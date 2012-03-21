@@ -1,0 +1,158 @@
+How to contribute to libNeuroML
+===============================
+
+To contribute to libNeuroML you need a github account then you should fork the 
+repository at https://github.com/NeuralEnsemble/libNeuroML
+
+Note: Fork is not a bad thing on a Github workflow. Forks basically means you 
+have your own repo which is connected with upstream. Yuo can contribute back to 
+upstream using [Pull Request](http://help.github.com/send-pull-requests/)
+
+Setting up
+----------
+
+Have a quick view at the doc: http://help.github.com/fork-a-repo/
+
+1. Fork the repo (done on github website)
+Now you should have a libNeuroML under you username
+(mine for example sits happily here: https://github.com/mattions/libNeuroML)
+
+2. Clone your repo locally (This is done once!)
+
+```
+git clone git@github.com:_username_/libNeuroML.git
+```
+
+3. Add upstream as remote branch which you follow
+
+```
+cd libNeuroML
+git remote add upstream https://github.com/NeuralEnsemble/libNeuroML.git
+git fetch upstream
+```
+
+You can check which branch are you following doing:
+
+```
+git branch -a
+```
+
+you should have soemthing like:
+
+```
+mattions@triton:libNeuroML(master*)$ git branch -a
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+  remotes/upstream/master
+```
+
+This means you are currently on branch master and there are two remotes branches
+`origin/master` which is your origin master (the branch where you master gets 
+pushed automatically and `upstream/master` which is the upstream master 
+(the NeuroEnsemble one).
+
+4. Synch with upstream. 
+
+Before starting to do some work, I'll suggest to get the latest development 
+going on the upstream repo
+
+```
+git fetch upstream
+git merge upstream/master
+```
+
+If there are no conflict, you are all set, if there are some you can solve them 
+with
+
+```
+git mergetool
+```
+
+which will fire up your favourite merger to do a 3-ways merge.
+
+3-ways means you will have your *local* file on your left, the *remote* file on 
+your right, and the file in the middle is the conflicted one, which you need to 
+solve.
+
+A nice 3-ways merger makes this process very easy, and merging thing could be fun.
+To see what you have currently installed just do `git mergetool`
+
+This is my response
+
+```
+mattions@triton:libNeuroML(master*)$ git mergetool
+merge tool candidates: meld opendiff kdiff3 tkdiff xxdiff tortoisemerge gvimdiff diffuse ecmerge p4merge araxis bc3 emerge vimdiff
+No files need merging
+```
+
+[Meld] (http://meldmerge.org/) is my favourite, but you pick anyone.
+
+
+Well done, now you are all set to do some cool work
+
+Working locally on a dedicated branch
+-------------------------------------
+
+Now you can work on your repo. 
+Teh best way to do it is to create a branch with a descriptive name
+which indicate what are you working on. 
+
+For example, just for the sake of this guide, I'm gonna close #2
+
+
+
+```
+git checkout -b fix-2
+```
+
+Now, I'm working on a different branch from master which is fix-2
+This will come handy in a minute.
+
+
+```
+hack hack hack
+git commit -am "I've done this and this."
+```
+
+Now that I found how to fix this issue, I just want to push my branch online 
+and open a pull request.
+
+
+A nice guide about git can be found online
+
+[One of my favourite](http://rogerdudler.github.com/git-guide/)
+
+You want to push you work online, so you always have a backup.
+This will push on your repo, so don't worry about it!
+
+```
+git push
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
