@@ -142,5 +142,5 @@ Miscellaneous
 
 - Remember to [tell git your name](http://help.github.com/set-your-user-name-email-and-github-token/), so we know who contributes!
 
-- always known in which branch are you using this [bash function](https://gist.github.com/2051095)
+- always known in which branch you are using this [bash function](https://gist.github.com/2051095)
 
