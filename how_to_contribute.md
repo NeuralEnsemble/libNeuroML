@@ -52,7 +52,8 @@ This means you are currently on branch master and there are two remotes branches
 pushed automatically and `upstream/master` which is the upstream master 
 (the NeuroEnsemble one).
 
-4. Synch with upstream. 
+Sync with upstream
+------------------
 
 Before starting to do some work, I'll suggest to get the latest development 
 going on the upstream repo
@@ -75,7 +76,7 @@ which will fire up your favourite merger to do a 3-ways merge.
 your right, and the file in the middle is the conflicted one, which you need to 
 solve.
 
-A nice 3-ways merger makes this process very easy, and merging thing could be fun.
+A nice 3-ways merger makes this process very easy, and merging could be fun.
 To see what you have currently installed just do `git mergetool`
 
 This is my response
@@ -86,8 +87,8 @@ merge tool candidates: meld opendiff kdiff3 tkdiff xxdiff tortoisemerge gvimdiff
 No files need merging
 ```
 
-[Meld] (http://meldmerge.org/) is my favourite, but you pick anyone.
-
+[Meld] (http://meldmerge.org/) is the first of the list and would be automatically
+picked up by `git mergetool`. Chose your favourite.
 
 Well done, now you are all set to do some cool work!
 
@@ -98,7 +99,7 @@ Now you can work on your repo.
 The best way to do it is to create a branch with a descriptive name
 which indicate what are you working on. 
 
-For example, just for the sake of this guide, I'm gonna close #2
+For example, just for the sake of this guide, I'm gonna close [#2](https://github.com/NeuralEnsemble/libNeuroML/issues/2)
 
 ```
 git checkout -b fix-2
@@ -118,15 +119,20 @@ and open a pull request.
 
 1. Push the branch online
 
-```
-git push origin fix-2
-```
+    ```
+    git push origin fix-2
+    ```
 
 2. Open the pull request
 
 Here I want to open a pull-request to integrate `fix-2` into `upstream/master` 
 
-To do that I click Pull-Request and automatically a new Issue #3 is created.
+To do that I click Pull-Request and automatically a new Issue [#3]((https://github.com/NeuralEnsemble/libNeuroML/issues/2) is created where it is possible to comment.
+
+If your code is not ready to be include, you can update the code on your branch 
+and automatically the Pull Request will sync to the latest commit, so it is 
+possible to change it after the Pull Request is started. Don't be scare to open 
+one.
 
 
 Miscellaneous
@@ -137,32 +143,4 @@ Miscellaneous
 - Remember to [tell git your name](http://help.github.com/set-your-user-name-email-and-github-token/), so we know who contributes!
 
 - always known in which branch are you using this [bash function](https://gist.github.com/2051095)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
