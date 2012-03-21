@@ -1,0 +1,8 @@
+# All the python compiled
+*.pyc
+.project
+.pydevproject
+*.egg-info
+
+#Sphinx built website.
+doc/_build
