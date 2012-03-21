@@ -5,7 +5,7 @@ To contribute to libNeuroML you need a github account then you should fork the
 repository at https://github.com/NeuralEnsemble/libNeuroML
 
 Note: Fork is not a bad thing on a Github workflow. Forks basically means you 
-have your own repo which is connected with upstream. Yuo can contribute back to 
+have your own repository which is connected with upstream. You can contribute back to 
 upstream using [Pull Request](http://help.github.com/send-pull-requests/)
 
 Setting up
@@ -37,7 +37,7 @@ You can check which branch are you following doing:
 git branch -a
 ```
 
-you should have soemthing like:
+you should have something like:
 
 ```
 mattions@triton:libNeuroML(master*)$ git branch -a
@@ -126,17 +126,19 @@ git push origin fix-2
 
 Here I want to open a pull-request to integrate `fix-2` into `upstream/master` 
 
-To do that I clik Pull-Request and automatically a new Issue #3 is created.
+To do that I click Pull-Request and automatically a new Issue #3 is created.
 
 
-Miscellaneuos
+Miscellaneous
 -------------
 
-A nice guide about git can be found online
+- [Nice guide about git](http://rogerdudler.github.com/git-guide/)
 
-[One of my favourite](http://rogerdudler.github.com/git-guide/)
+- Remember to [tell git your name](http://help.github.com/set-your-user-name-email-and-github-token/), so we know who contributes!
 
-Remember to [tell git your name](http://help.github.com/set-your-user-name-email-and-github-token/), so we know who contributes!
+- always known in which branch are you using this [bash function](https://gist.github.com/2051095)
+
+
 
 
 
