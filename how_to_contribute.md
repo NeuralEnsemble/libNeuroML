@@ -89,18 +89,16 @@ No files need merging
 [Meld] (http://meldmerge.org/) is my favourite, but you pick anyone.
 
 
-Well done, now you are all set to do some cool work
+Well done, now you are all set to do some cool work!
 
 Working locally on a dedicated branch
 -------------------------------------
 
 Now you can work on your repo. 
-Teh best way to do it is to create a branch with a descriptive name
+The best way to do it is to create a branch with a descriptive name
 which indicate what are you working on. 
 
 For example, just for the sake of this guide, I'm gonna close #2
-
-
 
 ```
 git checkout -b fix-2
@@ -112,23 +110,33 @@ This will come handy in a minute.
 
 ```
 hack hack hack
-git commit -am "I've done this and this."
+git commit -am "some decent commit message here"
 ```
 
 Now that I found how to fix this issue, I just want to push my branch online 
 and open a pull request.
 
+1. Push the branch online
+
+```
+git push origin fix-2
+```
+
+2. Open the pull request
+
+Here I want to open a pull-request to integrate `fix-2` into `upstream/master` 
+
+To do that I clik Pull-Request and automatically a new Issue #3 is created.
+
+
+Miscellaneuos
+-------------
 
 A nice guide about git can be found online
 
 [One of my favourite](http://rogerdudler.github.com/git-guide/)
 
-You want to push you work online, so you always have a backup.
-This will push on your repo, so don't worry about it!
-
-```
-git push
-```
+Remember to [tell git your name](http://help.github.com/set-your-user-name-email-and-github-token/), so we know who contributes!
 
 
 
