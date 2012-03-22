@@ -1,5 +1,3 @@
-Result:
-
 How to contribute to libNeuroML
 ===============================
 
