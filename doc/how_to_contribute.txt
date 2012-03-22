@@ -4,8 +4,9 @@ How to contribute to libNeuroML
 To contribute to libNeuroML you need a github account then you should
 fork the repository at https://github.com/NeuralEnsemble/libNeuroML
 
-Note: Fork is not a bad thing on a Github workflow. Forks basically
-means you have your own repository which is connected with upstream. You
+Note: Fork is not a bad thing on a Github workflow. Fork basically
+means you have your own repository which is connected with upstream 
+(the main repository from which official releases will be made). You
 can contribute back to upstream using `Pull Request`_
 
 Setting up
