@@ -1,9 +1,9 @@
 This package provides Python libNeuroML, for working with neuronal models
 specified in NeuroML (http://neuroml.org)
 
-Documentation is available at ...
+Documentation is available at http://readthedocs.org/docs/libneuroml/en/latest/
 
-The project home page is at ...
+The project home page is at http://neuroml.org/neuroml2 (this needs to be updated to point to Github...)
 
 For installation instructions, see doc/install.txt
 
