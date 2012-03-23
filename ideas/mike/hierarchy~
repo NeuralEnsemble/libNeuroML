@@ -1,0 +1,29 @@
+#This is a proposed hierarchy for what libneuroml could look like in terms of
+#modules and classes. There is probably a lot which can be taken from NeuroML
+#when thinking about this hierarchy
+
+libNeuroML
+    -morphology
+        -Network
+        -Region
+        -Cell
+        -Section
+    -simulators
+        -Neuron
+        -Pynn
+        -Genesis
+        -Moose 
+        -Nest
+    -currents
+        -ionchannels
+            -Hodgkinhuxley
+            -Stochastic(?)
+        -patch
+            -VoltageClamp
+            -CurrentClamp
+            -DynamicClamp
+        -synapses
+            -Abstract
+            -Chemical
+            -Electrical
+
