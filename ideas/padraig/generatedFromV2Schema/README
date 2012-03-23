@@ -1,0 +1,5 @@
+Some ideas for creating a NeuroML v2.0 based Python API using code generated from the XML Schema for v2.0:
+http://sourceforge.net/apps/trac/neuroml/browser/NeuroML2/Schemas/NeuroML2/NeuroML_v2alpha.xsd
+
+using a (modified version of) generateDS.py:
+http://www.rexx.com/~dkuhlman/generateDS.html

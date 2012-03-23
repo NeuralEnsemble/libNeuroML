@@ -4,5 +4,8 @@
 .pydevproject
 *.egg-info
 
+# general build dir
+build
+
 #Sphinx built website.
 doc/_build
