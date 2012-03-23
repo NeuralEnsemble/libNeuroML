@@ -1,5 +1,21 @@
 Some ideas for creating a NeuroML v2.0 based Python API using code generated from the XML Schema for v2.0:
 http://sourceforge.net/apps/trac/neuroml/browser/NeuroML2/Schemas/NeuroML2/NeuroML_v2alpha.xsd
-
 using a (modified version of) generateDS.py:
 http://www.rexx.com/~dkuhlman/generateDS.html
+
+To install/test:
+
+Run: 
+  sudo python setup.py install
+then test with:
+  python readNml2.py
+  python writeNml2.py
+
+
+Notes:
+
+The generated Python classes use camelCase(!!). 
+
+Almost no helper functions are present, just the default attribute/child element get/add/set functions from generateDS.py.
+
+
