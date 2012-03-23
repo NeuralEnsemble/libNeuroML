@@ -4,8 +4,9 @@
 .pydevproject
 *.egg-info
 
-# general build dir
-build
-
 #Sphinx built website.
 doc/_build
+
+#Padraig ignores..
+ideas/padraig/generatedFromV2Schema/build
+ideas/padraig/generatedFromV2Schema/*.xml
