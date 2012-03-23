@@ -6,16 +6,19 @@ http://www.rexx.com/~dkuhlman/generateDS.html
 To install/test:
 
 Run: 
+
   sudo python setup.py install
+
 then test with:
+
   python readNml2.py
   python writeNml2.py
 
 
 Notes:
 
-The generated Python classes use camelCase(!!). 
+The generated Python classes use camelCase. This will be controversial no doubt, but let's leave that argument for now... 
 
-Almost no helper functions are present, just the default attribute/child element get/add/set functions from generateDS.py.
+Almost no helper functions are present, just the default attribute/child element get/add/set functions from generateDS.py. This needs work and generateDS has some functionality for that...
 
 
