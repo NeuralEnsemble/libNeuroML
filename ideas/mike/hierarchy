@@ -8,12 +8,6 @@ libNeuroML
         -Region
         -Cell
         -Section
-    -simulators
-        -Neuron
-        -Pynn
-        -Genesis
-        -Moose 
-        -Nest
     -currents
         -ionchannels
             -Hodgkinhuxley
@@ -26,4 +20,11 @@ libNeuroML
             -AbstractSyn
             -ChemicalSyn
             -ElectricalSyn
+neuroSim
+    -simulators
+        -Neuron
+        -Pynn
+        -Genesis
+        -Moose 
+        -Nest
 
