@@ -1,12 +1,12 @@
 #
-# Hypothetical Example of libNeuroML API for setting up a model and running
-# a simulation
+# Hypothetical Example of using libNeuroML and neuroSim APIs for setting up a model and running
+# a simulation.
 #
 
 from libNeuroML import morphology
 from libNeuroML.currents import ionchannels
 from libNeuroML.currents import patch
-from libNeuroML import simulators
+from NeuroSim import simulators
 
 soma=morphology.Section(tag='Soma')
 dend1=morphology.Section(tag='Apical1')
@@ -69,6 +69,8 @@ soma.insert(iclamp)
 
 #set up the simulator
 mysimulator=simulators.Neuron(min_timestep=0.05,timestep='fixed',min_seg_length=50)
+#create a Genesis Simulator, might use it later:
+myGenesisSimulator=simulators.Genesis(min_timestep=0.05,timestep='fixed',min_seg_length=50)
 
 #simulate
 mysimulator.go()
