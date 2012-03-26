@@ -6,7 +6,7 @@
 from libNeuroML import morphology
 from libNeuroML.currents import ionchannels
 from libNeuroML.currents import patch
-from NeuroSim import simulators
+from neuroSim import simulators
 
 soma=morphology.Section(tag='Soma')
 dend1=morphology.Section(tag='Apical1')
