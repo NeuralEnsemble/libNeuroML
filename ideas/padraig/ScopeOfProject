@@ -1,0 +1,30 @@
+Some ideas on the scope of the project
+
+
+NeuroML:
+
+NeuroML will provide the core object model for describing neuronal morphologies, ion channels, synapses and 3D network structure 
+Any dynamical components (channels, synapses, abstratc cell models) will have a definition "behind the scenes" in LEMS.
+However, all NeuroML will specify is that "element segment will contain element distal with attributes x, y, z, diameter..." or "element izhikevichCell
+will have attributes a, b, c..."
+
+
+Serialisations:
+
+A) The XML serialisation will be the "natural" serialistaion and will be a pretty faithful reflection of the object model. This 
+will be specified by the XML Schema definition (XSD file). Note LEMS definition and XSD file are kept manually in line. 
+B) There should be a standardised (and validatable) HDF5 serialisation. This can use the overall structure of the NeuroML object 
+model, but use obtimised representaions of 1) neuronal morphologies, 2) cell locations and 3) synaptic connectivity. This can be based
+on Stephan's examples for NeuroHDF
+C) Other serialisation formats could be envisioned, e.g. YAML. That format would most likely have a one to one mapping to the XML format. 
+Other binary formats (e.g. Binary XML) may be unnecessary, as HDF5 should cover most of our needs
+
+
+APIs for accessing NeuroML files:
+
+APIs in any given language (e.g. Java, Python) should be independent of the serialisation format, and be based on the NeuroML object model.
+
+
+ 
+
+
