@@ -10,3 +10,4 @@ doc/_build
 #Padraig ignores..
 ideas/padraig/generatedFromV2Schema/build
 ideas/padraig/generatedFromV2Schema/*.xml
+ideas/padraig/hdf5tests/*.hdf
