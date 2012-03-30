@@ -25,6 +25,13 @@ APIs for accessing NeuroML files:
 APIs in any given language (e.g. Java, Python) should be independent of the serialisation format, and be based on the NeuroML object model.
 
 
+Backends
  
+A backend is the platform specific implementation in which the structure of the cells, network, etc. is stored. Examples can include:
+
+A) Language specific object model generated from NeuroML schema, e.g. Java or Python class hierarchy for Cell, Segment, Network, etc.
+B) Optimised version of above with certain classes substituted for more optimal representations of data (e.g. numpy array for 3d points) 
+C) Simulator specific backend, e.g. when neuroml.addCell(...) or cell.addSegment() are called, equivalent entities in the simulator are
+created.
 
 
