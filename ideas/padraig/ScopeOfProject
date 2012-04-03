@@ -61,5 +61,5 @@ network needs to be saved to XML/HDF5. This would facilitate running/saving/plot
 
 The core libNeuroML API should be kept to the minimal set of commands for reading/writing/parsing the object tree.
 Extension packages can be built on this (and PyNN) which use this functionality with specific workflows in mind, e.g.
-building small etworks of multicomp neurons with MorphForge, optimising 
+building small networks of multicomp neurons with MorphForge, parameter fitting neuron models (Mike v's package).
 
