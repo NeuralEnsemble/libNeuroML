@@ -63,3 +63,6 @@ The core libNeuroML API should be kept to the minimal set of commands for readin
 Extension packages can be built on this (and PyNN) which use this functionality with specific workflows in mind, e.g.
 building small networks of multicomp neurons with MorphForge, parameter fitting neuron models (Mike v's package).
 
+Other packages then can be developed (e.g. for visualisation in 3D, for analysis of morphological or network properties) which will be 
+usable on any simulator which supports libNeuroML+PyNN, e.g. NEURON, MOOSE...
+
