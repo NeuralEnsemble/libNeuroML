@@ -39,8 +39,8 @@ language implementations, as it is in libSBML
 A backend consists of a specific implementation which stores structure of the cells, network, etc. when the
 model is loaded in from XML/HDF5. Scenarios for this can include:
 
-A) A language specific object model generated from the NeuroML schema, e.g. Java or Python class hierarchy for Cell, Segment, 
-Network, etc. is used to store the data
+A) A language specific object model generated from the NeuroML schema, e.g. Java or Python class hierarchy for Cell, 
+Segment, Network, etc. is used to store the data
 B) Optimised version of above with certain objects substituted for more optimal representations of data (e.g. a numpy 
 array for 3D points) 
 C) Simulator specific backend, i.e. when addCell(...) or cell.addSegment() are called, equivalent entities 
@@ -55,13 +55,17 @@ Scenario C) could be implemented in Python by extending PyNN for multicompartmen
 commands for building networks in libNeuroML (e.g. addCell(), addPopulation, createSegment()) to existing or new 
 PyNN commands, and similarly parsing the simulator's internally instantiated network with PyNN commands when the 
 network needs to be saved to XML/HDF5. This would facilitate running/saving/plotting models on PyNN simulators.
+A version of Mike Vella's example file https://github.com/NeuralEnsemble/libNeuroML/blob/master/ideas/mike/example.py
+would certainly be possible through a libNeuroML+PyNN API like this.
 
+(Padraig: I plan to improve the existing implementation of A, try out some ideas for substituting numpy arrays in this
+to try B, and play with pyNeuron for testing ideas towards C, and would be happy to help extend PyNN for this)
 
 * Extensions
 
 The core libNeuroML API should be kept to the minimal set of commands for reading/writing/parsing the object tree.
 Extension packages can be built on this (and PyNN) which use this functionality with specific workflows in mind, e.g.
-building small networks of multicomp neurons with MorphForge, parameter fitting neuron models (Mike v's package).
+building small networks of multicomp neurons with MorphForge, parameter fitting neuron models (Mike V's package).
 
 Other packages then can be developed (e.g. for visualisation in 3D, for analysis of morphological or network properties) which will be 
 usable on any simulator which supports libNeuroML+PyNN, e.g. NEURON, MOOSE...
