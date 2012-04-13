@@ -17,7 +17,7 @@ then test with:
 
 Notes:
 
-The generated Python classes use camelCase. This will be controversial no doubt, but let's leave that argument for now... 
+The generated Python classes have been updated to use Python method names, get_cell(), etc. 
 
 Almost no helper functions are present, just the default attribute/child element get/add/set functions from generateDS.py. This needs work and generateDS has some functionality for that...
 
