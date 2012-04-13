@@ -17,13 +17,12 @@ if __name__ == "__main__":
     nmlDoc = NeuroMLDocument(id="IzhNet")
 
     izhCell = IzhikevichCell(id="izBurst", v0 = "-70mV", thresh = "30mV", a ="0.02", b = "0.2", c = "-50.0", d = "2", Iamp="15", Idel="22ms", Idur="2000ms")
-    nmlDoc.addIzhikevichCell(izhCell)
+    nmlDoc.add_izhikevichCell(izhCell)
 
     newnmlfile = "testIzhNml2.xml"
-    nmlDoc.writeNeuroML(newnmlfile)
+    nmlDoc.write_neuroml(newnmlfile)
 
-    validateNml2(newnmlfile)
-
+    validate_nml2(newnmlfile)
     ############################################################
 
     print "Writing NeuroML 2 file with detailed morph"
@@ -31,27 +30,27 @@ if __name__ == "__main__":
     nmlDoc = NeuroMLDocument(id="BigCell")
 
     cell = Cell(id="pyramidal")
-    nmlDoc.addCell(cell)
+    nmlDoc.add_cell(cell)
 
     morph = Morphology("morph")
-    cell.setMorphology(morph)
+    cell.morphology = morph
 
 
     for i in range(100):
         seg = Segment(id=i, name="seg_%i"%i)
 
-        seg.setDistal(Point3DWithDiam(0, int(i*5), 0, 2))
+        seg.distal = Point3DWithDiam(0, int(i*5), 0, 2)
         if i>0:
-            seg.setParent(SegmentParent(segment=i-1))
+            seg.parent = SegmentParent(segment=i-1)
         else:
-            seg.setProximal(Point3DWithDiam(0, 0, 0, 5))
+            seg.proximal = Point3DWithDiam(0, 0, 0, 5)
 
-        morph.addSegment(seg)
+        morph.add_segment(seg)
 
     newnmlfile = "testCellNml2.xml"
-    nmlDoc.writeNeuroML(newnmlfile)
+    nmlDoc.write_neuroml(newnmlfile)
 
-    validateNml2(newnmlfile)
+    validate_nml2(newnmlfile)
 
     ############################################################
 

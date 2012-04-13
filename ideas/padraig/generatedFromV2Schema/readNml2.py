@@ -16,34 +16,33 @@ if __name__ == "__main__":
 
     print "Reading in NeuroML 2 file: "+ filename
 
-    nml2Doc = reader.readNeuroML(filename)
+    nml2Doc = reader.read_neuroml(filename)
 
 
-    print "Read in cells in v2 file with Id: "+nml2Doc.getId()
+    print "Read in cells in v2 file with Id: "+nml2Doc.id
 
-    cell = nml2Doc.getCell()[0]
+    cell = nml2Doc.cell[0]
 
-    morph = cell.getMorphology()
+    morph = cell.morphology
 
-    segments = morph.getSegment()  # not getSegments...
+    segments = morph.segment  # not segments, this is a limitation of the code that generateDS.py creates...
 
 
-    print "Id of cell: %s, which has %i segments"%(cell.getId(),len(segments))
-
+    print "Id of cell: %s, which has %i segments"%(cell.id,len(segments))
 
     for seg in segments:
-        dist = seg.getDistal()
-        prox = seg.getProximal()
+        dist = seg.distal
+        prox = seg.proximal
 
         # There should of course be a helper function for this...
         if prox is None:
-            parent = int(seg.getParent().getSegment())
+            parent = int(seg.parent.segment)
             for segP in segments:
-                if int(segP.getId()) == parent:
-                    prox = segP.getDistal()
+                if int(segP.id) == parent:
+                    prox = segP.distal
 
-        print "  Segment %s (%s) from (%f, %f, %f) to (%f, %f, %f)"%(seg.getId(),
-                                                         (seg.getName() if seg.getName() is not None else "??"),
+        print "  Segment %s (%s) from (%f, %f, %f) to (%f, %f, %f)"%(seg.id,
+                                                         (seg.name if seg.name is not None else "??"),
                                                          prox.x,
                                                          prox.y,
                                                          prox.z,
