@@ -140,9 +140,11 @@ Miscellaneous
 
 -  `Nice guide about git`_
 
+-  `Quick reference for git`_
+
 -  Remember to `tell git your name`_, so we know who contributes!
 
--  always known in which branch you are using this `bash function`_
+-  Always known in which branch you are using this `bash function`_
 
 .. _Pull Request: http://help.github.com/send-pull-requests/
 .. _#2: https://github.com/NeuralEnsemble/libNeuroML/issues/2
@@ -150,4 +152,5 @@ Miscellaneous
 .. _Nice guide about git: http://rogerdudler.github.com/git-guide/
 .. _tell git your name: http://help.github.com/set-your-user-name-email-and-github-token/
 .. _bash function: https://gist.github.com/2051095
+.. _Quick reference for git: http://gitref.org/
 
