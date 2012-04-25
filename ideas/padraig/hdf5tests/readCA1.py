@@ -55,22 +55,6 @@ if __name__ == "__main__":
         dist = seg.distal
         prox = seg.proximal
 
-        '''# There should of course be a helper function for this...
-        if prox is None:
-            parent = int(seg.parent.segment)
-            for segP in segments:
-                if int(segP.id) == parent:
-                    prox = segP.distal
-
-        print "  Segment %s (%s) from (%f, %f, %f) to (%f, %f, %f)"%(seg.id,
-                                                         (seg.name if seg.name is not None else "??"),
-                                                         prox.x,
-                                                         prox.y,
-                                                         prox.z,
-                                                         dist.x,
-                                                         dist.y,
-                                                         dist.z)'''
-
         parent_id = int(seg.parent.segment) if seg.parent is not None else -1
         point_dataset[i] = (dist.x, dist.y, dist.z, dist.diameter)
         segment_dataset[i] = (int(seg.id), seg.name, parent_id, i)
