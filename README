@@ -5,7 +5,7 @@ Documentation is available at http://readthedocs.org/docs/libneuroml/en/latest/
 
 The project home page is at http://neuroml.org/neuroml2 (this needs to be updated to point to Github...)
 
-For installation instructions, see doc/install.txt
+For installation instructions, see doc/how_to_contribute.txt
 
 :copyright: Copyright 2012 by the libNeuroML team, see AUTHORS.
 :license: Modified BSD License, see LICENSE for details.
