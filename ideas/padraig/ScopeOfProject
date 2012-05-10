@@ -45,15 +45,15 @@ Segment, Network, etc. is used to store the data
 B) Optimised version of above with certain objects substituted for more optimal representations of data (e.g. a numpy 
 array for 3D points) 
 C) Simulator specific backend, i.e. when add_cell(...) or cell.add_segment() are called, equivalent entities 
-in the native simulator are created. Similarly when save_as_xml() is called in the API the native object tree is parsed for 
-this information.
+in the native simulator are created. Similarly when save_as_xml() is called in the API the native object tree is 
+parsed for this information.
 
 Scenario A) above already has an initial implementation in Python (see 
 https://github.com/NeuralEnsemble/libNeuroML/tree/master/ideas/padraig/generatedFromV2Schema).
 Scenario B) would fulfil most people's requirements for a standalone Python API to read/write large data sets of 
 cell/network data, and could be build from A
 Scenario C) could be implemented in Python by extending PyNN for multicompartmental simulators, and by hooking 
-commands for building networks in libNeuroML (e.g. addCell(), addPopulation, createSegment()) to existing or new 
+commands for building networks in libNeuroML (e.g. add_cell(), add_population, create_segment()) to existing or new 
 PyNN commands, and similarly parsing the simulator's internally instantiated network with PyNN commands when the 
 network needs to be saved to XML/HDF5. This would facilitate running/saving/plotting models on PyNN simulators.
 A version of Mike Vella's example file https://github.com/NeuralEnsemble/libNeuroML/blob/master/ideas/mike/example.py
@@ -68,6 +68,6 @@ The core libNeuroML API should be kept to the minimal set of commands for readin
 Extension packages can be built on this (and PyNN) which use this functionality with specific workflows in mind, e.g.
 building small networks of multicomp neurons with MorphForge, parameter fitting neuron models (Mike V's package).
 
-Other packages then can be developed (e.g. for visualisation in 3D, for analysis of morphological or network properties) which will be 
-usable on any simulator which supports libNeuroML+PyNN, e.g. NEURON, MOOSE...
+Other packages then can be developed (e.g. for visualisation in 3D, for analysis of morphological or network properties) 
+which will be usable on any simulator which supports libNeuroML+PyNN, e.g. NEURON, MOOSE...
 
