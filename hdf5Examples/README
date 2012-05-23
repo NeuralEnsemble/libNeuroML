@@ -1,0 +1,9 @@
+neuroConstruct_NetworkMLv1.8.1.h5  		Padraig Gleeson
+
+	A version of NetworkML (cell positions & connections only, no morphologies/channels) in HDF5 as can be saved/loaded in to neuroConstruct at tab Generate
+
+neuroConstruct_simulationDataOnePop.h5		Padraig Gleeson
+
+	Traces of membrane potentials from a single population/cell group, as saved during a NEURON simulation. Option to save as HDF5 (as opposed to simple text files) is enables by selecting "Save data as HDF5" at tab NEURON
+
+ 
