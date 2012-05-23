@@ -136,7 +136,7 @@ class MorphologyArray(MorphologyBase):
         #this doesn't work:
         del(self)
     
-    def connect(self,child_morphology,parent_index):
+    def adopt(self,child_morphology,parent_index):
         """
         Connect another morphology to this one.
 
@@ -268,9 +268,25 @@ class Section():
         """
         return self.parent_id==-1
 
+    def adopt(self,child):
+        """
+        Connect a child to this section
+        """
+
+        child_morphology=child.morphology
+    
+        assert child.is_root, 'child must be root of its morphology'
+
+        child_index=child.index
+        self.morphology.adopt(child_morphology=child.morphology,
+                            parent_index=self.index)
+                                
+        #delete the old morpholoy:
+        child.morphology.delete()
+
     def connect(self,parent):
         """
-        connect this section to a parent
+        connect this section to a new parent
 
         This is done by connecting the child morphology 
         to the parent morphology and delting the child morphology
@@ -282,7 +298,7 @@ class Section():
 
         parent_index=parent.index
         #connect the morphologies to each other:
-        parent_morphology.connect(child_morphology=self.morphology,
+        parent_morphology.adopt(child_morphology=self.morphology,
                                  parent_index=parent_index)
 
         #delete the old morpholoy:
