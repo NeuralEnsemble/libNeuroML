@@ -1,0 +1,59 @@
+# -*- coding: utf-8 -*-
+#-------------------------------------------------------------------------------
+# Copyright (c) 2012 Michael Hull, Michael Vella
+# All rights reserved.
+# 
+# Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+# 
+#  - Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+#  - Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#-------------------------------------------------------------------------------
+
+import numpy as np
+from morphology import *
+
+class NeuroMLLoadoer(object):
+
+    @classmethod
+    def load_neuroml(cls,src):
+        raise NotImplementedError
+
+def hello_world():
+    print 'hello_world'
+
+class SWCLoader(object):
+
+    @classmethod
+    def load_swc_single(cls,  src, name=None):
+      
+        dtype= {'names':   ('id', 'type', 'x','y','z','r','pid'),
+                'formats': ('int32', 'int32', 'f4','f4','f4','f4','int32') }
+        
+        d = np.loadtxt(src,dtype=dtype )
+        
+        if len( np.nonzero( d['pid']==-1)) != 1:
+            assert False, "Unexpected number of id's of -1 in file" 
+            
+        #replace -1 (root) with 0, to indicate that it is root. 
+        #There may be a sarter way to do this, -1 produces a key error.
+        index=np.where(d['pid']==-1)
+        d['pid'][index]=1
+        # We might not nessesarily have continuous indices in the 
+        # SWC file, so lets convert them:
+        index_to_id = d['id']
+        id_to_index_dict = dict( [(id,index) for index,id in enumerate(index_to_id) ] ) #this is a dict of ids and their corresponding index
+
+        if len(id_to_index_dict) != len(index_to_id):
+            s =  "Internal Error Loading SWC: Index and ID map are different lengths."
+            s += " [ID:%d, Index:%d]"%( len(index_to_id), len(id_to_index_dict) )
+            raise MorphologyImportError(s)
+        
+        # Vertices and section types are easy:
+        vertices =  d[ ['x','y','z','r'] ]
+        vertices =  np.vstack( [d['x'], d['y'],d['z'],d['r'] ]).T
+        section_types = [ swctype for ID,swctype in d[['id','type']]]
+        connection_indices = [ id_to_index_dict[pID] for pID in d['pid']]
+    
+        return MorphologyArray(vertices=vertices, connectivity=connection_indices, section_types=section_types, dummy_vertex_index=0, name=name )
