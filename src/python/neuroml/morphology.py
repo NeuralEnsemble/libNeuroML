@@ -125,21 +125,11 @@ class MorphologyArray(MorphologyBase):
         """
         return self._connectivity[index]
 
-    def vertex(self,sid):
+    def vertex(self,index):
         """
-        Return the vertex of the given sid
-        #Warning:this is still not adequately tested
+        Return vertex corresponding to index in morphology
         """
-        
-        if len(self._connectivity):
-            cids=self._connectivity.T[1]
-            index=np.where(cids==sid)
-            vertex=self._vertices[index]
-            
-        else:
-            vertex=self._vertices[0]
-
-        return vertex
+        return self.vertices[index]
 
     def delete(self):
         #haven't figured out the best way to do this yet
@@ -191,7 +181,6 @@ class MorphologyArray(MorphologyBase):
 
   
 class Section():
-
     """
     The idea of the Section class is to provide a user with a natural
     way of manipulating compartments while still utilising an array-
@@ -243,7 +232,6 @@ class Section():
             self.vertex=vertex
 
         #make the morphology and register this section to it
-        
         connectivity=np.array([-1],dtype='int32')
         self._morphology=MorphologyArray(vertices=self.vertex,
                                         connectivity=connectivity)
@@ -263,7 +251,7 @@ class Section():
 
     @property
     def vertex(self):
-        return self.morphology.vertex(self.sid)
+        return self.morphology.vertex(self.index)
 
     @property
     def parent_id(self):
@@ -296,7 +284,6 @@ class Section():
         #connect the morphologies to each other:
         parent_morphology.connect(child_morphology=self.morphology,
                                  parent_index=parent_index)
-
 
         #delete the old morpholoy:
         self._morphology.delete()

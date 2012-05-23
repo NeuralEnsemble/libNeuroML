@@ -12,6 +12,7 @@
 #-------------------------------------------------------------------------------
 
 import numpy as np
+from neuroml.morphology import MorphologyArray
 
 class NeuroMLLoader(object):
 
@@ -20,8 +21,6 @@ class NeuroMLLoader(object):
         raise NotImplementedError
 
 class SWCLoader(object):
-    
-    from neuroml.morphology import MorphologyArray
     
     @classmethod
     def load_swc_single(cls,  src, name=None):
