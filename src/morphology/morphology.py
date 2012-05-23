@@ -12,7 +12,7 @@
 #-------------------------------------------------------------------------------
 
 r"""
-Initial prototype for object model backend for the libNeuroML project
+Prototype for object model backend for the libNeuroML project
 
 AUTHORS:
 
@@ -51,8 +51,8 @@ class MorphologyArray(MorphologyBase):
     a Section class is provided (see further down) however this
     does not result in a tree-based object model. Rather, the section
     objects manipulate the MorphologyArray backend in a way that 
-    is invisible to the user. The user may still use the MorphologyArray
-    class, depending on their needs.
+    is invisible to the user. The user may still use the 
+    MorphologyArray class, depending on their needs.
 
     MorphologyArray[i] returns the Section object relating to
     element i
@@ -65,14 +65,18 @@ class MorphologyArray(MorphologyBase):
     to a new MorphologyArray is made and indices all change.
     """
 
-    def __init__(self,vertices,connectivity,section_types=None,dummy_vertex_index=0,name=None):
+    def __init__(self,vertices,connectivity,section_types=None,
+                name=None):
 
         self._connectivity=np.array(connectivity)
         self._vertices=np.array(vertices)
+        self.name=name
+
         if section_types:
             self._section_types=np.array(section_types)
         else:
-            self._section_types=np.zeros(len(connectivity))
+            self._section_types=np.zeros(len(connectivity),
+                                        dtype='int32')
 
         #validity test:
         M=self._vertices.shape[0]
@@ -82,53 +86,44 @@ class MorphologyArray(MorphologyBase):
 
         #morphology needs to know which sections are exist in memory
         #then if something like connecting to another morphology
-        #happens, the indices etc get updated
+        #happens, the indices etc get updated, there may be a better
+        #way of doing this
         self._registered_sections=[]
+
+        self.root_index=np.where(self._connectivity==-1)[0][0]
+
+    @property
+    def vertices(self):
+        return self._vertices
+
+    @property
+    def connectivity(self):
+        return self._connectivity
+
+    @property
+    def section_types(self):
+        return self._section_types
+
+    @property
+    def root_section(self):
+        index=self.root_index
+        return self[index]
 
     def register_section(self,section):
         #keep a register of section objects which are in memory and which
         #morphology they relate to
+        #this could be improved, perhaps by using an index:section dict?
         self._registered_sections=np.append(self._registered_sections,section)
         section.morphology=self
 
-    def add_section(self,vertex,connected_section,section_type=None):
-        #WIP
-        if len(self._connectivity) == 0:
-            sid=1
-        else:
-            sid=self._connectivity.max()+1
-
-        connection=[[sid,connected_section]]
-       
-        if len(self._connectivity) !=0:
-            self._connectivity=np.append(self._connectivity,connection,axis=0)
-        else:
-            self._connectivity=np.array(connection)
-
-        self._vertices=np.append(self._vertices,[vertex],axis=0)
-
     def pop_section(self,sid):
-        #WIP
         raise NotImplementedError
 
-    def parent_id(self,sid):
-        #WIP - should now be a much easier way to do this?
+    def parent_id(self,index):
         """
-        Return the parent sid for the given sid
-        #Warning:this is still not adequately tested
+        Return the parent index for the given index
         """
-        
-        if len(self._connectivity):
-            
-            sids=self._connectivity.T[0]
-            index=np.where(sids==sid)
-            parent_id=self._connectivity[index][1]
-            
-        else:
-            parent_id=0
-
-        return parent_id
-
+        return self._connectivity[index]
 
     def vertex(self,sid):
         """
@@ -146,6 +141,11 @@ class MorphologyArray(MorphologyBase):
 
         return vertex
 
+    def delete(self):
+        #haven't figured out the best way to do this yet
+        #this doesn't work:
+        del(self)
+    
     def connect(self,child_morphology,parent_index):
         """
         Connect another morphology to this one.
@@ -160,10 +160,14 @@ class MorphologyArray(MorphologyBase):
         new_connectivity=child_morphology.connectivity
         new_connectivity+=num_parent_sections
         new_connectivity[0]=parent_index#point root to its new parent
-        self._connectivity=np.append(self._connectivity,new_connectivity,axis=0)
-        self._section_types=np.append(self._section_types,child_morphology.section_types,axis=0)
-        #treat the parent section as the origin of the new root and translate
-        #the array, there is probably a cleaner way to do this using numpy
+        self._connectivity=np.append(self._connectivity,
+                                    new_connectivity,axis=0)
+        self._section_types=np.append(self._section_types,
+                                    child_morphology.section_types,axis=0)
+        #treat the parent section as the origin of 
+        #the new root and translate the array, 
+        #there is probably a cleaner way to do this using numpy
+
         xyz0=np.array(self.vertices[parent_index])
         xyz0[3]=0
         new_vertices=child_morphology.vertices+xyz0
@@ -174,71 +178,18 @@ class MorphologyArray(MorphologyBase):
             section.index+=num_parent_sections
             self.register_section(section)
 
-        #delete the old morphology:
-        del(child_morphology)
-    
+        #delete the old morphology, still not implemented properly
+        child_morphology.delete()
+
     def __getitem__(self,i):
         #create a section object:
         sec=Section(vertex=[self.vertices[i]])
         #register the section:
+        sec.index=i
         self.register_section(sec)
         return sec
 
-    @property
-    def vertices(self):
-        return self._vertices
-
-    @property
-    def connectivity(self):
-        return self._connectivity
-
-    @property
-    def section_types(self):
-        return self._section_types
-    
-class NeuroMLLoadoer(object):
-
-    @classmethod
-
-    def load_neuroml(cls,src):
-        raise NotImplementedError
-
-class SWCLoader(object):
-
-    @classmethod
-    def load_swc_single(cls,  src, name=None):
-      
-        dtype= {'names':   ('id', 'type', 'x','y','z','r','pid'),
-                'formats': ('int32', 'int32', 'f4','f4','f4','f4','int32') }
-        
-        d = np.loadtxt(src,dtype=dtype )
-        
-        if len( np.nonzero( d['pid']==-1)) != 1:
-            assert False, "Unexpected number of id's of -1 in file" 
-            
-        #replace -1 (root) with 0, to indicate that it is root. 
-        #There may be a sarter way to do this, -1 produces a key error.
-        index=np.where(d['pid']==-1)
-        d['pid'][index]=1
-        # We might not nessesarily have continuous indices in the 
-        # SWC file, so lets convert them:
-        index_to_id = d['id']
-        id_to_index_dict = dict( [(id,index) for index,id in enumerate(index_to_id) ] ) #this is a dict of ids and their corresponding index
-
-        if len(id_to_index_dict) != len(index_to_id):
-            s =  "Internal Error Loading SWC: Index and ID map are different lengths."
-            s += " [ID:%d, Index:%d]"%( len(index_to_id), len(id_to_index_dict) )
-            raise MorphologyImportError(s)
-        
-        # Vertices and section types are easy:
-        vertices =  d[ ['x','y','z','r'] ]
-        vertices =  np.vstack( [d['x'], d['y'],d['z'],d['r'] ]).T
-        section_types = [ swctype for ID,swctype in d[['id','type']]]
-        connection_indices = [ id_to_index_dict[pID] for pID in d['pid']]
-    
-        return MorphologyArray(vertices=vertices, connectivity=connection_indices, section_types=section_types, dummy_vertex_index=0, name=name )
-
-
+  
 class Section():
 
     """
@@ -282,42 +233,21 @@ class Section():
 
     def __init__(self,vertex=None,radius=50.0,length=10.0):
 
-
         self._index=0
 
         if vertex==None:
             self._radius=radius
             self._length=length
-
             self.vertex=[[self._length,0.0,0.0,self._radius]]
-
         else:
             self.vertex=vertex
 
         #make the morphology and register this section to it
-
-        self._morphology=MorphologyArray(vertices=self.vertex,connectivity=[0])
-        self._morphology.register_section(self)
-
-    def connect(self,parent):
-        """
-        connect this section to a parent
-
-        This is done by connecting the child morphology 
-        to the parent morphology and delting the child morphology
-        """
         
-        parent_morphology=parent.morphology
-
-        assert self.index==0, 'section must be root to connect'
-
-        parent_index=parent.index
-        #connect the morphologies to each other:
-        parent_morphology.connect(child_morphology=self.morphology,parent_index=parent_index)
-
-        #the parent morphology is now the child morphology:
-        self._morphology=parent.morphology
-
+        connectivity=np.array([-1],dtype='int32')
+        self._morphology=MorphologyArray(vertices=self.vertex,
+                                        connectivity=connectivity)
+        self._morphology.register_section(self)
 
     @property
     def length(self):
@@ -332,59 +262,97 @@ class Section():
         return self._index
 
     @property
-
-
     def vertex(self):
         return self.morphology.vertex(self.sid)
 
     @property
     def parent_id(self):
-        return self.morphology.parent_id(self.sid)
+        return self.morphology.parent_id(self.index)
 
     @property
     def morphology(self):
         return self._morphology
 
+    @property
+    def is_root(self):
+        """
+        Returns True if section is root
+        """
+        return self.parent_id==-1
+
+    def connect(self,parent):
+        """
+        connect this section to a parent
+
+        This is done by connecting the child morphology 
+        to the parent morphology and delting the child morphology
+        """
+        
+        parent_morphology=parent.morphology
+
+        assert self.is_root, 'section must be root to connect'
+
+        parent_index=parent.index
+        #connect the morphologies to each other:
+        parent_morphology.connect(child_morphology=self.morphology,
+                                 parent_index=parent_index)
 
 
-#in the following example we create an axon object, load a
-#reconstructed morphology from an SWC file and connect the
-#axon to the morphology
+        #delete the old morpholoy:
+        self._morphology.delete()
 
-#example of creating a section:
-iseg=Section(length=20.0)
-axonsec1=Section(length=1000)
-node1=Section(length=20)
-axonsec2=Section(length=500)
-axonsec3=Section()
+        #the parent morphology is now the child morphology:
+        self._morphology=parent.morphology
 
-#connect them all together:
-#standard is child.connect(parent)
-axonsec1.connect(iseg)
-node1.connect(axonsec1)
-axonsec2.connect(node1)
-axonsec3.connect(axonsec2)
+class NeuroMLLoader(object):
 
-#print some information from the morphology backend:
-artificial_morphology=iseg.morphology
-print 'Artificial morphology vertices:'
-print artificial_morphology.vertices
-print 'Artificial morphology connectivity:'
-print artificial_morphology.connectivity
-print 'Artificial morphology section types:'
-print artificial_morphology.section_types
+    @classmethod
+    def load_neuroml(cls,src):
+        raise NotImplementedError
 
-#Load a morphology from an SWC file and print some info about it
-morph1=SWCLoader.load_swc_single('/home/mike/tmp2mod.swc')
-print 'Loaded connectivity'
-print morph1.connectivity
+class SWCLoader(object):
 
-#now connect the loaded cell to axon
-iseg.connect(morph1[0])
-#connectivity of loaded cell now connected to an axon:
-print morph1.connectivity
+    @classmethod
+    def load_swc_single(cls,  src, name=None):
+      
+        dtype= {'names':   ('id', 'type', 'x','y','z','r','pid'),
+                'formats': ('int32', 'int32', 'f4','f4','f4','f4','int32') }
+        
+        d = np.loadtxt(src,dtype=dtype )
+        
+        if len( np.nonzero( d['pid']==-1)) != 1:
+            assert False, "Unexpected number of id's of -1 in file" 
+            
+        num_nodes=len(d['pid'])
 
-#can get a section object and info about it 
-#easily eg by doing:
-print 'Example - vertex of element 4 of morph1 morphology'
-print morph1[4].vertex
+        root_index=np.where(d['pid']==-1)[0][0]
+ 
+        # We might not nessesarily have continuous indices in the 
+        # SWC file, so lets convert them:
+        index_to_id = d['id']
+        id_to_index_dict = dict( [(id,index) for index,id in enumerate(index_to_id) ] )
+
+        if len(id_to_index_dict) != len(index_to_id):
+            s =  "Internal Error Loading SWC: Index and ID map are different lengths."
+            s += " [ID:%d, Index:%d]"%( len(index_to_id), len(id_to_index_dict) )
+            raise MorphologyImportError(s)
+        
+        # Vertices and section types are easy:
+        vertices =  d[ ['x','y','z','r'] ]
+        vertices =  np.vstack( [d['x'], d['y'],d['z'],d['r'] ]).T
+        section_types = [ swctype for ID,swctype in d[['id','type']]]
+
+        #for connection indices we want the root to have index -1:
+        connection_indices=np.zeros(num_nodes,dtype='int32')
+        for i in range(num_nodes):
+            pID=d['pid'][i]
+            if pID !=-1:
+                parent_index=id_to_index_dict[pID]
+                connection_indices[i]=parent_index
+            else:
+                connection_indices[i]=-1
+
+        return MorphologyArray(vertices=vertices, 
+                              connectivity=connection_indices, 
+                              section_types=section_types, 
+                              name=name )
