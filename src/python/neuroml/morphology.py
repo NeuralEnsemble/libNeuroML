@@ -3,13 +3,23 @@
 # Copyright (c) 2012 Michael Hull, Michael Vella
 # All rights reserved.
 # 
-# Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+# Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are meet:
 # 
 #  - Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
 #  - Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
 # 
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #-------------------------------------------------------------------------------
+
+"""
+After a discussion with Mike Hull I've decided to make 
+a signifcant change whereby nodes and sections have different
+meaning in important ways. Node has vertex
+and diam information as well as an index.
+
+Node can also be able to have some self constructing 
+properties?
+"""
 
 r"""
 Prototype for object model backend for the libNeuroML project
@@ -20,17 +30,14 @@ AUTHORS:
 - Mike Hull - Large parts of MorphologyArray and SWCLoader
 """
 
+import math
 import numpy as np
 
-class MorphologyBase(object):
-    def __init__():
-        raise NotImplementedError
-
-class MorphologyArray(MorphologyBase):
+class MorphologyArray(object):
     """Provides the array-based object model backend.
 
     Provides the core arrays -
-    vertices,connectivity and section_types. Unlike in
+    vertices,connectivity and node_types. Unlike in
     Morphforge these are all the same length so that corresponding
     sections have the same index in each array.
     
@@ -47,14 +54,14 @@ class MorphologyArray(MorphologyBase):
     connectivity[3] is an integer with the index of the section
     it refers to in the MorphologyArray
 
-    -note on Sections::
-    a Section class is provided (see further down) however this
+    -note on Nodes::
+    a Node class is provided (see further down) however this
     does not result in a tree-based object model. Rather, the section
     objects manipulate the MorphologyArray backend in a way that 
     is invisible to the user. The user may still use the 
     MorphologyArray class, depending on their needs.
 
-    MorphologyArray[i] returns the Section object relating to
+    MorphologyArray[i] returns the Node object relating to
     element i
 
     Because sections exist in memory independently of the,
@@ -65,56 +72,46 @@ class MorphologyArray(MorphologyBase):
     to a new MorphologyArray is made and indices all change.
     """
 
-    def __init__(self,vertices,connectivity,section_types=None,
+    def __init__(self,vertices,connectivity,node_types=None,
                 name=None):
 
-        self._connectivity=np.array(connectivity)
-        self._vertices=np.array(vertices)
+        self.connectivity=np.array(connectivity)
+        self.vertices=np.array(vertices)
         self.name=name
 
-        if section_types:
-            self._section_types=np.array(section_types)
+        if node_types:
+            self.node_types=np.array(node_types)
         else:
-            self._section_types=np.zeros(len(connectivity),
+            self.node_types=np.zeros(len(connectivity),
                                         dtype='int32')
 
         #validity test:
-        M=self._vertices.shape[0]
-        N=self._connectivity.shape[0]
-        P=self._section_types.shape[0]
+        M=self.vertices.shape[0]
+        N=self.connectivity.shape[0]
+        P=self.node_types.shape[0]
         assert N==M==P,'Invalid morphology'
 
         #morphology needs to know which sections are exist in memory
         #then if something like connecting to another morphology
         #happens, the indices etc get updated, there may be a better
         #way of doing this
-        self._registered_sections=[]
-
-        self.root_index=np.where(self._connectivity==-1)[0][0]
+        self._registered_nodes=[]
 
     @property
-    def vertices(self):
-        return self._vertices
-
+    def root_index(self):
+        return np.where(self.connectivity==-1)[0][0]    
+    
     @property
-    def connectivity(self):
-        return self._connectivity
-
-    @property
-    def section_types(self):
-        return self._section_types
-
-    @property
-    def root_section(self):
+    def root_node(self):
         index=self.root_index
         return self[index]
 
-    def register_section(self,section):
+    def register_node(self,node):
         #keep a register of section objects which are in memory and which
         #morphology they relate to
         #this could be improved, perhaps by using an index:section dict?
-        self._registered_sections=np.append(self._registered_sections,section)
-        section.morphology=self
+        self._registered_nodes=np.append(self._registered_nodes,node)
+        node.morphology=self
 
     def pop_section(self,sid):
         raise NotImplementedError
@@ -123,7 +120,7 @@ class MorphologyArray(MorphologyBase):
         """
         Return the parent index for the given index
         """
-        return self._connectivity[index]
+        return self.connectivity[index]
 
     def vertex(self,index):
         """
@@ -146,14 +143,14 @@ class MorphologyArray(MorphologyBase):
 
         #root of one (index=0) needs to connect to
         #section we are connecting to
-        num_parent_sections=len(self._connectivity)
+        num_parent_sections=len(self.connectivity)
         new_connectivity=child_morphology.connectivity
         new_connectivity+=num_parent_sections
         new_connectivity[0]=parent_index#point root to its new parent
-        self._connectivity=np.append(self._connectivity,
+        self.connectivity=np.append(self.connectivity,
                                     new_connectivity,axis=0)
-        self._section_types=np.append(self._section_types,
-                                    child_morphology.section_types,axis=0)
+        self.node_types=np.append(self.node_types,
+                                    child_morphology.node_types,axis=0)
         #treat the parent section as the origin of 
         #the new root and translate the array, 
         #there is probably a cleaner way to do this using numpy
@@ -161,38 +158,39 @@ class MorphologyArray(MorphologyBase):
         xyz0=np.array(self.vertices[parent_index])
         xyz0[3]=0
         new_vertices=child_morphology.vertices+xyz0
-        self._vertices=np.append(self._vertices,new_vertices,axis=0)
+        self.vertices=np.append(self.vertices,new_vertices,axis=0)
 
         #register the sections to the new morphology
-        for section in child_morphology._registered_sections:
+        #this is being done ina clumsy way..
+        for section in child_morphology._registered_nodes:
             section.index+=num_parent_sections
-            self.register_section(section)
+            self.register_node(section)
 
         #delete the old morphology, still not implemented properly
         child_morphology.delete()
 
     def __getitem__(self,i):
-        #create a section object:
-        sec=Section(vertex=[self.vertices[i]])
-        #register the section:
-        sec.index=i
-        self.register_section(sec)
-        return sec
+        #create a node object:
+        node=Node(vertex=[self.vertices[i]])
+        #register the node:
+        node.index=i
+        self.register_node(node)
+        return node
 
-  
-class Section():
+
+class Node():
     """
-    The idea of the Section class is to provide a user with a natural
+    The idea of the Node class is to provide a user with a natural
     way of manipulating compartments while still utilising an array-
-    based backend. The user does not have to use Section objects,
+    based backend. The user does not have to use Node objects,
     it is provided in particular for users who create models 
     with a small number of compartments.
 
     A section can be instantiated independently of a morphology, however
     such a section genernates its own morphology when it is instantiated.
 
-        A=Section()
-        B=Section()
+        A=Node()
+        B=Node()
 
     Will create two morphology objects and two section objects
     call the morphology objects A_morph and B_morph
@@ -220,34 +218,35 @@ class Section():
     implemented.
     """
 
-    def __init__(self,vertex=None,radius=50.0,length=10.0):
+    def __init__(self,vertex,node_type=None):
 
-        self._index=0
-
-        if vertex==None:
-            self._radius=radius
-            self._length=length
-            self.vertex=[[self._length,0.0,0.0,self._radius]]
-        else:
-            self.vertex=vertex
+        self.index=0
+        self.vertex=vertex
+        self.node_type=node_type
 
         #make the morphology and register this section to it
         connectivity=np.array([-1],dtype='int32')
-        self._morphology=MorphologyArray(vertices=self.vertex,
-                                        connectivity=connectivity)
-        self._morphology.register_section(self)
+        self.morphology=MorphologyArray(vertices=[self.vertex],
+                                        connectivity=connectivity,
+                                        node_types=node_type)
+
+        self.morphology.register_node(self)
 
     @property
-    def length(self):
-        return self._length
+    def x(self):
+        return self.vertex[0]
+
+    @property
+    def y(self):
+        return self.vertex[1]
+
+    @property
+    def z(self):
+        return self.vertex[2]
 
     @property
     def radius(self):
-        return self._radius
-
-    @property
-    def index(self):
-        return self._index
+        return self.vertex[4]
 
     @property
     def vertex(self):
@@ -256,10 +255,6 @@ class Section():
     @property
     def parent_id(self):
         return self.morphology.parent_id(self.index)
-
-    @property
-    def morphology(self):
-        return self._morphology
 
     @property
     def is_root(self):
@@ -302,7 +297,85 @@ class Section():
                                  parent_index=parent_index)
 
         #delete the old morpholoy:
-        self._morphology.delete()
+        self.morphology.delete()
 
-        #the parent morphology is now the child morphology:
-        self._morphology=parent.morphology
+        #the parent morphology is now the child morpholoy
+        self.morphology=parent.morphology
+
+class Section(object):
+
+    """
+    In the process of implementing NEURON-like sections.
+
+    These will also have their own connect() etc methods
+    but will be more complicated than nodes as they
+    have distal and proximal components.
+    """
+
+    def __init__(self,length=100,r1=10,r2=None,
+                 section_type=None,name=None):
+
+        if r2==None:r2=r1
+        
+        self.section_type=section_type
+        self.name=name
+
+        #create the vertices
+
+        vertex1=np.array([0.0,0.0,0.0,r1])
+        vertex2=np.array([0.0,0.0,length,r2])
+
+        #create the morphology by connecting two nodes #
+        #together
+
+        self.node1=Node(vertex1,node_type=section_type)
+        self.node2=Node(vertex2,node_type=section_type)
+        self.node2.connect(self.node1)
+    
+    @property
+    def r1(self):
+        return self.node1.radius
+
+    @property
+    def r2(self):
+        return self.node1.radius
+
+    @property
+    def length(self):
+        displacement=self.node1.vertex-self.node2.vertex        
+        return math.sqrt(sum(displacement**2))
+    
+    @length.setter
+    def length(self,value):
+        raise NotImplementedError
+
+    @property
+    def morphology(self):
+        #need to stop user from being able to set length etc
+        return self.node2.morphology
+
+    @property
+    def slant_height(self):
+        r=self.r1
+        R=self.r2
+        
+        s=math.sqrt((r-R)**2+self.length**2)
+        return s
+
+    @property
+    def lateral_area(self):
+        lsa=math.pi*(self.r1+self.r2)*self.slant_height
+        return lsa
+
+    @property
+    def total_area(self):
+        lsa=self.lateral_area
+        end_areas=math.pi*(self.r1**2+self.r2**2)
+        return lsa+end_areas
+
+    @property
+    def volume(self):
+        r=self.r1
+        R=self.r2
+        V=(math.pi*self.length/3.0)*(R**2+r**2+R*r)
+        return V

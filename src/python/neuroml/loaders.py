@@ -47,10 +47,10 @@ class SWCLoader(object):
             s += " [ID:%d, Index:%d]"%( len(index_to_id), len(id_to_index_dict) )
             raise MorphologyImportError(s)
         
-        # Vertices and section types are easy:
+        # Vertices and node types are easy:
         vertices =  d[ ['x','y','z','r'] ]
         vertices =  np.vstack( [d['x'], d['y'],d['z'],d['r'] ]).T
-        section_types = [ swctype for ID,swctype in d[['id','type']]]
+        node_types = [ swctype for ID,swctype in d[['id','type']]]
 
         #for connection indices we want the root to have index -1:
         connection_indices=np.zeros(num_nodes,dtype='int32')
@@ -64,5 +64,5 @@ class SWCLoader(object):
 
         return MorphologyArray(vertices=vertices, 
                               connectivity=connection_indices, 
-                              section_types=section_types, 
+                              node_types=node_types, 
                               name=name )
