@@ -115,8 +115,6 @@ class MorphologyArray(object):
 
     def pop(self,index):
 
-        print index
-        print self[index].is_root
         self.vertices=np.delete(self.vertices,index)
         self.node_types=np.delete(self.node_types,index)
         self.connectivity=np.delete(self.connectivity,index)
@@ -437,5 +435,4 @@ class Section(object):
         
         self.node1.connect(section.node2)
         i=self.node1.index
-        print self.morphology.connectivity
         self.morphology.pop(i)
