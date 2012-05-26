@@ -95,7 +95,7 @@ class MorphologyArray(object):
         #then if something like connecting to another morphology
         #happens, the indices etc get updated, there may be a better
         #way of doing this
-        self._registered_nodes=[]
+        self.__registered_nodes=[]
 
     @property
     def root_index(self):
@@ -110,11 +110,25 @@ class MorphologyArray(object):
         #keep a register of section objects which are in memory and which
         #morphology they relate to
         #this could be improved, perhaps by using an index:section dict?
-        self._registered_nodes=np.append(self._registered_nodes,node)
+        self.__registered_nodes=np.append(self.__registered_nodes,node)
         node.morphology=self
 
-    def pop_section(self,sid):
-        raise NotImplementedError
+    def pop(self,index):
+
+        print index
+        print self[index].is_root
+        self.vertices=np.delete(self.vertices,index)
+        self.node_types=np.delete(self.node_types,index)
+        self.connectivity=np.delete(self.connectivity,index)
+        #fix the connectivity array
+        #need to think about this some more
+        #but pretty sure it works
+        k=0
+        for i in self.connectivity:
+            if i>=index:
+                self.connectivity[k]=i-1
+            k+=1
+        pass
 
     def parent_id(self,index):
         """
@@ -139,6 +153,9 @@ class MorphologyArray(object):
 
         A lot of this can essentially be done via simple matrix 
         algebra.       
+
+        TO DO::
+        need to change this to use the connect method 'in reverse'
         """
 
         #root of one (index=0) needs to connect to
@@ -162,7 +179,7 @@ class MorphologyArray(object):
 
         #register the sections to the new morphology
         #this is being done ina clumsy way..
-        for section in child_morphology._registered_nodes:
+        for section in child_morphology.__registered_nodes:
             section.index+=num_parent_sections
             self.register_node(section)
 
@@ -177,6 +194,12 @@ class MorphologyArray(object):
         self.register_node(node)
         return node
 
+    def is_member(self,node):
+        """
+        Checks to see if the node is a member of
+        the morphology
+        """
+        return node in self.__registered_nodes
 
 class Node():
     """
@@ -218,7 +241,7 @@ class Node():
     implemented.
     """
 
-    def __init__(self,vertex,node_type=None):
+    def __init__(self,vertex=[0.0,0.0,0.0,0.0],node_type=None):
 
         self.index=0
         self.vertex=vertex
@@ -286,11 +309,13 @@ class Node():
         This is done by connecting the child morphology 
         to the parent morphology and delting the child morphology
         """
-        
+
+        #do some checks:        
+        #make sure this node isn't already in the parent morphology, would form rings
+        assert parent.morphology.is_member(self)==False, 'Parent node already in morphology!'        
+        assert self.is_root, 'Section must be root to connect'
+
         parent_morphology=parent.morphology
-
-        assert self.is_root, 'section must be root to connect'
-
         parent_index=parent.index
         #connect the morphologies to each other:
         parent_morphology.adopt(child_morphology=self.morphology,
@@ -302,7 +327,13 @@ class Node():
         #the parent morphology is now the child morpholoy
         self.morphology=parent.morphology
 
+        
 class Section(object):
+
+    """
+    Note - section type should be the type
+    of the distal node    
+    """
 
     """
     In the process of implementing NEURON-like sections.
@@ -379,3 +410,32 @@ class Section(object):
         R=self.r2
         V=(math.pi*self.length/3.0)*(R**2+r**2+R*r)
         return V
+
+    def connect(self,section,position=None):
+        """        
+        Position is not implemented until we
+        decide exactly what it means, right now
+        1 means distal and anything else means
+        proximal.
+
+        Currently a lot of this simply won't work
+        because a node needs to be a root for the
+        connect() method to work. We need a method
+        in the MorphologyArray class to make
+        transform the array and make any node into
+        the root of that array.
+
+        Things actually get tricky with sections
+        because the proximal node(of the child needs
+        to become the distal node of the parent)
+        """
+
+        #for now lets not implement the position
+        #thing, that will require breaking the
+        #section up, which is quite nontrivial I think if 
+        #it's already part of a morphology
+        
+        self.node1.connect(section.node2)
+        i=self.node1.index
+        print self.morphology.connectivity
+        self.morphology.pop(i)
