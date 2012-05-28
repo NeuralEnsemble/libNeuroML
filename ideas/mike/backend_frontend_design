@@ -31,6 +31,10 @@ Node
 NodeCollection
     
     Will appear to user as an iterable container of connected nodes.
+
+    It is both an iterator and a visitor, using lazy initialization
+    for node objects.
+
     The morphologyarray, start index and end index should be enough
     information to provide this behaviour. The user can then do operations 
     such as:
@@ -45,6 +49,7 @@ NodeCollection
         -pointer to its MorphologyArray
         -Start index
         -End index
+        -MetaData (this could include channel data?)        
 
     Methods:
         -connect -  can provide a default connection node, mainly
