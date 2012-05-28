@@ -2,10 +2,11 @@
 HDF Examples already in use
 ===========================
 
-Collecting all the HDF format already in use out there to have a better 
-understanding how to uniform all of this in one true format. If you've got one, 
-just add it to the list. Please keep the file small (<1 Mb) if possible, it 
-should be just an example.
+We would like to collect all the HDF formats already in use out there to have a 
+better understanding how to uniform all of this in one shared format. If you have 
+one of this example, please add it to the list. If it is possible, please keep 
+the file small (<1 Mb). Remember, we are looking only for an example here.
+
 
 - neuroConstruct_NetworkMLv1.8.1.h5  Padraig Gleeson
   
@@ -27,6 +28,3 @@ should be just an example.
     - geometry branch --> NeuroML 1.8.1 (here only a cell, but 
       theoretically can hold anything NeuroML can keep)
     - results branch --> Numpy array arranged according section_name/var_name
-  
-
- 
