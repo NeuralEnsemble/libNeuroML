@@ -12,12 +12,6 @@
 #-------------------------------------------------------------------------------
 
 """
-WARNING: As of 24/5/12 and the move to Nodes and Sections
-this is somewhat depracated. A new example will be built
-once the section class is complete
-"""
-
-"""
 An example of how synthetic morphologies can be generated
 using the predefined module. In a 
 """

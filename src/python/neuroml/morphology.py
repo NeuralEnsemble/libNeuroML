@@ -32,9 +32,10 @@ AUTHORS:
 
 import math
 import numpy as np
+import weakref
 
 class MorphologyArray(object):
-    """Provides the array-based object model backend.
+    """Provides the core of the array-based object model backend.
 
     Provides the core arrays -
     vertices,connectivity and node_types. Unlike in
@@ -45,8 +46,7 @@ class MorphologyArray(object):
     vertices[3] and connectivity[3] refer to the vertex and
     connectivity of the same section.
 
-    The root section must be at index 0 and by convention
-    has connectivity==0.
+    The root section by convention has connectivity==-1.
 
     -connectivity array::
     The connectivity array is a list of indices pointing to which
@@ -91,10 +91,7 @@ class MorphologyArray(object):
         P=self.node_types.shape[0]
         assert N==M==P,'Invalid morphology'
 
-        #morphology needs to know which sections are exist in memory
-        #then if something like connecting to another morphology
-        #happens, the indices etc get updated, there may be a better
-        #way of doing this
+        #No node objects exist in memory:
         self.__registered_nodes=[]
 
     @property
@@ -107,53 +104,81 @@ class MorphologyArray(object):
         return self[index]
 
     def register_node(self,node):
-        #keep a register of section objects which are in memory and which
-        #morphology they relate to
-        #this could be improved, perhaps by using an index:section dict?
+        """Array of references to instatiated node objects of this morphology
+        
+        This attribute exists so that if something like connecting to 
+        another morphology happens the node object can be updated.
+        """        
+
         self.__registered_nodes=np.append(self.__registered_nodes,node)
-        node.morphology=self
+        node._morphology=self
+
+    def insert(self,index,x):
+        """
+        Inserts a node between a node and its parent at
+        x between them. Where x ranges from 0 to 1, 0 being
+        the location of the child and 1 the location of the
+        parent.
+
+        ..TO-DO: vertex of new node needs to be calculated through
+        linear interpolation.
+        """
+
+        assert index !=0, 'Cannot insert on root node - It has no parent'
+
+        parent_id=self.parent_id(index)
+        parent_node=self[parent_id]        
+        #TO DO - calculate the vertex from the parent and child and x, 
+        new_node=Node()
+        old_node=self[index]
+        new_node.connect(parent_node)
+        old_node.parent_id=new_node.index
+
+    def children(self,index):
+        """Returns an array with indexes of children"""
+        return np.where(self.connectivity==index)
 
     def pop(self,index):
+        """
+        Deletes a node from the MorphologyArray, its children become
+        children of the deleted node's parent.
+        """    
 
         self.vertices=np.delete(self.vertices,index)
         self.node_types=np.delete(self.node_types,index)
         self.connectivity=np.delete(self.connectivity,index)
-        #fix the connectivity array
-        #need to think about this some more
-        #but pretty sure it works
+
+        #TO DO:
+        #there is a more efficient way to implement this using np.where(self.connectivity>=index)
         k=0
         for i in self.connectivity:
+            print k
             if i>=index:
                 self.connectivity[k]=i-1
             k+=1
         pass
 
-    def parent_id(self,index):
+    def to_root(self,index):
         """
-        Return the parent index for the given index
+        Changes the connectivity matrix
+        so that the node at index becomes the root
         """
-        return self.connectivity[index]
 
-    def vertex(self,index):
-        """
-        Return vertex corresponding to index in morphology
-        """
-        return self.vertices[index]
+        old_root_index=self.root_index
+        new_root_index=index        
+        #do a tree traversal:
+        parent_index=self.connectivity[index]
+        grandparent_index=self.connectivity[parent_index]
+        while index!=old_root_index:
+            self.connectivity[parent_index]=index
+            index=parent_index
+            parent_index=grandparent_index
+            grandparent_index=self.connectivity[parent_index]
+        self.connectivity[new_root_index]=-1
 
-    def delete(self):
-        #haven't figured out the best way to do this yet
-        #this doesn't work:
-        del(self)
-    
     def adopt(self,child_morphology,parent_index):
         """
         Connect another morphology to this one.
-
-        A lot of this can essentially be done via simple matrix 
-        algebra.       
-
-        TO DO::
-        need to change this to use the connect method 'in reverse'
         """
 
         #root of one (index=0) needs to connect to
@@ -162,6 +187,7 @@ class MorphologyArray(object):
         new_connectivity=child_morphology.connectivity
         new_connectivity+=num_parent_sections
         new_connectivity[0]=parent_index#point root to its new parent
+        
         self.connectivity=np.append(self.connectivity,
                                     new_connectivity,axis=0)
         self.node_types=np.append(self.node_types,
@@ -175,31 +201,33 @@ class MorphologyArray(object):
         new_vertices=child_morphology.vertices+xyz0
         self.vertices=np.append(self.vertices,new_vertices,axis=0)
 
-        #register the sections to the new morphology
+        #register the nodes to the new morphology
         #this is being done ina clumsy way..
         for section in child_morphology.__registered_nodes:
             section.index+=num_parent_sections
             self.register_node(section)
 
-        #delete the old morphology, still not implemented properly
-        child_morphology.delete()
+    def parent_id(self,index):
+        """Return the parent index for the given index"""
+        return self.connectivity[index]
+
+    def vertex(self,index):
+        """Return vertex corresponding to index in morphology"""
+        return self.vertices[index]
 
     def __getitem__(self,i):
-        #create a node object:
-        node=Node(vertex=[self.vertices[i]])
-        #register the node:
+        node=Node(vertex=[self.vertices[i]],node_types=self.node_types[i])
+        #prepare and register the node:
         node.index=i
         self.register_node(node)
         return node
 
     def is_member(self,node):
-        """
-        Checks to see if the node is a member of
-        the morphology
-        """
+        """True if the node is a member of the morphology"""
         return node in self.__registered_nodes
 
-class Node():
+
+class Node(object):
     """
     The idea of the Node class is to provide a user with a natural
     way of manipulating compartments while still utilising an array-
@@ -242,16 +270,26 @@ class Node():
     def __init__(self,vertex=[0.0,0.0,0.0,0.0],node_type=None):
 
         self.index=0
-        self.vertex=vertex
         self.node_type=node_type
 
         #make the morphology and register this section to it
         connectivity=np.array([-1],dtype='int32')
-        self.morphology=MorphologyArray(vertices=[self.vertex],
+
+        morph=MorphologyArray(vertices=[vertex],
                                         connectivity=connectivity,
                                         node_types=node_type)
 
-        self.morphology.register_node(self)
+        self._morphology=morph
+        self._weakmorph=weakref.proxy(morph)
+        self._morphology.register_node(self)
+
+    @property
+    def morphology(self):
+        return self._weakmorph
+
+    @morphology.setter
+    def morphology(self,morphology):
+        self._morphology=morphology
 
     @property
     def x(self):
@@ -271,11 +309,15 @@ class Node():
 
     @property
     def vertex(self):
-        return self.morphology.vertex(self.index)
+        return self._morphology.vertex(self.index)
 
     @property
     def parent_id(self):
-        return self.morphology.parent_id(self.index)
+        return self._morphology.parent_id(self.index)
+
+    @parent_id.setter
+    def parent_id(self,index):
+        self._morphology.connectivity[self.index]=index
 
     @property
     def is_root(self):
@@ -294,38 +336,38 @@ class Node():
         assert child.is_root, 'child must be root of its morphology'
 
         child_index=child.index
-        self.morphology.adopt(child_morphology=child.morphology,
+        self._morphology.adopt(child_morphology=child.morphology,
                             parent_index=self.index)
                                 
-        #delete the old morpholoy:
-        child.morphology.delete()
-
     def connect(self,parent):
         """
-        connect this section to a new parent
+        connect this node to a new parent
 
         This is done by connecting the child morphology 
         to the parent morphology and delting the child morphology
         """
 
         #do some checks:        
-        #make sure this node isn't already in the parent morphology, would form rings
+        #make sure this node isn't already in the 
+        #parent morphology, would form rings
+
+        #disabling this temporarily(!)
         assert parent.morphology.is_member(self)==False, 'Parent node already in morphology!'        
-        assert self.is_root, 'Section must be root to connect'
+
+        if not self.is_root:
+            self._morphology.to_root(self.index)
 
         parent_morphology=parent.morphology
         parent_index=parent.index
         #connect the morphologies to each other:
-        parent_morphology.adopt(child_morphology=self.morphology,
+        parent_morphology.adopt(child_morphology=self._morphology,
                                  parent_index=parent_index)
 
-        #delete the old morpholoy:
-        self.morphology.delete()
+       #the parent morphology is now the child morpholoy
+        self._morphology=parent.morphology
+        self._weakmorph=weakref.proxy(parent._morphology)
 
-        #the parent morphology is now the child morpholoy
-        self.morphology=parent.morphology
 
-        
 class Section(object):
 
     """
@@ -339,6 +381,9 @@ class Section(object):
     These will also have their own connect() etc methods
     but will be more complicated than nodes as they
     have distal and proximal components.
+
+    NEURON-type implies the possibility of a discontinuity
+    as far as I can infer.
     """
 
     def __init__(self,length=100,r1=10,r2=None,
@@ -376,7 +421,7 @@ class Section(object):
     
     @length.setter
     def length(self,value):
-        raise NotImplementedError
+        raise NotImplementedError, 'Cannot reset section length'
 
     @property
     def morphology(self):
@@ -387,7 +432,6 @@ class Section(object):
     def slant_height(self):
         r=self.r1
         R=self.r2
-        
         s=math.sqrt((r-R)**2+self.length**2)
         return s
 
@@ -426,13 +470,11 @@ class Section(object):
         Things actually get tricky with sections
         because the proximal node(of the child needs
         to become the distal node of the parent)
-        """
 
-        #for now lets not implement the position
-        #thing, that will require breaking the
-        #section up, which is quite nontrivial I think if 
-        #it's already part of a morphology
-        
-        self.node1.connect(section.node2)
-        i=self.node1.index
-        self.morphology.pop(i)
+        I think we need to have the possibility to insert
+        a node between two nodes. this will allow the
+        cool possibility of making a connection anywhere
+        along another section. However it will involve
+        some thinking to decide exactly how to implement
+        this
+        """

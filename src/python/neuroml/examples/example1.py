@@ -11,12 +11,6 @@
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #-------------------------------------------------------------------------------
 
-"""
-WARNING: As of 24/5/12 and the move to Nodes and Sections
-this is somewhat depracated. A new example will be built
-once the section class is complete
-"""
-
 #in the following example we create an axon object, load a
 #reconstructed morphology from an SWC file and connect the
 #axon to the morphology
@@ -25,11 +19,11 @@ import neuroml.morphology as morphology
 import neuroml.loaders as loaders
 
 #example of creating a section:
-iseg=morphology.Node(length=20.0)
-axonsec1=morphology.Node(length=1000)
-node1=morphology.Node(length=20)
-axonsec2=morphology.Node(length=500)
-axonsec3=morphology.Node()
+iseg=morphology.Section(length=20.0)
+axonsec1=morphology.Section(length=1000)
+node1=morphology.Section(length=20)
+axonsec2=morphology.Section(length=500)
+axonsec3=morphology.Section()
 
 #connect them all together:
 #standard is child.connect(parent)
@@ -45,7 +39,7 @@ print artificial_morphology.vertices
 print 'Artificial morphology connectivity:'
 print artificial_morphology.connectivity
 print 'Artificial morphology section types:'
-print artificial_morphology.node_types
+print artificial_morphology.section_types
 
 #Load a morphology from an SWC file and print some info about it
 morph1=loaders.SWCLoader.load_swc_single('/home/mike/tmp2mod.swc')
