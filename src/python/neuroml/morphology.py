@@ -92,7 +92,7 @@ class MorphologyArray(object):
         assert N==M==P,'Invalid morphology'
 
         #No node objects exist in memory:
-        self.__registered_nodes=[]
+        self.__registered_components=[]
 
     @property
     def root_index(self):
@@ -103,14 +103,14 @@ class MorphologyArray(object):
         index=self.root_index
         return self[index]
 
-    def register_node(self,node):
+    def register_component(self,node):
         """Array of references to instatiated node objects of this morphology
         
         This attribute exists so that if something like connecting to 
         another morphology happens the node object can be updated.
         """        
 
-        self.__registered_nodes=np.append(self.__registered_nodes,node)
+        self.__registered_components=np.append(self.__registered_components,node)
         node._morphology=self
 
     def insert(self,index,x):
@@ -203,9 +203,9 @@ class MorphologyArray(object):
 
         #register the nodes to the new morphology
         #this is being done ina clumsy way..
-        for section in child_morphology.__registered_nodes:
+        for section in child_morphology.__registered_components:
             section.index+=num_parent_sections
-            self.register_node(section)
+            self.register_component(section)
 
     def parent_id(self,index):
         """Return the parent index for the given index"""
@@ -216,18 +216,51 @@ class MorphologyArray(object):
         return self.vertices[index]
 
     def __getitem__(self,i):
-        node=Node(vertex=[self.vertices[i]],node_types=self.node_types[i])
+        node=Node(vertex=[self.vertices[i]],node_type=self.node_types [i])
         #prepare and register the node:
         node.index=i
         self.register_node(node)
         return node
 
-    def is_member(self,node):
+    def __len__(self):
+        return len(self.connectivity)
+        
+    def in_morphology(self,component):
         """True if the node is a member of the morphology"""
-        return node in self.__registered_nodes
+        return component in self.__registered_components
 
+class MorphologyArrayObserver(object):
+    """
+    
+    """
 
-class Node(object):
+    def __init__(self):
+        self.component=[]
+        self.index_change=None
+        self.new_morphology
+        
+    def observe(self):
+    
+    def stop_observing(self):
+    
+    def index_change(self,position,increment):
+        for component in self.components:
+            component.index_change(position,increment)
+
+    def parent_change(self,morphology_array)
+        for component in self.components:
+            component.morphology_array=morphology_array
+
+     
+class __MorphologyComponent(object):
+
+    def __init__(self):
+        raise NotImplementedError
+        
+    def __connect__(self):
+        raise NotImplementedError
+        
+class Node(__MorphologyComponent):
     """
     The idea of the Node class is to provide a user with a natural
     way of manipulating compartments while still utilising an array-
@@ -275,22 +308,32 @@ class Node(object):
         #make the morphology and register this section to it
         connectivity=np.array([-1],dtype='int32')
 
-        morph=MorphologyArray(vertices=[vertex],
+        morphology_array=MorphologyArray(vertices=[vertex],
                                         connectivity=connectivity,
                                         node_types=node_type)
 
-        self._morphology=morph
-        self._weakmorph=weakref.proxy(morph)
-        self._morphology.register_node(self)
+        self.__morphology_array=morphology_array
+        self.__weak_morphology_array=weakref.proxy(morphology_array)
+        self.__morphology_array.register_component(self)
+
+    @property
+    def morphology_array(self):
+        """
+        Return a weakly-referenced proxy to the MorphologyArray object
+        which this node belongs to.
+        """
+        return self.__weak_morphology_array
 
     @property
     def morphology(self):
-        return self._weakmorph
+        """
+        Return a node collection
+        """
+        return NodeCollection(self._morphology)
 
     @morphology.setter
     def morphology(self,morphology):
-        self._morphology=morphology
-
+        raise NotImplementedError,"this probably isn't allowed..."
     @property
     def x(self):
         return self.vertex[0]
@@ -320,25 +363,12 @@ class Node(object):
         self._morphology.connectivity[self.index]=index
 
     @property
-    def is_root(self):
+    def __is_root(self):
         """
         Returns True if section is root
         """
         return self.parent_id==-1
 
-    def adopt(self,child):
-        """
-        Connect a child to this section
-        """
-
-        child_morphology=child.morphology
-    
-        assert child.is_root, 'child must be root of its morphology'
-
-        child_index=child.index
-        self._morphology.adopt(child_morphology=child.morphology,
-                            parent_index=self.index)
-                                
     def connect(self,parent):
         """
         connect this node to a new parent
@@ -347,25 +377,73 @@ class Node(object):
         to the parent morphology and delting the child morphology
         """
 
-        #do some checks:        
-        #make sure this node isn't already in the 
-        #parent morphology, would form rings
+        #ensure this node isn't already in the same morphology as parent:
+        assert parent.morphology_array.in_morphology(self)==False, 'Parent node already in morphology!'        
 
-        #disabling this temporarily(!)
-        assert parent.morphology.is_member(self)==False, 'Parent node already in morphology!'        
+        #node needs to be root of its morphology_array to connect
+        if not self.__is_root:self.__morphology_array.to_root(self.index)
 
-        if not self.is_root:
-            self._morphology.to_root(self.index)
-
-        parent_morphology=parent.morphology
+        parent_morphology_array=parent.morphology_array
         parent_index=parent.index
+
         #connect the morphologies to each other:
-        parent_morphology.adopt(child_morphology=self._morphology,
+        parent_morphology_array.adopt(child_morphology=self._morphology,
                                  parent_index=parent_index)
 
        #the parent morphology is now the child morpholoy
-        self._morphology=parent.morphology
-        self._weakmorph=weakref.proxy(parent._morphology)
+        self.__morphology_array=parent.morphology_array
+        self.__weak_morphology_array=parent.morphology_array
+        
+class MorphologyCollection(__MorphologyComponent):
+    def __init__(self):
+        pass
+
+class NodeCollection(MorphologyCollection):
+
+    """
+    Works as an iterable visitor, part of or all of a morphology
+    all the nodes are connected.
+    
+    Morphology should not be iterable.
+    
+    using nodecollection is important in order to guarantee that
+    there is only one copy of all the vertex and connectivity
+    information at a given time, hence the 'back end'.
+    
+    lazy-evaluation of the getter ensures that a minimum number
+    of objects are instantiated.
+    """
+
+    def __init__(self,morphology):
+        #these will all have to be updated if a connection is made
+        #to another morphology
+        self.__morphology=morphology
+        self.__morphology_start_index=0
+        self.__morphology_end_index=len(self.__morphology.connectivity)-1
+        #register the nodecollection
+        #disabled for now
+#        self.__morphology.register(self)
+                
+    def __getitem__(self,i):
+        index=i+self.__morphology_start_index
+        return self.__morphology[index]
+        
+    def __len__(self):
+        return self.end_index-self.start_index
+        
+    def in_morphology(self,component):
+        """True if the node is a member of the morphology"""
+        return self.__morphology.in_morphology(component)
+        
+        
+class Segment(NodeCollection):
+    def __init__(self):
+        pass
+
+
+class Cylinder(Segment):
+    def __init__(self):
+        pass
 
 
 class Section(object):
