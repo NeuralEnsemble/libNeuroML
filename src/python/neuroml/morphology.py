@@ -32,7 +32,6 @@ AUTHORS:
 
 import math
 import numpy as np
-import weakref
 
 class MorphologyArray(object):
     """Provides the core of the array-based object model backend.
@@ -91,53 +90,65 @@ class MorphologyArray(object):
         P=self.node_types.shape[0]
         assert N==M==P,'Invalid morphology'
 
-        #No node objects exist in memory:
-        self.__registered_components=[]
+        self.observer=ComponentObserver()
 
     @property
     def root_index(self):
         return np.where(self.connectivity==-1)[0][0]    
     
     @property
+    def root_vertex(self):
+        return self.vertices[self.root_index]    
+
+    @property
     def root_node(self):
         index=self.root_index
         return self[index]
-
-    def register_component(self,node):
-        """Array of references to instatiated node objects of this morphology
-        
-        This attribute exists so that if something like connecting to 
-        another morphology happens the node object can be updated.
-        """        
-
-        self.__registered_components=np.append(self.__registered_components,node)
-        node._morphology=self
-
-    def insert(self,index,x):
-        """
-        Inserts a node between a node and its parent at
-        x between them. Where x ranges from 0 to 1, 0 being
-        the location of the child and 1 the location of the
-        parent.
-
-        ..TO-DO: vertex of new node needs to be calculated through
-        linear interpolation.
-        """
-
-        assert index !=0, 'Cannot insert on root node - It has no parent'
-
-        parent_id=self.parent_id(index)
-        parent_node=self[parent_id]        
-        #TO DO - calculate the vertex from the parent and child and x, 
-        new_node=Node()
-        old_node=self[index]
-        new_node.connect(parent_node)
-        old_node.parent_id=new_node.index
 
     def children(self,index):
         """Returns an array with indexes of children"""
         return np.where(self.connectivity==index)
 
+
+
+    def to_root(self,index):
+        """
+        Changes the connectivity matrix
+        so that the node at index becomes the root
+        """
+
+        old_root_index=self.root_index
+        new_root_index=index        
+        #do a tree traversal:
+        parent_index=self.connectivity[index]
+        grandparent_index=self.connectivity[parent_index]
+        while index!=old_root_index:
+            self.connectivity[parent_index]=index
+            index=parent_index
+            parent_index=grandparent_index
+            grandparent_index=self.connectivity[parent_index]
+        self.connectivity[new_root_index]=-1
+
+    def parent_id(self,index):
+        """Return the parent index for the given index"""
+        return self.connectivity[index]
+
+    def vertex(self,index):
+        """Return vertex corresponding to index in morphology"""
+        return self.vertices[index]
+
+    def __getitem__(self,i):
+        node=Node(vertex=[self.vertices[i]],node_type=self.node_types [i])
+        #prepare and register the node:
+        node.index=i
+        self.register_node(node)
+        return node
+
+    def __len__(self):
+        return len(self.connectivity)
+        
+    #I would like to move the following two methods out of here
+    #and into respective component classes
     def pop(self,index):
         """
         Deletes a node from the MorphologyArray, its children become
@@ -158,109 +169,77 @@ class MorphologyArray(object):
             k+=1
         pass
 
-    def to_root(self,index):
+    def insert(self,index,x):
         """
-        Changes the connectivity matrix
-        so that the node at index becomes the root
-        """
+        Inserts a node between a node and its parent at
+        x between them. Where x ranges from 0 to 1, 0 being
+        the location of the child and 1 the location of the
+        parent.
 
-        old_root_index=self.root_index
-        new_root_index=index        
-        #do a tree traversal:
-        parent_index=self.connectivity[index]
-        grandparent_index=self.connectivity[parent_index]
-        while index!=old_root_index:
-            self.connectivity[parent_index]=index
-            index=parent_index
-            parent_index=grandparent_index
-            grandparent_index=self.connectivity[parent_index]
-        self.connectivity[new_root_index]=-1
+        ..TO-DO: vertex of new node needs to be calculated through
+        linear interpolation.
 
-    def adopt(self,child_morphology,parent_index):
-        """
-        Connect another morphology to this one.
+        Also,perhaps this should rather be inserted at the root level.
+        methods which modify the arrays should do so from outside
+        this should behave like a container as much as is reasonable
         """
 
-        #root of one (index=0) needs to connect to
-        #section we are connecting to
-        num_parent_sections=len(self.connectivity)
-        new_connectivity=child_morphology.connectivity
-        new_connectivity+=num_parent_sections
-        new_connectivity[0]=parent_index#point root to its new parent
-        
-        self.connectivity=np.append(self.connectivity,
-                                    new_connectivity,axis=0)
-        self.node_types=np.append(self.node_types,
-                                    child_morphology.node_types,axis=0)
-        #treat the parent section as the origin of 
-        #the new root and translate the array, 
-        #there is probably a cleaner way to do this using numpy
+        assert index !=0, 'Cannot insert on root node - It has no parent'
 
-        xyz0=np.array(self.vertices[parent_index])
-        xyz0[3]=0
-        new_vertices=child_morphology.vertices+xyz0
-        self.vertices=np.append(self.vertices,new_vertices,axis=0)
+        parent_id=self.parent_id(index)
+        parent_node=self[parent_id]        
+        #TO DO - calculate the vertex from the parent and child and x, 
+        new_node=Node()
+        old_node=self[index]
+        new_node.connect(parent_node)
+        old_node.parent_id=new_node.index
 
-        #register the nodes to the new morphology
-        #this is being done ina clumsy way..
-        for section in child_morphology.__registered_components:
-            section.index+=num_parent_sections
-            self.register_component(section)
-
-    def parent_id(self,index):
-        """Return the parent index for the given index"""
-        return self.connectivity[index]
-
-    def vertex(self,index):
-        """Return vertex corresponding to index in morphology"""
-        return self.vertices[index]
-
-    def __getitem__(self,i):
-        node=Node(vertex=[self.vertices[i]],node_type=self.node_types [i])
-        #prepare and register the node:
-        node.index=i
-        self.register_node(node)
-        return node
-
-    def __len__(self):
-        return len(self.connectivity)
-        
-    def in_morphology(self,component):
-        """True if the node is a member of the morphology"""
-        return component in self.__registered_components
-
-class MorphologyArrayObserver(object):
+class ComponentObserver(object):
     """
-    
+    Keeps a record of which components reference a morphology
+    and updates them with new information when needed.
+    #make it such that if the arg is = none they all get updated
     """
 
     def __init__(self):
-        self.component=[]
-        self.index_change=None
-        self.new_morphology
+        self.components=np.array([])
+       
+    def observe(self,component):
+        self.components=np.append(self.components,component)
+    
+    def deobserve(self):
+        i=np.where(self.components==component)[0][0]
+        np.delete(self.components,i)
         
-    def observe(self):
-    
-    def stop_observing(self):
-    
-    def index_change(self,position,increment):
+    def index_update(self,position,increment):
         for component in self.components:
-            component.index_change(position,increment)
+            component._index_update(position,increment)
 
-    def parent_change(self,morphology_array)
+    def morphology_array_update(self,morphology_array):
         for component in self.components:
-            component.morphology_array=morphology_array
+            component._morphology_array=morphology_array
 
      
-class __MorphologyComponent(object):
+class MorphologyComponent(object):
 
     def __init__(self):
-        raise NotImplementedError
+        self._morphology_array=None
         
-    def __connect__(self):
+    def connect(self):
         raise NotImplementedError
+
+    def _index_update(self,position,increment):
+        raise NotImplementedError,'This component requires an index updater'
+
+    def morphology_array_update(self):
+        raise NotImplementedError
+
+    def in_morphology(self,component):
+        """True if the node is a member of the morphology"""
+        return component in self._morphology_array.observer.components
+
         
-class Node(__MorphologyComponent):
+class Node(MorphologyComponent):
     """
     The idea of the Node class is to provide a user with a natural
     way of manipulating compartments while still utilising an array-
@@ -302,7 +281,7 @@ class Node(__MorphologyComponent):
 
     def __init__(self,vertex=[0.0,0.0,0.0,0.0],node_type=None):
 
-        self.index=0
+        self._index=0
         self.node_type=node_type
 
         #make the morphology and register this section to it
@@ -312,24 +291,19 @@ class Node(__MorphologyComponent):
                                         connectivity=connectivity,
                                         node_types=node_type)
 
-        self.__morphology_array=morphology_array
-        self.__weak_morphology_array=weakref.proxy(morphology_array)
-        self.__morphology_array.register_component(self)
+        self._morphology_array=morphology_array
+        self._morphology_array.observer.observe(self)
 
-    @property
-    def morphology_array(self):
-        """
-        Return a weakly-referenced proxy to the MorphologyArray object
-        which this node belongs to.
-        """
-        return self.__weak_morphology_array
+    def _index_update(self,position,increment):
+        if self._index>=position:
+            self._index+=increment
 
     @property
     def morphology(self):
         """
         Return a node collection
         """
-        return NodeCollection(self._morphology)
+        return NodeCollection(self._morphology_array)
 
     @morphology.setter
     def morphology(self,morphology):
@@ -352,22 +326,22 @@ class Node(__MorphologyComponent):
 
     @property
     def vertex(self):
-        return self._morphology.vertex(self.index)
+        return self._morphology_array.vertex(self._index)
 
     @property
-    def parent_id(self):
-        return self._morphology.parent_id(self.index)
+    def __parent_id(self):
+        return self._morphology_array.parent_id(self._index)
 
-    @parent_id.setter
-    def parent_id(self,index):
-        self._morphology.connectivity[self.index]=index
+    @__parent_id.setter
+    def __parent_id(self,index):
+        self.__morphology.connectivity[self._index]=index
 
     @property
     def __is_root(self):
         """
         Returns True if section is root
         """
-        return self.parent_id==-1
+        return self.__parent_id==-1
 
     def connect(self,parent):
         """
@@ -378,27 +352,48 @@ class Node(__MorphologyComponent):
         """
 
         #ensure this node isn't already in the same morphology as parent:
-        assert parent.morphology_array.in_morphology(self)==False, 'Parent node already in morphology!'        
+        assert self.in_morphology(parent)==False, 'Parent node already in morphology!'        
 
         #node needs to be root of its morphology_array to connect
-        if not self.__is_root:self.__morphology_array.to_root(self.index)
+        if not self.__is_root:self._morphology_array.to_root(self._index)
 
-        parent_morphology_array=parent.morphology_array
-        parent_index=parent.index
+        #everything should now be handled including the observer's tasks
+        parent._morphadopt(child_morphology=self._morphology_array)
 
-        #connect the morphologies to each other:
-        parent_morphology_array.adopt(child_morphology=self._morphology,
-                                 parent_index=parent_index)
+    def _morphadopt(self,child_morphology):
+        """
+        Connect another morphology to this one.
+        """
 
-       #the parent morphology is now the child morpholoy
-        self.__morphology_array=parent.morphology_array
-        self.__weak_morphology_array=parent.morphology_array
-        
-class MorphologyCollection(__MorphologyComponent):
+        #move the vector in space
+        translation_vector=child_morphology.root_vertex-self.vertex
+        new_vertices=child_morphology.vertices+translation_vector
+        self._morphology_array.vertices=np.append(self._morphology_array.vertices,new_vertices,axis=0)
+
+        #increment and append connectivity
+        num_parent_nodes=len(self._morphology_array.connectivity)
+        new_connectivity=child_morphology.connectivity
+        new_connectivity+=num_parent_nodes
+        self._morphology_array.connectivity=np.append(self._morphology_array.connectivity,
+                                    new_connectivity,axis=0)
+
+        #add new node types to morphology
+        self.node_types=np.append(self._morphology_array.node_types,
+                                    child_morphology.node_types,axis=0)
+
+        #tell child observer what to update
+        child_morphology.observer.index_update(0,num_parent_nodes)
+        child_morphology.observer.morphology_array_update(self._morphology_array)
+
+        #tell parent observer to observe instantiated components of child:
+        for component in child_morphology.observer.components:
+            self._morphology_array.observer.observe(component)
+      
+class MorphologyCollection(MorphologyComponent):
     def __init__(self):
         pass
 
-class NodeCollection(MorphologyCollection):
+class _NodeCollection(MorphologyCollection):
 
     """
     Works as an iterable visitor, part of or all of a morphology
@@ -417,7 +412,7 @@ class NodeCollection(MorphologyCollection):
     def __init__(self,morphology):
         #these will all have to be updated if a connection is made
         #to another morphology
-        self.__morphology=morphology
+        self.__morphology_array=morphology
         self.__morphology_start_index=0
         self.__morphology_end_index=len(self.__morphology.connectivity)-1
         #register the nodecollection
@@ -426,14 +421,14 @@ class NodeCollection(MorphologyCollection):
                 
     def __getitem__(self,i):
         index=i+self.__morphology_start_index
-        return self.__morphology[index]
+        return self.__morphology_array[index]
         
     def __len__(self):
         return self.end_index-self.start_index
         
     def in_morphology(self,component):
         """True if the node is a member of the morphology"""
-        return self.__morphology.in_morphology(component)
+        return self.__morphology_array.in_morphology(component)
         
         
 class Segment(NodeCollection):
