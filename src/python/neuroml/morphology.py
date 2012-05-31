@@ -94,7 +94,7 @@ class MorphologyArray(object):
 
     @property
     def root_index(self):
-        return np.where(self.connectivity==-1)[0][0]    
+        return np.where(self.connectivity==-1)[0][0]
     
     @property
     def root_vertex(self):
@@ -108,8 +108,6 @@ class MorphologyArray(object):
     def children(self,index):
         """Returns an array with indexes of children"""
         return np.where(self.connectivity==index)
-
-
 
     def to_root(self,index):
         """
@@ -138,10 +136,11 @@ class MorphologyArray(object):
         return self.vertices[index]
 
     def __getitem__(self,i):
-        node=Node(vertex=[self.vertices[i]],node_type=self.node_types [i])
+        node=Node(vertex=[self.vertices[i]],node_type=self.node_types[i])
         #prepare and register the node:
-        node.index=i
-        self.register_node(node)
+        node._index=i
+        node._morphology_array=self
+        self.observer.observe(node)
         return node
 
     def __len__(self):
@@ -163,7 +162,6 @@ class MorphologyArray(object):
         #there is a more efficient way to implement this using np.where(self.connectivity>=index)
         k=0
         for i in self.connectivity:
-            print k
             if i>=index:
                 self.connectivity[k]=i-1
             k+=1
@@ -307,7 +305,7 @@ class Node(MorphologyComponent):
 
     @morphology.setter
     def morphology(self,morphology):
-        raise NotImplementedError,"this probably isn't allowed..."
+        raise NotImplementedError,"this probably won't be allowed..."
     @property
     def x(self):
         return self.vertex[0]
@@ -372,13 +370,14 @@ class Node(MorphologyComponent):
 
         #increment and append connectivity
         num_parent_nodes=len(self._morphology_array.connectivity)
-        new_connectivity=child_morphology.connectivity
+        new_connectivity=np.copy(child_morphology.connectivity)
         new_connectivity+=num_parent_nodes
+        new_connectivity[child_morphology.root_index]=self._index
         self._morphology_array.connectivity=np.append(self._morphology_array.connectivity,
                                     new_connectivity,axis=0)
 
         #add new node types to morphology
-        self.node_types=np.append(self._morphology_array.node_types,
+        self._morphology_array.node_types=np.append(self._morphology_array.node_types,
                                     child_morphology.node_types,axis=0)
 
         #tell child observer what to update
@@ -393,7 +392,8 @@ class MorphologyCollection(MorphologyComponent):
     def __init__(self):
         pass
 
-class _NodeCollection(MorphologyCollection):
+
+class NodeCollection(MorphologyCollection):
 
     """
     Works as an iterable visitor, part of or all of a morphology
@@ -410,38 +410,44 @@ class _NodeCollection(MorphologyCollection):
     """
 
     def __init__(self,morphology):
-        #these will all have to be updated if a connection is made
-        #to another morphology
-        self.__morphology_array=morphology
-        self.__morphology_start_index=0
-        self.__morphology_end_index=len(self.__morphology.connectivity)-1
-        #register the nodecollection
-        #disabled for now
-#        self.__morphology.register(self)
-                
+        self._morphology_array=morphology
+        self._morphology_start_index=0
+        self._morphology_end_index=len(self._morphology_array.connectivity)-1
+        self._morphology_array.observer.observe(self)
+
     def __getitem__(self,i):
-        index=i+self.__morphology_start_index
-        return self.__morphology_array[index]
+        index=i+self._morphology_start_index
+        return self._morphology_array[index]
         
     def __len__(self):
-        return self.end_index-self.start_index
+        return self._morphology_end_index-self._morphology_start_index
         
-    def in_morphology(self,component):
-        """True if the node is a member of the morphology"""
-        return self.__morphology_array.in_morphology(component)
-        
-        
-class Segment(NodeCollection):
-    def __init__(self):
-        pass
+    def _index_update(self,position,increment):
+        #WARNING:This module is still insufficiently tested
+        if position>self._morphology_start_index and position<morphology_end_index:
+            raise NotImplementedError,"insertions not allowed in NodeCollection domain!"
 
+        if position>self._morphology_end_index:
+            pass
+
+        else:
+            self._morphology_start_index+=increment
+            self._morphology_end_index+=increment
+        
+    def _morphology_array_update(self,morphology_array):
+        self._morphology_array=morphology_array
+  
+    @property
+    def connectivity(self):
+        return self._morphology_array.connectivity[self._morphology_start_index:self._morphology_end_index+1]
+    
 
 class Cylinder(Segment):
     def __init__(self):
         pass
 
 
-class Section(object):
+class Segment(MorphologyCollection):
 
     """
     Note - section type should be the type
