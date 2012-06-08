@@ -6,7 +6,7 @@ long_description = open("README").read()
 
 setup(
     name = "libNeuroML",
-    version = '0.1.0dev',
+    version = '0.1.1dev',
     packages = ['neuroml', 'neuroml.test'],
     author = "libNeuroML authors and contributors",
     author_email = "<...>",
