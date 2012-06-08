@@ -63,9 +63,9 @@ class MorphologyArray(object):
     MorphologyArray[i] returns the Node object relating to
     element i
 
-    Because sections exist in memory independently of the,
+    Because segments exist in memory independently of the,
     MorphologyArray, a MorphologyArray must keep a register
-    of all the sections which handle its elements. These
+    of all the segments which handle its elements. These
     are updated when their information changes via a MorphologyArray
     operation such as the indices changing when a connection
     to a new MorphologyArray is made and indices all change.
@@ -245,36 +245,28 @@ class Node(MorphologyComponent):
     it is provided in particular for users who create models 
     with a small number of compartments.
 
-    A section can be instantiated independently of a morphology, however
-    such a section genernates its own morphology when it is instantiated.
+    A node can be instantiated independently of a morphology, however
+    such a node genernates its own morphology when it is instantiated.
 
         A=Node()
         B=Node()
 
-    Will create two morphology objects and two section objects
+    Will create two morphology objects and two node objects
     call the morphology objects A_morph and B_morph
     
     When A.connect(B) is executed, the pattern is
 
-    child.connect(parent). hence A now becomes part of the
-    B_morph object and the A_morph object is destroyed (actually
-    as of 22/5/12 the morphology destruction isn't implemented, but
-    this should be easy enough to do).
+    child.connect(parent). Hence A now becomes part of the
+    B_morph object (registerd to its observer) and the 
+    A_morph object is destroyed (its reference count is 
+    dropped to zero and it is handled by the Python 
+    garbage collector).
 
     The idea of this "hidden" complexity is that it 
     combines the power of a more natural object-oriented 
     way of manipulating small numbers of compartments with an
     array-based backend.
 
-    There is still a lot to do here, as I add complexity, 
-    I can add other features like the direction in which 
-    a section extends, right now it is designed such that 
-    it extends only in x which is of course incorrect, 
-    a unit vector parameter would be a nice feature.
-
-    Additionally, things like which side (distal or proximal)
-    of the section is being connected to have still not been
-    implemented.
     """
 
     def __init__(self,vertex=[0.0,0.0,0.0,0.0],node_type=None):
