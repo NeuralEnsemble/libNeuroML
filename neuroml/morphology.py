@@ -266,7 +266,6 @@ class Node(MorphologyComponent):
     combines the power of a more natural object-oriented 
     way of manipulating small numbers of compartments with an
     array-based backend.
-
     """
 
     def __init__(self,vertex=[0.0,0.0,0.0,0.0],node_type=None):
@@ -398,14 +397,17 @@ class Node(MorphologyComponent):
             self._morphology_array.observer.observe(component)
       
 class MorphologyCollection(MorphologyComponent):
+    """
+    Subclasses are iterable visitors, more documentation
+    on this to follow.    
+    """
     def __init__(self):
         pass
 
 
 class NodeCollection(MorphologyCollection):
-
     """
-    Works as an iterable visitor, part of or all of a morphology
+    An iterable visitor, part of or all of a morphology
     all the nodes are connected.
     
     Morphology should not be iterable.
