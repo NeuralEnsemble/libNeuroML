@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='neuroml',
-      version='0.0.1.1',
+      version='0.0.1.2',
       description='Python API for libNeuroML',
       author='Mike Vella',
       author_email='vellamike@gmail.com',

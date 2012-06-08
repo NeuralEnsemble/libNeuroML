@@ -17,7 +17,7 @@ import random
 
 """
 This module is in its early stages but demonstrates how one can
-generate morphologies artificially using section objects which
+generate morphologies artificially using segment objects which
 control the morphology backend.
 """
 
@@ -37,7 +37,7 @@ def __branch_decision(probability):
 
 def __rall_power(parent_diam,e=1.5):
     """
-    Returns the diameter of a child section of a branch 
+    Returns the diameter of a child segment of a branch 
     according to Rall's Power Law as described
     in Van Ooyen et al 2010. Assumes child branches
     will be of equal diameter.
@@ -47,8 +47,8 @@ def __rall_power(parent_diam,e=1.5):
     return child_diam
 
 def soma(radius=30,length=30):
-    section=morphology.Section(radius=radius,length=30)
-    return section.morphology
+    segment=morphology.Segment(r1=radius,length=30)
+    return segment.morphology
 
 
 def arborization(bifurcations=3.0,root_L=100.0,term_L=1.0,
@@ -58,11 +58,11 @@ def arborization(bifurcations=3.0,root_L=100.0,term_L=1.0,
     returns a morphology corresponding to a dendritic tree
     """
 
-    root_section_length=root_L*__grand(L_sigma)
-    root_section=morphology.Section(radius=root_d,
-                                length=root_section_length)
+    root_segment_length=root_L*__grand(L_sigma)
+    root_segment=morphology.Segment(r1=root_d,
+                                length=root_segment_length)
         
-    heads=[root_section]                            
+    heads=[root_segment]                            
     i=0
     while i<bifurcations:
         i+=1
@@ -70,19 +70,19 @@ def arborization(bifurcations=3.0,root_L=100.0,term_L=1.0,
         for head in heads:
             #make decision whether to branch
             if __branch_decision(branch_prob):
-                section_length=(term_L-root_L)*i/bifurcations+root_L
-                section_diam=__rall_power(head.radius)
-                if section_diam<term_d:
-                    section_diam=term_d
+                segment_length=(term_L-root_L)*i/bifurcations+root_L
+                segment_diam=__rall_power(head.r1)
+                if segment_diam<term_d:
+                    segment_diam=term_d
 
-                #make two sections for it:
-                branch1_l=section_length*__grand(L_sigma)
-                branch2_l=section_length*__grand(L_sigma)
+                #make two segments for it:
+                branch1_l=segment_length*__grand(L_sigma)
+                branch2_l=segment_length*__grand(L_sigma)
 
-                branch1=morphology.Section(length=branch1_l,radius=
-                                            section_diam)
-                branch2=morphology.Section(length=branch2_l,radius=
-                                            section_diam)
+                branch1=morphology.Segment(length=branch1_l,r1=
+                                            segment_diam)
+                branch2=morphology.Segment(length=branch2_l,r1=
+                                            segment_diam)
 
                 branch1.connect(head)
                 branch2.connect(head)
@@ -90,4 +90,4 @@ def arborization(bifurcations=3.0,root_L=100.0,term_L=1.0,
                 
         heads=new_heads
     
-    return root_section.morphology
+    return root_segment.morphology

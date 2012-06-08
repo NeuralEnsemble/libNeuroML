@@ -320,7 +320,7 @@ class Node(MorphologyComponent):
 
     @property
     def radius(self):
-        return self.vertex[4]
+        return self.vertex[3]
 
     @property
     def vertex(self):
