@@ -358,15 +358,32 @@ class Node(MorphologyComponent):
         #everything should now be handled including the observer's tasks
         parent._morphadopt(child_morphology=self._morphology_array)
 
+    def shift_connect(self,parent):
+        """
+        connect this node to a new parent
+
+        This is done by connecting the child morphology 
+        to the parent morphology and delting the child morphology
+        """
+        #translate and connect:
+        self.translate_morphology(parent.vertex[0:3])
+        self.connect(parent)
+
+    def translate_morphology(self,origin):
+        """
+        Translate the morphology to a new origin, with node
+        at the origin.
+        """
+
+        translation_vector=self.vertex[0:3]-origin
+        self.morphology.vertices[:,0:3]-=translation_vector
+
     def _morphadopt(self,child_morphology):
         """
         Connect another morphology to this one.
         """
 
-        #move the vector in space
-        translation_vector=child_morphology.root_vertex-self.vertex
-        new_vertices=child_morphology.vertices+translation_vector
-        self._morphology_array.vertices=np.append(self._morphology_array.vertices,new_vertices,axis=0)
+        self._morphology_array.vertices=np.append(self._morphology_array.vertices,child_morphology.vertices,axis=0)
 
         #increment and append connectivity
         num_parent_nodes=len(self._morphology_array.connectivity)
@@ -440,12 +457,11 @@ class NodeCollection(MorphologyCollection):
     @property
     def connectivity(self):
         return self._morphology_array.connectivity[self._morphology_start_index:self._morphology_end_index+1]
+
+    @property
+    def vertices(self):
+        return self._morphology_array.vertices[self._morphology_start_index:self._morphology_end_index+1]
     
-
-class Cylinder(Segment):
-    def __init__(self):
-        pass
-
 
 class Segment(MorphologyCollection):
 
@@ -532,7 +548,7 @@ class Segment(MorphologyCollection):
         V=(math.pi*self.length/3.0)*(R**2+r**2+R*r)
         return V
 
-    def connect(self,section,position=None):
+    def connect(self,segment,position=None):
         """        
         Position is not implemented until we
         decide exactly what it means, right now
@@ -557,3 +573,9 @@ class Segment(MorphologyCollection):
         some thinking to decide exactly how to implement
         this
         """
+
+        self.node2.shift_connect(segment.node1)
+
+class Cylinder(Segment):
+    def __init__(self):
+        pass
