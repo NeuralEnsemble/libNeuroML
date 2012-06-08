@@ -466,19 +466,13 @@ class NodeCollection(MorphologyCollection):
 class Segment(MorphologyCollection):
 
     """
-    Note - section type should be the type
-    of the distal node    
-    """
+    In the process of implementing, this class will
+    provide the same functionality as NEURON sections.
 
-    """
-    In the process of implementing NEURON-like sections.
-
-    These will also have their own connect() etc methods
+    Segments will also have their own connect() etc methods
     but will be more complicated than nodes as they
     have distal and proximal components.
 
-    NEURON-type implies the possibility of a discontinuity
-    as far as I can infer.
     """
 
     def __init__(self,length=100,r1=10,r2=None,
@@ -496,7 +490,6 @@ class Segment(MorphologyCollection):
 
         #create the morphology by connecting two nodes #
         #together
-
         self.node1=Node(vertex1,node_type=section_type)
         self.node2=Node(vertex2,node_type=section_type)
         self.node2.connect(self.node1)
@@ -562,20 +555,19 @@ class Segment(MorphologyCollection):
         transform the array and make any node into
         the root of that array.
 
-        Things actually get tricky with sections
-        because the proximal node(of the child needs
-        to become the distal node of the parent)
-
         I think we need to have the possibility to insert
-        a node between two nodes. this will allow the
+        a node between two nodes. This will allow the
         cool possibility of making a connection anywhere
         along another section. However it will involve
         some thinking to decide exactly how to implement
-        this
+        this as it might mess up NodeCollections.
         """
 
         self.node2.shift_connect(segment.node1)
 
 class Cylinder(Segment):
+    """
+    A special case of segment where r1=r2...TBC
+    """
     def __init__(self):
         pass
