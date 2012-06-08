@@ -64,5 +64,4 @@ class SWCLoader(object):
 
         return MorphologyArray(vertices=vertices, 
                               connectivity=connection_indices, 
-                              section_types=section_types, 
                               name=name )
