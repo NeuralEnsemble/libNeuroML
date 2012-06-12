@@ -1,7 +1,7 @@
-Background and ideas on the scope of the project
-================================================
+Background and scope of the project
+===================================
 
-An overview of the motivation for libNeuroML, and the various scenarios in which APIs can be useful.
+An overview of the motivation for libNeuroML, and the various scenarios in which such an API can be useful.
 
 NeuroML
 -------

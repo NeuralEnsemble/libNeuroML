@@ -13,6 +13,9 @@ Contents:
    
    how_to_contribute
    scope_of_project
+   tools
+   nodes_segments_sections
+
 
 
 

@@ -1,0 +1,54 @@
+Tools relevant for this initiative
+==================================
+
+Below is a list of tools which are built in or use Python and which would benefit from a standard library to access,
+modify and save detailed neuronal morphologies. Developers from most of these initiatives are involved with the
+libNeuroML project.
+
+Neuronvisio
+-----------
+
+http://neuronvisio.org (GitHub: https://github.com/mattions/neuronvisio)
+
+PyNN
+----
+
+http://neuralensemble.org/trac/PyNN
+
+Morphforge
+----------
+
+https://github.com/mikehulluk/morphforge
+
+CATMAID
+-------
+
+http://www.catmaid.org
+We reconstruct neuronal circuits (morphology in 3D, synaptic connectivity) as skeletons, surfaces, volumes in CATMAID.
+We want to be able to export the data into an object model (data format), complement it with ion channel distribution of
+several types & synaptic mechanisms, and simulate the membrane voltage time series and do virtual current injection etc.
+on standard simulators. All of this with a easy-to-use, intuitive Python API in a few lines of code.
+
+NEURON
+------
+
+http://www.neuron.yale.edu/neuron
+
+MOOSE
+-----
+
+http://moose.sourceforge.net
+
+GENESIS
+-------
+
+http://genesis-sim.org/
+
+neuroConstruct
+--------------
+
+http://www.neuroConstruct.org
+neuroConstruct generates native simulator code for NEURON, MOOSE and other simulators. It would be a great benefit to be
+able to generate pure NeuroML descriptions of the model components and run (nearly) identical Python code on these
+simulators to load the NeuroML and execute the simulations. This scenario is implemented already for a limited number of
+model types by generating PyNN based scripts which can run on NEURON, Brian and NEST.
