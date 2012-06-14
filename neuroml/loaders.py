@@ -62,6 +62,7 @@ class SWCLoader(object):
             else:
                 connection_indices[i]=-1
 
+        #This needs to become a SegmentCollection
         return MorphologyArray(vertices=vertices, 
                               connectivity=connection_indices, 
                               name=name )
