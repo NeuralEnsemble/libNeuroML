@@ -62,12 +62,17 @@ class MorphologyArray(object):
     """
 
     def __init__(self,vertices,connectivity,node_types=None,
-                name=None):
+                name=None,physical_mask=None):
 
         self.connectivity=np.array(connectivity)
         self.vertices=np.array(vertices)
         self.name=name
 
+        if physical_mask:
+            self.physical_mask=np.array(physical_mask)
+        else:
+            self.physical_mask=np.zeros(len(connectivity),dtype='bool')
+        
         if node_types:
             self.node_types=np.array(node_types)
         else:
@@ -207,7 +212,37 @@ class ComponentObserver(object):
         for component in self.components:
             component._morphology_array=morphology_array
 
-     
+    #The following four methods may not be a smart way to do this
+    def segment_observed(self,i,j):
+       for component in self.components:
+            if component._index==(i,j) or component.index==(j,i):
+                return True
+            return False
+
+    def node_observed(self,i):
+        for component in self.components:
+            if component._index==i:
+                return True
+        return False
+        
+    def node(self,i):
+        """
+        Returns the node reference if it's observed, false otherwise
+        """
+        for component in self.components:
+            if component._index==i:
+                return component
+        raise Exception('No such component')
+
+    def segment(self,i,j):
+        """
+        Returns the segment reference if it's observed, false otherwise
+        """
+        for component in self.components:
+            if component.index==(i,j) or component.index==(j,i):
+                return component
+        raise Exception('No such segment')
+
 class MorphologyComponent(object):
 
     def __init__(self):
@@ -394,7 +429,6 @@ class MorphologyCollection(MorphologyComponent):
     def __init__(self):
         pass
 
-
 class NodeCollection(MorphologyCollection):
     """
     An iterable visitor, part of or all of a morphology
@@ -418,7 +452,11 @@ class NodeCollection(MorphologyCollection):
 
     def __getitem__(self,i):
         index=i+self._morphology_start_index
-        return self._morphology_array[index]
+
+        if self._morphology_array.observer.node_observed(i):
+            return self._morphology_array.observer.node(i)
+        else:
+            return self._morphology_array[index]
         
     def __len__(self):
         return self._morphology_end_index-self._morphology_start_index
@@ -494,6 +532,10 @@ class Segment(MorphologyCollection):
     @length.setter
     def length(self,value):
         raise NotImplementedError, 'Cannot reset section length'
+
+    @property
+    def index(self):
+        return (self.node1,self.node2)
 
     @property
     def morphology(self):
