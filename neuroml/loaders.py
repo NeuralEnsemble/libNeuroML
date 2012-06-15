@@ -18,7 +18,65 @@ class NeuroMLLoader(object):
 
     @classmethod
     def load_neuroml(cls,src):
-        raise NotImplementedError
+
+        """
+        This code is still mainly a proof of principle - work in progress,
+        mapping from the segment-based space of neuroML to the node-based
+        space of libNeuroML is the main conceptual difficulty
+        """
+        import v2
+        import sys
+
+        try:
+            nml2_doc = v2.parse(src)
+            print "Read in NeuroML 2 doc with id: %s"%nml2_doc.id
+        except Exception:
+            print "Not a valid NeuroML 2 doc:", sys.exc_info()
+            return None
+
+        cell = nml2_doc.cell[0]
+        morph = cell.morphology
+        segments = morph.segment  # not segments, this is a limitation of the code that generateDS.py creates...
+
+        print "Id of cell: %s, which has %i segments"%(cell.id,len(segments))
+
+        num_seg=len(segments)
+        vertices=[]
+        connectivity=np.zeros(num_seg*2)
+        physical_mask=np.zeros(num_seg*2)
+        id_to_index={}#this dictionary for a neuroml segment ID gives the index in the vertex,connectivity etc arrays of the proximal node of that segment
+
+        #here is how I think all the staging needs to happen:
+        #1.build up the id_to_index dictionary by looping through
+        #the segments, all the while inserting the vertex information
+        #into the relevant index
+
+        #1.loop through the id_to_index dict, building up the connectivity matrix
+
+        index=0
+        for seg in segments:
+            index *= 2
+            seg_id=seg.id
+            dist = seg.distal
+            prox = seg.proximal
+            parent = seg.parent
+            
+#            if parent != None:          
+#                fraction_along = parent.fractionAlong
+            
+            if prox is None:
+                parent = int(seg.parent.segment)
+  
+            for segP in segments:
+                if int(segP.id) == parent:
+                    prox = segP.distal
+                    
+            #base the index on the segment id:
+            vertices.append([prox.x,prox.y,prox.z,prox.diameter])
+            vertices.append([dist.x,dist.y,dist.z,dist.diameter])
+            id_to_index[seg_id]=index
+
+        print vertices
 
 class SWCLoader(object):
     
