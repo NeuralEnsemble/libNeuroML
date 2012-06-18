@@ -39,6 +39,15 @@ MOOSE & Moogli
 
 http://moose.sourceforge.net
 
+The latest version of MOOSE with a Python interface can be installed as follows:
+
+::
+
+    svn co http://moose.svn.sourceforge.net/svnroot/moose/moose/branches/dh_branch moose
+    cd moose
+    make
+    cd 
+
 http://moose.ncbs.res.in/moogli/
 
 GENESIS

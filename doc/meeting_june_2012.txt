@@ -10,8 +10,18 @@ Location: Room 336, Rockefeller building (`4B on this map <http://www.ucl.ac.uk/
 
 Attendees: Andrew Davison, Padraig Gleeson, Mike Hull, Michele Mattioni, Mike Vella
 
+Sponsors: This meeting is generously supported by the `INCF Multi Scale Modelling Program <http://www.incf.org/programs/modeling>`_.
+
 Agenda
 ------
+
+Agreeing on terminology (segments, etc.) & scope
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+http://libneuroml.readthedocs.org/en/latest/scope_of_project.html
+
+http://libneuroml.readthedocs.org/en/latest/nodes_segments_sections.html
+
 
 Mike Vella's current implementation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,12 +44,12 @@ http://neuronvisio.org
 Current Python & NeuroML support in MOOSE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Skype session?
+A Skype meeting will be arranged to get an update from Bangalore.
 
 Saving to & loading from XML
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
+Padraig's suggestion based on `generateDS.py <http://www.rexx.com/~dkuhlman/generateDS.html>`_: https://github.com/NeuralEnsemble/libNeuroML/tree/master/ideas/padraig/generatedFromV2Schema
 
 Storing simulation data as HDF5
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
