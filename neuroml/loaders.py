@@ -20,9 +20,11 @@ class NeuroMLLoader(object):
     def load_neuroml(cls,src):
 
         """
+        This code is highly experimental - also a lot of it needs to be
+        broken down into helper functions
         This code is still mainly a proof of principle - work in progress,
         mapping from the segment-based space of neuroML to the node-based
-        space of libNeuroML is the main conceptual difficulty
+        space of libNeuroML is the main conceptual difficulty..
         """
         import v2
         import sys
@@ -44,7 +46,9 @@ class NeuroMLLoader(object):
         vertices=[]
         connectivity=np.zeros(num_seg*2)
         physical_mask=np.zeros(num_seg*2)
-        id_to_index={}#this dictionary for a neuroml segment ID gives the index in the vertex,connectivity etc arrays of the proximal node of that segment
+        id_to_index={}#dict for a neuroml segment ID gives the index in the vertex,connectivity etc arrays of the proximal node of that segment
+        id_to_fraction_along={}
+        id_to_parent_id={}
 
         #here is how I think all the staging needs to happen:
         #1.build up the id_to_index dictionary by looping through
@@ -52,31 +56,78 @@ class NeuroMLLoader(object):
         #into the relevant index
 
         #1.loop through the id_to_index dict, building up the connectivity matrix
+        #at this stage it will also be possible to set the physical mask
 
         index=0
         for seg in segments:
             index *= 2
-            seg_id=seg.id
+            seg_id = int(seg.id)
             dist = seg.distal
             prox = seg.proximal
             parent = seg.parent
-            
-#            if parent != None:          
-#                fraction_along = parent.fractionAlong
-            
+            id_to_index[seg_id] = index
+
+            if parent != None:
+                id_to_fraction_along[seg_id] = float(parent.fractionAlong)
+                id_to_parent_id[seg_id] = int(parent.segment)
+            else:
+                id_to_fraction_along[seg_id] = 0.0
+                id_to_parent_id[seg_id] = 0 #I think this is OK - not sure, is root segment ID always 0?
+
+            #probably better ways to do this:
             if prox is None:
-                parent = int(seg.parent.segment)
-  
-            for segP in segments:
-                if int(segP.id) == parent:
-                    prox = segP.distal
+                for segP in segments:
+                    if int(segP.id) == int(parent.segment):
+                        prox = segP.distal
                     
-            #base the index on the segment id:
             vertices.append([prox.x,prox.y,prox.z,prox.diameter])
             vertices.append([dist.x,dist.y,dist.z,dist.diameter])
-            id_to_index[seg_id]=index
 
-        print vertices
+        #now build the connectivity matrix:
+        #need to check if the vertex is located in the correct
+        #position to make the connection, otherwise need to
+        #add a non-physical connection
+        connectivity=np.zeros(len(id_to_index))
+
+        for i in id_to_index:
+            seg_index=id_to_index[i]
+            distal_index = seg_index + 1
+            proximal_index = seg_index
+            fraction_along=id_to_fraction_along[i]
+            parent_id=id_to_parent_id[i]
+            parent_distal_index = id_to_index[parent_id+1]
+            parent_distal_vertex=vertices[parent_distal_index]
+            parent_proximal_index = id_to_index[parent_id]
+            parent_proximal_vertex=vertices[parent_proximal_index]
+
+            #let us assume the segment always connects from its
+            #distal node and the fraction along is where along the
+            #parent the connection is made
+
+            assert fraction_along > 0.0 and fraction_along < 1.0, "fraction along outside normal fractional bounds"
+
+            if fraction_along == None or fraction_along == 1:
+                #what does this actually mean? as far as I know
+                #the distal node connects to the parent segment
+                #between its distal and proximal nodes at
+                #fractionAlong
+                connected_index=parent_distal_index
+            elif fraction_along==0.0:
+                connected_index=parent_proximal_index
+            else:
+                #using linear interpolation
+                new_vertex=parent_proximal_vector[:3]-parent_distal_vector[:3]
+                radius=(parent_proximal_vector[3]-parent_distal_vector[3])*fraction_along
+                np.append(new_vertex,radius)
+                new_vertex_index=len(vertices)
+                np.append(vertices,new_vertex)
+
+            connectivity[proximal_index] = distal_index
+            connectivity[distal_index] = connected_index
+
+
+            #now need to set the physical mask by looking at how many of the connections are physical
+        print connectivity
 
 class SWCLoader(object):
     
