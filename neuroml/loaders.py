@@ -17,48 +17,25 @@ from neuroml.morphology import MorphologyArray
 class NeuroMLLoader(object):
 
     @classmethod
-    def load_neuroml(cls,src):
-
-        """
-        This code is highly experimental - also a lot of it needs to be
-        broken down into helper functions
-        This code is still mainly a proof of principle - work in progress,
-        mapping from the segment-based space of neuroML to the node-based
-        space of libNeuroML is the main conceptual difficulty..
-        """
-        import v2
+    def __nml2_doc(cls,src):
         import sys
+        import v2
 
         try:
             nml2_doc = v2.parse(src)
             print "Read in NeuroML 2 doc with id: %s"%nml2_doc.id
         except Exception:
             print "Not a valid NeuroML 2 doc:", sys.exc_info()
-            return None
-
-        cell = nml2_doc.cell[0]
-        morph = cell.morphology
-        segments = morph.segment  # not segments, this is a limitation of the code that generateDS.py creates...
-
-        print "Id of cell: %s, which has %i segments"%(cell.id,len(segments))
-
-        num_seg=len(segments)
-        vertices=[]
-        connectivity=np.zeros(num_seg*2)
-        physical_mask=np.zeros(num_seg*2)
-        id_to_index={}#dict for a neuroml segment ID gives the index in the vertex,connectivity etc arrays of the proximal node of that segment
-        id_to_fraction_along={}
-        id_to_parent_id={}
-
-        #here is how I think all the staging needs to happen:
-        #1.build up the id_to_index dictionary by looping through
-        #the segments, all the while inserting the vertex information
-        #into the relevant index
-
-        #1.loop through the id_to_index dict, building up the connectivity matrix
-        #at this stage it will also be possible to set the physical mask
-
+            return None    
+        return nml2_doc
+    
+    @classmethod
+    def __load_vertices(cls,segments):
         index=0
+        id_to_index={}#dict for a neuroml segment ID gives the index in the vertex,connectivity etc arrays of the proximal node of that segment
+        id_to_fraction_along = {}
+        id_to_parent_id = {}
+        vertices = []
         for seg in segments:
             index *= 2
             seg_id = int(seg.id)
@@ -83,10 +60,12 @@ class NeuroMLLoader(object):
             vertices.append([prox.x,prox.y,prox.z,prox.diameter])
             vertices.append([dist.x,dist.y,dist.z,dist.diameter])
 
-        #now build the connectivity matrix:
-        #need to check if the vertex is located in the correct
-        #position to make the connection, otherwise need to
-        #add a non-physical connection
+        return vertices,id_to_index,id_to_fraction_along,id_to_parent_id
+
+
+    @classmethod
+    def __connectivity(cls,id_to_index,id_to_fraction_along,vertices,id_to_parent_id):
+    
         connectivity=np.zeros(len(id_to_index))
 
         for i in id_to_index:
@@ -96,38 +75,65 @@ class NeuroMLLoader(object):
             fraction_along=id_to_fraction_along[i]
             parent_id=id_to_parent_id[i]
             parent_distal_index = id_to_index[parent_id+1]
-            parent_distal_vertex=vertices[parent_distal_index]
+            parent_distal_vertex=np.array(vertices[parent_distal_index])
             parent_proximal_index = id_to_index[parent_id]
-            parent_proximal_vertex=vertices[parent_proximal_index]
+            parent_proximal_vertex=np.array(vertices[parent_proximal_index])
 
-            #let us assume the segment always connects from its
-            #distal node and the fraction along is where along the
-            #parent the connection is made
-
-            assert fraction_along > 0.0 and fraction_along < 1.0, "fraction along outside normal fractional bounds"
+            assert fraction_along == None or (fraction_along >= 0.0 and fraction_along <= 1.0), "fraction along outside normal fractional bounds"
 
             if fraction_along == None or fraction_along == 1:
-                #what does this actually mean? as far as I know
+                #As I understand it (as of 18/6/12)
                 #the distal node connects to the parent segment
                 #between its distal and proximal nodes at
                 #fractionAlong
-                connected_index=parent_distal_index
-            elif fraction_along==0.0:
-                connected_index=parent_proximal_index
+                connected_index = parent_distal_index
+            elif fraction_along == 0.0:
+                connected_index = parent_proximal_index
             else:
                 #using linear interpolation
-                new_vertex=parent_proximal_vector[:3]-parent_distal_vector[:3]
-                radius=(parent_proximal_vector[3]-parent_distal_vector[3])*fraction_along
-                np.append(new_vertex,radius)
-                new_vertex_index=len(vertices)
-                np.append(vertices,new_vertex)
-
+                new_vertex = parent_proximal_vertex[:3]-parent_distal_vertex[:3]
+                radius=(parent_proximal_vertex[3]-parent_distal_vertex[3])*fraction_along
+                new_vertex = np.append(new_vertex,radius)
+                new_vertex_index = len(vertices)
+                vertices = np.append(vertices,[new_vertex],axis=0)
+                connected_index = new_vertex_index
+                connectivity = np.append(connectivity,
+                
             connectivity[proximal_index] = distal_index
             connectivity[distal_index] = connected_index
+        return connectivity,vertices
 
+    @classmethod
+    def load_neuroml(cls,src):
 
-            #now need to set the physical mask by looking at how many of the connections are physical
+        """
+        This code is highly experimental - also a lot of it needs to be
+        broken down into helper functions
+        This code is still mainly a proof of principle - work in progress,
+        mapping from the segment-based space of neuroML to the node-based
+        space of libNeuroML is the main conceptual difficulty..
+        """
+
+        nml2_doc=cls.__nml2_doc(src)
+
+        #this is temporary, will need to get an array of cells
+        cell = nml2_doc.cell[0]
+        morph = cell.morphology
+        segments = morph.segment  # not segments, this is a limitation of the code that generateDS.py creates...
+
+        print "Id of cell: %s, which has %i segments"%(cell.id,len(segments))
+
+        num_seg=len(segments)
+        connectivity=np.zeros(num_seg*2)
+        physical_mask=np.zeros(num_seg*2)
+
+        vertices,id_to_index,id_to_fraction_along,id_to_parent_id = cls.__load_vertices(segments)
+
+        print vertices
+        connectivity=cls.__connectivity(id_to_index,id_to_fraction_along,vertices,id_to_parent_id)
         print connectivity
+        print vertices
+         #now need to make the physical mask..
 
 class SWCLoader(object):
     
