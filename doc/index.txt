@@ -15,6 +15,7 @@ Contents:
    scope_of_project
    tools
    nodes_segments_sections
+   meeting_june_2012
 
 
 
