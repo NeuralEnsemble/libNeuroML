@@ -34,10 +34,12 @@ NEURON
 
 http://www.neuron.yale.edu/neuron
 
-MOOSE
+MOOSE & Moogli
 -----
 
 http://moose.sourceforge.net
+
+http://moose.ncbs.res.in/moogli/
 
 GENESIS
 -------

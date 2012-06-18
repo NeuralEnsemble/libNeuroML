@@ -48,7 +48,7 @@ conductance) of each determined by the set of 3D points in that part.
 
 There was a similar concept to this in NeuroML v1.x, the **cable**. Each **segment** had an attribute for the cable id, and these were used for mapping
 to and from NEURON. Cables were unbranched, and so all segments after the first in the cable only had distal points, see
-`here <http://www.neuroml.org/NeuroMLValidator/ViewNeuroMLFile.jsp?localFile=NeuroMLFiles/Examples/ChannelML/PyramidalCell.xml>`_.
+`this example <http://www.neuroml.org/NeuroMLValidator/ViewNeuroMLFile.jsp?localFile=NeuroMLFiles/Examples/ChannelML/PyramidalCell.xml>`_.
 
 The cable concept was removed in NeuroML v2.0, as this is was seen as imposing concepts from compartmental modelling
 on the basic morphological descriptions of cells. There is only a **segmentGroup** element for grouping segments, though
