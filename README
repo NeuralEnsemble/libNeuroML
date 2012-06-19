@@ -2,7 +2,9 @@ This package provides Python libNeuroML, for working with neuronal models specif
 
 Documentation is available at http://readthedocs.org/docs/libneuroml/en/latest/
 
-For installation instructions, see http://readthedocs.org/docs/libneuroml/en/latest/how_to_contribute.html
+For installation instructions, see http://readthedocs.org/docs/libneuroml/en/latest/install.html
+
+For details on how to contribute, see http://readthedocs.org/docs/libneuroml/en/latest/how_to_contribute.html
 
 The initial target version of NeuroML is v2.0. The latest details on that version is at http://neuroml.org/neuroml2.
 

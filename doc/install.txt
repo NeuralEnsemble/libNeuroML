@@ -1,0 +1,40 @@
+Installing libNeuroML
+=====================
+
+
+Get a read only copy of libNeuroML
+----------------------------------
+
+Install `git`_ and type:
+
+::
+
+    git clone git://github.com/NeuralEnsemble/libNeuroML.git
+
+
+More details about the git repository and making your own branch/fork are `here <how_to_contribute.html>`_.
+
+
+
+.. _Git: http://rogerdudler.github.com/git-guide/
+
+
+Install libNeuroML
+------------------
+
+Use the standard install method for Python packages:
+
+
+::
+
+    sudo python setup.py install
+
+
+Run an example
+--------------
+
+Some sample scripts are included in neuroml/examples
+
+::
+
+    python neuroml/examples/example0.py

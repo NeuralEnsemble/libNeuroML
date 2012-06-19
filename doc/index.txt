@@ -10,7 +10,8 @@ Contents:
 
 .. toctree::
    :maxdepth: 1
-   
+
+   install
    how_to_contribute
    scope_of_project
    tools
