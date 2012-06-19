@@ -48,4 +48,13 @@ the file small (<1 Mb). Remember, we are looking only for an example here.
   
   I plan to wrap up the specification on www.neurohdf.org at some point:
   http://www.neurohdf.org/
-    
+
+
+- hdf5testsPG_CA1cell.hdf
+
+  An example CA1 cell (loaded in from testFiles/CA1.nml) saved in HDF5 by the code at
+  ideas/padraig/hdf5tests/readCA1.py. This uses the initial libNeuroML code at 
+  ideas/padraig/generatedFromV2Schema/ to load the XML and ideas/padraig/hdf5tests/NeuroMLH5.py
+  to write HDF5 with a points & a segments array
+
+ 
