@@ -33,7 +33,7 @@ Use the standard install method for Python packages:
 Run an example
 --------------
 
-Some sample scripts are included in neuroml/examples
+Some sample scripts are included in `neuroml/examples`:
 
 ::
 
