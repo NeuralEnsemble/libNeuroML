@@ -62,7 +62,7 @@ class MorphologyArray(object):
     """
 
     def __init__(self,vertices,connectivity,node_types=None,
-                name=None,physical_mask=None):
+                name=None,physical_mask=None,fraction_along=None):
 
         self.connectivity=np.array(connectivity)
         self.vertices=np.array(vertices)
@@ -78,6 +78,12 @@ class MorphologyArray(object):
         else:
             self.node_types=np.zeros(len(connectivity),
                                         dtype='int32')
+
+        if fraction_along:
+            self.fraction_along=np.array(fraction_along)
+        else:
+            self.fraction_along=np.zeros(len(connectivity),
+                                         dtype='int32')
 
         #validity test:
         M=self.vertices.shape[0]
