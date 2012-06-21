@@ -8,7 +8,7 @@ Dates: 25 & 26 June 2012
 
 Location: Room 336, Rockefeller building (`4B on this map <http://www.ucl.ac.uk/locations/ucl-maps/ucl-bloomsbury-campus-map>`_), UCL, London
 
-Attendees: Andrew Davison, Padraig Gleeson, Mike Hull, Michele Mattioni, Mike Vella
+Attendees: Sandra Berger, Andrew Davison, Padraig Gleeson, Mike Hull, Michele Mattioni, Mike Vella
 
 Sponsors: This meeting is generously supported by the `INCF Multi Scale Modelling Program <http://www.incf.org/programs/modeling>`_.
 
