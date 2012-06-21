@@ -9,7 +9,7 @@ Longer term the Morphology/Segment/Distal etc. classes should be substituted int
 Author: Padraig Gleeson
 """
 
-from neuroml import *
+from neuroml2 import *
 import h5py
 import numpy
 

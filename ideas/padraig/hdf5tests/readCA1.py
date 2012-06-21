@@ -4,7 +4,7 @@ Initial version of Python API for NeuroML2
 Author: Padraig Gleeson
 """
 
-from neuroml import *
+from neuroml2 import *
 
 
 if __name__ == "__main__":

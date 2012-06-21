@@ -7,7 +7,7 @@ Reading in NeuroML from XML file, then creating HDF5 based object tree and parsi
 Author: Padraig Gleeson
 """
 
-from neuroml import *
+from neuroml2 import *
 
 if __name__ == "__main__":
 
