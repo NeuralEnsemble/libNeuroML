@@ -37,19 +37,18 @@ class NeuroMLLoader(object):
         id_to_parent_id = {}
         vertices = []
         for seg in segments:
-            index *= 2
             seg_id = int(seg.id)
+            id_to_index[seg_id] = index
             dist = seg.distal
             prox = seg.proximal
             parent = seg.parent
-            id_to_index[seg_id] = index
 
             if parent != None:
                 id_to_fraction_along[seg_id] = float(parent.fractionAlong)
                 id_to_parent_id[seg_id] = int(parent.segment)
             else:
-                id_to_fraction_along[seg_id] = 0.0
-                id_to_parent_id[seg_id] = 0 #I think this is OK - not sure, is root segment ID always 0?
+                id_to_fraction_along[seg_id] = 1.0
+                id_to_parent_id[seg_id] = None
 
             #probably better ways to do this:
             if prox is None:
@@ -60,48 +59,36 @@ class NeuroMLLoader(object):
             vertices.append([prox.x,prox.y,prox.z,prox.diameter])
             vertices.append([dist.x,dist.y,dist.z,dist.diameter])
 
+            index+=2
         return vertices,id_to_index,id_to_fraction_along,id_to_parent_id
 
 
     @classmethod
     def __connectivity(cls,id_to_index,id_to_fraction_along,vertices,id_to_parent_id):
     
-        connectivity=np.zeros(len(id_to_index))
-
+        connectivity = np.zeros(len(id_to_index)*2)
+        fractions_along = np.zeros(len(id_to_index)*2)
+        
         for i in id_to_index:
-            seg_index=id_to_index[i]
-            distal_index = seg_index + 1
-            proximal_index = seg_index
+            proximal_index=id_to_index[i]
+            distal_index = proximal_index + 1
             fraction_along=id_to_fraction_along[i]
             parent_id=id_to_parent_id[i]
-            parent_distal_index = id_to_index[parent_id+1]
-            parent_distal_vertex=np.array(vertices[parent_distal_index])
-            parent_proximal_index = id_to_index[parent_id]
-            parent_proximal_vertex=np.array(vertices[parent_proximal_index])
+            if parent_id != None:
+                parent_proximal_index = id_to_index[parent_id]
+                parent_distal_index = id_to_index[parent_id]+1
+            else:
+                parent_distal_index = -1
+                parent_proximal_index = None
 
             assert fraction_along == None or (fraction_along >= 0.0 and fraction_along <= 1.0), "fraction along outside normal fractional bounds"
 
-            if fraction_along == None or fraction_along == 1:
-                #As I understand it (as of 18/6/12)
-                #the distal node connects to the parent segment
-                #between its distal and proximal nodes at
-                #fractionAlong
-                connected_index = parent_distal_index
-            elif fraction_along == 0.0:
-                connected_index = parent_proximal_index
-            else:
-                #using linear interpolation
-                new_vertex = parent_proximal_vertex[:3]-parent_distal_vertex[:3]
-                radius=(parent_proximal_vertex[3]-parent_distal_vertex[3])*fraction_along
-                new_vertex = np.append(new_vertex,radius)
-                new_vertex_index = len(vertices)
-                vertices = np.append(vertices,[new_vertex],axis=0)
-                connected_index = new_vertex_index
-                connectivity = np.append(connectivity,
-                
-            connectivity[proximal_index] = distal_index
-            connectivity[distal_index] = connected_index
-        return connectivity,vertices
+            connectivity[proximal_index] = parent_distal_index
+            connectivity[distal_index] = proximal_index
+
+            fractions_along[proximal_index] = fraction_along
+            fractions_along[distal_index] = None #meaningless in this situation (I think..)
+        return connectivity, fractions_along
 
     @classmethod
     def load_neuroml(cls,src):
@@ -121,19 +108,27 @@ class NeuroMLLoader(object):
         morph = cell.morphology
         segments = morph.segment  # not segments, this is a limitation of the code that generateDS.py creates...
 
-        print "Id of cell: %s, which has %i segments"%(cell.id,len(segments))
-
-        num_seg=len(segments)
-        connectivity=np.zeros(num_seg*2)
-        physical_mask=np.zeros(num_seg*2)
-
         vertices,id_to_index,id_to_fraction_along,id_to_parent_id = cls.__load_vertices(segments)
 
+        connectivity,fractions_along = cls.__connectivity(id_to_index,id_to_fraction_along,vertices,id_to_parent_id)
+
+        #Haven't completely thought this through, is this always valid?:
+        physical_mask=np.tile([0,1],len(connectivity)/2)
+        
+        print 'vertices:'
         print vertices
-        connectivity=cls.__connectivity(id_to_index,id_to_fraction_along,vertices,id_to_parent_id)
+        print 'connectivity:'
         print connectivity
-        print vertices
-         #now need to make the physical mask..
+        print 'id to fraction along:'
+        print id_to_fraction_along
+        print 'fractions along:'
+        print fractions_along
+        print 'physical mask:'
+        print physical_mask
+
+        morph_array = MorphologyArray(vertices,connectivity,fractions_along=fractions_along)
+
+        return morph_array
 
 class SWCLoader(object):
     
