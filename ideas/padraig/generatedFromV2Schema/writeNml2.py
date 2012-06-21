@@ -4,8 +4,8 @@ Initial version of Python API for LEMS
 Author: Padraig Gleeson
 """
 
-from neuroml.v2 import *
-from neuroml.v2.NeuroMLDocument import *
+from neuroml2.v2 import *
+from neuroml2.v2.NeuroMLDocument import *
 
 
 if __name__ == "__main__":
