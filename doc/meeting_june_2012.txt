@@ -44,7 +44,7 @@ http://neuronvisio.org
 Current Python & NeuroML support in MOOSE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A Skype meeting will be arranged to get an update from Bangalore.
+A Skype call/Google Hangout will be held on Tues at 9:30 to get an update from Bangalore.
 
 Saving to & loading from XML
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
