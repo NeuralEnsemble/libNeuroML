@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 http://neuroml.svn.sourceforge.net/viewvc/neuroml/NeuroML2/Schemas/NeuroML2/NeuroML_v2alpha.xsd"
+    id="Kdr">
+
+    <notes>ChannelML file containing a single Channel description</notes>
+
+    <ionChannel id="Kdr" conductance="10pS" type="ionChannelHH" species="k">
+
+        <notes>Simple example of K conductance in squid giant axon. Based on channel from Hodgkin and Huxley 1952</notes>
+
+        <gate id="n" type="gateHH" instances="4">
+            <forwardRate type="HHExpLinearRate" rate="0.1per_ms" scale="10mV" midpoint="-55mV"/>
+            <reverseRate type="HHExpRate" rate="0.125per_ms" scale="-80mV" midpoint="-65mV"/>
+        </gate>
+                            
+    </ionChannel>
+
+</neuroml>

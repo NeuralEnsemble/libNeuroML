@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 http://neuroml.svn.sourceforge.net/viewvc/neuroml/NeuroML2/Schemas/NeuroML2/NeuroML_v2alpha.xsd"
+    id="NaF">
+
+    <notes>ChannelML file containing a single Channel description</notes>
+
+    <ionChannel id="NaF" conductance="10pS" type="ionChannelHH" species="na">
+
+        <notes>Simple example of Na conductance in squid giant axon. Based on channel from Hodgkin and Huxley 1952</notes>
+
+        <gate id="m" type="gateHH" instances="3">
+            <forwardRate type="HHExpLinearRate" rate="1per_ms" scale="10mV" midpoint="-40mV"/>
+            <reverseRate type="HHExpRate" rate="4per_ms" scale="-18mV" midpoint="-65mV"/>
+        </gate>
+
+        <gate id="h" type="gateHH" instances="1">
+            <forwardRate type="HHExpRate" rate="0.07per_ms" scale="-20mV" midpoint="-65mV"/>
+            <reverseRate type="HHSigmoidRate" rate="1per_ms" scale="10mV" midpoint="-35mV"/>
+        </gate>
+                            
+    </ionChannel>
+
+</neuroml>

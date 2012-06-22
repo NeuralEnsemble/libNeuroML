@@ -12,3 +12,7 @@ doc/_build
 ideas/padraig/generatedFromV2Schema/build
 ideas/padraig/generatedFromV2Schema/*.xml
 ideas/padraig/hdf5tests/*.hdf
+
+#hhExample ignores
+hhExample/*.xml
+hhExample/*.dat
