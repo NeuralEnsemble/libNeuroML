@@ -11,7 +11,7 @@ import xml
 import xml.sax
 
 
-from neuroml.v2 import *
+from neuroml2.v2 import *
 
 
 class NeuroMLDocument(neuroml):

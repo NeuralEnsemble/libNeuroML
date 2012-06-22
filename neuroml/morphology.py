@@ -62,7 +62,7 @@ class MorphologyArray(object):
     """
 
     def __init__(self,vertices,connectivity,node_types=None,
-                name=None,physical_mask=None,fraction_along=None):
+                name=None,physical_mask=None,fractions_along=None):
 
         self.connectivity=np.array(connectivity)
         self.vertices=np.array(vertices)
@@ -78,6 +78,7 @@ class MorphologyArray(object):
         else:
             self.node_types=np.zeros(len(connectivity),
                                         dtype='int32')
+<<<<<<< HEAD
         #Should contain the displacement from a node and the direction
         #of that displacement (vector originating at parent node
         #and in direction of 'direction node' for a distance l*fraction
@@ -90,6 +91,15 @@ class MorphologyArray(object):
                                          dtype='int32'),
                                          np.zeros(len(connectivity),
                                          dtype='int32'])
+=======
+
+        if fractions_along.any():
+            self.fractions_along=np.array(fractions_along)
+        else:
+            self.fractions_along=np.zeros(len(connectivity),
+                                         dtype='int32')
+
+>>>>>>> 8c2b0a075ba0992d7d428b7286635dd89c119ace
         #validity test:
         M=self.vertices.shape[0]
         N=self.connectivity.shape[0]
