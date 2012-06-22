@@ -66,42 +66,35 @@ class NeuroMLLoader(object):
     @classmethod
     def __connectivity(cls,id_to_index,id_to_fraction_along,vertices,id_to_parent_id):
     
-        connectivity=np.zeros(len(id_to_index))
+        connectivity=np.zeros(len(id_to_index)+1)
 
         for i in id_to_index:
-            seg_index=id_to_index[i]
-            distal_index = seg_index + 1
-            proximal_index = seg_index
-            fraction_along=id_to_fraction_along[i]
-            parent_id=id_to_parent_id[i]
+            proximal_index=id_to_index[i]
+            distal_index = proximal_index + 1
+            fraction_along = id_to_fraction_along[i]
+            parent_id = id_to_parent_id[i]
             parent_distal_index = id_to_index[parent_id+1]
-            parent_distal_vertex=np.array(vertices[parent_distal_index])
             parent_proximal_index = id_to_index[parent_id]
-            parent_proximal_vertex=np.array(vertices[parent_proximal_index])
 
-            assert fraction_along == None or (fraction_along >= 0.0 and fraction_along <= 1.0), "fraction along outside normal fractional bounds"
+            assert fraction_along == None or (fraction_along >= 0.0 and fraction_along <= 1.0), "fraction along outside (1U0) bounds"
 
-            if fraction_along == None or fraction_along == 1:
-                #As I understand it (as of 18/6/12)
+            if fraction_along == 1:
                 #the distal node connects to the parent segment
-                #between its distal and proximal nodes at
-                #fractionAlong
+                #between its distal and proximal nodes at fractionAlong
                 connected_index = parent_distal_index
-            elif fraction_along == 0.0:
-                connected_index = parent_proximal_index
             else:
-                #using linear interpolation
-                new_vertex = parent_proximal_vertex[:3]-parent_distal_vertex[:3]
-                radius=(parent_proximal_vertex[3]-parent_distal_vertex[3])*fraction_along
-                new_vertex = np.append(new_vertex,radius)
-                new_vertex_index = len(vertices)
-                vertices = np.append(vertices,[new_vertex],axis=0)
-                connected_index = new_vertex_index
-                connectivity = np.append(connectivity,
-                
-            connectivity[proximal_index] = distal_index
+                connected_index == parent_proximal_index
+
+            fraction_along[proximal_index] = 0.0
+            fraction_along[distal_index] = id_to_fraction_along[i]
+            direction[proximal_index] = distal_index
+            direction[distal_index] = parent_distal_index
+            
+            connectivity[index] = distal_index
             connectivity[distal_index] = connected_index
-        return connectivity,vertices
+
+        fractions_along = [fraction_along,direction]
+        return connectivity,fractions_along
 
     @classmethod
     def load_neuroml(cls,src):
@@ -126,13 +119,15 @@ class NeuroMLLoader(object):
         num_seg=len(segments)
         connectivity=np.zeros(num_seg*2)
         physical_mask=np.zeros(num_seg*2)
+        fractions_along=np.zeros(num_seg*2)
 
         vertices,id_to_index,id_to_fraction_along,id_to_parent_id = cls.__load_vertices(segments)
 
         print vertices
-        connectivity=cls.__connectivity(id_to_index,id_to_fraction_along,vertices,id_to_parent_id)
+        connectivity,fractions_along=cls.__connectivity(id_to_index,id_to_fraction_along,vertices,id_to_parent_id)
         print connectivity
         print vertices
+        print fractions_along
          #now need to make the physical mask..
 
 class SWCLoader(object):

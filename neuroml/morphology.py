@@ -78,13 +78,18 @@ class MorphologyArray(object):
         else:
             self.node_types=np.zeros(len(connectivity),
                                         dtype='int32')
-
+        #Should contain the displacement from a node and the direction
+        #of that displacement (vector originating at parent node
+        #and in direction of 'direction node' for a distance l*fraction
+        #where l is the distance between the parent node and the direction
+        #node)
         if fraction_along:
-            self.fraction_along=np.array(fraction_along)
+            self.fractions_along=np.array(fractions_along)
         else:
-            self.fraction_along=np.zeros(len(connectivity),
-                                         dtype='int32')
-
+            self.fraction_along=np.array([np.zeros(len(connectivity),
+                                         dtype='int32'),
+                                         np.zeros(len(connectivity),
+                                         dtype='int32'])
         #validity test:
         M=self.vertices.shape[0]
         N=self.connectivity.shape[0]
