@@ -679,7 +679,7 @@ class Segment(MorphologyCollection):
 
 class Cylinder(Segment):
     """
-    A special case of segment where r1=r2...TBC
+    A special case of segment where r1 = r2...TBC
     """
     def __init__(self):
         pass

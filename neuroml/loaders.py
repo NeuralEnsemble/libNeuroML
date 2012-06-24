@@ -49,7 +49,7 @@ class NeuroMLLoader(object):
                 id_to_parent_id[seg_id] = int(parent.segment)
             else:
                 id_to_fraction_along[seg_id] = 1.0
-f                id_to_parent_id[seg_id] = None
+                id_to_parent_id[seg_id] = None
 
             #probably better ways to do this:
             if prox is None:
