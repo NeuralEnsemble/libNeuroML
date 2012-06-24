@@ -68,38 +68,22 @@ class MorphologyArray(object):
         self.vertices=np.array(vertices)
         self.name=name
 
-        if physical_mask:
-            self.physical_mask=np.array(physical_mask)
+        if physical_mask != None:
+            self._physical_mask=np.array(physical_mask)
         else:
-            self.physical_mask=np.zeros(len(connectivity),dtype='bool')
-        
-        if node_types:
+            self._physical_mask=np.zeros(len(connectivity),dtype='bool')
+        if node_types != None:
             self.node_types=np.array(node_types)
         else:
             self.node_types=np.zeros(len(connectivity),
                                         dtype='int32')
-<<<<<<< HEAD
-        #Should contain the displacement from a node and the direction
-        #of that displacement (vector originating at parent node
-        #and in direction of 'direction node' for a distance l*fraction
-        #where l is the distance between the parent node and the direction
-        #node)
-        if fraction_along:
-            self.fractions_along=np.array(fractions_along)
-        else:
-            self.fraction_along=np.array([np.zeros(len(connectivity),
-                                         dtype='int32'),
-                                         np.zeros(len(connectivity),
-                                         dtype='int32'])
-=======
 
-        if fractions_along.any():
+        if fractions_along != None:
             self.fractions_along=np.array(fractions_along)
         else:
             self.fractions_along=np.zeros(len(connectivity),
                                          dtype='int32')
 
->>>>>>> 8c2b0a075ba0992d7d428b7286635dd89c119ace
         #validity test:
         M=self.vertices.shape[0]
         N=self.connectivity.shape[0]
@@ -121,6 +105,13 @@ class MorphologyArray(object):
         index=self.root_index
         return self[index]
 
+    @property
+    def physical_indices(self):
+        """returns indices of vertices which are physical"""
+        print 'physical_mask:'
+        print self._physical_mask
+        return np.where(self._physical_mask == 0)[0]
+        
     def children(self,index):
         """Returns an array with indexes of children"""
         return np.where(self.connectivity==index)
@@ -148,11 +139,11 @@ class MorphologyArray(object):
         return self.connectivity[index]
 
     def vertex(self,index):
-        """Return vertex corresponding to index in morphology"""
-        return self.vertices[index]
+       """Return vertex corresponding to index in morphology"""
+       return self.vertices[index]
 
     def __getitem__(self,i):
-        node=Node(vertex=[self.vertices[i]],node_type=self.node_types[i])
+        node=Node(vertex=[self.vertices[i]],node_type=[self.node_types[i]])
         #prepare and register the node:
         node._index=i
         node._morphology_array=self
@@ -217,10 +208,10 @@ class ComponentObserver(object):
 
     def __init__(self):
         self.components=np.array([])
-       
+      
     def observe(self,component):
         self.components=np.append(self.components,component)
-    
+     
     def deobserve(self):
         i=np.where(self.components==component)[0][0]
         np.delete(self.components,i)
@@ -234,41 +225,48 @@ class ComponentObserver(object):
             component._morphology_array=morphology_array
 
     #The following four methods may not be a smart way to do this
-    def segment_observed(self,i,j):
+    def segment_observed(self,i):
        for component in self.components:
-            if component._index==(i,j) or component.index==(j,i):
-                return True
-            return False
+           try:
+               if component.dist._index == i:
+                   return True
+           except AttributeError, e:
+               pass
+       return False
 
     def node_observed(self,i):
-        for component in self.components:
-            if component._index==i:
-                return True
-        return False
-        
+       for component in self.components:
+           try:
+               if segment._index == i:
+                   return True
+           except AttributeError, e:
+               pass
+       return False
+
     def node(self,i):
         """
         Returns the node reference if it's observed, false otherwise
         """
         for component in self.components:
-            if component._index==i:
+            if component._index == i and type(component) == Node:
                 return component
-        raise Exception('No such component')
+        raise Exception('No such node')
 
-    def segment(self,i,j):
+    def segment(self,i):
         """
         Returns the segment reference if it's observed, false otherwise
         """
         for component in self.components:
-            if component.index==(i,j) or component.index==(j,i):
+            'checking...'
+            if component._index == i and type(component) == Segment:
                 return component
         raise Exception('No such segment')
 
 class MorphologyComponent(object):
-
+    
     def __init__(self):
         self._morphology_array=None
-        
+
     def connect(self):
         raise NotImplementedError
 
@@ -282,7 +280,6 @@ class MorphologyComponent(object):
         """True if the node is a member of the morphology"""
         return component in self._morphology_array.observer.components
 
-        
 class Node(MorphologyComponent):
     """
     The idea of the Node class is to provide a user with a natural
@@ -339,6 +336,10 @@ class Node(MorphologyComponent):
         Return a node collection
         """
         return NodeCollection(self._morphology_array)
+
+    @property
+    def parent(self):
+        return self._morphology_array[self.__parent_id]
 
     @morphology.setter
     def morphology(self,morphology):
@@ -506,8 +507,59 @@ class NodeCollection(MorphologyCollection):
         return self._morphology_array.vertices[self._morphology_start_index:self._morphology_end_index+1]
     
 
-class Segment(MorphologyCollection):
+class SegmentCollection(MorphologyCollection):
+    """
+    Iterable container of segments
+    """
+    def __init__(self,morphology):
+        self._morphology_array=morphology
+        self._morphology_segment_indices = self._morphology_array.physical_indices
+        self._morphology_array.observer.observe(self)
 
+        #this is a bit of a hack, need a more elegant solution:
+        self._index=None
+
+    def _index_update(self,*args):
+        #This still requires implementation
+        pass
+
+    def __getitem__(self,i):
+        segment_index=self._morphology_segment_indices[i]
+        if self._morphology_array.observer.segment_observed(segment_index):
+            return self._morphology_array.observer.segment(segment_index)
+        else:
+            distal_node=self._morphology_array[segment_index]
+            return Segment(dist=distal_node)
+        
+    def __len__(self):
+        return self._morphology_end_index-self._morphology_start_index
+        
+    def _index_update(self,position,increment):
+        #WARNING:This module is still insufficiently tested
+        try:
+            if position>self._morphology_start_index and position<morphology_end_index:
+                raise NotImplementedError,"insertions not allowed in NodeCollection domain!"
+
+            if position>self._morphology_end_index:
+                pass
+
+            else:
+                self._morphology_start_index+=increment
+                self._morphology_end_index+=increment
+        except:
+            pass
+    def _morphology_array_update(self,morphology_array):
+        self._morphology_array=morphology_array
+  
+    @property
+    def connectivity(self):
+        return self._morphology_array.connectivity[self._morphology_start_index:self._morphology_end_index+1]
+
+    @property
+    def vertices(self):
+        return self._morphology_array.vertices[self._morphology_start_index:self._morphology_end_index+1]
+        
+class Segment(MorphologyCollection):
     """
     In the process of implementing, this class will
     provide the same functionality as NEURON sections.
@@ -519,35 +571,49 @@ class Segment(MorphologyCollection):
     """
 
     def __init__(self,length=100,r1=10,r2=None,
-                 section_type=None,name=None):
-
+                segment_type=None,name=None,
+                dist=None):
+   
         if r2==None:r2=r1
         
-        self.section_type=section_type
+        self.segment_type=segment_type
         self.name=name
 
-        #create the vertices
+        #node as an argument:
+        if dist != None:
+            self.dist=dist
+            self.prox=dist.parent
+        else:
+            prox=np.array([0.0,0.0,0.0,r1])
+            dist=np.array([0.0,0.0,length,r2])
+            self.prox=Node(prox,node_type=segment_type)
+            self.dist=Node(dist,node_type=segment_type)
+            self.dist.connect(self.prox)
 
-        vertex1=np.array([0.0,0.0,0.0,r1])
-        vertex2=np.array([0.0,0.0,length,r2])
+        self._morphology_array = self.dist._morphology_array
+        self._morphology_array.observer.observe(self)
+        self._morphology_array.observer.observe(self.dist)
+        self._morphology_array.observer.observe(self.prox)
 
-        #create the morphology by connecting two nodes #
-        #together
-        self.node1=Node(vertex1,node_type=section_type)
-        self.node2=Node(vertex2,node_type=section_type)
-        self.node2.connect(self.node1)
-    
+    def _index_update(self,*args):
+        #should be no need as nodes are updated themselves?
+        pass
+
+    @property
+    def _index(self):
+        #at the moment using dist, this needs to be changed to prox for the whole class
+        return self.dist._index
     @property
     def r1(self):
-        return self.node1.radius
+        return self.prox.radius
 
     @property
     def r2(self):
-        return self.node1.radius
+        return self.prox.radius
 
     @property
     def length(self):
-        displacement=self.node1.vertex-self.node2.vertex        
+        displacement=self.prox.vertex-self.dist.vertex        
         return math.sqrt(sum(displacement**2))
     
     @length.setter
@@ -556,12 +622,12 @@ class Segment(MorphologyCollection):
 
     @property
     def index(self):
-        return (self.node1,self.node2)
+        return (self.prox,self.dist)
 
     @property
     def morphology(self):
         #need to stop user from being able to set length etc
-        return self.node2.morphology
+        return self.dist.morphology
 
     @property
     def slant_height(self):
@@ -609,8 +675,7 @@ class Segment(MorphologyCollection):
         some thinking to decide exactly how to implement
         this as it might mess up NodeCollections.
         """
-
-        self.node2.shift_connect(segment.node1)
+        self.dist.connect(segment.prox)
 
 class Cylinder(Segment):
     """
