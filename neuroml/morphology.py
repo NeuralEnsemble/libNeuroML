@@ -108,8 +108,6 @@ class MorphologyArray(object):
     @property
     def physical_indices(self):
         """returns indices of vertices which are physical"""
-        print 'physical_mask:'
-        print self._physical_mask
         return np.where(self._physical_mask == 0)[0]
         
     def children(self,index):
@@ -451,6 +449,9 @@ class MorphologyCollection(MorphologyComponent):
     def __init__(self):
         pass
 
+    def _index_update(self,position,increment):
+        raise NotImplementedError,'This collection requires an index updater'
+
 class NodeCollection(MorphologyCollection):
     """
     An iterable visitor, part of or all of a morphology
@@ -519,9 +520,13 @@ class SegmentCollection(MorphologyCollection):
         #this is a bit of a hack, need a more elegant solution:
         self._index=None
 
-    def _index_update(self,*args):
-        #This still requires implementation
-        pass
+    def _index_update(self,position,increment):
+        #is there a more efficient way to do this?
+        i=0
+        for index in self._morphology_segment_indices:
+            if index >= position:
+                self._morphology_segment_indices[i] += increment
+            i += 1
 
     def __getitem__(self,i):
         segment_index=self._morphology_segment_indices[i]
@@ -534,20 +539,6 @@ class SegmentCollection(MorphologyCollection):
     def __len__(self):
         return self._morphology_end_index-self._morphology_start_index
         
-    def _index_update(self,position,increment):
-        #WARNING:This module is still insufficiently tested
-        try:
-            if position>self._morphology_start_index and position<morphology_end_index:
-                raise NotImplementedError,"insertions not allowed in NodeCollection domain!"
-
-            if position>self._morphology_end_index:
-                pass
-
-            else:
-                self._morphology_start_index += increment
-                self._morphology_end_index += increment
-        except:
-            pass
     def _morphology_array_update(self,morphology_array):
         self._morphology_array = morphology_array
   
@@ -558,6 +549,10 @@ class SegmentCollection(MorphologyCollection):
     @property
     def vertices(self):
         return self._morphology_array.vertices[self._morphology_start_index:self._morphology_end_index+1]
+
+    @property
+    def morphology(self):
+        return SegmentCollection(self._morphology_array)
         
 class Segment(MorphologyCollection):
     """
