@@ -23,6 +23,44 @@ AUTHORS:
 import math
 import numpy as np
 
+class Network(object):
+    def __init__(self):
+        pass
+
+
+class PointCurrent(object):
+    def __init__(self):
+        pass
+
+
+class IonChannel(object):
+    def __init__(self):
+        pass
+
+
+class Synapse(object):
+    def __init__(self):
+        pass
+
+class ExtracellularProperties(object):
+    def __init__(self):
+        pass
+
+
+class Morphology(object):
+    def __init__(self,whole_segment_group):
+        self.__whole_segment_group=segment_group
+
+        
+class Cell(object):
+    def __init__(self,morphology=None,biophysical_properties=None,
+               notes=None):
+
+        self.morphology=morphology
+        self.biophysical_properties=biophysical_properties
+        self.notes=notes
+
+  
 class MorphologyArray(object):
     """Provides the core of the array-based object model backend.
 
@@ -67,7 +105,7 @@ class MorphologyArray(object):
         self.connectivity = np.array(connectivity)
         self.vertices = np.array(vertices)
 
-        if physical_mask != None:
+        if physical_mask != None():
             self._physical_mask=np.array(physical_mask)
         else:
             self._physical_mask=np.zeros(len(connectivity),dtype='bool')
@@ -507,7 +545,7 @@ class NodeCollection(MorphologyCollection):
         return self._morphology_array.vertices[self._morphology_start_index:self._morphology_end_index+1]
     
 
-class SegmentCollection(MorphologyCollection):
+class SegmentGroup(MorphologyCollection):
     """
     Iterable container of segments
     """

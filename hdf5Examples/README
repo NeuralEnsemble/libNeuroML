@@ -57,4 +57,14 @@ the file small (<1 Mb). Remember, we are looking only for an example here.
   ideas/padraig/generatedFromV2Schema/ to load the XML and ideas/padraig/hdf5tests/NeuroMLH5.py
   to write HDF5 with a points & a segments array
 
+- moogli_mitral.h5
+
+  The format preserves the hierarchical structure within the hdf5 file. If
+  and when there is relevant time-series data it is named accordingly (The
+  nomenclature is not fixed -one can call it Vm or V, Ca or CaConc) as
+  arrays. In addition, the corresponding NeuroML file is added outside the
+  tree structure as a string. I am not sure how to go about with spike time
+  data and network connections yet.
+
+
  

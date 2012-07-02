@@ -15,6 +15,18 @@ import numpy as np
 import neuroml.morphology as ml
 from neuroml.morphology import MorphologyArray
 
+   
+class NeuroMLDocument(object):
+    def __init__(self,cells=None,morphologies=None,networks=None,
+                 ion_channels=None,synapses=None,extracellular_properties=None):
+
+        self.cells=cells
+        self.morphologies=morphologies
+        self.networks=networks
+        self.ion_channels=ion_channels
+        self.synapses=synapses
+        self.extracellular_properties=extracellular_properties
+
 class NeuroMLLoader(object):
 
     @classmethod
@@ -103,22 +115,20 @@ class NeuroMLLoader(object):
 
         nml2_doc=cls.__nml2_doc(src)
 
-        #this is temporary, will need to get an array of cells
-        cell = nml2_doc.cell[0]
-        morph = cell.morphology
-        segments = morph.segment  # not segments, this is a limitation of the code that generateDS.py creates...
-
-        vertices,id_to_index,id_to_fraction_along,id_to_parent_id = cls.__load_vertices(segments)
-
-        connectivity,fractions_along = cls.__connectivity(id_to_index,id_to_fraction_along,vertices,id_to_parent_id)
-
-        #Haven't completely thought this through, is this always valid?:
-        physical_mask=np.tile([1,0],len(connectivity)/2)
-        
-        morph_array = MorphologyArray(vertices,connectivity,fractions_along=fractions_along,
-                                      physical_mask=physical_mask)
-
-        return ml.SegmentCollection(morph_array)
+        cells_array=[]
+        for cell in nml2_doc.cell:
+            morph = cell.morphology
+            segments = morph.segment  # not segments, limitation of the code that generateDS.py creates...
+            vertices,id_to_index,id_to_fraction_along,id_to_parent_id = cls.__load_vertices(segments)
+            connectivity,fractions_along = cls.__connectivity(id_to_index,id_to_fraction_along,vertices,
+                                                             id_to_parent_id)
+            physical_mask=np.tile([1,0],len(connectivity)/2) #Is this always valid?
+            morph_array = MorphologyArray(vertices,connectivity,fractions_along=fractions_along,
+                                          physical_mask=physical_mask)
+            segment_group=ml.SegmentGroup(morph_array)
+            ml_cell=ml.Cell(segment_group)
+            cells_array.append(ml_cell)
+        return NeuroMLDocument(cells=cells_array)
 
 class SWCLoader(object):
     
@@ -162,7 +172,7 @@ class SWCLoader(object):
             else:
                 connection_indices[i]=-1
 
-        #This needs to become a SegmentCollection
+        #This needs to become a SegmentGroup
         return MorphologyArray(vertices=vertices, 
                               connectivity=connection_indices, 
                               name=name )
