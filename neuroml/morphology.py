@@ -66,7 +66,6 @@ class MorphologyArray(object):
 
         self.connectivity = np.array(connectivity)
         self.vertices = np.array(vertices)
-        self.name = name
 
         if physical_mask != None:
             self._physical_mask=np.array(physical_mask)
