@@ -17,9 +17,8 @@ Prototype for object model backend for the libNeuroML project
 AUTHORS:
 
 - Mike Vella: initial version
-- Mike Hull - Large parts of MorphologyArray and SWCLoader
+- Mike Hull - Large parts of Backend and SWCLoader
 """
-
 import math
 import numpy as np
 
@@ -60,24 +59,24 @@ class Backend(object):
     The connectivity array is a list of indices pointing to which
     other element an element is attached. So for instance,
     connectivity[3] is an integer with the index of the section
-    it refers to in the MorphologyArray
+    it refers to in the Backend
 
     -note on Nodes::
     a Node class is provided (see further down) however this
     does not result in a tree-based object model. Rather, the section
-    objects manipulate the MorphologyArray backend in a way that 
+    objects manipulate the Backend backend in a way that 
     is invisible to the user. The user may still use the 
-    MorphologyArray class, depending on their needs.
+    Backend class, depending on their needs.
 
-    MorphologyArray[i] returns the Node object relating to
+    Backend[i] returns the Node object relating to
     element i
 
     Because segments exist in memory independently of the,
-    MorphologyArray, a MorphologyArray must keep a register
+    Backend, a Backend must keep a register
     of all the segments which handle its elements. These
-    are updated when their information changes via a MorphologyArray
+    are updated when their information changes via a Backend
     operation such as the indices changing when a connection
-    to a new MorphologyArray is made and indices all change.
+    to a new Backend is made and indices all change.
     """
 
     def __init__(self,vertices,connectivity,node_types=None,
@@ -173,7 +172,7 @@ class Backend(object):
     #and into respective component classes
     def pop(self,index):
         """
-        Deletes a node from the MorphologyArray, its children become
+        Deletes a node from the Backend, its children become
         children of the deleted node's parent.
         """    
 
@@ -244,7 +243,7 @@ class ComponentObserver(object):
     def segment_observed(self,i):
        for component in self.components:
            try:
-               if component.dist._index == i:
+               if component.distal._index == i:
                    return True
            except AttributeError, e:
                pass
@@ -335,7 +334,7 @@ class Node(MorphologyComponent):
         #make the morphology and register this section to it
         connectivity=np.array([-1],dtype = 'int32')
 
-        backend=MorphologyArray(vertices = [vertex],
+        backend=Backend(vertices = [vertex],
                                         connectivity = connectivity,
                                         node_types = node_type)
 
@@ -384,7 +383,7 @@ class Node(MorphologyComponent):
     def __parent_id(self):
         return self._backend.parent_id(self._index)
 
-    @__parent_id.setter
+    @__parent_id.setter #ought not be here, why have a setter on this?
     def __parent_id(self,index):
         self.__morphology.connectivity[self._index]=index
 
@@ -406,8 +405,12 @@ class Node(MorphologyComponent):
         #ensure this node isn't already in the same morphology as parent:
         assert self.in_morphology(parent) == False, 'Parent node already in morphology!'        
 
+        #this was decided against in 25/06/12 June UCL meeting
         #node needs to be root of its backend to attach
-        if not self.__is_root: self._backend.to_root(self._index)
+        #if not self.__is_root: self._backend.to_root(self._index)
+        #instead replaced with:
+    
+        assert(self.__is_root,'attaching node must be root')
 
         #everything should now be handled including the observer's tasks
         parent._morphadopt(child_morphology = self._backend)
@@ -583,30 +586,30 @@ class Segment(MorphologyCollection):
 
     """
 
-    def __init__(self,length=100,r1=10,r2=None,
+    def __init__(self,length=100,proximal_diameter=10,distal_diameter=None,
                 segment_type=None,name=None,
                 dist=None):
    
-        if r2 == None:r2 = r1
+        if distal_diameter == None:distal_diameter = proximal_diameter
         
         self.segment_type = segment_type
         self.name = name
 
         #node as an argument:
         if dist != None:
-            self.dist = dist
-            self.prox = dist.parent
+            self.distal = dist
+            self.proximal = dist.parent
         else:
-            prox = np.array([0.0,0.0,0.0,r1])
-            dist = np.array([0.0,0.0,length,r2])
-            self.prox = Node(prox,node_type = segment_type)
-            self.dist = Node(dist,node_type = segment_type)
-            self.dist.attach(self.prox)
+            prox = np.array([0.0,0.0,0.0,proximal_diameter])
+            dist = np.array([0.0,0.0,length,distal_diameter])
+            self.proximal = Node(prox,node_type = segment_type)
+            self.distal = Node(dist,node_type = segment_type)
+            self.distal.attach(self.proximal)
 
-        self._backend = self.dist._backend
+        self._backend = self.distal._backend
         self._backend.observer.observe(self)
-        self._backend.observer.observe(self.dist)
-        self._backend.observer.observe(self.prox)
+        self._backend.observer.observe(self.distal)
+        self._backend.observer.observe(self.proximal)
 
     def _index_update(self,*args):
         #should be no need as nodes are updated themselves?
@@ -619,18 +622,18 @@ class Segment(MorphologyCollection):
     @property
     def _index(self):
         #at the moment using dist, this needs to be changed to prox for the whole class
-        return self.dist._index
+        return self.distal._index
     @property
-    def r1(self):
-        return self.prox.radius
+    def proximal_diameter(self):
+        return self.proximal.radius
 
     @property
-    def r2(self):
-        return self.prox.radius
+    def distal_diameter(self):
+        return self.proximal.radius
 
     @property
     def length(self):
-        displacement = self.prox.vertex - self.dist.vertex        
+        displacement = self.proximal.vertex - self.distal.vertex        
         return math.sqrt(sum(displacement ** 2))
     
     @length.setter
@@ -639,35 +642,51 @@ class Segment(MorphologyCollection):
 
     @property
     def index(self):
-        return (self.prox,self.dist)
+        return (self.proximal,self.distal)
 
     @property
     def morphology(self):
         #need to stop user from being able to set length etc
-        return self.dist.morphology
+        return self.distal.morphology
 
     @property
     def slant_height(self):
-        r = self.r1
-        R = self.r2
+        r = self.proximalimal_diameter
+        R = self.distalal_diameter
         s = math.sqrt((r - R) ** 2 + self.length ** 2)
         return s
 
     @property
     def lateral_area(self):
-        lsa = math.pi * (self.r1 + self.r2) * self.slant_height
+        lsa = math.pi * (self.proximalimal_diameter + self.distalal_diameter) * self.slant_height
         return lsa
 
     @property
     def total_area(self):
         lsa = self.lateral_area
-        end_areas = math.pi * (self.r1 ** 2 + self.r2 ** 2)
+        end_areas = math.pi * (self.proximalimal_diameter ** 2 + self.distalal_diameter ** 2)
         return lsa+end_areas
 
     @property
+    def parent(self):
+       #this isn't accounting for virtual segments...
+       parent_node=self.distal.parent 
+       grandparent_node=parent_node.parent
+       return Segment(dist=grandparent_node)
+
+    @property
+    def parent_id(self):
+        #also needs to account for existence of virtual segments
+        #currently it's assuming the extreme presence ie virtual segment
+        #exists between every segment
+        parent_node=self.distal.parent
+        grandparent_node=parent_node.parent
+        return grandparent_node._index
+
+    @property
     def volume(self):
-        r = self.r1
-        R = self.r2
+        r = self.proximalimal_diameter
+        R = self.distalal_diameter
         V = (math.pi * self.length / 3.0) * (R ** 2 + r ** 2 + R * r)
         return V
 
@@ -681,7 +700,7 @@ class Segment(MorphologyCollection):
         Currently a lot of this simply won't work
         because a node needs to be a root for the
         attach() method to work. We need a method
-        in the MorphologyArray class to make
+        in the Backend class to make
         transform the array and make any node into
         the root of that array.
 
@@ -692,11 +711,11 @@ class Segment(MorphologyCollection):
         some thinking to decide exactly how to implement
         this as it might mess up NodeCollections.
         """
-        self.dist.attach(segment.prox)
+        self.distal.attach(segment.proximal)
 
 class Cylinder(Segment):
     """
-    A special case of segment where r1 = r2...TBC
+    A special case of segment where proximal_diameter = distal_diameter...TBC
     """
     def __init__(self):
         pass

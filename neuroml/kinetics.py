@@ -11,22 +11,27 @@
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #-------------------------------------------------------------------------------
 
-class PointCurrent(object):
+class KineticComponent(object):
     def __init__(self):
         pass
 
 
-class IonChannel(object):
+class PointCurrent(KineticComponent):
     def __init__(self):
         pass
 
 
-class Synapse(object):
+class IonChannel(KineticComponent):
     def __init__(self):
         pass
 
 
-class ExtracellularProperties(object):
+class Synapse(KineticComponent):
+    def __init__(self):
+        pass
+
+
+class ExtracellularProperties(KineticComponent):
     def __init__(self):
         pass
 
@@ -36,4 +41,8 @@ class IClamp(PointCurrent):
         self.current=current
         self.delay=delay
         self.duration=duration
-        self.fraction_along=fraction_along
+
+        if fraction_along != None:
+            self.fraction_along=fraction_along
+        else:
+            self.fraction_along=0.5

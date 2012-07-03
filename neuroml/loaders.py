@@ -13,7 +13,7 @@
 
 import numpy as np
 import neuroml.morphology as ml
-from neuroml.morphology import MorphologyArray
+from neuroml.morphology import Backend
 
    
 class NeuroMLDocument(object):
@@ -123,7 +123,7 @@ class NeuroMLLoader(object):
             connectivity,fractions_along = cls.__connectivity(id_to_index,id_to_fraction_along,vertices,
                                                              id_to_parent_id)
             physical_mask=np.tile([1,0],len(connectivity)/2) #Is this always valid?
-            morph_array = MorphologyArray(vertices,connectivity,fractions_along=fractions_along,
+            morph_array = Backend(vertices,connectivity,fractions_along=fractions_along,
                                           physical_mask=physical_mask)
             segment_group=ml.SegmentGroup(morph_array)
             ml_cell=ml.Cell(segment_group)
@@ -173,6 +173,6 @@ class SWCLoader(object):
                 connection_indices[i]=-1
 
         #This needs to become a SegmentGroup
-        return MorphologyArray(vertices=vertices, 
+        return Backend(vertices=vertices, 
                               connectivity=connection_indices, 
                               name=name )
