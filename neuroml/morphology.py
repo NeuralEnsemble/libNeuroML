@@ -101,13 +101,17 @@ class Backend(object):
             self.fractions_along=np.zeros(len(connectivity),
                                          dtype='int32')
 
-        #validity test:
+
+        assert(self.valid_morphology,'invalid_morphology')
+
+        self.observer = ComponentObserver()
+
+    @property
+    def valid_morphology(self):
         M = self.vertices.shape[0]
         N = self.connectivity.shape[0]
         P = self.node_types.shape[0]
-        assert N == M == P,'Invalid morphology'
-
-        self.observer = ComponentObserver()
+        return(N == M == P)
 
     @property
     def root_index(self):
@@ -252,7 +256,7 @@ class ComponentObserver(object):
     def node_observed(self,i):
        for component in self.components:
            try:
-               if segment._index == i:
+               if component._index == i:
                    return True
            except AttributeError, e:
                pass
@@ -356,9 +360,19 @@ class Node(MorphologyComponent):
     def parent(self):
         return self._backend[self.__parent_id]
 
+    @property
+    def fraction_along(self):
+        fraction_along=self.fractions_along[self._index]
+        return fraction_along
+
+    @fraction_along.setter
+    def fraction_along(self,fraction_along):
+        self._backend.fractions_along[self._index]=fraction_along
+      
     @morphology.setter
     def morphology(self,morphology):
         raise NotImplementedError,"this probably won't be allowed..."
+
     @property
     def x(self):
         return self.vertex[0]
@@ -394,26 +408,35 @@ class Node(MorphologyComponent):
         """
         return self.__parent_id == -1
 
-    def attach(self,parent):
+    def attach(self,child):
         """
-        attach this node to a new parent
+        Attach this node to a new child
+        """        
 
-        This is done by attaching the child morphology 
-        to the parent morphology and delting the child morphology
-        """
+        assert self.in_morphology(child) == False, 'Parent node already in morphology!'        
 
-        #ensure this node isn't already in the same morphology as parent:
-        assert self.in_morphology(parent) == False, 'Parent node already in morphology!'        
+        self._morphadopt(child_morphology = child._backend)
 
-        #this was decided against in 25/06/12 June UCL meeting
-        #node needs to be root of its backend to attach
-        #if not self.__is_root: self._backend.to_root(self._index)
-        #instead replaced with:
+#    def attach(self,parent):
+#        """
+#        attach this node to a new parent
+
+#        This is done by attaching the child morphology 
+#        to the parent morphology and delting the child morphology
+#        """
+
+#        #ensure this node isn't already in the same morphology as parent:
+#        assert self.in_morphology(parent) == False, 'Parent node already in morphology!'        
+
+#        #this was decided against in 25/06/12 June UCL meeting
+#        #node needs to be root of its backend to attach
+#        #if not self.__is_root: self._backend.to_root(self._index)
+#        #instead replaced with:
     
-        assert(self.__is_root,'attaching node must be root')
-
-        #everything should now be handled including the observer's tasks
-        parent._morphadopt(child_morphology = self._backend)
+#        assert(self.__is_root,'attaching node must be root')
+#
+#        #everything should now be handled including the observer's tasks
+#        parent._morphadopt(child_morphology = self._backend)
 
     def shift_attach(self,parent):
         """
@@ -472,6 +495,15 @@ class MorphologyCollection(MorphologyComponent):
 
     def _index_update(self,position,increment):
         raise NotImplementedError,'This collection requires an index updater'
+
+    @property
+    def root_segment(self):
+        """
+        Returns the root segment for the morphology
+        """
+        root_node=self._backend.root_node
+        return Segment(root_node)
+
 
 class NodeCollection(MorphologyCollection):
     """
@@ -555,7 +587,7 @@ class SegmentGroup(MorphologyCollection):
             return self._backend.observer.segment(segment_index)
         else:
             distal_node=self._backend[segment_index]
-            return Segment(dist=distal_node)
+            return Segment(distal_node=distal_node)
         
     def __len__(self):
         return self._morphology_end_index-self._morphology_start_index
@@ -573,8 +605,9 @@ class SegmentGroup(MorphologyCollection):
 
     @property
     def morphology(self):
-        return SegmentCollection(self._backend)
-        
+        return SegmentGroup(self._backend)
+
+ 
 class Segment(MorphologyCollection):
     """
     In the process of implementing, this class will
@@ -588,17 +621,11 @@ class Segment(MorphologyCollection):
 
     def __init__(self,length=100,proximal_diameter=10,distal_diameter=None,
                 segment_type=None,name=None,
-                dist=None):
+                distal_node=None):
    
-        if distal_diameter == None:distal_diameter = proximal_diameter
-        
-        self.segment_type = segment_type
-        self.name = name
+        if distal_node != None:
+            self._from_node(distal_node)
 
-        #node as an argument:
-        if dist != None:
-            self.distal = dist
-            self.proximal = dist.parent
         else:
             prox = np.array([0.0,0.0,0.0,proximal_diameter])
             dist = np.array([0.0,0.0,length,distal_diameter])
@@ -606,13 +633,25 @@ class Segment(MorphologyCollection):
             self.distal = Node(dist,node_type = segment_type)
             self.distal.attach(self.proximal)
 
-        self._backend = self.distal._backend
-        self._backend.observer.observe(self)
-        self._backend.observer.observe(self.distal)
-        self._backend.observer.observe(self.proximal)
+        if distal_diameter == None:distal_diameter = proximal_diameter
+        
+        self.segment_type = segment_type
+        self.name = name
 
+        self._backend = self.proximal._backend
+        self._backend.observer.observe(self)
+
+    def _from_node(self,distal_node):
+        #now need to check with observer if segment has been
+        #instantiated, if it has I think throw an error for now?
+        self.distal = distal_node
+        self.proximal = distal_node.parent
+        
     def _index_update(self,*args):
-        #should be no need as nodes are updated themselves?
+        """
+        Should be no need for this method as nodes are updated
+        themselves by the observer
+        """
         pass
 
     def insert(self,kinetic_component):
@@ -622,7 +661,8 @@ class Segment(MorphologyCollection):
     @property
     def _index(self):
         #at the moment using dist, this needs to be changed to prox for the whole class
-        return self.distal._index
+        return self.proximal._index
+
     @property
     def proximal_diameter(self):
         return self.proximal.radius
@@ -646,7 +686,6 @@ class Segment(MorphologyCollection):
 
     @property
     def morphology(self):
-        #need to stop user from being able to set length etc
         return self.distal.morphology
 
     @property
@@ -690,7 +729,7 @@ class Segment(MorphologyCollection):
         V = (math.pi * self.length / 3.0) * (R ** 2 + r ** 2 + R * r)
         return V
 
-    def attach(self,segment,position=None):
+    def attach(self,segment_group,fraction_along=0.0):
         """        
         Position is not implemented until we
         decide exactly what it means, right now
@@ -711,7 +750,11 @@ class Segment(MorphologyCollection):
         some thinking to decide exactly how to implement
         this as it might mess up NodeCollections.
         """
-        self.distal.attach(segment.proximal)
+        #this could be handled by a COR, first try a cell, then a morphology etc,
+        #or perhaps we can think of something smarter?
+        root_segment=segment_group.root_segment
+        self.distal.attach(root_segment.proximal)
+        self.distal.fraction_along=fraction_along
 
 class Cylinder(Segment):
     """
