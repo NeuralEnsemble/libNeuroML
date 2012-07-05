@@ -61,37 +61,52 @@ Mike will continue on this (almost) full time for the next 2 months.
 
 Following the meeting, he will perform a refactoring operation on the code base to better reflect the names used in NeuroML, e.g.
 
-    -neuroml_doc
-        -cells
-            -morphology # not entirely sure how this works- contains segment groups and is itself a segment group?
-                -segments
-                -segment_groups
-                    -segment_groups
-            -biophysical_properties
-            -notes
-        -morphologies
-        -networks
-        -point currents
-        -ion channels
-        -synapses
-        -extracellular properties
+    neuroml_doc
+
+        cells
+
+            morphology # not entirely sure how this works- contains segment groups and is itself a segment group?
+
+                segments
+
+                segment_groups
+
+                    segment_groups
+
+            biophysical_properties
+
+            notes
+
+        morphologies
+
+        networks
+
+        point currents
+
+        ion channels
+
+        synapses
+
+        extracellular properties
 
 It was also decided that certain SegmentGroup names should have reserved names in libNeuroML, the exact implementation of this is undecided:
 
-segment groups with reserved names
-    name                
-    soma_group
-    axon_group
-    apical_dendrite_group
-    basal_dendrite_group
+Segment groups with reserved names:
+    |    soma_group
+    |    axon_group
+    |    apical_dendrite_group
+    |    basal_dendrite_group
 
 It was also decided that a segment should only be able to connect to the root of a morphology, the syntax should be something along the lines of:
 
--segment can only connect to root of a morphology
+segment can only connect to root of a morphology
 
     connect syntax examples:
+
         morph2.attach(2,cell2,0.5) (default frac along = None)
+
         and:
+
         morph[2].attach(cell2,0.5)
 
 Mike V was asked to add a clone method to a morphology.
