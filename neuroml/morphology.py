@@ -410,33 +410,34 @@ class Node(MorphologyComponent):
 
     def attach(self,child):
         """
-        Attach this node to a new child
+        Attach this node to a new child, attach another morphology to this one.
         """        
 
-        assert self.in_morphology(child) == False, 'Parent node already in morphology!'        
+        assert(self.in_morphology(child) == False,'Parent node already in morphology!')
 
-        self._morphadopt(child_morphology = child._backend)
+        child_backend = child._backend
 
-#    def attach(self,parent):
-#        """
-#        attach this node to a new parent
+        self._backend.vertices = np.append(self._backend.vertices,child_backend.vertices,axis=0)
 
-#        This is done by attaching the child morphology 
-#        to the parent morphology and delting the child morphology
-#        """
+        #increment and append connectivity
+        num_parent_nodes = len(self._backend.connectivity)
+        new_connectivity = np.copy(child_backend.connectivity)
+        new_connectivity += num_parent_nodes
+        new_connectivity[child_backend.root_index] = self._index
+        self._backend.connectivity = np.append(self._backend.connectivity,
+                                    new_connectivity,axis = 0)
 
-#        #ensure this node isn't already in the same morphology as parent:
-#        assert self.in_morphology(parent) == False, 'Parent node already in morphology!'        
+        #add new node types to morphology
+        self._backend.node_types=np.append(self._backend.node_types,
+                                    child_backend.node_types,axis = 0)
 
-#        #this was decided against in 25/06/12 June UCL meeting
-#        #node needs to be root of its backend to attach
-#        #if not self.__is_root: self._backend.to_root(self._index)
-#        #instead replaced with:
-    
-#        assert(self.__is_root,'attaching node must be root')
-#
-#        #everything should now be handled including the observer's tasks
-#        parent._morphadopt(child_morphology = self._backend)
+        #tell child observer what to update
+        child_backend.observer.index_update(0,num_parent_nodes)
+        child_backend.observer.backend_update(self._backend)
+
+        #tell parent observer to observe instantiated components of child:
+        for component in child_backend.observer.components:
+            self._backend.observer.observe(component)
 
     def shift_attach(self,parent):
         """
@@ -458,33 +459,7 @@ class Node(MorphologyComponent):
         translation_vector=self.vertex[0:3]-origin
         self.morphology.vertices[:,0:3]-=translation_vector
 
-    def _morphadopt(self,child_morphology):
-        """
-        Attach another morphology to this one.
-        """
-
-        self._backend.vertices = np.append(self._backend.vertices,child_morphology.vertices,axis=0)
-
-        #increment and append connectivity
-        num_parent_nodes = len(self._backend.connectivity)
-        new_connectivity = np.copy(child_morphology.connectivity)
-        new_connectivity += num_parent_nodes
-        new_connectivity[child_morphology.root_index] = self._index
-        self._backend.connectivity = np.append(self._backend.connectivity,
-                                    new_connectivity,axis = 0)
-
-        #add new node types to morphology
-        self._backend.node_types=np.append(self._backend.node_types,
-                                    child_morphology.node_types,axis = 0)
-
-        #tell child observer what to update
-        child_morphology.observer.index_update(0,num_parent_nodes)
-        child_morphology.observer.backend_update(self._backend)
-
-        #tell parent observer to observe instantiated components of child:
-        for component in child_morphology.observer.components:
-            self._backend.observer.observe(component)
-      
+     
 class MorphologyCollection(MorphologyComponent):
     """
     Subclasses are iterable visitors, more documentation
@@ -502,7 +477,7 @@ class MorphologyCollection(MorphologyComponent):
         Returns the root segment for the morphology
         """
         root_node=self._backend.root_node
-        return Segment(root_node)
+        return Segment(proximal_node=root_node)
 
 
 class NodeCollection(MorphologyCollection):
@@ -586,8 +561,8 @@ class SegmentGroup(MorphologyCollection):
         if self._backend.observer.segment_observed(segment_index):
             return self._backend.observer.segment(segment_index)
         else:
-            distal_node=self._backend[segment_index]
-            return Segment(distal_node=distal_node)
+            proximal_node=self._backend[segment_index]
+            return Segment(proximal_node = proximal_node)
         
     def __len__(self):
         return self._morphology_end_index-self._morphology_start_index
@@ -621,10 +596,10 @@ class Segment(MorphologyCollection):
 
     def __init__(self,length=100,proximal_diameter=10,distal_diameter=None,
                 segment_type=None,name=None,
-                distal_node=None):
+                proximal_node=None):
    
-        if distal_node != None:
-            self._from_node(distal_node)
+        if proximal_node != None:
+            self._from_node(proximal_node)
 
         else:
             prox = np.array([0.0,0.0,0.0,proximal_diameter])
@@ -632,20 +607,20 @@ class Segment(MorphologyCollection):
             self.proximal = Node(prox,node_type = segment_type)
             self.distal = Node(dist,node_type = segment_type)
             self.distal.attach(self.proximal)
-
-        if distal_diameter == None:distal_diameter = proximal_diameter
+            if distal_diameter == None:distal_diameter = proximal_diameter
         
         self.segment_type = segment_type
         self.name = name
 
+        #this should be handled by the nodes:
         self._backend = self.proximal._backend
         self._backend.observer.observe(self)
 
-    def _from_node(self,distal_node):
+    def _from_node(self,proximal_node):
         #now need to check with observer if segment has been
         #instantiated, if it has I think throw an error for now?
-        self.distal = distal_node
-        self.proximal = distal_node.parent
+        self.proximal = proximal_node
+        self.distal = proximal_node.parent
         
     def _index_update(self,*args):
         """
@@ -658,6 +633,9 @@ class Segment(MorphologyCollection):
         kinetic_component._index = self._index
         self._backend.observer.observe(kinetic_component)
 
+    @property
+    def _backend(self):
+        return self.proximal._backend
     @property
     def _index(self):
         #at the moment using dist, this needs to be changed to prox for the whole class
@@ -729,7 +707,7 @@ class Segment(MorphologyCollection):
         V = (math.pi * self.length / 3.0) * (R ** 2 + r ** 2 + R * r)
         return V
 
-    def attach(self,segment_group,fraction_along=0.0):
+    def attach(self,morphology_component,fraction_along=0.0):
         """        
         Position is not implemented until we
         decide exactly what it means, right now
@@ -750,9 +728,8 @@ class Segment(MorphologyCollection):
         some thinking to decide exactly how to implement
         this as it might mess up NodeCollections.
         """
-        #this could be handled by a COR, first try a cell, then a morphology etc,
-        #or perhaps we can think of something smarter?
-        root_segment=segment_group.root_segment
+
+        root_segment=morphology_component.root_segment
         self.distal.attach(root_segment.proximal)
         self.distal.fraction_along=fraction_along
 
