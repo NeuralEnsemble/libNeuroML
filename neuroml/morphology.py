@@ -299,6 +299,19 @@ class MorphologyComponent(object):
         """True if the node is a member of the morphology"""
         return component in self._backend.observer.components
 
+    def attach(self,morphology_component):
+        """
+        Default is to attach with the root
+        """
+
+        #this should be uprgraded to root node
+        child_root_node=morphology_component.root_node
+        self.root_node.attach(child_root_node)
+
+    @property
+    def root_node(self):
+        return self._backend.root_node
+
 class Node(MorphologyComponent):
     """
     The idea of the Node class is to provide a user with a natural
@@ -350,11 +363,37 @@ class Node(MorphologyComponent):
             self._index += increment
 
     @property
+    def physical_connection(self):
+        """
+        Returns whether connection to parent is physical (segment-forming)
+        or virtual
+        """
+        return self._backend._physical_mask[self._index] == 0
+    
+    @physical_connection.setter
+    def physical_connection(self,physical):
+        if physical:
+            self._backend._physical_mask[self._index] = 0
+        else:
+            self._backend._physical_mask[self._index] = 1
+            
+    @property
     def morphology(self):
         """
         Return a node collection
         """
         return NodeCollection(self._backend)
+
+    @property
+    def children(self):
+        """
+        Returns children nodes
+        """
+        child_indices=self._backend.children(self._index)
+        child_nodes=[]
+        for index in child_indices:
+            child_nodes.append(self._backend[index])
+        return child_nodes
 
     @property
     def parent(self):
@@ -431,6 +470,14 @@ class Node(MorphologyComponent):
         self._backend.node_types=np.append(self._backend.node_types,
                                     child_backend.node_types,axis = 0)
 
+        #add new fractions_along to morphology
+        self._backend.fractions_along=np.append(self._backend.fractions_along,
+                                    child_backend.fractions_along,axis = 0)
+
+        #add new physical mask
+        self._backend._physical_mask=np.append(self._backend._physical_mask,
+                                    child_backend._physical_mask,axis = 0)
+
         #tell child observer what to update
         child_backend.observer.index_update(0,num_parent_nodes)
         child_backend.observer.backend_update(self._backend)
@@ -476,8 +523,9 @@ class MorphologyCollection(MorphologyComponent):
         """
         Returns the root segment for the morphology
         """
-        root_node=self._backend.root_node
-        return Segment(proximal_node=root_node)
+        root_node = self._backend.root_node
+        child_nodes = root_node.children
+        return Segment(proximal_node=child_nodes[0])
 
 
 class NodeCollection(MorphologyCollection):
@@ -540,8 +588,8 @@ class SegmentGroup(MorphologyCollection):
     """
     Iterable container of segments
     """
-    def __init__(self,morphology):
-        self._backend=morphology
+    def __init__(self,backend):
+        self._backend=backend
         self._morphology_segment_indices = self._backend.physical_indices
         self._backend.observer.observe(self)
 
@@ -594,9 +642,8 @@ class Segment(MorphologyCollection):
 
     """
 
-    def __init__(self,length=100,proximal_diameter=10,distal_diameter=None,
-                segment_type=None,name=None,
-                proximal_node=None):
+    def __init__(self,length=100,proximal_diameter=10.0,distal_diameter=10.0,
+                segment_type=None,name=None,proximal_node=None):
    
         if proximal_node != None:
             self._from_node(proximal_node)
@@ -607,14 +654,18 @@ class Segment(MorphologyCollection):
             self.proximal = Node(prox,node_type = segment_type)
             self.distal = Node(dist,node_type = segment_type)
             self.distal.attach(self.proximal)
+            self.distal.physical_connection = False
             if distal_diameter == None:distal_diameter = proximal_diameter
         
         self.segment_type = segment_type
         self.name = name
 
-        #this should be handled by the nodes:
-        self._backend = self.proximal._backend
-        self._backend.observer.observe(self)
+        #this should be handled by the nodes?
+        #or should it? if a segment has been instantiated
+        #it needs to be observed in order to be returned
+        #again once the user requests it
+        #self._backend = self.proximal._backend
+        #self._backend.observer.observe(self)
 
     def _from_node(self,proximal_node):
         #now need to check with observer if segment has been
@@ -636,6 +687,7 @@ class Segment(MorphologyCollection):
     @property
     def _backend(self):
         return self.proximal._backend
+
     @property
     def _index(self):
         #at the moment using dist, this needs to be changed to prox for the whole class
@@ -647,7 +699,7 @@ class Segment(MorphologyCollection):
 
     @property
     def distal_diameter(self):
-        return self.proximal.radius
+        return self.distal.radius
 
     @property
     def length(self):
@@ -664,7 +716,7 @@ class Segment(MorphologyCollection):
 
     @property
     def morphology(self):
-        return self.distal.morphology
+        return SegmentGroup(self._backend)
 
     @property
     def slant_height(self):
@@ -728,10 +780,12 @@ class Segment(MorphologyCollection):
         some thinking to decide exactly how to implement
         this as it might mess up NodeCollections.
         """
-
+        #this should be uprgraded to root node
+        #need to also sort out the physical mask?
         root_segment=morphology_component.root_segment
-        self.distal.attach(root_segment.proximal)
-        self.distal.fraction_along=fraction_along
+        root_segment.distal.physical_connection = False
+        self.proximal.attach(root_segment)
+        self.proximal.fraction_along=fraction_along
 
 class Cylinder(Segment):
     """
