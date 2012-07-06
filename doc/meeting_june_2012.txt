@@ -49,7 +49,6 @@ API from segmentGroup. The outcome was not fully resolved, but as a first test o
 new attribute to NeuroML, Mike V will add a flag (boolean?) to the API, and at a later point, when the API begins to
 interact with native simulators, we can reevaluate the usefulness of the term.
 
-(Padraig: these are my recollections, please edit if you have a different idea of the agreements...)
 
 
 Mike Vella's current implementation
