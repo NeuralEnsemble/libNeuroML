@@ -162,12 +162,14 @@ class Backend(object):
        return self.vertices[index]
 
     def __getitem__(self,i):
-        node = Node(vertex = [self.vertices[i]],node_type=[self.node_types[i]])
-        #prepare and register the node:
-        node._index = i
-        node._backend = self
-        self.observer.observe(node)
-        return node
+        if self.observer.node_observed(i):
+            return self.observer.node(i)
+        else:
+            node = Node(vertex = [self.vertices[i]],node_type=[self.node_types[i]])
+            node._index = i
+            node._backend = self
+            self.observer.observe(node)
+            return node
 
     def __len__(self):
         return len(self.connectivity)
@@ -227,10 +229,14 @@ class ComponentObserver(object):
 
     def __init__(self):
         self.components = np.array([])
+        self.segments = {} #proximal node is key
       
     def observe(self,component):
         self.components = np.append(self.components,component)
      
+    def observe_segment(self,segment):
+        self.segments[segment.proximal] = segment
+
     def deobserve(self):
         i = np.where(self.components == component)[0][0]
         np.delete(self.components,i)
@@ -242,16 +248,19 @@ class ComponentObserver(object):
     def backend_update(self,backend):
         for component in self.components:
             component._backend = backend
+            
+    def segment_observed(self,segment):
+        return segment.proximal in self.segments
 
     #The following four methods may not be a smart way to do this
-    def segment_observed(self,i):
-       for component in self.components:
-           try:
-               if component.distal._index == i:
-                   return True
-           except AttributeError, e:
-               pass
-       return False
+#    def segment_observed(self,i):
+#       for component in self.components:
+#           try:
+#               if component.distal._index == i:
+#                   return True
+#           except AttributeError, e:
+#               pass
+#       return False
 
     def node_observed(self,i):
        for component in self.components:
@@ -606,11 +615,12 @@ class SegmentGroup(MorphologyCollection):
 
     def __getitem__(self,i):
         segment_index=self._morphology_segment_indices[i]
-        if self._backend.observer.segment_observed(segment_index):
-            return self._backend.observer.segment(segment_index)
-        else:
-            proximal_node=self._backend[segment_index]
-            return Segment(proximal_node = proximal_node)
+        proximal_node=self._backend[segment_index]
+        try:
+            segment = self._backend.observer.segments[proximal_node]
+        except:
+            segment = Segment(proximal_node = proximal_node)
+        return segment
         
     def __len__(self):
         return self._morphology_end_index-self._morphology_start_index
@@ -665,11 +675,9 @@ class Segment(MorphologyCollection):
         #it needs to be observed in order to be returned
         #again once the user requests it
         #self._backend = self.proximal._backend
-        #self._backend.observer.observe(self)
+        self._backend.observer.observe_segment(self)
 
     def _from_node(self,proximal_node):
-        #now need to check with observer if segment has been
-        #instantiated, if it has I think throw an error for now?
         self.proximal = proximal_node
         self.distal = proximal_node.parent
         
@@ -738,10 +746,19 @@ class Segment(MorphologyCollection):
 
     @property
     def parent(self):
-       #this isn't accounting for virtual segments...
-       parent_node=self.distal.parent 
-       grandparent_node=parent_node.parent
-       return Segment(dist=grandparent_node)
+       """
+       warning:
+       currently assuming all alternating segments have a virtual segment
+       between them!
+       """
+       parent_node=self.distal.parent
+#       if parent_node.physical_connection == False:
+#           parent_node = parent_node.parent
+#       grandparent_node=parent_node.parent
+       if parent_node._index == -1:
+           return None
+       else:
+           return Segment(proximal_node=parent_node)
 
     @property
     def parent_id(self):

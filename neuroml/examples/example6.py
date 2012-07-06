@@ -1,3 +1,9 @@
+"""
+In this example an axon is built, a morphology is loaded, the axon is
+then connected to the loadeed morphology. As of 6/7/12 this is working except
+for a bug in loading one of the nml segments - need to investigate
+"""
+
 import neuroml.loaders as loaders
 import neuroml.morphology as ml
 
@@ -11,24 +17,24 @@ iseg.attach(myelin1)
 myelin1.attach(node1)
 node1.attach(myelin2)
 myelin2.attach(node2)
-print #~~~#
-print 'physical indices:'
-print iseg._backend.physical_indices
-print 'physical mask:'
-print iseg._backend._physical_mask
-print 'connectivity:'
-print iseg._backend.connectivity
-print 'vertices:'
-print iseg._backend.vertices
 
-for seg in iseg.morphology:
-    print seg.proximal_diameter
+doc=loaders.NeuroMLLoader.load_neuroml('/home/mike/dev/libNeuroML/testFiles/NML2_FullCell.nml')
+cell=doc.cells[0]
+morphology=cell.morphology
+
+print 'Before attaching axon:'
+for i,seg in enumerate(morphology):
+    print 'segment '+str(i)+' distal diameter:'
     print seg.distal_diameter
 
-#doc=loaders.NeuroMLLoader.load_neuroml('/home/mike/dev/libNeuroML/testFiles/NML2_FullCell.nml')
-#cell=doc.cells[0]
-#morphology=cell.morphology
 
-#print morphology._backend.vertices
-#morphology.attach(iseg)
-#print morphology._backend.vertices
+morphology.attach(iseg)
+total_morphology=iseg.morphology
+print '\nAfter attaching axon:'
+for i,seg in enumerate(total_morphology):
+    print 'segment '+str(i)+' distal diameter:'
+    print seg.distal_diameter
+
+
+#now do a sanity test, the observer should guarantee that this returns true:
+print total_morphology[0] == total_morphology[0]
