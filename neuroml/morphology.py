@@ -230,13 +230,21 @@ class ComponentObserver(object):
 
     def __init__(self):
         self.components = np.array([])
-        self.segments = {} #proximal node is key
+        self.segments = {} #distal node is key
+        self.kinetic_components = []
       
     def observe(self,component):
         self.components = np.append(self.components,component)
      
     def observe_segment(self,segment):
         self.segments[segment.distal] = segment
+
+    #kinetic component still needs an update mechanism, this might not be a smart way of doing things:
+    def observe_kinetics(self,kinetic_component):
+        #this may not be a smart way to do things, may end up with a lot of instantiated segments,
+        #in fact, the smartest thing would definitely be to have each kinetic component store
+        #a list of indices for segments which it is located in, along with parameters
+        self.kinetic_components.append((kinetic_component,kinetic_component._index))
 
     def deobserve(self):
         i = np.where(self.components == component)[0][0]
@@ -689,7 +697,7 @@ class Segment(MorphologyCollection):
 
     def insert(self,kinetic_component):
         kinetic_component._index = self._index
-        self._backend.observer.observe(kinetic_component)
+        self._backend.observer.observe_kinetics(kinetic_component)
 
     @property
     def _backend(self):
