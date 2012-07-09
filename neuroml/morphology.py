@@ -129,7 +129,8 @@ class Backend(object):
     @property
     def physical_indices(self):
         """returns indices of vertices which are physical"""
-        return np.where(self._physical_mask == 0)[0]
+        physical_indices = np.where(self._physical_mask == 0)[0]
+        return physical_indices
         
     def children(self,index):
         """Returns an array with indexes of children"""
@@ -235,7 +236,7 @@ class ComponentObserver(object):
         self.components = np.append(self.components,component)
      
     def observe_segment(self,segment):
-        self.segments[segment.proximal] = segment
+        self.segments[segment.distal] = segment
 
     def deobserve(self):
         i = np.where(self.components == component)[0][0]
@@ -294,9 +295,6 @@ class MorphologyComponent(object):
     
     def __init__(self):
         self._backend = None
-
-    def attach(self):
-        raise NotImplementedError
 
     def _index_update(self,position,increment):
         raise NotImplementedError,'This component requires an index updater'
@@ -534,7 +532,7 @@ class MorphologyCollection(MorphologyComponent):
         """
         root_node = self._backend.root_node
         child_nodes = root_node.children
-        return Segment(proximal_node=child_nodes[0])
+        return Segment(distal_node=child_nodes[0])
 
 
 class NodeCollection(MorphologyCollection):
@@ -615,11 +613,11 @@ class SegmentGroup(MorphologyCollection):
 
     def __getitem__(self,i):
         segment_index=self._morphology_segment_indices[i]
-        proximal_node=self._backend[segment_index]
+        distal_node=self._backend[segment_index]
         try:
-            segment = self._backend.observer.segments[proximal_node]
+            segment = self._backend.observer.segments[distal_node]
         except:
-            segment = Segment(proximal_node = proximal_node)
+            segment = Segment(distal_node = distal_node)
         return segment
         
     def __len__(self):
@@ -653,18 +651,18 @@ class Segment(MorphologyCollection):
     """
 
     def __init__(self,length=100,proximal_diameter=10.0,distal_diameter=10.0,
-                segment_type=None,name=None,proximal_node=None):
+                segment_type=None,name=None,distal_node=None):
    
-        if proximal_node != None:
-            self._from_node(proximal_node)
+        if distal_node != None:
+            self._from_node(distal_node)
 
         else:
             prox = np.array([0.0,0.0,0.0,proximal_diameter])
             dist = np.array([0.0,0.0,length,distal_diameter])
             self.proximal = Node(prox,node_type = segment_type)
             self.distal = Node(dist,node_type = segment_type)
-            self.distal.attach(self.proximal)
-            self.distal.physical_connection = False
+            self.proximal.attach(self.distal)
+            self.proximal.physical_connection = False
             if distal_diameter == None:distal_diameter = proximal_diameter
         
         self.segment_type = segment_type
@@ -677,9 +675,10 @@ class Segment(MorphologyCollection):
         #self._backend = self.proximal._backend
         self._backend.observer.observe_segment(self)
 
-    def _from_node(self,proximal_node):
-        self.proximal = proximal_node
-        self.distal = proximal_node.parent
+    def _from_node(self,distal_node):
+        self.distal = distal_node
+        self.proximal = distal_node.parent
+
         
     def _index_update(self,*args):
         """
@@ -751,14 +750,14 @@ class Segment(MorphologyCollection):
        currently assuming all alternating segments have a virtual segment
        between them!
        """
-       parent_node=self.distal.parent
+       parent_node=self.proximal.parent
 #       if parent_node.physical_connection == False:
 #           parent_node = parent_node.parent
 #       grandparent_node=parent_node.parent
        if parent_node._index == -1:
            return None
        else:
-           return Segment(proximal_node=parent_node)
+           return Segment(distal_node=parent_node)
 
     @property
     def parent_id(self):
@@ -799,10 +798,11 @@ class Segment(MorphologyCollection):
         """
         #this should be uprgraded to root node
         #need to also sort out the physical mask?
+
         root_segment=morphology_component.root_segment
-        root_segment.distal.physical_connection = False
-        self.proximal.attach(root_segment)
-        self.proximal.fraction_along=fraction_along
+        root_segment.distal.physical_connection = True #should be true anyway
+        self.distal.attach(root_segment) #attaches to the proximal (should be root node of that morphology)
+        self.distal.fraction_along=fraction_along
 
 class Cylinder(Segment):
     """
