@@ -11,8 +11,7 @@
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #-------------------------------------------------------------------------------
 
-import neuroml.morphology as morphology
-from neuroml.morphology import MorphologyArray
+import neuroml.morphology as ml
 import random
 
 """
@@ -47,7 +46,7 @@ def __rall_power(parent_diam,e=1.5):
     return child_diam
 
 def soma(radius=30,length=30):
-    segment=morphology.Segment(r1=radius,length=30)
+    segment=ml.Segment(proximal_diameter=radius,length=30)
     return segment.morphology
 
 
@@ -59,7 +58,7 @@ def arborization(bifurcations=3.0,root_L=100.0,term_L=1.0,
     """
 
     root_segment_length=root_L*__grand(L_sigma)
-    root_segment=morphology.Segment(r1=root_d,
+    root_segment=ml.Segment(proximal_diameter=root_d,
                                 length=root_segment_length)
         
     heads=[root_segment]                            
@@ -71,7 +70,7 @@ def arborization(bifurcations=3.0,root_L=100.0,term_L=1.0,
             #make decision whether to branch
             if __branch_decision(branch_prob):
                 segment_length=(term_L-root_L)*i/bifurcations+root_L
-                segment_diam=__rall_power(head.r1)
+                segment_diam=__rall_power(head.proximal_diameter)
                 if segment_diam<term_d:
                     segment_diam=term_d
 
@@ -79,13 +78,13 @@ def arborization(bifurcations=3.0,root_L=100.0,term_L=1.0,
                 branch1_l=segment_length*__grand(L_sigma)
                 branch2_l=segment_length*__grand(L_sigma)
 
-                branch1=morphology.Segment(length=branch1_l,r1=
+                branch1=ml.Segment(length=branch1_l,proximal_diameter=
                                             segment_diam)
-                branch2=morphology.Segment(length=branch2_l,r1=
+                branch2=ml.Segment(length=branch2_l,proximal_diameter=
                                             segment_diam)
 
-                branch1.connect(head)
-                branch2.connect(head)
+                branch1.attach(head)
+                branch2.attach(head)
                 new_heads+=[branch1,branch2]
                 
         heads=new_heads

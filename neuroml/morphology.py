@@ -628,11 +628,13 @@ class SegmentGroup(MorphologyCollection):
   
     @property
     def connectivity(self):
-        return self._backend.connectivity[self._morphology_start_index:self._morphology_end_index+1]
+        return [self._backend.connectivity[i] for i in self._morphology_segment_indices]
+#        return self._backend.connectivity[self._morphology_start_index:self._morphology_end_index+1]
 
     @property
     def vertices(self):
-        return self._backend.vertices[self._morphology_start_index:self._morphology_end_index+1]
+        return [self._backend.vertices[i] for i in self._morphology_segment_indices]
+#        return self._backend.vertices[self._morphology_start_index:self._morphology_end_index+1]
 
     @property
     def morphology(self):

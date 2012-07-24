@@ -24,7 +24,7 @@ from neuroml import predefined
 tree=predefined.arborization(bifurcations=3.0,branch_prob=0.7)
 print tree.connectivity
 soma=predefined.soma()
-soma.root_section.connect(tree[0])
+soma.root_segment.attach(tree[0])
 pyramidal_cell=tree
 
 #we have gerenated a cell in a few lines:

@@ -27,11 +27,11 @@ axonsec2=morphology.Segment(length=500)
 axonsec3=morphology.Segment()
 
 #connect them all together:
-#standard is child.connect(parent)
-axonsec1.connect(iseg)
-node1.connect(axonsec1)
-axonsec2.connect(node1)
-axonsec3.connect(axonsec2)
+#standard is child.attach(parent)
+axonsec1.attach(iseg)
+node1.attach(axonsec1)
+axonsec2.attach(node1)
+axonsec3.attach(axonsec2)
 
 #print some information from the morphology (nodecollection) backend: -
 #potentially it would make more sense to offer a segmentcollection view of this too
@@ -42,6 +42,6 @@ print 'Artificial morphology connectivity:'
 print artificial_morphology.connectivity
 
 #Load a morphology from an SWC file and print some info about it
-morph1=loaders.SWCLoader.load_swc_single('/home/mike/tmp2mod.swc')
+morph1=loaders.SWCLoader.load_swc_single('./reconstructed_morphologies/tmp2.swc')
 print 'Loaded connectivity'
 print morph1.connectivity

@@ -1,19 +1,22 @@
-#Connecting segments together to create a multicompartmental model of a cell:
+"""
+Example of connecting segments together to create a 
+multicompartmental model of a cell:
+"""
 
 import neuroml.morphology as ml
 
-soma=ml.Segment(length=50,r1=10)
-iseg=ml.Segment(length=200,r1=3)
-node1=ml.Segment(length=20,r1=1)
-myelin1=ml.Segment(length=200,r1=2)
-node2=ml.Segment(length=20,r1=1)
-myelin2=ml.Segment(length=200,r1=2)
+soma=ml.Segment(length=50,proximal_diameter=10)
+iseg=ml.Segment(length=200,proximal_diameter=3)
+node1=ml.Segment(length=20,proximal_diameter=1)
+myelin1=ml.Segment(length=200,proximal_diameter=2)
+node2=ml.Segment(length=20,proximal_diameter=1)
+myelin2=ml.Segment(length=200,proximal_diameter=2)
 
-myelin2.connect(node2)
-node2.connect(myelin1)
-myelin1.connect(node1)
-node1.connect(iseg)
-iseg.connect(soma)
+myelin2.attach(node2)
+node2.attach(myelin1)
+myelin1.attach(node1)
+node1.attach(iseg)
+iseg.attach(soma)
 
 print('vertices:')
 print(soma.morphology.vertices)
