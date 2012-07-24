@@ -18,7 +18,7 @@ myelin1.attach(node1)
 node1.attach(myelin2)
 myelin2.attach(node2)
 
-doc=loaders.NeuroMLLoader.load_neuroml('/home/mike/dev/libNeuroML/testFiles/NML2_FullCell.nml')
+doc=loaders.NeuroMLLoader.load_neuroml('../../testFiles/NML2_FullCell.nml')
 cell=doc.cells[0]
 morphology=cell.morphology
 

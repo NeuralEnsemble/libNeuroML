@@ -18,14 +18,16 @@ from neuroml.morphology import Backend
    
 class NeuroMLDocument(object):
     def __init__(self,cells=None,morphologies=None,networks=None,
-                 ion_channels=None,synapses=None,extracellular_properties=None):
+                 ion_channels=None,synapses=None,extracellular_properties=None,
+                 izhikevich_cells=None):
 
-        self.cells=cells
-        self.morphologies=morphologies
-        self.networks=networks
-        self.ion_channels=ion_channels
-        self.synapses=synapses
-        self.extracellular_properties=extracellular_properties
+        self.cells = cells
+        self.morphologies = morphologies
+        self.networks = networks
+        self.ion_channels = ion_channels
+        self.synapses = synapses
+        self.extracellular_properties = extracellular_properties
+        self.izhikevich_cells = izhikevich_cells
 
 class NeuroMLLoader(object):
 
@@ -111,24 +113,42 @@ class NeuroMLLoader(object):
         This code is still mainly a proof of principle - work in progress,
         mapping from the segment-based space of neuroML to the node-based
         space of libNeuroML is the main conceptual difficulty..
+        
+        Also, I'm not sure how LEMS compatible it is since eg izhikevich_cells
+        is being hard-coded but this shouldn't be strictly necessary if the user
+        can define their own abstract cell types.
         """
 
         nml2_doc=cls.__nml2_doc(src)
+        try:
+            cells_array=[]
+            for cell in nml2_doc.cell:
+                print('Loading cell..')
+                morph = cell.morphology
+                segments = morph.segment  # not segments, limitation of the code that generateDS.py creates...
+                vertices,id_to_index,id_to_fraction_along,id_to_parent_id = cls.__load_vertices(segments)
+                connectivity,fractions_along = cls.__connectivity(id_to_index,id_to_fraction_along,vertices,
+                                                                 id_to_parent_id)
+                physical_mask=np.tile([1,0],len(connectivity)/2) #Is this always valid?
+                morph_array = Backend(vertices,connectivity,fractions_along=fractions_along,
+                                              physical_mask=physical_mask)
+                segment_group=ml.SegmentGroup(morph_array)
+                ml_cell=ml.Cell(segment_group)
+                cells_array.append(ml_cell)
 
-        cells_array=[]
-        for cell in nml2_doc.cell:
-            morph = cell.morphology
-            segments = morph.segment  # not segments, limitation of the code that generateDS.py creates...
-            vertices,id_to_index,id_to_fraction_along,id_to_parent_id = cls.__load_vertices(segments)
-            connectivity,fractions_along = cls.__connectivity(id_to_index,id_to_fraction_along,vertices,
-                                                             id_to_parent_id)
-            physical_mask=np.tile([1,0],len(connectivity)/2) #Is this always valid?
-            morph_array = Backend(vertices,connectivity,fractions_along=fractions_along,
-                                          physical_mask=physical_mask)
-            segment_group=ml.SegmentGroup(morph_array)
-            ml_cell=ml.Cell(segment_group)
-            cells_array.append(ml_cell)
-        return NeuroMLDocument(cells=cells_array)
+        except:
+            pass
+
+        try:
+            izhikevich_cell_array = []
+            for izhikevich_cell in nml2_doc.izhikevichCell:
+                print('Loading izhikevich cell..')
+                izhikevich_cell_array.append(izhikevich_cell)
+        except:
+            pass
+
+        return NeuroMLDocument(cells=cells_array,
+                               izhikevich_cells=izhikevich_cell_array)
 
 class SWCLoader(object):
     
