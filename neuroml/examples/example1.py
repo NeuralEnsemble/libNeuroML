@@ -8,31 +8,6 @@ import neuroml.loaders as loaders
 import neuroml.morphology as ml
 import os
 
-<<<<<<< HEAD
-a=ml.Node()
-b=ml.Node()
-c=ml.Node()
-a.attach(b)
-c.attach(b)
-chain1=a.morphology
-#now create and connect a new node:
-d=ml.Node()
-d.attach(c)
-chain2=d.morphology
-
-#now let's make yet another chain:
-f=ml.Node()
-g=ml.Node()
-h=ml.Node()
-f.attach(g)
-g.attach(h)
-
-chain3=g.morphology
-chain3[0].attach(chain1[1])
-morph1=a.morphology
-
-print morph1.vertices
-=======
 iseg=ml.Segment(length=10,proximal_diameter=1,distal_diameter=2)
 myelin1=ml.Segment(length=100,proximal_diameter=3,distal_diameter=4)
 node1=ml.Segment(length=10,proximal_diameter=5,distal_diameter=6)
@@ -68,4 +43,3 @@ for i,seg in enumerate(total_morphology):
 #guarantee that this returns true despite the lazy evaluation of
 #segment elements
 print total_morphology[0] == total_morphology[0]
->>>>>>> 9a5b5dd3e3a34732d37f7d7ce01048f73bea8785
