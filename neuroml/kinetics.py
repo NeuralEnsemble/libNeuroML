@@ -38,9 +38,10 @@ class ExtracellularProperties(KineticComponent):
 
 class IClamp(PointCurrent):
     def __init__(self,current,delay,duration,fraction_along=None):
-        self.current=current
-        self.delay=delay
-        self.duration=duration
+        self.name = 'IClamp'
+        self.amp = current
+        self.delay = delay
+        self.dur = duration
 
         if fraction_along != None:
             self.fraction_along=fraction_along

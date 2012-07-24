@@ -43,6 +43,8 @@ A widely used simulation platform for biophysically detailed neurons and network
 
 http://www.neuron.yale.edu/neuron
 
+For more information on Python & NEURON, see Andrew Davison's guide here: http://www.davison.webfactional.com/notes/installation-neuron-python/
+
 MOOSE & Moogli
 --------------
 

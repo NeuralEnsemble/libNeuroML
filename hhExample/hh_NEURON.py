@@ -1,18 +1,23 @@
 #############   Some imports
 
-from neuron import NeuroMLReader
+from neuron import h
 
+if '7.' in h.nrnversion(0):
+    import neuron.gui # To not freeze the GUI
 
 
 #############  Load the morphology
 
-reader = NeuroMLReader()
 
-filename = "../../../testFiles/CA1.nml"
-print "Reading in NeuroML 2 file: "+ filename
-nml2Doc = reader.read_neuroml(filename)
-print "Read in cells in v2 file with Id: "+nml2Doc.id
+neuromlFile = '../testFiles/Purk2M9s_v1x.nml'
 
+h.load_file('celbild.hoc')
+cb = h.CellBuild(0)
+cb.manage.neuroml(neuromlFile)
+cb.continuous = 1
+cb.cexport()
+
+print "Loaded NeuroML from: " + neuromlFile
 
 #############  Load the ion channels
 
