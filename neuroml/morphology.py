@@ -673,7 +673,8 @@ class Segment(MorphologyCollection):
             self.distal = Node(dist,node_type = segment_type)
             self.proximal.attach(self.distal)
             self.proximal.physical_connection = False
-            if distal_diameter == None:distal_diameter = proximal_diameter
+            if distal_diameter == None: # this does nothing: Node already created
+                distal_diameter = proximal_diameter
         
         self.segment_type = segment_type
         self.name = name
@@ -697,7 +698,7 @@ class Segment(MorphologyCollection):
         """
         pass
 
-    def insert(self,kinetic_component):
+    def insert(self, kinetic_component):
         kinetic_component._index = self._index
         self._backend.observer.observe_kinetics(kinetic_component)
 
@@ -712,7 +713,7 @@ class Segment(MorphologyCollection):
 
     @property
     def proximal_diameter(self):
-        return self.proximal.radius
+        return self.proximal.radius  # inconsistency: radius or diameter?
 
     @property
     def distal_diameter(self):
@@ -737,20 +738,21 @@ class Segment(MorphologyCollection):
 
     @property
     def slant_height(self):
-        r = self.proximalimal_diameter
-        R = self.distalal_diameter
+        # suggestion, for discussion: call this edge_length or side_length (cf axial_length==length)
+        r = self.proximal_diameter
+        R = self.distal_diameter
         s = math.sqrt((r - R) ** 2 + self.length ** 2)
         return s
 
     @property
     def lateral_area(self):
-        lsa = math.pi * (self.proximalimal_diameter + self.distalal_diameter) * self.slant_height
+        lsa = math.pi * (self.proximal_diameter + self.distal_diameter) * self.slant_height
         return lsa
 
     @property
     def total_area(self):
         lsa = self.lateral_area
-        end_areas = math.pi * (self.proximalimal_diameter ** 2 + self.distalal_diameter ** 2)
+        end_areas = math.pi * (self.proximal_diameter ** 2 + self.distal_diameter ** 2)
         return lsa+end_areas
 
     @property
@@ -780,8 +782,8 @@ class Segment(MorphologyCollection):
 
     @property
     def volume(self):
-        r = self.proximalimal_diameter
-        R = self.distalal_diameter
+        r = self.proximal_diameter
+        R = self.distal_diameter
         V = (math.pi * self.length / 3.0) * (R ** 2 + r ** 2 + R * r)
         return V
 
