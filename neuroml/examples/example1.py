@@ -20,26 +20,26 @@ node1.attach(myelin2)
 myelin2.attach(node2)
 
 filepath = '../../testFiles/NML2_FullCell.nml'
-print filepath
+print(filepath)
 
 doc=loaders.NeuroMLLoader.load_neuroml(filepath)
 cell=doc.cells[0]
 morphology=cell.morphology
 
-print 'Before attaching axon:'
+print('Before attaching axon:')
 for i,seg in enumerate(morphology):
-    print 'segment '+str(i)+' distal diameter:' + str(seg.distal_diameter)
-    print 'segment '+str(i)+' proximal diameter:' + str(seg.proximal_diameter)
+    print('segment '+str(i)+' distal diameter:' + str(seg.distal_diameter))
+    print('segment '+str(i)+' proximal diameter:' + str(seg.proximal_diameter))
 
 morphology.attach(iseg)
 total_morphology=iseg.morphology
 
-print '\nAfter attaching axon:'
+print('\nAfter attaching axon:')
 for i,seg in enumerate(total_morphology):
-    print 'segment '+str(i)+' distal diameter:' + str(seg.distal_diameter)
-    print 'segment '+str(i)+' proximal diameter:' + str(seg.proximal_diameter)
+    print('segment '+str(i)+' distal diameter:' + str(seg.distal_diameter))
+    print('segment '+str(i)+' proximal diameter:' + str(seg.proximal_diameter))
 
 #now do a sanity test, the observer in the backend should 
 #guarantee that this returns true despite the lazy evaluation of
 #segment elements
-print total_morphology[0] == total_morphology[0]
+print(total_morphology[0] == total_morphology[0])

@@ -22,16 +22,16 @@ doc=loaders.NeuroMLLoader.load_neuroml('../../testFiles/NML2_FullCell.nml')
 cell=doc.cells[0]
 morphology=cell.morphology
 
-print 'Before attaching axon:'
+print('Before attaching axon:')
 for i,seg in enumerate(morphology):
-    print 'segment '+str(i)+' distal diameter:' + str(seg.distal_diameter)
+    print('segment '+str(i)+' distal diameter:' + str(seg.distal_diameter))
 
 morphology.attach(iseg)
 total_morphology=iseg.morphology
 
-print '\nAfter attaching axon:'
+print('\nAfter attaching axon:')
 for i,seg in enumerate(total_morphology):
-    print 'segment '+str(i)+' distal diameter:' + str(seg.distal_diameter)
+    print('segment '+str(i)+' distal diameter:' + str(seg.distal_diameter))
 
 #now do a sanity test, the observer should guarantee that this returns true:
-print total_morphology[0] == total_morphology[0]
+print(total_morphology[0] == total_morphology[0])
