@@ -18,7 +18,7 @@ Contents:
    nodes_segments_sections
    meeting_june_2012
 
-
+.. automodule:: morphology
 
 
 Indices and tables
