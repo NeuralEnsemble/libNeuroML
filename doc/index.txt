@@ -17,6 +17,7 @@ Contents:
    tools
    nodes_segments_sections
    meeting_june_2012
+
    modules
    neuroml
    neuroml.v2
