@@ -1,0 +1,19 @@
+v2 Package
+==========
+
+:mod:`v2` Package
+-----------------
+
+.. automodule:: neuroml.v2
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`NeuroMLDocument` Module
+-----------------------------
+
+.. automodule:: neuroml.v2.NeuroMLDocument
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
