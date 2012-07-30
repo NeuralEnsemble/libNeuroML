@@ -18,12 +18,13 @@ Contents:
    nodes_segments_sections
    meeting_june_2012
 
-   modules
-   neuroml
-   neuroml.v2
-.. automodule:: neuroml.morphology
-    :members:  
+Source documentation
+==================
 
+.. toctree::
+   :maxdepth: 3
+   
+   modules
 
 Indices and tables
 ==================
