@@ -1,4 +1,4 @@
-Relevant tools for this initiative
+Tools relevant for this initiative
 ==================================
 
 Below is a list of tools which are built in or use Python and which would benefit from a standard library to access,
