@@ -18,13 +18,8 @@ Contents:
    nodes_segments_sections
    meeting_june_2012
 
-.. automodule:: neuroml
- 
-.. autoclass:: myClass
-    :members: 
- 
-.. autoclass:: anotherClass
-    :members:
+.. automodule:: morphology
+    :members:  
 
 
 Indices and tables
