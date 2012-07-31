@@ -36,8 +36,8 @@ def validate_nml2(nml2_file):
     xmlschema_doc = etree.parse(schema_file)
     xmlschema = etree.XMLSchema(xmlschema_doc)
 
-    print "Validating %s against %s" %(nml2_file, schema_file.geturl())
+    print("Validating %s against %s" % (nml2_file, schema_file.geturl()))
 
     doc = etree.parse(nml2_file)
     xmlschema.assertValid(doc)
-    print "It's valid!"
+    print("It's valid!")

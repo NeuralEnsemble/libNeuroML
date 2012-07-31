@@ -19,8 +19,8 @@ izhikevich_cells = doc.izhikevich_cells
 #All the elements are now accessible.. specification of dynamics is
 #the LEMS spec
 for cell in izhikevich_cells:
-    print 'Cell ID: '+str(cell.id)
-    print 'a: '+str(cell.a)
-    print 'b: '+str(cell.b)
-    print 'Current duration: '+str(cell.Idur)
-    print '\n'
+    print('Cell ID: '+str(cell.id))
+    print('a: '+str(cell.a))
+    print('b: '+str(cell.b))
+    print('Current duration: '+str(cell.Idur))
+    print('\n')

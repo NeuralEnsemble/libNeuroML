@@ -22,10 +22,10 @@ from neuroml import predefined
 
 #gerenate a morphology
 tree=predefined.arborization(bifurcations=3.0,branch_prob=0.7)
-print tree.connectivity
+print(tree.connectivity)
 soma=predefined.soma()
 soma.root_segment.attach(tree[0])
 pyramidal_cell=tree
 
 #we have gerenated a cell in a few lines:
-print pyramidal_cell.connectivity
+print(pyramidal_cell.connectivity)

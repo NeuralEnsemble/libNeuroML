@@ -36,12 +36,12 @@ axonsec3.attach(axonsec2)
 #print some information from the morphology (nodecollection) backend: -
 #potentially it would make more sense to offer a segmentcollection view of this too
 artificial_morphology=iseg.morphology
-print 'Artificial morphology vertices:'
-print artificial_morphology.vertices
-print 'Artificial morphology connectivity:'
-print artificial_morphology.connectivity
+print('Artificial morphology vertices:')
+print(artificial_morphology.vertices)
+print('Artificial morphology connectivity:')
+print(artificial_morphology.connectivity)
 
 #Load a morphology from an SWC file and print some info about it
 morph1=loaders.SWCLoader.load_swc_single('./reconstructed_morphologies/tmp2.swc')
-print 'Loaded connectivity'
-print morph1.connectivity
+print('Loaded connectivity')
+print(morph1.connectivity)

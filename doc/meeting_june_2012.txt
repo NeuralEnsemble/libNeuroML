@@ -20,12 +20,12 @@ Agreeing on terminology (segments, etc.) & scope
 
 An introduction to the background to the project and the projected scope is here:
 
-http://libneuroml.readthedocs.org/en/latest/scope_of_project.html
+:doc:`scope_of_project`
 
 A discussion on the definitions of the key terms Node, Segment and Section is here, and was the basis for discussions on
 these definitions at the meeting:
 
-http://libneuroml.readthedocs.org/en/latest/nodes_segments_sections.html
+:doc:`nodes_segments_sections`
 
 **Agreements**
 

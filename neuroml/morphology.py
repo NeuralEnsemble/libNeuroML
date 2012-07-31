@@ -102,7 +102,7 @@ class Backend(object):
                                          dtype='int32')
 
 
-        assert(self.valid_morphology,'invalid_morphology')
+        assert self.valid_morphology,'invalid_morphology'
 
         self.observer = ComponentObserver()
 
@@ -276,7 +276,7 @@ class ComponentObserver(object):
            try:
                if component._index == i:
                    return True
-           except AttributeError, e:
+           except AttributeError as e:
                pass
        return False
 
@@ -305,7 +305,7 @@ class MorphologyComponent(object):
         self._backend = None
 
     def _index_update(self,position,increment):
-        raise NotImplementedError,'This component requires an index updater'
+        raise NotImplementedError('This component requires an index updater')
 
     def backend_update(self):
         raise NotImplementedError
@@ -425,7 +425,7 @@ class Node(MorphologyComponent):
       
     @morphology.setter
     def morphology(self,morphology):
-        raise NotImplementedError,"this probably won't be allowed..."
+        raise NotImplementedError("this probably won't be allowed...")
 
     @property
     def x(self):
@@ -467,7 +467,7 @@ class Node(MorphologyComponent):
         Attach this node to a new child, attach another morphology to this one.
         """        
 
-        assert(self.in_morphology(child) == False,'Parent node already in morphology!')
+        assert self.in_morphology(child) == False, 'Parent node already in morphology!'
 
         child_backend = child._backend
 
@@ -531,7 +531,7 @@ class MorphologyCollection(MorphologyComponent):
         pass
 
     def _index_update(self,position,increment):
-        raise NotImplementedError,'This collection requires an index updater'
+        raise NotImplementedError('This collection requires an index updater')
 
     @property
     def root_segment(self):
@@ -578,7 +578,7 @@ class NodeCollection(MorphologyCollection):
     def _index_update(self,position,increment):
         #WARNING:This module is still insufficiently tested
         if position>self._morphology_start_index and position<morphology_end_index:
-            raise NotImplementedError,"insertions not allowed in NodeCollection domain!"
+            raise NotImplementedError("insertions not allowed in NodeCollection domain!")
 
         if position>self._morphology_end_index:
             pass
@@ -673,7 +673,8 @@ class Segment(MorphologyCollection):
             self.distal = Node(dist,node_type = segment_type)
             self.proximal.attach(self.distal)
             self.proximal.physical_connection = False
-            if distal_diameter == None:distal_diameter = proximal_diameter
+            if distal_diameter == None: # this does nothing: Node already created
+                distal_diameter = proximal_diameter
         
         self.segment_type = segment_type
         self.name = name
@@ -697,7 +698,7 @@ class Segment(MorphologyCollection):
         """
         pass
 
-    def insert(self,kinetic_component):
+    def insert(self, kinetic_component):
         kinetic_component._index = self._index
         self._backend.observer.observe_kinetics(kinetic_component)
 
@@ -712,7 +713,7 @@ class Segment(MorphologyCollection):
 
     @property
     def proximal_diameter(self):
-        return self.proximal.radius
+        return self.proximal.radius  # inconsistency: radius or diameter?
 
     @property
     def distal_diameter(self):
@@ -725,7 +726,7 @@ class Segment(MorphologyCollection):
     
     @length.setter
     def length(self,value):
-        raise NotImplementedError, 'Cannot reset section length'
+        raise NotImplementedError('Cannot reset section length')
 
     @property
     def index(self):
@@ -737,20 +738,21 @@ class Segment(MorphologyCollection):
 
     @property
     def slant_height(self):
-        r = self.proximalimal_diameter
-        R = self.distalal_diameter
+        # suggestion, for discussion: call this edge_length or side_length (cf axial_length==length)
+        r = self.proximal_diameter
+        R = self.distal_diameter
         s = math.sqrt((r - R) ** 2 + self.length ** 2)
         return s
 
     @property
     def lateral_area(self):
-        lsa = math.pi * (self.proximalimal_diameter + self.distalal_diameter) * self.slant_height
+        lsa = math.pi * (self.proximal_diameter + self.distal_diameter) * self.slant_height
         return lsa
 
     @property
     def total_area(self):
         lsa = self.lateral_area
-        end_areas = math.pi * (self.proximalimal_diameter ** 2 + self.distalal_diameter ** 2)
+        end_areas = math.pi * (self.proximal_diameter ** 2 + self.distal_diameter ** 2)
         return lsa+end_areas
 
     @property
@@ -780,8 +782,8 @@ class Segment(MorphologyCollection):
 
     @property
     def volume(self):
-        r = self.proximalimal_diameter
-        R = self.distalal_diameter
+        r = self.proximal_diameter
+        R = self.distal_diameter
         V = (math.pi * self.length / 3.0) * (R ** 2 + r ** 2 + R * r)
         return V
 

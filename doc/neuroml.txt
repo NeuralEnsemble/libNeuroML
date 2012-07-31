@@ -1,0 +1,51 @@
+neuroml Package
+===============
+
+:mod:`neuroml` Package
+----------------------
+
+.. automodule:: neuroml.__init__
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`kinetics` Module
+----------------------
+
+.. automodule:: neuroml.kinetics
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`loaders` Module
+---------------------
+
+.. automodule:: neuroml.loaders
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`morphology` Module
+------------------------
+
+.. automodule:: neuroml.morphology
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`predefined` Module
+------------------------
+
+.. automodule:: neuroml.predefined
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    neuroml.test
+    neuroml.v2
+

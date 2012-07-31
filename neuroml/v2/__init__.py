@@ -10,7 +10,7 @@ import getopt
 import re as re_
 
 etree_ = None
-Verbose_import_ = False
+Verbose_import_ = True
 (   XMLParser_import_none, XMLParser_import_lxml,
     XMLParser_import_elementtree
     ) = range(3)
@@ -70,7 +70,7 @@ def parsexml_(*args, **kwargs):
 
 try:
     from generatedssuper import GeneratedsSuper
-except ImportError, exp:
+except ImportError as exp:
 
     class GeneratedsSuper(object):
         def gds_format_string(self, input_data, input_name=''):
@@ -88,7 +88,7 @@ except ImportError, exp:
             for value in values:
                 try:
                     fvalue = float(value)
-                except (TypeError, ValueError), exp:
+                except (TypeError, ValueError) as exp:
                     raise_parse_error(node, 'Requires sequence of integers')
             return input_data
         def gds_format_float(self, input_data, input_name=''):
@@ -102,7 +102,7 @@ except ImportError, exp:
             for value in values:
                 try:
                     fvalue = float(value)
-                except (TypeError, ValueError), exp:
+                except (TypeError, ValueError)as exp:
                     raise_parse_error(node, 'Requires sequence of floats')
             return input_data
         def gds_format_double(self, input_data, input_name=''):
@@ -116,7 +116,7 @@ except ImportError, exp:
             for value in values:
                 try:
                     fvalue = float(value)
-                except (TypeError, ValueError), exp:
+                except (TypeError, ValueError)as exp:
                     raise_parse_error(node, 'Requires sequence of doubles')
             return input_data
         def gds_format_boolean(self, input_data, input_name=''):
@@ -753,7 +753,7 @@ class StpMechanism(GeneratedsSuper):
             already_processed.append('initReleaseProb')
             try:
                 self.initReleaseProb = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (initReleaseProb): %s' % exp)
             self.validate_ZeroToOne(self.initReleaseProb)    # validate type ZeroToOne
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -838,7 +838,7 @@ class SegmentParent(GeneratedsSuper):
             already_processed.append('fractionAlong')
             try:
                 self.fractionAlong = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (fractionAlong): %s' % exp)
             self.validate_ZeroToOne(self.fractionAlong)    # validate type ZeroToOne
         value = find_attr_value_('segment', node)
@@ -846,7 +846,7 @@ class SegmentParent(GeneratedsSuper):
             already_processed.append('segment')
             try:
                 self.segment = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.segment < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -948,28 +948,28 @@ class Point3DWithDiam(GeneratedsSuper):
             already_processed.append('y')
             try:
                 self.y = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (y): %s' % exp)
         value = find_attr_value_('x', node)
         if value is not None and 'x' not in already_processed:
             already_processed.append('x')
             try:
                 self.x = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (x): %s' % exp)
         value = find_attr_value_('z', node)
         if value is not None and 'z' not in already_processed:
             already_processed.append('z')
             try:
                 self.z = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (z): %s' % exp)
         value = find_attr_value_('diameter', node)
         if value is not None and 'diameter' not in already_processed:
             already_processed.append('diameter')
             try:
                 self.diameter = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (diameter): %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -1037,7 +1037,7 @@ class ProximalDetails(GeneratedsSuper):
             already_processed.append('translationStart')
             try:
                 self.translationStart = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (translationStart): %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -1105,7 +1105,7 @@ class DistalDetails(GeneratedsSuper):
             already_processed.append('normalizationEnd')
             try:
                 self.normalizationEnd = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (normalizationEnd): %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -1176,7 +1176,7 @@ class Member(GeneratedsSuper):
             already_processed.append('segment')
             try:
                 self.segment = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.segment < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -1483,7 +1483,7 @@ class SegmentEndPoint(GeneratedsSuper):
             already_processed.append('segment')
             try:
                 self.segment = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.segment < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -2708,42 +2708,42 @@ class SpaceStructure(GeneratedsSuper):
             already_processed.append('ySpacing')
             try:
                 self.ySpacing = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (ySpacing): %s' % exp)
         value = find_attr_value_('zStart', node)
         if value is not None and 'zStart' not in already_processed:
             already_processed.append('zStart')
             try:
                 self.zStart = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (zStart): %s' % exp)
         value = find_attr_value_('yStart', node)
         if value is not None and 'yStart' not in already_processed:
             already_processed.append('yStart')
             try:
                 self.yStart = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (yStart): %s' % exp)
         value = find_attr_value_('zSpacing', node)
         if value is not None and 'zSpacing' not in already_processed:
             already_processed.append('zSpacing')
             try:
                 self.zSpacing = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (zSpacing): %s' % exp)
         value = find_attr_value_('xStart', node)
         if value is not None and 'xStart' not in already_processed:
             already_processed.append('xStart')
             try:
                 self.xStart = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (xStart): %s' % exp)
         value = find_attr_value_('xSpacing', node)
         if value is not None and 'xSpacing' not in already_processed:
             already_processed.append('xSpacing')
             try:
                 self.xSpacing = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (xSpacing): %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -2924,7 +2924,7 @@ class UnstructuredLayout(GeneratedsSuper):
             already_processed.append('number')
             try:
                 self.number = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.number < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -3012,7 +3012,7 @@ class RandomLayout(GeneratedsSuper):
             already_processed.append('number')
             try:
                 self.number = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.number < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -3102,7 +3102,7 @@ class GridLayout(GeneratedsSuper):
             already_processed.append('zSize')
             try:
                 self.zSize = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.zSize < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -3111,7 +3111,7 @@ class GridLayout(GeneratedsSuper):
             already_processed.append('ySize')
             try:
                 self.ySize = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.ySize < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -3120,7 +3120,7 @@ class GridLayout(GeneratedsSuper):
             already_processed.append('xSize')
             try:
                 self.xSize = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.xSize < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -3210,7 +3210,7 @@ class Instances(GeneratedsSuper):
             already_processed.append('size')
             try:
                 self.size = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.size < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -3322,7 +3322,7 @@ class Instance(GeneratedsSuper):
             already_processed.append('i')
             try:
                 self.i = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.i < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -3331,7 +3331,7 @@ class Instance(GeneratedsSuper):
             already_processed.append('k')
             try:
                 self.k = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.k < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -3340,7 +3340,7 @@ class Instance(GeneratedsSuper):
             already_processed.append('j')
             try:
                 self.j = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.j < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -3349,7 +3349,7 @@ class Instance(GeneratedsSuper):
             already_processed.append('id')
             try:
                 self.id = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -3442,21 +3442,21 @@ class Location(GeneratedsSuper):
             already_processed.append('y')
             try:
                 self.y = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (y): %s' % exp)
         value = find_attr_value_('x', node)
         if value is not None and 'x' not in already_processed:
             already_processed.append('x')
             try:
                 self.x = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (x): %s' % exp)
         value = find_attr_value_('z', node)
         if value is not None and 'z' not in already_processed:
             already_processed.append('z')
             try:
                 self.z = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (z): %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -4252,7 +4252,7 @@ class Population(Standalone):
             already_processed.append('size')
             try:
                 self.size = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         super(Population, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -5371,7 +5371,7 @@ class ChannelPopulation(Base):
             already_processed.append('number')
             try:
                 self.number = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.number < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -6298,7 +6298,7 @@ class Gate(Base):
             already_processed.append('instances')
             try:
                 self.instances = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
@@ -6967,7 +6967,7 @@ class neuroml(Standalone):
             obj_.build(child_)
             self.expOneSynapse.append(obj_)
         elif nodeName_ == 'expTwoSynapse':
-            class_obj_ = self.get_class_obj_(child_, ExpTwoSynapse)
+            class_obj_ = self.get_class_obj_(child_, expTwoSynapse)
             obj_ = class_obj_.factory()
             obj_.build(child_)
             self.expTwoSynapse.append(obj_)
@@ -8193,7 +8193,7 @@ Usage: python <Parser>.py [ -s ] <in_xml_file>
 """
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 

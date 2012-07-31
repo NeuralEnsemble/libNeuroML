@@ -9,7 +9,7 @@ Welcome to libNeuroML's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    install
    how_to_contribute
@@ -18,8 +18,13 @@ Contents:
    nodes_segments_sections
    meeting_june_2012
 
+Source documentation
+==================
 
-
+.. toctree::
+   :maxdepth: 3
+   
+   modules
 
 Indices and tables
 ==================
