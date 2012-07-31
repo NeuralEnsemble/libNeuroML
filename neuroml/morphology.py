@@ -51,7 +51,7 @@ class Backend(object):
     Morphforge these are all the same length so that corresponding
     sections have the same index in each array.
     
-    .. example::
+    example::
     vertices[3] and connectivity[3] refer to the vertex and
     connectivity of the same section.
 
