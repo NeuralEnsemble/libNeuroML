@@ -19,13 +19,16 @@ AUTHORS:
 - Mike Vella: initial version
 - Mike Hull - Large parts of Backend and SWCLoader
 """
+
 import math
 import numpy as np
 
 class Network(object):
+r"""
+Currently unused (as of 1/8/12). Base class for networks of neurons.
+"""
     def __init__(self):
         pass
-
 
 class Morphology(object):
     def __init__(self,whole_segment_group):
@@ -35,33 +38,32 @@ class Morphology(object):
 class Cell(object):
     def __init__(self,morphology=None,biophysical_properties=None,
                notes=None):
-
         self.morphology=morphology
         self.biophysical_properties=biophysical_properties
         self.notes=notes
 
   
 class Backend(object):
-    """Provides the core of the array-based object model backend.
+    """Core of the array-based object model backend.
 
     Provides the core arrays -
     vertices,connectivity and node_types. Unlike in
     Morphforge these are all the same length so that corresponding
     sections have the same index in each array.
     
-    example::
+    .. example::
     vertices[3] and connectivity[3] refer to the vertex and
     connectivity of the same section.
 
     The root section by convention has connectivity==-1.
 
-    -connectivity array::
+    - connectivity array::
     The connectivity array is a list of indices pointing to which
     other element an element is attached. So for instance,
     connectivity[3] is an integer with the index of the section
     it refers to in the Backend
 
-    -note on Nodes::
+    - note on Nodes::
     a Node class is provided (see further down) however this
     does not result in a tree-based object model. Rather, the section
     objects manipulate the Backend backend in a way that 
