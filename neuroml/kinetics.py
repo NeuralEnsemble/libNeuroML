@@ -39,6 +39,7 @@ class ExtracellularProperties(KineticComponent):
 class IClamp(PointCurrent):
     def __init__(self,current,delay,duration,fraction_along=None):
         self.name = 'IClamp'
+        self.type = 'IClamp'
         self.amp = current
         self.delay = delay
         self.dur = duration
@@ -47,3 +48,27 @@ class IClamp(PointCurrent):
             self.fraction_along=fraction_along
         else:
             self.fraction_along=0.5
+
+class Nmodl(IonChannel):
+    """
+    NMODL (NEURON-Compatible) ion channel description
+    plan for now is that these still need to be
+    precompiled and located in the correct folder
+    """
+    def __init__(self,name):
+        self.type = 'NMODL'
+        self.name = name
+        self.attributes={}
+
+#for now use default values:
+#    @property
+#    def attributes(self):
+#        """
+#        should be a hash table with the attribute:value relationship
+#        """
+#        return self.__attributes
+#
+#    @attributes.setter
+#    def attributes(self,attribute,value):
+#        self.attributes.append((attribute,value))
+
