@@ -52,6 +52,7 @@ class Backend(object):
     sections have the same index in each array.
     
     .. example::
+
     vertices[3] and connectivity[3] refer to the vertex and
     connectivity of the same section.
 
