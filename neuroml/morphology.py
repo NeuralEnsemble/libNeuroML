@@ -24,9 +24,9 @@ import math
 import numpy as np
 
 class Network(object):
-r"""
-Currently unused (as of 1/8/12). Base class for networks of neurons.
-"""
+    r"""
+    Currently unused (as of 1/8/12). Base class for networks of neurons.
+    """
     def __init__(self):
         pass
 
