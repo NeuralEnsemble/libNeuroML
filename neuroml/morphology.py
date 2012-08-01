@@ -14,10 +14,8 @@
 r"""
 Prototype for object model backend for the libNeuroML project
 
-AUTHORS:
-
-- Mike Vella: initial version
-- Mike Hull - Large parts of Backend and SWCLoader
+.. moduleauthor:: Mike Vella <vellamike@gmail.com>
+.. moduleauthor:: Mike Hull
 """
 
 import math
@@ -46,10 +44,7 @@ class Cell(object):
 class Backend(object):
     """Core of the array-based object model backend.
 
-    Provides the core arrays -
-    vertices,connectivity and node_types. Unlike in
-    Morphforge these are all the same length so that corresponding
-    sections have the same index in each array.
+    Provides the core arrays - vertices,connectivity and node_types.
     
     .. note::
 
@@ -60,29 +55,33 @@ class Backend(object):
 
        The root section by convention has connectivity==-1.
 
-    - connectivity array::
+    .. note::
 
         The connectivity array is a list of indices pointing to which
         other element an element is attached. So for instance,
         connectivity[3] is an integer with the index of the section
         it refers to in the Backend
 
-    - note on Nodes::
+    .. note::
+
         a Node class is provided (see further down) however this
         does not result in a tree-based object model. Rather, the section
         objects manipulate the Backend backend in a way that 
         is invisible to the user. The user may still use the 
         Backend class, depending on their needs.
 
-    Backend[i] returns the Node object relating to
-    element i
+    .. note::
+        Backend[i] returns the Node object relating to
+        element i
 
-    Because segments exist in memory independently of the,
-    Backend, a Backend must keep a register
-    of all the segments which handle its elements. These
-    are updated when their information changes via a Backend
-    operation such as the indices changing when a connection
-    to a new Backend is made and indices all change.
+    .. note::
+
+        Because segments exist in memory independently of the,
+        Backend, a Backend must keep a register
+        of all the segments which handle its elements. These
+        are updated when their information changes via a Backend
+        operation such as the indices changing when a connection
+        to a new Backend is made and indices all change.
     """
 
     def __init__(self,vertices,connectivity,node_types=None,
