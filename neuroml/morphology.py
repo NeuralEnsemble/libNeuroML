@@ -51,25 +51,28 @@ class Backend(object):
     Morphforge these are all the same length so that corresponding
     sections have the same index in each array.
     
-    .. example::
+    .. note::
 
-    vertices[3] and connectivity[3] refer to the vertex and
-    connectivity of the same section.
+        So, for example - vertices[3] and connectivity[3] refer 
+        to the vertex and connectivity of the same node.
 
-    The root section by convention has connectivity==-1.
+    .. note::
+
+       The root section by convention has connectivity==-1.
 
     - connectivity array::
-    The connectivity array is a list of indices pointing to which
-    other element an element is attached. So for instance,
-    connectivity[3] is an integer with the index of the section
-    it refers to in the Backend
+
+        The connectivity array is a list of indices pointing to which
+        other element an element is attached. So for instance,
+        connectivity[3] is an integer with the index of the section
+        it refers to in the Backend
 
     - note on Nodes::
-    a Node class is provided (see further down) however this
-    does not result in a tree-based object model. Rather, the section
-    objects manipulate the Backend backend in a way that 
-    is invisible to the user. The user may still use the 
-    Backend class, depending on their needs.
+        a Node class is provided (see further down) however this
+        does not result in a tree-based object model. Rather, the section
+        objects manipulate the Backend backend in a way that 
+        is invisible to the user. The user may still use the 
+        Backend class, depending on their needs.
 
     Backend[i] returns the Node object relating to
     element i
