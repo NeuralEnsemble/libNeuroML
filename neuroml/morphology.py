@@ -57,7 +57,7 @@ class Backend(object):
 
     .. note::
 
-       The root section by convention has connectivity==-1.
+       The root section by convention has connectivity == -1.
 
     .. note::
 
