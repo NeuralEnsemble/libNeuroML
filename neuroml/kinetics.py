@@ -37,17 +37,25 @@ class ExtracellularProperties(KineticComponent):
 
 
 class IClamp(PointCurrent):
+    """
+    Steady point current injection
+    
+    :param current: injected current in pA
+    :param delay: initiation of current injection, in ms
+    :param duration: current injection duration, in ms
+    :param fraction_along: fraction along section for current injection
+    """
+
     def __init__(self,current,delay,duration,fraction_along=None):
         self.name = 'IClamp'
-        self.type = 'IClamp'
         self.amp = current
         self.delay = delay
         self.dur = duration
 
         if fraction_along != None:
-            self.fraction_along=fraction_along
+            self.fraction_along = fraction_along
         else:
-            self.fraction_along=0.5
+            self.fraction_along = 0.5
 
 class Nmodl(IonChannel):
     """
@@ -59,16 +67,4 @@ class Nmodl(IonChannel):
         self.type = 'NMODL'
         self.name = name
         self.attributes={}
-
-#for now use default values:
-#    @property
-#    def attributes(self):
-#        """
-#        should be a hash table with the attribute:value relationship
-#        """
-#        return self.__attributes
-#
-#    @attributes.setter
-#    def attributes(self,attribute,value):
-#        self.attributes.append((attribute,value))
 
