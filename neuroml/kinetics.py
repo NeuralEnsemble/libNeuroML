@@ -25,6 +25,85 @@ class IonChannel(KineticComponent):
     def __init__(self):
         pass
 
+    
+class HHChannel(IonChannel):
+
+    class _HHGate(KineticComponent):
+        def __init__(self,name,params,vdivs=150,vmin=-90,vmax=120):
+            """
+            This is primarily inspired by HHGate in MOOSE as per MOOSE
+            the params set up both gates using 13 parameters, as follows:
+
+            AA AB AC AD AF BA BB BC BD BF
+
+            Here AA-AF are Coefficients A to F of the alpha (forward) term
+            Here BA-BF are Coefficients A to F of the beta (reverse) term
+
+            Here xdivs is the number of entries in the table, xmin and xmax
+            define the range for lookup (Only relevant to MOOSE)
+            Outside this range the returned value will be the low [high]
+            entry of the table.
+
+            The equation describing each table is:
+            y(x) = (A + B * x) / (C + exp((x + D) / F))
+            The original HH equations can readily be cast into this form
+            """
+            self.name = name
+            self.params = params
+            self.vmin = vmin
+            self.vmax = vmax
+            self.vdivs = vdivs
+                  
+    def __init__(self, name, specific_gbar,
+                 e_rev, x_power, y_power=0.0, z_power=0.0):
+
+        """Instantiate an ion channel.
+
+        name -- name of the channel.
+        
+        specific_gbar -- specific value of maximum conductance.
+
+        e_rev -- reversal potential of the channel.
+        
+        Xpower -- exponent for the first gating parameter.
+
+        Ypower -- exponent for the second gatinmg component.
+        """
+        self.type = 'HHChannel'
+        self.specific_gbar = specific_gbar
+        self.e_rev = e_rev
+        self.x_power = x_power
+        self.y_power = y_power
+        self.z_power = z_power
+        self.channel_name = name
+
+    def setup_alpha(self, gate, params, vdivs, vmin, vmax):
+        """
+        Setup alpha and beta parameters of specified gate.
+
+        gate -- 'X'/'Y'/'Z' string initial of the gate.
+
+        params -- dict of parameters to compute alpha and beta, the rate constants for gates.
+
+        vdivs -- number of divisions in the interpolation tables for alpha and beta parameters.
+
+        vmin -- minimum voltage value for the alpha/beta lookup tables.
+
+        vmax -- maximum voltage value for the alpha/beta lookup tables.
+        """
+        #need to set up a dict so that there is correspondence between
+        #the gate and the parameters, gate can be X,Y or Z
+
+        if gate == 'X':
+            self.x_gate=self._HHGate(gate,params,vdivs=vdivs,vmin=vmin,vmax=vmax)
+        elif gate == 'Y':
+            self.y_gate=self._HHGate(gate,params,vdivs=vdivs,vmin=vmin,vmax=vmax)
+        elif gate == 'Z':
+            self.z_gate=self._HHGate(gate,params,vdivs=vdivs,vmin=vmin,vmax=vmax)
+        else:
+            raise(NotImplementedError,"This is an unkown gate")
+        return True
+
 
 class Synapse(KineticComponent):
     def __init__(self):
@@ -36,18 +115,35 @@ class ExtracellularProperties(KineticComponent):
         pass
 
 
+class PassiveProperties(KineticComponent):
+    """
+    """
+    def __init__(self,rm=5e9,cm=1e-12,ra=1e6,init_vm=-65e-3):
+        self.init_vm = init_vm # Initial membrane potential
+        self.rm = rm # Total membrane resistance of the compartment
+        self.cm = cm# Total membrane capacitance of the compartment
+        self.ra = ra # Total axial resistance of the compartment
+
+
+class LeakCurrent(IonChannel):
+    """
+    """
+    def __init__(self,em=-65e-3):
+        self.em = em
+
+        
 class IClamp(PointCurrent):
     """
     Steady point current injection
     
-    :param current: injected current in pA
-    :param delay: initiation of current injection, in ms
-    :param duration: current injection duration, in ms
+    :param current: injected current
+    :param delay: initiation of current injection
+    :param duration: current injection duration
     :param fraction_along: fraction along section for current injection
     """
 
     def __init__(self,current,delay,duration,fraction_along=None):
-        self.name = 'IClamp'
+        self.type = 'IClamp'
         self.amp = current
         self.delay = delay
         self.dur = duration
@@ -57,14 +153,19 @@ class IClamp(PointCurrent):
         else:
             self.fraction_along = 0.5
 
+
 class Nmodl(IonChannel):
     """
     NMODL (NEURON-Compatible) ion channel description
     plan for now is that these still need to be
     precompiled and located in the correct folder
     """
-    def __init__(self,name):
+    def __init__(self,name,attribute_values = None):
         self.type = 'NMODL'
         self.name = name
-        self.attributes={}
 
+        if attribute_values != None:
+            #any accessible attribute should be settable through this
+            self.attribute_values = attribute_values
+        else:
+            attribute_values = {}

@@ -30,7 +30,9 @@ class Network(object):
 
 class Morphology(object):
     def __init__(self,whole_segment_group):
-        self.__whole_segment_group=segment_group
+        self.__whole_segment_group = segment_group
+        self.passive_properties = None
+        self.leak_current = None
 
         
 class Cell(object):
