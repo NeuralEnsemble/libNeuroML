@@ -1,5 +1,8 @@
 # All the python compiled
 *.pyc
+*.py~
+*.*~
+*.*#
 .project
 .pydevproject
 *.egg-info

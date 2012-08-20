@@ -54,7 +54,7 @@ class HHChannel(IonChannel):
             self.vmax = vmax
             self.vdivs = vdivs
                   
-    def __init__(self, name, specific_gbar,
+    def __init__(self, name, specific_gbar, ion,
                  e_rev, x_power, y_power=0.0, z_power=0.0):
 
         """Instantiate an ion channel.
@@ -69,6 +69,8 @@ class HHChannel(IonChannel):
 
         Ypower -- exponent for the second gatinmg component.
         """
+
+        self.ion = ion
         self.type = 'HHChannel'
         self.specific_gbar = specific_gbar
         self.e_rev = e_rev
@@ -76,6 +78,7 @@ class HHChannel(IonChannel):
         self.y_power = y_power
         self.z_power = z_power
         self.channel_name = name
+        self.reversal_potential = e_rev
 
     def setup_alpha(self, gate, params, vdivs, vmin, vmax):
         """
@@ -94,11 +97,17 @@ class HHChannel(IonChannel):
         #need to set up a dict so that there is correspondence between
         #the gate and the parameters, gate can be X,Y or Z
 
+        self.vmin = vmin
+        self.vmax = vmax
+        
         if gate == 'X':
+            self.x_gating_params = params
             self.x_gate=self._HHGate(gate,params,vdivs=vdivs,vmin=vmin,vmax=vmax)
         elif gate == 'Y':
+            self.y_gating_params = params
             self.y_gate=self._HHGate(gate,params,vdivs=vdivs,vmin=vmin,vmax=vmax)
         elif gate == 'Z':
+            self.z_gating_params = params
             self.z_gate=self._HHGate(gate,params,vdivs=vdivs,vmin=vmin,vmax=vmax)
         else:
             raise(NotImplementedError,"This is an unkown gate")
