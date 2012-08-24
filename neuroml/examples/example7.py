@@ -1,10 +1,6 @@
 """
-Loading an abstract cell - example with IaFCell
 
-The neuroml element loaded is in this format:
-
-<IaFCell id="iaf" v0 = "-70mV" thresh = "30mV" a ="0.02" b = "0.2" c = "-50.0" d = "2" Iamp="15" Idel="22ms" Idur="2000ms"/>
-
+Example to build a full spiking IaF network throught libNeuroML & save it as XML & validate it
 
 """
 
