@@ -183,6 +183,7 @@ class PointCurrent(KineticComponent):
 class HHChannel(IonChannel):
 
     class _HHGate(KineticComponent):
+
         def __init__(self,name,params,vdivs=150,vmin=-90,vmax=120):
             """
             This is primarily inspired by HHGate in MOOSE as per MOOSE
