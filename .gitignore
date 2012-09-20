@@ -19,3 +19,5 @@ ideas/padraig/hdf5tests/*.hdf
 #hhExample ignores
 hhExample/*.xml
 hhExample/*.dat
+
+neuroml/examples/*.xml

@@ -16,16 +16,170 @@ class KineticComponent(object):
         pass
 
 
+class BaseVoltageDepRate(KineticComponent):
+    def __init__(self):
+        pass
+
+
+class BaseVoltageConcDepRate(KineticComponent):
+    def __init__(self):
+        pass
+
+
+class BaseHHRate(KineticComponent):
+    def __init__(self):
+        pass
+
+
+class HHExpRate(BaseHHRate):
+    def __init__(self):
+        pass
+
+
+class HHSigmoidRate(BaseHHRate):
+    def __init__(self):
+        pass
+
+
+class HHExpLinearRate(BaseHHRate):
+    def __init__(self):
+        pass
+
+
+class BaseVoltageDepVariable(KineticComponent):
+    def __init__(self):
+        pass
+
+
+class BaseVoltageConcDepVariable(BaseVoltageDepVariable):
+    def __init__(self):
+        pass
+
+
+class BaseHHVariable(BaseVoltageDepVariable):
+    def __init__(self):
+        pass
+
+    
+class HHExpVariable(BaseHHVariable):
+    def __init__(self):
+        pass
+
+
+class HHSigmoidVariable(BaseHHVariable):
+    def __init__(self):
+        pass
+
+
+class HHExpLinearVariable(BaseHHVariable):
+    def __init__(self):
+        pass
+
+
+class BaseVoltageDepTime(KineticComponent):
+    def __init__(self):
+        pass
+
+
+class FixedTimeCourse(BaseVoltageDepTime):
+    def __init__(self):
+        pass
+
+
+class BaseQ10Settings(KineticComponent):
+    def __init__(self):
+        pass
+
+
+class Q10Fixed(BaseQ10Settings):
+    def __init__(self):
+        pass
+
+
+class Q10ExpTemp(BaseQ10Settings):
+    def __init__(self):
+        pass
+
+
+class BaseGate(KineticComponent):
+    def __init__(self):
+        pass
+
+
+class GateHH(BaseGate):
+    def __init__(self):
+        pass
+
+
+class BaseIonChannel(KineticComponent):
+    def __init__(self):
+        pass
+
+
+class IonChannel(BaseIonChannel):
+    def __init__(self):
+        pass
+
+
+class IonChannelPassive(IonChannel):
+    def __init__(self):
+        pass
+
+class IonChnnelHH(IonChannel):
+    def __init__(self):
+        pass
+
+
+class KSState(KineticComponent):
+    def __init__(self):
+        pass
+
+
+class ClosedState(KSState):
+    def __init__(self):
+        pass
+
+
+class OpenState(KSState):
+    def __init__(self):
+        pass
+
+
+class IonChannelKS(IonChannel):
+    def __init__(self):
+        pass
+        
+
+class KSTransition(KineticComponent):
+    def __init__(self):
+        pass
+
+
+class ForwardTransition(KSTransition):
+    def __init__(self):
+        pass
+
+    
+class ReverseTransition(KSTransition):
+    def __init__(self):
+        pass
+
+
+class VHalfTransition(KSTransition):
+    def __init__(self):
+        pass
+
+
+class GateKS(BaseGate):
+    def __init__(self):
+        pass
+
+
 class PointCurrent(KineticComponent):
     def __init__(self):
         pass
 
 
-class IonChannel(KineticComponent):
-    def __init__(self):
-        pass
-
-    
 class HHChannel(IonChannel):
 
     class _HHGate(KineticComponent):
