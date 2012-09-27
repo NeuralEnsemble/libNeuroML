@@ -1,3 +1,7 @@
+"""
+This is currently an experimental module
+"""
+
 import lxml
 from lxml import objectify
 import xml_case_convert
