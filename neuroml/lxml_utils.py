@@ -15,6 +15,7 @@ import numpy as np
 import neuroml.morphology as ml
 from neuroml.morphology import Backend
 from lxml import objectify
+from neuroml.utils import xml_case_convert as xcc
    
 class NeuroMLLoader(object):
 
@@ -106,10 +107,6 @@ class NeuroMLLoader(object):
         can define their own abstract cell types.
         """
 
-        try:
-            
-
-        nml2_doc=cls.__nml2_doc(src)
         try:
             cells_array=[]
             for cell in nml2_doc.cell:
