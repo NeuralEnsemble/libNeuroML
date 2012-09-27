@@ -1,5 +1,6 @@
 """
-Working on util to convert naming conventions from neuroml to something more Python-friendly
+Set of methods to translate between naming conventions 
+in neuroml to others such as pythonic.
 """
 
 import re
