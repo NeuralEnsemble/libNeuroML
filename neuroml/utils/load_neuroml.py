@@ -88,13 +88,3 @@ def rename_elements(filename,new_file,to_format='python'):
               pretty_print=True,
               xml_declaration=True,
               encoding='UTF-8')
-
-rename_elements('/home/mike/temp/NeuroML_v2alpha.xsd',
-                '/home/mike/temp/pythonic_schema.nml',
-                to_format = 'python')
- 
-#now lets go back:
- 
-rename_elements('/home/mike/temp/pythonic_schema.nml',
-                '/home/mike/temp/neuromlic_schema.nml',
-                to_format = 'neuroml')
