@@ -187,7 +187,7 @@ class HHChannel(IonChannel):
         def __init__(self,name,params,vdivs=150,vmin=-90,vmax=120):
             """
             This is primarily inspired by HHGate in MOOSE as per MOOSE
-            the params set up both gates using 13 parameters, as follows:
+            the params set up both gates using 10 parameters, as follows:
 
             AA AB AC AD AF BA BB BC BD BF
 
