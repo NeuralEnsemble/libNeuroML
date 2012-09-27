@@ -14,11 +14,12 @@ def remove_curlies(string):
 
 def to_camelback(string):
     string_list = list(string)
-    for m in re.finditer:
+    i = 0
+    for m in re.finditer('_', string):
         underscore_index = m.end()
-        string_list(underscore_index) = string_list(underscore_index).lower()
-    return str(string_list)
-
-
-#def capitalise_first(string):
-
+        string_list[underscore_index - i] = string_list[underscore_index - i].capitalize()
+        string_list.pop(underscore_index - (1 + i))
+        i += 1
+    string = ''.join(string_list)
+    
+    return str(string)

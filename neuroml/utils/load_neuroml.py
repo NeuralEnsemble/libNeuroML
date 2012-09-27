@@ -1,5 +1,19 @@
 """
 This is currently an experimental module
+
+Some example code (use own nml files):
+
+
+>>> rename_elements('/home/mike/dev/libNeuroML/testFiles/NML2_FullCell.nml',
+>>>                 '/home/mike/temp/pythonic.nml',
+>>>                 to_format = 'python')
+>>> 
+>>> #now lets go back:
+>>> 
+>>> rename_elements('/home/mike/temp/pythonic.nml',
+>>>                 '/home/mike/temp/neuromlic.nml',
+>>>                 to_format = 'neuroml')
+
 """
 
 import lxml
@@ -9,7 +23,7 @@ import xml_case_convert
 def _rename_to_python(node):
     tag = node.tag
     tag = xml_case_convert.remove_curlies(tag)
-    tag = tag[0].lower()+tag[-len(tag)+1:]
+    tag = tag[0].capitalize()+tag[-len(tag)+1:]
     node.tag = tag
     
     new_attributes = {}
@@ -26,14 +40,14 @@ def _rename_to_python(node):
 def _rename_to_neuroml(node):
     tag = node.tag
     tag = xml_case_convert.remove_curlies(tag)
-    tag = tag[0].capitalize()+tag[-len(tag)+1:]
+    tag = tag[0].lower()+tag[-len(tag)+1:]
     node.tag = tag
     
     new_attributes = {}
     for attribute in node.attrib:
         value = node.attrib.pop(attribute)
         renamed_attribute = xml_case_convert.remove_curlies(attribute)
-        renamed_attribute = xml_case_convert.to_lowercase_with_underscores(attribute)
+        renamed_attribute = xml_case_convert.to_camelback(attribute)
         new_attributes[renamed_attribute] = value
     
     for attribute in new_attributes:
@@ -71,7 +85,16 @@ def rename_elements(filename,new_file,to_format='python'):
     if new_file == None: new_file = filename+'tmp'
     
     doc.write(new_file,
-              pretty_print=True)
-              
-rename_elements('/home/mike/dev/libNeuroML/testFiles/NML2_FullCell.nml',
-                '/home/mike/temp/test.nml')
+              pretty_print=True,
+              xml_declaration=True,
+              encoding='UTF-8')
+
+rename_elements('/home/mike/temp/NeuroML_v2alpha.xsd',
+                '/home/mike/temp/pythonic_schema.nml',
+                to_format = 'python')
+ 
+#now lets go back:
+ 
+rename_elements('/home/mike/temp/pythonic_schema.nml',
+                '/home/mike/temp/neuromlic_schema.nml',
+                to_format = 'neuroml')
