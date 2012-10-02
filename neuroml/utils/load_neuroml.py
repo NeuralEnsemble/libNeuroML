@@ -20,15 +20,20 @@ import lxml
 from lxml import objectify
 import xml_case_convert
 
-def _rename_to_python(node):
+def _node_to_python(node,rename_attributes,rename_elements,rename_values):
+
     tag = node.tag
-    tag = xml_case_convert.remove_curlies(tag)
-    tag = tag[0].capitalize()+tag[-len(tag)+1:]
-    node.tag = tag
+
+    if rename_elements:
+        tag = xml_case_convert.remove_curlies(tag)
+        tag = tag[0].capitalize()+tag[-len(tag)+1:]
+        node.tag = tag
     
     new_attributes = {}
     for attribute in node.attrib:
         value = node.attrib.pop(attribute)
+        if attribute in rename_values:
+            value = value[0].capitalize()+value[-len(value)+1:]
         renamed_attribute = xml_case_convert.remove_curlies(attribute)
         renamed_attribute = xml_case_convert.to_lowercase_with_underscores(attribute)
         new_attributes[renamed_attribute] = value
@@ -37,11 +42,15 @@ def _rename_to_python(node):
         new_attribute = new_attributes[attribute]
         node.set(attribute,new_attribute)
 
-def _rename_to_neuroml(node):
+#INCOMPLETE
+def _node_to_neuroml(node,rename_attributes,rename_elements,rename_values):
+
     tag = node.tag
-    tag = xml_case_convert.remove_curlies(tag)
-    tag = tag[0].lower()+tag[-len(tag)+1:]
-    node.tag = tag
+
+    if rename_elements:
+        tag = xml_case_convert.remove_curlies(tag)
+        tag = tag[0].lower()+tag[-len(tag)+1:]
+        node.tag = tag
     
     new_attributes = {}
     for attribute in node.attrib:
@@ -54,7 +63,7 @@ def _rename_to_neuroml(node):
         new_attribute = new_attributes[attribute]
         node.set(attribute,new_attribute)
 
-def rename_xml(queue,rename):
+def rename_doc(queue,rename,rename_attributes,rename_elements,rename_values):
     """Traverse the nodes of a tree in breadth-first order.
     The first argument should be the tree root; children
     should be a function taking as argument a tree node and
@@ -63,24 +72,33 @@ def rename_xml(queue,rename):
     if len(queue) > 0:
         node = queue.pop()
         children = node.getchildren()
-        rename(node)
+        rename(node,rename_attributes,rename_elements,rename_values)
         queue = queue + children
-        rename_xml(queue,rename)
+        rename_doc(queue,rename,
+                   rename_attributes,
+                   rename_elements,
+                   rename_values)
     else:
         return None
-    
-def rename_elements(filename,new_file,to_format='python'):
+
+def rename_file(filename,new_file,to_format,
+                rename_elements=False,
+                rename_attributes=False,
+                rename_values=False):
 
     doc = objectify.parse(filename)
     root = doc.getroot()
     queue = [root]
 
     if to_format == 'python':
-        rename = _rename_to_python
+        rename = _node_to_python
     if to_format == 'neuroml':
-        rename = _rename_to_neuroml
+        rename = _node_to_neuroml
         
-    rename_xml(queue,rename)
+    rename_doc(queue,rename,
+               rename_attributes=rename_attributes,
+               rename_elements=rename_elements,
+               rename_values=rename_values)
 
     if new_file == None: new_file = filename+'tmp'
     
@@ -88,3 +106,9 @@ def rename_elements(filename,new_file,to_format='python'):
               pretty_print=True,
               xml_declaration=True,
               encoding='UTF-8')
+
+def convert_xsd(input_file,output_file):
+    """
+    Still highly experimental, idea is to get the neuroml xsd and convert
+    the naming convention such that all the classes are pythonically named.
+    """
