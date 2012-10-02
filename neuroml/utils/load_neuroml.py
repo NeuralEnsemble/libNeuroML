@@ -112,3 +112,7 @@ def convert_xsd(input_file,output_file):
     Still highly experimental, idea is to get the neuroml xsd and convert
     the naming convention such that all the classes are pythonically named.
     """
+    rename_file(fn,to_file,'python',
+                rename_attributes=False,
+                rename_elements=False,
+                rename_values=['name','ref'])
