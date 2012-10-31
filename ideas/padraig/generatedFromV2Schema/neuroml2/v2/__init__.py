@@ -638,9 +638,11 @@ class includeType(GeneratedsSuper):
 class Q10Settings(GeneratedsSuper):
     subclass = None
     superclass = None
-    def __init__(self, fixedQ10=None, type_=None):
+    def __init__(self, fixedQ10=None, experimentalTemp=None, type_=None, q10Factor=None):
         self.fixedQ10 = _cast(None, fixedQ10)
+        self.experimentalTemp = _cast(None, experimentalTemp)
         self.type_ = _cast(None, type_)
+        self.q10Factor = _cast(None, q10Factor)
         pass
     def factory(*args_, **kwargs_):
         if Q10Settings.subclass:
@@ -653,11 +655,18 @@ class Q10Settings(GeneratedsSuper):
     def validate_Nml2Quantity_none(self, value):
         # Validate type Nml2Quantity_none, a restriction on xs:string.
         pass
+    def get_experimentalTemp(self): return self.experimentalTemp
+    def set_experimentalTemp(self, experimentalTemp): self.experimentalTemp = experimentalTemp
+    def validate_Nml2Quantity_temperature(self, value):
+        # Validate type Nml2Quantity_temperature, a restriction on xs:string.
+        pass
     def get_type(self): return self.type_
     def set_type(self, type_): self.type_ = type_
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         pass
+    def get_q10Factor(self): return self.q10Factor
+    def set_q10Factor(self, q10Factor): self.q10Factor = q10Factor
     def export(self, outfile, level, namespace_='', name_='Q10Settings', namespacedef_=''):
         showIndent(outfile, level)
         outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
@@ -673,9 +682,15 @@ class Q10Settings(GeneratedsSuper):
         if self.fixedQ10 is not None and 'fixedQ10' not in already_processed:
             already_processed.append('fixedQ10')
             outfile.write(' fixedQ10=%s' % (quote_attrib(self.fixedQ10), ))
+        if self.experimentalTemp is not None and 'experimentalTemp' not in already_processed:
+            already_processed.append('experimentalTemp')
+            outfile.write(' experimentalTemp=%s' % (quote_attrib(self.experimentalTemp), ))
         if self.type_ is not None and 'type_' not in already_processed:
             already_processed.append('type_')
             outfile.write(' type=%s' % (quote_attrib(self.type_), ))
+        if self.q10Factor is not None and 'q10Factor' not in already_processed:
+            already_processed.append('q10Factor')
+            outfile.write(' q10Factor=%s' % (quote_attrib(self.q10Factor), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Q10Settings', fromsubclass_=False):
         pass
     def hasContent_(self):
@@ -695,10 +710,18 @@ class Q10Settings(GeneratedsSuper):
             already_processed.append('fixedQ10')
             showIndent(outfile, level)
             outfile.write('fixedQ10 = "%s",\n' % (self.fixedQ10,))
+        if self.experimentalTemp is not None and 'experimentalTemp' not in already_processed:
+            already_processed.append('experimentalTemp')
+            showIndent(outfile, level)
+            outfile.write('experimentalTemp = "%s",\n' % (self.experimentalTemp,))
         if self.type_ is not None and 'type_' not in already_processed:
             already_processed.append('type_')
             showIndent(outfile, level)
             outfile.write('type_ = "%s",\n' % (self.type_,))
+        if self.q10Factor is not None and 'q10Factor' not in already_processed:
+            already_processed.append('q10Factor')
+            showIndent(outfile, level)
+            outfile.write('q10Factor = "%s",\n' % (self.q10Factor,))
     def exportLiteralChildren(self, outfile, level, name_):
         pass
     def build(self, node):
@@ -712,11 +735,21 @@ class Q10Settings(GeneratedsSuper):
             already_processed.append('fixedQ10')
             self.fixedQ10 = value
             self.validate_Nml2Quantity_none(self.fixedQ10)    # validate type Nml2Quantity_none
+        value = find_attr_value_('experimentalTemp', node)
+        if value is not None and 'experimentalTemp' not in already_processed:
+            already_processed.append('experimentalTemp')
+            self.experimentalTemp = value
+            self.validate_Nml2Quantity_temperature(self.experimentalTemp)    # validate type Nml2Quantity_temperature
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
             already_processed.append('type')
             self.type_ = value
             self.validate_NmlId(self.type_)    # validate type NmlId
+        value = find_attr_value_('q10Factor', node)
+        if value is not None and 'q10Factor' not in already_processed:
+            already_processed.append('q10Factor')
+            self.q10Factor = value
+            self.validate_Nml2Quantity_none(self.q10Factor)    # validate type Nml2Quantity_none
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
 # end class Q10Settings
@@ -964,11 +997,12 @@ class HHVariable(GeneratedsSuper):
 class HHTime(GeneratedsSuper):
     subclass = None
     superclass = None
-    def __init__(self, midpoint=None, rate=None, scale=None, type_=None):
+    def __init__(self, midpoint=None, rate=None, scale=None, type_=None, tau=None):
         self.midpoint = _cast(None, midpoint)
-        self.rate = _cast(float, rate)
+        self.rate = _cast(None, rate)
         self.scale = _cast(None, scale)
         self.type_ = _cast(None, type_)
+        self.tau = _cast(None, tau)
         pass
     def factory(*args_, **kwargs_):
         if HHTime.subclass:
@@ -983,6 +1017,9 @@ class HHTime(GeneratedsSuper):
         pass
     def get_rate(self): return self.rate
     def set_rate(self, rate): self.rate = rate
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        pass
     def get_scale(self): return self.scale
     def set_scale(self, scale): self.scale = scale
     def get_type(self): return self.type_
@@ -990,6 +1027,8 @@ class HHTime(GeneratedsSuper):
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         pass
+    def get_tau(self): return self.tau
+    def set_tau(self, tau): self.tau = tau
     def export(self, outfile, level, namespace_='', name_='HHTime', namespacedef_=''):
         showIndent(outfile, level)
         outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
@@ -1007,13 +1046,16 @@ class HHTime(GeneratedsSuper):
             outfile.write(' midpoint=%s' % (quote_attrib(self.midpoint), ))
         if self.rate is not None and 'rate' not in already_processed:
             already_processed.append('rate')
-            outfile.write(' rate="%s"' % self.gds_format_float(self.rate, input_name='rate'))
+            outfile.write(' rate=%s' % (quote_attrib(self.rate), ))
         if self.scale is not None and 'scale' not in already_processed:
             already_processed.append('scale')
             outfile.write(' scale=%s' % (quote_attrib(self.scale), ))
         if self.type_ is not None and 'type_' not in already_processed:
             already_processed.append('type_')
             outfile.write(' type=%s' % (quote_attrib(self.type_), ))
+        if self.tau is not None and 'tau' not in already_processed:
+            already_processed.append('tau')
+            outfile.write(' tau=%s' % (quote_attrib(self.tau), ))
     def exportChildren(self, outfile, level, namespace_='', name_='HHTime', fromsubclass_=False):
         pass
     def hasContent_(self):
@@ -1036,7 +1078,7 @@ class HHTime(GeneratedsSuper):
         if self.rate is not None and 'rate' not in already_processed:
             already_processed.append('rate')
             showIndent(outfile, level)
-            outfile.write('rate = %f,\n' % (self.rate,))
+            outfile.write('rate = "%s",\n' % (self.rate,))
         if self.scale is not None and 'scale' not in already_processed:
             already_processed.append('scale')
             showIndent(outfile, level)
@@ -1045,6 +1087,10 @@ class HHTime(GeneratedsSuper):
             already_processed.append('type_')
             showIndent(outfile, level)
             outfile.write('type_ = "%s",\n' % (self.type_,))
+        if self.tau is not None and 'tau' not in already_processed:
+            already_processed.append('tau')
+            showIndent(outfile, level)
+            outfile.write('tau = "%s",\n' % (self.tau,))
     def exportLiteralChildren(self, outfile, level, name_):
         pass
     def build(self, node):
@@ -1061,10 +1107,8 @@ class HHTime(GeneratedsSuper):
         value = find_attr_value_('rate', node)
         if value is not None and 'rate' not in already_processed:
             already_processed.append('rate')
-            try:
-                self.rate = float(value)
-            except ValueError, exp:
-                raise ValueError('Bad float/double attribute (rate): %s' % exp)
+            self.rate = value
+            self.validate_Nml2Quantity_time(self.rate)    # validate type Nml2Quantity_time
         value = find_attr_value_('scale', node)
         if value is not None and 'scale' not in already_processed:
             already_processed.append('scale')
@@ -1075,70 +1119,6 @@ class HHTime(GeneratedsSuper):
             already_processed.append('type')
             self.type_ = value
             self.validate_NmlId(self.type_)    # validate type NmlId
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        pass
-# end class HHTime
-
-
-class FixedTimeCourse(GeneratedsSuper):
-    subclass = None
-    superclass = None
-    def __init__(self, tau=None):
-        self.tau = _cast(None, tau)
-        pass
-    def factory(*args_, **kwargs_):
-        if FixedTimeCourse.subclass:
-            return FixedTimeCourse.subclass(*args_, **kwargs_)
-        else:
-            return FixedTimeCourse(*args_, **kwargs_)
-    factory = staticmethod(factory)
-    def get_tau(self): return self.tau
-    def set_tau(self, tau): self.tau = tau
-    def validate_Nml2Quantity_time(self, value):
-        # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
-    def export(self, outfile, level, namespace_='', name_='FixedTimeCourse', namespacedef_=''):
-        showIndent(outfile, level)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = []
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='FixedTimeCourse')
-        if self.hasContent_():
-            outfile.write('>\n')
-            self.exportChildren(outfile, level + 1, namespace_, name_)
-            outfile.write('</%s%s>\n' % (namespace_, name_))
-        else:
-            outfile.write('/>\n')
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='FixedTimeCourse'):
-        if self.tau is not None and 'tau' not in already_processed:
-            already_processed.append('tau')
-            outfile.write(' tau=%s' % (quote_attrib(self.tau), ))
-    def exportChildren(self, outfile, level, namespace_='', name_='FixedTimeCourse', fromsubclass_=False):
-        pass
-    def hasContent_(self):
-        if (
-
-            ):
-            return True
-        else:
-            return False
-    def exportLiteral(self, outfile, level, name_='FixedTimeCourse'):
-        level += 1
-        self.exportLiteralAttributes(outfile, level, [], name_)
-        if self.hasContent_():
-            self.exportLiteralChildren(outfile, level, name_)
-    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
-        if self.tau is not None and 'tau' not in already_processed:
-            already_processed.append('tau')
-            showIndent(outfile, level)
-            outfile.write('tau = "%s",\n' % (self.tau,))
-    def exportLiteralChildren(self, outfile, level, name_):
-        pass
-    def build(self, node):
-        self.buildAttributes(node, node.attrib, [])
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_)
-    def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('tau', node)
         if value is not None and 'tau' not in already_processed:
             already_processed.append('tau')
@@ -1146,7 +1126,7 @@ class FixedTimeCourse(GeneratedsSuper):
             self.validate_Nml2Quantity_time(self.tau)    # validate type Nml2Quantity_time
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
-# end class FixedTimeCourse
+# end class HHTime
 
 
 class VoltageConcDepBlock(GeneratedsSuper):
@@ -6828,34 +6808,37 @@ class DecayingPoolConcentrationModel(Standalone):
 class GateHH(Base):
     subclass = None
     superclass = Base
-    def __init__(self, id=None, neuroLexId=None, instances=1, type_=None, q10Settings=None, forwardRate=None, reverseRate=None, steadyState=None, timeCourse=None, fixedTimeCourse=None):
+    def __init__(self, id=None, neuroLexId=None, instances=1, type_=None, notes=None, q10Settings=None, forwardRate=None, reverseRate=None, timeCourse=None, steadyState=None):
         super(GateHH, self).__init__(id, neuroLexId, )
         self.instances = _cast(int, instances)
         self.type_ = _cast(None, type_)
+        self.notes = notes
         self.q10Settings = q10Settings
         self.forwardRate = forwardRate
         self.reverseRate = reverseRate
-        self.steadyState = steadyState
         self.timeCourse = timeCourse
-        self.fixedTimeCourse = fixedTimeCourse
+        self.steadyState = steadyState
     def factory(*args_, **kwargs_):
         if GateHH.subclass:
             return GateHH.subclass(*args_, **kwargs_)
         else:
             return GateHH(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def get_notes(self): return self.notes
+    def set_notes(self, notes): self.notes = notes
+    def validate_Notes(self, value):
+        # Validate type Notes, a restriction on xs:string.
+        pass
     def get_q10Settings(self): return self.q10Settings
     def set_q10Settings(self, q10Settings): self.q10Settings = q10Settings
     def get_forwardRate(self): return self.forwardRate
     def set_forwardRate(self, forwardRate): self.forwardRate = forwardRate
     def get_reverseRate(self): return self.reverseRate
     def set_reverseRate(self, reverseRate): self.reverseRate = reverseRate
-    def get_steadyState(self): return self.steadyState
-    def set_steadyState(self, steadyState): self.steadyState = steadyState
     def get_timeCourse(self): return self.timeCourse
     def set_timeCourse(self, timeCourse): self.timeCourse = timeCourse
-    def get_fixedTimeCourse(self): return self.fixedTimeCourse
-    def set_fixedTimeCourse(self, fixedTimeCourse): self.fixedTimeCourse = fixedTimeCourse
+    def get_steadyState(self): return self.steadyState
+    def set_steadyState(self, steadyState): self.steadyState = steadyState
     def get_instances(self): return self.instances
     def set_instances(self, instances): self.instances = instances
     def get_type(self): return self.type_
@@ -6885,26 +6868,27 @@ class GateHH(Base):
             outfile.write(' type=%s' % (quote_attrib(self.type_), ))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHH', fromsubclass_=False):
         super(GateHH, self).exportChildren(outfile, level, namespace_, name_, True)
+        if self.notes is not None:
+            showIndent(outfile, level)
+            outfile.write('<%snotes>%s</%snotes>\n' % (namespace_, self.gds_format_string(quote_xml(self.notes).encode(ExternalEncoding), input_name='notes'), namespace_))
         if self.q10Settings is not None:
             self.q10Settings.export(outfile, level, namespace_, name_='q10Settings')
         if self.forwardRate is not None:
             self.forwardRate.export(outfile, level, namespace_, name_='forwardRate')
         if self.reverseRate is not None:
             self.reverseRate.export(outfile, level, namespace_, name_='reverseRate')
-        if self.steadyState is not None:
-            self.steadyState.export(outfile, level, namespace_, name_='steadyState')
         if self.timeCourse is not None:
             self.timeCourse.export(outfile, level, namespace_, name_='timeCourse')
-        if self.fixedTimeCourse is not None:
-            self.fixedTimeCourse.export(outfile, level, namespace_, name_='fixedTimeCourse')
+        if self.steadyState is not None:
+            self.steadyState.export(outfile, level, namespace_, name_='steadyState')
     def hasContent_(self):
         if (
+            self.notes is not None or
             self.q10Settings is not None or
             self.forwardRate is not None or
             self.reverseRate is not None or
-            self.steadyState is not None or
             self.timeCourse is not None or
-            self.fixedTimeCourse is not None or
+            self.steadyState is not None or
             super(GateHH, self).hasContent_()
             ):
             return True
@@ -6927,6 +6911,9 @@ class GateHH(Base):
         super(GateHH, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
         super(GateHH, self).exportLiteralChildren(outfile, level, name_)
+        if self.notes is not None:
+            showIndent(outfile, level)
+            outfile.write('notes=%s,\n' % quote_python(self.notes).encode(ExternalEncoding))
         if self.q10Settings is not None:
             showIndent(outfile, level)
             outfile.write('q10Settings=model_.Q10Settings(\n')
@@ -6945,22 +6932,16 @@ class GateHH(Base):
             self.reverseRate.exportLiteral(outfile, level, name_='reverseRate')
             showIndent(outfile, level)
             outfile.write('),\n')
-        if self.steadyState is not None:
-            showIndent(outfile, level)
-            outfile.write('steadyState=model_.HHVariable(\n')
-            self.steadyState.exportLiteral(outfile, level, name_='steadyState')
-            showIndent(outfile, level)
-            outfile.write('),\n')
         if self.timeCourse is not None:
             showIndent(outfile, level)
             outfile.write('timeCourse=model_.HHTime(\n')
             self.timeCourse.exportLiteral(outfile, level, name_='timeCourse')
             showIndent(outfile, level)
             outfile.write('),\n')
-        if self.fixedTimeCourse is not None:
+        if self.steadyState is not None:
             showIndent(outfile, level)
-            outfile.write('fixedTimeCourse=model_.FixedTimeCourse(\n')
-            self.fixedTimeCourse.exportLiteral(outfile, level, name_='fixedTimeCourse')
+            outfile.write('steadyState=model_.HHVariable(\n')
+            self.steadyState.exportLiteral(outfile, level, name_='steadyState')
             showIndent(outfile, level)
             outfile.write('),\n')
     def build(self, node):
@@ -6983,7 +6964,12 @@ class GateHH(Base):
             self.validate_gateTypes(self.type_)    # validate type gateTypes
         super(GateHH, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        if nodeName_ == 'q10Settings':
+        if nodeName_ == 'notes':
+            notes_ = child_.text
+            notes_ = self.gds_validate_string(notes_, node, 'notes')
+            self.notes = notes_
+            self.validate_Notes(self.notes)    # validate type Notes
+        elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory()
             obj_.build(child_)
             self.set_q10Settings(obj_)
@@ -6995,18 +6981,14 @@ class GateHH(Base):
             obj_ = HHRate.factory()
             obj_.build(child_)
             self.set_reverseRate(obj_)
-        elif nodeName_ == 'steadyState':
-            obj_ = HHVariable.factory()
-            obj_.build(child_)
-            self.set_steadyState(obj_)
         elif nodeName_ == 'timeCourse':
             obj_ = HHTime.factory()
             obj_.build(child_)
             self.set_timeCourse(obj_)
-        elif nodeName_ == 'fixedTimeCourse':
-            obj_ = FixedTimeCourse.factory()
+        elif nodeName_ == 'steadyState':
+            obj_ = HHVariable.factory()
             obj_.build(child_)
-            self.set_fixedTimeCourse(obj_)
+            self.set_steadyState(obj_)
         super(GateHH, self).buildChildren(child_, node, nodeName_, True)
 # end class GateHH
 
@@ -7014,33 +6996,33 @@ class GateHH(Base):
 class IonChannel(Standalone):
     subclass = None
     superclass = Standalone
-    def __init__(self, id=None, neuroLexId=None, metaid=None, notes=None, annotation=None, conductance=None, type_=None, species=None, gateHH=None, gate=None):
+    def __init__(self, id=None, neuroLexId=None, metaid=None, notes=None, annotation=None, conductance=None, type_=None, species=None, gate=None, gateHH=None):
         super(IonChannel, self).__init__(id, neuroLexId, metaid, notes, annotation, )
         self.conductance = _cast(None, conductance)
         self.type_ = _cast(None, type_)
         self.species = _cast(None, species)
-        if gateHH is None:
-            self.gateHH = []
-        else:
-            self.gateHH = gateHH
         if gate is None:
             self.gate = []
         else:
             self.gate = gate
+        if gateHH is None:
+            self.gateHH = []
+        else:
+            self.gateHH = gateHH
     def factory(*args_, **kwargs_):
         if IonChannel.subclass:
             return IonChannel.subclass(*args_, **kwargs_)
         else:
             return IonChannel(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_gateHH(self): return self.gateHH
-    def set_gateHH(self, gateHH): self.gateHH = gateHH
-    def add_gateHH(self, value): self.gateHH.append(value)
-    def insert_gateHH(self, index, value): self.gateHH[index] = value
     def get_gate(self): return self.gate
     def set_gate(self, gate): self.gate = gate
     def add_gate(self, value): self.gate.append(value)
     def insert_gate(self, index, value): self.gate[index] = value
+    def get_gateHH(self): return self.gateHH
+    def set_gateHH(self, gateHH): self.gateHH = gateHH
+    def add_gateHH(self, value): self.gateHH.append(value)
+    def insert_gateHH(self, index, value): self.gateHH[index] = value
     def get_conductance(self): return self.conductance
     def set_conductance(self, conductance): self.conductance = conductance
     def validate_Nml2Quantity_conductance(self, value):
@@ -7081,14 +7063,14 @@ class IonChannel(Standalone):
             outfile.write(' species=%s' % (quote_attrib(self.species), ))
     def exportChildren(self, outfile, level, namespace_='', name_='IonChannel', fromsubclass_=False):
         super(IonChannel, self).exportChildren(outfile, level, namespace_, name_, True)
-        for gateHH_ in self.gateHH:
-            gateHH_.export(outfile, level, namespace_, name_='gateHH')
         for gate_ in self.gate:
             gate_.export(outfile, level, namespace_, name_='gate')
+        for gateHH_ in self.gateHH:
+            gateHH_.export(outfile, level, namespace_, name_='gateHH')
     def hasContent_(self):
         if (
-            self.gateHH or
             self.gate or
+            self.gateHH or
             super(IonChannel, self).hasContent_()
             ):
             return True
@@ -7116,24 +7098,24 @@ class IonChannel(Standalone):
     def exportLiteralChildren(self, outfile, level, name_):
         super(IonChannel, self).exportLiteralChildren(outfile, level, name_)
         showIndent(outfile, level)
-        outfile.write('gateHH=[\n')
-        level += 1
-        for gateHH_ in self.gateHH:
-            showIndent(outfile, level)
-            outfile.write('model_.GateHH(\n')
-            gateHH_.exportLiteral(outfile, level, name_='GateHH')
-            showIndent(outfile, level)
-            outfile.write('),\n')
-        level -= 1
-        showIndent(outfile, level)
-        outfile.write('],\n')
-        showIndent(outfile, level)
         outfile.write('gate=[\n')
         level += 1
         for gate_ in self.gate:
             showIndent(outfile, level)
             outfile.write('model_.GateHH(\n')
             gate_.exportLiteral(outfile, level, name_='GateHH')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('gateHH=[\n')
+        level += 1
+        for gateHH_ in self.gateHH:
+            showIndent(outfile, level)
+            outfile.write('model_.GateHH(\n')
+            gateHH_.exportLiteral(outfile, level, name_='GateHH')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -7162,14 +7144,14 @@ class IonChannel(Standalone):
             self.validate_NmlId(self.species)    # validate type NmlId
         super(IonChannel, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        if nodeName_ == 'gateHH':
-            obj_ = GateHH.factory()
-            obj_.build(child_)
-            self.gateHH.append(obj_)
-        elif nodeName_ == 'gate':
+        if nodeName_ == 'gate':
             obj_ = GateHH.factory()
             obj_.build(child_)
             self.gate.append(obj_)
+        elif nodeName_ == 'gateHH':
+            obj_ = GateHH.factory()
+            obj_.build(child_)
+            self.gateHH.append(obj_)
         super(IonChannel, self).buildChildren(child_, node, nodeName_, True)
 # end class IonChannel
 
@@ -9072,8 +9054,8 @@ def parseLiteral(inFileName):
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
     doc = None
-##     sys.stdout.write('#from nml2 import *\n\n')
-##     sys.stdout.write('import nml2 as model_\n\n')
+##     sys.stdout.write('#from __init__ import *\n\n')
+##     sys.stdout.write('import __init__ as model_\n\n')
 ##     sys.stdout.write('rootObj = model_.rootTag(\n')
 ##     rootObj.exportLiteral(sys.stdout, 0, name_=rootTag)
 ##     sys.stdout.write(')\n')
@@ -9114,7 +9096,6 @@ __all__ = [
     "ExplicitInput",
     "ExtracellularProperties",
     "ExtracellularPropertiesLocal",
-    "FixedTimeCourse",
     "GateHH",
     "GridLayout",
     "HHRate",

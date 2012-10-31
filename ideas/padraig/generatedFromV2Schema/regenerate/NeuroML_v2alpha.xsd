@@ -73,7 +73,7 @@
     <xs:simpleType name="Nml2Quantity_conductanceDensity">
 
         <xs:restriction base="xs:string">
-            <xs:pattern value="-?([0-9]*(\.[0-9]+)?)([eE]-?[0-9]+)?[\s]*(S_per_m2|mS_per_cm2)"/> <!-- Based on set of defined Units in NeuroMLCoreDimensions.xml -->
+            <xs:pattern value="-?([0-9]*(\.[0-9]+)?)([eE]-?[0-9]+)?[\s]*(S_per_m2|mS_per_cm2|S_per_cm2)"/> <!-- Based on set of defined Units in NeuroMLCoreDimensions.xml -->
         </xs:restriction>
 
     </xs:simpleType>
@@ -325,8 +325,8 @@
         <xs:complexContent>
             <xs:extension base="Standalone">
                 <xs:choice>
-                    <xs:element name="gateHH" type="GateHH" minOccurs="0" maxOccurs="unbounded"/>
                     <xs:element name="gate" type="GateHH" minOccurs="0" maxOccurs="unbounded"/>    <!-- TODO check type="gateHH" for this -->
+                    <xs:element name="gateHH" type="GateHH" minOccurs="0" maxOccurs="unbounded"/>
                 </xs:choice>
 
                 <xs:attribute name="species" type="NmlId" use="optional"/>
@@ -359,14 +359,14 @@
     <xs:complexType name="GateHH">
         <xs:complexContent>
             <xs:extension base="Base">
-                <xs:sequence>
+                <xs:all>
+                    <xs:element name="notes" type="Notes" minOccurs="0"/>
                     <xs:element name="q10Settings" type="Q10Settings" minOccurs="0"/>
                     <xs:element name="forwardRate" type="HHRate" minOccurs="0"/>
                     <xs:element name="reverseRate" type="HHRate" minOccurs="0"/>
+                    <xs:element name="timeCourse" type="HHTime"  minOccurs="0"/>
                     <xs:element name="steadyState" type="HHVariable" minOccurs="0"/>
-                    <xs:element name="timeCourse" type="HHTime" minOccurs="0"/>
-                    <xs:element name="fixedTimeCourse" type="FixedTimeCourse" minOccurs="0"/>
-                </xs:sequence>
+                </xs:all>
                 <xs:attribute name="instances" type="xs:integer" use="optional" default="1"/>
                 <xs:attribute name="type" type="gateTypes" use="optional"/>
             </xs:extension>
@@ -376,7 +376,9 @@
 
     <xs:complexType name="Q10Settings">
             <xs:attribute name="type" type="NmlId" use="required"/>
-            <xs:attribute name="fixedQ10" type="Nml2Quantity_none" use="optional"/>
+            <xs:attribute name="fixedQ10" type="Nml2Quantity_none" use="optional"/>   <!-- TODO: make this and follwing 2 attrs either/or-->
+            <xs:attribute name="q10Factor" type="Nml2Quantity_none" use="optional"/>
+            <xs:attribute name="experimentalTemp" type="Nml2Quantity_temperature" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="HHRate">
@@ -395,14 +397,15 @@
 
     <xs:complexType name="HHTime">
             <xs:attribute name="type" type="NmlId" use="required"/>
-            <xs:attribute name="rate" type="xs:float" use="optional"/>
+            <xs:attribute name="rate" type="Nml2Quantity_time" use="optional"/>
             <xs:attribute name="midpoint" type="Nml2Quantity_voltage" use="optional"/>
             <xs:attribute name="scale" type="Nml2Quantity_voltage" use="optional"/>
+            <xs:attribute name="tau" type="Nml2Quantity_time" use="optional"/>    <!-- TODO: make this and prev 3 attrs either/or-->
     </xs:complexType>
 
-    <xs:complexType name="FixedTimeCourse">
+    <!--<xs:complexType name="FixedTimeCourse">
             <xs:attribute name="tau" type="Nml2Quantity_time" use="required"/>
-    </xs:complexType>
+    </xs:complexType>-->
 
 
 
