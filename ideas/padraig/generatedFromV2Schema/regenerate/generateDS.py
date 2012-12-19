@@ -145,7 +145,7 @@ VERSION = '2.7b_pg'
 
 GenerateProperties = 0
 UseOldGetterSetter = 0
-UseNmlGetterSetter = 0
+UseNmlGetterSetter = 1
 MemberSpecs = None
 DelayedElements = []
 DelayedElements_subclass = []
@@ -4315,7 +4315,7 @@ def cleanupName(oldName):
     return newName
 
 nmlSubs = {}
-
+'''
 nmlSubs["inhomogeneous_param"]="InhomogeneousParam"
 nmlSubs["variable_parameter"]="VariableParameter"
 nmlSubs["spec_capacitance"]="SpecCapacitance"
@@ -4330,8 +4330,11 @@ nmlSubs["current_voltage_relation"]="CurrentVoltageRelation"
 nmlSubs["ion_concentration"]="IonConcentration"
 
 nmlSubs["synapse_type"]="SynapseType"
+nmlSubs["synapse_type"]="SynapseType"
 
-nmlSubs["xxx"]="xxx"
+nmlSubs["izhikevichCell"]="izhikevich_cell"
+
+nmlSubs["xxx"]="xxx"'''
 
 def make_gs_name(oldName):
     if UseOldGetterSetter:
@@ -4339,9 +4342,10 @@ def make_gs_name(oldName):
     if UseNmlGetterSetter:
         if nmlSubs.has_key(oldName):
             newName = nmlSubs[oldName]
-      
         else:
-            newName = str(oldName[0]).capitalize() + oldName[1:]
+            #newName = str(oldName[0]).capitalize() + oldName[1:]
+            newName = '_%s' % oldName
+            newName = newName.replace("Cell", "_cell")
     else:
         newName = '_%s' % oldName
     return newName

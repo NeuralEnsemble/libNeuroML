@@ -16,13 +16,13 @@ if __name__ == "__main__":
 
     nmlDoc = NeuroMLDocument(id="IzhNet")
 
-    izhCell = IzhikevichCell(id="izBurst", v0 = "-70mV", thresh = "30mV", a ="0.02", b = "0.2", c = "-50.0", d = "2", Iamp="15", Idel="22ms", Idur="2000ms")
-    nmlDoc.add_izhikevichCell(izhCell)
+    izhCell = IzhikevichCell(id="izBurst", v0 = "-70mV", thresh = "30mV", a ="0.02", b = "0.2", c = "-50.0", d = "2")
+    nmlDoc.add_izhikevich_cell(izhCell)
 
     newnmlfile = "testIzhNml2.xml"
     nmlDoc.write_neuroml(newnmlfile)
 
-    validate_nml2(newnmlfile)
+    validate_nml2beta(newnmlfile)
     ############################################################
 
     print "Writing NeuroML 2 file with detailed morph"
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     newnmlfile = "testCellNml2.xml"
     nmlDoc.write_neuroml(newnmlfile)
 
-    validate_nml2(newnmlfile)
+    validate_nml2beta(newnmlfile)
 
     ############################################################
 

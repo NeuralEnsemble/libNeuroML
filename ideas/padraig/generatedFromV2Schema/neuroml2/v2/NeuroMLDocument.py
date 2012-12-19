@@ -41,3 +41,18 @@ def validate_nml2(nml2_file):
     doc = etree.parse(nml2_file)
     xmlschema.assertValid(doc)
     print "It's valid!"
+
+# Helper function
+def validate_nml2beta(nml2_file):
+    from lxml import etree
+    from urllib import urlopen
+
+    schema_file = "regenerate/NeuroML_v2beta.xsd"
+    xmlschema_doc = etree.parse(schema_file)
+    xmlschema = etree.XMLSchema(xmlschema_doc)
+
+    print "Validating %s against %s" %(nml2_file, schema_file)
+
+    doc = etree.parse(nml2_file)
+    xmlschema.assertValid(doc)
+    print "It's valid!"
