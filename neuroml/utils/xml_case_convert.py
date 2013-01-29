@@ -11,15 +11,3 @@ def to_lowercase_with_underscores(string):
 
 def remove_curlies(string):
     return re.sub("{.*}","",string)
-
-def to_camelback(string):
-    string_list = list(string)
-    i = 0
-    for m in re.finditer('_', string):
-        underscore_index = m.end()
-        string_list[underscore_index - i] = string_list[underscore_index - i].capitalize()
-        string_list.pop(underscore_index - (1 + i))
-        i += 1
-    string = ''.join(string_list)
-    
-    return str(string)
