@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Generated Tue Jan 29 05:01:55 2013 by generateDS.py version 2.7c.
+# Generated Wed Jan 30 03:29:05 2013 by generateDS.py version 2.8b.
 #
 
 import sys
@@ -49,7 +49,8 @@ except ImportError:
                     if Verbose_import_:
                         print("running with ElementTree")
                 except ImportError:
-                    raise ImportError("Failed to import ElementTree from any known place")
+                    raise ImportError(
+                        "Failed to import ElementTree from any known place")
 
 def parsexml_(*args, **kwargs):
     if (XMLParser_import_library == XMLParser_import_lxml and
@@ -505,8 +506,8 @@ supermod.ConcentrationModel_D.subclass = ConcentrationModel_DSub
 
 
 class CellSub(supermod.Cell):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, biophysical_properties='1', morphology_attr=None, morphology=None):
-        super(CellSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, biophysical_properties, morphology_attr, morphology, )
+    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, biophysical_properties_attr=None, morphology_attr=None, morphology=None, biophysical_properties=None):
+        super(CellSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, biophysical_properties_attr, morphology_attr, morphology, biophysical_properties, )
 supermod.Cell.subclass = CellSub
 # end class CellSub
 
@@ -571,7 +572,8 @@ supermod.NmdaSynapse.subclass = NmdaSynapseSub
 def get_root_tag(node):
     tag = supermod.Tag_pattern_.match(node.tag).groups()[-1]
     rootClass = None
-    if hasattr(supermod, tag):
+    rootClass = supermod.GDSClassesMapping.get(tag)
+    if rootClass is None and hasattr(supermod, tag):
         rootClass = getattr(supermod, tag)
     return tag, rootClass
 

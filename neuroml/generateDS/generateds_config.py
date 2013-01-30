@@ -48,9 +48,7 @@ def _node_to_python(node):
 
     for attribute in node.attrib:
         nml_attribute = node.attrib.pop(attribute)
-        print nml_attribute
         if nml_attribute[0].islower():
-            print 'object detected'
             renamed_attribute = to_lowercase_with_underscores(nml_attribute)
             NameTable[nml_attribute] = renamed_attribute
    
@@ -64,19 +62,19 @@ NameTable = {}
 
 traverse_doc(queue,_node_to_python)
 
-#filtering routine
-disallowed_keywords = ['from']
+#filtering routine, need to get a better way to extract these, asked on Stack Overflow
+import keyword
+disallowed_keywords = keyword.kwlist
 for keyword in disallowed_keywords:
     try:
         NameTable.pop(keyword)
     except:
         pass
 
-#
-# Now we define the edge cases
-#
-
-#the following are edge cases (mainly where s's are needed): 
+# Now we define the edge cases (mainly where s's are needed): 
 NameTable['cell'] = 'cells'
 NameTable['segment'] = 'segments'
 NameTable['segmentGroup'] = 'segment_groups'
+
+print("NameTable is as follows:")
+print NameTable
