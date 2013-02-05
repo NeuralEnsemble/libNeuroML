@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Jan 30 03:29:05 2013 by generateDS.py version 2.8b.
+# Generated Tue Feb  5 04:41:00 2013 by generateDS.py version 2.8b.
 #
 
 import sys
@@ -7616,11 +7616,11 @@ class IonChannel(Standalone):
 # end class IonChannel
 
 
-class neuroml(Standalone):
+class NeuroML(Standalone):
     subclass = None
     superclass = Standalone
     def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, include=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, decaying_pool_concentration_model=None, exp_one_synapse=None, exp_two_synapse=None, nmda_synapse=None, stp_synapse=None, biophysical_properties=None, cells=None, abstract_cell=None, iaf_tau_cell=None, iaf_cell=None, izhikevich_cell=None, ad_ex_ia_f_cell=None, pulse_generator=None, network=None, ComponentType=None):
-        super(neuroml, self).__init__(id, neuro_lex_id, metaid, notes, annotation, )
+        super(NeuroML, self).__init__(id, neuro_lex_id, metaid, notes, annotation, )
         if include is None:
             self.include = []
         else:
@@ -7702,10 +7702,10 @@ class neuroml(Standalone):
         else:
             self.ComponentType = ComponentType
     def factory(*args_, **kwargs_):
-        if neuroml.subclass:
-            return neuroml.subclass(*args_, **kwargs_)
+        if NeuroML.subclass:
+            return NeuroML.subclass(*args_, **kwargs_)
         else:
-            return neuroml(*args_, **kwargs_)
+            return NeuroML(*args_, **kwargs_)
     factory = staticmethod(factory)
     def get_include(self): return self.include
     def set_include(self, include): self.include = include
@@ -7787,7 +7787,7 @@ class neuroml(Standalone):
     def set_ComponentType(self, ComponentType): self.ComponentType = ComponentType
     def add_ComponentType(self, value): self.ComponentType.append(value)
     def insert_ComponentType(self, index, value): self.ComponentType[index] = value
-    def export(self, outfile, level, namespace_='', name_='neuroml', namespacedef_='', pretty_print=True):
+    def export(self, outfile, level, namespace_='', name_='NeuroML', namespacedef_='', pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -7795,7 +7795,7 @@ class neuroml(Standalone):
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
         already_processed = []
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='neuroml')
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='NeuroML')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
             self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
@@ -7803,10 +7803,10 @@ class neuroml(Standalone):
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='neuroml'):
-        super(neuroml, self).exportAttributes(outfile, level, already_processed, namespace_, name_='neuroml')
-    def exportChildren(self, outfile, level, namespace_='', name_='neuroml', fromsubclass_=False, pretty_print=True):
-        super(neuroml, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='NeuroML'):
+        super(NeuroML, self).exportAttributes(outfile, level, already_processed, namespace_, name_='NeuroML')
+    def exportChildren(self, outfile, level, namespace_='', name_='NeuroML', fromsubclass_=False, pretty_print=True):
+        super(NeuroML, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
             eol_ = '\n'
         else:
@@ -7873,20 +7873,20 @@ class neuroml(Standalone):
             self.pulse_generator or
             self.network or
             self.ComponentType or
-            super(neuroml, self).hasContent_()
+            super(NeuroML, self).hasContent_()
             ):
             return True
         else:
             return False
-    def exportLiteral(self, outfile, level, name_='neuroml'):
+    def exportLiteral(self, outfile, level, name_='NeuroML'):
         level += 1
         self.exportLiteralAttributes(outfile, level, [], name_)
         if self.hasContent_():
             self.exportLiteralChildren(outfile, level, name_)
     def exportLiteralAttributes(self, outfile, level, already_processed, name_):
-        super(neuroml, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+        super(NeuroML, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
-        super(neuroml, self).exportLiteralChildren(outfile, level, name_)
+        super(NeuroML, self).exportLiteralChildren(outfile, level, name_)
         showIndent(outfile, level)
         outfile.write('include=[\n')
         level += 1
@@ -8133,7 +8133,7 @@ class neuroml(Standalone):
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
     def buildAttributes(self, node, attrs, already_processed):
-        super(neuroml, self).buildAttributes(node, attrs, already_processed)
+        super(NeuroML, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'include':
             obj_ = include_type.factory()
@@ -8218,8 +8218,8 @@ class neuroml(Standalone):
             obj_ = ComponentType.factory()
             obj_.build(child_)
             self.ComponentType.append(obj_)
-        super(neuroml, self).buildChildren(child_, node, nodeName_, True)
-# end class neuroml
+        super(NeuroML, self).buildChildren(child_, node, nodeName_, True)
+# end class NeuroML
 
 
 class ConcentrationModel_D(DecayingPoolConcentrationModel):
@@ -9552,6 +9552,7 @@ GDSClassesMapping = {
     'forwardRate': HHRate,
     'location': Location,
     'synapticConnection': SynapticConnection,
+    'neuroml': NeuroML,
     'channelPopulation': ChannelPopulation,
     'parent': SegmentParent,
     'initMembPotential': ValueAcrossSegOrSegGroup,
@@ -9712,6 +9713,7 @@ __all__ = [
     "MembraneProperties",
     "Morphology",
     "Network",
+    "NeuroML",
     "NmdaSynapse",
     "Path",
     "Point3DWithDiam",
@@ -9740,6 +9742,5 @@ __all__ = [
     "ValueAcrossSegOrSegGroup",
     "VariableParameter",
     "VoltageConcDepBlock",
-    "include_type",
-    "neuroml"
+    "include_type"
     ]

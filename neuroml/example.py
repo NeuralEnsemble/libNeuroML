@@ -1,6 +1,5 @@
-import nml
-
-doc = nml.parse('Purk2M9s.nml')
+import loaders
+doc = loaders.NeuroMLLoader.load('Purk2M9s.nml')
 
 mycell = doc.cells[0]
 
@@ -10,7 +9,7 @@ my_morphology = mycell.morphology
 #randomly  change a segment id:
 my_morphology.segments[33].id = 'random_test'
 
-newcell = nml.Cell()
+newcell = .Cell()
 newcell.id = "some random cell"
 
 new_morphology = nml.Morphology()

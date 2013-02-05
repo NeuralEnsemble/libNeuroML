@@ -7,7 +7,7 @@ long_description = open("README").read()
 setup(
     name = "libNeuroML",
     version = '0.1.1dev',
-    packages = ['neuroml', 'neuroml.test','neuroml.v2','neuroml.utils'],
+    packages = ['neuroml', 'neuroml.test','neuroml.nml','neuroml.examples'],
     author = "libNeuroML authors and contributors",
     author_email = "<...>",
     description = "A Python library for working with NeuroML descriptions of neuronal models",

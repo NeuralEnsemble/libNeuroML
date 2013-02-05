@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Generated Wed Jan 30 03:29:05 2013 by generateDS.py version 2.8b.
+# Generated Tue Feb  5 04:41:01 2013 by generateDS.py version 2.8b.
 #
 
 import sys
@@ -491,11 +491,11 @@ supermod.IonChannel.subclass = IonChannelSub
 # end class IonChannelSub
 
 
-class neuromlSub(supermod.neuroml):
+class NeuroMLSub(supermod.NeuroML):
     def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, include=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, decaying_pool_concentration_model=None, exp_one_synapse=None, exp_two_synapse=None, nmda_synapse=None, stp_synapse=None, biophysical_properties=None, cells=None, abstract_cell=None, iaf_tau_cell=None, iaf_cell=None, izhikevich_cell=None, ad_ex_ia_f_cell=None, pulse_generator=None, network=None, ComponentType=None):
-        super(neuromlSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, include, extracellular_properties, intracellular_properties, morphology, ion_channel, decaying_pool_concentration_model, exp_one_synapse, exp_two_synapse, nmda_synapse, stp_synapse, biophysical_properties, cells, abstract_cell, iaf_tau_cell, iaf_cell, izhikevich_cell, ad_ex_ia_f_cell, pulse_generator, network, ComponentType, )
-supermod.neuroml.subclass = neuromlSub
-# end class neuromlSub
+        super(NeuroMLSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, include, extracellular_properties, intracellular_properties, morphology, ion_channel, decaying_pool_concentration_model, exp_one_synapse, exp_two_synapse, nmda_synapse, stp_synapse, biophysical_properties, cells, abstract_cell, iaf_tau_cell, iaf_cell, izhikevich_cell, ad_ex_ia_f_cell, pulse_generator, network, ComponentType, )
+supermod.NeuroML.subclass = NeuroMLSub
+# end class NeuroMLSub
 
 
 class ConcentrationModel_DSub(supermod.ConcentrationModel_D):

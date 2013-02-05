@@ -75,6 +75,7 @@ for keyword in disallowed_keywords:
 NameTable['cell'] = 'cells'
 NameTable['segment'] = 'segments'
 NameTable['segmentGroup'] = 'segment_groups'
+NameTable['neuroml'] = 'NeuroMLDocument' #not working
 
 print("NameTable is as follows:")
 print NameTable
