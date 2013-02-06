@@ -9,7 +9,7 @@ my_morphology = mycell.morphology
 #randomly  change a segment id:
 my_morphology.segments[33].id = 'random_test'
 
-newcell = .Cell()
+newcell = neuroml.Cell()
 newcell.id = "some random cell"
 
 new_morphology = nml.Morphology()

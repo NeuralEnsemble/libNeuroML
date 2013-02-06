@@ -1,4 +1,6 @@
-from import loaders
+from neuroml import loaders
+from neuroml import opmorphology
+import neuroml
 
 doc = loaders.NeuroMLLoader.load('Purk2M9s.nml')
 
@@ -10,21 +12,36 @@ my_morphology = mycell.morphology
 #randomly  change a segment id:
 my_morphology.segments[33].id = 'random_test'
 
-newcell = nml.Cell()
+newcell = neuroml.Cell()
 newcell.id = "some random cell"
 
-new_morphology = nml.Morphology()
+new_morphology = neuroml.Morphology()
 newcell.morphology = new_morphology
 
 new_morphology.id = 'some random morphology'
 
 #add a few segments to that morphology:
 for i in range(10):
-    segment = nml.Segment()
+    segment = neuroml.Segment()
     segment.id = "some random segment"
     new_morphology.add_segment(segment)
 
+opmorph = opmorphology.OptimizedMorphology()
+
+anothercell = neuroml.Cell()
+anothercell.id = 'another random cell'
+
+anothercell.morphology = opmorph
+
+for i in range(5):
+    segment = neuroml.Segment()
+    segment.id = "another random segment"
+    opmorph.add_segment(segment)
+
+print opmorph.segments
+    
 doc.add_cell(newcell)
+doc.add_cell(anothercell)
 
 f = open('test.xml','w')
 doc.export(f,0)
