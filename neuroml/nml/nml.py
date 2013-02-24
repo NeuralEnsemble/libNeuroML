@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Feb  5 04:41:00 2013 by generateDS.py version 2.8b.
+# Generated Sun Feb 24 03:22:45 2013 by generateDS.py version 2.8b.
 #
 
 import sys
@@ -671,7 +671,7 @@ class ComponentType(GeneratedsSuper):
 # end class ComponentType
 
 
-class include_type(GeneratedsSuper):
+class IncludeType(GeneratedsSuper):
     subclass = None
     superclass = None
     def __init__(self, href=None, valueOf_=None, mixedclass_=None, content_=None):
@@ -687,16 +687,16 @@ class include_type(GeneratedsSuper):
             self.content_ = content_
         self.valueOf_ = valueOf_
     def factory(*args_, **kwargs_):
-        if include_type.subclass:
-            return include_type.subclass(*args_, **kwargs_)
+        if IncludeType.subclass:
+            return IncludeType.subclass(*args_, **kwargs_)
         else:
-            return include_type(*args_, **kwargs_)
+            return IncludeType(*args_, **kwargs_)
     factory = staticmethod(factory)
     def get_href(self): return self.href
     def set_href(self, href): self.href = href
     def get_valueOf_(self): return self.valueOf_
     def set_valueOf_(self, valueOf_): self.valueOf_ = valueOf_
-    def export(self, outfile, level, namespace_='', name_='includeType', namespacedef_='', pretty_print=True):
+    def export(self, outfile, level, namespace_='', name_='IncludeType', namespacedef_='', pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -704,15 +704,15 @@ class include_type(GeneratedsSuper):
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
         already_processed = []
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='includeType')
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='IncludeType')
         outfile.write('>')
         self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
         outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='includeType'):
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='IncludeType'):
         if self.href is not None and 'href' not in already_processed:
             already_processed.append('href')
             outfile.write(' href=%s' % (self.gds_format_string(quote_attrib(self.href).encode(ExternalEncoding), input_name='href'), ))
-    def exportChildren(self, outfile, level, namespace_='', name_='includeType', fromsubclass_=False, pretty_print=True):
+    def exportChildren(self, outfile, level, namespace_='', name_='IncludeType', fromsubclass_=False, pretty_print=True):
         pass
     def hasContent_(self):
         if (
@@ -721,7 +721,7 @@ class include_type(GeneratedsSuper):
             return True
         else:
             return False
-    def exportLiteral(self, outfile, level, name_='includeType'):
+    def exportLiteral(self, outfile, level, name_='IncludeType'):
         level += 1
         self.exportLiteralAttributes(outfile, level, [], name_)
         if self.hasContent_():
@@ -756,7 +756,7 @@ class include_type(GeneratedsSuper):
                 MixedContainer.TypeNone, '', child_.tail)
             self.content_.append(obj_)
         pass
-# end class include_type
+# end class IncludeType
 
 
 class Q10Settings(GeneratedsSuper):
@@ -3808,107 +3808,6 @@ class GridLayout(GeneratedsSuper):
 # end class GridLayout
 
 
-class Instances(GeneratedsSuper):
-    subclass = None
-    superclass = None
-    def __init__(self, size=None, instance=None):
-        self.size = _cast(int, size)
-        if instance is None:
-            self.instance = []
-        else:
-            self.instance = instance
-    def factory(*args_, **kwargs_):
-        if Instances.subclass:
-            return Instances.subclass(*args_, **kwargs_)
-        else:
-            return Instances(*args_, **kwargs_)
-    factory = staticmethod(factory)
-    def get_instance(self): return self.instance
-    def set_instance(self, instance): self.instance = instance
-    def add_instance(self, value): self.instance.append(value)
-    def insert_instance(self, index, value): self.instance[index] = value
-    def get_size(self): return self.size
-    def set_size(self, size): self.size = size
-    def export(self, outfile, level, namespace_='', name_='Instances', namespacedef_='', pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = []
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='Instances')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Instances'):
-        if self.size is not None and 'size' not in already_processed:
-            already_processed.append('size')
-            outfile.write(' size="%s"' % self.gds_format_integer(self.size, input_name='size'))
-    def exportChildren(self, outfile, level, namespace_='', name_='Instances', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        for instance_ in self.instance:
-            instance_.export(outfile, level, namespace_, name_='instance', pretty_print=pretty_print)
-    def hasContent_(self):
-        if (
-            self.instance
-            ):
-            return True
-        else:
-            return False
-    def exportLiteral(self, outfile, level, name_='Instances'):
-        level += 1
-        self.exportLiteralAttributes(outfile, level, [], name_)
-        if self.hasContent_():
-            self.exportLiteralChildren(outfile, level, name_)
-    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
-        if self.size is not None and 'size' not in already_processed:
-            already_processed.append('size')
-            showIndent(outfile, level)
-            outfile.write('size = %d,\n' % (self.size,))
-    def exportLiteralChildren(self, outfile, level, name_):
-        showIndent(outfile, level)
-        outfile.write('instance=[\n')
-        level += 1
-        for instance_ in self.instance:
-            showIndent(outfile, level)
-            outfile.write('model_.Instance(\n')
-            instance_.exportLiteral(outfile, level, name_='Instance')
-            showIndent(outfile, level)
-            outfile.write('),\n')
-        level -= 1
-        showIndent(outfile, level)
-        outfile.write('],\n')
-    def build(self, node):
-        self.buildAttributes(node, node.attrib, [])
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_)
-    def buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_('size', node)
-        if value is not None and 'size' not in already_processed:
-            already_processed.append('size')
-            try:
-                self.size = int(value)
-            except ValueError, exp:
-                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
-            if self.size < 0:
-                raise_parse_error(node, 'Invalid NonNegativeInteger')
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        if nodeName_ == 'instance':
-            obj_ = Instance.factory()
-            obj_.build(child_)
-            self.instance.append(obj_)
-# end class Instances
-
-
 class Instance(GeneratedsSuper):
     subclass = None
     superclass = None
@@ -4163,6 +4062,9 @@ class Location(GeneratedsSuper):
 
 
 class SynapticConnection(GeneratedsSuper):
+    """Single explicit connection. Introduced to test connections in LEMS.
+    Will probably be removed in favour of connections wrapped in
+    projection element"""
     subclass = None
     superclass = None
     def __init__(self, to=None, synapse=None, fromxx=None):
@@ -4260,11 +4162,13 @@ class SynapticConnection(GeneratedsSuper):
 
 
 class Connection(GeneratedsSuper):
+    """Subject to change as it gets tested with LEMS"""
     subclass = None
     superclass = None
-    def __init__(self, to=None, fromxx=None):
-        self.to = _cast(None, to)
-        self.fromxx = _cast(None, fromxx)
+    def __init__(self, post_cell_id=None, id=None, pre_cell_id=None):
+        self.post_cell_id = _cast(None, post_cell_id)
+        self.id = _cast(int, id)
+        self.pre_cell_id = _cast(None, pre_cell_id)
         pass
     def factory(*args_, **kwargs_):
         if Connection.subclass:
@@ -4272,10 +4176,12 @@ class Connection(GeneratedsSuper):
         else:
             return Connection(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_to(self): return self.to
-    def set_to(self, to): self.to = to
-    def get_from(self): return self.fromxx
-    def set_from(self, fromxx): self.fromxx = fromxx
+    def get_postCellId(self): return self.post_cell_id
+    def set_postCellId(self, post_cell_id): self.post_cell_id = post_cell_id
+    def get_id(self): return self.id
+    def set_id(self, id): self.id = id
+    def get_preCellId(self): return self.pre_cell_id
+    def set_preCellId(self, pre_cell_id): self.pre_cell_id = pre_cell_id
     def export(self, outfile, level, namespace_='', name_='Connection', namespacedef_='', pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -4292,12 +4198,15 @@ class Connection(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Connection'):
-        if self.to is not None and 'to' not in already_processed:
-            already_processed.append('to')
-            outfile.write(' to=%s' % (self.gds_format_string(quote_attrib(self.to).encode(ExternalEncoding), input_name='to'), ))
-        if self.fromxx is not None and 'fromxx' not in already_processed:
-            already_processed.append('fromxx')
-            outfile.write(' from=%s' % (self.gds_format_string(quote_attrib(self.fromxx).encode(ExternalEncoding), input_name='from'), ))
+        if self.post_cell_id is not None and 'post_cell_id' not in already_processed:
+            already_processed.append('post_cell_id')
+            outfile.write(' postCellId=%s' % (self.gds_format_string(quote_attrib(self.post_cell_id).encode(ExternalEncoding), input_name='postCellId'), ))
+        if self.id is not None and 'id' not in already_processed:
+            already_processed.append('id')
+            outfile.write(' id="%s"' % self.gds_format_integer(self.id, input_name='id'))
+        if self.pre_cell_id is not None and 'pre_cell_id' not in already_processed:
+            already_processed.append('pre_cell_id')
+            outfile.write(' preCellId=%s' % (self.gds_format_string(quote_attrib(self.pre_cell_id).encode(ExternalEncoding), input_name='preCellId'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Connection', fromsubclass_=False, pretty_print=True):
         pass
     def hasContent_(self):
@@ -4313,14 +4222,18 @@ class Connection(GeneratedsSuper):
         if self.hasContent_():
             self.exportLiteralChildren(outfile, level, name_)
     def exportLiteralAttributes(self, outfile, level, already_processed, name_):
-        if self.to is not None and 'to' not in already_processed:
-            already_processed.append('to')
+        if self.post_cell_id is not None and 'post_cell_id' not in already_processed:
+            already_processed.append('post_cell_id')
             showIndent(outfile, level)
-            outfile.write('to = "%s",\n' % (self.to,))
-        if self.fromxx is not None and 'fromxx' not in already_processed:
-            already_processed.append('fromxx')
+            outfile.write('post_cell_id = "%s",\n' % (self.post_cell_id,))
+        if self.id is not None and 'id' not in already_processed:
+            already_processed.append('id')
             showIndent(outfile, level)
-            outfile.write('fromxx = "%s",\n' % (self.fromxx,))
+            outfile.write('id = %d,\n' % (self.id,))
+        if self.pre_cell_id is not None and 'pre_cell_id' not in already_processed:
+            already_processed.append('pre_cell_id')
+            showIndent(outfile, level)
+            outfile.write('pre_cell_id = "%s",\n' % (self.pre_cell_id,))
     def exportLiteralChildren(self, outfile, level, name_):
         pass
     def build(self, node):
@@ -4329,24 +4242,37 @@ class Connection(GeneratedsSuper):
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
     def buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_('to', node)
-        if value is not None and 'to' not in already_processed:
-            already_processed.append('to')
-            self.to = value
-        value = find_attr_value_('from', node)
-        if value is not None and 'from' not in already_processed:
-            already_processed.append('from')
-            self.fromxx = value
+        value = find_attr_value_('postCellId', node)
+        if value is not None and 'postCellId' not in already_processed:
+            already_processed.append('postCellId')
+            self.post_cell_id = value
+        value = find_attr_value_('id', node)
+        if value is not None and 'id' not in already_processed:
+            already_processed.append('id')
+            try:
+                self.id = int(value)
+            except ValueError, exp:
+                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.id < 0:
+                raise_parse_error(node, 'Invalid NonNegativeInteger')
+        value = find_attr_value_('preCellId', node)
+        if value is not None and 'preCellId' not in already_processed:
+            already_processed.append('preCellId')
+            self.pre_cell_id = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
 # end class Connection
 
 
 class ExplicitInput(GeneratedsSuper):
+    """Single explicit input. Introduced to test inputs in LEMS. Will
+    probably be removed in favour of inputs wrapped in inputList
+    element"""
     subclass = None
     superclass = None
-    def __init__(self, input=None, target=None):
+    def __init__(self, input=None, destination=None, target=None):
         self.input = _cast(None, input)
+        self.destination = _cast(None, destination)
         self.target = _cast(None, target)
         pass
     def factory(*args_, **kwargs_):
@@ -4357,6 +4283,8 @@ class ExplicitInput(GeneratedsSuper):
     factory = staticmethod(factory)
     def get_input(self): return self.input
     def set_input(self, input): self.input = input
+    def get_destination(self): return self.destination
+    def set_destination(self, destination): self.destination = destination
     def get_target(self): return self.target
     def set_target(self, target): self.target = target
     def export(self, outfile, level, namespace_='', name_='ExplicitInput', namespacedef_='', pretty_print=True):
@@ -4378,6 +4306,9 @@ class ExplicitInput(GeneratedsSuper):
         if self.input is not None and 'input' not in already_processed:
             already_processed.append('input')
             outfile.write(' input=%s' % (self.gds_format_string(quote_attrib(self.input).encode(ExternalEncoding), input_name='input'), ))
+        if self.destination is not None and 'destination' not in already_processed:
+            already_processed.append('destination')
+            outfile.write(' destination=%s' % (self.gds_format_string(quote_attrib(self.destination).encode(ExternalEncoding), input_name='destination'), ))
         if self.target is not None and 'target' not in already_processed:
             already_processed.append('target')
             outfile.write(' target=%s' % (self.gds_format_string(quote_attrib(self.target).encode(ExternalEncoding), input_name='target'), ))
@@ -4400,6 +4331,10 @@ class ExplicitInput(GeneratedsSuper):
             already_processed.append('input')
             showIndent(outfile, level)
             outfile.write('input = "%s",\n' % (self.input,))
+        if self.destination is not None and 'destination' not in already_processed:
+            already_processed.append('destination')
+            showIndent(outfile, level)
+            outfile.write('destination = "%s",\n' % (self.destination,))
         if self.target is not None and 'target' not in already_processed:
             already_processed.append('target')
             showIndent(outfile, level)
@@ -4416,6 +4351,10 @@ class ExplicitInput(GeneratedsSuper):
         if value is not None and 'input' not in already_processed:
             already_processed.append('input')
             self.input = value
+        value = find_attr_value_('destination', node)
+        if value is not None and 'destination' not in already_processed:
+            already_processed.append('destination')
+            self.destination = value
         value = find_attr_value_('target', node)
         if value is not None and 'target' not in already_processed:
             already_processed.append('target')
@@ -4423,6 +4362,113 @@ class ExplicitInput(GeneratedsSuper):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
 # end class ExplicitInput
+
+
+class Input(GeneratedsSuper):
+    """Subject to change as it gets tested with LEMS"""
+    subclass = None
+    superclass = None
+    def __init__(self, destination=None, id=None, target=None):
+        self.destination = _cast(None, destination)
+        self.id = _cast(int, id)
+        self.target = _cast(None, target)
+        pass
+    def factory(*args_, **kwargs_):
+        if Input.subclass:
+            return Input.subclass(*args_, **kwargs_)
+        else:
+            return Input(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def get_destination(self): return self.destination
+    def set_destination(self, destination): self.destination = destination
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
+    def get_id(self): return self.id
+    def set_id(self, id): self.id = id
+    def get_target(self): return self.target
+    def set_target(self, target): self.target = target
+    def export(self, outfile, level, namespace_='', name_='Input', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = []
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='Input')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Input'):
+        if self.destination is not None and 'destination' not in already_processed:
+            already_processed.append('destination')
+            outfile.write(' destination=%s' % (quote_attrib(self.destination), ))
+        if self.id is not None and 'id' not in already_processed:
+            already_processed.append('id')
+            outfile.write(' id="%s"' % self.gds_format_integer(self.id, input_name='id'))
+        if self.target is not None and 'target' not in already_processed:
+            already_processed.append('target')
+            outfile.write(' target=%s' % (self.gds_format_string(quote_attrib(self.target).encode(ExternalEncoding), input_name='target'), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='Input', fromsubclass_=False, pretty_print=True):
+        pass
+    def hasContent_(self):
+        if (
+
+            ):
+            return True
+        else:
+            return False
+    def exportLiteral(self, outfile, level, name_='Input'):
+        level += 1
+        self.exportLiteralAttributes(outfile, level, [], name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.destination is not None and 'destination' not in already_processed:
+            already_processed.append('destination')
+            showIndent(outfile, level)
+            outfile.write('destination = "%s",\n' % (self.destination,))
+        if self.id is not None and 'id' not in already_processed:
+            already_processed.append('id')
+            showIndent(outfile, level)
+            outfile.write('id = %d,\n' % (self.id,))
+        if self.target is not None and 'target' not in already_processed:
+            already_processed.append('target')
+            showIndent(outfile, level)
+            outfile.write('target = "%s",\n' % (self.target,))
+    def exportLiteralChildren(self, outfile, level, name_):
+        pass
+    def build(self, node):
+        self.buildAttributes(node, node.attrib, [])
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('destination', node)
+        if value is not None and 'destination' not in already_processed:
+            already_processed.append('destination')
+            self.destination = value
+            self.validate_NmlId(self.destination)    # validate type NmlId
+        value = find_attr_value_('id', node)
+        if value is not None and 'id' not in already_processed:
+            already_processed.append('id')
+            try:
+                self.id = int(value)
+            except ValueError, exp:
+                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.id < 0:
+                raise_parse_error(node, 'Invalid NonNegativeInteger')
+        value = find_attr_value_('target', node)
+        if value is not None and 'target' not in already_processed:
+            already_processed.append('target')
+            self.target = value
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        pass
+# end class Input
 
 
 class Base(GeneratedsSuper):
@@ -4530,11 +4576,13 @@ class Base(GeneratedsSuper):
 
 class Standalone(Base):
     """Elements which can stand alone and be referenced by id, e.g. cell,
-    morphology."""
+    morphology.Optional human readable name of the element. Not
+    necessarily unique; should not be used for referencing/indexing."""
     subclass = None
     superclass = Base
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, extensiontype_=None):
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, extensiontype_=None):
         super(Standalone, self).__init__(id, neuro_lex_id, extensiontype_, )
+        self.name = _cast(None, name)
         self.metaid = _cast(None, metaid)
         self.notes = notes
         self.annotation = annotation
@@ -4552,6 +4600,8 @@ class Standalone(Base):
         pass
     def get_annotation(self): return self.annotation
     def set_annotation(self, annotation): self.annotation = annotation
+    def get_name(self): return self.name
+    def set_name(self, name): self.name = name
     def get_metaid(self): return self.metaid
     def set_metaid(self, metaid): self.metaid = metaid
     def validate_MetaId(self, value):
@@ -4577,6 +4627,9 @@ class Standalone(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Standalone'):
         super(Standalone, self).exportAttributes(outfile, level, already_processed, namespace_, name_='Standalone')
+        if self.name is not None and 'name' not in already_processed:
+            already_processed.append('name')
+            outfile.write(' name=%s' % (self.gds_format_string(quote_attrib(self.name).encode(ExternalEncoding), input_name='name'), ))
         if self.metaid is not None and 'metaid' not in already_processed:
             already_processed.append('metaid')
             outfile.write(' metaid=%s' % (quote_attrib(self.metaid), ))
@@ -4610,6 +4663,10 @@ class Standalone(Base):
         if self.hasContent_():
             self.exportLiteralChildren(outfile, level, name_)
     def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.name is not None and 'name' not in already_processed:
+            already_processed.append('name')
+            showIndent(outfile, level)
+            outfile.write('name = "%s",\n' % (self.name,))
         if self.metaid is not None and 'metaid' not in already_processed:
             already_processed.append('metaid')
             showIndent(outfile, level)
@@ -4632,6 +4689,10 @@ class Standalone(Base):
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
     def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('name', node)
+        if value is not None and 'name' not in already_processed:
+            already_processed.append('name')
+            self.name = value
         value = find_attr_value_('metaid', node)
         if value is not None and 'metaid' not in already_processed:
             already_processed.append('metaid')
@@ -4656,25 +4717,162 @@ class Standalone(Base):
 # end class Standalone
 
 
-class Projection(Base):
+class InputList(Base):
+    """Subject to change as it gets tested with LEMS"""
     subclass = None
     superclass = Base
-    def __init__(self, id=None, neuro_lex_id=None, anytypeobjs_=None):
-        super(Projection, self).__init__(id, neuro_lex_id, )
-        if anytypeobjs_ is None:
-            self.anytypeobjs_ = []
+    def __init__(self, id=None, neuro_lex_id=None, component=None, population=None, input=None):
+        super(InputList, self).__init__(id, neuro_lex_id, )
+        self.component = _cast(None, component)
+        self.population = _cast(None, population)
+        if input is None:
+            self.input = []
         else:
-            self.anytypeobjs_ = anytypeobjs_
+            self.input = input
+    def factory(*args_, **kwargs_):
+        if InputList.subclass:
+            return InputList.subclass(*args_, **kwargs_)
+        else:
+            return InputList(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def get_input(self): return self.input
+    def set_input(self, input): self.input = input
+    def add_input(self, value): self.input.append(value)
+    def insert_input(self, index, value): self.input[index] = value
+    def get_component(self): return self.component
+    def set_component(self, component): self.component = component
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
+    def get_population(self): return self.population
+    def set_population(self, population): self.population = population
+    def export(self, outfile, level, namespace_='', name_='InputList', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = []
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='InputList')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='InputList'):
+        super(InputList, self).exportAttributes(outfile, level, already_processed, namespace_, name_='InputList')
+        if self.component is not None and 'component' not in already_processed:
+            already_processed.append('component')
+            outfile.write(' component=%s' % (quote_attrib(self.component), ))
+        if self.population is not None and 'population' not in already_processed:
+            already_processed.append('population')
+            outfile.write(' population=%s' % (quote_attrib(self.population), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='InputList', fromsubclass_=False, pretty_print=True):
+        super(InputList, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        for input_ in self.input:
+            input_.export(outfile, level, namespace_, name_='input', pretty_print=pretty_print)
+    def hasContent_(self):
+        if (
+            self.input or
+            super(InputList, self).hasContent_()
+            ):
+            return True
+        else:
+            return False
+    def exportLiteral(self, outfile, level, name_='InputList'):
+        level += 1
+        self.exportLiteralAttributes(outfile, level, [], name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.component is not None and 'component' not in already_processed:
+            already_processed.append('component')
+            showIndent(outfile, level)
+            outfile.write('component = "%s",\n' % (self.component,))
+        if self.population is not None and 'population' not in already_processed:
+            already_processed.append('population')
+            showIndent(outfile, level)
+            outfile.write('population = "%s",\n' % (self.population,))
+        super(InputList, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(InputList, self).exportLiteralChildren(outfile, level, name_)
+        showIndent(outfile, level)
+        outfile.write('input=[\n')
+        level += 1
+        for input_ in self.input:
+            showIndent(outfile, level)
+            outfile.write('model_.Input(\n')
+            input_.exportLiteral(outfile, level, name_='Input')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+    def build(self, node):
+        self.buildAttributes(node, node.attrib, [])
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('component', node)
+        if value is not None and 'component' not in already_processed:
+            already_processed.append('component')
+            self.component = value
+            self.validate_NmlId(self.component)    # validate type NmlId
+        value = find_attr_value_('population', node)
+        if value is not None and 'population' not in already_processed:
+            already_processed.append('population')
+            self.population = value
+            self.validate_NmlId(self.population)    # validate type NmlId
+        super(InputList, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        if nodeName_ == 'input':
+            obj_ = Input.factory()
+            obj_.build(child_)
+            self.input.append(obj_)
+        super(InputList, self).buildChildren(child_, node, nodeName_, True)
+# end class InputList
+
+
+class Projection(Base):
+    """Subject to change as it gets tested with LEMS"""
+    subclass = None
+    superclass = Base
+    def __init__(self, id=None, neuro_lex_id=None, postsynaptic_population=None, presynaptic_population=None, synapse=None, connection=None):
+        super(Projection, self).__init__(id, neuro_lex_id, )
+        self.postsynaptic_population = _cast(None, postsynaptic_population)
+        self.presynaptic_population = _cast(None, presynaptic_population)
+        self.synapse = _cast(None, synapse)
+        if connection is None:
+            self.connection = []
+        else:
+            self.connection = connection
     def factory(*args_, **kwargs_):
         if Projection.subclass:
             return Projection.subclass(*args_, **kwargs_)
         else:
             return Projection(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
+    def get_connection(self): return self.connection
+    def set_connection(self, connection): self.connection = connection
+    def add_connection(self, value): self.connection.append(value)
+    def insert_connection(self, index, value): self.connection[index] = value
+    def get_postsynapticPopulation(self): return self.postsynaptic_population
+    def set_postsynapticPopulation(self, postsynaptic_population): self.postsynaptic_population = postsynaptic_population
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
+    def get_presynapticPopulation(self): return self.presynaptic_population
+    def set_presynapticPopulation(self, presynaptic_population): self.presynaptic_population = presynaptic_population
+    def get_synapse(self): return self.synapse
+    def set_synapse(self, synapse): self.synapse = synapse
     def export(self, outfile, level, namespace_='', name_='Projection', namespacedef_='', pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -4693,17 +4891,26 @@ class Projection(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Projection'):
         super(Projection, self).exportAttributes(outfile, level, already_processed, namespace_, name_='Projection')
+        if self.postsynaptic_population is not None and 'postsynaptic_population' not in already_processed:
+            already_processed.append('postsynaptic_population')
+            outfile.write(' postsynapticPopulation=%s' % (quote_attrib(self.postsynaptic_population), ))
+        if self.presynaptic_population is not None and 'presynaptic_population' not in already_processed:
+            already_processed.append('presynaptic_population')
+            outfile.write(' presynapticPopulation=%s' % (quote_attrib(self.presynaptic_population), ))
+        if self.synapse is not None and 'synapse' not in already_processed:
+            already_processed.append('synapse')
+            outfile.write(' synapse=%s' % (quote_attrib(self.synapse), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Projection', fromsubclass_=False, pretty_print=True):
         super(Projection, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        for obj_ in self.anytypeobjs_:
-            obj_.export(outfile, level, namespace_, pretty_print=pretty_print)
+        for connection_ in self.connection:
+            connection_.export(outfile, level, namespace_, name_='connection', pretty_print=pretty_print)
     def hasContent_(self):
         if (
-            self.anytypeobjs_ or
+            self.connection or
             super(Projection, self).hasContent_()
             ):
             return True
@@ -4715,14 +4922,30 @@ class Projection(Base):
         if self.hasContent_():
             self.exportLiteralChildren(outfile, level, name_)
     def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.postsynaptic_population is not None and 'postsynaptic_population' not in already_processed:
+            already_processed.append('postsynaptic_population')
+            showIndent(outfile, level)
+            outfile.write('postsynaptic_population = "%s",\n' % (self.postsynaptic_population,))
+        if self.presynaptic_population is not None and 'presynaptic_population' not in already_processed:
+            already_processed.append('presynaptic_population')
+            showIndent(outfile, level)
+            outfile.write('presynaptic_population = "%s",\n' % (self.presynaptic_population,))
+        if self.synapse is not None and 'synapse' not in already_processed:
+            already_processed.append('synapse')
+            showIndent(outfile, level)
+            outfile.write('synapse = "%s",\n' % (self.synapse,))
         super(Projection, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
         super(Projection, self).exportLiteralChildren(outfile, level, name_)
         showIndent(outfile, level)
-        outfile.write('anytypeobjs_=[\n')
+        outfile.write('connection=[\n')
         level += 1
-        for anytypeobjs_ in self.anytypeobjs_:
-            anytypeobjs_.exportLiteral(outfile, level)
+        for connection_ in self.connection:
+            showIndent(outfile, level)
+            outfile.write('model_.Connection(\n')
+            connection_.exportLiteral(outfile, level, name_='Connection')
+            showIndent(outfile, level)
+            outfile.write('),\n')
         level -= 1
         showIndent(outfile, level)
         outfile.write('],\n')
@@ -4732,11 +4955,27 @@ class Projection(Base):
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
     def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('postsynapticPopulation', node)
+        if value is not None and 'postsynapticPopulation' not in already_processed:
+            already_processed.append('postsynapticPopulation')
+            self.postsynaptic_population = value
+            self.validate_NmlId(self.postsynaptic_population)    # validate type NmlId
+        value = find_attr_value_('presynapticPopulation', node)
+        if value is not None and 'presynapticPopulation' not in already_processed:
+            already_processed.append('presynapticPopulation')
+            self.presynaptic_population = value
+            self.validate_NmlId(self.presynaptic_population)    # validate type NmlId
+        value = find_attr_value_('synapse', node)
+        if value is not None and 'synapse' not in already_processed:
+            already_processed.append('synapse')
+            self.synapse = value
+            self.validate_NmlId(self.synapse)    # validate type NmlId
         super(Projection, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        obj_ = self.gds_build_any(child_, 'Projection')
-        if obj_ is not None:
-            self.add_anytypeobjs_(obj_)
+        if nodeName_ == 'connection':
+            obj_ = Connection.factory()
+            obj_.build(child_)
+            self.connection.append(obj_)
         super(Projection, self).buildChildren(child_, node, nodeName_, True)
 # end class Projection
 
@@ -4843,15 +5082,19 @@ class CellSet(Base):
 class Population(Standalone):
     subclass = None
     superclass = Standalone
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, cells=None, extracellular_properties=None, component=None, network=None, size=None, layout=None, instances=None):
-        super(Population, self).__init__(id, neuro_lex_id, metaid, notes, annotation, )
-        self.cells = _cast(None, cells)
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, extracellular_properties=None, network=None, component=None, cells=None, type=None, size=None, layout=None, instance=None):
+        super(Population, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, )
         self.extracellular_properties = _cast(None, extracellular_properties)
-        self.component = _cast(None, component)
         self.network = _cast(None, network)
+        self.component = _cast(None, component)
+        self.cells = _cast(None, cells)
+        self.type = _cast(None, type)
         self.size = _cast(int, size)
         self.layout = layout
-        self.instances = instances
+        if instance is None:
+            self.instance = []
+        else:
+            self.instance = instance
     def factory(*args_, **kwargs_):
         if Population.subclass:
             return Population.subclass(*args_, **kwargs_)
@@ -4860,19 +5103,26 @@ class Population(Standalone):
     factory = staticmethod(factory)
     def get_layout(self): return self.layout
     def set_layout(self, layout): self.layout = layout
-    def get_instances(self): return self.instances
-    def set_instances(self, instances): self.instances = instances
-    def get_cell(self): return self.cells
-    def set_cell(self, cells): self.cells = cells
+    def get_instance(self): return self.instance
+    def set_instance(self, instance): self.instance = instance
+    def add_instance(self, value): self.instance.append(value)
+    def insert_instance(self, index, value): self.instance[index] = value
+    def get_extracellularProperties(self): return self.extracellular_properties
+    def set_extracellularProperties(self, extracellular_properties): self.extracellular_properties = extracellular_properties
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         pass
-    def get_extracellularProperties(self): return self.extracellular_properties
-    def set_extracellularProperties(self, extracellular_properties): self.extracellular_properties = extracellular_properties
-    def get_component(self): return self.component
-    def set_component(self, component): self.component = component
     def get_network(self): return self.network
     def set_network(self, network): self.network = network
+    def get_component(self): return self.component
+    def set_component(self, component): self.component = component
+    def get_cell(self): return self.cells
+    def set_cell(self, cells): self.cells = cells
+    def get_type(self): return self.type
+    def set_type(self, type): self.type = type
+    def validate_populationTypes(self, value):
+        # Validate type populationTypes, a restriction on xs:string.
+        pass
     def get_size(self): return self.size
     def set_size(self, size): self.size = size
     def export(self, outfile, level, namespace_='', name_='Population', namespacedef_='', pretty_print=True):
@@ -4893,18 +5143,21 @@ class Population(Standalone):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Population'):
         super(Population, self).exportAttributes(outfile, level, already_processed, namespace_, name_='Population')
-        if self.cells is not None and 'cells' not in already_processed:
-            already_processed.append('cells')
-            outfile.write(' cell=%s' % (quote_attrib(self.cells), ))
         if self.extracellular_properties is not None and 'extracellular_properties' not in already_processed:
             already_processed.append('extracellular_properties')
             outfile.write(' extracellularProperties=%s' % (quote_attrib(self.extracellular_properties), ))
-        if self.component is not None and 'component' not in already_processed:
-            already_processed.append('component')
-            outfile.write(' component=%s' % (quote_attrib(self.component), ))
         if self.network is not None and 'network' not in already_processed:
             already_processed.append('network')
             outfile.write(' network=%s' % (quote_attrib(self.network), ))
+        if self.component is not None and 'component' not in already_processed:
+            already_processed.append('component')
+            outfile.write(' component=%s' % (quote_attrib(self.component), ))
+        if self.cells is not None and 'cells' not in already_processed:
+            already_processed.append('cells')
+            outfile.write(' cell=%s' % (quote_attrib(self.cells), ))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.append('type')
+            outfile.write(' type=%s' % (quote_attrib(self.type), ))
         if self.size is not None and 'size' not in already_processed:
             already_processed.append('size')
             outfile.write(' size="%s"' % self.gds_format_integer(self.size, input_name='size'))
@@ -4916,12 +5169,12 @@ class Population(Standalone):
             eol_ = ''
         if self.layout is not None:
             self.layout.export(outfile, level, namespace_, name_='layout', pretty_print=pretty_print)
-        if self.instances is not None:
-            self.instances.export(outfile, level, namespace_, name_='instances', pretty_print=pretty_print)
+        for instance_ in self.instance:
+            instance_.export(outfile, level, namespace_, name_='instance', pretty_print=pretty_print)
     def hasContent_(self):
         if (
             self.layout is not None or
-            self.instances is not None or
+            self.instance or
             super(Population, self).hasContent_()
             ):
             return True
@@ -4933,22 +5186,26 @@ class Population(Standalone):
         if self.hasContent_():
             self.exportLiteralChildren(outfile, level, name_)
     def exportLiteralAttributes(self, outfile, level, already_processed, name_):
-        if self.cells is not None and 'cells' not in already_processed:
-            already_processed.append('cells')
-            showIndent(outfile, level)
-            outfile.write('cells = "%s",\n' % (self.cells,))
         if self.extracellular_properties is not None and 'extracellular_properties' not in already_processed:
             already_processed.append('extracellular_properties')
             showIndent(outfile, level)
             outfile.write('extracellular_properties = "%s",\n' % (self.extracellular_properties,))
-        if self.component is not None and 'component' not in already_processed:
-            already_processed.append('component')
-            showIndent(outfile, level)
-            outfile.write('component = "%s",\n' % (self.component,))
         if self.network is not None and 'network' not in already_processed:
             already_processed.append('network')
             showIndent(outfile, level)
             outfile.write('network = "%s",\n' % (self.network,))
+        if self.component is not None and 'component' not in already_processed:
+            already_processed.append('component')
+            showIndent(outfile, level)
+            outfile.write('component = "%s",\n' % (self.component,))
+        if self.cells is not None and 'cells' not in already_processed:
+            already_processed.append('cells')
+            showIndent(outfile, level)
+            outfile.write('cells = "%s",\n' % (self.cells,))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.append('type')
+            showIndent(outfile, level)
+            outfile.write('type = "%s",\n' % (self.type,))
         if self.size is not None and 'size' not in already_processed:
             already_processed.append('size')
             showIndent(outfile, level)
@@ -4962,38 +5219,49 @@ class Population(Standalone):
             self.layout.exportLiteral(outfile, level, name_='layout')
             showIndent(outfile, level)
             outfile.write('),\n')
-        if self.instances is not None:
+        showIndent(outfile, level)
+        outfile.write('instance=[\n')
+        level += 1
+        for instance_ in self.instance:
             showIndent(outfile, level)
-            outfile.write('instances=model_.Instances(\n')
-            self.instances.exportLiteral(outfile, level, name_='instances')
+            outfile.write('model_.Instance(\n')
+            instance_.exportLiteral(outfile, level, name_='Instance')
             showIndent(outfile, level)
             outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
     def build(self, node):
         self.buildAttributes(node, node.attrib, [])
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
     def buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_('cell', node)
-        if value is not None and 'cell' not in already_processed:
-            already_processed.append('cell')
-            self.cells = value
-            self.validate_NmlId(self.cells)    # validate type NmlId
         value = find_attr_value_('extracellularProperties', node)
         if value is not None and 'extracellularProperties' not in already_processed:
             already_processed.append('extracellularProperties')
             self.extracellular_properties = value
             self.validate_NmlId(self.extracellular_properties)    # validate type NmlId
-        value = find_attr_value_('component', node)
-        if value is not None and 'component' not in already_processed:
-            already_processed.append('component')
-            self.component = value
-            self.validate_NmlId(self.component)    # validate type NmlId
         value = find_attr_value_('network', node)
         if value is not None and 'network' not in already_processed:
             already_processed.append('network')
             self.network = value
             self.validate_NmlId(self.network)    # validate type NmlId
+        value = find_attr_value_('component', node)
+        if value is not None and 'component' not in already_processed:
+            already_processed.append('component')
+            self.component = value
+            self.validate_NmlId(self.component)    # validate type NmlId
+        value = find_attr_value_('cell', node)
+        if value is not None and 'cell' not in already_processed:
+            already_processed.append('cell')
+            self.cells = value
+            self.validate_NmlId(self.cells)    # validate type NmlId
+        value = find_attr_value_('type', node)
+        if value is not None and 'type' not in already_processed:
+            already_processed.append('type')
+            self.type = value
+            self.validate_populationTypes(self.type)    # validate type populationTypes
         value = find_attr_value_('size', node)
         if value is not None and 'size' not in already_processed:
             already_processed.append('size')
@@ -5007,10 +5275,10 @@ class Population(Standalone):
             obj_ = Layout.factory()
             obj_.build(child_)
             self.set_layout(obj_)
-        elif nodeName_ == 'instances':
-            obj_ = Instances.factory()
+        elif nodeName_ == 'instance':
+            obj_ = Instance.factory()
             obj_.build(child_)
-            self.set_instances(obj_)
+            self.instance.append(obj_)
         super(Population, self).buildChildren(child_, node, nodeName_, True)
 # end class Population
 
@@ -5218,8 +5486,8 @@ class Space(Base):
 class Network(Standalone):
     subclass = None
     superclass = Standalone
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, space=None, region=None, extracellular_properties=None, population=None, cell_set=None, projection=None, synaptic_connection=None, connection=None, explicit_input=None):
-        super(Network, self).__init__(id, neuro_lex_id, metaid, notes, annotation, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, space=None, region=None, extracellular_properties=None, population=None, cell_set=None, synaptic_connection=None, projection=None, explicit_input=None, input_list=None):
+        super(Network, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, )
         if space is None:
             self.space = []
         else:
@@ -5240,22 +5508,22 @@ class Network(Standalone):
             self.cell_set = []
         else:
             self.cell_set = cell_set
-        if projection is None:
-            self.projection = []
-        else:
-            self.projection = projection
         if synaptic_connection is None:
             self.synaptic_connection = []
         else:
             self.synaptic_connection = synaptic_connection
-        if connection is None:
-            self.connection = []
+        if projection is None:
+            self.projection = []
         else:
-            self.connection = connection
+            self.projection = projection
         if explicit_input is None:
             self.explicit_input = []
         else:
             self.explicit_input = explicit_input
+        if input_list is None:
+            self.input_list = []
+        else:
+            self.input_list = input_list
     def factory(*args_, **kwargs_):
         if Network.subclass:
             return Network.subclass(*args_, **kwargs_)
@@ -5282,22 +5550,22 @@ class Network(Standalone):
     def set_cellSet(self, cell_set): self.cell_set = cell_set
     def add_cellSet(self, value): self.cell_set.append(value)
     def insert_cellSet(self, index, value): self.cell_set[index] = value
-    def get_projection(self): return self.projection
-    def set_projection(self, projection): self.projection = projection
-    def add_projection(self, value): self.projection.append(value)
-    def insert_projection(self, index, value): self.projection[index] = value
     def get_synapticConnection(self): return self.synaptic_connection
     def set_synapticConnection(self, synaptic_connection): self.synaptic_connection = synaptic_connection
     def add_synapticConnection(self, value): self.synaptic_connection.append(value)
     def insert_synapticConnection(self, index, value): self.synaptic_connection[index] = value
-    def get_connection(self): return self.connection
-    def set_connection(self, connection): self.connection = connection
-    def add_connection(self, value): self.connection.append(value)
-    def insert_connection(self, index, value): self.connection[index] = value
+    def get_projection(self): return self.projection
+    def set_projection(self, projection): self.projection = projection
+    def add_projection(self, value): self.projection.append(value)
+    def insert_projection(self, index, value): self.projection[index] = value
     def get_explicitInput(self): return self.explicit_input
     def set_explicitInput(self, explicit_input): self.explicit_input = explicit_input
     def add_explicitInput(self, value): self.explicit_input.append(value)
     def insert_explicitInput(self, index, value): self.explicit_input[index] = value
+    def get_inputList(self): return self.input_list
+    def set_inputList(self, input_list): self.input_list = input_list
+    def add_inputList(self, value): self.input_list.append(value)
+    def insert_inputList(self, index, value): self.input_list[index] = value
     def export(self, outfile, level, namespace_='', name_='Network', namespacedef_='', pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -5332,14 +5600,14 @@ class Network(Standalone):
             population_.export(outfile, level, namespace_, name_='population', pretty_print=pretty_print)
         for cellSet_ in self.cell_set:
             cellSet_.export(outfile, level, namespace_, name_='cellSet', pretty_print=pretty_print)
-        for projection_ in self.projection:
-            projection_.export(outfile, level, namespace_, name_='projection', pretty_print=pretty_print)
         for synapticConnection_ in self.synaptic_connection:
             synapticConnection_.export(outfile, level, namespace_, name_='synapticConnection', pretty_print=pretty_print)
-        for connection_ in self.connection:
-            connection_.export(outfile, level, namespace_, name_='connection', pretty_print=pretty_print)
+        for projection_ in self.projection:
+            projection_.export(outfile, level, namespace_, name_='projection', pretty_print=pretty_print)
         for explicitInput_ in self.explicit_input:
             explicitInput_.export(outfile, level, namespace_, name_='explicitInput', pretty_print=pretty_print)
+        for inputList_ in self.input_list:
+            inputList_.export(outfile, level, namespace_, name_='inputList', pretty_print=pretty_print)
     def hasContent_(self):
         if (
             self.space or
@@ -5347,10 +5615,10 @@ class Network(Standalone):
             self.extracellular_properties or
             self.population or
             self.cell_set or
-            self.projection or
             self.synaptic_connection or
-            self.connection or
+            self.projection or
             self.explicit_input or
+            self.input_list or
             super(Network, self).hasContent_()
             ):
             return True
@@ -5426,18 +5694,6 @@ class Network(Standalone):
         showIndent(outfile, level)
         outfile.write('],\n')
         showIndent(outfile, level)
-        outfile.write('projection=[\n')
-        level += 1
-        for projection_ in self.projection:
-            showIndent(outfile, level)
-            outfile.write('model_.Projection(\n')
-            projection_.exportLiteral(outfile, level, name_='Projection')
-            showIndent(outfile, level)
-            outfile.write('),\n')
-        level -= 1
-        showIndent(outfile, level)
-        outfile.write('],\n')
-        showIndent(outfile, level)
         outfile.write('synaptic_connection=[\n')
         level += 1
         for synapticConnection_ in self.synaptic_connection:
@@ -5450,12 +5706,12 @@ class Network(Standalone):
         showIndent(outfile, level)
         outfile.write('],\n')
         showIndent(outfile, level)
-        outfile.write('connection=[\n')
+        outfile.write('projection=[\n')
         level += 1
-        for connection_ in self.connection:
+        for projection_ in self.projection:
             showIndent(outfile, level)
-            outfile.write('model_.Connection(\n')
-            connection_.exportLiteral(outfile, level, name_='Connection')
+            outfile.write('model_.Projection(\n')
+            projection_.exportLiteral(outfile, level, name_='Projection')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -5468,6 +5724,18 @@ class Network(Standalone):
             showIndent(outfile, level)
             outfile.write('model_.ExplicitInput(\n')
             explicitInput_.exportLiteral(outfile, level, name_='ExplicitInput')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('input_list=[\n')
+        level += 1
+        for inputList_ in self.input_list:
+            showIndent(outfile, level)
+            outfile.write('model_.InputList(\n')
+            inputList_.exportLiteral(outfile, level, name_='InputList')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -5501,22 +5769,22 @@ class Network(Standalone):
             obj_ = CellSet.factory()
             obj_.build(child_)
             self.cell_set.append(obj_)
-        elif nodeName_ == 'projection':
-            obj_ = Projection.factory()
-            obj_.build(child_)
-            self.projection.append(obj_)
         elif nodeName_ == 'synapticConnection':
             obj_ = SynapticConnection.factory()
             obj_.build(child_)
             self.synaptic_connection.append(obj_)
-        elif nodeName_ == 'connection':
-            obj_ = Connection.factory()
+        elif nodeName_ == 'projection':
+            obj_ = Projection.factory()
             obj_.build(child_)
-            self.connection.append(obj_)
+            self.projection.append(obj_)
         elif nodeName_ == 'explicitInput':
             obj_ = ExplicitInput.factory()
             obj_.build(child_)
             self.explicit_input.append(obj_)
+        elif nodeName_ == 'inputList':
+            obj_ = InputList.factory()
+            obj_.build(child_)
+            self.input_list.append(obj_)
         super(Network, self).buildChildren(child_, node, nodeName_, True)
 # end class Network
 
@@ -5524,8 +5792,8 @@ class Network(Standalone):
 class PulseGenerator(Standalone):
     subclass = None
     superclass = Standalone
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, delay=None, duration=None, amplitude=None):
-        super(PulseGenerator, self).__init__(id, neuro_lex_id, metaid, notes, annotation, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, delay=None, duration=None, amplitude=None):
+        super(PulseGenerator, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, )
         self.delay = _cast(None, delay)
         self.duration = _cast(None, duration)
         self.amplitude = _cast(None, amplitude)
@@ -6250,8 +6518,8 @@ class BiophysicalProperties(Standalone):
     be outside and referenced by id."""
     subclass = None
     superclass = Standalone
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, membrane_properties=None, intracellular_properties=None, extracellular_properties=None):
-        super(BiophysicalProperties, self).__init__(id, neuro_lex_id, metaid, notes, annotation, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, membrane_properties=None, intracellular_properties=None, extracellular_properties=None):
+        super(BiophysicalProperties, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, )
         self.membrane_properties = membrane_properties
         self.intracellular_properties = intracellular_properties
         self.extracellular_properties = extracellular_properties
@@ -6813,8 +7081,8 @@ class Morphology(Standalone):
     be outside and referenced by id."""
     subclass = None
     superclass = Standalone
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, segments=None, segment_groups=None):
-        super(Morphology, self).__init__(id, neuro_lex_id, metaid, notes, annotation, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, segments=None, segment_groups=None):
+        super(Morphology, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, )
         if segments is None:
             self.segments = []
         else:
@@ -6930,8 +7198,8 @@ class Morphology(Standalone):
 class AbstractCell(Standalone):
     subclass = None
     superclass = Standalone
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, extensiontype_=None):
-        super(AbstractCell, self).__init__(id, neuro_lex_id, metaid, notes, annotation, extensiontype_, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, extensiontype_=None):
+        super(AbstractCell, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, extensiontype_, )
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if AbstractCell.subclass:
@@ -7001,8 +7269,8 @@ class AbstractCell(Standalone):
 class ConductanceBasedSynapse(Standalone):
     subclass = None
     superclass = Standalone
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, extensiontype_=None):
-        super(ConductanceBasedSynapse, self).__init__(id, neuro_lex_id, metaid, notes, annotation, extensiontype_, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, extensiontype_=None):
+        super(ConductanceBasedSynapse, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, extensiontype_, )
         self.erev = _cast(None, erev)
         self.gbase = _cast(None, gbase)
         self.extensiontype_ = extensiontype_
@@ -7109,8 +7377,8 @@ class DecayingPoolConcentrationModel(Standalone):
     """Should not be required, as it's present on the species element!"""
     subclass = None
     superclass = Standalone
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, ion=None, shell_thickness=None, resting_conc=None, decay_constant=None, extensiontype_=None):
-        super(DecayingPoolConcentrationModel, self).__init__(id, neuro_lex_id, metaid, notes, annotation, extensiontype_, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, ion=None, shell_thickness=None, resting_conc=None, decay_constant=None, extensiontype_=None):
+        super(DecayingPoolConcentrationModel, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, extensiontype_, )
         self.ion = _cast(None, ion)
         self.shell_thickness = _cast(None, shell_thickness)
         self.resting_conc = _cast(None, resting_conc)
@@ -7249,24 +7517,22 @@ class DecayingPoolConcentrationModel(Standalone):
 # end class DecayingPoolConcentrationModel
 
 
-class GateHH(Base):
+class GateHHTauInf(Base):
     subclass = None
     superclass = Base
-    def __init__(self, id=None, neuro_lex_id=None, instances=1, type=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None, steady_state=None):
-        super(GateHH, self).__init__(id, neuro_lex_id, )
+    def __init__(self, id=None, neuro_lex_id=None, instances=1, type=None, notes=None, q10_settings=None, time_course=None, steady_state=None):
+        super(GateHHTauInf, self).__init__(id, neuro_lex_id, )
         self.instances = _cast(int, instances)
         self.type = _cast(None, type)
         self.notes = notes
         self.q10_settings = q10_settings
-        self.forward_rate = forward_rate
-        self.reverse_rate = reverse_rate
         self.time_course = time_course
         self.steady_state = steady_state
     def factory(*args_, **kwargs_):
-        if GateHH.subclass:
-            return GateHH.subclass(*args_, **kwargs_)
+        if GateHHTauInf.subclass:
+            return GateHHTauInf.subclass(*args_, **kwargs_)
         else:
-            return GateHH(*args_, **kwargs_)
+            return GateHHTauInf(*args_, **kwargs_)
     factory = staticmethod(factory)
     def get_notes(self): return self.notes
     def set_notes(self, notes): self.notes = notes
@@ -7275,10 +7541,6 @@ class GateHH(Base):
         pass
     def get_q10Settings(self): return self.q10_settings
     def set_q10Settings(self, q10_settings): self.q10_settings = q10_settings
-    def get_forwardRate(self): return self.forward_rate
-    def set_forwardRate(self, forward_rate): self.forward_rate = forward_rate
-    def get_reverseRate(self): return self.reverse_rate
-    def set_reverseRate(self, reverse_rate): self.reverse_rate = reverse_rate
     def get_timeCourse(self): return self.time_course
     def set_timeCourse(self, time_course): self.time_course = time_course
     def get_steadyState(self): return self.steady_state
@@ -7290,7 +7552,7 @@ class GateHH(Base):
     def validate_gateTypes(self, value):
         # Validate type gateTypes, a restriction on xs:string.
         pass
-    def export(self, outfile, level, namespace_='', name_='GateHH', namespacedef_='', pretty_print=True):
+    def export(self, outfile, level, namespace_='', name_='GateHHTauInf', namespacedef_='', pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -7298,7 +7560,7 @@ class GateHH(Base):
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
         already_processed = []
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='GateHH')
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHTauInf')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
             self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
@@ -7306,16 +7568,16 @@ class GateHH(Base):
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateHH'):
-        super(GateHH, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHH')
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateHHTauInf'):
+        super(GateHHTauInf, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHTauInf')
         if self.instances is not None and 'instances' not in already_processed:
             already_processed.append('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
         if self.type is not None and 'type' not in already_processed:
             already_processed.append('type')
             outfile.write(' type=%s' % (quote_attrib(self.type), ))
-    def exportChildren(self, outfile, level, namespace_='', name_='GateHH', fromsubclass_=False, pretty_print=True):
-        super(GateHH, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportChildren(self, outfile, level, namespace_='', name_='GateHHTauInf', fromsubclass_=False, pretty_print=True):
+        super(GateHHTauInf, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
             eol_ = '\n'
         else:
@@ -7325,10 +7587,6 @@ class GateHH(Base):
             outfile.write('<%snotes>%s</%snotes>%s' % (namespace_, self.gds_format_string(quote_xml(self.notes).encode(ExternalEncoding), input_name='notes'), namespace_, eol_))
         if self.q10_settings is not None:
             self.q10_settings.export(outfile, level, namespace_, name_='q10Settings', pretty_print=pretty_print)
-        if self.forward_rate is not None:
-            self.forward_rate.export(outfile, level, namespace_, name_='forwardRate', pretty_print=pretty_print)
-        if self.reverse_rate is not None:
-            self.reverse_rate.export(outfile, level, namespace_, name_='reverseRate', pretty_print=pretty_print)
         if self.time_course is not None:
             self.time_course.export(outfile, level, namespace_, name_='timeCourse', pretty_print=pretty_print)
         if self.steady_state is not None:
@@ -7337,16 +7595,14 @@ class GateHH(Base):
         if (
             self.notes is not None or
             self.q10_settings is not None or
-            self.forward_rate is not None or
-            self.reverse_rate is not None or
             self.time_course is not None or
             self.steady_state is not None or
-            super(GateHH, self).hasContent_()
+            super(GateHHTauInf, self).hasContent_()
             ):
             return True
         else:
             return False
-    def exportLiteral(self, outfile, level, name_='GateHH'):
+    def exportLiteral(self, outfile, level, name_='GateHHTauInf'):
         level += 1
         self.exportLiteralAttributes(outfile, level, [], name_)
         if self.hasContent_():
@@ -7360,9 +7616,9 @@ class GateHH(Base):
             already_processed.append('type')
             showIndent(outfile, level)
             outfile.write('type = "%s",\n' % (self.type,))
-        super(GateHH, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+        super(GateHHTauInf, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
-        super(GateHH, self).exportLiteralChildren(outfile, level, name_)
+        super(GateHHTauInf, self).exportLiteralChildren(outfile, level, name_)
         if self.notes is not None:
             showIndent(outfile, level)
             outfile.write('notes=%s,\n' % quote_python(self.notes).encode(ExternalEncoding))
@@ -7370,18 +7626,6 @@ class GateHH(Base):
             showIndent(outfile, level)
             outfile.write('q10_settings=model_.Q10Settings(\n')
             self.q10_settings.exportLiteral(outfile, level, name_='q10Settings')
-            showIndent(outfile, level)
-            outfile.write('),\n')
-        if self.forward_rate is not None:
-            showIndent(outfile, level)
-            outfile.write('forward_rate=model_.HHRate(\n')
-            self.forward_rate.exportLiteral(outfile, level, name_='forwardRate')
-            showIndent(outfile, level)
-            outfile.write('),\n')
-        if self.reverse_rate is not None:
-            showIndent(outfile, level)
-            outfile.write('reverse_rate=model_.HHRate(\n')
-            self.reverse_rate.exportLiteral(outfile, level, name_='reverseRate')
             showIndent(outfile, level)
             outfile.write('),\n')
         if self.time_course is not None:
@@ -7414,7 +7658,171 @@ class GateHH(Base):
             already_processed.append('type')
             self.type = value
             self.validate_gateTypes(self.type)    # validate type gateTypes
-        super(GateHH, self).buildAttributes(node, attrs, already_processed)
+        super(GateHHTauInf, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        if nodeName_ == 'notes':
+            notes_ = child_.text
+            notes_ = self.gds_validate_string(notes_, node, 'notes')
+            self.notes = notes_
+            self.validate_Notes(self.notes)    # validate type Notes
+        elif nodeName_ == 'q10Settings':
+            obj_ = Q10Settings.factory()
+            obj_.build(child_)
+            self.set_q10Settings(obj_)
+        elif nodeName_ == 'timeCourse':
+            obj_ = HHTime.factory()
+            obj_.build(child_)
+            self.set_timeCourse(obj_)
+        elif nodeName_ == 'steadyState':
+            obj_ = HHVariable.factory()
+            obj_.build(child_)
+            self.set_steadyState(obj_)
+        super(GateHHTauInf, self).buildChildren(child_, node, nodeName_, True)
+# end class GateHHTauInf
+
+
+class GateHHRates(Base):
+    subclass = None
+    superclass = Base
+    def __init__(self, id=None, neuro_lex_id=None, instances=1, type=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None):
+        super(GateHHRates, self).__init__(id, neuro_lex_id, )
+        self.instances = _cast(int, instances)
+        self.type = _cast(None, type)
+        self.notes = notes
+        self.q10_settings = q10_settings
+        self.forward_rate = forward_rate
+        self.reverse_rate = reverse_rate
+    def factory(*args_, **kwargs_):
+        if GateHHRates.subclass:
+            return GateHHRates.subclass(*args_, **kwargs_)
+        else:
+            return GateHHRates(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def get_notes(self): return self.notes
+    def set_notes(self, notes): self.notes = notes
+    def validate_Notes(self, value):
+        # Validate type Notes, a restriction on xs:string.
+        pass
+    def get_q10Settings(self): return self.q10_settings
+    def set_q10Settings(self, q10_settings): self.q10_settings = q10_settings
+    def get_forwardRate(self): return self.forward_rate
+    def set_forwardRate(self, forward_rate): self.forward_rate = forward_rate
+    def get_reverseRate(self): return self.reverse_rate
+    def set_reverseRate(self, reverse_rate): self.reverse_rate = reverse_rate
+    def get_instances(self): return self.instances
+    def set_instances(self, instances): self.instances = instances
+    def get_type(self): return self.type
+    def set_type(self, type): self.type = type
+    def validate_gateTypes(self, value):
+        # Validate type gateTypes, a restriction on xs:string.
+        pass
+    def export(self, outfile, level, namespace_='', name_='GateHHRates', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = []
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRates')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateHHRates'):
+        super(GateHHRates, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRates')
+        if self.instances is not None and 'instances' not in already_processed:
+            already_processed.append('instances')
+            outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.append('type')
+            outfile.write(' type=%s' % (quote_attrib(self.type), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='GateHHRates', fromsubclass_=False, pretty_print=True):
+        super(GateHHRates, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.notes is not None:
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%snotes>%s</%snotes>%s' % (namespace_, self.gds_format_string(quote_xml(self.notes).encode(ExternalEncoding), input_name='notes'), namespace_, eol_))
+        if self.q10_settings is not None:
+            self.q10_settings.export(outfile, level, namespace_, name_='q10Settings', pretty_print=pretty_print)
+        if self.forward_rate is not None:
+            self.forward_rate.export(outfile, level, namespace_, name_='forwardRate', pretty_print=pretty_print)
+        if self.reverse_rate is not None:
+            self.reverse_rate.export(outfile, level, namespace_, name_='reverseRate', pretty_print=pretty_print)
+    def hasContent_(self):
+        if (
+            self.notes is not None or
+            self.q10_settings is not None or
+            self.forward_rate is not None or
+            self.reverse_rate is not None or
+            super(GateHHRates, self).hasContent_()
+            ):
+            return True
+        else:
+            return False
+    def exportLiteral(self, outfile, level, name_='GateHHRates'):
+        level += 1
+        self.exportLiteralAttributes(outfile, level, [], name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.instances is not None and 'instances' not in already_processed:
+            already_processed.append('instances')
+            showIndent(outfile, level)
+            outfile.write('instances = %d,\n' % (self.instances,))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.append('type')
+            showIndent(outfile, level)
+            outfile.write('type = "%s",\n' % (self.type,))
+        super(GateHHRates, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(GateHHRates, self).exportLiteralChildren(outfile, level, name_)
+        if self.notes is not None:
+            showIndent(outfile, level)
+            outfile.write('notes=%s,\n' % quote_python(self.notes).encode(ExternalEncoding))
+        if self.q10_settings is not None:
+            showIndent(outfile, level)
+            outfile.write('q10_settings=model_.Q10Settings(\n')
+            self.q10_settings.exportLiteral(outfile, level, name_='q10Settings')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        if self.forward_rate is not None:
+            showIndent(outfile, level)
+            outfile.write('forward_rate=model_.HHRate(\n')
+            self.forward_rate.exportLiteral(outfile, level, name_='forwardRate')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        if self.reverse_rate is not None:
+            showIndent(outfile, level)
+            outfile.write('reverse_rate=model_.HHRate(\n')
+            self.reverse_rate.exportLiteral(outfile, level, name_='reverseRate')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+    def build(self, node):
+        self.buildAttributes(node, node.attrib, [])
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('instances', node)
+        if value is not None and 'instances' not in already_processed:
+            already_processed.append('instances')
+            try:
+                self.instances = int(value)
+            except ValueError, exp:
+                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+        value = find_attr_value_('type', node)
+        if value is not None and 'type' not in already_processed:
+            already_processed.append('type')
+            self.type = value
+            self.validate_gateTypes(self.type)    # validate type gateTypes
+        super(GateHHRates, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'notes':
             notes_ = child_.text
@@ -7433,23 +7841,15 @@ class GateHH(Base):
             obj_ = HHRate.factory()
             obj_.build(child_)
             self.set_reverseRate(obj_)
-        elif nodeName_ == 'timeCourse':
-            obj_ = HHTime.factory()
-            obj_.build(child_)
-            self.set_timeCourse(obj_)
-        elif nodeName_ == 'steadyState':
-            obj_ = HHVariable.factory()
-            obj_.build(child_)
-            self.set_steadyState(obj_)
-        super(GateHH, self).buildChildren(child_, node, nodeName_, True)
-# end class GateHH
+        super(GateHHRates, self).buildChildren(child_, node, nodeName_, True)
+# end class GateHHRates
 
 
 class IonChannel(Standalone):
     subclass = None
     superclass = Standalone
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, conductance=None, type=None, species=None, gate=None, gate_hh=None):
-        super(IonChannel, self).__init__(id, neuro_lex_id, metaid, notes, annotation, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, conductance=None, type=None, species=None, gate=None, gate_h_hrates=None, gate_h_htau_inf=None):
+        super(IonChannel, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, )
         self.conductance = _cast(None, conductance)
         self.type = _cast(None, type)
         self.species = _cast(None, species)
@@ -7457,10 +7857,14 @@ class IonChannel(Standalone):
             self.gate = []
         else:
             self.gate = gate
-        if gate_hh is None:
-            self.gate_hh = []
+        if gate_h_hrates is None:
+            self.gate_h_hrates = []
         else:
-            self.gate_hh = gate_hh
+            self.gate_h_hrates = gate_h_hrates
+        if gate_h_htau_inf is None:
+            self.gate_h_htau_inf = []
+        else:
+            self.gate_h_htau_inf = gate_h_htau_inf
     def factory(*args_, **kwargs_):
         if IonChannel.subclass:
             return IonChannel.subclass(*args_, **kwargs_)
@@ -7471,10 +7875,14 @@ class IonChannel(Standalone):
     def set_gate(self, gate): self.gate = gate
     def add_gate(self, value): self.gate.append(value)
     def insert_gate(self, index, value): self.gate[index] = value
-    def get_gateHH(self): return self.gate_hh
-    def set_gateHH(self, gate_hh): self.gate_hh = gate_hh
-    def add_gateHH(self, value): self.gate_hh.append(value)
-    def insert_gateHH(self, index, value): self.gate_hh[index] = value
+    def get_gateHHrates(self): return self.gate_h_hrates
+    def set_gateHHrates(self, gate_h_hrates): self.gate_h_hrates = gate_h_hrates
+    def add_gateHHrates(self, value): self.gate_h_hrates.append(value)
+    def insert_gateHHrates(self, index, value): self.gate_h_hrates[index] = value
+    def get_gateHHtauInf(self): return self.gate_h_htau_inf
+    def set_gateHHtauInf(self, gate_h_htau_inf): self.gate_h_htau_inf = gate_h_htau_inf
+    def add_gateHHtauInf(self, value): self.gate_h_htau_inf.append(value)
+    def insert_gateHHtauInf(self, index, value): self.gate_h_htau_inf[index] = value
     def get_conductance(self): return self.conductance
     def set_conductance(self, conductance): self.conductance = conductance
     def validate_Nml2Quantity_conductance(self, value):
@@ -7525,12 +7933,15 @@ class IonChannel(Standalone):
             eol_ = ''
         for gate_ in self.gate:
             gate_.export(outfile, level, namespace_, name_='gate', pretty_print=pretty_print)
-        for gateHH_ in self.gate_hh:
-            gateHH_.export(outfile, level, namespace_, name_='gateHH', pretty_print=pretty_print)
+        for gateHHrates_ in self.gate_h_hrates:
+            gateHHrates_.export(outfile, level, namespace_, name_='gateHHrates', pretty_print=pretty_print)
+        for gateHHtauInf_ in self.gate_h_htau_inf:
+            gateHHtauInf_.export(outfile, level, namespace_, name_='gateHHtauInf', pretty_print=pretty_print)
     def hasContent_(self):
         if (
             self.gate or
-            self.gate_hh or
+            self.gate_h_hrates or
+            self.gate_h_htau_inf or
             super(IonChannel, self).hasContent_()
             ):
             return True
@@ -7562,20 +7973,32 @@ class IonChannel(Standalone):
         level += 1
         for gate_ in self.gate:
             showIndent(outfile, level)
-            outfile.write('model_.GateHH(\n')
-            gate_.exportLiteral(outfile, level, name_='GateHH')
+            outfile.write('model_.GateHHRates(\n')
+            gate_.exportLiteral(outfile, level, name_='GateHHRates')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
         showIndent(outfile, level)
         outfile.write('],\n')
         showIndent(outfile, level)
-        outfile.write('gate_hh=[\n')
+        outfile.write('gate_h_hrates=[\n')
         level += 1
-        for gateHH_ in self.gate_hh:
+        for gateHHrates_ in self.gate_h_hrates:
             showIndent(outfile, level)
-            outfile.write('model_.GateHH(\n')
-            gateHH_.exportLiteral(outfile, level, name_='GateHH')
+            outfile.write('model_.GateHHRates(\n')
+            gateHHrates_.exportLiteral(outfile, level, name_='GateHHRates')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('gate_h_htau_inf=[\n')
+        level += 1
+        for gateHHtauInf_ in self.gate_h_htau_inf:
+            showIndent(outfile, level)
+            outfile.write('model_.GateHHTauInf(\n')
+            gateHHtauInf_.exportLiteral(outfile, level, name_='GateHHTauInf')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -7605,22 +8028,26 @@ class IonChannel(Standalone):
         super(IonChannel, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'gate':
-            obj_ = GateHH.factory()
+            obj_ = GateHHRates.factory()
             obj_.build(child_)
             self.gate.append(obj_)
-        elif nodeName_ == 'gateHH':
-            obj_ = GateHH.factory()
+        elif nodeName_ == 'gateHHrates':
+            obj_ = GateHHRates.factory()
             obj_.build(child_)
-            self.gate_hh.append(obj_)
+            self.gate_h_hrates.append(obj_)
+        elif nodeName_ == 'gateHHtauInf':
+            obj_ = GateHHTauInf.factory()
+            obj_.build(child_)
+            self.gate_h_htau_inf.append(obj_)
         super(IonChannel, self).buildChildren(child_, node, nodeName_, True)
 # end class IonChannel
 
 
-class NeuroML(Standalone):
+class NeuroMLDocument(Standalone):
     subclass = None
     superclass = Standalone
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, include=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, decaying_pool_concentration_model=None, exp_one_synapse=None, exp_two_synapse=None, nmda_synapse=None, stp_synapse=None, biophysical_properties=None, cells=None, abstract_cell=None, iaf_tau_cell=None, iaf_cell=None, izhikevich_cell=None, ad_ex_ia_f_cell=None, pulse_generator=None, network=None, ComponentType=None):
-        super(NeuroML, self).__init__(id, neuro_lex_id, metaid, notes, annotation, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, include=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, decaying_pool_concentration_model=None, exp_one_synapse=None, exp_two_synapse=None, nmda_synapse=None, stp_synapse=None, biophysical_properties=None, cells=None, abstract_cell=None, iaf_tau_cell=None, iaf_cell=None, izhikevich_cell=None, ad_ex_ia_f_cell=None, pulse_generator=None, network=None, ComponentType=None):
+        super(NeuroMLDocument, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, )
         if include is None:
             self.include = []
         else:
@@ -7702,10 +8129,10 @@ class NeuroML(Standalone):
         else:
             self.ComponentType = ComponentType
     def factory(*args_, **kwargs_):
-        if NeuroML.subclass:
-            return NeuroML.subclass(*args_, **kwargs_)
+        if NeuroMLDocument.subclass:
+            return NeuroMLDocument.subclass(*args_, **kwargs_)
         else:
-            return NeuroML(*args_, **kwargs_)
+            return NeuroMLDocument(*args_, **kwargs_)
     factory = staticmethod(factory)
     def get_include(self): return self.include
     def set_include(self, include): self.include = include
@@ -7787,7 +8214,7 @@ class NeuroML(Standalone):
     def set_ComponentType(self, ComponentType): self.ComponentType = ComponentType
     def add_ComponentType(self, value): self.ComponentType.append(value)
     def insert_ComponentType(self, index, value): self.ComponentType[index] = value
-    def export(self, outfile, level, namespace_='', name_='NeuroML', namespacedef_='', pretty_print=True):
+    def export(self, outfile, level, namespace_='', name_='NeuroMLDocument', namespacedef_='', pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -7795,7 +8222,7 @@ class NeuroML(Standalone):
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
         already_processed = []
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='NeuroML')
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='NeuroMLDocument')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
             self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
@@ -7803,10 +8230,10 @@ class NeuroML(Standalone):
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='NeuroML'):
-        super(NeuroML, self).exportAttributes(outfile, level, already_processed, namespace_, name_='NeuroML')
-    def exportChildren(self, outfile, level, namespace_='', name_='NeuroML', fromsubclass_=False, pretty_print=True):
-        super(NeuroML, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='NeuroMLDocument'):
+        super(NeuroMLDocument, self).exportAttributes(outfile, level, already_processed, namespace_, name_='NeuroMLDocument')
+    def exportChildren(self, outfile, level, namespace_='', name_='NeuroMLDocument', fromsubclass_=False, pretty_print=True):
+        super(NeuroMLDocument, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
             eol_ = '\n'
         else:
@@ -7873,27 +8300,27 @@ class NeuroML(Standalone):
             self.pulse_generator or
             self.network or
             self.ComponentType or
-            super(NeuroML, self).hasContent_()
+            super(NeuroMLDocument, self).hasContent_()
             ):
             return True
         else:
             return False
-    def exportLiteral(self, outfile, level, name_='NeuroML'):
+    def exportLiteral(self, outfile, level, name_='NeuroMLDocument'):
         level += 1
         self.exportLiteralAttributes(outfile, level, [], name_)
         if self.hasContent_():
             self.exportLiteralChildren(outfile, level, name_)
     def exportLiteralAttributes(self, outfile, level, already_processed, name_):
-        super(NeuroML, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+        super(NeuroMLDocument, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
-        super(NeuroML, self).exportLiteralChildren(outfile, level, name_)
+        super(NeuroMLDocument, self).exportLiteralChildren(outfile, level, name_)
         showIndent(outfile, level)
         outfile.write('include=[\n')
         level += 1
         for include_ in self.include:
             showIndent(outfile, level)
-            outfile.write('model_.include_type(\n')
-            include_.exportLiteral(outfile, level, name_='includeType')
+            outfile.write('model_.IncludeType(\n')
+            include_.exportLiteral(outfile, level, name_='IncludeType')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -8133,10 +8560,10 @@ class NeuroML(Standalone):
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
     def buildAttributes(self, node, attrs, already_processed):
-        super(NeuroML, self).buildAttributes(node, attrs, already_processed)
+        super(NeuroMLDocument, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'include':
-            obj_ = include_type.factory()
+            obj_ = IncludeType.factory()
             obj_.build(child_)
             self.include.append(obj_)
         elif nodeName_ == 'extracellularProperties':
@@ -8218,15 +8645,15 @@ class NeuroML(Standalone):
             obj_ = ComponentType.factory()
             obj_.build(child_)
             self.ComponentType.append(obj_)
-        super(NeuroML, self).buildChildren(child_, node, nodeName_, True)
-# end class NeuroML
+        super(NeuroMLDocument, self).buildChildren(child_, node, nodeName_, True)
+# end class NeuroMLDocument
 
 
 class ConcentrationModel_D(DecayingPoolConcentrationModel):
     subclass = None
     superclass = DecayingPoolConcentrationModel
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, ion=None, shell_thickness=None, resting_conc=None, decay_constant=None, type=None):
-        super(ConcentrationModel_D, self).__init__(id, neuro_lex_id, metaid, notes, annotation, ion, shell_thickness, resting_conc, decay_constant, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, ion=None, shell_thickness=None, resting_conc=None, decay_constant=None, type=None):
+        super(ConcentrationModel_D, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, ion, shell_thickness, resting_conc, decay_constant, )
         self.type = _cast(None, type)
         pass
     def factory(*args_, **kwargs_):
@@ -8299,13 +8726,13 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
 
 class Cell(AbstractCell):
     """Should only be used if morphology element is outside the cell. This
-    points to the id of the morphologyShould only be used if
+    points to the id of the morphology Should only be used if
     biophysicalProperties element is outside the cell. This points
     to the id of the biophysicalProperties"""
     subclass = None
     superclass = AbstractCell
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, biophysical_properties_attr=None, morphology_attr=None, morphology=None, biophysical_properties=None):
-        super(Cell, self).__init__(id, neuro_lex_id, metaid, notes, annotation, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, biophysical_properties_attr=None, morphology_attr=None, morphology=None, biophysical_properties=None):
+        super(Cell, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, )
         self.biophysical_properties_attr = _cast(None, biophysical_properties_attr)
         self.morphology_attr = _cast(None, morphology_attr)
         self.morphology = morphology
@@ -8427,20 +8854,17 @@ class Cell(AbstractCell):
 class AdExIaFCell(AbstractCell):
     subclass = None
     superclass = AbstractCell
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, reset=None, EL=None, C=None, b=None, Idel=None, Idur=None, VT=None, del_t=None, a=None, thresh=None, g_l=None, Iamp=None, tauw=None):
-        super(AdExIaFCell, self).__init__(id, neuro_lex_id, metaid, notes, annotation, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, reset=None, EL=None, C=None, b=None, VT=None, del_t=None, a=None, thresh=None, g_l=None, tauw=None):
+        super(AdExIaFCell, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, )
         self.reset = _cast(None, reset)
         self.EL = _cast(None, EL)
         self.C = _cast(None, C)
         self.b = _cast(None, b)
-        self.Idel = _cast(None, Idel)
-        self.Idur = _cast(None, Idur)
         self.VT = _cast(None, VT)
         self.del_t = _cast(None, del_t)
         self.a = _cast(None, a)
         self.thresh = _cast(None, thresh)
         self.g_l = _cast(None, g_l)
-        self.Iamp = _cast(None, Iamp)
         self.tauw = _cast(None, tauw)
         pass
     def factory(*args_, **kwargs_):
@@ -8466,13 +8890,6 @@ class AdExIaFCell(AbstractCell):
     def validate_Nml2Quantity_current(self, value):
         # Validate type Nml2Quantity_current, a restriction on xs:string.
         pass
-    def get_Idel(self): return self.Idel
-    def set_Idel(self, Idel): self.Idel = Idel
-    def validate_Nml2Quantity_time(self, value):
-        # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
-    def get_Idur(self): return self.Idur
-    def set_Idur(self, Idur): self.Idur = Idur
     def get_VT(self): return self.VT
     def set_VT(self, VT): self.VT = VT
     def get_delT(self): return self.del_t
@@ -8486,10 +8903,11 @@ class AdExIaFCell(AbstractCell):
     def set_thresh(self, thresh): self.thresh = thresh
     def get_gL(self): return self.g_l
     def set_gL(self, g_l): self.g_l = g_l
-    def get_Iamp(self): return self.Iamp
-    def set_Iamp(self, Iamp): self.Iamp = Iamp
     def get_tauw(self): return self.tauw
     def set_tauw(self, tauw): self.tauw = tauw
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        pass
     def export(self, outfile, level, namespace_='', name_='AdExIaFCell', namespacedef_='', pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -8520,12 +8938,6 @@ class AdExIaFCell(AbstractCell):
         if self.b is not None and 'b' not in already_processed:
             already_processed.append('b')
             outfile.write(' b=%s' % (quote_attrib(self.b), ))
-        if self.Idel is not None and 'Idel' not in already_processed:
-            already_processed.append('Idel')
-            outfile.write(' Idel=%s' % (quote_attrib(self.Idel), ))
-        if self.Idur is not None and 'Idur' not in already_processed:
-            already_processed.append('Idur')
-            outfile.write(' Idur=%s' % (quote_attrib(self.Idur), ))
         if self.VT is not None and 'VT' not in already_processed:
             already_processed.append('VT')
             outfile.write(' VT=%s' % (quote_attrib(self.VT), ))
@@ -8541,9 +8953,6 @@ class AdExIaFCell(AbstractCell):
         if self.g_l is not None and 'g_l' not in already_processed:
             already_processed.append('g_l')
             outfile.write(' gL=%s' % (quote_attrib(self.g_l), ))
-        if self.Iamp is not None and 'Iamp' not in already_processed:
-            already_processed.append('Iamp')
-            outfile.write(' Iamp=%s' % (quote_attrib(self.Iamp), ))
         if self.tauw is not None and 'tauw' not in already_processed:
             already_processed.append('tauw')
             outfile.write(' tauw=%s' % (quote_attrib(self.tauw), ))
@@ -8578,14 +8987,6 @@ class AdExIaFCell(AbstractCell):
             already_processed.append('b')
             showIndent(outfile, level)
             outfile.write('b = "%s",\n' % (self.b,))
-        if self.Idel is not None and 'Idel' not in already_processed:
-            already_processed.append('Idel')
-            showIndent(outfile, level)
-            outfile.write('Idel = "%s",\n' % (self.Idel,))
-        if self.Idur is not None and 'Idur' not in already_processed:
-            already_processed.append('Idur')
-            showIndent(outfile, level)
-            outfile.write('Idur = "%s",\n' % (self.Idur,))
         if self.VT is not None and 'VT' not in already_processed:
             already_processed.append('VT')
             showIndent(outfile, level)
@@ -8606,10 +9007,6 @@ class AdExIaFCell(AbstractCell):
             already_processed.append('g_l')
             showIndent(outfile, level)
             outfile.write('g_l = "%s",\n' % (self.g_l,))
-        if self.Iamp is not None and 'Iamp' not in already_processed:
-            already_processed.append('Iamp')
-            showIndent(outfile, level)
-            outfile.write('Iamp = "%s",\n' % (self.Iamp,))
         if self.tauw is not None and 'tauw' not in already_processed:
             already_processed.append('tauw')
             showIndent(outfile, level)
@@ -8643,16 +9040,6 @@ class AdExIaFCell(AbstractCell):
             already_processed.append('b')
             self.b = value
             self.validate_Nml2Quantity_current(self.b)    # validate type Nml2Quantity_current
-        value = find_attr_value_('Idel', node)
-        if value is not None and 'Idel' not in already_processed:
-            already_processed.append('Idel')
-            self.Idel = value
-            self.validate_Nml2Quantity_time(self.Idel)    # validate type Nml2Quantity_time
-        value = find_attr_value_('Idur', node)
-        if value is not None and 'Idur' not in already_processed:
-            already_processed.append('Idur')
-            self.Idur = value
-            self.validate_Nml2Quantity_time(self.Idur)    # validate type Nml2Quantity_time
         value = find_attr_value_('VT', node)
         if value is not None and 'VT' not in already_processed:
             already_processed.append('VT')
@@ -8678,11 +9065,6 @@ class AdExIaFCell(AbstractCell):
             already_processed.append('gL')
             self.g_l = value
             self.validate_Nml2Quantity_conductance(self.g_l)    # validate type Nml2Quantity_conductance
-        value = find_attr_value_('Iamp', node)
-        if value is not None and 'Iamp' not in already_processed:
-            already_processed.append('Iamp')
-            self.Iamp = value
-            self.validate_Nml2Quantity_current(self.Iamp)    # validate type Nml2Quantity_current
         value = find_attr_value_('tauw', node)
         if value is not None and 'tauw' not in already_processed:
             already_processed.append('tauw')
@@ -8698,17 +9080,14 @@ class AdExIaFCell(AbstractCell):
 class IzhikevichCell(AbstractCell):
     subclass = None
     superclass = AbstractCell
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, a=None, Idel=None, c=None, b=None, d=None, Idur=None, v0=None, thresh=None, Iamp=None):
-        super(IzhikevichCell, self).__init__(id, neuro_lex_id, metaid, notes, annotation, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, a=None, c=None, b=None, d=None, v0=None, thresh=None):
+        super(IzhikevichCell, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, )
         self.a = _cast(None, a)
-        self.Idel = _cast(None, Idel)
         self.c = _cast(None, c)
         self.b = _cast(None, b)
         self.d = _cast(None, d)
-        self.Idur = _cast(None, Idur)
         self.v0 = _cast(None, v0)
         self.thresh = _cast(None, thresh)
-        self.Iamp = _cast(None, Iamp)
         pass
     def factory(*args_, **kwargs_):
         if IzhikevichCell.subclass:
@@ -8721,19 +9100,12 @@ class IzhikevichCell(AbstractCell):
     def validate_Nml2Quantity_none(self, value):
         # Validate type Nml2Quantity_none, a restriction on xs:string.
         pass
-    def get_Idel(self): return self.Idel
-    def set_Idel(self, Idel): self.Idel = Idel
-    def validate_Nml2Quantity_time(self, value):
-        # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
     def get_c(self): return self.c
     def set_c(self, c): self.c = c
     def get_b(self): return self.b
     def set_b(self, b): self.b = b
     def get_d(self): return self.d
     def set_d(self, d): self.d = d
-    def get_Idur(self): return self.Idur
-    def set_Idur(self, Idur): self.Idur = Idur
     def get_v0(self): return self.v0
     def set_v0(self, v0): self.v0 = v0
     def validate_Nml2Quantity_voltage(self, value):
@@ -8741,8 +9113,6 @@ class IzhikevichCell(AbstractCell):
         pass
     def get_thresh(self): return self.thresh
     def set_thresh(self, thresh): self.thresh = thresh
-    def get_Iamp(self): return self.Iamp
-    def set_Iamp(self, Iamp): self.Iamp = Iamp
     def export(self, outfile, level, namespace_='', name_='IzhikevichCell', namespacedef_='', pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -8764,9 +9134,6 @@ class IzhikevichCell(AbstractCell):
         if self.a is not None and 'a' not in already_processed:
             already_processed.append('a')
             outfile.write(' a=%s' % (quote_attrib(self.a), ))
-        if self.Idel is not None and 'Idel' not in already_processed:
-            already_processed.append('Idel')
-            outfile.write(' Idel=%s' % (quote_attrib(self.Idel), ))
         if self.c is not None and 'c' not in already_processed:
             already_processed.append('c')
             outfile.write(' c=%s' % (quote_attrib(self.c), ))
@@ -8776,18 +9143,12 @@ class IzhikevichCell(AbstractCell):
         if self.d is not None and 'd' not in already_processed:
             already_processed.append('d')
             outfile.write(' d=%s' % (quote_attrib(self.d), ))
-        if self.Idur is not None and 'Idur' not in already_processed:
-            already_processed.append('Idur')
-            outfile.write(' Idur=%s' % (quote_attrib(self.Idur), ))
         if self.v0 is not None and 'v0' not in already_processed:
             already_processed.append('v0')
             outfile.write(' v0=%s' % (quote_attrib(self.v0), ))
         if self.thresh is not None and 'thresh' not in already_processed:
             already_processed.append('thresh')
             outfile.write(' thresh=%s' % (quote_attrib(self.thresh), ))
-        if self.Iamp is not None and 'Iamp' not in already_processed:
-            already_processed.append('Iamp')
-            outfile.write(' Iamp=%s' % (quote_attrib(self.Iamp), ))
     def exportChildren(self, outfile, level, namespace_='', name_='IzhikevichCell', fromsubclass_=False, pretty_print=True):
         super(IzhikevichCell, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
     def hasContent_(self):
@@ -8807,10 +9168,6 @@ class IzhikevichCell(AbstractCell):
             already_processed.append('a')
             showIndent(outfile, level)
             outfile.write('a = "%s",\n' % (self.a,))
-        if self.Idel is not None and 'Idel' not in already_processed:
-            already_processed.append('Idel')
-            showIndent(outfile, level)
-            outfile.write('Idel = "%s",\n' % (self.Idel,))
         if self.c is not None and 'c' not in already_processed:
             already_processed.append('c')
             showIndent(outfile, level)
@@ -8823,10 +9180,6 @@ class IzhikevichCell(AbstractCell):
             already_processed.append('d')
             showIndent(outfile, level)
             outfile.write('d = "%s",\n' % (self.d,))
-        if self.Idur is not None and 'Idur' not in already_processed:
-            already_processed.append('Idur')
-            showIndent(outfile, level)
-            outfile.write('Idur = "%s",\n' % (self.Idur,))
         if self.v0 is not None and 'v0' not in already_processed:
             already_processed.append('v0')
             showIndent(outfile, level)
@@ -8835,10 +9188,6 @@ class IzhikevichCell(AbstractCell):
             already_processed.append('thresh')
             showIndent(outfile, level)
             outfile.write('thresh = "%s",\n' % (self.thresh,))
-        if self.Iamp is not None and 'Iamp' not in already_processed:
-            already_processed.append('Iamp')
-            showIndent(outfile, level)
-            outfile.write('Iamp = "%s",\n' % (self.Iamp,))
         super(IzhikevichCell, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
         super(IzhikevichCell, self).exportLiteralChildren(outfile, level, name_)
@@ -8853,11 +9202,6 @@ class IzhikevichCell(AbstractCell):
             already_processed.append('a')
             self.a = value
             self.validate_Nml2Quantity_none(self.a)    # validate type Nml2Quantity_none
-        value = find_attr_value_('Idel', node)
-        if value is not None and 'Idel' not in already_processed:
-            already_processed.append('Idel')
-            self.Idel = value
-            self.validate_Nml2Quantity_time(self.Idel)    # validate type Nml2Quantity_time
         value = find_attr_value_('c', node)
         if value is not None and 'c' not in already_processed:
             already_processed.append('c')
@@ -8873,11 +9217,6 @@ class IzhikevichCell(AbstractCell):
             already_processed.append('d')
             self.d = value
             self.validate_Nml2Quantity_none(self.d)    # validate type Nml2Quantity_none
-        value = find_attr_value_('Idur', node)
-        if value is not None and 'Idur' not in already_processed:
-            already_processed.append('Idur')
-            self.Idur = value
-            self.validate_Nml2Quantity_time(self.Idur)    # validate type Nml2Quantity_time
         value = find_attr_value_('v0', node)
         if value is not None and 'v0' not in already_processed:
             already_processed.append('v0')
@@ -8888,11 +9227,6 @@ class IzhikevichCell(AbstractCell):
             already_processed.append('thresh')
             self.thresh = value
             self.validate_Nml2Quantity_voltage(self.thresh)    # validate type Nml2Quantity_voltage
-        value = find_attr_value_('Iamp', node)
-        if value is not None and 'Iamp' not in already_processed:
-            already_processed.append('Iamp')
-            self.Iamp = value
-            self.validate_Nml2Quantity_none(self.Iamp)    # validate type Nml2Quantity_none
         super(IzhikevichCell, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(IzhikevichCell, self).buildChildren(child_, node, nodeName_, True)
@@ -8903,8 +9237,8 @@ class IzhikevichCell(AbstractCell):
 class IaFCell(AbstractCell):
     subclass = None
     superclass = AbstractCell
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, reset=None, C=None, thresh=None, leak_conductance=None, leak_reversal=None):
-        super(IaFCell, self).__init__(id, neuro_lex_id, metaid, notes, annotation, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, reset=None, C=None, thresh=None, leak_conductance=None, leak_reversal=None):
+        super(IaFCell, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, )
         self.reset = _cast(None, reset)
         self.C = _cast(None, C)
         self.thresh = _cast(None, thresh)
@@ -9048,8 +9382,8 @@ class IaFCell(AbstractCell):
 class IaFTauCell(AbstractCell):
     subclass = None
     superclass = AbstractCell
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, reset=None, tau=None, thresh=None, leak_reversal=None):
-        super(IaFTauCell, self).__init__(id, neuro_lex_id, metaid, notes, annotation, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, reset=None, tau=None, thresh=None, leak_reversal=None):
+        super(IaFTauCell, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, )
         self.reset = _cast(None, reset)
         self.tau = _cast(None, tau)
         self.thresh = _cast(None, thresh)
@@ -9175,8 +9509,8 @@ class IaFTauCell(AbstractCell):
 class ExpTwoSynapse(ConductanceBasedSynapse):
     subclass = None
     superclass = ConductanceBasedSynapse
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None, tau_rise=None, extensiontype_=None):
-        super(ExpTwoSynapse, self).__init__(id, neuro_lex_id, metaid, notes, annotation, erev, gbase, extensiontype_, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None, tau_rise=None, extensiontype_=None):
+        super(ExpTwoSynapse, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, erev, gbase, extensiontype_, )
         self.tau_decay = _cast(None, tau_decay)
         self.tau_rise = _cast(None, tau_rise)
         self.extensiontype_ = extensiontype_
@@ -9279,8 +9613,8 @@ class ExpTwoSynapse(ConductanceBasedSynapse):
 class ExpOneSynapse(ConductanceBasedSynapse):
     subclass = None
     superclass = ConductanceBasedSynapse
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None):
-        super(ExpOneSynapse, self).__init__(id, neuro_lex_id, metaid, notes, annotation, erev, gbase, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None):
+        super(ExpOneSynapse, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, erev, gbase, )
         self.tau_decay = _cast(None, tau_decay)
         pass
     def factory(*args_, **kwargs_):
@@ -9358,8 +9692,8 @@ class ExpOneSynapse(ConductanceBasedSynapse):
 class StpSynapse(ExpTwoSynapse):
     subclass = None
     superclass = ExpTwoSynapse
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None, tau_rise=None, stp_mechanism=None):
-        super(StpSynapse, self).__init__(id, neuro_lex_id, metaid, notes, annotation, erev, gbase, tau_decay, tau_rise, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None, tau_rise=None, stp_mechanism=None):
+        super(StpSynapse, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, erev, gbase, tau_decay, tau_rise, )
         self.stp_mechanism = stp_mechanism
     def factory(*args_, **kwargs_):
         if StpSynapse.subclass:
@@ -9437,8 +9771,8 @@ class StpSynapse(ExpTwoSynapse):
 class NmdaSynapse(ExpTwoSynapse):
     subclass = None
     superclass = ExpTwoSynapse
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None, tau_rise=None, voltage_conc_dep_block=None):
-        super(NmdaSynapse, self).__init__(id, neuro_lex_id, metaid, notes, annotation, erev, gbase, tau_decay, tau_rise, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None, tau_rise=None, voltage_conc_dep_block=None):
+        super(NmdaSynapse, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, erev, gbase, tau_decay, tau_rise, )
         self.voltage_conc_dep_block = voltage_conc_dep_block
     def factory(*args_, **kwargs_):
         if NmdaSynapse.subclass:
@@ -9522,13 +9856,14 @@ GDSClassesMapping = {
     'random': RandomLayout,
     'variableParameter': VariableParameter,
     'subTree': SubTree,
+    'gateHHtauInf': GateHHTauInf,
+    'inputList': InputList,
     'ionChannel': IonChannel,
     'biophysicalProperties': BiophysicalProperties,
     'membraneProperties': MembraneProperties,
     'abstractCell': AbstractCell,
     'morphology': Morphology,
     'iafCell': IaFCell,
-    'instances': Instances,
     'species': Species,
     'resistivity': ValueAcrossSegOrSegGroup,
     'member': Member,
@@ -9540,19 +9875,19 @@ GDSClassesMapping = {
     'decayingPoolConcentrationModel': DecayingPoolConcentrationModel,
     'segment': Segment,
     'cellSet': CellSet,
+    'annotation': Annotation,
     'cell': Cell,
     'to': SegmentEndPoint,
     'stpSynapse': StpSynapse,
-    'gateHH': GateHH,
     'layout': Layout,
     'projection': Projection,
-    'gate': GateHH,
+    'gate': GateHHRates,
     'steadyState': HHVariable,
     'include': Include,
     'forwardRate': HHRate,
     'location': Location,
     'synapticConnection': SynapticConnection,
-    'neuroml': NeuroML,
+    'neuroml': NeuroMLDocument,
     'channelPopulation': ChannelPopulation,
     'parent': SegmentParent,
     'initMembPotential': ValueAcrossSegOrSegGroup,
@@ -9561,11 +9896,12 @@ GDSClassesMapping = {
     'grid': GridLayout,
     'izhikevichCell': IzhikevichCell,
     'structure': SpaceStructure,
+    'input': Input,
     'iafTauCell': IaFTauCell,
     'path': Path,
     'expTwoSynapse': ExpTwoSynapse,
     'pulseGenerator': PulseGenerator,
-    'annotation': Annotation,
+    'gateHHrates': GateHHRates,
     'stpMechanism': StpMechanism,
     'spikeThresh': ValueAcrossSegOrSegGroup,
     'unstructured': UnstructuredLayout,
@@ -9607,8 +9943,8 @@ def parse(inFileName):
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
-        rootTag = 'Annotation'
-        rootClass = Annotation
+        rootTag = 'neuroml'
+        rootClass = neuroml
     rootObj = rootClass.factory()
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
@@ -9626,14 +9962,14 @@ def parseString(inString):
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
-        rootTag = 'Annotation'
-        rootClass = Annotation
+        rootTag = 'neuroml'
+        rootClass = neuroml
     rootObj = rootClass.factory()
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
     doc = None
     sys.stdout.write('<?xml version="1.0" ?>\n')
-    rootObj.export(sys.stdout, 0, name_="Annotation",
+    rootObj.export(sys.stdout, 0, name_="neuroml",
         namespacedef_='')
     return rootObj
 
@@ -9643,8 +9979,8 @@ def parseLiteral(inFileName):
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
-        rootTag = 'Annotation'
-        rootClass = Annotation
+        rootTag = 'neuroml'
+        rootClass = neuroml
     rootObj = rootClass.factory()
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
@@ -9692,7 +10028,8 @@ __all__ = [
     "ExplicitInput",
     "ExtracellularProperties",
     "ExtracellularPropertiesLocal",
-    "GateHH",
+    "GateHHRates",
+    "GateHHTauInf",
     "GridLayout",
     "HHRate",
     "HHTime",
@@ -9700,10 +10037,12 @@ __all__ = [
     "IaFCell",
     "IaFTauCell",
     "Include",
+    "IncludeType",
     "InhomogeneousParam",
     "InhomogeneousValue",
+    "Input",
+    "InputList",
     "Instance",
-    "Instances",
     "IntracellularProperties",
     "IonChannel",
     "IzhikevichCell",
@@ -9713,7 +10052,7 @@ __all__ = [
     "MembraneProperties",
     "Morphology",
     "Network",
-    "NeuroML",
+    "NeuroMLDocument",
     "NmdaSynapse",
     "Path",
     "Point3DWithDiam",
@@ -9741,6 +10080,5 @@ __all__ = [
     "UnstructuredLayout",
     "ValueAcrossSegOrSegGroup",
     "VariableParameter",
-    "VoltageConcDepBlock",
-    "include_type"
+    "VoltageConcDepBlock"
     ]

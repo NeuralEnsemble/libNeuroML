@@ -52,7 +52,7 @@ def _node_to_python(node):
             renamed_attribute = to_lowercase_with_underscores(nml_attribute)
             NameTable[nml_attribute] = renamed_attribute
    
-filename = 'NeuroML_v2alpha.xsd'
+filename = 'NeuroML_v2beta.xsd'
 
 doc = objectify.parse(filename)
 root = doc.getroot()
@@ -75,7 +75,6 @@ for keyword in disallowed_keywords:
 NameTable['cell'] = 'cells'
 NameTable['segment'] = 'segments'
 NameTable['segmentGroup'] = 'segment_groups'
-NameTable['neuroml'] = 'NeuroMLDocument' #not working
 
 print("NameTable is as follows:")
 print NameTable

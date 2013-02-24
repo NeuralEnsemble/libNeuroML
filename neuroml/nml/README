@@ -1,5 +1,5 @@
 Autogeneration of API, using genreateds_config.py to ensure correct naming conventions.
 
-generateDS.py should be invoked in this folder (so that generateds_config.py can be located) with the following command:
+generateDS.py should be invoked in this folder (so that generateds_config.py can be located) with the following command (namespace def here will be mended when it's become stable)
 
-   $ generateDS.py -o nml.py -s nmlsubs.py NeuroML_v2alpha.xsd
+   $ generateDS.py --namespacedef='xmlns="http://www.neuroml.org/schema/neuroml2"' -o nml.py -s nmlsubs.py NeuroML_v2beta.xsd

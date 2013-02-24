@@ -3,6 +3,7 @@
 *.py~
 *.*~
 *.*#
+*~
 .project
 .pydevproject
 *.egg-info

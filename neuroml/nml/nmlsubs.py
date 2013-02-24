@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Generated Tue Feb  5 04:41:01 2013 by generateDS.py version 2.8b.
+# Generated Sun Feb 24 03:22:50 2013 by generateDS.py version 2.8b.
 #
 
 import sys
@@ -85,11 +85,11 @@ supermod.ComponentType.subclass = ComponentTypeSub
 # end class ComponentTypeSub
 
 
-class include_typeSub(supermod.include_type):
+class IncludeTypeSub(supermod.IncludeType):
     def __init__(self, href=None, valueOf_=None, mixedclass_=None, content_=None):
-        super(include_typeSub, self).__init__(href, valueOf_, mixedclass_, content_, )
-supermod.include_type.subclass = include_typeSub
-# end class include_typeSub
+        super(IncludeTypeSub, self).__init__(href, valueOf_, mixedclass_, content_, )
+supermod.IncludeType.subclass = IncludeTypeSub
+# end class IncludeTypeSub
 
 
 class Q10SettingsSub(supermod.Q10Settings):
@@ -288,13 +288,6 @@ supermod.GridLayout.subclass = GridLayoutSub
 # end class GridLayoutSub
 
 
-class InstancesSub(supermod.Instances):
-    def __init__(self, size=None, instance=None):
-        super(InstancesSub, self).__init__(size, instance, )
-supermod.Instances.subclass = InstancesSub
-# end class InstancesSub
-
-
 class InstanceSub(supermod.Instance):
     def __init__(self, i=None, k=None, j=None, id=None, location=None):
         super(InstanceSub, self).__init__(i, k, j, id, location, )
@@ -317,17 +310,24 @@ supermod.SynapticConnection.subclass = SynapticConnectionSub
 
 
 class ConnectionSub(supermod.Connection):
-    def __init__(self, to=None, fromxx=None):
-        super(ConnectionSub, self).__init__(to, fromxx, )
+    def __init__(self, post_cell_id=None, id=None, pre_cell_id=None):
+        super(ConnectionSub, self).__init__(post_cell_id, id, pre_cell_id, )
 supermod.Connection.subclass = ConnectionSub
 # end class ConnectionSub
 
 
 class ExplicitInputSub(supermod.ExplicitInput):
-    def __init__(self, input=None, target=None):
-        super(ExplicitInputSub, self).__init__(input, target, )
+    def __init__(self, input=None, destination=None, target=None):
+        super(ExplicitInputSub, self).__init__(input, destination, target, )
 supermod.ExplicitInput.subclass = ExplicitInputSub
 # end class ExplicitInputSub
+
+
+class InputSub(supermod.Input):
+    def __init__(self, destination=None, id=None, target=None):
+        super(InputSub, self).__init__(destination, id, target, )
+supermod.Input.subclass = InputSub
+# end class InputSub
 
 
 class BaseSub(supermod.Base):
@@ -338,15 +338,22 @@ supermod.Base.subclass = BaseSub
 
 
 class StandaloneSub(supermod.Standalone):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, extensiontype_=None):
-        super(StandaloneSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, extensiontype_, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, extensiontype_=None):
+        super(StandaloneSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, extensiontype_, )
 supermod.Standalone.subclass = StandaloneSub
 # end class StandaloneSub
 
 
+class InputListSub(supermod.InputList):
+    def __init__(self, id=None, neuro_lex_id=None, component=None, population=None, input=None):
+        super(InputListSub, self).__init__(id, neuro_lex_id, component, population, input, )
+supermod.InputList.subclass = InputListSub
+# end class InputListSub
+
+
 class ProjectionSub(supermod.Projection):
-    def __init__(self, id=None, neuro_lex_id=None, anytypeobjs_=None):
-        super(ProjectionSub, self).__init__(id, neuro_lex_id, anytypeobjs_, )
+    def __init__(self, id=None, neuro_lex_id=None, postsynaptic_population=None, presynaptic_population=None, synapse=None, connection=None):
+        super(ProjectionSub, self).__init__(id, neuro_lex_id, postsynaptic_population, presynaptic_population, synapse, connection, )
 supermod.Projection.subclass = ProjectionSub
 # end class ProjectionSub
 
@@ -359,8 +366,8 @@ supermod.CellSet.subclass = CellSetSub
 
 
 class PopulationSub(supermod.Population):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, cells=None, extracellular_properties=None, component=None, network=None, size=None, layout=None, instances=None):
-        super(PopulationSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, cells, extracellular_properties, component, network, size, layout, instances, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, extracellular_properties=None, network=None, component=None, cells=None, type=None, size=None, layout=None, instance=None):
+        super(PopulationSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, extracellular_properties, network, component, cells, type, size, layout, instance, )
 supermod.Population.subclass = PopulationSub
 # end class PopulationSub
 
@@ -380,15 +387,15 @@ supermod.Space.subclass = SpaceSub
 
 
 class NetworkSub(supermod.Network):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, space=None, region=None, extracellular_properties=None, population=None, cell_set=None, projection=None, synaptic_connection=None, connection=None, explicit_input=None):
-        super(NetworkSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, space, region, extracellular_properties, population, cell_set, projection, synaptic_connection, connection, explicit_input, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, space=None, region=None, extracellular_properties=None, population=None, cell_set=None, synaptic_connection=None, projection=None, explicit_input=None, input_list=None):
+        super(NetworkSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, space, region, extracellular_properties, population, cell_set, synaptic_connection, projection, explicit_input, input_list, )
 supermod.Network.subclass = NetworkSub
 # end class NetworkSub
 
 
 class PulseGeneratorSub(supermod.PulseGenerator):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, delay=None, duration=None, amplitude=None):
-        super(PulseGeneratorSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, delay, duration, amplitude, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, delay=None, duration=None, amplitude=None):
+        super(PulseGeneratorSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, delay, duration, amplitude, )
 supermod.PulseGenerator.subclass = PulseGeneratorSub
 # end class PulseGeneratorSub
 
@@ -422,8 +429,8 @@ supermod.ChannelPopulation.subclass = ChannelPopulationSub
 
 
 class BiophysicalPropertiesSub(supermod.BiophysicalProperties):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, membrane_properties=None, intracellular_properties=None, extracellular_properties=None):
-        super(BiophysicalPropertiesSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, membrane_properties, intracellular_properties, extracellular_properties, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, membrane_properties=None, intracellular_properties=None, extracellular_properties=None):
+        super(BiophysicalPropertiesSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, membrane_properties, intracellular_properties, extracellular_properties, )
 supermod.BiophysicalProperties.subclass = BiophysicalPropertiesSub
 # end class BiophysicalPropertiesSub
 
@@ -450,120 +457,127 @@ supermod.Segment.subclass = SegmentSub
 
 
 class MorphologySub(supermod.Morphology):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, segments=None, segment_groups=None):
-        super(MorphologySub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, segments, segment_groups, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, segments=None, segment_groups=None):
+        super(MorphologySub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, segments, segment_groups, )
 supermod.Morphology.subclass = MorphologySub
 # end class MorphologySub
 
 
 class AbstractCellSub(supermod.AbstractCell):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, extensiontype_=None):
-        super(AbstractCellSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, extensiontype_, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, extensiontype_=None):
+        super(AbstractCellSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, extensiontype_, )
 supermod.AbstractCell.subclass = AbstractCellSub
 # end class AbstractCellSub
 
 
 class ConductanceBasedSynapseSub(supermod.ConductanceBasedSynapse):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, extensiontype_=None):
-        super(ConductanceBasedSynapseSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, erev, gbase, extensiontype_, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, extensiontype_=None):
+        super(ConductanceBasedSynapseSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, erev, gbase, extensiontype_, )
 supermod.ConductanceBasedSynapse.subclass = ConductanceBasedSynapseSub
 # end class ConductanceBasedSynapseSub
 
 
 class DecayingPoolConcentrationModelSub(supermod.DecayingPoolConcentrationModel):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, ion=None, shell_thickness=None, resting_conc=None, decay_constant=None, extensiontype_=None):
-        super(DecayingPoolConcentrationModelSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, ion, shell_thickness, resting_conc, decay_constant, extensiontype_, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, ion=None, shell_thickness=None, resting_conc=None, decay_constant=None, extensiontype_=None):
+        super(DecayingPoolConcentrationModelSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, ion, shell_thickness, resting_conc, decay_constant, extensiontype_, )
 supermod.DecayingPoolConcentrationModel.subclass = DecayingPoolConcentrationModelSub
 # end class DecayingPoolConcentrationModelSub
 
 
-class GateHHSub(supermod.GateHH):
-    def __init__(self, id=None, neuro_lex_id=None, instances=1, type=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None, steady_state=None):
-        super(GateHHSub, self).__init__(id, neuro_lex_id, instances, type, notes, q10_settings, forward_rate, reverse_rate, time_course, steady_state, )
-supermod.GateHH.subclass = GateHHSub
-# end class GateHHSub
+class GateHHTauInfSub(supermod.GateHHTauInf):
+    def __init__(self, id=None, neuro_lex_id=None, instances=1, type=None, notes=None, q10_settings=None, time_course=None, steady_state=None):
+        super(GateHHTauInfSub, self).__init__(id, neuro_lex_id, instances, type, notes, q10_settings, time_course, steady_state, )
+supermod.GateHHTauInf.subclass = GateHHTauInfSub
+# end class GateHHTauInfSub
+
+
+class GateHHRatesSub(supermod.GateHHRates):
+    def __init__(self, id=None, neuro_lex_id=None, instances=1, type=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None):
+        super(GateHHRatesSub, self).__init__(id, neuro_lex_id, instances, type, notes, q10_settings, forward_rate, reverse_rate, )
+supermod.GateHHRates.subclass = GateHHRatesSub
+# end class GateHHRatesSub
 
 
 class IonChannelSub(supermod.IonChannel):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, conductance=None, type=None, species=None, gate=None, gate_hh=None):
-        super(IonChannelSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, conductance, type, species, gate, gate_hh, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, conductance=None, type=None, species=None, gate=None, gate_h_hrates=None, gate_h_htau_inf=None):
+        super(IonChannelSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, conductance, type, species, gate, gate_h_hrates, gate_h_htau_inf, )
 supermod.IonChannel.subclass = IonChannelSub
 # end class IonChannelSub
 
 
-class NeuroMLSub(supermod.NeuroML):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, include=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, decaying_pool_concentration_model=None, exp_one_synapse=None, exp_two_synapse=None, nmda_synapse=None, stp_synapse=None, biophysical_properties=None, cells=None, abstract_cell=None, iaf_tau_cell=None, iaf_cell=None, izhikevich_cell=None, ad_ex_ia_f_cell=None, pulse_generator=None, network=None, ComponentType=None):
-        super(NeuroMLSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, include, extracellular_properties, intracellular_properties, morphology, ion_channel, decaying_pool_concentration_model, exp_one_synapse, exp_two_synapse, nmda_synapse, stp_synapse, biophysical_properties, cells, abstract_cell, iaf_tau_cell, iaf_cell, izhikevich_cell, ad_ex_ia_f_cell, pulse_generator, network, ComponentType, )
-supermod.NeuroML.subclass = NeuroMLSub
-# end class NeuroMLSub
+class NeuroMLDocumentSub(supermod.NeuroMLDocument):
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, include=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, decaying_pool_concentration_model=None, exp_one_synapse=None, exp_two_synapse=None, nmda_synapse=None, stp_synapse=None, biophysical_properties=None, cells=None, abstract_cell=None, iaf_tau_cell=None, iaf_cell=None, izhikevich_cell=None, ad_ex_ia_f_cell=None, pulse_generator=None, network=None, ComponentType=None):
+        super(NeuroMLDocumentSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, include, extracellular_properties, intracellular_properties, morphology, ion_channel, decaying_pool_concentration_model, exp_one_synapse, exp_two_synapse, nmda_synapse, stp_synapse, biophysical_properties, cells, abstract_cell, iaf_tau_cell, iaf_cell, izhikevich_cell, ad_ex_ia_f_cell, pulse_generator, network, ComponentType, )
+supermod.NeuroMLDocument.subclass = NeuroMLDocumentSub
+# end class NeuroMLDocumentSub
 
 
 class ConcentrationModel_DSub(supermod.ConcentrationModel_D):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, ion=None, shell_thickness=None, resting_conc=None, decay_constant=None, type=None):
-        super(ConcentrationModel_DSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, ion, shell_thickness, resting_conc, decay_constant, type, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, ion=None, shell_thickness=None, resting_conc=None, decay_constant=None, type=None):
+        super(ConcentrationModel_DSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, ion, shell_thickness, resting_conc, decay_constant, type, )
 supermod.ConcentrationModel_D.subclass = ConcentrationModel_DSub
 # end class ConcentrationModel_DSub
 
 
 class CellSub(supermod.Cell):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, biophysical_properties_attr=None, morphology_attr=None, morphology=None, biophysical_properties=None):
-        super(CellSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, biophysical_properties_attr, morphology_attr, morphology, biophysical_properties, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, biophysical_properties_attr=None, morphology_attr=None, morphology=None, biophysical_properties=None):
+        super(CellSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, biophysical_properties_attr, morphology_attr, morphology, biophysical_properties, )
 supermod.Cell.subclass = CellSub
 # end class CellSub
 
 
 class AdExIaFCellSub(supermod.AdExIaFCell):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, reset=None, EL=None, C=None, b=None, Idel=None, Idur=None, VT=None, del_t=None, a=None, thresh=None, g_l=None, Iamp=None, tauw=None):
-        super(AdExIaFCellSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, reset, EL, C, b, Idel, Idur, VT, del_t, a, thresh, g_l, Iamp, tauw, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, reset=None, EL=None, C=None, b=None, VT=None, del_t=None, a=None, thresh=None, g_l=None, tauw=None):
+        super(AdExIaFCellSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, reset, EL, C, b, VT, del_t, a, thresh, g_l, tauw, )
 supermod.AdExIaFCell.subclass = AdExIaFCellSub
 # end class AdExIaFCellSub
 
 
 class IzhikevichCellSub(supermod.IzhikevichCell):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, a=None, Idel=None, c=None, b=None, d=None, Idur=None, v0=None, thresh=None, Iamp=None):
-        super(IzhikevichCellSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, a, Idel, c, b, d, Idur, v0, thresh, Iamp, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, a=None, c=None, b=None, d=None, v0=None, thresh=None):
+        super(IzhikevichCellSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, a, c, b, d, v0, thresh, )
 supermod.IzhikevichCell.subclass = IzhikevichCellSub
 # end class IzhikevichCellSub
 
 
 class IaFCellSub(supermod.IaFCell):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, reset=None, C=None, thresh=None, leak_conductance=None, leak_reversal=None):
-        super(IaFCellSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, reset, C, thresh, leak_conductance, leak_reversal, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, reset=None, C=None, thresh=None, leak_conductance=None, leak_reversal=None):
+        super(IaFCellSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, reset, C, thresh, leak_conductance, leak_reversal, )
 supermod.IaFCell.subclass = IaFCellSub
 # end class IaFCellSub
 
 
 class IaFTauCellSub(supermod.IaFTauCell):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, reset=None, tau=None, thresh=None, leak_reversal=None):
-        super(IaFTauCellSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, reset, tau, thresh, leak_reversal, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, reset=None, tau=None, thresh=None, leak_reversal=None):
+        super(IaFTauCellSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, reset, tau, thresh, leak_reversal, )
 supermod.IaFTauCell.subclass = IaFTauCellSub
 # end class IaFTauCellSub
 
 
 class ExpTwoSynapseSub(supermod.ExpTwoSynapse):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None, tau_rise=None, extensiontype_=None):
-        super(ExpTwoSynapseSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, erev, gbase, tau_decay, tau_rise, extensiontype_, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None, tau_rise=None, extensiontype_=None):
+        super(ExpTwoSynapseSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, erev, gbase, tau_decay, tau_rise, extensiontype_, )
 supermod.ExpTwoSynapse.subclass = ExpTwoSynapseSub
 # end class ExpTwoSynapseSub
 
 
 class ExpOneSynapseSub(supermod.ExpOneSynapse):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None):
-        super(ExpOneSynapseSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, erev, gbase, tau_decay, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None):
+        super(ExpOneSynapseSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, erev, gbase, tau_decay, )
 supermod.ExpOneSynapse.subclass = ExpOneSynapseSub
 # end class ExpOneSynapseSub
 
 
 class StpSynapseSub(supermod.StpSynapse):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None, tau_rise=None, stp_mechanism=None):
-        super(StpSynapseSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, erev, gbase, tau_decay, tau_rise, stp_mechanism, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None, tau_rise=None, stp_mechanism=None):
+        super(StpSynapseSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, erev, gbase, tau_decay, tau_rise, stp_mechanism, )
 supermod.StpSynapse.subclass = StpSynapseSub
 # end class StpSynapseSub
 
 
 class NmdaSynapseSub(supermod.NmdaSynapse):
-    def __init__(self, id=None, neuro_lex_id=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None, tau_rise=None, voltage_conc_dep_block=None):
-        super(NmdaSynapseSub, self).__init__(id, neuro_lex_id, metaid, notes, annotation, erev, gbase, tau_decay, tau_rise, voltage_conc_dep_block, )
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None, tau_rise=None, voltage_conc_dep_block=None):
+        super(NmdaSynapseSub, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, erev, gbase, tau_decay, tau_rise, voltage_conc_dep_block, )
 supermod.NmdaSynapse.subclass = NmdaSynapseSub
 # end class NmdaSynapseSub
 
@@ -584,7 +598,7 @@ def parse(inFilename):
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
         rootTag = 'Annotation'
-        rootClass = supermod.Annotation
+        rootClass = supermod.neuroml
     rootObj = rootClass.factory()
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
@@ -604,7 +618,7 @@ def parseString(inString):
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
         rootTag = 'Annotation'
-        rootClass = supermod.Annotation
+        rootClass = supermod.neuroml
     rootObj = rootClass.factory()
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
@@ -621,7 +635,7 @@ def parseLiteral(inFilename):
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
         rootTag = 'Annotation'
-        rootClass = supermod.Annotation
+        rootClass = supermod.neuroml
     rootObj = rootClass.factory()
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
