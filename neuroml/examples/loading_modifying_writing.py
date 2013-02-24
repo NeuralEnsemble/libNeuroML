@@ -18,7 +18,6 @@ parent = neuroml.SegmentParent(segments=parent_segment.id)
 seg_id = 5000 # need a way to get a unique id from a morphology
 axon_segments = []
 for i in range(10):
-    print parent_segment.name
     p = neuroml.Point3DWithDiam(x=parent_segment.distal.x,
                                 y=parent_segment.distal.y,
                                 z=parent_segment.distal.z,
