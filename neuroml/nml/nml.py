@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Sun Feb 24 03:22:45 2013 by generateDS.py version 2.8b.
+# Generated Sun Feb 24 21:13:38 2013 by generateDS.py version 2.8b.
 #
 
 import sys
@@ -471,6 +471,9 @@ def _cast(typ, value):
 
 class Annotation(GeneratedsSuper):
     """Placeholder for MIRIAM related metadata, among others."""
+    member_data_items_ = [
+        MemberSpec_('', 'xs:string', 1),
+        ]
     subclass = None
     superclass = None
     def __init__(self, anytypeobjs_=None):
@@ -553,6 +556,12 @@ class Annotation(GeneratedsSuper):
 class ComponentType(GeneratedsSuper):
     """Contains an extension to NeuroML by creating custom LEMS
     ComponentType."""
+    member_data_items_ = [
+        MemberSpec_('extends', 'xs:string', 0),
+        MemberSpec_('name', 'xs:string', 0),
+        MemberSpec_('description', 'xs:string', 0),
+        MemberSpec_('', 'xs:string', 1),
+        ]
     subclass = None
     superclass = None
     def __init__(self, extends=None, name=None, description=None, anytypeobjs_=None):
@@ -672,6 +681,10 @@ class ComponentType(GeneratedsSuper):
 
 
 class IncludeType(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('href', 'xs:anyURI', 0),
+        MemberSpec_('valueOf_', [], 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, href=None, valueOf_=None, mixedclass_=None, content_=None):
@@ -760,6 +773,12 @@ class IncludeType(GeneratedsSuper):
 
 
 class Q10Settings(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('fixedQ10', 'Nml2Quantity_none', 0),
+        MemberSpec_('experimentalTemp', 'Nml2Quantity_temperature', 0),
+        MemberSpec_('type', 'NmlId', 0),
+        MemberSpec_('q10Factor', 'Nml2Quantity_none', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, fixed_q10=None, experimental_temp=None, type=None, q10_factor=None):
@@ -884,6 +903,12 @@ class Q10Settings(GeneratedsSuper):
 
 
 class HHRate(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('midpoint', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('rate', 'Nml2Quantity_pertime', 0),
+        MemberSpec_('scale', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('type', 'NmlId', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, midpoint=None, rate=None, scale=None, type=None):
@@ -1008,6 +1033,12 @@ class HHRate(GeneratedsSuper):
 
 
 class HHVariable(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('midpoint', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('rate', 'xs:float', 0),
+        MemberSpec_('scale', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('type', 'NmlId', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, midpoint=None, rate=None, scale=None, type=None):
@@ -1131,6 +1162,13 @@ class HHVariable(GeneratedsSuper):
 
 
 class HHTime(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('midpoint', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('rate', 'Nml2Quantity_time', 0),
+        MemberSpec_('scale', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('type', 'NmlId', 0),
+        MemberSpec_('tau', 'Nml2Quantity_time', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, midpoint=None, rate=None, scale=None, type=None, tau=None):
@@ -1270,6 +1308,13 @@ class HHTime(GeneratedsSuper):
 
 
 class VoltageConcDepBlock(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('blockConcentration', 'Nml2Quantity_concentration', 0),
+        MemberSpec_('scalingConc', 'Nml2Quantity_concentration', 0),
+        MemberSpec_('type', 'xs:string', 0),
+        MemberSpec_('species', 'NmlId', 0),
+        MemberSpec_('scalingVolt', 'Nml2Quantity_voltage', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, block_concentration=None, scaling_conc=None, type=None, species=None, scaling_volt=None):
@@ -1408,6 +1453,11 @@ class VoltageConcDepBlock(GeneratedsSuper):
 
 
 class StpMechanism(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('tauRec', 'Nml2Quantity_time', 0),
+        MemberSpec_('tauFac', 'Nml2Quantity_time', 0),
+        MemberSpec_('initReleaseProb', 'ZeroToOne', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, tau_rec=None, tau_fac=None, init_release_prob=None):
@@ -1517,6 +1567,10 @@ class StpMechanism(GeneratedsSuper):
 
 
 class SegmentParent(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('fractionAlong', 'ZeroToOne', 0),
+        MemberSpec_('segment', 'SegmentId', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, fraction_along='1', segments=None):
@@ -1612,11 +1666,55 @@ class SegmentParent(GeneratedsSuper):
             self.validate_SegmentId(self.segments)    # validate type SegmentId
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
-# end class SegmentParent
+    @property
+    def length(self):
+        prox_x = self.proximal.x
+        prox_y = self.proximal.y
+        prox_z = self.proximal.z
+
+        dist_x = self.distal.x
+        dist_y = self.distal.y
+        dist_z = self.distal.z
+
+        length = ((prox_x-dist_x)**2 + (prox_y-dist_y)**2 + (prox_z-dist_z)**2)**(0.5)
+
+        return length
+    @property
+    def volume(self):
+        from math import pi
+
+        prox_diam = self.proximal.diameter
+        dist_diam = self.distal.diameter
+
+        length = self.length
+
+        volume = (pi/3)*length*(prox_diam**2+dist_diam**2+prox_diam*dist_diam)
+
+        return volume
+    
+    @property
+    def area(self):
+        from math import pi
+        from math import sqrt
+
+        prox_diam = self.proximal.diameter
+        dist_diam = self.distal.diameter
+        length = self.length
+
+        area = pi*(prox_diam+dist_diam)*sqrt((prox_diam-dist_diam)**2+length**2)
+        
+        return area
+    # end class SegmentParent
 
 
 class Point3DWithDiam(GeneratedsSuper):
     """A 3D point with diameter."""
+    member_data_items_ = [
+        MemberSpec_('y', 'xs:double', 0),
+        MemberSpec_('x', 'xs:double', 0),
+        MemberSpec_('z', 'xs:double', 0),
+        MemberSpec_('diameter', 'xs:double', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, y=None, x=None, z=None, diameter=None):
@@ -1740,6 +1838,9 @@ class Point3DWithDiam(GeneratedsSuper):
 
 
 class ProximalDetails(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('translationStart', 'xs:double', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, translation_start=None):
@@ -1812,6 +1913,9 @@ class ProximalDetails(GeneratedsSuper):
 
 
 class DistalDetails(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('normalizationEnd', 'xs:double', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, normalization_end=None):
@@ -1884,6 +1988,9 @@ class DistalDetails(GeneratedsSuper):
 
 
 class Member(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('segment', 'SegmentId', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, segments=None):
@@ -1962,6 +2069,9 @@ class Member(GeneratedsSuper):
 
 
 class Include(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('segmentGroup', 'NmlId', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, segment_groups=None):
@@ -2035,6 +2145,10 @@ class Include(GeneratedsSuper):
 
 
 class Path(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('fromxx', 'SegmentEndPoint', 0),
+        MemberSpec_('to', 'SegmentEndPoint', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, fromxx=None, to=None):
@@ -2125,6 +2239,10 @@ class Path(GeneratedsSuper):
 
 
 class SubTree(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('fromxx', 'SegmentEndPoint', 0),
+        MemberSpec_('to', 'SegmentEndPoint', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, fromxx=None, to=None):
@@ -2215,6 +2333,9 @@ class SubTree(GeneratedsSuper):
 
 
 class SegmentEndPoint(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('segment', 'SegmentId', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, segments=None):
@@ -2289,10 +2410,56 @@ class SegmentEndPoint(GeneratedsSuper):
             self.validate_SegmentId(self.segments)    # validate type SegmentId
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
-# end class SegmentEndPoint
+    @property
+    def length(self):
+        prox_x = self.proximal.x
+        prox_y = self.proximal.y
+        prox_z = self.proximal.z
+
+        dist_x = self.distal.x
+        dist_y = self.distal.y
+        dist_z = self.distal.z
+
+        length = ((prox_x-dist_x)**2 + (prox_y-dist_y)**2 + (prox_z-dist_z)**2)**(0.5)
+
+        return length
+    @property
+    def volume(self):
+        from math import pi
+
+        prox_diam = self.proximal.diameter
+        dist_diam = self.distal.diameter
+
+        length = self.length
+
+        volume = (pi/3)*length*(prox_diam**2+dist_diam**2+prox_diam*dist_diam)
+
+        return volume
+    
+    @property
+    def area(self):
+        from math import pi
+        from math import sqrt
+
+        prox_diam = self.proximal.diameter
+        dist_diam = self.distal.diameter
+        length = self.length
+
+        area = pi*(prox_diam+dist_diam)*sqrt((prox_diam-dist_diam)**2+length**2)
+        
+        return area
+    # end class SegmentEndPoint
 
 
 class MembraneProperties(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('channel_population', 'ChannelPopulation', 1),
+        MemberSpec_('channel_density', 'ChannelDensity', 1),
+        MemberSpec_('spike_thresh', 'ValueAcrossSegOrSegGroup', 1),
+        MemberSpec_('specific_capacitance', 'ValueAcrossSegOrSegGroup', 1),
+        MemberSpec_('init_memb_potential', 'ValueAcrossSegOrSegGroup', 1),
+        MemberSpec_('reversal_potential', 'ReversalPotential', 1),
+        ]
     subclass = None
     superclass = None
     def __init__(self, channel_population=None, channel_density=None, spike_thresh=None, specific_capacitance=None, init_memb_potential=None, reversal_potential=None):
@@ -2516,6 +2683,11 @@ class MembraneProperties(GeneratedsSuper):
 
 
 class ValueAcrossSegOrSegGroup(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('segment', 'NmlId', 0),
+        MemberSpec_('segmentGroup', 'NmlId', 0),
+        MemberSpec_('value', 'Nml2Quantity', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, segments=None, segment_groups='all', value=None, extensiontype_=None):
@@ -2632,6 +2804,11 @@ class ValueAcrossSegOrSegGroup(GeneratedsSuper):
 
 
 class VariableParameter(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('segmentGroup', 'xs:string', 0),
+        MemberSpec_('parameter', 'xs:string', 0),
+        MemberSpec_('inhomogeneous_value', 'InhomogeneousValue', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, segment_groups=None, parameter=None, inhomogeneous_value=None):
@@ -2731,6 +2908,10 @@ class VariableParameter(GeneratedsSuper):
 
 
 class InhomogeneousValue(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('inhomogeneousParam', 'xs:string', 0),
+        MemberSpec_('value', 'xs:string', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, inhomogeneous_param=None, value=None):
@@ -2814,6 +2995,9 @@ class InhomogeneousValue(GeneratedsSuper):
 
 
 class ReversalPotential(ValueAcrossSegOrSegGroup):
+    member_data_items_ = [
+        MemberSpec_('species', 'NmlId', 0),
+        ]
     subclass = None
     superclass = ValueAcrossSegOrSegGroup
     def __init__(self, segments=None, segment_groups='all', value=None, species=None):
@@ -2897,6 +3081,13 @@ class Species(ValueAcrossSegOrSegGroup):
     """Specifying the ion here again is redundant, the ion name should be
     the same as id. Kept for now until LEMS implementation can
     select by id. TODO: remove."""
+    member_data_items_ = [
+        MemberSpec_('ion', 'NmlId', 0),
+        MemberSpec_('initialExtConcentration', 'Nml2Quantity_concentration', 0),
+        MemberSpec_('concentrationModel', 'NmlId', 0),
+        MemberSpec_('id', 'NmlId', 0),
+        MemberSpec_('initialConcentration', 'Nml2Quantity_concentration', 0),
+        ]
     subclass = None
     superclass = ValueAcrossSegOrSegGroup
     def __init__(self, segments=None, segment_groups='all', value=None, ion=None, initial_ext_concentration=None, concentration_model=None, id=None, initial_concentration=None):
@@ -3040,6 +3231,10 @@ class Species(ValueAcrossSegOrSegGroup):
 
 
 class IntracellularProperties(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('species', 'Species', 1),
+        MemberSpec_('resistivity', 'ValueAcrossSegOrSegGroup', 1),
+        ]
     subclass = None
     superclass = None
     def __init__(self, species=None, resistivity=None):
@@ -3153,6 +3348,10 @@ class IntracellularProperties(GeneratedsSuper):
 
 
 class ExtracellularPropertiesLocal(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('temperature', 'Nml2Quantity_temperature', 0),
+        MemberSpec_('species', 'Species', 1),
+        ]
     subclass = None
     superclass = None
     def __init__(self, temperature=None, species=None):
@@ -3253,6 +3452,14 @@ class ExtracellularPropertiesLocal(GeneratedsSuper):
 
 
 class SpaceStructure(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('ySpacing', 'xs:float', 0),
+        MemberSpec_('zStart', 'xs:float', 0),
+        MemberSpec_('yStart', 'xs:float', 0),
+        MemberSpec_('zSpacing', 'xs:float', 0),
+        MemberSpec_('xStart', 'xs:float', 0),
+        MemberSpec_('xSpacing', 'xs:float', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, y_spacing=None, z_start=0, y_start=0, z_spacing=None, x_start=0, x_spacing=None):
@@ -3410,6 +3617,12 @@ class SpaceStructure(GeneratedsSuper):
 
 
 class Layout(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('space', 'NmlId', 0),
+        MemberSpec_('random', 'RandomLayout', 0),
+        MemberSpec_('grid', 'GridLayout', 0),
+        MemberSpec_('unstructured', 'UnstructuredLayout', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, space=None, random=None, grid=None, unstructured=None):
@@ -3531,6 +3744,9 @@ class Layout(GeneratedsSuper):
 
 
 class UnstructuredLayout(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('number', 'xs:nonNegativeInteger', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, number=None):
@@ -3605,6 +3821,10 @@ class UnstructuredLayout(GeneratedsSuper):
 
 
 class RandomLayout(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('region', 'NmlId', 0),
+        MemberSpec_('number', 'xs:nonNegativeInteger', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, region=None, number=None):
@@ -3697,6 +3917,11 @@ class RandomLayout(GeneratedsSuper):
 
 
 class GridLayout(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('zSize', 'xs:nonNegativeInteger', 0),
+        MemberSpec_('ySize', 'xs:nonNegativeInteger', 0),
+        MemberSpec_('xSize', 'xs:nonNegativeInteger', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, z_size=None, y_size=None, x_size=None):
@@ -3809,6 +4034,13 @@ class GridLayout(GeneratedsSuper):
 
 
 class Instance(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('i', 'xs:nonNegativeInteger', 0),
+        MemberSpec_('k', 'xs:nonNegativeInteger', 0),
+        MemberSpec_('j', 'xs:nonNegativeInteger', 0),
+        MemberSpec_('id', 'xs:nonNegativeInteger', 0),
+        MemberSpec_('location', 'Location', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, i=None, k=None, j=None, id=None, location=None):
@@ -3956,6 +4188,11 @@ class Instance(GeneratedsSuper):
 
 
 class Location(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('y', 'xs:float', 0),
+        MemberSpec_('x', 'xs:float', 0),
+        MemberSpec_('z', 'xs:float', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, y=None, x=None, z=None):
@@ -4065,6 +4302,11 @@ class SynapticConnection(GeneratedsSuper):
     """Single explicit connection. Introduced to test connections in LEMS.
     Will probably be removed in favour of connections wrapped in
     projection element"""
+    member_data_items_ = [
+        MemberSpec_('to', 'xs:string', 0),
+        MemberSpec_('synapse', 'xs:string', 0),
+        MemberSpec_('from', 'xs:string', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, to=None, synapse=None, fromxx=None):
@@ -4163,6 +4405,11 @@ class SynapticConnection(GeneratedsSuper):
 
 class Connection(GeneratedsSuper):
     """Subject to change as it gets tested with LEMS"""
+    member_data_items_ = [
+        MemberSpec_('postCellId', 'xs:string', 0),
+        MemberSpec_('id', 'xs:nonNegativeInteger', 0),
+        MemberSpec_('preCellId', 'xs:string', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, post_cell_id=None, id=None, pre_cell_id=None):
@@ -4268,6 +4515,11 @@ class ExplicitInput(GeneratedsSuper):
     """Single explicit input. Introduced to test inputs in LEMS. Will
     probably be removed in favour of inputs wrapped in inputList
     element"""
+    member_data_items_ = [
+        MemberSpec_('input', 'xs:string', 0),
+        MemberSpec_('destination', 'xs:string', 0),
+        MemberSpec_('target', 'xs:string', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, input=None, destination=None, target=None):
@@ -4366,6 +4618,11 @@ class ExplicitInput(GeneratedsSuper):
 
 class Input(GeneratedsSuper):
     """Subject to change as it gets tested with LEMS"""
+    member_data_items_ = [
+        MemberSpec_('destination', 'NmlId', 0),
+        MemberSpec_('id', 'xs:nonNegativeInteger', 0),
+        MemberSpec_('target', 'xs:string', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, destination=None, id=None, target=None):
@@ -4474,6 +4731,10 @@ class Input(GeneratedsSuper):
 class Base(GeneratedsSuper):
     """Anything which can have a unique id (within its parent) i.e. most
     elements."""
+    member_data_items_ = [
+        MemberSpec_('id', 'NmlId', 0),
+        MemberSpec_('neuroLexId', 'NeuroLexId', 0),
+        ]
     subclass = None
     superclass = None
     def __init__(self, id=None, neuro_lex_id=None, extensiontype_=None):
@@ -4578,6 +4839,12 @@ class Standalone(Base):
     """Elements which can stand alone and be referenced by id, e.g. cell,
     morphology.Optional human readable name of the element. Not
     necessarily unique; should not be used for referencing/indexing."""
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0),
+        MemberSpec_('metaid', 'MetaId', 0),
+        MemberSpec_('notes', ['Notes', 'xs:string'], 0),
+        MemberSpec_('annotation', 'Annotation', 0),
+        ]
     subclass = None
     superclass = Base
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, extensiontype_=None):
@@ -4719,6 +4986,11 @@ class Standalone(Base):
 
 class InputList(Base):
     """Subject to change as it gets tested with LEMS"""
+    member_data_items_ = [
+        MemberSpec_('component', 'NmlId', 0),
+        MemberSpec_('population', 'NmlId', 0),
+        MemberSpec_('input', 'Input', 1),
+        ]
     subclass = None
     superclass = Base
     def __init__(self, id=None, neuro_lex_id=None, component=None, population=None, input=None):
@@ -4843,6 +5115,12 @@ class InputList(Base):
 
 class Projection(Base):
     """Subject to change as it gets tested with LEMS"""
+    member_data_items_ = [
+        MemberSpec_('postsynapticPopulation', 'NmlId', 0),
+        MemberSpec_('presynapticPopulation', 'NmlId', 0),
+        MemberSpec_('synapse', 'NmlId', 0),
+        MemberSpec_('connection', 'Connection', 1),
+        ]
     subclass = None
     superclass = Base
     def __init__(self, id=None, neuro_lex_id=None, postsynaptic_population=None, presynaptic_population=None, synapse=None, connection=None):
@@ -4981,6 +5259,10 @@ class Projection(Base):
 
 
 class CellSet(Base):
+    member_data_items_ = [
+        MemberSpec_('select', 'xs:string', 0),
+        MemberSpec_('', 'xs:string', 1),
+        ]
     subclass = None
     superclass = Base
     def __init__(self, id=None, neuro_lex_id=None, select=None, anytypeobjs_=None):
@@ -5080,6 +5362,16 @@ class CellSet(Base):
 
 
 class Population(Standalone):
+    member_data_items_ = [
+        MemberSpec_('extracellularProperties', 'NmlId', 0),
+        MemberSpec_('network', 'NmlId', 0),
+        MemberSpec_('component', 'NmlId', 0),
+        MemberSpec_('cell', 'NmlId', 0),
+        MemberSpec_('type', 'populationTypes', 0),
+        MemberSpec_('size', 'xs:integer', 0),
+        MemberSpec_('layout', 'Layout', 0),
+        MemberSpec_('instance', 'Instance', 1),
+        ]
     subclass = None
     superclass = Standalone
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, extracellular_properties=None, network=None, component=None, cells=None, type=None, size=None, layout=None, instance=None):
@@ -5284,6 +5576,10 @@ class Population(Standalone):
 
 
 class Region(Base):
+    member_data_items_ = [
+        MemberSpec_('space', 'NmlId', 0),
+        MemberSpec_('', 'xs:string', 1),
+        ]
     subclass = None
     superclass = Base
     def __init__(self, id=None, neuro_lex_id=None, space=None, anytypeobjs_=None):
@@ -5387,6 +5683,10 @@ class Region(Base):
 
 
 class Space(Base):
+    member_data_items_ = [
+        MemberSpec_('basedOn', 'allowedSpaces', 0),
+        MemberSpec_('structure', 'SpaceStructure', 0),
+        ]
     subclass = None
     superclass = Base
     def __init__(self, id=None, neuro_lex_id=None, based_on=None, structure=None):
@@ -5484,6 +5784,17 @@ class Space(Base):
 
 
 class Network(Standalone):
+    member_data_items_ = [
+        MemberSpec_('space', 'Space', 1),
+        MemberSpec_('region', 'Region', 1),
+        MemberSpec_('extracellular_properties', 'ExtracellularPropertiesLocal', 1),
+        MemberSpec_('population', 'Population', 1),
+        MemberSpec_('cell_set', 'CellSet', 1),
+        MemberSpec_('synaptic_connection', 'SynapticConnection', 1),
+        MemberSpec_('projection', 'Projection', 1),
+        MemberSpec_('explicit_input', 'ExplicitInput', 1),
+        MemberSpec_('input_list', 'InputList', 1),
+        ]
     subclass = None
     superclass = Standalone
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, space=None, region=None, extracellular_properties=None, population=None, cell_set=None, synaptic_connection=None, projection=None, explicit_input=None, input_list=None):
@@ -5790,6 +6101,11 @@ class Network(Standalone):
 
 
 class PulseGenerator(Standalone):
+    member_data_items_ = [
+        MemberSpec_('delay', 'Nml2Quantity_time', 0),
+        MemberSpec_('duration', 'Nml2Quantity_time', 0),
+        MemberSpec_('amplitude', 'Nml2Quantity_current', 0),
+        ]
     subclass = None
     superclass = Standalone
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, delay=None, duration=None, amplitude=None):
@@ -5902,6 +6218,11 @@ class PulseGenerator(Standalone):
 
 
 class ReactionScheme(Base):
+    member_data_items_ = [
+        MemberSpec_('source', 'xs:string', 0),
+        MemberSpec_('type', 'xs:string', 0),
+        MemberSpec_('', 'xs:string', 1),
+        ]
     subclass = None
     superclass = Base
     def __init__(self, id=None, neuro_lex_id=None, source=None, type=None, anytypeobjs_=None):
@@ -6015,6 +6336,10 @@ class ReactionScheme(Base):
 
 
 class ExtracellularProperties(Base):
+    member_data_items_ = [
+        MemberSpec_('temperature', 'Nml2Quantity_temperature', 0),
+        MemberSpec_('species', 'Species', 1),
+        ]
     subclass = None
     superclass = Base
     def __init__(self, id=None, neuro_lex_id=None, temperature=None, species=None):
@@ -6129,6 +6454,15 @@ class ChannelDensity(Base):
     difficult otherwise. It should be removed in the longer term,
     due to possible inconsistencies in this value and that in the
     ionChannel element. TODO: remove."""
+    member_data_items_ = [
+        MemberSpec_('segmentGroup', 'NmlId', 0),
+        MemberSpec_('ion', 'NmlId', 0),
+        MemberSpec_('ionChannel', 'NmlId', 0),
+        MemberSpec_('erev', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('condDensity', 'Nml2Quantity_conductanceDensity', 0),
+        MemberSpec_('segment', 'NmlId', 0),
+        MemberSpec_('variable_parameter', 'VariableParameter', 1),
+        ]
     subclass = None
     superclass = Base
     def __init__(self, id=None, neuro_lex_id=None, segment_groups='all', ion=None, ion_channel=None, erev=None, cond_density=None, segments=None, variable_parameter=None):
@@ -6324,6 +6658,15 @@ class ChannelPopulation(Base):
     difficult otherwise. It should be removed in the longer term,
     due to possible inconsistencies in this value and that in the
     ionChannel element. TODO: remove."""
+    member_data_items_ = [
+        MemberSpec_('segmentGroup', 'NmlId', 0),
+        MemberSpec_('ion', 'NmlId', 0),
+        MemberSpec_('number', 'xs:nonNegativeInteger', 0),
+        MemberSpec_('ionChannel', 'NmlId', 0),
+        MemberSpec_('erev', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('segment', 'NmlId', 0),
+        MemberSpec_('variable_parameter', 'VariableParameter', 1),
+        ]
     subclass = None
     superclass = Base
     def __init__(self, id=None, neuro_lex_id=None, segment_groups='all', ion=None, number=None, ion_channel=None, erev=None, segments=None, variable_parameter=None):
@@ -6516,6 +6859,11 @@ class ChannelPopulation(Base):
 class BiophysicalProperties(Standalone):
     """Standalone element which is usually inside a single cell, but could
     be outside and referenced by id."""
+    member_data_items_ = [
+        MemberSpec_('membrane_properties', 'MembraneProperties', 0),
+        MemberSpec_('intracellular_properties', 'IntracellularProperties', 0),
+        MemberSpec_('extracellular_properties', 'ExtracellularProperties', 0),
+        ]
     subclass = None
     superclass = Standalone
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, membrane_properties=None, intracellular_properties=None, extracellular_properties=None):
@@ -6627,6 +6975,12 @@ class BiophysicalProperties(Standalone):
 
 
 class InhomogeneousParam(Base):
+    member_data_items_ = [
+        MemberSpec_('variable', 'xs:string', 0),
+        MemberSpec_('metric', 'Metric', 0),
+        MemberSpec_('proximal', 'ProximalDetails', 0),
+        MemberSpec_('distal', 'DistalDetails', 0),
+        ]
     subclass = None
     superclass = Base
     def __init__(self, id=None, neuro_lex_id=None, variable=None, metric=None, proximal=None, distal=None):
@@ -6754,6 +7108,13 @@ class InhomogeneousParam(Base):
 
 
 class SegmentGroup(Base):
+    member_data_items_ = [
+        MemberSpec_('member', 'Member', 1),
+        MemberSpec_('include', 'Include', 1),
+        MemberSpec_('path', 'Path', 1),
+        MemberSpec_('sub_tree', 'SubTree', 1),
+        MemberSpec_('inhomogeneous_param', 'InhomogeneousParam', 1),
+        ]
     subclass = None
     superclass = Base
     def __init__(self, id=None, neuro_lex_id=None, member=None, include=None, path=None, sub_tree=None, inhomogeneous_param=None):
@@ -6948,10 +7309,54 @@ class SegmentGroup(Base):
             obj_.build(child_)
             self.inhomogeneous_param.append(obj_)
         super(SegmentGroup, self).buildChildren(child_, node, nodeName_, True)
-# end class SegmentGroup
+    @property
+    def length(self):
+        prox_x = self.proximal.x
+        prox_y = self.proximal.y
+        prox_z = self.proximal.z
+
+        dist_x = self.distal.x
+        dist_y = self.distal.y
+        dist_z = self.distal.z
+
+        length = ((prox_x-dist_x)**2 + (prox_y-dist_y)**2 + (prox_z-dist_z)**2)**(0.5)
+
+        return length
+    @property
+    def volume(self):
+        from math import pi
+
+        prox_diam = self.proximal.diameter
+        dist_diam = self.distal.diameter
+
+        length = self.length
+
+        volume = (pi/3)*length*(prox_diam**2+dist_diam**2+prox_diam*dist_diam)
+
+        return volume
+    
+    @property
+    def area(self):
+        from math import pi
+        from math import sqrt
+
+        prox_diam = self.proximal.diameter
+        dist_diam = self.distal.diameter
+        length = self.length
+
+        area = pi*(prox_diam+dist_diam)*sqrt((prox_diam-dist_diam)**2+length**2)
+        
+        return area
+    # end class SegmentGroup
 
 
 class Segment(Base):
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0),
+        MemberSpec_('parent', 'SegmentParent', 0),
+        MemberSpec_('proximal', 'Point3DWithDiam', 0),
+        MemberSpec_('distal', 'Point3DWithDiam', 0),
+        ]
     subclass = None
     superclass = Base
     def __init__(self, id=None, neuro_lex_id=None, name=None, parent=None, proximal=None, distal=None):
@@ -7073,12 +7478,54 @@ class Segment(Base):
             obj_.build(child_)
             self.set_distal(obj_)
         super(Segment, self).buildChildren(child_, node, nodeName_, True)
-# end class Segment
+    @property
+    def length(self):
+        prox_x = self.proximal.x
+        prox_y = self.proximal.y
+        prox_z = self.proximal.z
+
+        dist_x = self.distal.x
+        dist_y = self.distal.y
+        dist_z = self.distal.z
+
+        length = ((prox_x-dist_x)**2 + (prox_y-dist_y)**2 + (prox_z-dist_z)**2)**(0.5)
+
+        return length
+    @property
+    def volume(self):
+        from math import pi
+
+        prox_diam = self.proximal.diameter
+        dist_diam = self.distal.diameter
+
+        length = self.length
+
+        volume = (pi/3)*length*(prox_diam**2+dist_diam**2+prox_diam*dist_diam)
+
+        return volume
+    
+    @property
+    def area(self):
+        from math import pi
+        from math import sqrt
+
+        prox_diam = self.proximal.diameter
+        dist_diam = self.distal.diameter
+        length = self.length
+
+        area = pi*(prox_diam+dist_diam)*sqrt((prox_diam-dist_diam)**2+length**2)
+        
+        return area
+    # end class Segment
 
 
 class Morphology(Standalone):
     """Standalone element which is usually inside a single cell, but could
     be outside and referenced by id."""
+    member_data_items_ = [
+        MemberSpec_('segments', 'Segment', 1),
+        MemberSpec_('segment_groups', 'SegmentGroup', 1),
+        ]
     subclass = None
     superclass = Standalone
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, segments=None, segment_groups=None):
@@ -7196,6 +7643,8 @@ class Morphology(Standalone):
 
 
 class AbstractCell(Standalone):
+    member_data_items_ = [
+        ]
     subclass = None
     superclass = Standalone
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, extensiontype_=None):
@@ -7267,6 +7716,10 @@ class AbstractCell(Standalone):
 
 
 class ConductanceBasedSynapse(Standalone):
+    member_data_items_ = [
+        MemberSpec_('erev', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('gbase', 'Nml2Quantity_conductance', 0),
+        ]
     subclass = None
     superclass = Standalone
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, extensiontype_=None):
@@ -7375,6 +7828,12 @@ class ConductanceBasedSynapse(Standalone):
 
 class DecayingPoolConcentrationModel(Standalone):
     """Should not be required, as it's present on the species element!"""
+    member_data_items_ = [
+        MemberSpec_('ion', 'NmlId', 0),
+        MemberSpec_('shellThickness', 'Nml2Quantity_length', 0),
+        MemberSpec_('restingConc', 'Nml2Quantity_concentration', 0),
+        MemberSpec_('decayConstant', 'Nml2Quantity_time', 0),
+        ]
     subclass = None
     superclass = Standalone
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, ion=None, shell_thickness=None, resting_conc=None, decay_constant=None, extensiontype_=None):
@@ -7518,6 +7977,14 @@ class DecayingPoolConcentrationModel(Standalone):
 
 
 class GateHHTauInf(Base):
+    member_data_items_ = [
+        MemberSpec_('instances', 'xs:integer', 0),
+        MemberSpec_('type', 'gateTypes', 0),
+        MemberSpec_('notes', ['Notes', 'xs:string'], 0),
+        MemberSpec_('q10_settings', 'Q10Settings', 0),
+        MemberSpec_('time_course', 'HHTime', 0),
+        MemberSpec_('steady_state', 'HHVariable', 0),
+        ]
     subclass = None
     superclass = Base
     def __init__(self, id=None, neuro_lex_id=None, instances=1, type=None, notes=None, q10_settings=None, time_course=None, steady_state=None):
@@ -7682,6 +8149,14 @@ class GateHHTauInf(Base):
 
 
 class GateHHRates(Base):
+    member_data_items_ = [
+        MemberSpec_('instances', 'xs:integer', 0),
+        MemberSpec_('type', 'gateTypes', 0),
+        MemberSpec_('notes', ['Notes', 'xs:string'], 0),
+        MemberSpec_('q10_settings', 'Q10Settings', 0),
+        MemberSpec_('forward_rate', 'HHRate', 0),
+        MemberSpec_('reverse_rate', 'HHRate', 0),
+        ]
     subclass = None
     superclass = Base
     def __init__(self, id=None, neuro_lex_id=None, instances=1, type=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None):
@@ -7846,6 +8321,14 @@ class GateHHRates(Base):
 
 
 class IonChannel(Standalone):
+    member_data_items_ = [
+        MemberSpec_('conductance', 'Nml2Quantity_conductance', 0),
+        MemberSpec_('type', 'channelTypes', 0),
+        MemberSpec_('species', 'NmlId', 0),
+        MemberSpec_('gate', 'GateHHRates', 1),
+        MemberSpec_('gate_h_hrates', 'GateHHRates', 1),
+        MemberSpec_('gate_h_htau_inf', 'GateHHTauInf', 1),
+        ]
     subclass = None
     superclass = Standalone
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, conductance=None, type=None, species=None, gate=None, gate_h_hrates=None, gate_h_htau_inf=None):
@@ -8044,6 +8527,28 @@ class IonChannel(Standalone):
 
 
 class NeuroMLDocument(Standalone):
+    member_data_items_ = [
+        MemberSpec_('include', 'IncludeType', 1),
+        MemberSpec_('extracellular_properties', 'ExtracellularProperties', 1),
+        MemberSpec_('intracellular_properties', 'IntracellularProperties', 1),
+        MemberSpec_('morphology', 'Morphology', 1),
+        MemberSpec_('ion_channel', 'IonChannel', 1),
+        MemberSpec_('decaying_pool_concentration_model', 'DecayingPoolConcentrationModel', 1),
+        MemberSpec_('exp_one_synapse', 'ExpOneSynapse', 1),
+        MemberSpec_('exp_two_synapse', 'ExpTwoSynapse', 1),
+        MemberSpec_('nmda_synapse', 'NmdaSynapse', 1),
+        MemberSpec_('stp_synapse', 'StpSynapse', 1),
+        MemberSpec_('biophysical_properties', 'BiophysicalProperties', 1),
+        MemberSpec_('cells', 'Cell', 1),
+        MemberSpec_('abstract_cell', 'AbstractCell', 1),
+        MemberSpec_('iaf_tau_cell', 'IaFTauCell', 1),
+        MemberSpec_('iaf_cell', 'IaFCell', 1),
+        MemberSpec_('izhikevich_cell', 'IzhikevichCell', 1),
+        MemberSpec_('ad_ex_ia_f_cell', 'AdExIaFCell', 1),
+        MemberSpec_('pulse_generator', 'PulseGenerator', 1),
+        MemberSpec_('network', 'Network', 1),
+        MemberSpec_('ComponentType', 'ComponentType', 1),
+        ]
     subclass = None
     superclass = Standalone
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, include=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, decaying_pool_concentration_model=None, exp_one_synapse=None, exp_two_synapse=None, nmda_synapse=None, stp_synapse=None, biophysical_properties=None, cells=None, abstract_cell=None, iaf_tau_cell=None, iaf_cell=None, izhikevich_cell=None, ad_ex_ia_f_cell=None, pulse_generator=None, network=None, ComponentType=None):
@@ -8650,6 +9155,9 @@ class NeuroMLDocument(Standalone):
 
 
 class ConcentrationModel_D(DecayingPoolConcentrationModel):
+    member_data_items_ = [
+        MemberSpec_('type', 'xs:string', 0),
+        ]
     subclass = None
     superclass = DecayingPoolConcentrationModel
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, ion=None, shell_thickness=None, resting_conc=None, decay_constant=None, type=None):
@@ -8729,6 +9237,12 @@ class Cell(AbstractCell):
     points to the id of the morphology Should only be used if
     biophysicalProperties element is outside the cell. This points
     to the id of the biophysicalProperties"""
+    member_data_items_ = [
+        MemberSpec_('biophysical_properties_attr', 'xs:string', 0),
+        MemberSpec_('morphology_attr', 'xs:string', 0),
+        MemberSpec_('morphology', 'Morphology', 0),
+        MemberSpec_('biophysical_properties', 'BiophysicalProperties', 0),
+        ]
     subclass = None
     superclass = AbstractCell
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, biophysical_properties_attr=None, morphology_attr=None, morphology=None, biophysical_properties=None):
@@ -8852,6 +9366,18 @@ class Cell(AbstractCell):
 
 
 class AdExIaFCell(AbstractCell):
+    member_data_items_ = [
+        MemberSpec_('reset', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('EL', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('C', 'Nml2Quantity_capacitance', 0),
+        MemberSpec_('b', 'Nml2Quantity_current', 0),
+        MemberSpec_('VT', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('delT', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('a', 'Nml2Quantity_conductance', 0),
+        MemberSpec_('thresh', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('gL', 'Nml2Quantity_conductance', 0),
+        MemberSpec_('tauw', 'Nml2Quantity_time', 0),
+        ]
     subclass = None
     superclass = AbstractCell
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, reset=None, EL=None, C=None, b=None, VT=None, del_t=None, a=None, thresh=None, g_l=None, tauw=None):
@@ -9078,6 +9604,14 @@ class AdExIaFCell(AbstractCell):
 
 
 class IzhikevichCell(AbstractCell):
+    member_data_items_ = [
+        MemberSpec_('a', 'Nml2Quantity_none', 0),
+        MemberSpec_('c', 'Nml2Quantity_none', 0),
+        MemberSpec_('b', 'Nml2Quantity_none', 0),
+        MemberSpec_('d', 'Nml2Quantity_none', 0),
+        MemberSpec_('v0', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('thresh', 'Nml2Quantity_voltage', 0),
+        ]
     subclass = None
     superclass = AbstractCell
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, a=None, c=None, b=None, d=None, v0=None, thresh=None):
@@ -9235,6 +9769,13 @@ class IzhikevichCell(AbstractCell):
 
 
 class IaFCell(AbstractCell):
+    member_data_items_ = [
+        MemberSpec_('reset', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('C', 'Nml2Quantity_capacitance', 0),
+        MemberSpec_('thresh', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('leakConductance', 'Nml2Quantity_conductance', 0),
+        MemberSpec_('leakReversal', 'Nml2Quantity_voltage', 0),
+        ]
     subclass = None
     superclass = AbstractCell
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, reset=None, C=None, thresh=None, leak_conductance=None, leak_reversal=None):
@@ -9380,6 +9921,12 @@ class IaFCell(AbstractCell):
 
 
 class IaFTauCell(AbstractCell):
+    member_data_items_ = [
+        MemberSpec_('reset', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('tau', 'Nml2Quantity_time', 0),
+        MemberSpec_('thresh', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('leakReversal', 'Nml2Quantity_voltage', 0),
+        ]
     subclass = None
     superclass = AbstractCell
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, reset=None, tau=None, thresh=None, leak_reversal=None):
@@ -9507,6 +10054,10 @@ class IaFTauCell(AbstractCell):
 
 
 class ExpTwoSynapse(ConductanceBasedSynapse):
+    member_data_items_ = [
+        MemberSpec_('tauDecay', 'Nml2Quantity_time', 0),
+        MemberSpec_('tauRise', 'Nml2Quantity_time', 0),
+        ]
     subclass = None
     superclass = ConductanceBasedSynapse
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None, tau_rise=None, extensiontype_=None):
@@ -9611,6 +10162,9 @@ class ExpTwoSynapse(ConductanceBasedSynapse):
 
 
 class ExpOneSynapse(ConductanceBasedSynapse):
+    member_data_items_ = [
+        MemberSpec_('tauDecay', 'Nml2Quantity_time', 0),
+        ]
     subclass = None
     superclass = ConductanceBasedSynapse
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None):
@@ -9690,6 +10244,9 @@ class ExpOneSynapse(ConductanceBasedSynapse):
 
 
 class StpSynapse(ExpTwoSynapse):
+    member_data_items_ = [
+        MemberSpec_('stp_mechanism', 'StpMechanism', 0),
+        ]
     subclass = None
     superclass = ExpTwoSynapse
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None, tau_rise=None, stp_mechanism=None):
@@ -9769,6 +10326,9 @@ class StpSynapse(ExpTwoSynapse):
 
 
 class NmdaSynapse(ExpTwoSynapse):
+    member_data_items_ = [
+        MemberSpec_('voltage_conc_dep_block', 'VoltageConcDepBlock', 0),
+        ]
     subclass = None
     superclass = ExpTwoSynapse
     def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, erev=None, gbase=None, tau_decay=None, tau_rise=None, voltage_conc_dep_block=None):
@@ -9943,8 +10503,8 @@ def parse(inFileName):
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
-        rootTag = 'neuroml'
-        rootClass = neuroml
+        rootTag = 'Annotation'
+        rootClass = Annotation
     rootObj = rootClass.factory()
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
@@ -9962,14 +10522,14 @@ def parseString(inString):
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
-        rootTag = 'neuroml'
-        rootClass = neuroml
+        rootTag = 'Annotation'
+        rootClass = Annotation
     rootObj = rootClass.factory()
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
     doc = None
     sys.stdout.write('<?xml version="1.0" ?>\n')
-    rootObj.export(sys.stdout, 0, name_="neuroml",
+    rootObj.export(sys.stdout, 0, name_="Annotation",
         namespacedef_='')
     return rootObj
 
@@ -9979,8 +10539,8 @@ def parseLiteral(inFileName):
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
-        rootTag = 'neuroml'
-        rootClass = neuroml
+        rootTag = 'Annotation'
+        rootClass = Annotation
     rootObj = rootClass.factory()
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
