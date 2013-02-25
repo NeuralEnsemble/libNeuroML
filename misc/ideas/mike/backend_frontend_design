@@ -1,0 +1,62 @@
+As was previously discussed, morphology should be array based for
+efficiency and serialization. However,for the multicompartmental 
+modelling community, an object based approach provides a 
+more natural way to manipulate models. The design I am working on
+stores data (vertices,connectivity,node_types) in an array-based manner 
+in a MorphologyArray class. These are manipulated via 
+Node and NodeCollection objects which are basically following the 
+visitor patern.
+
+MorphologyArray
+    Attributes:
+        -connectivity array
+        -node_types array
+        -vertices array
+        -list of instatiated objects referencing it
+    Methods:
+        A number of methods to manipulate the morphology
+        array and extract information from it such as to_root()
+        connect(),is_root(index) etc.
+
+Node
+    Attributes:
+        -pointer to its MorphologyArray
+        -index in MorphologyArray
+        -x,y,z,r
+
+    Methods:
+        A number of methods to manipulate the morphology
+        array such as connect()
+
+NodeCollection
+    
+    Will appear to user as an iterable container of connected nodes.
+
+    It is both an iterator and a visitor, using lazy initialization
+    for node objects.
+
+    The morphologyarray, start index and end index should be enough
+    information to provide this behaviour. The user can then do operations 
+    such as:
+
+        A=NodeCollection.from_file('somefile.swc')
+        for node in A:
+            print A.type    
+
+    Without requiring an actual list of nodes to be instatiated    
+
+    Attributes:
+        -pointer to its MorphologyArray
+        -Start index
+        -End index
+        -MetaData (this could include channel data?)        
+
+    Methods:
+        -connect -  can provide a default connection node, mainly
+                    this will be used by overriding by an inheriting 
+                    class.
+
+    Subclasses:
+        Objects such as section (NEURON-type section with 
+        non-equal end diameters and discrete diameter changes) and
+        cylinders can inherit from this class.
