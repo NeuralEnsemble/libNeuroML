@@ -75,7 +75,7 @@ class SWCLoader(object):
             else:
                 connection_indices[i]=-1
 
-        #This needs to become a SegmentGroup
+        #This needs to become an "Optimized Morphology" of some kind
         return Backend(vertices=vertices, 
                               connectivity=connection_indices, 
                               name=name )
