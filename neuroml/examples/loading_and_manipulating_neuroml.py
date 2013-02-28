@@ -1,5 +1,7 @@
 from neuroml import loaders
-doc = loaders.NeuroMLLoader.load('Purk2M9s.nml')
+import neuroml
+
+doc = loaders.NeuroMLLoader.load('./test_files/Purk2M9s.nml')
 
 mycell = doc.cells[0]
 
@@ -12,14 +14,14 @@ my_morphology.segments[33].id = 'random_test'
 newcell = neuroml.Cell()
 newcell.id = "some random cell"
 
-new_morphology = nml.Morphology()
+new_morphology = neuroml.Morphology()
 newcell.morphology = new_morphology
 
 new_morphology.id = 'some random morphology'
 
 #add a few segments to that morphology:
 for i in range(10):
-    segment = nml.Segment()
+    segment = neuroml.Segment()
     segment.id = "some random segment"
     new_morphology.add_segment(segment)
 
