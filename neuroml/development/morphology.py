@@ -42,6 +42,10 @@ class Cell(object):
         self.biophysical_properties=biophysical_properties
         self.notes=notes
 
+from nml.nml import Morphology
+
+class ArraySegment(Morphology):
+    
   
 class Backend(object):
     """Core of the array-based object model backend.
