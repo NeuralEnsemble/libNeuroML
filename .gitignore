@@ -22,3 +22,4 @@ hhExample/*.xml
 hhExample/*.dat
 
 neuroml/examples/*.xml
+neuroml/examples/tmp/*.xml
