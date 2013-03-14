@@ -18,13 +18,13 @@ Contents:
    nodes_segments_sections
    meeting_june_2012
 
-Source documentation
-==================
-
-.. toctree::
-   :maxdepth: 3
+.. Source documentation
+   ==================
    
-   modules
+   .. toctree::
+      :maxdepth: 3
+      
+      modules
 
 Indices and tables
 ==================
