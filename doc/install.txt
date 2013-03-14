@@ -57,6 +57,7 @@ To run unit tests cd to the directory '/neuoroml/test' and use the python unitte
 If everything worked your output should look something like this:
 
 ::
+
     .......
     ----------------------------------------------------------------------
     Ran 7 tests in 0.001s
