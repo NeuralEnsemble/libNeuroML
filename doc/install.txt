@@ -37,8 +37,28 @@ Some sample scripts are included in `neuroml/examples`:
 
 ::
 
-    python neuroml/examples/example0.py
-    python neuroml/examples/example1.py
-    python neuroml/examples/example2.py
-    python neuroml/examples/example3.py
-    python neuroml/examples/example4.py
+    build_network.py   
+    loading_neuroml.py
+    loading_and_manipulating_neuroml.py	
+    morphology_generation.py  
+    writing_neuroml.py
+    load_and_write.py  
+    loading_modifying_writing.py
+
+Unit tests
+----------
+
+To run unit tests cd to the directory '/neuoroml/test' and use the python unittest module discover method:
+
+::
+
+    python -m unittest discover
+
+If everything worked your output should look something like this:
+
+::
+    .......
+    ----------------------------------------------------------------------
+    Ran 7 tests in 0.001s
+    
+    OK
