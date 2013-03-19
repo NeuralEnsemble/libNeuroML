@@ -1,13 +1,15 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
 #
-# Generated Thu Mar  7 11:51:23 2013 by generateDS.py version 2.7c.
+# Generated Tue Mar 19 21:36:46 2013 by generateDS.py version 2.8b.
 #
 
 import sys
 import getopt
 import re as re_
+import base64
+from datetime import datetime, tzinfo, timedelta
 
 etree_ = None
 Verbose_import_ = False
@@ -50,7 +52,8 @@ except ImportError:
                     if Verbose_import_:
                         print("running with ElementTree")
                 except ImportError:
-                    raise ImportError("Failed to import ElementTree from any known place")
+                    raise ImportError(
+                        "Failed to import ElementTree from any known place")
 
 def parsexml_(*args, **kwargs):
     if (XMLParser_import_library == XMLParser_import_lxml and
@@ -73,9 +76,24 @@ try:
 except ImportError, exp:
 
     class GeneratedsSuper(object):
+        tzoff_pattern = re_.compile(r'(\+|-)((0\d|1[0-3]):[0-5]\d|14:00)$')
+        class _FixedOffsetTZ(tzinfo):
+            def __init__(self, offset, name):
+                self.__offset = timedelta(minutes = offset)
+                self.__name = name
+            def utcoffset(self, dt):
+                return self.__offset
+            def tzname(self, dt):
+                return self.__name
+            def dst(self, dt):
+                return None
         def gds_format_string(self, input_data, input_name=''):
             return input_data
         def gds_validate_string(self, input_data, node, input_name=''):
+            return input_data
+        def gds_format_base64(self, input_data, input_name=''):
+            return base64.b64encode(input_data)
+        def gds_validate_base64(self, input_data, node, input_name=''):
             return input_data
         def gds_format_integer(self, input_data, input_name=''):
             return '%d' % input_data
@@ -129,8 +147,84 @@ except ImportError, exp:
             values = input_data.split()
             for value in values:
                 if value not in ('true', '1', 'false', '0', ):
-                    raise_parse_error(node, 'Requires sequence of booleans ("true", "1", "false", "0")')
+                    raise_parse_error(node,
+                        'Requires sequence of booleans '
+                        '("true", "1", "false", "0")')
             return input_data
+        def gds_validate_datetime(self, input_data, node, input_name=''):
+            return input_data
+        def gds_format_datetime(self, input_data, input_name=''):
+            _svalue = input_data.strftime('%Y-%m-%dT%H:%M:%S')
+            if input_data.tzinfo is not None:
+                tzoff = input_data.tzinfo.utcoffset(input_data)
+                if tzoff is not None:
+                    total_seconds = tzoff.seconds + (86400 * tzoff.days)
+                    if total_seconds == 0:
+                        _svalue += 'Z'
+                    else:
+                        if total_seconds < 0:
+                            _svalue += '-'
+                            total_seconds *= -1
+                        else:
+                            _svalue += '+'
+                        hours = total_seconds // 3600
+                        minutes = (total_seconds - (hours * 3600)) // 60
+                        _svalue += '{0:02d}:{1:02d}'.format(hours, minutes)
+            return _svalue
+        def gds_parse_datetime(self, input_data, node, input_name=''):
+            tz = None
+            if input_data[-1] == 'Z':
+                tz = GeneratedsSuper._FixedOffsetTZ(0, 'GMT')
+                input_data = input_data[:-1]
+            else:
+                results = GeneratedsSuper.tzoff_pattern.search(input_data)
+                if results is not None:
+                    tzoff_parts = results.group(2).split(':')
+                    tzoff = int(tzoff_parts[0]) * 60 + int(tzoff_parts[1])
+                    if results.group(1) == '-':
+                        tzoff *= -1
+                    tz = GeneratedsSuper._FixedOffsetTZ(
+                        tzoff, results.group(0))
+                    input_data = input_data[:-6]
+            return datetime.strptime(input_data,
+                '%Y-%m-%dT%H:%M:%S').replace(tzinfo = tz)
+        def gds_validate_date(self, input_data, node, input_name=''):
+            return input_data
+        def gds_format_date(self, input_data, input_name=''):
+            _svalue = input_data.strftime('%Y-%m-%d')
+            if input_data.tzinfo is not None:
+                tzoff = input_data.tzinfo.utcoffset(input_data)
+                if tzoff is not None:
+                    total_seconds = tzoff.seconds + (86400 * tzoff.days)
+                    if total_seconds == 0:
+                        _svalue += 'Z'
+                    else:
+                        if total_seconds < 0:
+                            _svalue += '-'
+                            total_seconds *= -1
+                        else:
+                            _svalue += '+'
+                        hours = total_seconds // 3600
+                        minutes = (total_seconds - (hours * 3600)) // 60
+                        _svalue += '{0:02d}:{1:02d}'.format(hours, minutes)
+            return _svalue
+        def gds_parse_date(self, input_data, node, input_name=''):
+            tz = None
+            if input_data[-1] == 'Z':
+                tz = GeneratedsSuper._FixedOffsetTZ(0, 'GMT')
+                input_data = input_data[:-1]
+            else:
+                results = GeneratedsSuper.tzoff_pattern.search(input_data)
+                if results is not None:
+                    tzoff_parts = results.group(2).split(':')
+                    tzoff = int(tzoff_parts[0]) * 60 + int(tzoff_parts[1])
+                    if results.group(1) == '-':
+                        tzoff *= -1
+                    tz = GeneratedsSuper._FixedOffsetTZ(
+                        tzoff, results.group(0))
+                    input_data = input_data[:-6]
+            return datetime.strptime(input_data,
+                '%Y-%m-%d').replace(tzinfo = tz)
         def gds_str_lower(self, instring):
             return instring.lower()
         def get_path_(self, node):
@@ -265,7 +359,8 @@ class GDSParseError(Exception):
 
 def raise_parse_error(node, msg):
     if XMLParser_import_library == XMLParser_import_lxml:
-        msg = '%s (element %s/line %d)' % (msg, node.tag, node.sourceline, )
+        msg = '%s (element %s/line %d)' % (
+            msg, node.tag, node.sourceline, )
     else:
         msg = '%s (element %s)' % (msg, node.tag, )
     raise GDSParseError(msg)
@@ -286,6 +381,7 @@ class MixedContainer:
     TypeDecimal = 5
     TypeDouble = 6
     TypeBoolean = 7
+    TypeBase64 = 8
     def __init__(self, category, content_type, name, value):
         self.category = category
         self.content_type = content_type
@@ -302,7 +398,7 @@ class MixedContainer:
     def export(self, outfile, level, name, namespace, pretty_print=True):
         if self.category == MixedContainer.CategoryText:
             # Prevent exporting empty content as empty lines.
-            if self.value.strip(): 
+            if self.value.strip():
                 outfile.write(self.value)
         elif self.category == MixedContainer.CategorySimple:
             self.exportSimple(outfile, level, name)
@@ -310,24 +406,31 @@ class MixedContainer:
             self.value.export(outfile, level, namespace, name, pretty_print)
     def exportSimple(self, outfile, level, name):
         if self.content_type == MixedContainer.TypeString:
-            outfile.write('<%s>%s</%s>' % (self.name, self.value, self.name))
+            outfile.write('<%s>%s</%s>' %
+                (self.name, self.value, self.name))
         elif self.content_type == MixedContainer.TypeInteger or \
                 self.content_type == MixedContainer.TypeBoolean:
-            outfile.write('<%s>%d</%s>' % (self.name, self.value, self.name))
+            outfile.write('<%s>%d</%s>' %
+                (self.name, self.value, self.name))
         elif self.content_type == MixedContainer.TypeFloat or \
                 self.content_type == MixedContainer.TypeDecimal:
-            outfile.write('<%s>%f</%s>' % (self.name, self.value, self.name))
+            outfile.write('<%s>%f</%s>' %
+                (self.name, self.value, self.name))
         elif self.content_type == MixedContainer.TypeDouble:
-            outfile.write('<%s>%g</%s>' % (self.name, self.value, self.name))
+            outfile.write('<%s>%g</%s>' %
+                (self.name, self.value, self.name))
+        elif self.content_type == MixedContainer.TypeBase64:
+            outfile.write('<%s>%s</%s>' %
+                (self.name, base64.b64encode(self.value), self.name))
     def exportLiteral(self, outfile, level, name):
         if self.category == MixedContainer.CategoryText:
             showIndent(outfile, level)
-            outfile.write('model_.MixedContainer(%d, %d, "%s", "%s"),\n' % \
-                (self.category, self.content_type, self.name, self.value))
+            outfile.write('model_.MixedContainer(%d, %d, "%s", "%s"),\n'
+                % (self.category, self.content_type, self.name, self.value))
         elif self.category == MixedContainer.CategorySimple:
             showIndent(outfile, level)
-            outfile.write('model_.MixedContainer(%d, %d, "%s", "%s"),\n' % \
-                (self.category, self.content_type, self.name, self.value))
+            outfile.write('model_.MixedContainer(%d, %d, "%s", "%s"),\n'
+                % (self.category, self.content_type, self.name, self.value))
         else:    # category == MixedContainer.CategoryComplex
             showIndent(outfile, level)
             outfile.write('model_.MixedContainer(%d, %d, "%s",\n' % \
@@ -9135,16 +9238,16 @@ class Cell(AbstractCell):
     biophysicalProperties element is outside the cell. This points
     to the id of the biophysicalProperties"""
     member_data_items_ = [
-        MemberSpec_('biophysicalProperties', 'NmlId', 0),
+        MemberSpec_('biophysical_properties_attr', 'xs:string', 0),
         MemberSpec_('morphology_attr', 'xs:string', 0),
         MemberSpec_('morphology', 'Morphology', 0),
         MemberSpec_('biophysical_properties', 'BiophysicalProperties', 0),
         ]
     subclass = None
     superclass = AbstractCell
-    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, biophysical_properties='1', morphology_attr=None, morphology=None):
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, biophysical_properties_attr=None, morphology_attr=None, morphology=None, biophysical_properties=None):
         super(Cell, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, )
-        self.biophysical_properties = _cast(None, biophysical_properties)
+        self.biophysical_properties_attr = _cast(None, biophysical_properties_attr)
         self.morphology_attr = _cast(None, morphology_attr)
         self.morphology = morphology
         self.biophysical_properties = biophysical_properties
@@ -9158,11 +9261,8 @@ class Cell(AbstractCell):
     def set_morphology(self, morphology): self.morphology = morphology
     def get_biophysicalProperties(self): return self.biophysical_properties
     def set_biophysicalProperties(self, biophysical_properties): self.biophysical_properties = biophysical_properties
-    def get_biophysicalProperties(self): return self.biophysical_properties
-    def set_biophysicalProperties(self, biophysical_properties): self.biophysical_properties = biophysical_properties
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
+    def get_biophysical_properties_attr(self): return self.biophysical_properties_attr
+    def set_biophysical_properties_attr(self, biophysical_properties_attr): self.biophysical_properties_attr = biophysical_properties_attr
     def get_morphology_attr(self): return self.morphology_attr
     def set_morphology_attr(self, morphology_attr): self.morphology_attr = morphology_attr
     def export(self, outfile, level, namespace_='', name_='Cell', namespacedef_='', pretty_print=True):
@@ -9183,12 +9283,12 @@ class Cell(AbstractCell):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Cell'):
         super(Cell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='Cell')
-        if self.biophysical_properties is not None and 'biophysical_properties' not in already_processed:
-            already_processed.append('biophysical_properties')
-            outfile.write(' biophysicalProperties=%s' % (quote_attrib(self.biophysical_properties), ))
+        if self.biophysical_properties_attr is not None and 'biophysical_properties_attr' not in already_processed:
+            already_processed.append('biophysical_properties_attr')
+            outfile.write(' biophysicalProperties=%s' % (self.gds_format_string(quote_attrib(self.biophysical_properties_attr).encode(ExternalEncoding), input_name='biophysical_properties_attr'), ))
         if self.morphology_attr is not None and 'morphology_attr' not in already_processed:
             already_processed.append('morphology_attr')
-            outfile.write(' morphology_attr=%s' % (self.gds_format_string(quote_attrib(self.morphology_attr).encode(ExternalEncoding), input_name='morphology_attr'), ))
+            outfile.write(' morphology=%s' % (self.gds_format_string(quote_attrib(self.morphology_attr).encode(ExternalEncoding), input_name='morphology_attr'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Cell', fromsubclass_=False, pretty_print=True):
         super(Cell, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -9214,10 +9314,10 @@ class Cell(AbstractCell):
         if self.hasContent_():
             self.exportLiteralChildren(outfile, level, name_)
     def exportLiteralAttributes(self, outfile, level, already_processed, name_):
-        if self.biophysical_properties is not None and 'biophysical_properties' not in already_processed:
-            already_processed.append('biophysical_properties')
+        if self.biophysical_properties_attr is not None and 'biophysical_properties_attr' not in already_processed:
+            already_processed.append('biophysical_properties_attr')
             showIndent(outfile, level)
-            outfile.write('biophysical_properties = "%s",\n' % (self.biophysical_properties,))
+            outfile.write('biophysical_properties_attr = "%s",\n' % (self.biophysical_properties_attr,))
         if self.morphology_attr is not None and 'morphology_attr' not in already_processed:
             already_processed.append('morphology_attr')
             showIndent(outfile, level)
@@ -9244,11 +9344,10 @@ class Cell(AbstractCell):
             self.buildChildren(child, node, nodeName_)
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('biophysicalProperties', node)
-        if value is not None and 'biophysicalProperties' not in already_processed:
-            already_processed.append('biophysicalProperties')
-            self.biophysical_properties = value
-            self.validate_NmlId(self.biophysical_properties)    # validate type NmlId
-        value = find_attr_value_('morphology_attr', node)
+        if value is not None and 'biophysical_properties_attr' not in already_processed:
+            already_processed.append('biophysical_properties_attr')
+            self.biophysical_properties_attr = value
+        value = find_attr_value_('morphology', node)
         if value is not None and 'morphology_attr' not in already_processed:
             already_processed.append('morphology_attr')
             self.morphology_attr = value
@@ -10308,6 +10407,80 @@ class NmdaSynapse(ExpTwoSynapse):
 # end class NmdaSynapse
 
 
+GDSClassesMapping = {
+    'intracellularProperties': IntracellularProperties,
+    'proximal': ProximalDetails,
+    'q10Settings': Q10Settings,
+    'from': SegmentEndPoint,
+    'distal': DistalDetails,
+    'random': RandomLayout,
+    'variableParameter': VariableParameter,
+    'subTree': SubTree,
+    'gateHHtauInf': GateHHTauInf,
+    'inputList': InputList,
+    'ionChannel': IonChannel,
+    'biophysicalProperties': BiophysicalProperties,
+    'membraneProperties': MembraneProperties,
+    'abstractCell': AbstractCell,
+    'morphology': Morphology,
+    'iafCell': IaFCell,
+    'species': Species,
+    'resistivity': ValueAcrossSegOrSegGroup,
+    'member': Member,
+    'inhomogeneousValue': InhomogeneousValue,
+    'voltageConcDepBlock': VoltageConcDepBlock,
+    'segmentGroup': SegmentGroup,
+    'network': Network,
+    'reverseRate': HHRate,
+    'decayingPoolConcentrationModel': DecayingPoolConcentrationModel,
+    'segment': Segment,
+    'cellSet': CellSet,
+    'annotation': Annotation,
+    'cell': Cell,
+    'to': SegmentEndPoint,
+    'stpSynapse': StpSynapse,
+    'layout': Layout,
+    'projection': Projection,
+    'gate': GateHHRates,
+    'steadyState': HHVariable,
+    'include': Include,
+    'forwardRate': HHRate,
+    'location': Location,
+    'synapticConnection': SynapticConnection,
+    'neuroml': NeuroMLDocument,
+    'channelPopulation': ChannelPopulation,
+    'parent': SegmentParent,
+    'initMembPotential': ValueAcrossSegOrSegGroup,
+    'instance': Instance,
+    'adExIaFCell': AdExIaFCell,
+    'grid': GridLayout,
+    'izhikevichCell': IzhikevichCell,
+    'structure': SpaceStructure,
+    'input': Input,
+    'iafTauCell': IaFTauCell,
+    'path': Path,
+    'expTwoSynapse': ExpTwoSynapse,
+    'pulseGenerator': PulseGenerator,
+    'gateHHrates': GateHHRates,
+    'stpMechanism': StpMechanism,
+    'spikeThresh': ValueAcrossSegOrSegGroup,
+    'unstructured': UnstructuredLayout,
+    'nmdaSynapse': NmdaSynapse,
+    'reversalPotential': ReversalPotential,
+    'specificCapacitance': ValueAcrossSegOrSegGroup,
+    'region': Region,
+    'space': Space,
+    'inhomogeneousParam': InhomogeneousParam,
+    'population': Population,
+    'timeCourse': HHTime,
+    'explicitInput': ExplicitInput,
+    'extracellularProperties': ExtracellularPropertiesLocal,
+    'connection': Connection,
+    'channelDensity': ChannelDensity,
+    'expOneSynapse': ExpOneSynapse,
+}
+
+
 USAGE_TEXT = """
 Usage: python <Parser>.py [ -s ] <in_xml_file>
 """
@@ -10319,7 +10492,9 @@ def usage():
 
 def get_root_tag(node):
     tag = Tag_pattern_.match(node.tag).groups()[-1]
-    rootClass = globals().get(tag)
+    rootClass = GDSClassesMapping.get(tag)
+    if rootClass is None:
+        rootClass = globals().get(tag)
     return tag, rootClass
 
 
@@ -10371,6 +10546,7 @@ def parseLiteral(inFileName):
     # Enable Python to collect the space used by the DOM.
     doc = None
     sys.stdout.write('#from nml import *\n\n')
+    sys.stdout.write('from datetime import datetime as datetime_\n\n')
     sys.stdout.write('import nml as model_\n\n')
     sys.stdout.write('rootObj = model_.rootTag(\n')
     rootObj.exportLiteral(sys.stdout, 0, name_=rootTag)
