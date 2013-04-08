@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Apr  3 15:52:01 2013 by generateDS.py version 2.9a.
+# Generated Tue Apr  9 00:54:24 2013 by generateDS.py version 2.9a.
 #
 
 import sys
@@ -201,24 +201,21 @@ except ImportError, exp:
             return input_data
         def gds_format_date(self, input_data, input_name=''):
             _svalue = input_data.strftime('%Y-%m-%d')
-            try:
-                if input_data.tzinfo is not None:
-                    tzoff = input_data.tzinfo.utcoffset(input_data)
-                    if tzoff is not None:
-                        total_seconds = tzoff.seconds + (86400 * tzoff.days)
-                        if total_seconds == 0:
-                            _svalue += 'Z'
+            if input_data.tzinfo is not None:
+                tzoff = input_data.tzinfo.utcoffset(input_data)
+                if tzoff is not None:
+                    total_seconds = tzoff.seconds + (86400 * tzoff.days)
+                    if total_seconds == 0:
+                        _svalue += 'Z'
+                    else:
+                        if total_seconds < 0:
+                            _svalue += '-'
+                            total_seconds *= -1
                         else:
-                            if total_seconds < 0:
-                                _svalue += '-'
-                                total_seconds *= -1
-                            else:
-                                _svalue += '+'
-                            hours = total_seconds // 3600
-                            minutes = (total_seconds - (hours * 3600)) // 60
-                            _svalue += '{0:02d}:{1:02d}'.format(hours, minutes)
-            except AttributeError:
-                pass
+                            _svalue += '+'
+                        hours = total_seconds // 3600
+                        minutes = (total_seconds - (hours * 3600)) // 60
+                        _svalue += '{0:02d}:{1:02d}'.format(hours, minutes)
             return _svalue
         def gds_parse_date(self, input_data, node, input_name=''):
             tz = None
@@ -267,8 +264,6 @@ except ImportError, exp:
             return class_obj1
         def gds_build_any(self, node, type_name=None):
             return None
-        def gds_reverse_node_mapping(self, mapping):
-            return dict(((v, k) for k,v in mapping.iteritems()))
 
 
 #
