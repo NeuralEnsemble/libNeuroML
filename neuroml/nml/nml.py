@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Apr  3 15:52:01 2013 by generateDS.py version 2.9a.
+# Generated Wed Apr 24 09:36:28 2013 by generateDS.py version 2.9a.
 #
 
 import sys
@@ -8495,12 +8495,12 @@ class IonChannel(Standalone):
         MemberSpec_('type', 'channelTypes', 0),
         MemberSpec_('species', 'NmlId', 0),
         MemberSpec_('gate', 'GateHHRates', 1),
-        MemberSpec_('gate_h_hrates', 'GateHHRates', 1),
-        MemberSpec_('gate_h_htau_inf', 'GateHHTauInf', 1),
+        MemberSpec_('gate_hh_rates', 'GateHHRates', 1),
+        MemberSpec_('gate_hh_tau_inf', 'GateHHTauInf', 1),
         ]
     subclass = None
     superclass = Standalone
-    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, conductance=None, type=None, species=None, gate=None, gate_h_hrates=None, gate_h_htau_inf=None):
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, conductance=None, type=None, species=None, gate=None, gate_hh_rates=None, gate_hh_tau_inf=None):
         super(IonChannel, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, )
         self.conductance = _cast(None, conductance)
         self.type = _cast(None, type)
@@ -8509,14 +8509,14 @@ class IonChannel(Standalone):
             self.gate = []
         else:
             self.gate = gate
-        if gate_h_hrates is None:
-            self.gate_h_hrates = []
+        if gate_hh_rates is None:
+            self.gate_hh_rates = []
         else:
-            self.gate_h_hrates = gate_h_hrates
-        if gate_h_htau_inf is None:
-            self.gate_h_htau_inf = []
+            self.gate_hh_rates = gate_hh_rates
+        if gate_hh_tau_inf is None:
+            self.gate_hh_tau_inf = []
         else:
-            self.gate_h_htau_inf = gate_h_htau_inf
+            self.gate_hh_tau_inf = gate_hh_tau_inf
     def factory(*args_, **kwargs_):
         if IonChannel.subclass:
             return IonChannel.subclass(*args_, **kwargs_)
@@ -8527,14 +8527,14 @@ class IonChannel(Standalone):
     def set_gate(self, gate): self.gate = gate
     def add_gate(self, value): self.gate.append(value)
     def insert_gate(self, index, value): self.gate[index] = value
-    def get_gateHHrates(self): return self.gate_h_hrates
-    def set_gateHHrates(self, gate_h_hrates): self.gate_h_hrates = gate_h_hrates
-    def add_gateHHrates(self, value): self.gate_h_hrates.append(value)
-    def insert_gateHHrates(self, index, value): self.gate_h_hrates[index] = value
-    def get_gateHHtauInf(self): return self.gate_h_htau_inf
-    def set_gateHHtauInf(self, gate_h_htau_inf): self.gate_h_htau_inf = gate_h_htau_inf
-    def add_gateHHtauInf(self, value): self.gate_h_htau_inf.append(value)
-    def insert_gateHHtauInf(self, index, value): self.gate_h_htau_inf[index] = value
+    def get_gateHHrates(self): return self.gate_hh_rates
+    def set_gateHHrates(self, gate_hh_rates): self.gate_hh_rates = gate_hh_rates
+    def add_gateHHrates(self, value): self.gate_hh_rates.append(value)
+    def insert_gateHHrates(self, index, value): self.gate_hh_rates[index] = value
+    def get_gateHHtauInf(self): return self.gate_hh_tau_inf
+    def set_gateHHtauInf(self, gate_hh_tau_inf): self.gate_hh_tau_inf = gate_hh_tau_inf
+    def add_gateHHtauInf(self, value): self.gate_hh_tau_inf.append(value)
+    def insert_gateHHtauInf(self, index, value): self.gate_hh_tau_inf[index] = value
     def get_conductance(self): return self.conductance
     def set_conductance(self, conductance): self.conductance = conductance
     def validate_Nml2Quantity_conductance(self, value):
@@ -8553,8 +8553,8 @@ class IonChannel(Standalone):
     def hasContent_(self):
         if (
             self.gate or
-            self.gate_h_hrates or
-            self.gate_h_htau_inf or
+            self.gate_hh_rates or
+            self.gate_hh_tau_inf or
             super(IonChannel, self).hasContent_()
             ):
             return True
@@ -8595,9 +8595,9 @@ class IonChannel(Standalone):
             eol_ = ''
         for gate_ in self.gate:
             gate_.export(outfile, level, namespace_, name_='gate', pretty_print=pretty_print)
-        for gateHHrates_ in self.gate_h_hrates:
+        for gateHHrates_ in self.gate_hh_rates:
             gateHHrates_.export(outfile, level, namespace_, name_='gateHHrates', pretty_print=pretty_print)
-        for gateHHtauInf_ in self.gate_h_htau_inf:
+        for gateHHtauInf_ in self.gate_hh_tau_inf:
             gateHHtauInf_.export(outfile, level, namespace_, name_='gateHHtauInf', pretty_print=pretty_print)
     def exportLiteral(self, outfile, level, name_='IonChannel'):
         level += 1
@@ -8634,9 +8634,9 @@ class IonChannel(Standalone):
         showIndent(outfile, level)
         outfile.write('],\n')
         showIndent(outfile, level)
-        outfile.write('gate_h_hrates=[\n')
+        outfile.write('gate_hh_rates=[\n')
         level += 1
-        for gateHHrates_ in self.gate_h_hrates:
+        for gateHHrates_ in self.gate_hh_rates:
             showIndent(outfile, level)
             outfile.write('model_.GateHHRates(\n')
             gateHHrates_.exportLiteral(outfile, level, name_='GateHHRates')
@@ -8646,9 +8646,9 @@ class IonChannel(Standalone):
         showIndent(outfile, level)
         outfile.write('],\n')
         showIndent(outfile, level)
-        outfile.write('gate_h_htau_inf=[\n')
+        outfile.write('gate_hh_tau_inf=[\n')
         level += 1
-        for gateHHtauInf_ in self.gate_h_htau_inf:
+        for gateHHtauInf_ in self.gate_hh_tau_inf:
             showIndent(outfile, level)
             outfile.write('model_.GateHHTauInf(\n')
             gateHHtauInf_.exportLiteral(outfile, level, name_='GateHHTauInf')
@@ -8688,11 +8688,11 @@ class IonChannel(Standalone):
         elif nodeName_ == 'gateHHrates':
             obj_ = GateHHRates.factory()
             obj_.build(child_)
-            self.gate_h_hrates.append(obj_)
+            self.gate_hh_rates.append(obj_)
         elif nodeName_ == 'gateHHtauInf':
             obj_ = GateHHTauInf.factory()
             obj_.build(child_)
-            self.gate_h_htau_inf.append(obj_)
+            self.gate_hh_tau_inf.append(obj_)
         super(IonChannel, self).buildChildren(child_, node, nodeName_, True)
 # end class IonChannel
 
