@@ -5,6 +5,7 @@
 import lxml
 from lxml import objectify
 import re
+from config import variables
 
 def remove_curlies(string):
     return re.sub("{.*}","",string)
@@ -42,17 +43,30 @@ def traverse_doc(queue,rename):
     else:
         return None
 
+def pluralize(noun):                            
+    if re.search('[sxz]$', noun):             
+        return re.sub('$', 'es', noun)        
+    elif re.search('[^aeioudgkprt]h$', noun):
+        return re.sub('$', 'es', noun)       
+    elif re.search('[^aeiou]y$', noun):      
+        return re.sub('y$', 'ies', noun)     
+    else:                                    
+        return noun + 's'
+
 def _node_to_python(node):
 
-    tag = node.tag
+    pluralize_flag = 'maxOccurs' in node.attrib
 
     for attribute in node.attrib:
         nml_attribute = node.attrib.pop(attribute)
         if nml_attribute[0].islower():
             renamed_attribute = to_lowercase_with_underscores(nml_attribute)
+            if pluralize_flag:
+                renamed_attribute = pluralize(renamed_attribute)
+
             NameTable[nml_attribute] = renamed_attribute
    
-filename = 'NeuroML_v2beta.xsd'
+filename = variables['schema_name']
 
 doc = objectify.parse(filename)
 root = doc.getroot()
@@ -72,9 +86,9 @@ for keyword in disallowed_keywords:
         pass
 
 # Now we define the edge cases (mainly where s's are needed): 
-NameTable['cell'] = 'cells'
-NameTable['segment'] = 'segments'
-NameTable['segmentGroup'] = 'segment_groups'
+#NameTable['cell'] = 'cells'
+#NameTable['segment'] = 'segments'
+#NameTable['segmentGroup'] = 'segment_groups'
 
 print("NameTable is as follows:")
-print NameTable
+print NameTable['segmentGroup']
