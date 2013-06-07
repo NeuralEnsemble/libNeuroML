@@ -1,8 +1,0 @@
-This directory contains a set of scripts which all should do the same thing: 
-create a simple multicompartmental cell with HH channels and run a simulation with them.
-
-These scripts will be used to try to get a consensus format for this basic task amongst simulators.
-
-Andrew's example: https://github.com/NeuralEnsemble/libNeuroML/blob/master/ideas/andrew/pyNN_example1.py
-will be used as a basis for what we want to achieve, and each script will try to get as close to this using
-their native syntax

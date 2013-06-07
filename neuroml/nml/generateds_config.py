@@ -23,11 +23,11 @@ def to_camelback(string):
         string_list.pop(underscore_index - (1 + i))
         i += 1
     string = ''.join(string_list)
-    
+
     return str(string)
 
 def traverse_doc(queue,rename):
-    """Recursive function to traverse the nodes of a tree in 
+    """Recursive function to traverse the nodes of a tree in
     breadth-first order.
 
     The first argument should be the tree root; children
@@ -65,7 +65,7 @@ def _node_to_python(node):
                 renamed_attribute = pluralize(renamed_attribute)
 
             NameTable[nml_attribute] = renamed_attribute
-   
+
 filename = variables['schema_name']
 
 doc = objectify.parse(filename)
@@ -85,10 +85,10 @@ for keyword in disallowed_keywords:
     except:
         pass
 
-# Now we define the edge cases (mainly where s's are needed): 
-#NameTable['cell'] = 'cells'
-#NameTable['segment'] = 'segments'
-#NameTable['segmentGroup'] = 'segment_groups'
+NameTable['gateHHtauInf'] = 'gate_hh_tau_inf'
+NameTable['ionChannelHH'] = 'ion_channel_hh'
+NameTable['gateHHrates']  = 'gate_hh_rates'
+NameTable['gateHHtauInf'] = 'gate_hh_tau_inf'
 
 print("NameTable is as follows:")
 print NameTable['segmentGroup']
