@@ -34,11 +34,11 @@ h_gate.reverse_rate = neuroml.HHRate(type="HHExpRate",
                                      midpoint="-65mV",
                                      scale="-80mV")
 
-chan.gate.append(m_gate)
-chan.gate.append(h_gate)
+chan.gates.append(m_gate)
+chan.gates.append(h_gate)
 
 doc = neuroml.NeuroMLDocument()
-doc.ion_channel.append(chan)
+doc.ion_channels.append(chan)
 
 doc.id = "ChannelMLDemo"
 

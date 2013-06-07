@@ -85,6 +85,9 @@ for keyword in disallowed_keywords:
     except:
         pass
 
+NameTable['morphology'] = 'morphology' #overriding change to
+#"morphologies" because it only applies outside of a cell - not a very
+#elegant solution
 NameTable['gateHHtauInf'] = 'gate_hh_tau_infs'
 NameTable['ionChannelHH'] = 'ion_channel_hh'
 NameTable['gateHHrates']  = 'gate_hh_rates'
