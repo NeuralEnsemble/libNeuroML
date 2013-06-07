@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Apr 24 09:40:15 2013 by generateDS.py version 2.9a.
+# Generated Fri Jun  7 02:04:17 2013 by generateDS.py version 2.9a.
 #
 
 import sys
@@ -8491,11 +8491,11 @@ class IonChannel(Standalone):
         MemberSpec_('species', 'NmlId', 0),
         MemberSpec_('gates', 'GateHHRates', 1),
         MemberSpec_('gate_hh_rates', 'GateHHRates', 1),
-        MemberSpec_('gate_hh_tau_inf', 'GateHHTauInf', 1),
+        MemberSpec_('gate_hh_tau_infs', 'GateHHTauInf', 1),
         ]
     subclass = None
     superclass = Standalone
-    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, conductance=None, type=None, species=None, gate=None, gate_hh_rates=None, gate_hh_tau_inf=None):
+    def __init__(self, id=None, neuro_lex_id=None, name=None, metaid=None, notes=None, annotation=None, conductance=None, type=None, species=None, gates=None, gate_hh_rates=None, gate_hh_tau_infs=None):
         super(IonChannel, self).__init__(id, neuro_lex_id, name, metaid, notes, annotation, )
         self.conductance = _cast(None, conductance)
         self.type = _cast(None, type)
@@ -8508,10 +8508,10 @@ class IonChannel(Standalone):
             self.gate_hh_rates = []
         else:
             self.gate_hh_rates = gate_hh_rates
-        if gate_hh_tau_inf is None:
-            self.gate_hh_tau_inf = []
+        if gate_hh_tau_infs is None:
+            self.gate_hh_tau_infs = []
         else:
-            self.gate_hh_tau_inf = gate_hh_tau_inf
+            self.gate_hh_tau_infs = gate_hh_tau_infs
     def factory(*args_, **kwargs_):
         if IonChannel.subclass:
             return IonChannel.subclass(*args_, **kwargs_)
@@ -8526,10 +8526,10 @@ class IonChannel(Standalone):
     def set_gateHHrates(self, gate_hh_rates): self.gate_hh_rates = gate_hh_rates
     def add_gateHHrates(self, value): self.gate_hh_rates.append(value)
     def insert_gateHHrates(self, index, value): self.gate_hh_rates[index] = value
-    def get_gateHHtauInf(self): return self.gate_hh_tau_inf
-    def set_gateHHtauInf(self, gate_hh_tau_inf): self.gate_hh_tau_inf = gate_hh_tau_inf
-    def add_gateHHtauInf(self, value): self.gate_hh_tau_inf.append(value)
-    def insert_gateHHtauInf(self, index, value): self.gate_hh_tau_inf[index] = value
+    def get_gateHHtauInf(self): return self.gate_hh_tau_infs
+    def set_gateHHtauInf(self, gate_hh_tau_infs): self.gate_hh_tau_infs = gate_hh_tau_infs
+    def add_gateHHtauInf(self, value): self.gate_hh_tau_infs.append(value)
+    def insert_gateHHtauInf(self, index, value): self.gate_hh_tau_infs[index] = value
     def get_conductance(self): return self.conductance
     def set_conductance(self, conductance): self.conductance = conductance
     def validate_Nml2Quantity_conductance(self, value):
@@ -8549,7 +8549,7 @@ class IonChannel(Standalone):
         if (
             self.gates or
             self.gate_hh_rates or
-            self.gate_hh_tau_inf or
+            self.gate_hh_tau_infs or
             super(IonChannel, self).hasContent_()
             ):
             return True
@@ -8592,7 +8592,7 @@ class IonChannel(Standalone):
             gate_.export(outfile, level, namespace_, name_='gate', pretty_print=pretty_print)
         for gateHHrates_ in self.gate_hh_rates:
             gateHHrates_.export(outfile, level, namespace_, name_='gateHHrates', pretty_print=pretty_print)
-        for gateHHtauInf_ in self.gate_hh_tau_inf:
+        for gateHHtauInf_ in self.gate_hh_tau_infs:
             gateHHtauInf_.export(outfile, level, namespace_, name_='gateHHtauInf', pretty_print=pretty_print)
     def exportLiteral(self, outfile, level, name_='IonChannel'):
         level += 1
@@ -8641,9 +8641,9 @@ class IonChannel(Standalone):
         showIndent(outfile, level)
         outfile.write('],\n')
         showIndent(outfile, level)
-        outfile.write('gate_hh_tau_inf=[\n')
+        outfile.write('gate_hh_tau_infs=[\n')
         level += 1
-        for gateHHtauInf_ in self.gate_hh_tau_inf:
+        for gateHHtauInf_ in self.gate_hh_tau_infs:
             showIndent(outfile, level)
             outfile.write('model_.GateHHTauInf(\n')
             gateHHtauInf_.exportLiteral(outfile, level, name_='GateHHTauInf')
@@ -8687,7 +8687,7 @@ class IonChannel(Standalone):
         elif nodeName_ == 'gateHHtauInf':
             obj_ = GateHHTauInf.factory()
             obj_.build(child_)
-            self.gate_hh_tau_inf.append(obj_)
+            self.gate_hh_tau_infs.append(obj_)
         super(IonChannel, self).buildChildren(child_, node, nodeName_, True)
 # end class IonChannel
 

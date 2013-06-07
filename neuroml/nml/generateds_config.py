@@ -85,10 +85,10 @@ for keyword in disallowed_keywords:
     except:
         pass
 
-NameTable['gateHHtauInf'] = 'gate_hh_tau_inf'
+NameTable['gateHHtauInf'] = 'gate_hh_tau_infs'
 NameTable['ionChannelHH'] = 'ion_channel_hh'
 NameTable['gateHHrates']  = 'gate_hh_rates'
-NameTable['gateHHtauInf'] = 'gate_hh_tau_inf'
+NameTable['gateHHtauInf'] = 'gate_hh_tau_infs'
 
 print("NameTable is as follows:")
-print NameTable['segmentGroup']
+print NameTable
