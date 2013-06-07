@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Jun  7 02:04:17 2013 by generateDS.py version 2.9a.
+# Generated Fri Jun  7 02:29:15 2013 by generateDS.py version 2.9a.
 #
 
 import sys
@@ -10697,10 +10697,10 @@ def parse(inFileName):
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
     doc = None
-    sys.stdout.write('<?xml version="1.0" ?>\n')
-    rootObj.export(sys.stdout, 0, name_=rootTag,
-        namespacedef_='',
-        pretty_print=True)
+##     sys.stdout.write('<?xml version="1.0" ?>\n')
+##     rootObj.export(sys.stdout, 0, name_=rootTag,
+##         namespacedef_='',
+##         pretty_print=True)
     return rootObj
 
 
@@ -10716,10 +10716,10 @@ def parseEtree(inFileName):
     # Enable Python to collect the space used by the DOM.
     doc = None
     rootElement = rootObj.to_etree(None, name_=rootTag)
-    content = etree_.tostring(rootElement, pretty_print=True,
-        xml_declaration=True, encoding="utf-8")
-    sys.stdout.write(content)
-    sys.stdout.write('\n')
+##     content = etree_.tostring(rootElement, pretty_print=True,
+##         xml_declaration=True, encoding="utf-8")
+##     sys.stdout.write(content)
+##     sys.stdout.write('\n')
     return rootObj, rootElement
 
 
@@ -10735,9 +10735,9 @@ def parseString(inString):
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
     doc = None
-    sys.stdout.write('<?xml version="1.0" ?>\n')
-    rootObj.export(sys.stdout, 0, name_="Annotation",
-        namespacedef_='')
+##     sys.stdout.write('<?xml version="1.0" ?>\n')
+##     rootObj.export(sys.stdout, 0, name_="Annotation",
+##         namespacedef_='')
     return rootObj
 
 
@@ -10752,12 +10752,12 @@ def parseLiteral(inFileName):
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
     doc = None
-    sys.stdout.write('#from nml import *\n\n')
-    sys.stdout.write('from datetime import datetime as datetime_\n\n')
-    sys.stdout.write('import nml as model_\n\n')
-    sys.stdout.write('rootObj = model_.rootTag(\n')
-    rootObj.exportLiteral(sys.stdout, 0, name_=rootTag)
-    sys.stdout.write(')\n')
+##     sys.stdout.write('#from nml import *\n\n')
+##     sys.stdout.write('from datetime import datetime as datetime_\n\n')
+##     sys.stdout.write('import nml as model_\n\n')
+##     sys.stdout.write('rootObj = model_.rootTag(\n')
+##     rootObj.exportLiteral(sys.stdout, 0, name_=rootTag)
+##     sys.stdout.write(')\n')
     return rootObj
 
 
