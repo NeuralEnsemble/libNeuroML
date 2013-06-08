@@ -7,6 +7,8 @@
 .project
 .pydevproject
 *.egg-info
+MANIFEST
+dist/*
 build
 
 #Sphinx built website.
