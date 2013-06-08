@@ -6,16 +6,15 @@ long_description = open("README").read()
 
 setup(
     name = "libNeuroML",
-    version = '0.1.2dev',
+    version = '0.1',
     packages = ['neuroml', 'neuroml.test','neuroml.nml','neuroml.examples'],
     author = "libNeuroML authors and contributors",
-    author_email = "<...>",
+    author_email = "vellamike@gmail.com",
     description = "A Python library for working with NeuroML descriptions of neuronal models",
     long_description = long_description,
     license = "BSD",
-    url='https://github.com/NeuralEnsemble/libNeuroML',
+    url="http://libneuroml.readthedocs.org/en/latest/"
     classifiers = [
-        'Development Status :: 3 - Alpha',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
