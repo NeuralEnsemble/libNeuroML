@@ -2,3 +2,5 @@ include examples *.py
 include AUTHORS
 include LICENSE
 include doc/*.txt
+/ninclude neuroml/nml/README
+include neuroml/nml/README
