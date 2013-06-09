@@ -20,7 +20,7 @@ class TestNeuroMLLoader(unittest.TestCase):
         print test_file_path
         f = open(test_file_path,'r')
         print f
-        f.read()
+        print f.read()
         doc = loaders.NeuroMLLoader.load(test_file_path)
         print doc
         self.assertEqual(doc.id,'Purk2M9s')
