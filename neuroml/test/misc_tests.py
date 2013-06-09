@@ -22,6 +22,7 @@ class TestCommonProperties(unittest.TestCase):
         
         for name,test_class in inspect.getmembers(sys.modules[neuroml.__name__]):
             if sys.version_info > (2, 6):
+                print sys.version_info
                 if inspect.isclass(test_class):
                     ob = test_class()
                     self.assertIsInstance(ob,test_class)
