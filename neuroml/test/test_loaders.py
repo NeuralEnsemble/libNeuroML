@@ -14,7 +14,9 @@ except ImportError:
 
 class TestNeuroMLLoader(unittest.TestCase):
     def test_load_neuroml(self):
-        test_file_path = os.path.join(os.path.dirname(neuroml.test.__file__), 'Purk2M9s.nml')
+        root_dir = os.path.dirname(neuroml.__file__)
+        test_file_path = os.path.join(root_dir,'test')
+        test_file_path = os.path.join(test_file_path,'Purk2M9s.nml')
         print test_file_path
         doc = loaders.NeuroMLLoader.load(test_file_path)
         print doc
