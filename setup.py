@@ -9,7 +9,7 @@ setup(
     name = "libNeuroML",
     version = '0.1.5',
     packages = ['neuroml', 'neuroml.test','neuroml.nml','neuroml.examples'],
-    package_data = {'neuroml.test': ['neuroml/test/*.nml']},
+    package_data = {'neuroml.test': ['*.nml']},
     author = "libNeuroML authors and contributors",
     author_email = "vellamike@gmail.com",
     description = "A Python library for working with NeuroML descriptions of neuronal models",
