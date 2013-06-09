@@ -21,7 +21,7 @@ class TestCommonProperties(unittest.TestCase):
         """
         
         for name,test_class in inspect.getmembers(sys.modules[neuroml.__name__]):
-            if sys.version_info > (2, 6):
+            if sys.version_info >= (2, 7):
                 print sys.version_info
                 if inspect.isclass(test_class):
                     ob = test_class()
