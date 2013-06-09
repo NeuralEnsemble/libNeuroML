@@ -4,5 +4,4 @@ python:
   - "2.7"
   - "pypy"
 # command to run tests, e.g. python setup.py test
-script:  cd ./neuroml/test
-scrpit:  nosetests
+script:  cd ./neuroml/test && nosetests
