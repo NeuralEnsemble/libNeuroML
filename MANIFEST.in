@@ -3,3 +3,4 @@ include AUTHORS
 include LICENSE
 include doc/*.txt
 include neuroml/nml/README
+neuroml/test/*
