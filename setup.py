@@ -7,7 +7,7 @@ long_description = open("README").read()
 setup(
     data_files=[("",['neuroml/test/Purk2M9s.nml'])],
     name = "libNeuroML",
-    version = '0.1.5',
+    version = '0.1.6',
     packages = ['neuroml', 'neuroml.test','neuroml.nml','neuroml.examples'],
     package_data = {'neuroml.test': ['*.nml']},
     author = "libNeuroML authors and contributors",
