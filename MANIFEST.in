@@ -4,4 +4,4 @@ include LICENSE
 include doc/*.txt
 include neuroml/nml/README
 include neuroml/test/*
-include *.nml
+recursive-include *.nml
