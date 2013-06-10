@@ -114,8 +114,6 @@ class Morphology(object):
 
     def to_root(self,index):
         """
-        TODO:Add tests for this
-
         Changes the connectivity matrix
         so that the node at index becomes the root
         """
@@ -145,7 +143,7 @@ class Morphology(object):
         
     def pop(self,index):
         """
-        Deletes a node from the Backend, its children become
+        Deletes a node from the morphology, its children become
         children of the deleted node's parent.
         """    
 
