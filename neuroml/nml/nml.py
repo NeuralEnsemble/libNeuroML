@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Jun 12 10:50:19 2013 by generateDS.py version 2.10b.
+# Generated Wed Jun 12 23:48:05 2013 by generateDS.py version 2.10b.
 #
 
 import sys
@@ -2401,7 +2401,7 @@ class Path(GeneratedsSuper):
         if nodeName_ == 'from':
             obj_ = SegmentEndPoint.factory()
             obj_.build(child_)
-            self.from = obj_
+            self.fromxx = obj_
         elif nodeName_ == 'to':
             obj_ = SegmentEndPoint.factory()
             obj_.build(child_)
@@ -2497,7 +2497,7 @@ class SubTree(GeneratedsSuper):
         if nodeName_ == 'from':
             obj_ = SegmentEndPoint.factory()
             obj_.build(child_)
-            self.from = obj_
+            self.fromxx = obj_
         elif nodeName_ == 'to':
             obj_ = SegmentEndPoint.factory()
             obj_.build(child_)
@@ -3084,7 +3084,7 @@ class VariableParameter(GeneratedsSuper):
         if nodeName_ == 'inhomogeneousValue':
             obj_ = InhomogeneousValue.factory()
             obj_.build(child_)
-            self.inhomogeneousValue = obj_
+            self.inhomogeneous_value = obj_
 # end class VariableParameter
 
 
@@ -7204,15 +7204,15 @@ class BiophysicalProperties(Standalone):
         if nodeName_ == 'membraneProperties':
             obj_ = MembraneProperties.factory()
             obj_.build(child_)
-            self.membraneProperties = obj_
+            self.membrane_properties = obj_
         elif nodeName_ == 'intracellularProperties':
             obj_ = IntracellularProperties.factory()
             obj_.build(child_)
-            self.intracellularProperties = obj_
+            self.intracellular_propertieses = obj_
         elif nodeName_ == 'extracellularProperties':
             obj_ = ExtracellularProperties.factory()
             obj_.build(child_)
-            self.extracellularProperties = obj_
+            self.extracellular_propertieses = obj_
         super(BiophysicalProperties, self).buildChildren(child_, node, nodeName_, True)
 # end class BiophysicalProperties
 
@@ -8394,15 +8394,15 @@ class GateHHTauInf(Base):
         elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory()
             obj_.build(child_)
-            self.q10Settings = obj_
+            self.q10_settings = obj_
         elif nodeName_ == 'timeCourse':
             obj_ = HHTime.factory()
             obj_.build(child_)
-            self.timeCourse = obj_
+            self.time_course = obj_
         elif nodeName_ == 'steadyState':
             obj_ = HHVariable.factory()
             obj_.build(child_)
-            self.steadyState = obj_
+            self.steady_state = obj_
         super(GateHHTauInf, self).buildChildren(child_, node, nodeName_, True)
 # end class GateHHTauInf
 
@@ -8568,15 +8568,15 @@ class GateHHRates(Base):
         elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory()
             obj_.build(child_)
-            self.q10Settings = obj_
+            self.q10_settings = obj_
         elif nodeName_ == 'forwardRate':
             obj_ = HHRate.factory()
             obj_.build(child_)
-            self.forwardRate = obj_
+            self.forward_rate = obj_
         elif nodeName_ == 'reverseRate':
             obj_ = HHRate.factory()
             obj_.build(child_)
-            self.reverseRate = obj_
+            self.reverse_rate = obj_
         super(GateHHRates, self).buildChildren(child_, node, nodeName_, True)
 # end class GateHHRates
 
@@ -9629,7 +9629,7 @@ class Cell(AbstractCell):
         elif nodeName_ == 'biophysicalProperties':
             obj_ = BiophysicalProperties.factory()
             obj_.build(child_)
-            self.biophysicalProperties = obj_
+            self.biophysical_propertieses = obj_
         super(Cell, self).buildChildren(child_, node, nodeName_, True)
 # end class Cell
 
@@ -10603,7 +10603,7 @@ class StpSynapse(ExpTwoSynapse):
         if nodeName_ == 'stpMechanism':
             obj_ = StpMechanism.factory()
             obj_.build(child_)
-            self.stpMechanism = obj_
+            self.stp_mechanism = obj_
         super(StpSynapse, self).buildChildren(child_, node, nodeName_, True)
 # end class StpSynapse
 
@@ -10687,7 +10687,7 @@ class NmdaSynapse(ExpTwoSynapse):
         if nodeName_ == 'voltageConcDepBlock':
             obj_ = VoltageConcDepBlock.factory()
             obj_.build(child_)
-            self.voltageConcDepBlock = obj_
+            self.voltage_conc_dep_block = obj_
         super(NmdaSynapse, self).buildChildren(child_, node, nodeName_, True)
 # end class NmdaSynapse
 

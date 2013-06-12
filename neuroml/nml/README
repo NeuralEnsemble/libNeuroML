@@ -6,4 +6,4 @@ Unit tests should be run to confirm this.
 
 generateDS.py should be invoked in this folder (so that generateds_config.py can be located) with the following command (namespace def here will be mended when it's become stable)
 
-   $ generateDS.py -o nml.py --silence --use-getter-setter=none --user-methods=helper_methods NeuroML_v2beta.xsd
+   $ generateDS.py -o nml.py --use-getter-setter=none --silence --user-methods=helper_methods NeuroML_v2beta.xsd
