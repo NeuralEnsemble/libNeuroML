@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Jun 12 23:48:05 2013 by generateDS.py version 2.10b.
+# Generated Thu Jun 13 00:03:04 2013 by generateDS.py version 2.10b.
 #
 
 import sys
@@ -626,10 +626,6 @@ class Annotation(GeneratedsSuper):
         else:
             return Annotation(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
     def hasContent_(self):
         if (
             self.anytypeobjs_
@@ -719,16 +715,6 @@ class ComponentType(GeneratedsSuper):
         else:
             return ComponentType(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
-    def get_extends(self): return self.extends
-    def set_extends(self, extends): self.extends = extends
-    def get_name(self): return self.name
-    def set_name(self, name): self.name = name
-    def get_description(self): return self.description
-    def set_description(self, description): self.description = description
     def hasContent_(self):
         if (
             self.anytypeobjs_
@@ -848,10 +834,6 @@ class IncludeType(GeneratedsSuper):
         else:
             return IncludeType(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_href(self): return self.href
-    def set_href(self, href): self.href = href
-    def get_valueOf_(self): return self.valueOf_
-    def set_valueOf_(self, valueOf_): self.valueOf_ = valueOf_
     def hasContent_(self):
         if (
             self.valueOf_
@@ -938,23 +920,6 @@ class Q10Settings(GeneratedsSuper):
         else:
             return Q10Settings(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_fixedQ10(self): return self.fixed_q10
-    def set_fixedQ10(self, fixed_q10): self.fixed_q10 = fixed_q10
-    def validate_Nml2Quantity_none(self, value):
-        # Validate type Nml2Quantity_none, a restriction on xs:string.
-        pass
-    def get_experimentalTemp(self): return self.experimental_temp
-    def set_experimentalTemp(self, experimental_temp): self.experimental_temp = experimental_temp
-    def validate_Nml2Quantity_temperature(self, value):
-        # Validate type Nml2Quantity_temperature, a restriction on xs:string.
-        pass
-    def get_type(self): return self.type
-    def set_type(self, type): self.type = type
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
-    def get_q10Factor(self): return self.q10_factor
-    def set_q10Factor(self, q10_factor): self.q10_factor = q10_factor
     def hasContent_(self):
         if (
 
@@ -1070,23 +1035,6 @@ class HHRate(GeneratedsSuper):
         else:
             return HHRate(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_midpoint(self): return self.midpoint
-    def set_midpoint(self, midpoint): self.midpoint = midpoint
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
-    def get_rate(self): return self.rate
-    def set_rate(self, rate): self.rate = rate
-    def validate_Nml2Quantity_pertime(self, value):
-        # Validate type Nml2Quantity_pertime, a restriction on xs:string.
-        pass
-    def get_scale(self): return self.scale
-    def set_scale(self, scale): self.scale = scale
-    def get_type(self): return self.type
-    def set_type(self, type): self.type = type
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
     def hasContent_(self):
         if (
 
@@ -1202,20 +1150,6 @@ class HHVariable(GeneratedsSuper):
         else:
             return HHVariable(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_midpoint(self): return self.midpoint
-    def set_midpoint(self, midpoint): self.midpoint = midpoint
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
-    def get_rate(self): return self.rate
-    def set_rate(self, rate): self.rate = rate
-    def get_scale(self): return self.scale
-    def set_scale(self, scale): self.scale = scale
-    def get_type(self): return self.type
-    def set_type(self, type): self.type = type
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
     def hasContent_(self):
         if (
 
@@ -1335,25 +1269,6 @@ class HHTime(GeneratedsSuper):
         else:
             return HHTime(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_midpoint(self): return self.midpoint
-    def set_midpoint(self, midpoint): self.midpoint = midpoint
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
-    def get_rate(self): return self.rate
-    def set_rate(self, rate): self.rate = rate
-    def validate_Nml2Quantity_time(self, value):
-        # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
-    def get_scale(self): return self.scale
-    def set_scale(self, scale): self.scale = scale
-    def get_type(self): return self.type
-    def set_type(self, type): self.type = type
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
-    def get_tau(self): return self.tau
-    def set_tau(self, tau): self.tau = tau
     def hasContent_(self):
         if (
 
@@ -1483,25 +1398,6 @@ class VoltageConcDepBlock(GeneratedsSuper):
         else:
             return VoltageConcDepBlock(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_blockConcentration(self): return self.block_concentration
-    def set_blockConcentration(self, block_concentration): self.block_concentration = block_concentration
-    def validate_Nml2Quantity_concentration(self, value):
-        # Validate type Nml2Quantity_concentration, a restriction on xs:string.
-        pass
-    def get_scalingConc(self): return self.scaling_conc
-    def set_scalingConc(self, scaling_conc): self.scaling_conc = scaling_conc
-    def get_type(self): return self.type
-    def set_type(self, type): self.type = type
-    def get_species(self): return self.species
-    def set_species(self, species): self.species = species
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
-    def get_scalingVolt(self): return self.scaling_volt
-    def set_scalingVolt(self, scaling_volt): self.scaling_volt = scaling_volt
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
     def hasContent_(self):
         if (
 
@@ -1626,18 +1522,6 @@ class StpMechanism(GeneratedsSuper):
         else:
             return StpMechanism(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_tauRec(self): return self.tau_rec
-    def set_tauRec(self, tau_rec): self.tau_rec = tau_rec
-    def validate_Nml2Quantity_time(self, value):
-        # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
-    def get_tauFac(self): return self.tau_fac
-    def set_tauFac(self, tau_fac): self.tau_fac = tau_fac
-    def get_initReleaseProb(self): return self.init_release_prob
-    def set_initReleaseProb(self, init_release_prob): self.init_release_prob = init_release_prob
-    def validate_ZeroToOne(self, value):
-        # Validate type ZeroToOne, a restriction on xs:double.
-        pass
     def hasContent_(self):
         if (
 
@@ -1740,16 +1624,6 @@ class SegmentParent(GeneratedsSuper):
         else:
             return SegmentParent(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_fractionAlong(self): return self.fraction_along
-    def set_fractionAlong(self, fraction_along): self.fraction_along = fraction_along
-    def validate_ZeroToOne(self, value):
-        # Validate type ZeroToOne, a restriction on xs:double.
-        pass
-    def get_segment(self): return self.segments
-    def set_segment(self, segments): self.segments = segments
-    def validate_SegmentId(self, value):
-        # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
-        pass
     def hasContent_(self):
         if (
 
@@ -1888,14 +1762,6 @@ class Point3DWithDiam(GeneratedsSuper):
         else:
             return Point3DWithDiam(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_y(self): return self.y
-    def set_y(self, y): self.y = y
-    def get_x(self): return self.x
-    def set_x(self, x): self.x = x
-    def get_z(self): return self.z
-    def set_z(self, z): self.z = z
-    def get_diameter(self): return self.diameter
-    def set_diameter(self, diameter): self.diameter = diameter
     def hasContent_(self):
         if (
 
@@ -2013,8 +1879,6 @@ class ProximalDetails(GeneratedsSuper):
         else:
             return ProximalDetails(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_translationStart(self): return self.translation_start
-    def set_translationStart(self, translation_start): self.translation_start = translation_start
     def hasContent_(self):
         if (
 
@@ -2090,8 +1954,6 @@ class DistalDetails(GeneratedsSuper):
         else:
             return DistalDetails(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_normalizationEnd(self): return self.normalization_end
-    def set_normalizationEnd(self, normalization_end): self.normalization_end = normalization_end
     def hasContent_(self):
         if (
 
@@ -2167,11 +2029,6 @@ class Member(GeneratedsSuper):
         else:
             return Member(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_segment(self): return self.segments
-    def set_segment(self, segments): self.segments = segments
-    def validate_SegmentId(self, value):
-        # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
-        pass
     def hasContent_(self):
         if (
 
@@ -2250,11 +2107,6 @@ class Include(GeneratedsSuper):
         else:
             return Include(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_segmentGroup(self): return self.segment_groups
-    def set_segmentGroup(self, segment_groups): self.segment_groups = segment_groups
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
     def hasContent_(self):
         if (
 
@@ -2329,10 +2181,6 @@ class Path(GeneratedsSuper):
         else:
             return Path(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_from(self): return self.fromxx
-    def set_from(self, fromxx): self.fromxx = fromxx
-    def get_to(self): return self.to
-    def set_to(self, to): self.to = to
     def hasContent_(self):
         if (
             self.fromxx is not None or
@@ -2425,10 +2273,6 @@ class SubTree(GeneratedsSuper):
         else:
             return SubTree(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_from(self): return self.fromxx
-    def set_from(self, fromxx): self.fromxx = fromxx
-    def get_to(self): return self.to
-    def set_to(self, to): self.to = to
     def hasContent_(self):
         if (
             self.fromxx is not None or
@@ -2520,11 +2364,6 @@ class SegmentEndPoint(GeneratedsSuper):
         else:
             return SegmentEndPoint(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_segment(self): return self.segments
-    def set_segment(self, segments): self.segments = segments
-    def validate_SegmentId(self, value):
-        # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
-        pass
     def hasContent_(self):
         if (
 
@@ -2668,30 +2507,6 @@ class MembraneProperties(GeneratedsSuper):
         else:
             return MembraneProperties(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_channelPopulation(self): return self.channel_populations
-    def set_channelPopulation(self, channel_populations): self.channel_populations = channel_populations
-    def add_channelPopulation(self, value): self.channel_populations.append(value)
-    def insert_channelPopulation(self, index, value): self.channel_populations[index] = value
-    def get_channelDensity(self): return self.channel_densities
-    def set_channelDensity(self, channel_densities): self.channel_densities = channel_densities
-    def add_channelDensity(self, value): self.channel_densities.append(value)
-    def insert_channelDensity(self, index, value): self.channel_densities[index] = value
-    def get_spikeThresh(self): return self.spike_threshes
-    def set_spikeThresh(self, spike_threshes): self.spike_threshes = spike_threshes
-    def add_spikeThresh(self, value): self.spike_threshes.append(value)
-    def insert_spikeThresh(self, index, value): self.spike_threshes[index] = value
-    def get_specificCapacitance(self): return self.specific_capacitances
-    def set_specificCapacitance(self, specific_capacitances): self.specific_capacitances = specific_capacitances
-    def add_specificCapacitance(self, value): self.specific_capacitances.append(value)
-    def insert_specificCapacitance(self, index, value): self.specific_capacitances[index] = value
-    def get_initMembPotential(self): return self.init_memb_potentials
-    def set_initMembPotential(self, init_memb_potentials): self.init_memb_potentials = init_memb_potentials
-    def add_initMembPotential(self, value): self.init_memb_potentials.append(value)
-    def insert_initMembPotential(self, index, value): self.init_memb_potentials[index] = value
-    def get_reversalPotential(self): return self.reversal_potentials
-    def set_reversalPotential(self, reversal_potentials): self.reversal_potentials = reversal_potentials
-    def add_reversalPotential(self, value): self.reversal_potentials.append(value)
-    def insert_reversalPotential(self, index, value): self.reversal_potentials[index] = value
     def hasContent_(self):
         if (
             self.channel_populations or
@@ -2878,20 +2693,6 @@ class ValueAcrossSegOrSegGroup(GeneratedsSuper):
         else:
             return ValueAcrossSegOrSegGroup(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_segment(self): return self.segments
-    def set_segment(self, segments): self.segments = segments
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
-    def get_segmentGroup(self): return self.segment_groups
-    def set_segmentGroup(self, segment_groups): self.segment_groups = segment_groups
-    def get_value(self): return self.value
-    def set_value(self, value): self.value = value
-    def validate_Nml2Quantity(self, value):
-        # Validate type Nml2Quantity, a restriction on xs:string.
-        pass
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def hasContent_(self):
         if (
 
@@ -3000,12 +2801,6 @@ class VariableParameter(GeneratedsSuper):
         else:
             return VariableParameter(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_inhomogeneousValue(self): return self.inhomogeneous_value
-    def set_inhomogeneousValue(self, inhomogeneous_value): self.inhomogeneous_value = inhomogeneous_value
-    def get_segmentGroup(self): return self.segment_groups
-    def set_segmentGroup(self, segment_groups): self.segment_groups = segment_groups
-    def get_parameter(self): return self.parameter
-    def set_parameter(self, parameter): self.parameter = parameter
     def hasContent_(self):
         if (
             self.inhomogeneous_value is not None
@@ -3105,10 +2900,6 @@ class InhomogeneousValue(GeneratedsSuper):
         else:
             return InhomogeneousValue(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_inhomogeneousParam(self): return self.inhomogeneous_params
-    def set_inhomogeneousParam(self, inhomogeneous_params): self.inhomogeneous_params = inhomogeneous_params
-    def get_value(self): return self.value
-    def set_value(self, value): self.value = value
     def hasContent_(self):
         if (
 
@@ -3193,11 +2984,6 @@ class ReversalPotential(ValueAcrossSegOrSegGroup):
         else:
             return ReversalPotential(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_species(self): return self.species
-    def set_species(self, species): self.species = species
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
     def hasContent_(self):
         if (
             super(ReversalPotential, self).hasContent_()
@@ -3289,22 +3075,6 @@ class Species(ValueAcrossSegOrSegGroup):
         else:
             return Species(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ion(self): return self.ion
-    def set_ion(self, ion): self.ion = ion
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
-    def get_initialExtConcentration(self): return self.initial_ext_concentration
-    def set_initialExtConcentration(self, initial_ext_concentration): self.initial_ext_concentration = initial_ext_concentration
-    def validate_Nml2Quantity_concentration(self, value):
-        # Validate type Nml2Quantity_concentration, a restriction on xs:string.
-        pass
-    def get_concentrationModel(self): return self.concentration_model
-    def set_concentrationModel(self, concentration_model): self.concentration_model = concentration_model
-    def get_id(self): return self.id
-    def set_id(self, id): self.id = id
-    def get_initialConcentration(self): return self.initial_concentration
-    def set_initialConcentration(self, initial_concentration): self.initial_concentration = initial_concentration
     def hasContent_(self):
         if (
             super(Species, self).hasContent_()
@@ -3439,14 +3209,6 @@ class IntracellularProperties(GeneratedsSuper):
         else:
             return IntracellularProperties(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_species(self): return self.species
-    def set_species(self, species): self.species = species
-    def add_species(self, value): self.species.append(value)
-    def insert_species(self, index, value): self.species[index] = value
-    def get_resistivity(self): return self.resistivities
-    def set_resistivity(self, resistivities): self.resistivities = resistivities
-    def add_resistivity(self, value): self.resistivities.append(value)
-    def insert_resistivity(self, index, value): self.resistivities[index] = value
     def hasContent_(self):
         if (
             self.species or
@@ -3555,15 +3317,6 @@ class ExtracellularPropertiesLocal(GeneratedsSuper):
         else:
             return ExtracellularPropertiesLocal(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_species(self): return self.species
-    def set_species(self, species): self.species = species
-    def add_species(self, value): self.species.append(value)
-    def insert_species(self, index, value): self.species[index] = value
-    def get_temperature(self): return self.temperature
-    def set_temperature(self, temperature): self.temperature = temperature
-    def validate_Nml2Quantity_temperature(self, value):
-        # Validate type Nml2Quantity_temperature, a restriction on xs:string.
-        pass
     def hasContent_(self):
         if (
             self.species
@@ -3667,18 +3420,6 @@ class SpaceStructure(GeneratedsSuper):
         else:
             return SpaceStructure(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ySpacing(self): return self.y_spacing
-    def set_ySpacing(self, y_spacing): self.y_spacing = y_spacing
-    def get_zStart(self): return self.z_start
-    def set_zStart(self, z_start): self.z_start = z_start
-    def get_yStart(self): return self.y_start
-    def set_yStart(self, y_start): self.y_start = y_start
-    def get_zSpacing(self): return self.z_spacing
-    def set_zSpacing(self, z_spacing): self.z_spacing = z_spacing
-    def get_xStart(self): return self.x_start
-    def set_xStart(self, x_start): self.x_start = x_start
-    def get_xSpacing(self): return self.x_spacing
-    def set_xSpacing(self, x_spacing): self.x_spacing = x_spacing
     def hasContent_(self):
         if (
 
@@ -3829,17 +3570,6 @@ class Layout(GeneratedsSuper):
         else:
             return Layout(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_random(self): return self.random
-    def set_random(self, random): self.random = random
-    def get_grid(self): return self.grid
-    def set_grid(self, grid): self.grid = grid
-    def get_unstructured(self): return self.unstructured
-    def set_unstructured(self, unstructured): self.unstructured = unstructured
-    def get_space(self): return self.spaces
-    def set_space(self, spaces): self.spaces = spaces
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
     def hasContent_(self):
         if (
             self.random is not None or
@@ -3953,8 +3683,6 @@ class UnstructuredLayout(GeneratedsSuper):
         else:
             return UnstructuredLayout(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_number(self): return self.number
-    def set_number(self, number): self.number = number
     def hasContent_(self):
         if (
 
@@ -4034,13 +3762,6 @@ class RandomLayout(GeneratedsSuper):
         else:
             return RandomLayout(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_region(self): return self.regions
-    def set_region(self, regions): self.regions = regions
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
-    def get_number(self): return self.number
-    def set_number(self, number): self.number = number
     def hasContent_(self):
         if (
 
@@ -4134,12 +3855,6 @@ class GridLayout(GeneratedsSuper):
         else:
             return GridLayout(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_zSize(self): return self.z_size
-    def set_zSize(self, z_size): self.z_size = z_size
-    def get_ySize(self): return self.y_size
-    def set_ySize(self, y_size): self.y_size = y_size
-    def get_xSize(self): return self.x_size
-    def set_xSize(self, x_size): self.x_size = x_size
     def hasContent_(self):
         if (
 
@@ -4256,16 +3971,6 @@ class Instance(GeneratedsSuper):
         else:
             return Instance(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_location(self): return self.location
-    def set_location(self, location): self.location = location
-    def get_i(self): return self.i
-    def set_i(self, i): self.i = i
-    def get_k(self): return self.k
-    def set_k(self, k): self.k = k
-    def get_j(self): return self.j
-    def set_j(self, j): self.j = j
-    def get_id(self): return self.id
-    def set_id(self, id): self.id = id
     def hasContent_(self):
         if (
             self.location is not None
@@ -4409,12 +4114,6 @@ class Location(GeneratedsSuper):
         else:
             return Location(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_y(self): return self.y
-    def set_y(self, y): self.y = y
-    def get_x(self): return self.x
-    def set_x(self, x): self.x = x
-    def get_z(self): return self.z
-    def set_z(self, z): self.z = z
     def hasContent_(self):
         if (
 
@@ -4525,12 +4224,6 @@ class SynapticConnection(GeneratedsSuper):
         else:
             return SynapticConnection(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_to(self): return self.to
-    def set_to(self, to): self.to = to
-    def get_synapse(self): return self.synapse
-    def set_synapse(self, synapse): self.synapse = synapse
-    def get_from(self): return self.fromxx
-    def set_from(self, fromxx): self.fromxx = fromxx
     def hasContent_(self):
         if (
 
@@ -4630,12 +4323,6 @@ class Connection(GeneratedsSuper):
         else:
             return Connection(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_postCellId(self): return self.post_cell_id
-    def set_postCellId(self, post_cell_id): self.post_cell_id = post_cell_id
-    def get_id(self): return self.id
-    def set_id(self, id): self.id = id
-    def get_preCellId(self): return self.pre_cell_id
-    def set_preCellId(self, pre_cell_id): self.pre_cell_id = pre_cell_id
     def hasContent_(self):
         if (
 
@@ -4742,12 +4429,6 @@ class ExplicitInput(GeneratedsSuper):
         else:
             return ExplicitInput(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_input(self): return self.input
-    def set_input(self, input): self.input = input
-    def get_destination(self): return self.destination
-    def set_destination(self, destination): self.destination = destination
-    def get_target(self): return self.target
-    def set_target(self, target): self.target = target
     def hasContent_(self):
         if (
 
@@ -4847,15 +4528,6 @@ class Input(GeneratedsSuper):
         else:
             return Input(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_destination(self): return self.destination
-    def set_destination(self, destination): self.destination = destination
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
-    def get_id(self): return self.id
-    def set_id(self, id): self.id = id
-    def get_target(self): return self.target
-    def set_target(self, target): self.target = target
     def hasContent_(self):
         if (
 
@@ -4960,18 +4632,6 @@ class Base(GeneratedsSuper):
         else:
             return Base(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_id(self): return self.id
-    def set_id(self, id): self.id = id
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
-    def get_neuroLexId(self): return self.neuro_lex_id
-    def set_neuroLexId(self, neuro_lex_id): self.neuro_lex_id = neuro_lex_id
-    def validate_NeuroLexId(self, value):
-        # Validate type NeuroLexId, a restriction on xs:string.
-        pass
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def hasContent_(self):
         if (
 
@@ -5075,22 +4735,6 @@ class Standalone(Base):
         else:
             return Standalone(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_notes(self): return self.notes
-    def set_notes(self, notes): self.notes = notes
-    def validate_Notes(self, value):
-        # Validate type Notes, a restriction on xs:string.
-        pass
-    def get_annotation(self): return self.annotation
-    def set_annotation(self, annotation): self.annotation = annotation
-    def get_name(self): return self.name
-    def set_name(self, name): self.name = name
-    def get_metaid(self): return self.metaid
-    def set_metaid(self, metaid): self.metaid = metaid
-    def validate_MetaId(self, value):
-        # Validate type MetaId, a restriction on xs:string.
-        pass
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def hasContent_(self):
         if (
             self.notes is not None or
@@ -5224,17 +4868,6 @@ class InputList(Base):
         else:
             return InputList(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_input(self): return self.input
-    def set_input(self, input): self.input = input
-    def add_input(self, value): self.input.append(value)
-    def insert_input(self, index, value): self.input[index] = value
-    def get_component(self): return self.component
-    def set_component(self, component): self.component = component
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
-    def get_population(self): return self.populations
-    def set_population(self, populations): self.populations = populations
     def hasContent_(self):
         if (
             self.input or
@@ -5357,19 +4990,6 @@ class Projection(Base):
         else:
             return Projection(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_connection(self): return self.connections
-    def set_connection(self, connections): self.connections = connections
-    def add_connection(self, value): self.connections.append(value)
-    def insert_connection(self, index, value): self.connections[index] = value
-    def get_postsynapticPopulation(self): return self.postsynaptic_population
-    def set_postsynapticPopulation(self, postsynaptic_population): self.postsynaptic_population = postsynaptic_population
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
-    def get_presynapticPopulation(self): return self.presynaptic_population
-    def set_presynapticPopulation(self, presynaptic_population): self.presynaptic_population = presynaptic_population
-    def get_synapse(self): return self.synapse
-    def set_synapse(self, synapse): self.synapse = synapse
     def hasContent_(self):
         if (
             self.connections or
@@ -5499,12 +5119,6 @@ class CellSet(Base):
         else:
             return CellSet(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
-    def get_select(self): return self.select
-    def set_select(self, select): self.select = select
     def hasContent_(self):
         if (
             self.anytypeobjs_ or
@@ -5616,30 +5230,6 @@ class Population(Standalone):
         else:
             return Population(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_layout(self): return self.layout
-    def set_layout(self, layout): self.layout = layout
-    def get_instance(self): return self.instances
-    def set_instance(self, instances): self.instances = instances
-    def add_instance(self, value): self.instances.append(value)
-    def insert_instance(self, index, value): self.instances[index] = value
-    def get_extracellularProperties(self): return self.extracellular_propertieses
-    def set_extracellularProperties(self, extracellular_propertieses): self.extracellular_propertieses = extracellular_propertieses
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
-    def get_network(self): return self.networks
-    def set_network(self, networks): self.networks = networks
-    def get_component(self): return self.component
-    def set_component(self, component): self.component = component
-    def get_cell(self): return self.cells
-    def set_cell(self, cells): self.cells = cells
-    def get_type(self): return self.type
-    def set_type(self, type): self.type = type
-    def validate_populationTypes(self, value):
-        # Validate type populationTypes, a restriction on xs:string.
-        pass
-    def get_size(self): return self.size
-    def set_size(self, size): self.size = size
     def hasContent_(self):
         if (
             self.layout is not None or
@@ -5820,15 +5410,6 @@ class Region(Base):
         else:
             return Region(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
-    def get_space(self): return self.spaces
-    def set_space(self, spaces): self.spaces = spaces
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
     def hasContent_(self):
         if (
             self.anytypeobjs_ or
@@ -5926,13 +5507,6 @@ class Space(Base):
         else:
             return Space(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_structure(self): return self.structure
-    def set_structure(self, structure): self.structure = structure
-    def get_basedOn(self): return self.based_on
-    def set_basedOn(self, based_on): self.based_on = based_on
-    def validate_allowedSpaces(self, value):
-        # Validate type allowedSpaces, a restriction on xs:string.
-        pass
     def hasContent_(self):
         if (
             self.structure is not None or
@@ -6070,42 +5644,6 @@ class Network(Standalone):
         else:
             return Network(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_space(self): return self.spaces
-    def set_space(self, spaces): self.spaces = spaces
-    def add_space(self, value): self.spaces.append(value)
-    def insert_space(self, index, value): self.spaces[index] = value
-    def get_region(self): return self.regions
-    def set_region(self, regions): self.regions = regions
-    def add_region(self, value): self.regions.append(value)
-    def insert_region(self, index, value): self.regions[index] = value
-    def get_extracellularProperties(self): return self.extracellular_propertieses
-    def set_extracellularProperties(self, extracellular_propertieses): self.extracellular_propertieses = extracellular_propertieses
-    def add_extracellularProperties(self, value): self.extracellular_propertieses.append(value)
-    def insert_extracellularProperties(self, index, value): self.extracellular_propertieses[index] = value
-    def get_population(self): return self.populations
-    def set_population(self, populations): self.populations = populations
-    def add_population(self, value): self.populations.append(value)
-    def insert_population(self, index, value): self.populations[index] = value
-    def get_cellSet(self): return self.cell_sets
-    def set_cellSet(self, cell_sets): self.cell_sets = cell_sets
-    def add_cellSet(self, value): self.cell_sets.append(value)
-    def insert_cellSet(self, index, value): self.cell_sets[index] = value
-    def get_synapticConnection(self): return self.synaptic_connections
-    def set_synapticConnection(self, synaptic_connections): self.synaptic_connections = synaptic_connections
-    def add_synapticConnection(self, value): self.synaptic_connections.append(value)
-    def insert_synapticConnection(self, index, value): self.synaptic_connections[index] = value
-    def get_projection(self): return self.projections
-    def set_projection(self, projections): self.projections = projections
-    def add_projection(self, value): self.projections.append(value)
-    def insert_projection(self, index, value): self.projections[index] = value
-    def get_explicitInput(self): return self.explicit_inputs
-    def set_explicitInput(self, explicit_inputs): self.explicit_inputs = explicit_inputs
-    def add_explicitInput(self, value): self.explicit_inputs.append(value)
-    def insert_explicitInput(self, index, value): self.explicit_inputs[index] = value
-    def get_inputList(self): return self.input_lists
-    def set_inputList(self, input_lists): self.input_lists = input_lists
-    def add_inputList(self, value): self.input_lists.append(value)
-    def insert_inputList(self, index, value): self.input_lists[index] = value
     def hasContent_(self):
         if (
             self.spaces or
@@ -6351,18 +5889,6 @@ class PulseGenerator(Standalone):
         else:
             return PulseGenerator(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_delay(self): return self.delay
-    def set_delay(self, delay): self.delay = delay
-    def validate_Nml2Quantity_time(self, value):
-        # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
-    def get_duration(self): return self.duration
-    def set_duration(self, duration): self.duration = duration
-    def get_amplitude(self): return self.amplitude
-    def set_amplitude(self, amplitude): self.amplitude = amplitude
-    def validate_Nml2Quantity_current(self, value):
-        # Validate type Nml2Quantity_current, a restriction on xs:string.
-        pass
     def hasContent_(self):
         if (
             super(PulseGenerator, self).hasContent_()
@@ -6472,14 +5998,6 @@ class ReactionScheme(Base):
         else:
             return ReactionScheme(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
-    def get_source(self): return self.source
-    def set_source(self, source): self.source = source
-    def get_type(self): return self.type
-    def set_type(self, type): self.type = type
     def hasContent_(self):
         if (
             self.anytypeobjs_ or
@@ -6590,15 +6108,6 @@ class ExtracellularProperties(Base):
         else:
             return ExtracellularProperties(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_species(self): return self.species
-    def set_species(self, species): self.species = species
-    def add_species(self, value): self.species.append(value)
-    def insert_species(self, index, value): self.species[index] = value
-    def get_temperature(self): return self.temperature
-    def set_temperature(self, temperature): self.temperature = temperature
-    def validate_Nml2Quantity_temperature(self, value):
-        # Validate type Nml2Quantity_temperature, a restriction on xs:string.
-        pass
     def hasContent_(self):
         if (
             self.species or
@@ -6720,31 +6229,6 @@ class ChannelDensity(Base):
         else:
             return ChannelDensity(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_variableParameter(self): return self.variable_parameters
-    def set_variableParameter(self, variable_parameters): self.variable_parameters = variable_parameters
-    def add_variableParameter(self, value): self.variable_parameters.append(value)
-    def insert_variableParameter(self, index, value): self.variable_parameters[index] = value
-    def get_segmentGroup(self): return self.segment_groups
-    def set_segmentGroup(self, segment_groups): self.segment_groups = segment_groups
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
-    def get_ion(self): return self.ion
-    def set_ion(self, ion): self.ion = ion
-    def get_ionChannel(self): return self.ion_channels
-    def set_ionChannel(self, ion_channels): self.ion_channels = ion_channels
-    def get_erev(self): return self.erev
-    def set_erev(self, erev): self.erev = erev
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
-    def get_condDensity(self): return self.cond_density
-    def set_condDensity(self, cond_density): self.cond_density = cond_density
-    def validate_Nml2Quantity_conductanceDensity(self, value):
-        # Validate type Nml2Quantity_conductanceDensity, a restriction on xs:string.
-        pass
-    def get_segment(self): return self.segments
-    def set_segment(self, segments): self.segments = segments
     def hasContent_(self):
         if (
             self.variable_parameters or
@@ -6926,28 +6410,6 @@ class ChannelPopulation(Base):
         else:
             return ChannelPopulation(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_variableParameter(self): return self.variable_parameters
-    def set_variableParameter(self, variable_parameters): self.variable_parameters = variable_parameters
-    def add_variableParameter(self, value): self.variable_parameters.append(value)
-    def insert_variableParameter(self, index, value): self.variable_parameters[index] = value
-    def get_segmentGroup(self): return self.segment_groups
-    def set_segmentGroup(self, segment_groups): self.segment_groups = segment_groups
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
-    def get_ion(self): return self.ion
-    def set_ion(self, ion): self.ion = ion
-    def get_number(self): return self.number
-    def set_number(self, number): self.number = number
-    def get_ionChannel(self): return self.ion_channels
-    def set_ionChannel(self, ion_channels): self.ion_channels = ion_channels
-    def get_erev(self): return self.erev
-    def set_erev(self, erev): self.erev = erev
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
-    def get_segment(self): return self.segments
-    def set_segment(self, segments): self.segments = segments
     def hasContent_(self):
         if (
             self.variable_parameters or
@@ -7118,12 +6580,6 @@ class BiophysicalProperties(Standalone):
         else:
             return BiophysicalProperties(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_membraneProperties(self): return self.membrane_properties
-    def set_membraneProperties(self, membrane_properties): self.membrane_properties = membrane_properties
-    def get_intracellularProperties(self): return self.intracellular_propertieses
-    def set_intracellularProperties(self, intracellular_propertieses): self.intracellular_propertieses = intracellular_propertieses
-    def get_extracellularProperties(self): return self.extracellular_propertieses
-    def set_extracellularProperties(self, extracellular_propertieses): self.extracellular_propertieses = extracellular_propertieses
     def hasContent_(self):
         if (
             self.membrane_properties is not None or
@@ -7238,17 +6694,6 @@ class InhomogeneousParam(Base):
         else:
             return InhomogeneousParam(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_proximal(self): return self.proximal
-    def set_proximal(self, proximal): self.proximal = proximal
-    def get_distal(self): return self.distal
-    def set_distal(self, distal): self.distal = distal
-    def get_variable(self): return self.variable
-    def set_variable(self, variable): self.variable = variable
-    def get_metric(self): return self.metric
-    def set_metric(self, metric): self.metric = metric
-    def validate_Metric(self, value):
-        # Validate type Metric, a restriction on xs:string.
-        pass
     def hasContent_(self):
         if (
             self.proximal is not None or
@@ -7390,26 +6835,6 @@ class SegmentGroup(Base):
         else:
             return SegmentGroup(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_member(self): return self.members
-    def set_member(self, members): self.members = members
-    def add_member(self, value): self.members.append(value)
-    def insert_member(self, index, value): self.members[index] = value
-    def get_include(self): return self.includes
-    def set_include(self, includes): self.includes = includes
-    def add_include(self, value): self.includes.append(value)
-    def insert_include(self, index, value): self.includes[index] = value
-    def get_path(self): return self.paths
-    def set_path(self, paths): self.paths = paths
-    def add_path(self, value): self.paths.append(value)
-    def insert_path(self, index, value): self.paths[index] = value
-    def get_subTree(self): return self.sub_trees
-    def set_subTree(self, sub_trees): self.sub_trees = sub_trees
-    def add_subTree(self, value): self.sub_trees.append(value)
-    def insert_subTree(self, index, value): self.sub_trees[index] = value
-    def get_inhomogeneousParam(self): return self.inhomogeneous_params
-    def set_inhomogeneousParam(self, inhomogeneous_params): self.inhomogeneous_params = inhomogeneous_params
-    def add_inhomogeneousParam(self, value): self.inhomogeneous_params.append(value)
-    def insert_inhomogeneousParam(self, index, value): self.inhomogeneous_params[index] = value
     def hasContent_(self):
         if (
             self.members or
@@ -7618,14 +7043,6 @@ class Segment(Base):
         else:
             return Segment(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_parent(self): return self.parent
-    def set_parent(self, parent): self.parent = parent
-    def get_proximal(self): return self.proximal
-    def set_proximal(self, proximal): self.proximal = proximal
-    def get_distal(self): return self.distal
-    def set_distal(self, distal): self.distal = distal
-    def get_name(self): return self.name
-    def set_name(self, name): self.name = name
     def hasContent_(self):
         if (
             self.parent is not None or
@@ -7793,14 +7210,6 @@ class Morphology(Standalone):
         else:
             return Morphology(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_segment(self): return self.segments
-    def set_segment(self, segments): self.segments = segments
-    def add_segment(self, value): self.segments.append(value)
-    def insert_segment(self, index, value): self.segments[index] = value
-    def get_segmentGroup(self): return self.segment_groups
-    def set_segmentGroup(self, segment_groups): self.segment_groups = segment_groups
-    def add_segmentGroup(self, value): self.segment_groups.append(value)
-    def insert_segmentGroup(self, index, value): self.segment_groups[index] = value
     def hasContent_(self):
         if (
             self.segments or
@@ -7907,8 +7316,6 @@ class AbstractCell(Standalone):
         else:
             return AbstractCell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def hasContent_(self):
         if (
             super(AbstractCell, self).hasContent_()
@@ -7986,18 +7393,6 @@ class ConductanceBasedSynapse(Standalone):
         else:
             return ConductanceBasedSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_erev(self): return self.erev
-    def set_erev(self, erev): self.erev = erev
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
-    def get_gbase(self): return self.gbase
-    def set_gbase(self, gbase): self.gbase = gbase
-    def validate_Nml2Quantity_conductance(self, value):
-        # Validate type Nml2Quantity_conductance, a restriction on xs:string.
-        pass
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def hasContent_(self):
         if (
             super(ConductanceBasedSynapse, self).hasContent_()
@@ -8104,28 +7499,6 @@ class DecayingPoolConcentrationModel(Standalone):
         else:
             return DecayingPoolConcentrationModel(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ion(self): return self.ion
-    def set_ion(self, ion): self.ion = ion
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
-    def get_shellThickness(self): return self.shell_thickness
-    def set_shellThickness(self, shell_thickness): self.shell_thickness = shell_thickness
-    def validate_Nml2Quantity_length(self, value):
-        # Validate type Nml2Quantity_length, a restriction on xs:string.
-        pass
-    def get_restingConc(self): return self.resting_conc
-    def set_restingConc(self, resting_conc): self.resting_conc = resting_conc
-    def validate_Nml2Quantity_concentration(self, value):
-        # Validate type Nml2Quantity_concentration, a restriction on xs:string.
-        pass
-    def get_decayConstant(self): return self.decay_constant
-    def set_decayConstant(self, decay_constant): self.decay_constant = decay_constant
-    def validate_Nml2Quantity_time(self, value):
-        # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def hasContent_(self):
         if (
             super(DecayingPoolConcentrationModel, self).hasContent_()
@@ -8258,24 +7631,6 @@ class GateHHTauInf(Base):
         else:
             return GateHHTauInf(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_notes(self): return self.notes
-    def set_notes(self, notes): self.notes = notes
-    def validate_Notes(self, value):
-        # Validate type Notes, a restriction on xs:string.
-        pass
-    def get_q10Settings(self): return self.q10_settings
-    def set_q10Settings(self, q10_settings): self.q10_settings = q10_settings
-    def get_timeCourse(self): return self.time_course
-    def set_timeCourse(self, time_course): self.time_course = time_course
-    def get_steadyState(self): return self.steady_state
-    def set_steadyState(self, steady_state): self.steady_state = steady_state
-    def get_instances(self): return self.instances
-    def set_instances(self, instances): self.instances = instances
-    def get_type(self): return self.type
-    def set_type(self, type): self.type = type
-    def validate_gateTypes(self, value):
-        # Validate type gateTypes, a restriction on xs:string.
-        pass
     def hasContent_(self):
         if (
             self.notes is not None or
@@ -8432,24 +7787,6 @@ class GateHHRates(Base):
         else:
             return GateHHRates(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_notes(self): return self.notes
-    def set_notes(self, notes): self.notes = notes
-    def validate_Notes(self, value):
-        # Validate type Notes, a restriction on xs:string.
-        pass
-    def get_q10Settings(self): return self.q10_settings
-    def set_q10Settings(self, q10_settings): self.q10_settings = q10_settings
-    def get_forwardRate(self): return self.forward_rate
-    def set_forwardRate(self, forward_rate): self.forward_rate = forward_rate
-    def get_reverseRate(self): return self.reverse_rate
-    def set_reverseRate(self, reverse_rate): self.reverse_rate = reverse_rate
-    def get_instances(self): return self.instances
-    def set_instances(self, instances): self.instances = instances
-    def get_type(self): return self.type
-    def set_type(self, type): self.type = type
-    def validate_gateTypes(self, value):
-        # Validate type gateTypes, a restriction on xs:string.
-        pass
     def hasContent_(self):
         if (
             self.notes is not None or
@@ -8615,33 +7952,6 @@ class IonChannel(Standalone):
         else:
             return IonChannel(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_gate(self): return self.gates
-    def set_gate(self, gates): self.gates = gates
-    def add_gate(self, value): self.gates.append(value)
-    def insert_gate(self, index, value): self.gates[index] = value
-    def get_gateHHrates(self): return self.gate_hh_rates
-    def set_gateHHrates(self, gate_hh_rates): self.gate_hh_rates = gate_hh_rates
-    def add_gateHHrates(self, value): self.gate_hh_rates.append(value)
-    def insert_gateHHrates(self, index, value): self.gate_hh_rates[index] = value
-    def get_gateHHtauInf(self): return self.gate_hh_tau_infs
-    def set_gateHHtauInf(self, gate_hh_tau_infs): self.gate_hh_tau_infs = gate_hh_tau_infs
-    def add_gateHHtauInf(self, value): self.gate_hh_tau_infs.append(value)
-    def insert_gateHHtauInf(self, index, value): self.gate_hh_tau_infs[index] = value
-    def get_conductance(self): return self.conductance
-    def set_conductance(self, conductance): self.conductance = conductance
-    def validate_Nml2Quantity_conductance(self, value):
-        # Validate type Nml2Quantity_conductance, a restriction on xs:string.
-        pass
-    def get_type(self): return self.type
-    def set_type(self, type): self.type = type
-    def validate_channelTypes(self, value):
-        # Validate type channelTypes, a restriction on xs:string.
-        pass
-    def get_species(self): return self.species
-    def set_species(self, species): self.species = species
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
     def hasContent_(self):
         if (
             self.gates or
@@ -8902,86 +8212,6 @@ class NeuroMLDocument(Standalone):
         else:
             return NeuroMLDocument(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_include(self): return self.includes
-    def set_include(self, includes): self.includes = includes
-    def add_include(self, value): self.includes.append(value)
-    def insert_include(self, index, value): self.includes[index] = value
-    def get_extracellularProperties(self): return self.extracellular_propertieses
-    def set_extracellularProperties(self, extracellular_propertieses): self.extracellular_propertieses = extracellular_propertieses
-    def add_extracellularProperties(self, value): self.extracellular_propertieses.append(value)
-    def insert_extracellularProperties(self, index, value): self.extracellular_propertieses[index] = value
-    def get_intracellularProperties(self): return self.intracellular_propertieses
-    def set_intracellularProperties(self, intracellular_propertieses): self.intracellular_propertieses = intracellular_propertieses
-    def add_intracellularProperties(self, value): self.intracellular_propertieses.append(value)
-    def insert_intracellularProperties(self, index, value): self.intracellular_propertieses[index] = value
-    def get_morphology(self): return self.morphology
-    def set_morphology(self, morphology): self.morphology = morphology
-    def add_morphology(self, value): self.morphology.append(value)
-    def insert_morphology(self, index, value): self.morphology[index] = value
-    def get_ionChannel(self): return self.ion_channels
-    def set_ionChannel(self, ion_channels): self.ion_channels = ion_channels
-    def add_ionChannel(self, value): self.ion_channels.append(value)
-    def insert_ionChannel(self, index, value): self.ion_channels[index] = value
-    def get_decayingPoolConcentrationModel(self): return self.decaying_pool_concentration_models
-    def set_decayingPoolConcentrationModel(self, decaying_pool_concentration_models): self.decaying_pool_concentration_models = decaying_pool_concentration_models
-    def add_decayingPoolConcentrationModel(self, value): self.decaying_pool_concentration_models.append(value)
-    def insert_decayingPoolConcentrationModel(self, index, value): self.decaying_pool_concentration_models[index] = value
-    def get_expOneSynapse(self): return self.exp_one_synapses
-    def set_expOneSynapse(self, exp_one_synapses): self.exp_one_synapses = exp_one_synapses
-    def add_expOneSynapse(self, value): self.exp_one_synapses.append(value)
-    def insert_expOneSynapse(self, index, value): self.exp_one_synapses[index] = value
-    def get_expTwoSynapse(self): return self.exp_two_synapses
-    def set_expTwoSynapse(self, exp_two_synapses): self.exp_two_synapses = exp_two_synapses
-    def add_expTwoSynapse(self, value): self.exp_two_synapses.append(value)
-    def insert_expTwoSynapse(self, index, value): self.exp_two_synapses[index] = value
-    def get_nmdaSynapse(self): return self.nmda_synapses
-    def set_nmdaSynapse(self, nmda_synapses): self.nmda_synapses = nmda_synapses
-    def add_nmdaSynapse(self, value): self.nmda_synapses.append(value)
-    def insert_nmdaSynapse(self, index, value): self.nmda_synapses[index] = value
-    def get_stpSynapse(self): return self.stp_synapses
-    def set_stpSynapse(self, stp_synapses): self.stp_synapses = stp_synapses
-    def add_stpSynapse(self, value): self.stp_synapses.append(value)
-    def insert_stpSynapse(self, index, value): self.stp_synapses[index] = value
-    def get_biophysicalProperties(self): return self.biophysical_propertieses
-    def set_biophysicalProperties(self, biophysical_propertieses): self.biophysical_propertieses = biophysical_propertieses
-    def add_biophysicalProperties(self, value): self.biophysical_propertieses.append(value)
-    def insert_biophysicalProperties(self, index, value): self.biophysical_propertieses[index] = value
-    def get_cell(self): return self.cells
-    def set_cell(self, cells): self.cells = cells
-    def add_cell(self, value): self.cells.append(value)
-    def insert_cell(self, index, value): self.cells[index] = value
-    def get_abstractCell(self): return self.abstract_cells
-    def set_abstractCell(self, abstract_cells): self.abstract_cells = abstract_cells
-    def add_abstractCell(self, value): self.abstract_cells.append(value)
-    def insert_abstractCell(self, index, value): self.abstract_cells[index] = value
-    def get_iafTauCell(self): return self.iaf_tau_cells
-    def set_iafTauCell(self, iaf_tau_cells): self.iaf_tau_cells = iaf_tau_cells
-    def add_iafTauCell(self, value): self.iaf_tau_cells.append(value)
-    def insert_iafTauCell(self, index, value): self.iaf_tau_cells[index] = value
-    def get_iafCell(self): return self.iaf_cells
-    def set_iafCell(self, iaf_cells): self.iaf_cells = iaf_cells
-    def add_iafCell(self, value): self.iaf_cells.append(value)
-    def insert_iafCell(self, index, value): self.iaf_cells[index] = value
-    def get_izhikevichCell(self): return self.izhikevich_cells
-    def set_izhikevichCell(self, izhikevich_cells): self.izhikevich_cells = izhikevich_cells
-    def add_izhikevichCell(self, value): self.izhikevich_cells.append(value)
-    def insert_izhikevichCell(self, index, value): self.izhikevich_cells[index] = value
-    def get_adExIaFCell(self): return self.ad_ex_ia_f_cells
-    def set_adExIaFCell(self, ad_ex_ia_f_cells): self.ad_ex_ia_f_cells = ad_ex_ia_f_cells
-    def add_adExIaFCell(self, value): self.ad_ex_ia_f_cells.append(value)
-    def insert_adExIaFCell(self, index, value): self.ad_ex_ia_f_cells[index] = value
-    def get_pulseGenerator(self): return self.pulse_generators
-    def set_pulseGenerator(self, pulse_generators): self.pulse_generators = pulse_generators
-    def add_pulseGenerator(self, value): self.pulse_generators.append(value)
-    def insert_pulseGenerator(self, index, value): self.pulse_generators[index] = value
-    def get_network(self): return self.networks
-    def set_network(self, networks): self.networks = networks
-    def add_network(self, value): self.networks.append(value)
-    def insert_network(self, index, value): self.networks[index] = value
-    def get_ComponentType(self): return self.ComponentType
-    def set_ComponentType(self, ComponentType): self.ComponentType = ComponentType
-    def add_ComponentType(self, value): self.ComponentType.append(value)
-    def insert_ComponentType(self, index, value): self.ComponentType[index] = value
     def hasContent_(self):
         if (
             self.includes or
@@ -9435,8 +8665,6 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
         else:
             return ConcentrationModel_D(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_type(self): return self.type
-    def set_type(self, type): self.type = type
     def hasContent_(self):
         if (
             super(ConcentrationModel_D, self).hasContent_()
@@ -9524,14 +8752,6 @@ class Cell(AbstractCell):
         else:
             return Cell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_morphology(self): return self.morphology
-    def set_morphology(self, morphology): self.morphology = morphology
-    def get_biophysicalProperties(self): return self.biophysical_propertieses
-    def set_biophysicalProperties(self, biophysical_propertieses): self.biophysical_propertieses = biophysical_propertieses
-    def get_biophysical_propertieses_attr(self): return self.biophysical_propertieses_attr
-    def set_biophysical_propertieses_attr(self, biophysical_propertieses_attr): self.biophysical_propertieses_attr = biophysical_propertieses_attr
-    def get_morphology_attr(self): return self.morphology_attr
-    def set_morphology_attr(self, morphology_attr): self.morphology_attr = morphology_attr
     def hasContent_(self):
         if (
             self.morphology is not None or
@@ -9668,41 +8888,6 @@ class AdExIaFCell(AbstractCell):
         else:
             return AdExIaFCell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_reset(self): return self.reset
-    def set_reset(self, reset): self.reset = reset
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
-    def get_EL(self): return self.EL
-    def set_EL(self, EL): self.EL = EL
-    def get_C(self): return self.C
-    def set_C(self, C): self.C = C
-    def validate_Nml2Quantity_capacitance(self, value):
-        # Validate type Nml2Quantity_capacitance, a restriction on xs:string.
-        pass
-    def get_b(self): return self.b
-    def set_b(self, b): self.b = b
-    def validate_Nml2Quantity_current(self, value):
-        # Validate type Nml2Quantity_current, a restriction on xs:string.
-        pass
-    def get_VT(self): return self.VT
-    def set_VT(self, VT): self.VT = VT
-    def get_delT(self): return self.del_t
-    def set_delT(self, del_t): self.del_t = del_t
-    def get_a(self): return self.a
-    def set_a(self, a): self.a = a
-    def validate_Nml2Quantity_conductance(self, value):
-        # Validate type Nml2Quantity_conductance, a restriction on xs:string.
-        pass
-    def get_thresh(self): return self.thresh
-    def set_thresh(self, thresh): self.thresh = thresh
-    def get_gL(self): return self.g_l
-    def set_gL(self, g_l): self.g_l = g_l
-    def get_tauw(self): return self.tauw
-    def set_tauw(self, tauw): self.tauw = tauw
-    def validate_Nml2Quantity_time(self, value):
-        # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
     def hasContent_(self):
         if (
             super(AdExIaFCell, self).hasContent_()
@@ -9900,24 +9085,6 @@ class IzhikevichCell(AbstractCell):
         else:
             return IzhikevichCell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_a(self): return self.a
-    def set_a(self, a): self.a = a
-    def validate_Nml2Quantity_none(self, value):
-        # Validate type Nml2Quantity_none, a restriction on xs:string.
-        pass
-    def get_c(self): return self.c
-    def set_c(self, c): self.c = c
-    def get_b(self): return self.b
-    def set_b(self, b): self.b = b
-    def get_d(self): return self.d
-    def set_d(self, d): self.d = d
-    def get_v0(self): return self.v0
-    def set_v0(self, v0): self.v0 = v0
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
-    def get_thresh(self): return self.thresh
-    def set_thresh(self, thresh): self.thresh = thresh
     def hasContent_(self):
         if (
             super(IzhikevichCell, self).hasContent_()
@@ -10065,25 +9232,6 @@ class IaFCell(AbstractCell):
         else:
             return IaFCell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_reset(self): return self.reset
-    def set_reset(self, reset): self.reset = reset
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
-    def get_C(self): return self.C
-    def set_C(self, C): self.C = C
-    def validate_Nml2Quantity_capacitance(self, value):
-        # Validate type Nml2Quantity_capacitance, a restriction on xs:string.
-        pass
-    def get_thresh(self): return self.thresh
-    def set_thresh(self, thresh): self.thresh = thresh
-    def get_leakConductance(self): return self.leak_conductance
-    def set_leakConductance(self, leak_conductance): self.leak_conductance = leak_conductance
-    def validate_Nml2Quantity_conductance(self, value):
-        # Validate type Nml2Quantity_conductance, a restriction on xs:string.
-        pass
-    def get_leakReversal(self): return self.leak_reversal
-    def set_leakReversal(self, leak_reversal): self.leak_reversal = leak_reversal
     def hasContent_(self):
         if (
             super(IaFCell, self).hasContent_()
@@ -10217,20 +9365,6 @@ class IaFTauCell(AbstractCell):
         else:
             return IaFTauCell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_reset(self): return self.reset
-    def set_reset(self, reset): self.reset = reset
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
-    def get_tau(self): return self.tau
-    def set_tau(self, tau): self.tau = tau
-    def validate_Nml2Quantity_time(self, value):
-        # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
-    def get_thresh(self): return self.thresh
-    def set_thresh(self, thresh): self.thresh = thresh
-    def get_leakReversal(self): return self.leak_reversal
-    def set_leakReversal(self, leak_reversal): self.leak_reversal = leak_reversal
     def hasContent_(self):
         if (
             super(IaFTauCell, self).hasContent_()
@@ -10348,15 +9482,6 @@ class ExpTwoSynapse(ConductanceBasedSynapse):
         else:
             return ExpTwoSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_tauDecay(self): return self.tau_decay
-    def set_tauDecay(self, tau_decay): self.tau_decay = tau_decay
-    def validate_Nml2Quantity_time(self, value):
-        # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
-    def get_tauRise(self): return self.tau_rise
-    def set_tauRise(self, tau_rise): self.tau_rise = tau_rise
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def hasContent_(self):
         if (
             super(ExpTwoSynapse, self).hasContent_()
@@ -10456,11 +9581,6 @@ class ExpOneSynapse(ConductanceBasedSynapse):
         else:
             return ExpOneSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_tauDecay(self): return self.tau_decay
-    def set_tauDecay(self, tau_decay): self.tau_decay = tau_decay
-    def validate_Nml2Quantity_time(self, value):
-        # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
     def hasContent_(self):
         if (
             super(ExpOneSynapse, self).hasContent_()
@@ -10539,8 +9659,6 @@ class StpSynapse(ExpTwoSynapse):
         else:
             return StpSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_stpMechanism(self): return self.stp_mechanism
-    def set_stpMechanism(self, stp_mechanism): self.stp_mechanism = stp_mechanism
     def hasContent_(self):
         if (
             self.stp_mechanism is not None or
@@ -10623,8 +9741,6 @@ class NmdaSynapse(ExpTwoSynapse):
         else:
             return NmdaSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_voltageConcDepBlock(self): return self.voltage_conc_dep_block
-    def set_voltageConcDepBlock(self, voltage_conc_dep_block): self.voltage_conc_dep_block = voltage_conc_dep_block
     def hasContent_(self):
         if (
             self.voltage_conc_dep_block is not None or
