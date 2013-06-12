@@ -58,12 +58,18 @@ class TestMorphology(unittest.TestCase):
         new_connectivity = new_morphology.connectivity
         self.assertTrue(np.array_equal(new_connectivity,[1,2,-1,2]))
 
-    def test_pop(self):
-        new_morphology = am.Morphology(self.optimized_morphology.vertices,
-                                       self.optimized_morphology.connectivity)
+    def test_to_neuroml_morphology(self):
+        neuroml_morphology = self.optimized_morphology.to_neuroml_morphology(id="Test")
+        self.assertEqual(neuroml_morphology.id,"Test")
+        self.assertEqual(len(neuroml_morphology.segments),3)
 
-        new_morphology.pop(1)
-        new_connectivity = new_morphology.connectivity
-        print new_connectivity
-        self.assertTrue(np.array_equal(new_connectivity,[1,-1,1]))
-        
+
+#    def test_pop(self):
+#        new_morphology = am.Morphology(self.optimized_morphology.vertices,
+#                                       self.optimized_morphology.connectivity)#
+
+#        new_morphology.pop(1)
+#        new_connectivity = new_morphology.connectivity
+#        print new_connectivity
+ #       self.assertTrue(np.array_equal(new_connectivity,[1,-1,1]))
+

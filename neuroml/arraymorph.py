@@ -4,6 +4,7 @@ Prototype for object model backend for the libNeuroML project
 
 import math
 import numpy as np
+import neuroml
 
 class Morphology(object):
     """Core of the array-based object model backend.
@@ -158,3 +159,42 @@ class Morphology(object):
                 self.connectivity[k] = i - 1
             k += 1
         pass
+
+    def to_neuroml_morphology(self,id=""):
+
+        morphology = neuroml.Morphology()
+        morphology.id = id
+
+        #need to traverse the tree:
+        for index in range(self.num_vertices):
+            if self.connectivity[index] != -1:
+                parent_index = self.connectivity[index]
+
+                node_x = self.vertices[index][0]
+                node_y = self.vertices[index][1]
+                node_z = self.vertices[index][2]
+                node_d = self.vertices[index][3]
+                
+                parent_x = self.vertices[parent_index][0]
+                parent_y = self.vertices[parent_index][1]
+                parent_z = self.vertices[parent_index][2]
+                parent_d = self.vertices[parent_index][3]                
+
+                p = neuroml.Point3DWithDiam(x=node_x,
+                                            y=node_y,
+                                            z=node_z,
+                                            diameter=node_d)
+
+                d = neuroml.Point3DWithDiam(x=parent_x,
+                                            y=parent_y,
+                                            z=parent_z,
+                                            diameter=parent_d)
+
+                
+                seg = neuroml.Segment(proximal=p,
+                                      distal=d)
+
+
+                morphology.segments.append(seg)
+            
+        return morphology
