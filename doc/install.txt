@@ -1,6 +1,13 @@
 Installing libNeuroML
 =====================
 
+A working version is installable via pip:
+----------------------------------------
+
+::
+
+    pip install libNeuroML
+
 
 Get a read only copy of libNeuroML
 ----------------------------------
