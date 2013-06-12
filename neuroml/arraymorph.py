@@ -143,6 +143,7 @@ class Morphology(object):
         
     def pop(self,index):
         """
+        TODO:This is failing tests (understandably) - need to fix!
         Deletes a node from the morphology, its children become
         children of the deleted node's parent.
         """    
