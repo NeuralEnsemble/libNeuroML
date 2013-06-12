@@ -78,6 +78,16 @@ class MethodSpec(object):
 #   generated superclass file and also section "User Methods" in
 #   the documentation, as well as the examples below.
 
+num_segments = MethodSpec(name='num_segments',
+    source='''\
+    @property
+    def num_segments(self):
+        return len(self.segments)
+''',
+    class_names=("Morphology")
+    )
+
+
 length = MethodSpec(name='length',
     source='''\
     @property
@@ -144,6 +154,7 @@ area = MethodSpec(name='area',
 METHOD_SPECS=(length,
               volume,
               area,
+              num_segments,
              )
 
 
