@@ -58,6 +58,7 @@ class Morphology(object):
         self.vertices = np.array(vertices)
 
         if physical_mask != None:
+            raise NotImplementedError #temporary, until this functionality is implemented
             self._physical_mask=np.array(physical_mask)
         else:
             self._physical_mask=np.zeros(len(connectivity),dtype='bool')
