@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Jun 13 00:03:04 2013 by generateDS.py version 2.10b.
+# Generated Thu Jun 13 23:16:14 2013 by generateDS.py version 2.10b.
 #
 
 import sys
@@ -920,6 +920,15 @@ class Q10Settings(GeneratedsSuper):
         else:
             return Q10Settings(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Nml2Quantity_none(self, value):
+        # Validate type Nml2Quantity_none, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_temperature(self, value):
+        # Validate type Nml2Quantity_temperature, a restriction on xs:string.
+        pass
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
 
@@ -1035,6 +1044,15 @@ class HHRate(GeneratedsSuper):
         else:
             return HHRate(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_pertime(self, value):
+        # Validate type Nml2Quantity_pertime, a restriction on xs:string.
+        pass
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
 
@@ -1150,6 +1168,12 @@ class HHVariable(GeneratedsSuper):
         else:
             return HHVariable(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        pass
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
 
@@ -1269,6 +1293,15 @@ class HHTime(GeneratedsSuper):
         else:
             return HHTime(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        pass
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
 
@@ -1398,6 +1431,15 @@ class VoltageConcDepBlock(GeneratedsSuper):
         else:
             return VoltageConcDepBlock(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Nml2Quantity_concentration(self, value):
+        # Validate type Nml2Quantity_concentration, a restriction on xs:string.
+        pass
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
 
@@ -1522,6 +1564,12 @@ class StpMechanism(GeneratedsSuper):
         else:
             return StpMechanism(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        pass
+    def validate_ZeroToOne(self, value):
+        # Validate type ZeroToOne, a restriction on xs:double.
+        pass
     def hasContent_(self):
         if (
 
@@ -1624,6 +1672,12 @@ class SegmentParent(GeneratedsSuper):
         else:
             return SegmentParent(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_ZeroToOne(self, value):
+        # Validate type ZeroToOne, a restriction on xs:double.
+        pass
+    def validate_SegmentId(self, value):
+        # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
+        pass
     def hasContent_(self):
         if (
 
@@ -2029,6 +2083,9 @@ class Member(GeneratedsSuper):
         else:
             return Member(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_SegmentId(self, value):
+        # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
+        pass
     def hasContent_(self):
         if (
 
@@ -2107,6 +2164,9 @@ class Include(GeneratedsSuper):
         else:
             return Include(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
 
@@ -2167,13 +2227,13 @@ class Include(GeneratedsSuper):
 
 class Path(GeneratedsSuper):
     member_data_items_ = [
-        MemberSpec_('fromxx', 'SegmentEndPoint', 0),
+        MemberSpec_('from_', 'SegmentEndPoint', 0),
         MemberSpec_('to', 'SegmentEndPoint', 0),
     ]
     subclass = None
     superclass = None
-    def __init__(self, fromxx=None, to=None):
-        self.fromxx = fromxx
+    def __init__(self, from_=None, to=None):
+        self.from_ = from_
         self.to = to
     def factory(*args_, **kwargs_):
         if Path.subclass:
@@ -2183,7 +2243,7 @@ class Path(GeneratedsSuper):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.fromxx is not None or
+            self.from_ is not None or
             self.to is not None
         ):
             return True
@@ -2212,8 +2272,8 @@ class Path(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.fromxx is not None:
-            self.fromxx.export(outfile, level, namespace_, name_='from', pretty_print=pretty_print)
+        if self.from_ is not None:
+            self.from_.export(outfile, level, namespace_, name_='from', pretty_print=pretty_print)
         if self.to is not None:
             self.to.export(outfile, level, namespace_, name_='to', pretty_print=pretty_print)
     def exportLiteral(self, outfile, level, name_='Path'):
@@ -2225,10 +2285,10 @@ class Path(GeneratedsSuper):
     def exportLiteralAttributes(self, outfile, level, already_processed, name_):
         pass
     def exportLiteralChildren(self, outfile, level, name_):
-        if self.fromxx is not None:
+        if self.from_ is not None:
             showIndent(outfile, level)
-            outfile.write('fromxx=model_.SegmentEndPoint(\n')
-            self.fromxx.exportLiteral(outfile, level, name_='from')
+            outfile.write('from_=model_.SegmentEndPoint(\n')
+            self.from_.exportLiteral(outfile, level, name_='from')
             showIndent(outfile, level)
             outfile.write('),\n')
         if self.to is not None:
@@ -2249,7 +2309,7 @@ class Path(GeneratedsSuper):
         if nodeName_ == 'from':
             obj_ = SegmentEndPoint.factory()
             obj_.build(child_)
-            self.fromxx = obj_
+            self.from_ = obj_
         elif nodeName_ == 'to':
             obj_ = SegmentEndPoint.factory()
             obj_.build(child_)
@@ -2259,13 +2319,13 @@ class Path(GeneratedsSuper):
 
 class SubTree(GeneratedsSuper):
     member_data_items_ = [
-        MemberSpec_('fromxx', 'SegmentEndPoint', 0),
+        MemberSpec_('from_', 'SegmentEndPoint', 0),
         MemberSpec_('to', 'SegmentEndPoint', 0),
     ]
     subclass = None
     superclass = None
-    def __init__(self, fromxx=None, to=None):
-        self.fromxx = fromxx
+    def __init__(self, from_=None, to=None):
+        self.from_ = from_
         self.to = to
     def factory(*args_, **kwargs_):
         if SubTree.subclass:
@@ -2275,7 +2335,7 @@ class SubTree(GeneratedsSuper):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.fromxx is not None or
+            self.from_ is not None or
             self.to is not None
         ):
             return True
@@ -2304,8 +2364,8 @@ class SubTree(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.fromxx is not None:
-            self.fromxx.export(outfile, level, namespace_, name_='from', pretty_print=pretty_print)
+        if self.from_ is not None:
+            self.from_.export(outfile, level, namespace_, name_='from', pretty_print=pretty_print)
         if self.to is not None:
             self.to.export(outfile, level, namespace_, name_='to', pretty_print=pretty_print)
     def exportLiteral(self, outfile, level, name_='SubTree'):
@@ -2317,10 +2377,10 @@ class SubTree(GeneratedsSuper):
     def exportLiteralAttributes(self, outfile, level, already_processed, name_):
         pass
     def exportLiteralChildren(self, outfile, level, name_):
-        if self.fromxx is not None:
+        if self.from_ is not None:
             showIndent(outfile, level)
-            outfile.write('fromxx=model_.SegmentEndPoint(\n')
-            self.fromxx.exportLiteral(outfile, level, name_='from')
+            outfile.write('from_=model_.SegmentEndPoint(\n')
+            self.from_.exportLiteral(outfile, level, name_='from')
             showIndent(outfile, level)
             outfile.write('),\n')
         if self.to is not None:
@@ -2341,7 +2401,7 @@ class SubTree(GeneratedsSuper):
         if nodeName_ == 'from':
             obj_ = SegmentEndPoint.factory()
             obj_.build(child_)
-            self.fromxx = obj_
+            self.from_ = obj_
         elif nodeName_ == 'to':
             obj_ = SegmentEndPoint.factory()
             obj_.build(child_)
@@ -2364,6 +2424,9 @@ class SegmentEndPoint(GeneratedsSuper):
         else:
             return SegmentEndPoint(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_SegmentId(self, value):
+        # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
+        pass
     def hasContent_(self):
         if (
 
@@ -2693,6 +2756,12 @@ class ValueAcrossSegOrSegGroup(GeneratedsSuper):
         else:
             return ValueAcrossSegOrSegGroup(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity(self, value):
+        # Validate type Nml2Quantity, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
 
@@ -2984,6 +3053,9 @@ class ReversalPotential(ValueAcrossSegOrSegGroup):
         else:
             return ReversalPotential(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             super(ReversalPotential, self).hasContent_()
@@ -3075,6 +3147,12 @@ class Species(ValueAcrossSegOrSegGroup):
         else:
             return Species(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_concentration(self, value):
+        # Validate type Nml2Quantity_concentration, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             super(Species, self).hasContent_()
@@ -3317,6 +3395,9 @@ class ExtracellularPropertiesLocal(GeneratedsSuper):
         else:
             return ExtracellularPropertiesLocal(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Nml2Quantity_temperature(self, value):
+        # Validate type Nml2Quantity_temperature, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             self.species
@@ -3570,6 +3651,9 @@ class Layout(GeneratedsSuper):
         else:
             return Layout(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             self.random is not None or
@@ -3762,6 +3846,9 @@ class RandomLayout(GeneratedsSuper):
         else:
             return RandomLayout(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
 
@@ -4213,10 +4300,10 @@ class SynapticConnection(GeneratedsSuper):
     ]
     subclass = None
     superclass = None
-    def __init__(self, to=None, synapse=None, fromxx=None):
+    def __init__(self, to=None, synapse=None, from_=None):
         self.to = _cast(None, to)
         self.synapse = _cast(None, synapse)
-        self.fromxx = _cast(None, fromxx)
+        self.from_ = _cast(None, from_)
         pass
     def factory(*args_, **kwargs_):
         if SynapticConnection.subclass:
@@ -4253,9 +4340,9 @@ class SynapticConnection(GeneratedsSuper):
         if self.synapse is not None and 'synapse' not in already_processed:
             already_processed.add('synapse')
             outfile.write(' synapse=%s' % (self.gds_format_string(quote_attrib(self.synapse).encode(ExternalEncoding), input_name='synapse'), ))
-        if self.fromxx is not None and 'fromxx' not in already_processed:
-            already_processed.add('fromxx')
-            outfile.write(' from=%s' % (self.gds_format_string(quote_attrib(self.fromxx).encode(ExternalEncoding), input_name='from'), ))
+        if self.from_ is not None and 'from_' not in already_processed:
+            already_processed.add('from_')
+            outfile.write(' from=%s' % (self.gds_format_string(quote_attrib(self.from_).encode(ExternalEncoding), input_name='from'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='SynapticConnection', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='SynapticConnection'):
@@ -4273,10 +4360,10 @@ class SynapticConnection(GeneratedsSuper):
             already_processed.add('synapse')
             showIndent(outfile, level)
             outfile.write('synapse="%s",\n' % (self.synapse,))
-        if self.fromxx is not None and 'fromxx' not in already_processed:
-            already_processed.add('fromxx')
+        if self.from_ is not None and 'from_' not in already_processed:
+            already_processed.add('from_')
             showIndent(outfile, level)
-            outfile.write('fromxx="%s",\n' % (self.fromxx,))
+            outfile.write('from_="%s",\n' % (self.from_,))
     def exportLiteralChildren(self, outfile, level, name_):
         pass
     def build(self, node):
@@ -4297,7 +4384,7 @@ class SynapticConnection(GeneratedsSuper):
         value = find_attr_value_('from', node)
         if value is not None and 'from' not in already_processed:
             already_processed.add('from')
-            self.fromxx = value
+            self.from_ = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
 # end class SynapticConnection
@@ -4528,6 +4615,9 @@ class Input(GeneratedsSuper):
         else:
             return Input(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
 
@@ -4632,6 +4722,12 @@ class Base(GeneratedsSuper):
         else:
             return Base(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
 
@@ -4735,6 +4831,12 @@ class Standalone(Base):
         else:
             return Standalone(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Notes(self, value):
+        # Validate type Notes, a restriction on xs:string.
+        pass
+    def validate_MetaId(self, value):
+        # Validate type MetaId, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             self.notes is not None or
@@ -4868,6 +4970,9 @@ class InputList(Base):
         else:
             return InputList(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             self.input or
@@ -4990,6 +5095,9 @@ class Projection(Base):
         else:
             return Projection(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             self.connections or
@@ -5230,6 +5338,12 @@ class Population(Standalone):
         else:
             return Population(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
+    def validate_populationTypes(self, value):
+        # Validate type populationTypes, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             self.layout is not None or
@@ -5410,6 +5524,9 @@ class Region(Base):
         else:
             return Region(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             self.anytypeobjs_ or
@@ -5507,6 +5624,9 @@ class Space(Base):
         else:
             return Space(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_allowedSpaces(self, value):
+        # Validate type allowedSpaces, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             self.structure is not None or
@@ -5889,6 +6009,12 @@ class PulseGenerator(Standalone):
         else:
             return PulseGenerator(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_current(self, value):
+        # Validate type Nml2Quantity_current, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             super(PulseGenerator, self).hasContent_()
@@ -6108,6 +6234,9 @@ class ExtracellularProperties(Base):
         else:
             return ExtracellularProperties(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Nml2Quantity_temperature(self, value):
+        # Validate type Nml2Quantity_temperature, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             self.species or
@@ -6229,6 +6358,15 @@ class ChannelDensity(Base):
         else:
             return ChannelDensity(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_conductanceDensity(self, value):
+        # Validate type Nml2Quantity_conductanceDensity, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             self.variable_parameters or
@@ -6410,6 +6548,12 @@ class ChannelPopulation(Base):
         else:
             return ChannelPopulation(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             self.variable_parameters or
@@ -6694,6 +6838,9 @@ class InhomogeneousParam(Base):
         else:
             return InhomogeneousParam(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Metric(self, value):
+        # Validate type Metric, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             self.proximal is not None or
@@ -7393,6 +7540,12 @@ class ConductanceBasedSynapse(Standalone):
         else:
             return ConductanceBasedSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_conductance(self, value):
+        # Validate type Nml2Quantity_conductance, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             super(ConductanceBasedSynapse, self).hasContent_()
@@ -7499,6 +7652,18 @@ class DecayingPoolConcentrationModel(Standalone):
         else:
             return DecayingPoolConcentrationModel(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_length(self, value):
+        # Validate type Nml2Quantity_length, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_concentration(self, value):
+        # Validate type Nml2Quantity_concentration, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             super(DecayingPoolConcentrationModel, self).hasContent_()
@@ -7631,6 +7796,12 @@ class GateHHTauInf(Base):
         else:
             return GateHHTauInf(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Notes(self, value):
+        # Validate type Notes, a restriction on xs:string.
+        pass
+    def validate_gateTypes(self, value):
+        # Validate type gateTypes, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             self.notes is not None or
@@ -7787,6 +7958,12 @@ class GateHHRates(Base):
         else:
             return GateHHRates(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Notes(self, value):
+        # Validate type Notes, a restriction on xs:string.
+        pass
+    def validate_gateTypes(self, value):
+        # Validate type gateTypes, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             self.notes is not None or
@@ -7952,6 +8129,15 @@ class IonChannel(Standalone):
         else:
             return IonChannel(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Nml2Quantity_conductance(self, value):
+        # Validate type Nml2Quantity_conductance, a restriction on xs:string.
+        pass
+    def validate_channelTypes(self, value):
+        # Validate type channelTypes, a restriction on xs:string.
+        pass
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             self.gates or
@@ -8888,6 +9074,21 @@ class AdExIaFCell(AbstractCell):
         else:
             return AdExIaFCell(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_capacitance(self, value):
+        # Validate type Nml2Quantity_capacitance, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_current(self, value):
+        # Validate type Nml2Quantity_current, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_conductance(self, value):
+        # Validate type Nml2Quantity_conductance, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             super(AdExIaFCell, self).hasContent_()
@@ -9085,6 +9286,12 @@ class IzhikevichCell(AbstractCell):
         else:
             return IzhikevichCell(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Nml2Quantity_none(self, value):
+        # Validate type Nml2Quantity_none, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             super(IzhikevichCell, self).hasContent_()
@@ -9232,6 +9439,15 @@ class IaFCell(AbstractCell):
         else:
             return IaFCell(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_capacitance(self, value):
+        # Validate type Nml2Quantity_capacitance, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_conductance(self, value):
+        # Validate type Nml2Quantity_conductance, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             super(IaFCell, self).hasContent_()
@@ -9365,6 +9581,12 @@ class IaFTauCell(AbstractCell):
         else:
             return IaFTauCell(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             super(IaFTauCell, self).hasContent_()
@@ -9482,6 +9704,9 @@ class ExpTwoSynapse(ConductanceBasedSynapse):
         else:
             return ExpTwoSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             super(ExpTwoSynapse, self).hasContent_()
@@ -9581,6 +9806,9 @@ class ExpOneSynapse(ConductanceBasedSynapse):
         else:
             return ExpOneSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
             super(ExpOneSynapse, self).hasContent_()
