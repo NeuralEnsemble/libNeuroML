@@ -180,12 +180,12 @@ class Morphology(object):
                 parent_z = self.vertices[parent_index][2]
                 parent_d = self.vertices[parent_index][3]                
 
-                p = neuroml.Point3DWithDiam(x=node_x,
+                d = neuroml.Point3DWithDiam(x=node_x,
                                             y=node_y,
                                             z=node_z,
                                             diameter=node_d)
 
-                d = neuroml.Point3DWithDiam(x=parent_x,
+                p = neuroml.Point3DWithDiam(x=parent_x,
                                             y=parent_y,
                                             z=parent_z,
                                             diameter=parent_d)
@@ -194,8 +194,9 @@ class Morphology(object):
                 seg = neuroml.Segment(proximal=p,
                                       distal=d,
                                       id=index)
-
+                if index <=1:
+                    parent = neuroml.SegmentParent(segments=index-1)
 
                 morphology.segments.append(seg)
-            
+
         return morphology

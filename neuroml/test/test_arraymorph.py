@@ -10,7 +10,7 @@ class TestMorphology(unittest.TestCase):
 
     def setUp(self):
 
-        self.valid_vertices = [[0,0,0,0.1],[1,1,1,0.1],[2,2,2,0.1],[3,3,3,0.1]]
+        self.valid_vertices = [[0,0,0,0.1],[1,0,0,0.2],[2,0,0,0.3],[3,0,0,0.4]]
         self.valid_connectivity = [-1,0,1,2]
 
         self.optimized_morphology = am.Morphology(vertices=self.valid_vertices,
