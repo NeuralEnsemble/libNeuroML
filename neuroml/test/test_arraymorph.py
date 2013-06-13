@@ -71,5 +71,5 @@ class TestMorphology(unittest.TestCase):
         new_morphology.pop(1)
         new_connectivity = new_morphology.connectivity
         print new_connectivity
-        self.assertTrue(np.array_equal(new_connectivity,[1,-1,1]))
+        self.assertTrue(np.array_equal(new_connectivity,[-1,0,1]))
 

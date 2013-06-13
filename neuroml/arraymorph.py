@@ -192,7 +192,8 @@ class Morphology(object):
 
                 
                 seg = neuroml.Segment(proximal=p,
-                                      distal=d)
+                                      distal=d,
+                                      id=index)
 
 
                 morphology.segments.append(seg)
