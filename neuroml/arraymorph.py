@@ -49,6 +49,7 @@ class Morphology(object):
 
     def __init__(self,vertices,
                  connectivity,
+                 id=None,
                  node_types=None,
                  name=None,
                  physical_mask=None,
@@ -56,6 +57,8 @@ class Morphology(object):
 
         self.connectivity = np.array(connectivity)
         self.vertices = np.array(vertices)
+        
+        self.id = id
 
         if physical_mask != None:
             raise NotImplementedError #temporary, until this functionality is implemented

@@ -1,4 +1,5 @@
 import neuroml
+import numpy as np
 
 class NeuroMLWriter(object):
     @classmethod
@@ -20,3 +21,16 @@ class NeuroMLWriter(object):
         nmldoc.export(f,0,name_="neuroml",
                       namespacedef_=namespacedef) #name_ param to ensure root element named correctly - generateDS limitation
 
+class ArrayMorphWriter(object):
+    @classmethod
+    def write(cls,arraymorph,file_path):
+
+        import h5py
+
+        f = h5py.File(file_path,'w')
+        identifier = arraymorph.id
+
+        f['vertices_'+str(identifier)] = arraymorph.vertices
+        f['connectivity_'+str(identifier)] = arraymorph.connectivity
+
+        f.close()

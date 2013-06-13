@@ -1,5 +1,7 @@
 import neuroml.arraymorph as am
 import numpy as np
+import neuroml.writers as writers
+import neuroml.loaders as loaders
 
 try:
     import unittest2 as unittest
@@ -14,7 +16,8 @@ class TestMorphology(unittest.TestCase):
         self.valid_connectivity = [-1,0,1,2]
 
         self.optimized_morphology = am.Morphology(vertices=self.valid_vertices,
-                                             connectivity=self.valid_connectivity)
+                                                  connectivity=self.valid_connectivity,
+                                                  id = 'test_arraymorph')
 
     def test_num_vertices(self):
         """
@@ -73,3 +76,8 @@ class TestMorphology(unittest.TestCase):
         print new_connectivity
         self.assertTrue(np.array_equal(new_connectivity,[-1,0,1]))
 
+    def test_write(self):
+        writers.ArrayMorphWriter.write(self.optimized_morphology,'test.h5')
+
+#    def test_load(self):
+#        loaders.ArrayMorphLoader.load('./test_files/test.h5')
