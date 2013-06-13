@@ -80,4 +80,4 @@ class TestMorphology(unittest.TestCase):
         writers.ArrayMorphWriter.write(self.optimized_morphology,'test.h5')
 
     def test_load(self):
-        loaders.ArrayMorphLoader.load('./test_files/test.h5')
+        loaders.ArrayMorphLoader.load('test.h5')
