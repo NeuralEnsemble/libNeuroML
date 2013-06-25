@@ -7,7 +7,9 @@ import neuroml
 import neuroml.loaders as loaders
 import neuroml.writers as writers
 
-doc = loaders.NeuroMLLoader.load('./test_files/Purk2M9s.nml')
+fn = './test_files/Purk2M9s.nml'
+doc = loaders.NeuroMLLoader.load(fn)
+print("Loaded morphology file from: "+fn)
 
 #get the parent segment:
 parent_segment = doc.cells[0].morphology.segments[0]
@@ -48,3 +50,5 @@ doc.cells[0].morphology.segments += axon_segments
 fn = './tmp/modified_morphology.nml'
 
 writers.NeuroMLWriter.write(doc,fn)
+
+print("Saved modified morphology file to: "+fn)

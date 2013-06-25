@@ -65,3 +65,5 @@ doc.id = "TestNeuroMLDocument"
 fn = './tmp/test_morphology_generation.xml'
 
 writers.NeuroMLWriter.write(doc,fn)
+
+print("Written morphology file to: "+fn)

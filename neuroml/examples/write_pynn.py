@@ -24,26 +24,16 @@ nml_doc.HH_cond_exp.append(pynn1)
 pynnSynn0 = ExpCondSynapse(id="ps1", tau_syn="5", e_rev="0")
 nml_doc.exp_cond_synapses.append(pynnSynn0)
 
-newnmlfile = 'test.xml'
+newnmlfile = 'tmp/pynn_network.xml'
 writers.NeuroMLWriter.write(nml_doc, newnmlfile)
-print("Saved...")
-
-
-###########################  Save to file & validate  #################################
-#newnmlfile = "testNml2.xml"
-#nml_doc.write_neuroml(newnmlfile)
+print("Saved to: "+newnmlfile)
 
 
 from lxml import etree
 from urllib import urlopen
-
 schema_file = urlopen("../../../NeuroML2/Schemas/NeuroML2/NeuroML_v2beta.xsd")
-xmlschema_doc = etree.parse(schema_file)
-xmlschema = etree.XMLSchema(xmlschema_doc)
-
+xmlschema = etree.XMLSchema(etree.parse(schema_file))
 print "Validating %s against %s" %(newnmlfile, schema_file.geturl())
-
-doc = etree.parse(newnmlfile)
-xmlschema.assertValid(doc)
+xmlschema.assertValid(etree.parse(newnmlfile))
 print "It's valid!"
-print
+
