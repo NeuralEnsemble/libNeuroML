@@ -1,3 +1,7 @@
 To run tests:
 
 python -m unittest discover
+
+or:
+
+nosetests
