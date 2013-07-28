@@ -6,10 +6,12 @@ import math
 import numpy as np
 import neuroml
 
-class Morphology(object):
+class ArrayMorphology(neuroml.Morphology):
     """Core of the array-based object model backend.
 
-    Provides the core arrays - vertices,connectivity and node_types.        
+    Provides the core arrays - vertices,connectivity and
+    node_types.        
+
     The connectivity array is a list of indices pointing to which
     other element an element is attached. So for instance,
     connectivity[3] is an integer with the index of the section
@@ -47,8 +49,9 @@ class Morphology(object):
         to a new Backend is made and indices all change.
     """
 
-    def __init__(self,vertices,
-                 connectivity,
+    def __init__(self,
+                 vertices=[],
+                 connectivity=[],
                  id=None,
                  node_types=None,
                  name=None,
@@ -77,6 +80,8 @@ class Morphology(object):
             self.fractions_along=np.zeros(len(connectivity),
                                          dtype='int32')
 
+        #it will need a reference to its parent?
+        self.segments = self.SegmentList(self)
 
         assert self.valid_morphology,'invalid_morphology'
 
@@ -170,37 +175,66 @@ class Morphology(object):
         morphology.id = id
 
         #need to traverse the tree:
-        for index in range(self.num_vertices):
-            if self.connectivity[index] != -1:
-                parent_index = self.connectivity[index]
-
-                node_x = self.vertices[index][0]
-                node_y = self.vertices[index][1]
-                node_z = self.vertices[index][2]
-                node_d = self.vertices[index][3]
-                
-                parent_x = self.vertices[parent_index][0]
-                parent_y = self.vertices[parent_index][1]
-                parent_z = self.vertices[parent_index][2]
-                parent_d = self.vertices[parent_index][3]                
-
-                d = neuroml.Point3DWithDiam(x=node_x,
-                                            y=node_y,
-                                            z=node_z,
-                                            diameter=node_d)
-
-                p = neuroml.Point3DWithDiam(x=parent_x,
-                                            y=parent_y,
-                                            z=parent_z,
-                                            diameter=parent_d)
-
-                
-                seg = neuroml.Segment(proximal=p,
-                                      distal=d,
-                                      id=index)
-                if index <=1:
-                    parent = neuroml.SegmentParent(segments=index-1)
-
-                morphology.segments.append(seg)
+        for index in range(self.num_vertices-1):
+            seg = self.__segment__(index)
+            morphology.segments.append(seg)
 
         return morphology
+
+    def __segment__(self,index):
+
+        #Needed because node 1 refers to segment 1 not node 0
+        index += 1
+        parent_index = self.connectivity[index]
+
+        node_x = self.vertices[index][0]
+        node_y = self.vertices[index][1]
+        node_z = self.vertices[index][2]
+        node_d = self.vertices[index][3]
+        
+        parent_x = self.vertices[parent_index][0]
+        parent_y = self.vertices[parent_index][1]
+        parent_z = self.vertices[parent_index][2]
+        parent_d = self.vertices[parent_index][3]                
+
+        p = neuroml.Point3DWithDiam(x=node_x,
+                                    y=node_y,
+                                    z=node_z,
+                                    diameter=node_d)
+
+        d = neuroml.Point3DWithDiam(x=parent_x,
+                                    y=parent_y,
+                                    z=parent_z,
+                                    diameter=parent_d)
+
+        
+        seg = neuroml.Segment(proximal=p,
+                              distal=d,
+                              id=index)
+        if index > 1:
+            parent = neuroml.SegmentParent(segments=parent_index)
+            seg.parent = parent
+
+        return seg
+        
+    class SegmentList(object):
+        """
+        This class is a proxy, it returns a segment either
+        from the arraymorph or if it has already been instantiated
+        it returns the relevant segment
+        """
+
+        def __init__(self,arraymorph):
+            self.arraymorph = arraymorph
+            self.instantiated_segments = {}
+            
+        def __getitem__(self,index):
+            if index in self.instantiated_segments:
+                neuroml_segment = self.instantiated_segments[index]
+            else:
+                neuroml_segment = self.arraymorph.__segment__(index)
+                self.instantiated_segments[index] = neuroml_segment
+            return neuroml_segment
+
+        def __setitem__(self,index,user_set_segment):
+            self.instantiated_segments[index] =  user_set_segment

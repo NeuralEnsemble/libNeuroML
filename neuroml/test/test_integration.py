@@ -1,5 +1,5 @@
 import neuroml
-import neuroml.arraymorph as arraymorph
+import neuroml.arraymorph as am
 import neuroml.writers as writers
 
 try:
@@ -14,7 +14,7 @@ class TestIntegration(unittest.TestCase):
         vertices = [[0,0,0,0.1],[1,0,0,0.2],[2,0,0,0.3],[3,0,0,0.4]]
         connectivity = [-1,0,1,2]
         
-        test_morphology = arraymorph.Morphology(vertices=vertices,
+        test_morphology = am.ArrayMorphology(vertices=vertices,
                                         connectivity=connectivity)
 
         neuroml_morphology = test_morphology.to_neuroml_morphology(id="Test")
