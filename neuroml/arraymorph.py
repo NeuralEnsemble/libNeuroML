@@ -58,6 +58,8 @@ class ArrayMorphology(neuroml.Morphology):
                  physical_mask=None,
                  fractions_along=None):
 
+        super(ArrayMorphology,self).__init__()
+
         self.connectivity = np.array(connectivity)
         self.vertices = np.array(vertices)
         
