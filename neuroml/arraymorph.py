@@ -4,6 +4,7 @@ Prototype for object model backend for the libNeuroML project
 
 import math
 import numpy as np
+import numpy.ma as ma
 import neuroml
 
 class ArrayMorphology(neuroml.Morphology):
@@ -66,10 +67,10 @@ class ArrayMorphology(neuroml.Morphology):
         self.id = id
 
         if physical_mask != None:
-            raise NotImplementedError #temporary, until this functionality is implemented
-            self._physical_mask=np.array(physical_mask)
+            self.physical_mask=np.array(physical_mask)
         else:
-            self._physical_mask=np.zeros(len(connectivity),dtype='bool')
+            self.physical_mask=np.zeros(len(connectivity),dtype='bool')
+
         if node_types != None:
             self.node_types=np.array(node_types)
         else:
@@ -117,7 +118,7 @@ class ArrayMorphology(neuroml.Morphology):
     @property
     def physical_indices(self):
         """returns indices of vertices which are physical"""
-        physical_indices = np.where(self._physical_mask == 0)[0]
+        physical_indices = np.where(self.physical_mask == 0)[0]
         return physical_indices
         
     def children(self,index):
@@ -185,8 +186,6 @@ class ArrayMorphology(neuroml.Morphology):
 
     def __segment__(self,index):
 
-        #Needed because node 1 refers to segment 1 not node 0
-        index += 1
         parent_index = self.connectivity[index]
 
         node_x = self.vertices[index][0]
@@ -223,20 +222,88 @@ class ArrayMorphology(neuroml.Morphology):
         """
         This class is a proxy, it returns a segment either
         from the arraymorph or if it has already been instantiated
-        it returns the relevant segment
+        it returns the relevant segment.
         """
 
         def __init__(self,arraymorph):
             self.arraymorph = arraymorph
             self.instantiated_segments = {}
+
+        def __vertex_index_from_segment_index__(self,index):
+            """
+            The existence of a physical mask means that segment and
+            and vertex indices fall out of sync. This function returns the
+            index of the proximal vertex in the vertices array of the arraymorph
+            which corresponds to the segment index.
+            """
+
+            physical_mask = self.arraymorph.physical_mask
+            segment_proximal_vertex_indexes = np.where(physical_mask == False)[0]
             
-        def __getitem__(self,index):
-            if index in self.instantiated_segments:
-                neuroml_segment = self.instantiated_segments[index]
+            return segment_proximal_vertex_indexes[index] + 1
+
+        def __len__(self):
+            """
+            Override the __len__ magic method to give total numer of
+            segments which is number of vertices - 1 and minus all
+            floating segments.
+            """
+            
+            num_vertices = self.arraymorph.num_vertices
+            num_floating = np.sum(self.arraymorph.physical_mask)
+            num_segments = num_vertices - num_floating -1
+
+            return num_segments
+
+        def __getitem__(self,segment_index):
+            if segment_index in self.instantiated_segments:
+                neuroml_segment = self.instantiated_segments[segment_index]
             else:
-                neuroml_segment = self.arraymorph.__segment__(index)
-                self.instantiated_segments[index] = neuroml_segment
+                vertex_index = self.__vertex_index_from_segment_index__(segment_index)
+                print "vertex index:"
+                print vertex_index
+                neuroml_segment = self.arraymorph.__segment__(vertex_index)
+                self.instantiated_segments[segment_index] = neuroml_segment
             return neuroml_segment
 
         def __setitem__(self,index,user_set_segment):
             self.instantiated_segments[index] =  user_set_segment
+
+        def append(self,segment):
+            """
+            Adds a new segment
+
+            TODO: Correct connectivity is currently being ignored -
+            The new segment is always connected to the root node.
+            """
+
+            dist_vertex_index = len(self.arraymorph.vertices)
+            prox_vertex_index = dist_vertex_index + 1
+            
+            prox_x = segment.proximal.x
+            prox_y = segment.proximal.y
+            prox_z = segment.proximal.z
+            prox_diam = segment.proximal.diameter
+
+            dist_x = segment.distal.x
+            dist_y = segment.distal.y
+            dist_z = segment.distal.z
+            distal_diam = segment.distal.diameter
+            
+            prox_vertex = [prox_x,prox_y,prox_z,prox_diam]
+            dist_vertex = [dist_x,dist_y,dist_z,distal_diam]
+
+            self.arraymorph.vertices = np.append(self.arraymorph.vertices,[dist_vertex,prox_vertex],axis = 0)
+
+            #TODO
+            #Need to worry about connectivity..
+            #For now just default to root
+            #connect to root for now
+            #need to figure out the parent ID, should assume it is the same
+            #as the internal representation - otherwise the whole thing wont work properly
+            
+            self.arraymorph.connectivity = np.append(self.arraymorph.connectivity,[-1,dist_vertex_index])
+            
+            self.arraymorph.physical_mask = np.append(self.arraymorph.physical_mask,[1,0])
+            
+            self.instantiated_segments[prox_vertex_index] = segment

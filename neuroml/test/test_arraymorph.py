@@ -9,17 +9,115 @@ try:
 except ImportError:
     import unittest
 
-class TestMorphology(unittest.TestCase):
+class TestArrayMorphology(unittest.TestCase):
 
     def setUp(self):
 
-        self.valid_vertices = [[0,0,0,0.1],[1,0,0,0.2],[2,0,0,0.3],[3,0,0,0.4]]
+        num_segments = int(100)
+        num_vertices = num_segments + 1
+
+        x = np.linspace(0,10,num_vertices)
+        y = np.zeros(num_vertices)
+        z = np.zeros(num_vertices)
+        d = np.linspace(1,0.01,num_vertices)
+
+        connectivity = range(-1,num_segments)
+
+        vertices = np.array([x,y,z,d]).T
+
+        self.complex_vertices = vertices
+        
+        physical_mask = np.zeros(num_vertices)
+
+        #third segment is non-physical:
+        physical_mask[2] = 1
+        physical_mask[20] = 1
+        
+        self.complex_morphology = am.ArrayMorphology(vertices=vertices,
+                                                     connectivity=connectivity,
+                                                     physical_mask=physical_mask,
+                                                     id = 'test_arraymorph')
+
+        self.valid_vertices = [[0,0,0,0.1],
+                               [1,0,0,0.2],
+                               [2,0,0,0.3],
+                               [3,0,0,0.4]]
+
         self.valid_connectivity = [-1,0,1,2]
 
         self.optimized_morphology = am.ArrayMorphology(vertices=self.valid_vertices,
-                                                  connectivity=self.valid_connectivity,
-                                                  id = 'test_arraymorph')
+                                                       connectivity=self.valid_connectivity,
+                                                       id = 'test_arraymorph')
 
+
+    def test_single_floating_segment(self):
+        """
+        Because physical_mask[4] = 1 a segment should be skipped as it is
+        floating.
+        """
+        
+        seg = self.complex_morphology.segments[3]
+        seg_proximal_x = seg.proximal.x
+        seg_distal_x = seg.distal.x
+
+        equivalent_proximal_vertex = self.complex_vertices[5][0]
+        equivalent_distal_vertex = self.complex_vertices[4][0]
+
+        self.assertEqual(seg_proximal_x,equivalent_proximal_vertex)       
+        self.assertEqual(seg_distal_x,equivalent_distal_vertex)       
+
+    def test_double_floating_segment(self):
+        """
+        Because physical_mask[4] = 1 a segment should be skipped as it is
+        floating.
+        """
+        
+        seg = self.complex_morphology.segments[3]
+        seg_proximal_x = seg.proximal.x
+        seg_distal_x = seg.distal.x
+
+        equivalent_proximal_vertex = self.complex_vertices[5][0]
+        equivalent_distal_vertex = self.complex_vertices[4][0]
+
+        self.assertEqual(seg_proximal_x,equivalent_proximal_vertex)       
+        self.assertEqual(seg_distal_x,equivalent_distal_vertex)       
+
+
+    def test_segments_len(self):
+        num_segments = 98
+        len_segment_list = len(self.complex_morphology.segments)
+        self.assertEqual(num_segments,len_segment_list)
+
+    def test_add_segment(self):
+        """
+        Add a neuroml.Segment() object, the segments proximal
+        and distal vertices should be used. The internal connectivity
+        should be passed.
+        """
+        
+        proximal_point = neuroml.Point3DWithDiam(x=0.1,
+                                                 y=0.2,
+                                                 z=0.3)
+
+        distal_point = neuroml.Point3DWithDiam(x=0.0,
+                                               y=0.0,
+                                               z=0.0)
+
+        seg = neuroml.Segment(proximal = proximal_point,
+                              distal = distal_point)
+
+        num_segments = len(self.complex_morphology.segments)
+
+        self.complex_morphology.segments.append(seg)
+
+        len_segment_list = len(self.complex_morphology.segments)
+
+        self.assertEqual(num_segments+1, len_segment_list)
+        self.setUp()
+
+    def test_connectivity_valid(self):
+        pass
+    
     def test_num_vertices(self):
         """
         Morphology with one segment
@@ -74,7 +172,6 @@ class TestMorphology(unittest.TestCase):
  
         new_morphology.pop(1)
         new_connectivity = new_morphology.connectivity
-        print new_connectivity
         self.assertTrue(np.array_equal(new_connectivity,[-1,0,1]))
 
     #TODO    
