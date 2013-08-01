@@ -213,6 +213,15 @@ class TestArrayMorphology(unittest.TestCase):
         self.assertEqual(test_segment_2.parent.segments,1)
         self.assertIsNone(test_segment_1.parent)
 
+    def test_valid_morphology_ids(self):
+        morphology = self.optimized_morphology
+        self.assertTrue(morphology.valid_ids)
+
+    def test_invalid_morphology_ids(self):
+        morphology = self.optimized_morphology
+        morphology.segments[0].id = 5
+        self.assertFalse(morphology.valid_ids)
+
     def test_large_arraymorph(self):
         """
         This will generate a morphology which will be difficult to

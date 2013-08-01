@@ -82,8 +82,18 @@ class ArrayMorphology(neuroml.Morphology):
             all_vertices_present = False
 
         return(all_vertices_present)
-        
 
+    @property
+    def valid_ids(self):
+        valid_flag = True
+
+        for internal_id in self.segments.instantiated_segments.keys():
+            external_id = self.segments.instantiated_segments[internal_id].id
+            valid_flag = (internal_id == external_id) * valid_flag
+
+        return valid_flag
+            
+        
     @property
     def __all_nodes_satisfied(self):
         m = self.vertices.shape[0]
@@ -91,10 +101,8 @@ class ArrayMorphology(neuroml.Morphology):
         p = self.node_types.shape[0]
 
         all_nodes_satisfied = (m == n == p)
-        print all_nodes_satisfied
         return all_nodes_satisfied
         
-
     @property
     def root_index(self):
         return np.where(self.connectivity == -1)[0][0]    
@@ -252,8 +260,6 @@ class ArrayMorphology(neuroml.Morphology):
                 neuroml_segment = self.instantiated_segments[segment_index]
             else:
                 vertex_index = self.__vertex_index_from_segment_index__(segment_index)
-                print "vertex index:"
-                print vertex_index
                 neuroml_segment = self.arraymorph.__segment__(vertex_index)
                 self.instantiated_segments[segment_index] = neuroml_segment
             return neuroml_segment
