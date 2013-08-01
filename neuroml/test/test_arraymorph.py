@@ -199,6 +199,12 @@ class TestArrayMorphology(unittest.TestCase):
         self.assertEqual(self.optimized_morphology.segments[2].proximal,0.9)
         self.setUp()
 
+    def test_instantiation(self):
+        """
+        Test an arraymorph can be instantiated with default parameters
+        """
+        morphology = am.ArrayMorphology()
+
     def test_parents(self):
         """
         A segment by default uses its vertex index as its ID,
@@ -219,7 +225,7 @@ class TestArrayMorphology(unittest.TestCase):
 
     def test_invalid_morphology_ids(self):
         morphology = self.optimized_morphology
-        morphology.segments[0].id = 5
+        morphology.segments[0].id = 5 
         self.assertFalse(morphology.valid_ids)
 
     def test_large_arraymorph(self):

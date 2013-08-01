@@ -71,7 +71,6 @@ class ArrayMorphology(neuroml.Morphology):
     def valid_morphology(self):
         all_nodes = self.__all_nodes_satisfied
         all_vertices = self.__all_vertices_present
-
         return (all_nodes and all_vertices)
 
     @property
@@ -81,7 +80,9 @@ class ArrayMorphology(neuroml.Morphology):
         except:
             all_vertices_present = False
 
-        return(all_vertices_present)
+        num_vertices = len(self.vertices)
+
+        return(all_vertices_present or num_vertices == 0)
 
     @property
     def valid_ids(self):
@@ -291,8 +292,10 @@ class ArrayMorphology(neuroml.Morphology):
             prox_vertex = [prox_x,prox_y,prox_z,prox_diam]
             dist_vertex = [dist_x,dist_y,dist_z,distal_diam]
 
-            self.arraymorph.vertices = np.append(self.arraymorph.vertices,[dist_vertex,prox_vertex],axis = 0)
-
+            if len(self.arraymorph.vertices) > 0:
+                self.arraymorph.vertices = np.append(self.arraymorph.vertices,[dist_vertex,prox_vertex],axis = 0)
+            else:
+                self.arraymorph.vertice = np.array([[dist_vertex,prox_vertex]])
             #TODO
             #Need to worry about connectivity..
             #For now just default to root
