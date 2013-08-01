@@ -10,7 +10,7 @@ import neuroml
 class ArrayMorphology(neuroml.Morphology):
     """Core of the array-based object model backend.
 
-    Provides the core arrays - vertices,connectivity and
+    Provides the core arrays - vertices,connectivity etc.
     node_types.        
 
     The connectivity array is a list of indices pointing to which
@@ -27,27 +27,6 @@ class ArrayMorphology(neuroml.Morphology):
 
        The root section by convention has connectivity == -1.
 
-    .. note::
-
-        A Node class is provided (see further down) however this
-        does not result in a tree-based object model. Rather, 
-        the section objects manipulate the Backend backend in 
-        a way that is invisible to the user. The user may 
-        still use the Backend class, depending on their needs.
-
-    .. note::
-
-        Backend[i] returns the Node object relating to
-        element i.
-
-    .. note::
-
-        Because segments exist in memory independently of the,
-        Backend, a Backend must keep a register
-        of all the segments which handle its elements. These
-        are updated when their information changes via a Backend
-        operation such as the indices changing when a connection
-        to a new Backend is made and indices all change.
     """
 
     def __init__(self,
