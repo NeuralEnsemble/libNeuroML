@@ -69,18 +69,31 @@ class ArrayMorphology(neuroml.Morphology):
 
     @property
     def valid_morphology(self):
-        m = self.vertices.shape[0]
-        n = self.connectivity.shape[0]
-        p = self.node_types.shape[0]
+        all_nodes = self.__all_nodes_satisfied
+        all_vertices = self.__all_vertices_present
 
-        all_nodes_satisfied = m == n == p
+        return (all_nodes and all_vertices)
 
+    @property
+    def __all_vertices_present(self):
         try:
             all_vertices_present = self.vertices.shape[1] == 4
         except:
             all_vertices_present = False
 
-        return(all_nodes_satisfied and all_vertices_present)
+        return(all_vertices_present)
+        
+
+    @property
+    def __all_nodes_satisfied(self):
+        m = self.vertices.shape[0]
+        n = self.connectivity.shape[0]
+        p = self.node_types.shape[0]
+
+        all_nodes_satisfied = (m == n == p)
+        print all_nodes_satisfied
+        return all_nodes_satisfied
+        
 
     @property
     def root_index(self):
