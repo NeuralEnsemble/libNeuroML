@@ -4,6 +4,8 @@ Generating a Hodgkin-Huxley Ion Channel and writing it to NeuroML
 
 import neuroml
 import neuroml.writers as writers
+from lxml import etree
+from urllib import urlopen
 
 chan = neuroml.IonChannel(id='na',
                           type='ionChannelHH',
@@ -47,8 +49,6 @@ writers.NeuroMLWriter.write(doc,newnmlfile)
 
 print("Written channel file to: "+newnmlfile)
 
-from lxml import etree
-from urllib import urlopen
 schema_file = urlopen("https://raw.github.com/NeuroML/NeuroML2/master/Schemas/NeuroML2/NeuroML_v2beta.xsd")
 #schema_file = urlopen("../../../NeuroML2/Schemas/NeuroML2/NeuroML_v2beta.xsd")
 xmlschema = etree.XMLSchema(etree.parse(schema_file))

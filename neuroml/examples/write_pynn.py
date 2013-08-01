@@ -31,7 +31,7 @@ print("Saved to: "+newnmlfile)
 
 from lxml import etree
 from urllib import urlopen
-schema_file = urlopen("../../../NeuroML2/Schemas/NeuroML2/NeuroML_v2beta.xsd")
+schema_file = urlopen("https://raw.github.com/NeuroML/NeuroML2/master/Schemas/NeuroML2/NeuroML_v2beta.xsd")
 xmlschema = etree.XMLSchema(etree.parse(schema_file))
 print "Validating %s against %s" %(newnmlfile, schema_file.geturl())
 xmlschema.assertValid(etree.parse(newnmlfile))
