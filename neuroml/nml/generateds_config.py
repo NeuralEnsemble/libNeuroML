@@ -1,5 +1,5 @@
-#Maps from neuroML element space (Key) to python object space (value)
-#The class names are essnetially correct, the instance names need converting
+#Maps from NeuroML element space (Key) to python object space (value)
+#The class names are essentially correct, the instance names need converting
 #also attributes need fixing
 
 import lxml
@@ -92,6 +92,26 @@ NameTable['gateHHtauInf'] = 'gate_hh_tau_infs'
 NameTable['ionChannelHH'] = 'ion_channel_hh'
 NameTable['gateHHrates']  = 'gate_hh_rates'
 NameTable['gateHHtauInf'] = 'gate_hh_tau_infs'
+
+
+NameTable['basePyNNCell'] = 'basePyNNCell'
+NameTable['basePyNNIaFCell'] = 'basePyNNIaFCell'
+NameTable['basePyNNIaFCondCell'] = 'basePyNNIaFCondCell'
+NameTable['tau_syn_E'] = 'tau_syn_E'
+NameTable['tau_syn_I'] = 'tau_syn_I'
+
+NameTable['e_rev_E'] = 'e_rev_E'
+NameTable['e_rev_I'] = 'e_rev_I'
+NameTable['e_rev_Na'] = 'e_rev_Na'
+NameTable['e_rev_K'] = 'e_rev_K'
+
+NameTable['gbar_K'] = 'gbar_K'
+NameTable['gbar_Na'] = 'gbar_Na'
+
+NameTable['IF_curr_alpha'] = 'IF_curr_alpha'
+NameTable['IF_curr_exp'] = 'IF_curr_exp'
+NameTable['IF_cond_alpha'] = 'IF_cond_alpha'
+NameTable['IF_cond_exp'] = 'IF_cond_exp'
 
 print("NameTable is as follows:")
 print NameTable

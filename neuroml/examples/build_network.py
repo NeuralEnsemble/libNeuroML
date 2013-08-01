@@ -60,25 +60,22 @@ def run():
     fn = '/dev/null'
     writers.NeuroMLWriter.write(nml_doc, fn)
     
+
+    print("Written network file to: "+fn)
     
     
-    #NOTE:This is another way of doing the above, which has not yet been tested properly
-    ###########################  Save to file & validate  #################################
-    #newnmlfile = "testNml2.xml"
-    #nml_doc.write_neuroml(newnmlfile)
     
+    from lxml import etree
+    from urllib import urlopen
     
-    #from lxml import etree
-    #from urllib import urlopen
+    schema_file = urlopen("../../../NeuroML2/Schemas/NeuroML2/NeuroML_v2beta.xsd")
+    xmlschema_doc = etree.parse(schema_file)
+    xmlschema = etree.XMLSchema(xmlschema_doc)
     
-    #schema_file = urlopen("http://neuroml.svn.sourceforge.net/viewvc/neuroml/NeuroML2/Schemas/NeuroML2/NeuroML_v2alpha.xsd")
-    #xmlschema_doc = etree.parse(schema_file)
-    #xmlschema = etree.XMLSchema(xmlschema_doc)
+    print "Validating %s against %s" %(fn, schema_file.geturl())
     
-    #print "Validating %s against %s" %(newnmlfile, schema_file.geturl())
-    
-    #doc = etree.parse(newnmlfile)
-    #xmlschema.assertValid(doc)
-    #print "It's valid!"
+    doc = etree.parse(fn)
+    xmlschema.assertValid(doc)
+    print "It's valid!"
 
 run()

@@ -1,3 +1,4 @@
+/neuroml/test/tmpfile
 # All the python compiled
 *.pyc
 *.py~

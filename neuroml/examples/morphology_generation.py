@@ -66,5 +66,7 @@ def run():
     fn = '/dev/null'
     
     writers.NeuroMLWriter.write(doc,fn)
+    
+    print("Written morphology file to: "+fn)
 
 run()
