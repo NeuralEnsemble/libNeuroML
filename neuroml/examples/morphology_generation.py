@@ -63,7 +63,7 @@ def run():
     doc.cells.append(cell)
     doc.id = "TestNeuroMLDocument"
     
-    fn = '/home/mike/testmorphwrite.nml'
+    fn = 'tmp/testmorphwrite.nml'
     
     writers.NeuroMLWriter.write(doc,fn)
     
