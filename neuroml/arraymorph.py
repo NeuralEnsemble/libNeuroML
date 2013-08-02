@@ -63,7 +63,7 @@ class ArrayMorphology(neuroml.Morphology):
                                          dtype='int32')
 
         #it will need a reference to its parent?
-        self.segments = self.SegmentList(self)
+        self.segments = SegmentList(self)
 
         assert self.valid_morphology,'invalid_morphology'
 
@@ -180,15 +180,16 @@ class ArrayMorphology(neuroml.Morphology):
 
         #need to traverse the tree:
         for index in range(self.num_vertices-1):
-            seg = self.__segment__(index)
+            seg = self.segment_from_vertex_index(index)
             morphology.segments.append(seg)
 
         return morphology
 
-    def __segment__(self,index):
-
+    def segment_from_vertex_index(self,index):
+        print "index:"
+        print index
         parent_index = self.connectivity[index]
-
+        
         node_x = self.vertices[index][0]
         node_y = self.vertices[index][1]
         node_z = self.vertices[index][2]
@@ -219,92 +220,97 @@ class ArrayMorphology(neuroml.Morphology):
 
         return seg
         
-    class SegmentList(object):
+class SegmentList(object):
+    """
+    This class is a proxy, it returns a segment either
+    from the arraymorph or if it has already been instantiated
+    it returns the relevant segment.
+    """
+
+    def __init__(self,arraymorph):
+        self.arraymorph = arraymorph
+        self.instantiated_segments = {}
+
+    def __vertex_index_from_segment_index__(self,index):
         """
-        This class is a proxy, it returns a segment either
-        from the arraymorph or if it has already been instantiated
-        it returns the relevant segment.
+        The existence of a physical mask means that segment and
+        and vertex indices fall out of sync. This function returns the
+        index of the proximal vertex in the vertices array of the arraymorph
+        which corresponds to the segment index.
         """
 
-        def __init__(self,arraymorph):
-            self.arraymorph = arraymorph
-            self.instantiated_segments = {}
+        physical_mask = self.arraymorph.physical_mask
+        segment_distal_vertex_indexes = np.where(physical_mask == False)[0] + 1
 
-        def __vertex_index_from_segment_index__(self,index):
-            """
-            The existence of a physical mask means that segment and
-            and vertex indices fall out of sync. This function returns the
-            index of the proximal vertex in the vertices array of the arraymorph
-            which corresponds to the segment index.
-            """
+        return segment_distal_vertex_indexes[index]
 
-            physical_mask = self.arraymorph.physical_mask
-            segment_proximal_vertex_indexes = np.where(physical_mask == False)[0]
-            
-            return segment_proximal_vertex_indexes[index] + 1
+    def __len__(self):
+        """
+        Override the __len__ magic method to give total numer of
+        segments which is number of vertices - 1 and minus all
+        floating segments.
+        """
+        
+        num_vertices = self.arraymorph.num_vertices
+        num_floating = np.sum(self.arraymorph.physical_mask)
+        num_segments = num_vertices - num_floating -1
+        if num_segments < 0:
+            num_segments = 0
 
-        def __len__(self):
-            """
-            Override the __len__ magic method to give total numer of
-            segments which is number of vertices - 1 and minus all
-            floating segments.
-            """
-            
-            num_vertices = self.arraymorph.num_vertices
-            num_floating = np.sum(self.arraymorph.physical_mask)
-            num_segments = num_vertices - num_floating -1
+        return num_segments
 
-            return num_segments
+    def __iadd__(self,segment_list):
+        for segment in segment_list:
+            self.append(segment)
+        return self
 
-        def __getitem__(self,segment_index):
-            if segment_index in self.instantiated_segments:
-                neuroml_segment = self.instantiated_segments[segment_index]
-            else:
-                vertex_index = self.__vertex_index_from_segment_index__(segment_index)
-                neuroml_segment = self.arraymorph.__segment__(vertex_index)
-                self.instantiated_segments[segment_index] = neuroml_segment
-            return neuroml_segment
+    def __getitem__(self,segment_index):
 
-        def __setitem__(self,index,user_set_segment):
-            self.instantiated_segments[index] =  user_set_segment
+        if segment_index in self.instantiated_segments:
+            neuroml_segment = self.instantiated_segments[segment_index]
+        else:
+            vertex_index = self.__vertex_index_from_segment_index__(segment_index)
+            neuroml_segment = self.arraymorph.segment_from_vertex_index(vertex_index)
+            self.instantiated_segments[segment_index] = neuroml_segment
+        return neuroml_segment
 
-        def append(self,segment):
-            """
-            Adds a new segment
+    def __setitem__(self,index,user_set_segment):
+        self.instantiated_segments[index] =  user_set_segment
 
-            TODO: Correct connectivity is currently being ignored -
-            The new segment is always connected to the root node.
-            """
+    def append(self,segment):
+        """
+        Adds a new segment
 
-            dist_vertex_index = len(self.arraymorph.vertices)
-            prox_vertex_index = dist_vertex_index + 1
-            
-            prox_x = segment.proximal.x
-            prox_y = segment.proximal.y
-            prox_z = segment.proximal.z
-            prox_diam = segment.proximal.diameter
+        TODO: Correct connectivity is currently being ignored -
+        The new segment is always connected to the root node.
+        """
+        dist_vertex_index = len(self.arraymorph.vertices)
+        prox_vertex_index = dist_vertex_index + 1
+        
+        prox_x = segment.proximal.x
+        prox_y = segment.proximal.y
+        prox_z = segment.proximal.z
+        prox_diam = segment.proximal.diameter
 
-            dist_x = segment.distal.x
-            dist_y = segment.distal.y
-            dist_z = segment.distal.z
-            distal_diam = segment.distal.diameter
-            
-            prox_vertex = [prox_x,prox_y,prox_z,prox_diam]
-            dist_vertex = [dist_x,dist_y,dist_z,distal_diam]
+        dist_x = segment.distal.x
+        dist_y = segment.distal.y
+        dist_z = segment.distal.z
+        distal_diam = segment.distal.diameter
+        
+        prox_vertex = [prox_x,prox_y,prox_z,prox_diam]
+        dist_vertex = [dist_x,dist_y,dist_z,distal_diam]
 
-            if len(self.arraymorph.vertices) > 0:
-                self.arraymorph.vertices = np.append(self.arraymorph.vertices,[dist_vertex,prox_vertex],axis = 0)
-            else:
-                self.arraymorph.vertice = np.array([[dist_vertex,prox_vertex]])
-            #TODO
-            #Need to worry about connectivity..
-            #For now just default to root
-            #connect to root for now
-            #need to figure out the parent ID, should assume it is the same
-            #as the internal representation - otherwise the whole thing wont work properly
-            
-            self.arraymorph.connectivity = np.append(self.arraymorph.connectivity,[-1,dist_vertex_index])
-            
+        if len(self.arraymorph.vertices) > 0:
+            self.arraymorph.vertices = np.append(self.arraymorph.vertices,[dist_vertex,prox_vertex],axis = 0)
+        else:
+            self.arraymorph.vertices = np.array([dist_vertex,prox_vertex])
+
+        self.arraymorph.connectivity = np.append(self.arraymorph.connectivity,[-1,dist_vertex_index])
+        
+        if len(self.arraymorph.physical_mask) == 0:
+            self.arraymorph.physical_mask = np.array([0,0])
+        else:
             self.arraymorph.physical_mask = np.append(self.arraymorph.physical_mask,[1,0])
             
-            self.instantiated_segments[prox_vertex_index] = segment
+        segment_index = len(self) - 1
+        self.instantiated_segments[segment_index] = segment
