@@ -9,6 +9,89 @@ try:
 except ImportError:
     import unittest
 
+class TestObjectBuiltMorphology(unittest.TestCase):
+
+    def setUp(self):
+        """
+        Testing a complex hand-built morphology (from neuroml objects
+        rather than arrays)
+        """
+
+        p = neuroml.Point3DWithDiam(x=0,y=0,z=0,diameter=50)
+        d = neuroml.Point3DWithDiam(x=50,y=0,z=0,diameter=50)
+        soma = neuroml.Segment(proximal=p, distal=d)
+        soma.name = 'Soma'
+        soma.id = 0
+        
+        #now make an axon with 100 compartments:
+        
+        parent = neuroml.SegmentParent(segments=soma.id)
+        parent_segment = soma
+        axon_segments = []
+        seg_id = 1
+        for i in range(100):
+            p = neuroml.Point3DWithDiam(x=parent_segment.distal.x,
+                                        y=parent_segment.distal.y,
+                                        z=parent_segment.distal.z,
+                                        diameter=0.1)
+        
+            d = neuroml.Point3DWithDiam(x=parent_segment.distal.x+10,
+                                        y=parent_segment.distal.y,
+                                        z=parent_segment.distal.z,
+                                        diameter=0.1)
+        
+            axon_segment = neuroml.Segment(proximal = p, 
+                                           distal = d, 
+                                           parent = parent)
+        
+            axon_segment.id = seg_id
+            
+            axon_segment.name = 'axon_segment_' + str(axon_segment.id)
+        
+            #now reset everything:
+            parent = neuroml.SegmentParent(segments=axon_segment.id)
+            parent_segment = axon_segment
+            seg_id += 1 
+        
+            axon_segments.append(axon_segment)
+
+        test_morphology = am.ArrayMorphology()
+        test_morphology.segments.append(soma)
+        test_morphology.segments += axon_segments
+        test_morphology.id = "TestMorphology"
+
+        self.test_morphology = test_morphology
+
+    def test_valid_morphology_ids(self):
+        morphology = self.test_morphology
+        self.assertTrue(morphology.valid_ids)
+
+    def test_invalid_morphology_ids(self):
+        morphology = self.test_morphology
+        morphology.segments[0].id = 5 
+        self.assertFalse(morphology.valid_ids)
+
+    def test_num_segments(self):
+        num_segments = len(self.test_morphology.segments)
+        self.assertEqual(num_segments,101)
+
+    def test_segments_ids_ok(self):
+        self.assertEqual(self.test_morphology.segments[30].id,30)
+
+    def test_soma_still_located_at_zero(self):
+        self.assertEqual(self.test_morphology.segments[0].name,'Soma')
+        self.assertEqual(self.test_morphology.segments[0].id,0)
+
+    def test_segment_vertices_ok(self):
+        self.assertEqual(self.test_morphology.segments[1].proximal.x,50.0)
+                               
+    def test_axon_names_ok(self):
+        self.assertEqual(self.test_morphology.segments[32].name,'axon_segment_32')
+
+    def test_segment_instance(self):
+        seg = self.test_morphology.segments[47]
+        self.assertIsInstance(seg,neuroml.nml.nml.Segment)
+
 class TestArrayMorphology(unittest.TestCase):
 
     def setUp(self):
@@ -49,7 +132,42 @@ class TestArrayMorphology(unittest.TestCase):
                                                        connectivity=self.valid_connectivity,
                                                        id = 'test_arraymorph')
 
+        proximal_point = neuroml.Point3DWithDiam(x=0.1,
+                                                 y=0.2,
+                                                 z=0.3,
+                                                 diameter=1.1,)
 
+        distal_point = neuroml.Point3DWithDiam(x=0.0,
+                                               y=0.0,
+                                               z=0.0,
+                                               diameter=1.1,)
+
+        soma = neuroml.Segment(proximal = proximal_point,
+                               distal = distal_point,)
+        self.small_morphology = am.ArrayMorphology()
+        self.small_morphology.segments.append(soma)
+
+    def test_single_segment_morphology_instantiation(self):
+        print self.small_morphology.connectivity
+        seg = self.small_morphology.segments[0]
+        self.assertIsInstance(seg,neuroml.nml.nml.Segment)
+
+    def test_single_segment_morphology_length(self):
+        self.assertEqual(len(self.small_morphology.segments),1)
+
+    def test_index_error(self):
+        """
+        There is no segments[1] for a one-segment morphology
+        """
+        
+#        print self.small_morphology.vertices
+#        print self.small_morphology.segments[0].id
+#        print self.small_morphology.segments[1].id
+#        print 'instnatiated segments:'
+#        print self.small_morphology.segments.instantiated_segments
+
+        self.assertRaises(IndexError,self.small_morphology.segments.__getitem__,1)
+        
     def test_single_floating_segment(self):
         """
         Because physical_mask[4] = 1 a segment should be skipped as it is
@@ -88,7 +206,7 @@ class TestArrayMorphology(unittest.TestCase):
         len_segment_list = len(self.complex_morphology.segments)
         self.assertEqual(num_segments,len_segment_list)
 
-    def test_add_segment(self):
+    def test_add_segment_len(self):
         """
         Add a neuroml.Segment() object, the segments proximal
         and distal vertices should be used. The internal connectivity
@@ -97,11 +215,13 @@ class TestArrayMorphology(unittest.TestCase):
         
         proximal_point = neuroml.Point3DWithDiam(x=0.1,
                                                  y=0.2,
-                                                 z=0.3)
+                                                 z=0.3,
+                                                 diameter=1.1,)
 
         distal_point = neuroml.Point3DWithDiam(x=0.0,
                                                y=0.0,
-                                               z=0.0)
+                                               z=0.0,
+                                               diameter=1.1,)
 
         seg = neuroml.Segment(proximal = proximal_point,
                               distal = distal_point)
@@ -115,9 +235,40 @@ class TestArrayMorphology(unittest.TestCase):
         self.assertEqual(num_segments+1, len_segment_list)
         self.setUp()
 
-    def test_connectivity_valid(self):
+    def test_add_segment_vertices_added(self):
+        proximal_point = neuroml.Point3DWithDiam(x=0.1,
+                                                 y=0.2,
+                                                 z=0.3,
+                                                 diameter=0.1,)
+
+        distal_point = neuroml.Point3DWithDiam(x=0.0,
+                                               y=0.0,
+                                               z=0.0,
+                                               diameter=0.1)
+
+        seg = neuroml.Segment(proximal = proximal_point,
+                              distal = distal_point)
+
+        num_segments = len(self.complex_morphology.segments)
+
+        self.optimized_morphology.segments.append(seg)
+
+        true_vertices = self.optimized_morphology.vertices
+        expected_vertices = np.array([[0,0,0,0.1],
+                                      [1,0,0,0.2],
+                                      [2,0,0,0.3],
+                                      [3,0,0,0.4],
+                                      [0,0,0,0.1],
+                                      [0.1,0.2,0.3,0.1],])
+
+        arrays_equal = np.array_equal(true_vertices,expected_vertices)
+
+        self.assertTrue(arrays_equal)
+        self.setUp()
+        
+    def tes_add_segment_connectivity_valid(self):
         pass
-    
+
     def test_num_vertices(self):
         """
         Morphology with one segment
@@ -192,12 +343,44 @@ class TestArrayMorphology(unittest.TestCase):
         segment_again = self.optimized_morphology.segments[1]
         self.assertEqual(segment,segment_again)
 
+#TODO: Needs to be a proper segment:
     def test_segmentlist_setter(self):
-        new_segment = neuroml.Segment(proximal=0.9)
+
+        p = neuroml.Point3DWithDiam(x=0.9,
+                                    y=0.0,
+                                    z=0.0,
+                                    diameter=0.1)
+    
+        d = neuroml.Point3DWithDiam(x=0.0,
+                                    y=0.0,
+                                    z=0.0,
+                                    diameter=0.1)
+
+        new_segment = neuroml.Segment(proximal=p,
+                                      distal=d)
+
         self.optimized_morphology.segments[2] = new_segment
+
         self.assertEqual(self.optimized_morphology.segments[2],new_segment)
-        self.assertEqual(self.optimized_morphology.segments[2].proximal,0.9)
-        self.setUp()
+
+    def test_segmentlist_setter_by_inference(self):
+
+        p = neuroml.Point3DWithDiam(x=0.9,
+                                    y=0.0,
+                                    z=0.0,
+                                    diameter=0.1)
+    
+        d = neuroml.Point3DWithDiam(x=0.0,
+                                    y=0.0,
+                                    z=0.0,
+                                    diameter=0.1)
+
+        new_segment = neuroml.Segment(proximal=p,
+                                      distal=d)
+
+        self.optimized_morphology.segments[2] = new_segment
+        self.assertEqual(self.optimized_morphology.segments[2].proximal.x,0.9)
+
 
     def test_instantiation(self):
         """
