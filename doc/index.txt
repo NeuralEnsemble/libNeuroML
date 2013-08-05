@@ -11,13 +11,12 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   scope_of_project
    install
    how_to_contribute
-   scope_of_project
    tools
-   nodes_segments_sections
    meeting_june_2012
-
+   
 .. Source documentation
    ==================
    
