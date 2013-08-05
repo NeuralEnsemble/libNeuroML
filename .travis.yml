@@ -12,7 +12,7 @@ before_install:
 
 # command to install dependencies
 install:
-  - "easy_install tables"
+  - "pip install numexpr"
   - "pip install . --use-mirrors"
   - "pip install -r requirements.txt --use-mirrors"
 
