@@ -336,7 +336,6 @@ class TestArrayMorphology(unittest.TestCase):
         segment_again = self.optimized_morphology.segments[1]
         self.assertEqual(segment,segment_again)
 
-#TODO: Needs to be a proper segment:
     def test_segmentlist_setter(self):
 
         p = neuroml.Point3DWithDiam(x=0.9,
