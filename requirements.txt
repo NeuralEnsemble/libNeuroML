@@ -1,5 +1,5 @@
 numpy
 lxml
 h5py
-numexpr
+numexpr>=2.0.0
 tables
