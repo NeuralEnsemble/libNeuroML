@@ -96,7 +96,8 @@ class TestArrayMorphWriter(unittest.TestCase):
         writer_method(self.big_arraymorph,filename)
 
         loader_method = neuroml.loaders.ArrayMorphLoader.load
-        array_morph = loader_method(filename)
+        doc = loader_method(filename)
+        array_morph = doc.morphology[0]
 
         connectivity_equal = np.testing.assert_array_equal(array_morph.connectivity,self.big_arraymorph.connectivity)
         physical_masks_equal = np.testing.assert_array_equal(array_morph.physical_mask,self.big_arraymorph.physical_mask)
@@ -118,7 +119,6 @@ class TestArrayMorphWriter(unittest.TestCase):
 
     def test_write_multiple_morphologies(self):
         filename = tempfile.mkstemp()[1]
-        filename = '/home/mike/tempfile2.h5' #temp
         writer_method = neuroml.writers.ArrayMorphWriter.write
         writer_method(self.test_doc,filename)
 

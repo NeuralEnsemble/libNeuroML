@@ -1,6 +1,7 @@
 import numpy as np
 from nml.nml import parse as nmlparse
 from neuroml import arraymorph
+import neuroml
 
 class NeuroMLLoader(object):
 
@@ -74,16 +75,35 @@ class SWCLoader(object):
 class ArrayMorphLoader(object):
 
     @classmethod
+    def __extract_morphology(cls, node):
+            loaded_morphology = arraymorph.ArrayMorphology()
+            loaded_morphology.physical_mask = node.physical_mask[:]
+            loaded_morphology.vertices = node.vertices[:]
+            loaded_morphology.connectivity = node.connectivity[:]
+
+            return loaded_morphology
+
+    @classmethod
     def load(cls, filepath):
+        """
+        Right now this load method isn't done in a very nice way.
+        TODO: Complete refactoring.
+        """
         import tables
         file = tables.openFile(filepath,mode='r')
 
-        loaded_morphology = arraymorph.ArrayMorphology()
+        document = neuroml.NeuroMLDocument()
 
-        for morphology in file.root:
-            loaded_morphology.physical_mask = morphology.physical_mask[:]
-            loaded_morphology.vertices = morphology.vertices[:]
-            loaded_morphology.connectivity = morphology.connectivity[:]
+        for node in file.root:
+            if hasattr(node,'vertices'):
+                print "found vertices attribute..must be a morphology"
+                loaded_morphology = cls.__extract_morphology(node)
+                document.morphology.append(loaded_morphology)
+            else:
+                for morphology in node:
+                    loaded_morphology = cls.__extract_morphology(morphology)
+                    document.morphology.append(loaded_morphology)
+                
 
-        return loaded_morphology
+        return document
             
