@@ -5,12 +5,15 @@ import tables
 
 class NeuroMLWriter(object):
     @classmethod
-    def write(cls,nmldoc,file_path):
+    def write(cls,nmldoc,file):
         """
         Writes from NeuroMLDocument to nml file
         in future can implement from other types
         via chain of responsibility pattern.
         """
+
+        if isinstance(file,str):
+            file = open(file,'w')
 
         #TODO: this needs to be extracted from the schema:
         namespacedef = 'xmlns="http://www.neuroml.org/schema/neuroml2" '
@@ -19,8 +22,7 @@ class NeuroMLWriter(object):
         namespacedef += ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'
         namespacedef += ' xsi:schemaLocation="http://www.w3.org/2001/XMLSchema"'
 
-        f = open(file_path,'w')
-        nmldoc.export(f,0,name_="neuroml",
+        nmldoc.export(file,0,name_="neuroml",
                       namespacedef_=namespacedef) #name_ param to ensure root element named correctly - generateDS limitation
 
 class HDF5ArrayMorph(tables.IsDescription):
@@ -54,7 +56,7 @@ class ArrayMorphWriter(object):
         physical_mask_array = fileh.createArray("/"+morphology_name, "physical_mask", physical_mask)
 
     @classmethod
-    def write(cls,array_morph,file_path):
+    def write(cls,array_morph,filepath):
 
         assert isinstance(array_morph,neuroml.Morphology)
 

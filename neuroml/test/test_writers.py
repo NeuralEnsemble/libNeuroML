@@ -47,8 +47,8 @@ class TestArrayMorphWriter(unittest.TestCase):
 
     def test_write_big_arraymorph(self):
         writer_method = neuroml.writers.ArrayMorphWriter.write
-        writer_method(self.big_arraymorph,'dev/null')        
+        writer_method(self.big_arraymorph,'/dev/null')        
         try:
-            writer_method(self.big_arraymorph,'dev/null')
+            writer_method(self.big_arraymorph,'/dev/null')
         except:
             self.fail("Exception raised!")
