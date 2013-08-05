@@ -325,13 +325,6 @@ class TestArrayMorphology(unittest.TestCase):
         new_connectivity = new_morphology.connectivity
         self.assertTrue(np.array_equal(new_connectivity,[-1,0,1]))
 
-    #TODO    
-    #def test_write(self):
-    #    writers.ArrayMorphWriter.write(self.optimized_morphology,'test.h5')
-
-    def test_load(self):
-        loaders.ArrayMorphLoader.load('test.h5')
-
     def test_segment_getter(self):
         segment = self.optimized_morphology.segments[0]
         self.assertIsInstance(segment,neuroml.Segment)
