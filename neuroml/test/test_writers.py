@@ -44,9 +44,37 @@ class TestArrayMorphWriter(unittest.TestCase):
 
         big_arraymorph = am.ArrayMorphology(vertices = vertices,
                                             connectivity = connectivity)
+        transposed_x = x+10
+        transposed_vertices = np.array([transposed_x,y,z,d]).T
 
+        transposed_arraymorph = am.ArrayMorphology(vertices = transposed_vertices,
+                                                   connectivity = connectivity)
+
+        bigger_d = d + 0.5
+        fatter_vertices = np.array([x,y,z,bigger_d]).T
+
+        fatter_arraymorph = am.ArrayMorphology(vertices = fatter_vertices,
+                                               connectivity = connectivity)
+
+
+        self.transposed_arraymorph = transposed_arraymorph
+        self.fatter_arraymorph = fatter_arraymorph
         self.big_arraymorph = big_arraymorph
 
+        self.cell_1 = neuroml.Cell(id='cell_1')
+        self.cell_2 = neuroml.Cell(id='cell_2')
+        self.cell_3 = neuroml.Cell(id='cell_3')
+        
+        self.cell_1.morphology = transposed_arraymorph
+        self.cell_2.morphology = fatter_arraymorph
+        self.cell_3.morphology = big_arraymorph
+
+        self.test_doc = neuroml.NeuroMLDocument(id='TestDocument')
+
+        self.test_doc.cells.append(self.cell_1)
+        self.test_doc.cells.append(self.cell_2)
+        self.test_doc.cells.append(self.cell_3)
+        
     def test_write_big_arraymorph(self):
         writer_method = neuroml.writers.ArrayMorphWriter.write
         filename = tempfile.mkstemp()[1]
@@ -78,4 +106,23 @@ class TestArrayMorphWriter(unittest.TestCase):
         self.assertEqual(connectivity_equal,None) #None when equal
         self.assertEqual(physical_masks_equal,None) #None when equal
         self.assertEqual(vertices_equal,None) #None when equal        
-        
+
+    def test_write_multiple_morphologies(self):
+        filename = tempfile.mkstemp()[1]
+
+        writer_method = neuroml.writers.ArrayMorphWriter.write
+        try:
+            writer_method(self.test_doc,filename)
+        except:
+            self.fail("Exception raised!")
+
+    def test_write_multiple_morphologies(self):
+        filename = tempfile.mkstemp()[1]
+        filename = '/home/mike/tempfile2.h5' #temp
+        writer_method = neuroml.writers.ArrayMorphWriter.write
+        writer_method(self.test_doc,filename)
+
+        loader_method = neuroml.loaders.ArrayMorphLoader.load
+        document = loader_method(filename)
+
+        self.assertIsInstance(document,neuroml.NeuroMLDocument)

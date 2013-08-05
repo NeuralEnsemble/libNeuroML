@@ -41,7 +41,7 @@ class ArrayMorphWriter(object):
         
         # Create the groups:
         # can use morphology name in future?
-        morphology_name = "morphology_1"
+        morphology_name = array_morph.id
         morphology_group = fileh.createGroup(root, morphology_name)
 
         # Now, create an array in root group
@@ -49,18 +49,27 @@ class ArrayMorphWriter(object):
         connectivity_array = fileh.createArray("/"+morphology_name, "connectivity", connectivity)
         physical_mask_array = fileh.createArray("/"+morphology_name, "physical_mask", physical_mask)
 
+
     @classmethod
-    def write(cls,array_morph,filepath):
+    def __write_neuroml_document(cls,document,fileh):
+        document_id = document.id
+        for cell in document.cells:
+            morphology = cell.morphology
+            cls.__write_single_morphology(morphology,fileh)
 
-        assert isinstance(array_morph,neuroml.Morphology)
+    @classmethod
+    def write(cls,data,filepath):
 
-        # Open a file in "w"rite mode
         fileh = tables.openFile(filepath, mode = "w")
         
         #Now instead we should go through a document/cell/morphology
         #hierarchy - this kind of tree traversal should be done recursively
 
-        cls.__write_single_morphology(array_morph, fileh)
+        if isinstance(data,neuroml.Morphology):
+            cls.__write_single_morphology(data, fileh)
 
+        if isinstance(data,neuroml.NeuroMLDocument):
+            cls.__write_neuroml_document(data,fileh)
+            
         # Finally, close the file (this also will flush all the remaining buffers!)
         fileh.close()
