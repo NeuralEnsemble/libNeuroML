@@ -10,7 +10,7 @@ Contents:
    how_to_contribute
    scope_of_project
    tools
-   meeting_june_2012
+   note_on_arraymorph   
 
 .. Source documentation
    ==================

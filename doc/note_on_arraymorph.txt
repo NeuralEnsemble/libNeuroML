@@ -1,0 +1,9 @@
+Notes on Arraymorph
+===================
+
+Why arraymorph is needed
+------------------------
+
+How arraymorph works
+--------------------
+
