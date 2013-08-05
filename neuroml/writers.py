@@ -25,12 +25,6 @@ class NeuroMLWriter(object):
         nmldoc.export(file,0,name_="neuroml",
                       namespacedef_=namespacedef) #name_ param to ensure root element named correctly - generateDS limitation
 
-class HDF5ArrayMorph(tables.IsDescription):
-    vertices = tables.Float32Col(dflt=1, pos = 1)
-    connectivity =  tables.Float32Col(dflt=1, pos = 1)
-    physical_mask = tables.Float32Col(dflt=1, pos = 1)
-
-
 class ArrayMorphWriter(object):
     """
     For now just testing a simple method which can write a morphology, not a NeuroMLDocument.
