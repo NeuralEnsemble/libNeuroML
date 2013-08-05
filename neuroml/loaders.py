@@ -1,5 +1,6 @@
 import numpy as np
 from nml.nml import parse as nmlparse
+from neuroml import arraymorph
 
 class NeuroMLLoader(object):
 
@@ -21,6 +22,9 @@ class NeuroMLLoader(object):
 
 
 class SWCLoader(object):
+    """
+    WARNING: Class defunct
+    """
     
     @classmethod
     def load_swc_single(cls,  src, name=None):
@@ -64,16 +68,22 @@ class SWCLoader(object):
 
         #This needs to become an "Optimized Morphology" of some kind
         return Backend(vertices=vertices, 
-                              connectivity=connection_indices, 
-                              name=name )
+                       connectivity=connection_indices, 
+                       name=name )
 
 class ArrayMorphLoader(object):
 
     @classmethod
-    def load(cls, src):
-        
-        import h5py
+    def load(cls, filepath):
+        import tables
+        file = tables.openFile(filepath,mode='r')
 
-        f = h5py.File(src,'a')
-        
-        return f
+        loaded_morphology = arraymorph.ArrayMorphology()
+
+        for morphology in file.root:
+            loaded_morphology.physical_mask = morphology.physical_mask[:]
+            loaded_morphology.vertices = morphology.vertices[:]
+            loaded_morphology.connectivity = morphology.connectivity[:]
+
+        return loaded_morphology
+            

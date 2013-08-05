@@ -61,7 +61,7 @@ class ArrayMorphWriter(object):
         assert isinstance(array_morph,neuroml.Morphology)
 
         # Open a file in "w"rite mode
-        fileh = tables.openFile("test_file.h5", mode = "w")
+        fileh = tables.openFile(filepath, mode = "w")
         
         #Now instead we should go through a document/cell/morphology
         #hierarchy - this kind of tree traversal should be done recursively

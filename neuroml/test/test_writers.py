@@ -5,9 +5,11 @@ Unit tests for writers
 
 import neuroml
 from neuroml import writers
+from neuroml import loaders
 import os
 import numpy as np
 from neuroml import arraymorph as am
+import tempfile
 
 try:
     import unittest2 as unittest
@@ -47,8 +49,33 @@ class TestArrayMorphWriter(unittest.TestCase):
 
     def test_write_big_arraymorph(self):
         writer_method = neuroml.writers.ArrayMorphWriter.write
-        writer_method(self.big_arraymorph,'/dev/null')        
+        filename = tempfile.mkstemp()[1]
+
         try:
-            writer_method(self.big_arraymorph,'/dev/null')
+            writer_method(self.big_arraymorph,filename)
         except:
             self.fail("Exception raised!")
+
+    def test_write_expected(self):
+        """
+        More of an integration test, write a file and confirm the contents are
+        as expected.
+        """
+
+        filename = tempfile.mkstemp()[1]
+
+        writer_method = neuroml.writers.ArrayMorphWriter.write
+        writer_method(self.big_arraymorph,filename)
+
+        loader_method = neuroml.loaders.ArrayMorphLoader.load
+        array_morph = loader_method(filename)
+
+        connectivity_equal = np.testing.assert_array_equal(array_morph.connectivity,self.big_arraymorph.connectivity)
+        physical_masks_equal = np.testing.assert_array_equal(array_morph.physical_mask,self.big_arraymorph.physical_mask)
+        vertices_equal = np.testing.assert_array_equal(array_morph.vertices,self.big_arraymorph.vertices)
+
+
+        self.assertEqual(connectivity_equal,None) #None when equal
+        self.assertEqual(physical_masks_equal,None) #None when equal
+        self.assertEqual(vertices_equal,None) #None when equal        
+        
