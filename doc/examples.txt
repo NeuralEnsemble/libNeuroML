@@ -2,6 +2,9 @@
 Examples
 ========
 
+These examples are located in the neuroml/examples directory and can
+be tested to confirm they work by running the run_all.py script.
+
 Making a NeuroML morphology
 ---------------------------
 
@@ -31,12 +34,12 @@ Ion channels
 Pynn models
 -----------
 
-.. literalinclude:: ../neuroml/examples/writing_pynn.py
+.. literalinclude:: ../neuroml/examples/write_pynn.py
 
 Synapses
 --------
 
-.. literalinclude:: ../neuroml/examples/writing_syns.py
+.. literalinclude:: ../neuroml/examples/write_syns.py
 
 Working with arraymorphs
 ------------------------
