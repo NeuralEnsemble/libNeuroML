@@ -6,9 +6,10 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   introduction
    install
+   examples
    how_to_contribute
-   scope_of_project
    tools
    note_on_arraymorph   
 
