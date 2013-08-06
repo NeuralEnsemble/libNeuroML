@@ -1,4 +1,5 @@
-libNeuroML documentation
+========================
+libNeuroML: documentation
 ========================
 
 .. toctree::
