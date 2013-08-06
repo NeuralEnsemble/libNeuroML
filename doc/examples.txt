@@ -5,7 +5,7 @@ Examples
 Making a NeuroML morphology
 ---------------------------
 
-.. lieteralinclude:: ../neuroml/examples/morphology_generation.py
+.. literalinclude:: ../neuroml/examples/morphology_generation.py
 
 Loading and modifying a file
 ----------------------------
@@ -16,29 +16,29 @@ Loading and modifying a file
 Building a network
 ------------------
 
-.. lieteralinclude:: ../neuroml/examples/build_network.py
+.. literalinclude:: ../neuroml/examples/build_network.py
 
 Building a 3D network
 ---------------------
 
-.. lieteralinclude:: ../neuroml/examples/build_3D_network.py
+.. literalinclude:: ../neuroml/examples/build_3D_network.py
  
 Ion channels
 ------------
 
-.. lieteralinclude:: ../neuroml/examples/ion_channel_generation.py
+.. literalinclude:: ../neuroml/examples/ion_channel_generation.py
 
 Pynn models
 -----------
 
-.. lieteralinclude:: ../neuroml/examples/writing_pynn.py
+.. literalinclude:: ../neuroml/examples/writing_pynn.py
 
 Synapses
 --------
 
-.. lieteralinclude:: ../neuroml/examples/writing_syns.py
+.. literalinclude:: ../neuroml/examples/writing_syns.py
 
 Working with arraymorphs
 ------------------------
 
-.. lieteralinclude:: ../neuroml/examples/arraymorph_generation.py
+.. literalinclude:: ../neuroml/examples/arraymorph_generation.py
