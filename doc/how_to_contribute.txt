@@ -1,5 +1,5 @@
-How to contribute to libNeuroML
-===============================
+How to contribute
+=================
 
 To contribute to libNeuroML you need a github account then you should
 fork the repository at https://github.com/NeuralEnsemble/libNeuroML

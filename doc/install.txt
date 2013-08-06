@@ -1,5 +1,5 @@
-Installing libNeuroML
-=====================
+Installation
+============
 
 A working version is installable via pip:
 ----------------------------------------

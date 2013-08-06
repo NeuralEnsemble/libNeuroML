@@ -1,5 +1,5 @@
-Notes on Arraymorph
-===================
+Appendix I: Arraymorph
+======================
 
 Why arraymorph is needed
 ------------------------

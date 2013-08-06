@@ -1,5 +1,5 @@
-Background and scope of the project
-===================================
+Introduction
+============
 
 An overview of the motivation for libNeuroML, and the various scenarios in which such an API can be useful.
 
