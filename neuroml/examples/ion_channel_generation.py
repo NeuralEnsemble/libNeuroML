@@ -44,14 +44,14 @@ doc.ion_channels.append(chan)
 
 doc.id = "ChannelMLDemo"
 
-newnmlfile = './tmp/channelMLtest.xml'
-writers.NeuroMLWriter.write(doc,newnmlfile)
+nml_file = './tmp/channelMLtest.xml'
+writers.NeuroMLWriter.write(doc,nml_file)
 
-print("Written channel file to: "+newnmlfile)
+print("Written channel file to: "+nml_file)
 
-schema_file = urlopen("https://raw.github.com/NeuroML/NeuroML2/master/Schemas/NeuroML2/NeuroML_v2beta.xsd")
-#schema_file = urlopen("../../../NeuroML2/Schemas/NeuroML2/NeuroML_v2beta.xsd")
-xmlschema = etree.XMLSchema(etree.parse(schema_file))
-print "Validating %s against %s" %(newnmlfile, schema_file.geturl())
-xmlschema.assertValid(etree.parse(newnmlfile))
-print "It's valid!"
+
+###### Validate the NeuroML ######    
+
+from utils import validateNeuroML2
+
+validateNeuroML2(nml_file)
