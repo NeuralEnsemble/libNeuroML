@@ -47,8 +47,15 @@ for i in range(10):
 
 doc.cells[0].morphology.segments += axon_segments
 
-fn = './tmp/modified_morphology.nml'
+nml_file = './tmp/modified_morphology.nml'
 
-writers.NeuroMLWriter.write(doc,fn)
+writers.NeuroMLWriter.write(doc,nml_file)
 
-print("Saved modified morphology file to: "+fn)
+print("Saved modified morphology file to: "+nml_file)
+
+
+###### Validate the NeuroML ######    
+
+from utils import validateNeuroML2
+
+validateNeuroML2(nml_file)

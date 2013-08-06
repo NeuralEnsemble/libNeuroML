@@ -61,8 +61,14 @@ doc = neuroml.NeuroMLDocument()
 doc.cells.append(cell)
 doc.id = "TestNeuroMLDocument"
 
-fn = 'tmp/testmorphwrite.nml'
+nml_file = 'tmp/testmorphwrite.nml'
+    
+writers.NeuroMLWriter.write(doc,nml_file)
+    
+print("Written morphology file to: "+nml_file)
 
-writers.NeuroMLWriter.write(doc,fn)
+###### Validate the NeuroML ######    
 
-print("Written morphology file to: "+fn)
+from utils import validateNeuroML2
+
+validateNeuroML2(nml_file)

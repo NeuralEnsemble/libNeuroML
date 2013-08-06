@@ -1530,8 +1530,10 @@
         <xs:attribute name="id" type="xs:nonNegativeInteger"/>
         <xs:attribute name="preCellId" type="xs:string"/>
         <xs:attribute name="preSegmentId" type="SegmentId"/>
+        <xs:attribute name="preFractionAlong" type="ZeroToOne"/>
         <xs:attribute name="postCellId" type="xs:string"/>
         <xs:attribute name="postSegmentId" type="SegmentId"/>
+        <xs:attribute name="postFractionAlong" type="ZeroToOne"/>
     </xs:complexType>
 
 
