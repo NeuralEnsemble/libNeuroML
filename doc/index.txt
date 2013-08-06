@@ -1,7 +1,5 @@
-Welcome to libNeuroML's documentation!
-======================================
-
-Contents:
+libNeuroML documentation
+========================
 
 .. toctree::
    :maxdepth: 2
