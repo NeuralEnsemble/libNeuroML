@@ -1,0 +1,10 @@
+========
+Examples
+========
+
+Loading and modifying a file
+----------------------------
+
+.. literalinclude:: ../examples/loading_modifying_writing_large.py
+ 
+
