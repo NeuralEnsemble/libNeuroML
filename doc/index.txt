@@ -8,8 +8,17 @@ libNeuroML: documentation
    introduction
    install
    examples
-   how_to_contribute
    tools
+   note_on_arraymorph   
+
+=======================
+Developer documentation
+=======================
+
+.. toctree::
+   :maxdepth: 2
+
+   how_to_contribute
    note_on_arraymorph   
 
 .. Source documentation
