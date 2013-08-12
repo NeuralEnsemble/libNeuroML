@@ -25,6 +25,18 @@ class NeuroMLWriter(object):
         nmldoc.export(file,0,name_="neuroml",
                       namespacedef_=namespacedef) #name_ param to ensure root element named correctly - generateDS limitation
 
+class JSONWriter(object):
+    """
+    Write a NeuroMLDocument to JSON, particularly useful
+    when dealing with lots of ArrayMorphs.
+    """
+
+    @classmethod
+    def write(NeuroMLDocument):
+        pass
+        
+        
+
 class ArrayMorphWriter(object):
     """
     For now just testing a simple method which can write a morphology, not a NeuroMLDocument.
