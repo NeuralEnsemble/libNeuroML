@@ -32,9 +32,12 @@ class JSONWriter(object):
     """
 
     @classmethod
-    def write(NeuroMLDocument):
-        pass
-        
+    def write(neuroml_document):
+        if isinstance(neuroml_document,neuroml.NeuroMLDocument):
+            import jsonpickle
+            encoded = jsonpickle.encode(neuroml_document):
+        else:
+            raise NotImplementedError("Currently you can only serialize NeuroMLDocument type in JSON format")
         
 
 class ArrayMorphWriter(object):
