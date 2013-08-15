@@ -94,7 +94,6 @@ class TestJSONWriter(unittest.TestCase):
 
     def test_write_multiple_morphologies(self):
         filename = tempfile.mkstemp()[1]
-        filename = '/home/mike/temp/hello.json'
         writer_method = neuroml.writers.JSONWriter.write
         try:
             writer_method(self.test_doc,filename)
