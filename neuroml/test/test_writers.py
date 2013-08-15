@@ -67,6 +67,16 @@ class TestJSONWriter(unittest.TestCase):
         self.test_doc.cells.append(self.cell_2)
         self.test_doc.cells.append(self.cell_3)
         self.test_doc.cells.append(neuroml_cell)        
+
+    def test_write_multiple_morphologies(self):
+        filename = tempfile.mkstemp()[1]
+        print filename
+        writer_method = neuroml.writers.JSONWriter.write
+        try:
+            writer_method(self.test_doc,filename)
+        except:
+            self.fail("Exception raised!")
+
         
 #    def test_write_expected(self):
 #        """
@@ -91,14 +101,6 @@ class TestJSONWriter(unittest.TestCase):
 #        self.assertEqual(connectivity_equal,None) #None when equal
 #        self.assertEqual(physical_masks_equal,None) #None when equal
 #        self.assertEqual(vertices_equal,None) #None when equal        
-
-    def test_write_multiple_morphologies(self):
-        filename = tempfile.mkstemp()[1]
-        writer_method = neuroml.writers.JSONWriter.write
-        try:
-            writer_method(self.test_doc,filename)
-        except:
-            self.fail("Exception raised!")
 
 #    def test_write_multiple_morphologies(self):
 #        filename = tempfile.mkstemp()[1]

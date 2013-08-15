@@ -1,7 +1,7 @@
 import neuroml
 import numpy as np
 import tables
-
+import jsonpickle
 
 class NeuroMLWriter(object):
     @classmethod
@@ -63,7 +63,6 @@ class JSONWriter(object):
             fileh = file
 
         if isinstance(neuroml_document,neuroml.NeuroMLDocument):
-            import jsonpickle
             print 'about to start sanitization'
             neuroml_document = cls.__sanitize_doc(neuroml_document)
             encoded = jsonpickle.encode(neuroml_document)
