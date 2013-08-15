@@ -32,13 +32,46 @@ class JSONWriter(object):
     """
 
     @classmethod
-    def write(neuroml_document):
+    def __sanitize_doc(cls,neuroml_document):
+        """
+        Some operations will need to be performed
+        before the document is JSON-pickleable.
+        """
+        print 'starting...'
+        print neuroml_document.cells
+        for cell in neuroml_document.cells:
+            print 'sanitizing'
+            try:
+                cell.morphology.vertices = cell.morphology.vertices.tolist()
+                cell.morphology.physical_mask = cell.morphology.physical_mask.tolist()
+                cell.morphology.connectivity = cell.morphology.connectivity.tolist()
+            except:
+                pass
+
+        return neuroml_document
+
+    @classmethod
+    def __file_handle(file):
+        if isinstance(cls,file,str):
+            fileh = tables.openFile(filepath, mode = "w")
+            
+    @classmethod    
+    def write(cls,neuroml_document,file):
+        if isinstance(file,str):
+            fileh = open(file, mode = 'w')
+        else:
+            fileh = file
+
         if isinstance(neuroml_document,neuroml.NeuroMLDocument):
             import jsonpickle
+            print 'about to start sanitization'
+            neuroml_document = cls.__sanitize_doc(neuroml_document)
             encoded = jsonpickle.encode(neuroml_document)
         else:
+            print type(neuroml_document)
             raise NotImplementedError("Currently you can only serialize NeuroMLDocument type in JSON format")
-        
+
+        fileh.write(encoded)
 
 class ArrayMorphWriter(object):
     """
