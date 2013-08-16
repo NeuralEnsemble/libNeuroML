@@ -2,6 +2,8 @@ import numpy as np
 from nml.nml import parse as nmlparse
 from neuroml import arraymorph
 import neuroml
+import jsonpickle
+import neuroml
 
 class NeuroMLLoader(object):
 
@@ -72,6 +74,23 @@ class SWCLoader(object):
                        connectivity=connection_indices, 
                        name=name )
 
+class JSONLoader(object):
+
+    @classmethod
+    def load(cls,file):
+        if isinstance(file,str):
+            fileh = open(file,'r')
+        else:
+            fileh = file
+
+        json_string = fileh.read()
+        print json_string
+        unpickled = jsonpickle.decode(json_string)
+        print 'unpickled:'
+        print unpickled
+        return unpickled
+        
+    
 class ArrayMorphLoader(object):
 
     @classmethod
@@ -104,6 +123,6 @@ class ArrayMorphLoader(object):
                     loaded_morphology = cls.__extract_morphology(morphology)
                     document.morphology.append(loaded_morphology)
                 
-
         return document
             
+    

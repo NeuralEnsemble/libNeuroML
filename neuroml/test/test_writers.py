@@ -70,7 +70,6 @@ class TestJSONWriter(unittest.TestCase):
 
     def test_write_multiple_morphologies(self):
         filename = tempfile.mkstemp()[1]
-        print filename
         writer_method = neuroml.writers.JSONWriter.write
         try:
             writer_method(self.test_doc,filename)
@@ -78,39 +77,41 @@ class TestJSONWriter(unittest.TestCase):
             self.fail("Exception raised!")
 
         
-#    def test_write_expected(self):
-#        """
-#        More of an integration test, write a file and confirm the contents are
-#        as expected.
-#        """
-#
-#        filename = tempfile.mkstemp()[1]
-#
-#        writer_method = neuroml.writers.JSONWriter.write
-#        writer_method(self.test_doc,filename)
-#
-#        loader_method = neuroml.loaders.ArrayMorphLoader.load
-#        doc = loader_method(filename)
-#        array_morph = doc.morphology[0]
-#
-#        connectivity_equal = np.testing.assert_array_equal(array_morph.connectivity,self.big_arraymorph.connectivity)
-#        physical_masks_equal = np.testing.assert_array_equal(array_morph.physical_mask,self.big_arraymorph.physical_mask)
-#        vertices_equal = np.testing.assert_array_equal(array_morph.vertices,self.big_arraymorph.vertices)
-#
-#
-#        self.assertEqual(connectivity_equal,None) #None when equal
-#        self.assertEqual(physical_masks_equal,None) #None when equal
-#        self.assertEqual(vertices_equal,None) #None when equal        
+    def test_write_expected(self):
+        """
+        More of an integration test, write a file and confirm the contents are
+        as expected.
+        """
+ 
+        filename = tempfile.mkstemp()[1]
+ 
+        writer_method = neuroml.writers.JSONWriter.write
+        writer_method(self.test_doc,filename)
+ 
+        loader_method = neuroml.loaders.JSONLoader.load
+        
+        doc = loader_method(filename)
+ 
+        array_morph = doc.cells[2].morphology
+ 
+        connectivity_equal = np.testing.assert_array_equal(array_morph.connectivity,self.big_arraymorph.connectivity)
+        physical_masks_equal = np.testing.assert_array_equal(array_morph.physical_mask,self.big_arraymorph.physical_mask)
+        vertices_equal = np.testing.assert_array_equal(array_morph.vertices,self.big_arraymorph.vertices)
+ 
+ 
+        self.assertEqual(connectivity_equal,None) #None when equal
+        self.assertEqual(physical_masks_equal,None) #None when equal
+        self.assertEqual(vertices_equal,None) #None when equal        
 
-#    def test_write_multiple_morphologies(self):
-#        filename = tempfile.mkstemp()[1]
-#        writer_method = neuroml.writers.ArrayMorphWriter.write
-#        writer_method(self.test_doc,filename)
-#
-#        loader_method = neuroml.loaders.ArrayMorphLoader.load
-#        document = loader_method(filename)
-#
-#        self.assertIsInstance(document,neuroml.NeuroMLDocument)
+    def test_writer_instance(self):
+        filename = tempfile.mkstemp()[1]
+        writer_method = neuroml.writers.JSONWriter.write
+        writer_method(self.test_doc,filename)
+
+        loader_method = neuroml.loaders.JSONLoader.load
+        document = loader_method(filename)
+
+        self.assertIsInstance(document,neuroml.NeuroMLDocument)
 
 
 

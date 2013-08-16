@@ -37,10 +37,8 @@ class JSONWriter(object):
         Some operations will need to be performed
         before the document is JSON-pickleable.
         """
-        print 'starting...'
-        print neuroml_document.cells
+
         for cell in neuroml_document.cells:
-            print 'sanitizing'
             try:
                 cell.morphology.vertices = cell.morphology.vertices.tolist()
                 cell.morphology.physical_mask = cell.morphology.physical_mask.tolist()
@@ -63,11 +61,9 @@ class JSONWriter(object):
             fileh = file
 
         if isinstance(neuroml_document,neuroml.NeuroMLDocument):
-            print 'about to start sanitization'
             neuroml_document = cls.__sanitize_doc(neuroml_document)
             encoded = jsonpickle.encode(neuroml_document)
         else:
-            print type(neuroml_document)
             raise NotImplementedError("Currently you can only serialize NeuroMLDocument type in JSON format")
 
         fileh.write(encoded)
@@ -137,11 +133,9 @@ class ArrayMorphWriter(object):
         #hierarchy - this kind of tree traversal should be done recursively
 
         if isinstance(data,neuroml.arraymorph.ArrayMorphology):
-            print "writing array morphology"
             cls.__write_single_cell(data, fileh)
 
         if isinstance(data,neuroml.NeuroMLDocument):
-            print "writing neuroml document"
             cls.__write_neuroml_document(data,fileh)
             
         # Finally, close the file (this also will flush all the remaining buffers!)
