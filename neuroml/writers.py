@@ -1,7 +1,7 @@
 import neuroml
 import numpy as np
 import tables
-import neuroml.jsonpickle as jsonpickle
+from neuroml.jsonpickle import encode as json_encode
 
 class NeuroMLWriter(object):
     @classmethod
@@ -62,7 +62,7 @@ class JSONWriter(object):
 
         if isinstance(neuroml_document,neuroml.NeuroMLDocument):
             neuroml_document = cls.__sanitize_doc(neuroml_document)
-            encoded = jsonpickle.encode(neuroml_document)
+            encoded = json_encode(neuroml_document)
         else:
             raise NotImplementedError("Currently you can only serialize NeuroMLDocument type in JSON format")
 

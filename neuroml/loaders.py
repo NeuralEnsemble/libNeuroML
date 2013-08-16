@@ -2,7 +2,7 @@ import numpy as np
 from nml.nml import parse as nmlparse
 from neuroml import arraymorph
 import neuroml
-import neuroml.jsonpickle as jsonpickle
+from neuroml.jsonpickle import decode as json_decode
 import neuroml
 
 class NeuroMLLoader(object):
@@ -85,7 +85,7 @@ class JSONLoader(object):
 
         json_string = fileh.read()
         print json_string
-        unpickled = jsonpickle.decode(json_string)
+        unpickled = json_decode(json_string)
         print 'unpickled:'
         print unpickled
         return unpickled
