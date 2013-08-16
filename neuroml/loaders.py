@@ -2,7 +2,7 @@ import numpy as np
 from nml.nml import parse as nmlparse
 from neuroml import arraymorph
 import neuroml
-import jsonpickle
+import neuroml.jsonpickle as jsonpickle
 import neuroml
 
 class NeuroMLLoader(object):

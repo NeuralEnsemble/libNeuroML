@@ -1,7 +1,7 @@
 import neuroml
 import numpy as np
 import tables
-import jsonpickle
+import neuroml.jsonpickle as jsonpickle
 
 class NeuroMLWriter(object):
     @classmethod
