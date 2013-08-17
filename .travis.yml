@@ -16,6 +16,5 @@ install:
   - "pip install . --use-mirrors"
   - "pip install -r requirements.txt --use-mirrors"
 
-# command to run tests, e.g. python setup.py test
-script:  cd ./neuroml/test && nosetests
-script:  cd ./neuroml/examples && mkdir ./tmp && python run_all.py
+# command to run tests and examples, e.g. python setup.py test
+script:  cd ./neuroml/test && nosetests && cd ../examples && mkdir ./tmp && python run_all.py
