@@ -19,7 +19,7 @@ except ImportError:
 class TestJSONWriter(unittest.TestCase):
     
     def setUp(self):
-        num_segments = int(2000)
+        num_segments = int(1e4)
         num_vertices = num_segments + 1
 
         x = np.linspace(0,10,num_vertices)
