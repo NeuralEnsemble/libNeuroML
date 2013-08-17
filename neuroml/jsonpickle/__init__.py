@@ -59,10 +59,10 @@ added to JSON.
 
 """
 
-from jsonpickle.pickler import Pickler
-from jsonpickle.unpickler import Unpickler
-from jsonpickle.backend import JSONBackend
-from jsonpickle.version import VERSION
+from .pickler import Pickler
+from .unpickler import Unpickler
+from .backend import JSONBackend
+from .version import VERSION
 
 # ensure built-in handlers are loaded
 __import__('jsonpickle._handlers')
