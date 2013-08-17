@@ -10,7 +10,7 @@ import operator
 import jsonpickle.util as util
 import jsonpickle.tags as tags
 import jsonpickle.handlers as handlers
-from jsonpickle.compat import unicode
+from neuroml.jsonpickle.compat import unicode
 
 
 class Pickler(object):
