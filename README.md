@@ -1,7 +1,3 @@
-:copyright: Copyright 2012 by the libNeuroML team, see AUTHORS.
-
-License: Modified BSD License, see LICENSE for details.
-
 ## Introduction
 
 This package provides Python libNeuroML, for working with neuronal models specified in NeuroML (http://neuroml.org)
@@ -19,3 +15,6 @@ The initial target version of NeuroML is v2.0. The latest details on that versio
 libNeuroML is integrated with the the [Travis Continuous Integration service](http://travis-ci.org/).
 
 [![Build Status](https://api.travis-ci.org/NeuralEnsemble/libNeuroML.png)](https://travis-ci.org/NeuralEnsemble/libNeuroML)
+
+:copyright: Copyright 2012 by the libNeuroML team, see AUTHORS.
+:license: Modified BSD License, see LICENSE for details.
