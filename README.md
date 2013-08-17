@@ -1,6 +1,8 @@
 :copyright: Copyright 2012 by the libNeuroML team, see AUTHORS.
 :license: Modified BSD License, see LICENSE for details.
 
+## Introduction
+
 This package provides Python libNeuroML, for working with neuronal models specified in NeuroML (http://neuroml.org)
 
 Documentation is available at http://readthedocs.org/docs/libneuroml/en/latest/
