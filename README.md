@@ -1,6 +1,6 @@
 :copyright: Copyright 2012 by the libNeuroML team, see AUTHORS.
 
-:license: Modified BSD License, see LICENSE for details.
+License: Modified BSD License, see LICENSE for details.
 
 ## Introduction
 
