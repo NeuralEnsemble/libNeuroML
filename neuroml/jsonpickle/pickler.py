@@ -7,9 +7,9 @@
 # This software is licensed as described in the file COPYING, which
 # you should have received as part of this distribution.
 import operator
-import .util as util
-import .tags as tags
-import .handlers as handlers
+import util
+import tags
+import handlers
 from .compat import unicode
 
 
