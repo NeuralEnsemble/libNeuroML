@@ -53,26 +53,26 @@ If you will never need to load (regenerate the Python class from JSON), you can
 pass in the keyword unpicklable=False to prevent extra information from being
 added to JSON.
 
-    >>> oneway = neuroml.jsonpickle.encode(obj, unpicklable=False)
+    >>> oneway = jsonpickle.encode(obj, unpicklable=False)
     >>> print oneway
     {"name": "A String", "child": null}
 
 """
 
-from neuroml.jsonpickle.pickler import Pickler
-from neuroml.jsonpickle.unpickler import Unpickler
-from neuroml.jsonpickle.backend import JSONBackend
-from neuroml.jsonpickle.version import VERSION
+from jsonpickle.pickler import Pickler
+from jsonpickle.unpickler import Unpickler
+from jsonpickle.backend import JSONBackend
+from jsonpickle.version import VERSION
 
 # ensure built-in handlers are loaded
-__import__('neuroml.jsonpickle._handlers')
+__import__('jsonpickle._handlers')
 
 __all__ = ('encode', 'decode')
 __version__ = VERSION
 
 json = JSONBackend()
 
-# Export specific JSONPluginMgr methods into the neuroml.jsonpickle namespace
+# Export specific JSONPluginMgr methods into the jsonpickle namespace
 set_preferred_backend = json.set_preferred_backend
 set_encoder_options = json.set_encoder_options
 load_backend = json.load_backend
@@ -88,7 +88,7 @@ def encode(value, unpicklable=True, max_depth=None):
     necessary to turn the JSON data back into Python objects.
 
     The keyword argument 'max_depth' defaults to None.
-    If set to a non-negative integer then neuroml.jsonpickle will not recurse
+    If set to a non-negative integer then jsonpickle will not recurse
     deeper than 'max_depth' steps into the object.  Anything deeper
     than 'max_depth' is represented using a Python repr() of the object.
 
