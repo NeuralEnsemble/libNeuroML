@@ -84,10 +84,7 @@ class JSONLoader(object):
             fileh = file
 
         json_string = fileh.read()
-        print json_string
         unpickled = json_decode(json_string)
-        print 'unpickled:'
-        print unpickled
         return unpickled
         
     
@@ -115,7 +112,6 @@ class ArrayMorphLoader(object):
 
         for node in file.root:
             if hasattr(node,'vertices'):
-                print "found vertices attribute..must be a morphology"
                 loaded_morphology = cls.__extract_morphology(node)
                 document.morphology.append(loaded_morphology)
             else:
