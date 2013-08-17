@@ -8,10 +8,10 @@
 
 import operator
 import sys
-import jsonpickle.util as util
-import jsonpickle.tags as tags
-import jsonpickle.handlers as handlers
-from jsonpickle.compat import set
+import util
+import tags
+import handlers
+from .compat import set
 
 
 class Unpickler(object):
