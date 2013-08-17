@@ -18,4 +18,4 @@ install:
 
 # command to run tests, e.g. python setup.py test
 script:  cd ./neuroml/test && nosetests
-script:  cd ./neuroml/examples && python run_all.py
+script:  cd ./neuroml/examples && mkdir ./tmp && python run_all.py
