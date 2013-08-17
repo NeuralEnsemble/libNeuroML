@@ -2,7 +2,7 @@
 
 from distutils.core import setup
 
-long_description = open("README.md5").read()
+long_description = open("README.md").read()
 
 setup(
     data_files=[("",['neuroml/test/Purk2M9s.nml'])],
