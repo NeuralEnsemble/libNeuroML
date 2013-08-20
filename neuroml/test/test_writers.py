@@ -70,8 +70,6 @@ class TestJSONWriter(unittest.TestCase):
 
     def test_write_to_mongodb_backend(self):
         writer_method = neuroml.writers.JSONWriter.write_to_mongodb
-        writer_method(neuroml_document = self.test_doc,
-                      db = 'mike_test_db3')
 
         try:
             writer_method(neuroml_document = self.test_doc,
@@ -87,8 +85,6 @@ class TestJSONWriter(unittest.TestCase):
         except:
             self.fail("Exception raised!")
 
-          
-        
     def test_write_expected(self):
         """
         More of an integration test, write a file and confirm the contents are
