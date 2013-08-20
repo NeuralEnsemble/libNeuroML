@@ -8,6 +8,8 @@ specific tasks with libNeuroML.
 These examples are located in the neuroml/examples directory and can
 be tested to confirm they work by running the run_all.py script.
 
+.. contents:: Examples
+
 Making a NeuroML morphology
 ---------------------------
 
