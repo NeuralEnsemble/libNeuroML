@@ -3,3 +3,4 @@ lxml
 numexpr>=2.0.0
 tables
 jsonpickle
+pymongo
