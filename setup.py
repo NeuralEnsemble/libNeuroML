@@ -12,7 +12,7 @@ setup(
     install_requires=required,
     name = "libNeuroML",
     version = '0.1.7',
-    packages = ['neuroml', 'neuroml.test','neuroml.nml','neuroml.examples','neuroml.jsonpickle'],
+    packages = ['neuroml', 'neuroml.test','neuroml.nml'],
     package_data = {'neuroml.test': ['*.nml']},
     author = "libNeuroML authors and contributors",
     author_email = "vellamike@gmail.com",
