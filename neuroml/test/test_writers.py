@@ -81,15 +81,21 @@ class TestJSONWriter(unittest.TestCase):
         """
         More of an integration test, write a file and confirm the contents are
         as expected.
+
+        TODO: add a teardown
         """
 
+        db_name = 'test_db_4'
+        
         writer_method = neuroml.writers.JSONWriter.write_to_mongodb
         writer_method(neuroml_document = self.test_doc,
-                      db = 'mike_test_db4')
+                      db = db_name)
 
         loader_method = neuroml.loaders.JSONLoader.load_from_mongodb
         
-        doc = loader_method(self.test_doc.id,db,host)
+        doc = loader_method(db = db_name,
+                            id = self.test_doc.id,
+                            host = 'localhost')
  
         array_morph = doc.cells[2].morphology
  

@@ -88,8 +88,36 @@ class JSONLoader(object):
         return unpickled
         
     @classmethod
-    def load_from_mongodb(cls,db,host)
-    
+    def load_from_mongodb(cls,
+                          db,
+                          id,
+                          host=None,
+                          port=None):
+        
+        from pymongo import MongoClient
+        import simplejson as json
+        
+        if host == None:
+            host = 'localhost'
+        if port == None:
+            port = 27017
+
+        client = MongoClient(host,port)
+
+        db = client[db]
+
+        collection = db[id]
+
+        doc = collection.find_one()
+
+        del doc['_id']         
+
+        doc = json.dumps(doc)
+
+        document = json_decode(doc)
+
+        return document
+        
 class ArrayMorphLoader(object):
 
     @classmethod
