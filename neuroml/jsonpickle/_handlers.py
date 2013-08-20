@@ -4,7 +4,7 @@ import collections
 
 #import jsonpickle
 
-class DatetimeHandler(.handlers.BaseHandler):
+class DatetimeHandler(handlers.BaseHandler):
     """
     Datetime objects use __reduce__, and they generate binary strings encoding
     the payload. This handler encodes that payload to reconstruct the
@@ -30,7 +30,7 @@ class DatetimeHandler(.handlers.BaseHandler):
         params = (value,) + tuple(params)
         return cls.__new__(cls, *params)
 
-class SimpleReduceHandler(.handlers.BaseHandler):
+class SimpleReduceHandler(handlers.BaseHandler):
     """
     Follow the __reduce__ protocol to pickle an object. As long as the factory
     and its arguments are pickleable, this should pickle any object that
