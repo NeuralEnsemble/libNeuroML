@@ -1,7 +1,7 @@
 import neuroml
 import numpy as np
 import tables
-from .jsonpickle import encode as json_encode
+from jsonpickle import encode as json_encode
 
 class NeuroMLWriter(object):
     @classmethod
