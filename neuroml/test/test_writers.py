@@ -77,6 +77,32 @@ class TestJSONWriter(unittest.TestCase):
         except:
             self.fail("Exception raised!")
 
+    def test_write_to_mongodb_expected(self):
+        """
+        More of an integration test, write a file and confirm the contents are
+        as expected.
+        """
+
+        writer_method = neuroml.writers.JSONWriter.write_to_mongodb
+        writer_method(neuroml_document = self.test_doc,
+                      db = 'mike_test_db4')
+
+        loader_method = neuroml.loaders.JSONLoader.load_from_mongodb
+        
+        doc = loader_method(self.test_doc.id,db,host)
+ 
+        array_morph = doc.cells[2].morphology
+ 
+        connectivity_equal = np.testing.assert_array_equal(array_morph.connectivity,self.big_arraymorph.connectivity)
+        physical_masks_equal = np.testing.assert_array_equal(array_morph.physical_mask,self.big_arraymorph.physical_mask)
+        vertices_equal = np.testing.assert_array_equal(array_morph.vertices,self.big_arraymorph.vertices)
+ 
+ 
+        self.assertEqual(connectivity_equal,None) #None when equal
+        self.assertEqual(physical_masks_equal,None) #None when equal
+        self.assertEqual(vertices_equal,None) #None when equal        
+
+
     def test_write_multiple_morphologies(self):
         filename = tempfile.mkstemp()[1]
         writer_method = neuroml.writers.JSONWriter.write

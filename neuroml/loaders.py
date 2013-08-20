@@ -87,6 +87,8 @@ class JSONLoader(object):
         unpickled = json_decode(json_string)
         return unpickled
         
+    @classmethod
+    def load_from_mongodb(cls,db,host)
     
 class ArrayMorphLoader(object):
 
