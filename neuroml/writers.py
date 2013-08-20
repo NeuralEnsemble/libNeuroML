@@ -32,6 +32,12 @@ class JSONWriter(object):
     """
 
     @classmethod
+    def __encode_as_json(cls,neuroml_document):
+        neuroml_document = cls.__sanitize_doc(neuroml_document)
+        encoded = json_encode(neuroml_document)
+        return encoded
+    
+    @classmethod
     def __sanitize_doc(cls,neuroml_document):
         """
         Some operations will need to be performed
@@ -52,6 +58,7 @@ class JSONWriter(object):
     def __file_handle(file):
         if isinstance(cls,file,str):
             fileh = tables.openFile(filepath, mode = "w")
+
             
     @classmethod    
     def write(cls,neuroml_document,file):
@@ -61,12 +68,35 @@ class JSONWriter(object):
             fileh = file
 
         if isinstance(neuroml_document,neuroml.NeuroMLDocument):
-            neuroml_document = cls.__sanitize_doc(neuroml_document)
-            encoded = json_encode(neuroml_document)
+            encoded = cls.__encode_as_json(neuroml_document)
+
         else:
             raise NotImplementedError("Currently you can only serialize NeuroMLDocument type in JSON format")
 
         fileh.write(encoded)
+
+    @classmethod
+    def write_to_mongodb(cls,neuroml_document,db,host=None,port=None,id=None):
+        from pymongo import MongoClient
+        import json
+
+        if id == None:
+            id = neuroml_document.id
+        
+        if host == None:
+            host = 'localhost'
+        if port == None:
+            port = 27017
+
+        client = MongoClient(host, port)
+        db = client[db]
+        collection = db[id]
+
+        if isinstance(neuroml_document,neuroml.NeuroMLDocument):
+            encoded = cls.__encode_as_json(neuroml_document)
+
+        encoded_dict = json.loads(encoded)
+        collection.insert(encoded_dict)
 
 class ArrayMorphWriter(object):
     """

@@ -68,6 +68,17 @@ class TestJSONWriter(unittest.TestCase):
         self.test_doc.cells.append(self.cell_3)
         self.test_doc.cells.append(neuroml_cell)        
 
+    def test_write_to_mongodb_backend(self):
+        writer_method = neuroml.writers.JSONWriter.write_to_mongodb
+        writer_method(neuroml_document = self.test_doc,
+                      db = 'mike_test_db3')
+
+        try:
+            writer_method(neuroml_document = self.test_doc,
+                          db = 'mike_test_db3')
+        except:
+            self.fail("Exception raised!")
+
     def test_write_multiple_morphologies(self):
         filename = tempfile.mkstemp()[1]
         writer_method = neuroml.writers.JSONWriter.write
@@ -76,6 +87,7 @@ class TestJSONWriter(unittest.TestCase):
         except:
             self.fail("Exception raised!")
 
+          
         
     def test_write_expected(self):
         """
