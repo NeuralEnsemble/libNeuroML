@@ -1,5 +1,6 @@
 language: python
 
+#python 3 not supported as dependencies don't include it
 python:
   - "2.6"
   - "2.7"
