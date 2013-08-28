@@ -113,7 +113,7 @@ NameTable['IF_curr_exp'] = 'IF_curr_exp'
 NameTable['IF_cond_alpha'] = 'IF_cond_alpha'
 NameTable['IF_cond_exp'] = 'IF_cond_exp'
 
-NameTable['extracellularProperites'] = 'extracellular_properties'
+NameTable['extracellularProperties'] = 'extracellular_properties'
 
 print("NameTable is as follows:")
 print NameTable
