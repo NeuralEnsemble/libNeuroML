@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Aug 28 14:30:51 2013 by generateDS.py version 2.10b.
+# Generated Wed Aug 28 14:37:29 2013 by generateDS.py version 2.10b.
 #
 
 import sys
@@ -7835,15 +7835,15 @@ class BiophysicalProperties(Standalone):
     be outside and referenced by id."""
     member_data_items_ = [
         MemberSpec_('membrane_properties', 'MembraneProperties', 0),
-        MemberSpec_('intracellular_propertieses', 'IntracellularProperties', 0),
+        MemberSpec_('intracellular_properties', 'IntracellularProperties', 0),
         MemberSpec_('extracellular_properties', 'ExtracellularProperties', 0),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, membrane_properties=None, intracellular_propertieses=None, extracellular_properties=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, membrane_properties=None, intracellular_properties=None, extracellular_properties=None):
         super(BiophysicalProperties, self).__init__(neuro_lex_id, id, metaid, notes, annotation, )
         self.membrane_properties = membrane_properties
-        self.intracellular_propertieses = intracellular_propertieses
+        self.intracellular_properties = intracellular_properties
         self.extracellular_properties = extracellular_properties
     def factory(*args_, **kwargs_):
         if BiophysicalProperties.subclass:
@@ -7854,7 +7854,7 @@ class BiophysicalProperties(Standalone):
     def hasContent_(self):
         if (
             self.membrane_properties is not None or
-            self.intracellular_propertieses is not None or
+            self.intracellular_properties is not None or
             self.extracellular_properties is not None or
             super(BiophysicalProperties, self).hasContent_()
         ):
@@ -7887,8 +7887,8 @@ class BiophysicalProperties(Standalone):
             eol_ = ''
         if self.membrane_properties is not None:
             self.membrane_properties.export(outfile, level, namespace_, name_='membraneProperties', pretty_print=pretty_print)
-        if self.intracellular_propertieses is not None:
-            self.intracellular_propertieses.export(outfile, level, namespace_, name_='intracellularProperties', pretty_print=pretty_print)
+        if self.intracellular_properties is not None:
+            self.intracellular_properties.export(outfile, level, namespace_, name_='intracellularProperties', pretty_print=pretty_print)
         if self.extracellular_properties is not None:
             self.extracellular_properties.export(outfile, level, namespace_, name_='extracellularProperties', pretty_print=pretty_print)
     def exportLiteral(self, outfile, level, name_='BiophysicalProperties'):
@@ -7907,10 +7907,10 @@ class BiophysicalProperties(Standalone):
             self.membrane_properties.exportLiteral(outfile, level, name_='membraneProperties')
             showIndent(outfile, level)
             outfile.write('),\n')
-        if self.intracellular_propertieses is not None:
+        if self.intracellular_properties is not None:
             showIndent(outfile, level)
-            outfile.write('intracellular_propertieses=model_.IntracellularProperties(\n')
-            self.intracellular_propertieses.exportLiteral(outfile, level, name_='intracellularProperties')
+            outfile.write('intracellular_properties=model_.IntracellularProperties(\n')
+            self.intracellular_properties.exportLiteral(outfile, level, name_='intracellularProperties')
             showIndent(outfile, level)
             outfile.write('),\n')
         if self.extracellular_properties is not None:
@@ -7935,7 +7935,7 @@ class BiophysicalProperties(Standalone):
         elif nodeName_ == 'intracellularProperties':
             obj_ = IntracellularProperties.factory()
             obj_.build(child_)
-            self.intracellular_propertieses = obj_
+            self.intracellular_properties = obj_
         elif nodeName_ == 'extracellularProperties':
             obj_ = ExtracellularProperties.factory()
             obj_.build(child_)
@@ -10001,14 +10001,14 @@ class NeuroMLDocument(Standalone):
     member_data_items_ = [
         MemberSpec_('includes', 'IncludeType', 1),
         MemberSpec_('extracellular_properties', 'ExtracellularProperties', 1),
-        MemberSpec_('intracellular_propertieses', 'IntracellularProperties', 1),
+        MemberSpec_('intracellular_properties', 'IntracellularProperties', 1),
         MemberSpec_('morphology', 'Morphology', 1),
         MemberSpec_('ion_channels', 'IonChannel', 1),
         MemberSpec_('decaying_pool_concentration_models', 'DecayingPoolConcentrationModel', 1),
         MemberSpec_('exp_one_synapses', 'ExpOneSynapse', 1),
         MemberSpec_('exp_two_synapses', 'ExpTwoSynapse', 1),
         MemberSpec_('blocking_plastic_synapses', 'BlockingPlasticSynapse', 1),
-        MemberSpec_('biophysical_propertieses', 'BiophysicalProperties', 1),
+        MemberSpec_('biophysical_properties', 'BiophysicalProperties', 1),
         MemberSpec_('cells', 'Cell', 1),
         MemberSpec_('base_cells', 'BaseCell', 1),
         MemberSpec_('iaf_tau_cells', 'IaFTauCell', 1),
@@ -10042,7 +10042,7 @@ class NeuroMLDocument(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, includes=None, extracellular_properties=None, intracellular_propertieses=None, morphology=None, ion_channels=None, decaying_pool_concentration_models=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, biophysical_propertieses=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, ad_ex_ia_f_cells=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channels=None, decaying_pool_concentration_models=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, biophysical_properties=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, ad_ex_ia_f_cells=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
         super(NeuroMLDocument, self).__init__(neuro_lex_id, id, metaid, notes, annotation, )
         if includes is None:
             self.includes = []
@@ -10052,10 +10052,10 @@ class NeuroMLDocument(Standalone):
             self.extracellular_properties = []
         else:
             self.extracellular_properties = extracellular_properties
-        if intracellular_propertieses is None:
-            self.intracellular_propertieses = []
+        if intracellular_properties is None:
+            self.intracellular_properties = []
         else:
-            self.intracellular_propertieses = intracellular_propertieses
+            self.intracellular_properties = intracellular_properties
         if morphology is None:
             self.morphology = []
         else:
@@ -10080,10 +10080,10 @@ class NeuroMLDocument(Standalone):
             self.blocking_plastic_synapses = []
         else:
             self.blocking_plastic_synapses = blocking_plastic_synapses
-        if biophysical_propertieses is None:
-            self.biophysical_propertieses = []
+        if biophysical_properties is None:
+            self.biophysical_properties = []
         else:
-            self.biophysical_propertieses = biophysical_propertieses
+            self.biophysical_properties = biophysical_properties
         if cells is None:
             self.cells = []
         else:
@@ -10214,14 +10214,14 @@ class NeuroMLDocument(Standalone):
         if (
             self.includes or
             self.extracellular_properties or
-            self.intracellular_propertieses or
+            self.intracellular_properties or
             self.morphology or
             self.ion_channels or
             self.decaying_pool_concentration_models or
             self.exp_one_synapses or
             self.exp_two_synapses or
             self.blocking_plastic_synapses or
-            self.biophysical_propertieses or
+            self.biophysical_properties or
             self.cells or
             self.base_cells or
             self.iaf_tau_cells or
@@ -10285,7 +10285,7 @@ class NeuroMLDocument(Standalone):
             include_.export(outfile, level, namespace_, name_='include', pretty_print=pretty_print)
         for extracellularProperties_ in self.extracellular_properties:
             extracellularProperties_.export(outfile, level, namespace_, name_='extracellularProperties', pretty_print=pretty_print)
-        for intracellularProperties_ in self.intracellular_propertieses:
+        for intracellularProperties_ in self.intracellular_properties:
             intracellularProperties_.export(outfile, level, namespace_, name_='intracellularProperties', pretty_print=pretty_print)
         for morphology_ in self.morphology:
             morphology_.export(outfile, level, namespace_, name_='morphology', pretty_print=pretty_print)
@@ -10299,7 +10299,7 @@ class NeuroMLDocument(Standalone):
             expTwoSynapse_.export(outfile, level, namespace_, name_='expTwoSynapse', pretty_print=pretty_print)
         for blockingPlasticSynapse_ in self.blocking_plastic_synapses:
             blockingPlasticSynapse_.export(outfile, level, namespace_, name_='blockingPlasticSynapse', pretty_print=pretty_print)
-        for biophysicalProperties_ in self.biophysical_propertieses:
+        for biophysicalProperties_ in self.biophysical_properties:
             biophysicalProperties_.export(outfile, level, namespace_, name_='biophysicalProperties', pretty_print=pretty_print)
         for cell_ in self.cells:
             cell_.export(outfile, level, namespace_, name_='cell', pretty_print=pretty_print)
@@ -10396,9 +10396,9 @@ class NeuroMLDocument(Standalone):
         showIndent(outfile, level)
         outfile.write('],\n')
         showIndent(outfile, level)
-        outfile.write('intracellular_propertieses=[\n')
+        outfile.write('intracellular_properties=[\n')
         level += 1
-        for intracellularProperties_ in self.intracellular_propertieses:
+        for intracellularProperties_ in self.intracellular_properties:
             showIndent(outfile, level)
             outfile.write('model_.IntracellularProperties(\n')
             intracellularProperties_.exportLiteral(outfile, level, name_='IntracellularProperties')
@@ -10480,9 +10480,9 @@ class NeuroMLDocument(Standalone):
         showIndent(outfile, level)
         outfile.write('],\n')
         showIndent(outfile, level)
-        outfile.write('biophysical_propertieses=[\n')
+        outfile.write('biophysical_properties=[\n')
         level += 1
-        for biophysicalProperties_ in self.biophysical_propertieses:
+        for biophysicalProperties_ in self.biophysical_properties:
             showIndent(outfile, level)
             outfile.write('model_.BiophysicalProperties(\n')
             biophysicalProperties_.exportLiteral(outfile, level, name_='BiophysicalProperties')
@@ -10871,7 +10871,7 @@ class NeuroMLDocument(Standalone):
         elif nodeName_ == 'intracellularProperties':
             obj_ = IntracellularProperties.factory()
             obj_.build(child_)
-            self.intracellular_propertieses.append(obj_)
+            self.intracellular_properties.append(obj_)
         elif nodeName_ == 'morphology':
             obj_ = Morphology.factory()
             obj_.build(child_)
@@ -10901,7 +10901,7 @@ class NeuroMLDocument(Standalone):
         elif nodeName_ == 'biophysicalProperties':
             obj_ = BiophysicalProperties.factory()
             obj_.build(child_)
-            self.biophysical_propertieses.append(obj_)
+            self.biophysical_properties.append(obj_)
         elif nodeName_ == 'cell':
             obj_ = Cell.factory()
             obj_.build(child_)
@@ -11355,19 +11355,19 @@ class Cell(BaseCell):
     biophysicalProperties element is outside the cell. This points
     to the id of the biophysicalProperties"""
     member_data_items_ = [
-        MemberSpec_('biophysical_propertieses_attr', 'xs:string', 0),
+        MemberSpec_('biophysical_properties_attr', 'xs:string', 0),
         MemberSpec_('morphology_attr', 'xs:string', 0),
         MemberSpec_('morphology', 'Morphology', 0),
-        MemberSpec_('biophysical_propertieses', 'BiophysicalProperties', 0),
+        MemberSpec_('biophysical_properties', 'BiophysicalProperties', 0),
     ]
     subclass = None
     superclass = BaseCell
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, biophysical_propertieses_attr=None, morphology_attr=None, morphology=None, biophysical_propertieses=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, biophysical_properties_attr=None, morphology_attr=None, morphology=None, biophysical_properties=None):
         super(Cell, self).__init__(neuro_lex_id, id, metaid, notes, annotation, )
-        self.biophysical_propertieses_attr = _cast(None, biophysical_propertieses_attr)
+        self.biophysical_properties_attr = _cast(None, biophysical_properties_attr)
         self.morphology_attr = _cast(None, morphology_attr)
         self.morphology = morphology
-        self.biophysical_propertieses = biophysical_propertieses
+        self.biophysical_properties = biophysical_properties
     def factory(*args_, **kwargs_):
         if Cell.subclass:
             return Cell.subclass(*args_, **kwargs_)
@@ -11377,7 +11377,7 @@ class Cell(BaseCell):
     def hasContent_(self):
         if (
             self.morphology is not None or
-            self.biophysical_propertieses is not None or
+            self.biophysical_properties is not None or
             super(Cell, self).hasContent_()
         ):
             return True
@@ -11401,9 +11401,9 @@ class Cell(BaseCell):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Cell'):
         super(Cell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='Cell')
-        if self.biophysical_propertieses_attr is not None and 'biophysical_propertieses_attr' not in already_processed:
-            already_processed.add('biophysical_propertieses_attr')
-            outfile.write(' biophysicalProperties=%s' % (self.gds_format_string(quote_attrib(self.biophysical_propertieses_attr).encode(ExternalEncoding), input_name='biophysical_propertieses_attr'), ))
+        if self.biophysical_properties_attr is not None and 'biophysical_properties_attr' not in already_processed:
+            already_processed.add('biophysical_properties_attr')
+            outfile.write(' biophysicalProperties=%s' % (self.gds_format_string(quote_attrib(self.biophysical_properties_attr).encode(ExternalEncoding), input_name='biophysical_properties_attr'), ))
         if self.morphology_attr is not None and 'morphology_attr' not in already_processed:
             already_processed.add('morphology_attr')
             outfile.write(' morphology=%s' % (self.gds_format_string(quote_attrib(self.morphology_attr).encode(ExternalEncoding), input_name='morphology_attr'), ))
@@ -11415,8 +11415,8 @@ class Cell(BaseCell):
             eol_ = ''
         if self.morphology is not None:
             self.morphology.export(outfile, level, namespace_, name_='morphology', pretty_print=pretty_print)
-        if self.biophysical_propertieses is not None:
-            self.biophysical_propertieses.export(outfile, level, namespace_, name_='biophysicalProperties', pretty_print=pretty_print)
+        if self.biophysical_properties is not None:
+            self.biophysical_properties.export(outfile, level, namespace_, name_='biophysicalProperties', pretty_print=pretty_print)
     def exportLiteral(self, outfile, level, name_='Cell'):
         level += 1
         already_processed = set()
@@ -11424,10 +11424,10 @@ class Cell(BaseCell):
         if self.hasContent_():
             self.exportLiteralChildren(outfile, level, name_)
     def exportLiteralAttributes(self, outfile, level, already_processed, name_):
-        if self.biophysical_propertieses_attr is not None and 'biophysical_propertieses_attr' not in already_processed:
-            already_processed.add('biophysical_propertieses_attr')
+        if self.biophysical_properties_attr is not None and 'biophysical_properties_attr' not in already_processed:
+            already_processed.add('biophysical_properties_attr')
             showIndent(outfile, level)
-            outfile.write('biophysical_propertieses_attr="%s",\n' % (self.biophysical_propertieses_attr,))
+            outfile.write('biophysical_properties_attr="%s",\n' % (self.biophysical_properties_attr,))
         if self.morphology_attr is not None and 'morphology_attr' not in already_processed:
             already_processed.add('morphology_attr')
             showIndent(outfile, level)
@@ -11441,10 +11441,10 @@ class Cell(BaseCell):
             self.morphology.exportLiteral(outfile, level, name_='morphology')
             showIndent(outfile, level)
             outfile.write('),\n')
-        if self.biophysical_propertieses is not None:
+        if self.biophysical_properties is not None:
             showIndent(outfile, level)
-            outfile.write('biophysical_propertieses=model_.BiophysicalProperties(\n')
-            self.biophysical_propertieses.exportLiteral(outfile, level, name_='biophysicalProperties')
+            outfile.write('biophysical_properties=model_.BiophysicalProperties(\n')
+            self.biophysical_properties.exportLiteral(outfile, level, name_='biophysicalProperties')
             showIndent(outfile, level)
             outfile.write('),\n')
     def build(self, node):
@@ -11455,9 +11455,9 @@ class Cell(BaseCell):
             self.buildChildren(child, node, nodeName_)
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('biophysicalProperties', node)
-        if value is not None and 'biophysical_propertieses_attr' not in already_processed:
-            already_processed.add('biophysical_propertieses_attr')
-            self.biophysical_propertieses_attr = value
+        if value is not None and 'biophysical_properties_attr' not in already_processed:
+            already_processed.add('biophysical_properties_attr')
+            self.biophysical_properties_attr = value
         value = find_attr_value_('morphology', node)
         if value is not None and 'morphology_attr' not in already_processed:
             already_processed.add('morphology_attr')
@@ -11471,7 +11471,7 @@ class Cell(BaseCell):
         elif nodeName_ == 'biophysicalProperties':
             obj_ = BiophysicalProperties.factory()
             obj_.build(child_)
-            self.biophysical_propertieses = obj_
+            self.biophysical_properties = obj_
         super(Cell, self).buildChildren(child_, node, nodeName_, True)
 # end class Cell
 
