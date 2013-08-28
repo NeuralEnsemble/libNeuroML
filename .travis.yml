@@ -15,6 +15,10 @@ before_install:
 install:
   - "pip install numexpr"
   - "pip install . --use-mirrors"
+  - "pip install jsonpickle"
+  - "pip install pymongo"
+  - "pip install simplejson"
+  - "pip install tables"
   - "pip install -r requirements.txt --use-mirrors"
 
 # command to run tests and examples, e.g. python setup.py test
