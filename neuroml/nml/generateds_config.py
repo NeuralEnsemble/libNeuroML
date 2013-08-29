@@ -63,7 +63,6 @@ def _node_to_python(node):
             renamed_attribute = to_lowercase_with_underscores(nml_attribute)
             if pluralize_flag:
                 renamed_attribute = pluralize(renamed_attribute)
-
             NameTable[nml_attribute] = renamed_attribute
 
 filename = variables['schema_name']
@@ -112,6 +111,10 @@ NameTable['IF_curr_alpha'] = 'IF_curr_alpha'
 NameTable['IF_curr_exp'] = 'IF_curr_exp'
 NameTable['IF_cond_alpha'] = 'IF_cond_alpha'
 NameTable['IF_cond_exp'] = 'IF_cond_exp'
+
+NameTable['extracellularProperties'] = 'extracellular_properties'
+NameTable['intracellularProperties'] = 'intracellular_properties'
+NameTable['biophysicalProperties'] = 'biophysical_properties'
 
 print("NameTable is as follows:")
 print NameTable

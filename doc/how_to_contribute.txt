@@ -1,5 +1,5 @@
-How to contribute to libNeuroML
-===============================
+How to contribute
+=================
 
 To contribute to libNeuroML you need a github account then you should
 fork the repository at https://github.com/NeuralEnsemble/libNeuroML
@@ -99,7 +99,7 @@ Working locally on a dedicated branch
 Now you can work on your repo. The best way to do it is to create a
 branch with a descriptive name which indicate what are you working on.
 
-For example, just for the sake of this guide, I’m gonna close `#2`_
+For example, just for the sake of this guide, I’m going to close `#2`_
 
 ::
 
@@ -153,4 +153,3 @@ Miscellaneous
 .. _tell git your name: http://help.github.com/set-your-user-name-email-and-github-token/
 .. _bash function: https://gist.github.com/2051095
 .. _Quick reference for git: http://gitref.org/
-

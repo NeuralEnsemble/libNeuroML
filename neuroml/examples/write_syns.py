@@ -26,16 +26,16 @@ bpSyn.block_mechanism = BlockMechanism(type="voltageConcDepBlockMechanism", spec
 nml_doc.blocking_plastic_synapses.append(bpSyn)
 
 
-newnmlfile = 'tmp/synapses.xml'
-writers.NeuroMLWriter.write(nml_doc, newnmlfile)
-print("Saved to: "+newnmlfile)
+nml_file = 'tmp/synapses.xml'
+writers.NeuroMLWriter.write(nml_doc, nml_file)
+print("Saved to: "+nml_file)
 
 
-from lxml import etree
-from urllib import urlopen
-schema_file = urlopen("../../../NeuroML2/Schemas/NeuroML2/NeuroML_v2beta.xsd")
-xmlschema = etree.XMLSchema(etree.parse(schema_file))
-print "Validating %s against %s" %(newnmlfile, schema_file.geturl())
-xmlschema.assertValid(etree.parse(newnmlfile))
-print "It's valid!"
+###### Validate the NeuroML ######    
+
+from utils import validateNeuroML2
+
+validateNeuroML2(nml_file)
+
+
 

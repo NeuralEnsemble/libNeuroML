@@ -1,6 +1,7 @@
 """
 In this example an axon is built, a morphology is loaded, the axon is
-then connected to the loadeed morphology.
+then connected to the loadeed morphology. The whole thing is serialized
+in JSON format, reloaded and validated.
 """
 
 import neuroml
@@ -47,12 +48,22 @@ for i in range(10):
 
 doc.cells[0].morphology.segments += axon_segments
 
-nml_file = './tmp/modified_morphology.nml'
+json_file = './tmp/modified_morphology.json'
 
-writers.NeuroMLWriter.write(doc,nml_file)
+writers.JSONWriter.write(doc,json_file)
 
-print("Saved modified morphology file to: "+nml_file)
+print("Saved modified morphology in JSON format to: " + json_file)
 
+
+##### load it again, this time write it to a normal neuroml file ###
+
+neuroml_document_from_json = loaders.JSONLoader.load(json_file)
+
+print("Re-loaded neuroml document in JSON format to NeuroMLDocument object") 
+
+nml_file = './tmp/modified_morphology_from_json.nml'
+
+writers.NeuroMLWriter.write(neuroml_document_from_json,nml_file)
 
 ###### Validate the NeuroML ######    
 
