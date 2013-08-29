@@ -1,5 +1,5 @@
-Installing libNeuroML
-=====================
+Installation
+============
 
 A working version is installable via pip:
 ----------------------------------------
@@ -7,6 +7,9 @@ A working version is installable via pip:
 ::
 
     pip install libNeuroML
+
+This is always the latest (stable) branch corresponding to the master
+branch on github.
 
 
 Get a read only copy of libNeuroML
@@ -44,13 +47,15 @@ Some sample scripts are included in `neuroml/examples`:
 
 ::
 
-    build_network.py   
-    loading_neuroml.py
-    loading_and_manipulating_neuroml.py	
-    morphology_generation.py  
-    writing_neuroml.py
-    load_and_write.py  
-    loading_modifying_writing.py
+     arraymorph.py
+     build_3D_network.py
+     build_network.py
+     ion_channel_generation.py
+     loading_modifying_writing_large.py
+     loading_modifying_writing.py
+     morphology_generation.py
+     write_pynn.py
+     write_syns.py
 
 Unit tests
 ----------
@@ -67,6 +72,6 @@ If everything worked your output should look something like this:
 
     .......
     ----------------------------------------------------------------------
-    Ran 7 tests in 0.001s
+    Ran 40 tests in 4.01s
     
     OK

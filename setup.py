@@ -2,13 +2,17 @@
 
 from distutils.core import setup
 
-long_description = open("README").read()
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
+
+long_description = open("README.md").read()
 
 setup(
     data_files=[("",['neuroml/test/Purk2M9s.nml'])],
+    install_requires=required,
     name = "libNeuroML",
-    version = '0.1.7',
-    packages = ['neuroml', 'neuroml.test','neuroml.nml','neuroml.examples'],
+    version = '0.1.8',
+    packages = ['neuroml', 'neuroml.test','neuroml.nml'],
     package_data = {'neuroml.test': ['*.nml']},
     author = "libNeuroML authors and contributors",
     author_email = "vellamike@gmail.com",
@@ -25,6 +29,3 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Topic :: Scientific/Engineering']
 )
-
-
-

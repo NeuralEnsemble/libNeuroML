@@ -1,25 +1,27 @@
 """
-In this example an axon is built, a morphology is loaded, the axon is
-then connected to the loadeed morphology.
+Example of utilising arraymorph
+
 """
 
+import neuroml.arraymorph as am
 import neuroml
-import neuroml.loaders as loaders
 import neuroml.writers as writers
 
-fn = './test_files/Purk2M9s.nml'
-doc = loaders.NeuroMLLoader.load(fn)
-print("Loaded morphology file from: "+fn)
+#In this example arraymorph is used in an identical way to the morphology class:
 
-#get the parent segment:
-parent_segment = doc.cells[0].morphology.segments[0]
+p = neuroml.Point3DWithDiam(x=0,y=0,z=0,diameter=50)
+d = neuroml.Point3DWithDiam(x=50,y=0,z=0,diameter=50)
+soma = neuroml.Segment(proximal=p, distal=d)
+soma.name = 'Soma'
+soma.id = 0
 
-parent = neuroml.SegmentParent(segments=parent_segment.id)
+#now make an axon with 100 compartments:
 
-#make an axon:
-seg_id = 5000 # need a way to get a unique id from a morphology
+parent = neuroml.SegmentParent(segments=soma.id)
+parent_segment = soma
 axon_segments = []
-for i in range(10):
+seg_id = 1
+for i in range(100):
     p = neuroml.Point3DWithDiam(x=parent_segment.distal.x,
                                 y=parent_segment.distal.y,
                                 z=parent_segment.distal.z,
@@ -45,17 +47,25 @@ for i in range(10):
 
     axon_segments.append(axon_segment)
 
-doc.cells[0].morphology.segments += axon_segments
+test_morphology = am.ArrayMorphology()
+test_morphology.segments.append(soma)
+test_morphology.segments += axon_segments
+test_morphology.id = "TestMorphology"
 
-nml_file = './tmp/modified_morphology.nml'
+cell = neuroml.Cell()
+cell.name = 'TestCell'
+cell.id = 'TestCell'
+cell.morphology = test_morphology
 
-writers.NeuroMLWriter.write(doc,nml_file)
 
-print("Saved modified morphology file to: "+nml_file)
+doc = neuroml.NeuroMLDocument()
+#doc.name = "Test neuroML document"
 
+doc.cells.append(cell)
+doc.id = "TestNeuroMLDocument"
 
-###### Validate the NeuroML ######    
+fn = '/home/mike/testmorphwrite.nml'
 
-from utils import validateNeuroML2
+writers.NeuroMLWriter.write(doc,fn)
 
-validateNeuroML2(nml_file)
+print("Written morphology file to: "+fn)

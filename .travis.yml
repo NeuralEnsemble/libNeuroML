@@ -1,6 +1,29 @@
 language: python
+
+#python 3 not supported as dependencies (generateDS,jsonpickle,h5py,numpy and others) don't support it
 python:
   - "2.6"
   - "2.7"
-# command to run tests, e.g. python setup.py test
-script:  cd ./neuroml/test && nosetests
+
+before_install:
+    - sudo apt-get update -qq
+    - sudo apt-get install -qq libhdf5-serial-dev
+    - if [[ $TRAVIS_PYTHON_VERSION == "2.6" ]]; then pip install unittest2; fi
+    - pip install cython numpy
+
+# command to install dependencies
+install:
+  - "pip install numexpr"
+  - "pip install . --use-mirrors"
+  - "pip install jsonpickle"
+  - "pip install pymongo"
+  - "pip install simplejson"
+  - "pip install tables"
+  - "pip install -r requirements.txt --use-mirrors"
+
+# command to run tests and examples, e.g. python setup.py test
+script:  
+  - cd ./neuroml/test && nosetests 
+  - cd ../examples && mkdir ./tmp && python run_all.py
+
+services: mongodb

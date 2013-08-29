@@ -1,10 +1,15 @@
 """
 Example of connecting segments together to create a 
 multicompartmental model of a cell.
+
+In this case ArrayMorphology will be used rather than
+Morphology - demonstrating its similarity and
+ability to save in HDF5 format
 """
 
 import neuroml
 import neuroml.writers as writers
+import neuroml.arraymorph as am
 
 p = neuroml.Point3DWithDiam(x=0,y=0,z=0,diameter=50)
 d = neuroml.Point3DWithDiam(x=50,y=0,z=0,diameter=50)
@@ -44,7 +49,7 @@ for i in range(100):
 
     axon_segments.append(axon_segment)
 
-test_morphology = neuroml.Morphology()
+test_morphology = am.ArrayMorphology()
 test_morphology.segments.append(soma)
 test_morphology.segments += axon_segments
 test_morphology.id = "TestMorphology"
@@ -61,14 +66,8 @@ doc = neuroml.NeuroMLDocument()
 doc.cells.append(cell)
 doc.id = "TestNeuroMLDocument"
 
-nml_file = 'tmp/testmorphwrite.nml'
-    
-writers.NeuroMLWriter.write(doc,nml_file)
-    
-print("Written morphology file to: "+nml_file)
+fn = 'tmp/arraymorph.nml'
 
-###### Validate the NeuroML ######    
+writers.NeuroMLWriter.write(doc,fn)
 
-from utils import validateNeuroML2
-
-validateNeuroML2(nml_file)
+print("Written morphology file to: "+fn)

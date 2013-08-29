@@ -1,5 +1,5 @@
-Tools relevant for this initiative
-==================================
+Useful tools
+============
 
 Below is a list of tools which are built in or use Python and which would benefit from a standard library to access,
 modify and save detailed neuronal morphologies. Developers from most of these initiatives are involved with the
