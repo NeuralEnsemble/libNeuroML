@@ -13,6 +13,8 @@ before_install:
 
 # command to install dependencies
 install:
+  - "pip install lxml"
+  - "pip install numpy"
   - "pip install numexpr"
   - "pip install . --use-mirrors"
   - "pip install jsonpickle"
