@@ -6,6 +6,7 @@ import lxml
 from lxml import objectify
 import re
 from config import variables
+import csv
 
 def remove_curlies(string):
     return re.sub("{.*}","",string)
@@ -118,3 +119,15 @@ NameTable['biophysicalProperties'] = 'biophysical_properties'
 
 print("NameTable is as follows:")
 print NameTable
+
+print("Saving NameTable to csv file")
+writer = csv.writer(open('name_table.csv', 'wb'))
+for key, value in NameTable.items():
+   writer.writerow([key, value])
+
+print ("Saving name changes table to csv file")
+changes_writer = csv.writer(open('changed_names.csv','wb'))
+for key in NameTable:
+    value = NameTable[key]
+    if key != value:
+        changes_writer.writerow([key,value])
