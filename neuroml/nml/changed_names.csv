@@ -14,6 +14,7 @@ member,members
 q10Settings,q10_settings
 reverseRate,reverse_rate
 rampGenerator,ramp_generators
+channelDensityNernst,channel_density_nernsts
 gateHHrates,gate_hh_rates
 voltageClamp,voltage_clamps
 voltageConcDepBlockMechanism,voltage_conc_dep_block_mechanism

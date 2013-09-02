@@ -22,6 +22,7 @@ q10Settings,q10_settings
 reverseRate,reverse_rate
 true,true
 rampGenerator,ramp_generators
+channelDensityNernst,channel_density_nernsts
 gateHHrates,gate_hh_rates
 to,to
 voltageClamp,voltage_clamps
