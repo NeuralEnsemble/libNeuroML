@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Aug 28 14:37:29 2013 by generateDS.py version 2.10b.
+# Generated Mon Sep  2 18:12:40 2013 by generateDS.py version 2.10b.
 #
 
 import sys
@@ -2553,6 +2553,7 @@ class MembraneProperties(GeneratedsSuper):
     member_data_items_ = [
         MemberSpec_('channel_populations', 'ChannelPopulation', 1),
         MemberSpec_('channel_densities', 'ChannelDensity', 1),
+        MemberSpec_('channel_density_nernsts', 'ChannelDensityNernst', 1),
         MemberSpec_('spike_threshes', 'ValueAcrossSegOrSegGroup', 1),
         MemberSpec_('specific_capacitances', 'ValueAcrossSegOrSegGroup', 1),
         MemberSpec_('init_memb_potentials', 'ValueAcrossSegOrSegGroup', 1),
@@ -2560,7 +2561,7 @@ class MembraneProperties(GeneratedsSuper):
     ]
     subclass = None
     superclass = None
-    def __init__(self, channel_populations=None, channel_densities=None, spike_threshes=None, specific_capacitances=None, init_memb_potentials=None, reversal_potentials=None):
+    def __init__(self, channel_populations=None, channel_densities=None, channel_density_nernsts=None, spike_threshes=None, specific_capacitances=None, init_memb_potentials=None, reversal_potentials=None):
         if channel_populations is None:
             self.channel_populations = []
         else:
@@ -2569,6 +2570,10 @@ class MembraneProperties(GeneratedsSuper):
             self.channel_densities = []
         else:
             self.channel_densities = channel_densities
+        if channel_density_nernsts is None:
+            self.channel_density_nernsts = []
+        else:
+            self.channel_density_nernsts = channel_density_nernsts
         if spike_threshes is None:
             self.spike_threshes = []
         else:
@@ -2595,6 +2600,7 @@ class MembraneProperties(GeneratedsSuper):
         if (
             self.channel_populations or
             self.channel_densities or
+            self.channel_density_nernsts or
             self.spike_threshes or
             self.specific_capacitances or
             self.init_memb_potentials or
@@ -2630,6 +2636,8 @@ class MembraneProperties(GeneratedsSuper):
             channelPopulation_.export(outfile, level, namespace_, name_='channelPopulation', pretty_print=pretty_print)
         for channelDensity_ in self.channel_densities:
             channelDensity_.export(outfile, level, namespace_, name_='channelDensity', pretty_print=pretty_print)
+        for channelDensityNernst_ in self.channel_density_nernsts:
+            channelDensityNernst_.export(outfile, level, namespace_, name_='channelDensityNernst', pretty_print=pretty_print)
         for spikeThresh_ in self.spike_threshes:
             spikeThresh_.export(outfile, level, namespace_, name_='spikeThresh', pretty_print=pretty_print)
         for specificCapacitance_ in self.specific_capacitances:
@@ -2666,6 +2674,18 @@ class MembraneProperties(GeneratedsSuper):
             showIndent(outfile, level)
             outfile.write('model_.ChannelDensity(\n')
             channelDensity_.exportLiteral(outfile, level, name_='ChannelDensity')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('channel_density_nernsts=[\n')
+        level += 1
+        for channelDensityNernst_ in self.channel_density_nernsts:
+            showIndent(outfile, level)
+            outfile.write('model_.ChannelDensityNernst(\n')
+            channelDensityNernst_.exportLiteral(outfile, level, name_='ChannelDensityNernst')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -2736,6 +2756,10 @@ class MembraneProperties(GeneratedsSuper):
             obj_ = ChannelDensity.factory()
             obj_.build(child_)
             self.channel_densities.append(obj_)
+        elif nodeName_ == 'channelDensityNernst':
+            obj_ = ChannelDensityNernst.factory()
+            obj_.build(child_)
+            self.channel_density_nernsts.append(obj_)
         elif nodeName_ == 'spikeThresh':
             class_obj_ = self.get_class_obj_(child_, ValueAcrossSegOrSegGroup)
             obj_ = class_obj_.factory()
@@ -7447,6 +7471,154 @@ class ExtracellularProperties(Base):
             self.species.append(obj_)
         super(ExtracellularProperties, self).buildChildren(child_, node, nodeName_, True)
 # end class ExtracellularProperties
+
+
+class ChannelDensityNernst(Base):
+    """Specifying the ion here again is redundant, this will be set in
+    ionChannel. It is added here TEMPORARILY as selecting all ca or
+    na conducting channel populations/densities in a cell would be
+    difficult otherwise. It should be removed in the longer term,
+    due to possible inconsistencies in this value and that in the
+    ionChannel element. TODO: remove."""
+    member_data_items_ = [
+        MemberSpec_('ionChannel', 'NmlId', 0),
+        MemberSpec_('condDensity', 'Nml2Quantity_conductanceDensity', 0),
+        MemberSpec_('segmentGroup', 'NmlId', 0),
+        MemberSpec_('segment', 'NmlId', 0),
+        MemberSpec_('ion', 'NmlId', 0),
+    ]
+    subclass = None
+    superclass = Base
+    def __init__(self, neuro_lex_id=None, id=None, ion_channels=None, cond_density=None, segment_groups='all', segments=None, ion=None):
+        super(ChannelDensityNernst, self).__init__(neuro_lex_id, id, )
+        self.ion_channels = _cast(None, ion_channels)
+        self.cond_density = _cast(None, cond_density)
+        self.segment_groups = _cast(None, segment_groups)
+        self.segments = _cast(None, segments)
+        self.ion = _cast(None, ion)
+        pass
+    def factory(*args_, **kwargs_):
+        if ChannelDensityNernst.subclass:
+            return ChannelDensityNernst.subclass(*args_, **kwargs_)
+        else:
+            return ChannelDensityNernst(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_conductanceDensity(self, value):
+        # Validate type Nml2Quantity_conductanceDensity, a restriction on xs:string.
+        pass
+    def hasContent_(self):
+        if (
+            super(ChannelDensityNernst, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='ChannelDensityNernst', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensityNernst')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ChannelDensityNernst'):
+        super(ChannelDensityNernst, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensityNernst')
+        if self.ion_channels is not None and 'ion_channels' not in already_processed:
+            already_processed.add('ion_channels')
+            outfile.write(' ionChannel=%s' % (quote_attrib(self.ion_channels), ))
+        if self.cond_density is not None and 'cond_density' not in already_processed:
+            already_processed.add('cond_density')
+            outfile.write(' condDensity=%s' % (quote_attrib(self.cond_density), ))
+        if self.segment_groups is not None and 'segment_groups' not in already_processed:
+            already_processed.add('segment_groups')
+            outfile.write(' segmentGroup=%s' % (quote_attrib(self.segment_groups), ))
+        if self.segments is not None and 'segments' not in already_processed:
+            already_processed.add('segments')
+            outfile.write(' segment=%s' % (quote_attrib(self.segments), ))
+        if self.ion is not None and 'ion' not in already_processed:
+            already_processed.add('ion')
+            outfile.write(' ion=%s' % (quote_attrib(self.ion), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='ChannelDensityNernst', fromsubclass_=False, pretty_print=True):
+        super(ChannelDensityNernst, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
+    def exportLiteral(self, outfile, level, name_='ChannelDensityNernst'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.ion_channels is not None and 'ion_channels' not in already_processed:
+            already_processed.add('ion_channels')
+            showIndent(outfile, level)
+            outfile.write('ion_channels="%s",\n' % (self.ion_channels,))
+        if self.cond_density is not None and 'cond_density' not in already_processed:
+            already_processed.add('cond_density')
+            showIndent(outfile, level)
+            outfile.write('cond_density="%s",\n' % (self.cond_density,))
+        if self.segment_groups is not None and 'segment_groups' not in already_processed:
+            already_processed.add('segment_groups')
+            showIndent(outfile, level)
+            outfile.write('segment_groups="%s",\n' % (self.segment_groups,))
+        if self.segments is not None and 'segments' not in already_processed:
+            already_processed.add('segments')
+            showIndent(outfile, level)
+            outfile.write('segments="%s",\n' % (self.segments,))
+        if self.ion is not None and 'ion' not in already_processed:
+            already_processed.add('ion')
+            showIndent(outfile, level)
+            outfile.write('ion="%s",\n' % (self.ion,))
+        super(ChannelDensityNernst, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(ChannelDensityNernst, self).exportLiteralChildren(outfile, level, name_)
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('ionChannel', node)
+        if value is not None and 'ionChannel' not in already_processed:
+            already_processed.add('ionChannel')
+            self.ion_channels = value
+            self.validate_NmlId(self.ion_channels)    # validate type NmlId
+        value = find_attr_value_('condDensity', node)
+        if value is not None and 'condDensity' not in already_processed:
+            already_processed.add('condDensity')
+            self.cond_density = value
+            self.validate_Nml2Quantity_conductanceDensity(self.cond_density)    # validate type Nml2Quantity_conductanceDensity
+        value = find_attr_value_('segmentGroup', node)
+        if value is not None and 'segmentGroup' not in already_processed:
+            already_processed.add('segmentGroup')
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)    # validate type NmlId
+        value = find_attr_value_('segment', node)
+        if value is not None and 'segment' not in already_processed:
+            already_processed.add('segment')
+            self.segments = value
+            self.validate_NmlId(self.segments)    # validate type NmlId
+        value = find_attr_value_('ion', node)
+        if value is not None and 'ion' not in already_processed:
+            already_processed.add('ion')
+            self.ion = value
+            self.validate_NmlId(self.ion)    # validate type NmlId
+        super(ChannelDensityNernst, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(ChannelDensityNernst, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class ChannelDensityNernst
 
 
 class ChannelDensity(Base):
@@ -14016,90 +14188,91 @@ class IF_cond_alpha(basePyNNIaFCondCell):
 
 
 GDSClassesMapping = {
-    'intracellularProperties': IntracellularProperties,
     'inhomogeneousParam': InhomogeneousParam,
-    'q10Settings': Q10Settings,
-    'spikeGenerator': SpikeGenerator,
-    'distal': DistalDetails,
     'random': RandomLayout,
-    'variableParameter': VariableParameter,
-    'subTree': SubTree,
     'gateHHtauInf': GateHHTauInf,
+    'spikeGeneratorPoisson': SpikeGeneratorPoisson,
+    'proximal': ProximalDetails,
+    'morphology': Morphology,
+    'spikeGeneratorRandom': SpikeGeneratorRandom,
+    'sineGenerator': SineGenerator,
+    'layout': Layout,
+    'reverseRate': HHRate,
+    'rampGenerator': RampGenerator,
+    'channelDensityNernst': ChannelDensityNernst,
+    'iafRefCell': IaFRefCell,
+    'to': SegmentEndPoint,
+    'voltageClamp': VoltageClamp,
+    'location': Location,
+    'input': Input,
+    'include': Include,
+    'neuroml': NeuroMLDocument,
+    'blockMechanism': BlockMechanism,
+    'plasticityMechanism': PlasticityMechanism,
+    'adExIaFCell': AdExIaFCell,
+    'unstructured': UnstructuredLayout,
+    'alphaCondSynapse': AlphaCondSynapse,
+    'grid': GridLayout,
+    'spikeThresh': ValueAcrossSegOrSegGroup,
     'inputList': InputList,
-    'specificCapacitance': ValueAcrossSegOrSegGroup,
-    'ionChannel': IonChannel,
+    'membraneProperties': MembraneProperties,
+    'timeCourse': HHTime,
+    'spikeGenerator': SpikeGenerator,
+    'subTree': SubTree,
     'gateHHratesTau': GateHHRatesTau,
     'biophysicalProperties': BiophysicalProperties,
-    'membraneProperties': MembraneProperties,
-    'proximal': ProximalDetails,
+    'segmentGroup': SegmentGroup,
+    'network': Network,
+    'space': Space,
+    'cell': Cell,
+    'forwardRate': HHRate,
+    'synapticConnection': SynapticConnection,
+    'gateHHratesInf': GateHHRatesInf,
+    'parent': SegmentParent,
+    'alphaCurrSynapse': AlphaCurrSynapse,
+    'izhikevichCell': IzhikevichCell,
     'path': Path,
-    'morphology': Morphology,
+    'region': Region,
+    'extracellularProperties': ExtracellularPropertiesLocal,
+    'connection': Connection,
+    'channelDensity': ChannelDensity,
+    'intracellularProperties': IntracellularProperties,
+    'projection': Projection,
+    'q10Settings': Q10Settings,
+    'distal': DistalDetails,
+    'from': SegmentEndPoint,
+    'decayingPoolConcentrationModel': DecayingPoolConcentrationModel,
+    'cellSet': CellSet,
+    'spike': Spike,
+    'channelPopulation': ChannelPopulation,
+    'inhomogeneousValue': InhomogeneousValue,
+    'iafTauCell': IaFTauCell,
+    'pulseGenerator': PulseGenerator,
+    'gateHHrates': GateHHRates,
+    'population': Population,
+    'ionChannel': IonChannel,
+    'expCurrSynapse': ExpCurrSynapse,
+    'explicitInput': ExplicitInput,
+    'resistivity': ValueAcrossSegOrSegGroup,
+    'specificCapacitance': ValueAcrossSegOrSegGroup,
     'iafCell': IaFCell,
     'iafTauRefCell': IaFTauRefCell,
     'species': Species,
-    'resistivity': ValueAcrossSegOrSegGroup,
-    'member': Member,
-    'inhomogeneousValue': InhomogeneousValue,
-    'spikeGeneratorRandom': SpikeGeneratorRandom,
-    'sineGenerator': SineGenerator,
     'expCondSynapse': ExpCondSynapse,
-    'network': Network,
-    'reverseRate': HHRate,
-    'decayingPoolConcentrationModel': DecayingPoolConcentrationModel,
-    'segment': Segment,
-    'rampGenerator': RampGenerator,
-    'cellSet': CellSet,
-    'gateHHrates': GateHHRates,
-    'cell': Cell,
-    'to': SegmentEndPoint,
-    'voltageClamp': VoltageClamp,
-    'initMembPotential': ValueAcrossSegOrSegGroup,
-    'projection': Projection,
-    'spike': Spike,
+    'member': Member,
+    'instance': Instance,
     'gate': GateHHUndetermined,
     'steadyState': HHVariable,
-    'include': Include,
-    'forwardRate': HHRate,
-    'location': Location,
-    'synapticConnection': SynapticConnection,
-    'neuroml': NeuroMLDocument,
-    'from': SegmentEndPoint,
-    'blockMechanism': BlockMechanism,
-    'gateHHratesInf': GateHHRatesInf,
-    'parent': SegmentParent,
-    'plasticityMechanism': PlasticityMechanism,
-    'spikeThresh': ValueAcrossSegOrSegGroup,
-    'annotation': Annotation,
-    'instance': Instance,
-    'adExIaFCell': AdExIaFCell,
-    'grid': GridLayout,
-    'alphaCondSynapse': AlphaCondSynapse,
-    'izhikevichCell': IzhikevichCell,
-    'input': Input,
-    'iafTauCell': IaFTauCell,
-    'segmentGroup': SegmentGroup,
+    'initMembPotential': ValueAcrossSegOrSegGroup,
+    'variableParameter': VariableParameter,
     'expTwoSynapse': ExpTwoSynapse,
-    'pulseGenerator': PulseGenerator,
-    'iafRefCell': IaFRefCell,
+    'segment': Segment,
+    'annotation': Annotation,
     'structure': SpaceStructure,
     'spikeArray': SpikeArray,
-    'unstructured': UnstructuredLayout,
     'blockingPlasticSynapse': BlockingPlasticSynapse,
     'reversalPotential': ReversalPotential,
-    'channelPopulation': ChannelPopulation,
-    'alphaCurrSynapse': AlphaCurrSynapse,
-    'region': Region,
-    'space': Space,
-    'expCurrSynapse': ExpCurrSynapse,
-    'population': Population,
-    'timeCourse': HHTime,
-    'explicitInput': ExplicitInput,
-    'extracellularProperties': ExtracellularPropertiesLocal,
-    'connection': Connection,
-    'spikeGeneratorPoisson': SpikeGeneratorPoisson,
-    'channelDensity': ChannelDensity,
     'expOneSynapse': ExpOneSynapse,
-    'layout': Layout,
     'baseCell': BaseCell,
 }
 
@@ -14231,324 +14404,7 @@ __all__ = [
     "Cell",
     "CellSet",
     "ChannelDensity",
-    "ChannelPopulation",
-    "ComponentType",
-    "ConcentrationModel_D",
-    "Connection",
-    "DecayingPoolConcentrationModel",
-    "DistalDetails",
-    "EIF_cond_alpha_isfa_ista",
-    "EIF_cond_exp_isfa_ista",
-    "ExpCondSynapse",
-    "ExpCurrSynapse",
-    "ExpOneSynapse",
-    "ExpTwoSynapse",
-    "ExplicitInput",
-    "ExtracellularProperties",
-    "ExtracellularPropertiesLocal",
-    "GateHHRates",
-    "GateHHRatesInf",
-    "GateHHRatesTau",
-    "GateHHTauInf",
-    "GateHHUndetermined",
-    "GridLayout",
-    "HHRate",
-    "HHTime",
-    "HHVariable",
-    "HH_cond_exp",
-    "IF_cond_alpha",
-    "IF_cond_exp",
-    "IF_curr_alpha",
-    "IF_curr_exp",
-    "IaFCell",
-    "IaFRefCell",
-    "IaFTauCell",
-    "IaFTauRefCell",
-    "Include",
-    "IncludeType",
-    "InhomogeneousParam",
-    "InhomogeneousValue",
-    "Input",
-    "InputList",
-    "Instance",
-    "IntracellularProperties",
-    "IonChannel",
-    "IzhikevichCell",
-    "Layout",
-    "Location",
-    "Member",
-    "MembraneProperties",
-    "Morphology",
-    "Network",
-    "NeuroMLDocument",
-    "Path",
-    "PlasticityMechanism",
-    "Point3DWithDiam",
-    "Population",
-    "Projection",
-    "ProximalDetails",
-    "PulseGenerator",
-    "Q10Settings",
-    "RampGenerator",
-    "RandomLayout",
-    "ReactionScheme",
-    "Region",
-    "ReversalPotential",
-    "Segment",
-    "SegmentEndPoint",
-    "SegmentGroup",
-    "SegmentParent",
-    "SineGenerator",
-    "Space",
-    "SpaceStructure",
-    "Species",
-    "Spike",
-    "SpikeArray",
-    "SpikeGenerator",
-    "SpikeGeneratorPoisson",
-    "SpikeGeneratorRandom",
-    "SpikeSourcePoisson",
-    "Standalone",
-    "SubTree",
-    "SynapticConnection",
-    "UnstructuredLayout",
-    "ValueAcrossSegOrSegGroup",
-    "VariableParameter",
-    "VoltageClamp",
-    "basePyNNCell",
-    "basePyNNIaFCell",
-    "basePyNNIaFCondCell"
-]
-
-__all__ = [
-    "AdExIaFCell",
-    "AlphaCondSynapse",
-    "AlphaCurrSynapse",
-    "Annotation",
-    "Base",
-    "BaseCell",
-    "BaseConductanceBasedSynapse",
-    "BasePynnSynapse",
-    "BaseSynapse",
-    "BaseWithoutId",
-    "BiophysicalProperties",
-    "BlockMechanism",
-    "BlockingPlasticSynapse",
-    "Cell",
-    "CellSet",
-    "ChannelDensity",
-    "ChannelPopulation",
-    "ComponentType",
-    "ConcentrationModel_D",
-    "Connection",
-    "DecayingPoolConcentrationModel",
-    "DistalDetails",
-    "EIF_cond_alpha_isfa_ista",
-    "EIF_cond_exp_isfa_ista",
-    "ExpCondSynapse",
-    "ExpCurrSynapse",
-    "ExpOneSynapse",
-    "ExpTwoSynapse",
-    "ExplicitInput",
-    "ExtracellularProperties",
-    "ExtracellularPropertiesLocal",
-    "GateHHRates",
-    "GateHHRatesInf",
-    "GateHHRatesTau",
-    "GateHHTauInf",
-    "GateHHUndetermined",
-    "GridLayout",
-    "HHRate",
-    "HHTime",
-    "HHVariable",
-    "HH_cond_exp",
-    "IF_cond_alpha",
-    "IF_cond_exp",
-    "IF_curr_alpha",
-    "IF_curr_exp",
-    "IaFCell",
-    "IaFRefCell",
-    "IaFTauCell",
-    "IaFTauRefCell",
-    "Include",
-    "IncludeType",
-    "InhomogeneousParam",
-    "InhomogeneousValue",
-    "Input",
-    "InputList",
-    "Instance",
-    "IntracellularProperties",
-    "IonChannel",
-    "IzhikevichCell",
-    "Layout",
-    "Location",
-    "Member",
-    "MembraneProperties",
-    "Morphology",
-    "Network",
-    "NeuroMLDocument",
-    "Path",
-    "PlasticityMechanism",
-    "Point3DWithDiam",
-    "Population",
-    "Projection",
-    "ProximalDetails",
-    "PulseGenerator",
-    "Q10Settings",
-    "RampGenerator",
-    "RandomLayout",
-    "ReactionScheme",
-    "Region",
-    "ReversalPotential",
-    "Segment",
-    "SegmentEndPoint",
-    "SegmentGroup",
-    "SegmentParent",
-    "SineGenerator",
-    "Space",
-    "SpaceStructure",
-    "Species",
-    "Spike",
-    "SpikeArray",
-    "SpikeGenerator",
-    "SpikeGeneratorPoisson",
-    "SpikeGeneratorRandom",
-    "SpikeSourcePoisson",
-    "Standalone",
-    "SubTree",
-    "SynapticConnection",
-    "UnstructuredLayout",
-    "ValueAcrossSegOrSegGroup",
-    "VariableParameter",
-    "VoltageClamp",
-    "basePyNNCell",
-    "basePyNNIaFCell",
-    "basePyNNIaFCondCell"
-]
-
-__all__ = [
-    "AdExIaFCell",
-    "AlphaCondSynapse",
-    "AlphaCurrSynapse",
-    "Annotation",
-    "Base",
-    "BaseCell",
-    "BaseConductanceBasedSynapse",
-    "BasePynnSynapse",
-    "BaseSynapse",
-    "BaseWithoutId",
-    "BiophysicalProperties",
-    "BlockMechanism",
-    "BlockingPlasticSynapse",
-    "Cell",
-    "CellSet",
-    "ChannelDensity",
-    "ChannelPopulation",
-    "ComponentType",
-    "ConcentrationModel_D",
-    "Connection",
-    "DecayingPoolConcentrationModel",
-    "DistalDetails",
-    "EIF_cond_alpha_isfa_ista",
-    "EIF_cond_exp_isfa_ista",
-    "ExpCondSynapse",
-    "ExpCurrSynapse",
-    "ExpOneSynapse",
-    "ExpTwoSynapse",
-    "ExplicitInput",
-    "ExtracellularProperties",
-    "ExtracellularPropertiesLocal",
-    "GateHHRates",
-    "GateHHRatesInf",
-    "GateHHRatesTau",
-    "GateHHTauInf",
-    "GateHHUndetermined",
-    "GridLayout",
-    "HHRate",
-    "HHTime",
-    "HHVariable",
-    "HH_cond_exp",
-    "IF_cond_alpha",
-    "IF_cond_exp",
-    "IF_curr_alpha",
-    "IF_curr_exp",
-    "IaFCell",
-    "IaFRefCell",
-    "IaFTauCell",
-    "IaFTauRefCell",
-    "Include",
-    "IncludeType",
-    "InhomogeneousParam",
-    "InhomogeneousValue",
-    "Input",
-    "InputList",
-    "Instance",
-    "IntracellularProperties",
-    "IonChannel",
-    "IzhikevichCell",
-    "Layout",
-    "Location",
-    "Member",
-    "MembraneProperties",
-    "Morphology",
-    "Network",
-    "NeuroMLDocument",
-    "Path",
-    "PlasticityMechanism",
-    "Point3DWithDiam",
-    "Population",
-    "Projection",
-    "ProximalDetails",
-    "PulseGenerator",
-    "Q10Settings",
-    "RampGenerator",
-    "RandomLayout",
-    "ReactionScheme",
-    "Region",
-    "ReversalPotential",
-    "Segment",
-    "SegmentEndPoint",
-    "SegmentGroup",
-    "SegmentParent",
-    "SineGenerator",
-    "Space",
-    "SpaceStructure",
-    "Species",
-    "Spike",
-    "SpikeArray",
-    "SpikeGenerator",
-    "SpikeGeneratorPoisson",
-    "SpikeGeneratorRandom",
-    "SpikeSourcePoisson",
-    "Standalone",
-    "SubTree",
-    "SynapticConnection",
-    "UnstructuredLayout",
-    "ValueAcrossSegOrSegGroup",
-    "VariableParameter",
-    "VoltageClamp",
-    "basePyNNCell",
-    "basePyNNIaFCell",
-    "basePyNNIaFCondCell"
-]
-
-__all__ = [
-    "AdExIaFCell",
-    "AlphaCondSynapse",
-    "AlphaCurrSynapse",
-    "Annotation",
-    "Base",
-    "BaseCell",
-    "BaseConductanceBasedSynapse",
-    "BasePynnSynapse",
-    "BaseSynapse",
-    "BaseWithoutId",
-    "BiophysicalProperties",
-    "BlockMechanism",
-    "BlockingPlasticSynapse",
-    "Cell",
-    "CellSet",
-    "ChannelDensity",
+    "ChannelDensityNernst",
     "ChannelPopulation",
     "ComponentType",
     "ConcentrationModel_D",
