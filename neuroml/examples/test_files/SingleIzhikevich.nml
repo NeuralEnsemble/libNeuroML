@@ -1,0 +1,3 @@
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2"  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema" id="SingleIzhikevich">
+    <izhikevichCell id="iz0" a="0.02" c="-65.0" b="0.2" d="6" v0="-70mV" thresh="30mV"/>
+</neuroml>
