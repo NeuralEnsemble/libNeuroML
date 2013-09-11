@@ -26,6 +26,6 @@ install:
 # command to run tests and examples, e.g. python setup.py test
 script:  
   - cd ./neuroml/test && nosetests 
-  - cd ../examples && mkdir ./tmp && python run_all.py
+  - cd ../examples && python run_all.py
 
 services: mongodb

@@ -3,13 +3,13 @@ import neuroml
 
 doc = loaders.NeuroMLLoader.load('./test_files/Purk2M9s.nml')
 
-mycell = doc.cells[0]
+sample_cell = doc.cells[0]
 
 #extract the morphology:
-my_morphology = mycell.morphology
+sample_morphology = sample_cell.morphology
 
 #randomly  change a segment id:
-my_morphology.segments[33].id = 'random_test'
+sample_morphology.segments[33].id = 'random_test'
 
 newcell = neuroml.Cell()
 newcell.id = "some random cell"

@@ -52,6 +52,6 @@ print("Written channel file to: "+nml_file)
 
 ###### Validate the NeuroML ######    
 
-from utils import validateNeuroML2
+from neuroml.utils import validateNeuroML2
 
 validateNeuroML2(nml_file)

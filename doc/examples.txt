@@ -60,3 +60,11 @@ Working with arraymorphs
 ------------------------
 
 .. literalinclude:: ../neuroml/examples/arraymorph_generation.py
+
+Working with Izhikevich Cells
+-----------------------------
+
+These examples were kindly contributed by Steve Marsh
+
+.. literalinclude:: ../neuroml/examples/single_izhikevich_reader.py
+.. literalinclude:: ../neuroml/examples/single_izhikevich_writer.py

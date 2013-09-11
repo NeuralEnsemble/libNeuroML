@@ -144,8 +144,9 @@ release is ready the following needs to happen:
   - update version number in doc/conf.py
   - update release number in doc/conf.py (same as version number)
   - update changelog in README.md
-  - merge development branch with master (usually via pull request -
-  let someone else do the merge)
+  - merge development branch with master (This should happen via pull
+    request - do not do the merge yourself even if you are an owner
+    of the repository.
   - push latest release to PyPi
 
 Miscellaneous
