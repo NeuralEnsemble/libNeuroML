@@ -79,7 +79,6 @@ class WriteBenchmark(object):
         """
 
         filename = tempfile.mkstemp()[1]
-
         writer_method = neuroml.writers.ArrayMorphWriter.write
         writer_method(self.big_arraymorph,filename)
 
@@ -117,17 +116,40 @@ class WriteBenchmark(object):
         
 from matplotlib import pyplot as plt
 
+
+
+#prototype:
 if __name__ == "__main__":
-    times = []
-    num_segments_list = []
 
-    for i in range(300):
-        num_segments = 1e4 * i
-        benchmark = WriteBenchmark(num_segments=num_segments)
-        write_time = benchmark.run()
-        times.append(write_time)
-        num_segments_list.append(num_segments)
+    total_results= []
+    num_tests =1
+    for i in range(num_tests):
+        times = []
+        num_segments_list = []
 
-    plt.plot(num_segments_list,times)
+        for i in range(5):
+            print "test %d" % (i)
+            num_segments = 1e5 * i
+            benchmark = WriteBenchmark(num_segments=num_segments)
+            write_time = benchmark.run()
+            times.append(write_time)
+            num_segments_list.append(num_segments)
+
+        total_results.append(times)
+
+    #Need to add JSON serialization and NeuroML saerialization
+    times = np.mean(total_results,axis=0)
+    num_segments_list = np.array(num_segments_list)
+    plt.plot(num_segments_list/1000,times)
+    plt.title("ArrayMorph write to disk benchmark (HDF5 serialization)")
+    plt.xlabel("Number of segments in morphology (Units of 1000 segments)")
+    plt.ylabel("Time to write to disk (s)")
     plt.show()
+
+#    plt.plot(num_segments_list/1000,times)
+#    plt.title("ArrayMorph write to disk benchmark (HDF5 serialization)")
+#    plt.xlabel("Number of segments in morphology (Units of 1000 segments)")
+#    plt.ylabel("Time to write to disk (s)")
+#    plt.show()
+
 #    write_time = benchmark_1.write_time
