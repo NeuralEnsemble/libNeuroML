@@ -70,7 +70,7 @@ class SWCLoader(object):
                 connection_indices[i]=-1
 
         #This needs to become an "Optimized Morphology" of some kind
-        return Backend(vertices=vertices, 
+        return arraymorph.ArrayMorphology(vertices=vertices, 
                        connectivity=connection_indices, 
                        name=name )
 
