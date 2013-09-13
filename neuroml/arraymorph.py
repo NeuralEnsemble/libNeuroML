@@ -186,8 +186,6 @@ class ArrayMorphology(neuroml.Morphology):
         return morphology
 
     def segment_from_vertex_index(self,index):
-        print "index:"
-        print index
         parent_index = self.connectivity[index]
         
         node_x = self.vertices[index][0]
