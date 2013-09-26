@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Sep  3 14:37:28 2013 by generateDS.py version 2.10b.
+# Generated Thu Sep 26 19:23:55 2013 by generateDS.py version 2.10b.
 #
 
 import sys
@@ -4327,13 +4327,15 @@ class SynapticConnection(GeneratedsSuper):
     member_data_items_ = [
         MemberSpec_('to', 'xs:string', 0),
         MemberSpec_('synapse', 'xs:string', 0),
+        MemberSpec_('destination', 'NmlId', 0),
         MemberSpec_('from', 'xs:string', 0),
     ]
     subclass = None
     superclass = None
-    def __init__(self, to=None, synapse=None, from_=None):
+    def __init__(self, to=None, synapse=None, destination=None, from_=None):
         self.to = _cast(None, to)
         self.synapse = _cast(None, synapse)
+        self.destination = _cast(None, destination)
         self.from_ = _cast(None, from_)
         pass
     def factory(*args_, **kwargs_):
@@ -4342,6 +4344,9 @@ class SynapticConnection(GeneratedsSuper):
         else:
             return SynapticConnection(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
 
@@ -4371,6 +4376,9 @@ class SynapticConnection(GeneratedsSuper):
         if self.synapse is not None and 'synapse' not in already_processed:
             already_processed.add('synapse')
             outfile.write(' synapse=%s' % (self.gds_format_string(quote_attrib(self.synapse).encode(ExternalEncoding), input_name='synapse'), ))
+        if self.destination is not None and 'destination' not in already_processed:
+            already_processed.add('destination')
+            outfile.write(' destination=%s' % (quote_attrib(self.destination), ))
         if self.from_ is not None and 'from_' not in already_processed:
             already_processed.add('from_')
             outfile.write(' from=%s' % (self.gds_format_string(quote_attrib(self.from_).encode(ExternalEncoding), input_name='from'), ))
@@ -4391,6 +4399,10 @@ class SynapticConnection(GeneratedsSuper):
             already_processed.add('synapse')
             showIndent(outfile, level)
             outfile.write('synapse="%s",\n' % (self.synapse,))
+        if self.destination is not None and 'destination' not in already_processed:
+            already_processed.add('destination')
+            showIndent(outfile, level)
+            outfile.write('destination="%s",\n' % (self.destination,))
         if self.from_ is not None and 'from_' not in already_processed:
             already_processed.add('from_')
             showIndent(outfile, level)
@@ -4412,6 +4424,11 @@ class SynapticConnection(GeneratedsSuper):
         if value is not None and 'synapse' not in already_processed:
             already_processed.add('synapse')
             self.synapse = value
+        value = find_attr_value_('destination', node)
+        if value is not None and 'destination' not in already_processed:
+            already_processed.add('destination')
+            self.destination = value
+            self.validate_NmlId(self.destination)    # validate type NmlId
         value = find_attr_value_('from', node)
         if value is not None and 'from' not in already_processed:
             already_processed.add('from')
@@ -8919,6 +8936,140 @@ class BaseSynapse(Standalone):
 # end class BaseSynapse
 
 
+class FixedFactorConcentrationModel(Standalone):
+    """Should not be required, as it's present on the species element!"""
+    member_data_items_ = [
+        MemberSpec_('ion', 'NmlId', 0),
+        MemberSpec_('phi', 'Nml2Quantity_phiFactor', 0),
+        MemberSpec_('restingConc', 'Nml2Quantity_concentration', 0),
+        MemberSpec_('decayConstant', 'Nml2Quantity_time', 0),
+    ]
+    subclass = None
+    superclass = Standalone
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, ion=None, phi=None, resting_conc=None, decay_constant=None):
+        super(FixedFactorConcentrationModel, self).__init__(neuro_lex_id, id, metaid, notes, annotation, )
+        self.ion = _cast(None, ion)
+        self.phi = _cast(None, phi)
+        self.resting_conc = _cast(None, resting_conc)
+        self.decay_constant = _cast(None, decay_constant)
+        pass
+    def factory(*args_, **kwargs_):
+        if FixedFactorConcentrationModel.subclass:
+            return FixedFactorConcentrationModel.subclass(*args_, **kwargs_)
+        else:
+            return FixedFactorConcentrationModel(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_phiFactor(self, value):
+        # Validate type Nml2Quantity_phiFactor, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_concentration(self, value):
+        # Validate type Nml2Quantity_concentration, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        pass
+    def hasContent_(self):
+        if (
+            super(FixedFactorConcentrationModel, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='FixedFactorConcentrationModel', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='FixedFactorConcentrationModel')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='FixedFactorConcentrationModel'):
+        super(FixedFactorConcentrationModel, self).exportAttributes(outfile, level, already_processed, namespace_, name_='FixedFactorConcentrationModel')
+        if self.ion is not None and 'ion' not in already_processed:
+            already_processed.add('ion')
+            outfile.write(' ion=%s' % (quote_attrib(self.ion), ))
+        if self.phi is not None and 'phi' not in already_processed:
+            already_processed.add('phi')
+            outfile.write(' phi=%s' % (quote_attrib(self.phi), ))
+        if self.resting_conc is not None and 'resting_conc' not in already_processed:
+            already_processed.add('resting_conc')
+            outfile.write(' restingConc=%s' % (quote_attrib(self.resting_conc), ))
+        if self.decay_constant is not None and 'decay_constant' not in already_processed:
+            already_processed.add('decay_constant')
+            outfile.write(' decayConstant=%s' % (quote_attrib(self.decay_constant), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='FixedFactorConcentrationModel', fromsubclass_=False, pretty_print=True):
+        super(FixedFactorConcentrationModel, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='FixedFactorConcentrationModel'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.ion is not None and 'ion' not in already_processed:
+            already_processed.add('ion')
+            showIndent(outfile, level)
+            outfile.write('ion="%s",\n' % (self.ion,))
+        if self.phi is not None and 'phi' not in already_processed:
+            already_processed.add('phi')
+            showIndent(outfile, level)
+            outfile.write('phi="%s",\n' % (self.phi,))
+        if self.resting_conc is not None and 'resting_conc' not in already_processed:
+            already_processed.add('resting_conc')
+            showIndent(outfile, level)
+            outfile.write('resting_conc="%s",\n' % (self.resting_conc,))
+        if self.decay_constant is not None and 'decay_constant' not in already_processed:
+            already_processed.add('decay_constant')
+            showIndent(outfile, level)
+            outfile.write('decay_constant="%s",\n' % (self.decay_constant,))
+        super(FixedFactorConcentrationModel, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(FixedFactorConcentrationModel, self).exportLiteralChildren(outfile, level, name_)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('ion', node)
+        if value is not None and 'ion' not in already_processed:
+            already_processed.add('ion')
+            self.ion = value
+            self.validate_NmlId(self.ion)    # validate type NmlId
+        value = find_attr_value_('phi', node)
+        if value is not None and 'phi' not in already_processed:
+            already_processed.add('phi')
+            self.phi = value
+            self.validate_Nml2Quantity_phiFactor(self.phi)    # validate type Nml2Quantity_phiFactor
+        value = find_attr_value_('restingConc', node)
+        if value is not None and 'restingConc' not in already_processed:
+            already_processed.add('restingConc')
+            self.resting_conc = value
+            self.validate_Nml2Quantity_concentration(self.resting_conc)    # validate type Nml2Quantity_concentration
+        value = find_attr_value_('decayConstant', node)
+        if value is not None and 'decayConstant' not in already_processed:
+            already_processed.add('decayConstant')
+            self.decay_constant = value
+            self.validate_Nml2Quantity_time(self.decay_constant)    # validate type Nml2Quantity_time
+        super(FixedFactorConcentrationModel, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(FixedFactorConcentrationModel, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class FixedFactorConcentrationModel
+
+
 class DecayingPoolConcentrationModel(Standalone):
     """Should not be required, as it's present on the species element!"""
     member_data_items_ = [
@@ -10177,6 +10328,7 @@ class NeuroMLDocument(Standalone):
         MemberSpec_('morphology', 'Morphology', 1),
         MemberSpec_('ion_channels', 'IonChannel', 1),
         MemberSpec_('decaying_pool_concentration_models', 'DecayingPoolConcentrationModel', 1),
+        MemberSpec_('fixedFactorConcentrationModel', 'FixedFactorConcentrationModel', 1),
         MemberSpec_('exp_one_synapses', 'ExpOneSynapse', 1),
         MemberSpec_('exp_two_synapses', 'ExpTwoSynapse', 1),
         MemberSpec_('blocking_plastic_synapses', 'BlockingPlasticSynapse', 1),
@@ -10214,7 +10366,7 @@ class NeuroMLDocument(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channels=None, decaying_pool_concentration_models=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, biophysical_properties=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, ad_ex_ia_f_cells=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channels=None, decaying_pool_concentration_models=None, fixedFactorConcentrationModel=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, biophysical_properties=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, ad_ex_ia_f_cells=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
         super(NeuroMLDocument, self).__init__(neuro_lex_id, id, metaid, notes, annotation, )
         if includes is None:
             self.includes = []
@@ -10240,6 +10392,10 @@ class NeuroMLDocument(Standalone):
             self.decaying_pool_concentration_models = []
         else:
             self.decaying_pool_concentration_models = decaying_pool_concentration_models
+        if fixedFactorConcentrationModel is None:
+            self.fixedFactorConcentrationModel = []
+        else:
+            self.fixedFactorConcentrationModel = fixedFactorConcentrationModel
         if exp_one_synapses is None:
             self.exp_one_synapses = []
         else:
@@ -10390,6 +10546,7 @@ class NeuroMLDocument(Standalone):
             self.morphology or
             self.ion_channels or
             self.decaying_pool_concentration_models or
+            self.fixedFactorConcentrationModel or
             self.exp_one_synapses or
             self.exp_two_synapses or
             self.blocking_plastic_synapses or
@@ -10465,6 +10622,8 @@ class NeuroMLDocument(Standalone):
             ionChannel_.export(outfile, level, namespace_, name_='ionChannel', pretty_print=pretty_print)
         for decayingPoolConcentrationModel_ in self.decaying_pool_concentration_models:
             decayingPoolConcentrationModel_.export(outfile, level, namespace_, name_='decayingPoolConcentrationModel', pretty_print=pretty_print)
+        for fixedFactorConcentrationModel_ in self.fixedFactorConcentrationModel:
+            fixedFactorConcentrationModel_.export(outfile, level, namespace_, name_='fixedFactorConcentrationModel', pretty_print=pretty_print)
         for expOneSynapse_ in self.exp_one_synapses:
             expOneSynapse_.export(outfile, level, namespace_, name_='expOneSynapse', pretty_print=pretty_print)
         for expTwoSynapse_ in self.exp_two_synapses:
@@ -10610,6 +10769,18 @@ class NeuroMLDocument(Standalone):
             showIndent(outfile, level)
             outfile.write('model_.DecayingPoolConcentrationModel(\n')
             decayingPoolConcentrationModel_.exportLiteral(outfile, level, name_='DecayingPoolConcentrationModel')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('fixedFactorConcentrationModel=[\n')
+        level += 1
+        for fixedFactorConcentrationModel_ in self.fixedFactorConcentrationModel:
+            showIndent(outfile, level)
+            outfile.write('model_.FixedFactorConcentrationModel(\n')
+            fixedFactorConcentrationModel_.exportLiteral(outfile, level, name_='FixedFactorConcentrationModel')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -11057,6 +11228,10 @@ class NeuroMLDocument(Standalone):
             obj_ = class_obj_.factory()
             obj_.build(child_)
             self.decaying_pool_concentration_models.append(obj_)
+        elif nodeName_ == 'fixedFactorConcentrationModel':
+            obj_ = FixedFactorConcentrationModel.factory()
+            obj_.build(child_)
+            self.fixedFactorConcentrationModel.append(obj_)
         elif nodeName_ == 'expOneSynapse':
             obj_ = ExpOneSynapse.factory()
             obj_.build(child_)
@@ -14232,6 +14407,7 @@ GDSClassesMapping = {
     'alphaCurrSynapse': AlphaCurrSynapse,
     'izhikevichCell': IzhikevichCell,
     'path': Path,
+    'fixedFactorConcentrationModel': FixedFactorConcentrationModel,
     'region': Region,
     'extracellularProperties': ExtracellularPropertiesLocal,
     'connection': Connection,
@@ -14420,6 +14596,7 @@ __all__ = [
     "ExplicitInput",
     "ExtracellularProperties",
     "ExtracellularPropertiesLocal",
+    "FixedFactorConcentrationModel",
     "GateHHRates",
     "GateHHRatesInf",
     "GateHHRatesTau",

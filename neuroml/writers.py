@@ -1,5 +1,4 @@
 import neuroml
-import numpy as np
 import tables
 from jsonpickle import encode as json_encode
 
@@ -17,10 +16,9 @@ class NeuroMLWriter(object):
 
         #TODO: this should be extracted from the schema:
         namespacedef = 'xmlns="http://www.neuroml.org/schema/neuroml2" '
-        namespacedef += ' xmlns:xi="http://www.w3.org/2001/XInclude"'
         namespacedef += ' xmlns:xs="http://www.w3.org/2001/XMLSchema"'
         namespacedef += ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'
-        namespacedef += ' xsi:schemaLocation="http://www.w3.org/2001/XMLSchema"'
+        namespacedef += ' xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta2.xsd"'
 
         nmldoc.export(file,0,name_="neuroml",
                       namespacedef_=namespacedef) #name_ param to ensure root element named correctly - generateDS limitation
