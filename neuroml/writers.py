@@ -1,5 +1,4 @@
 import neuroml
-from jsonpickle import encode as json_encode
 
 class NeuroMLWriter(object):
     @classmethod
@@ -28,9 +27,11 @@ class JSONWriter(object):
     when dealing with lots of ArrayMorphs.
     """
 
+    
     @classmethod
     def __encode_as_json(cls,neuroml_document):
         neuroml_document = cls.__sanitize_doc(neuroml_document)
+        from jsonpickle import encode as json_encode
         encoded = json_encode(neuroml_document)
         return encoded
     
