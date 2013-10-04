@@ -1,5 +1,4 @@
 import neuroml
-import tables
 from jsonpickle import encode as json_encode
 
 class NeuroMLWriter(object):
@@ -55,6 +54,7 @@ class JSONWriter(object):
     @classmethod
     def __file_handle(file):
         if isinstance(cls,file,str):
+            import tables
             fileh = tables.openFile(filepath, mode = "w")
 
             
@@ -155,6 +155,7 @@ class ArrayMorphWriter(object):
     @classmethod
     def write(cls,data,filepath):
 
+        import tables
         fileh = tables.openFile(filepath, mode = "w")
         
         #Now instead we should go through a document/cell/morphology
