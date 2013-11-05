@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Sep 26 19:23:55 2013 by generateDS.py version 2.10b.
+# Generated Thu Oct 31 19:28:00 2013 by generateDS.py version 2.10b.
 #
 
 import sys
@@ -2554,9 +2554,9 @@ class MembraneProperties(GeneratedsSuper):
         MemberSpec_('channel_populations', 'ChannelPopulation', 1),
         MemberSpec_('channel_densities', 'ChannelDensity', 1),
         MemberSpec_('channel_density_nernsts', 'ChannelDensityNernst', 1),
-        MemberSpec_('spike_threshes', 'ValueAcrossSegOrSegGroup', 1),
-        MemberSpec_('specific_capacitances', 'ValueAcrossSegOrSegGroup', 1),
-        MemberSpec_('init_memb_potentials', 'ValueAcrossSegOrSegGroup', 1),
+        MemberSpec_('spike_threshes', 'SpikeThresh', 1),
+        MemberSpec_('specific_capacitances', 'SpecificCapacitance', 1),
+        MemberSpec_('init_memb_potentials', 'InitMembPotential', 1),
         MemberSpec_('reversal_potentials', 'ReversalPotential', 1),
     ]
     subclass = None
@@ -2696,8 +2696,8 @@ class MembraneProperties(GeneratedsSuper):
         level += 1
         for spikeThresh_ in self.spike_threshes:
             showIndent(outfile, level)
-            outfile.write('model_.ValueAcrossSegOrSegGroup(\n')
-            spikeThresh_.exportLiteral(outfile, level, name_='ValueAcrossSegOrSegGroup')
+            outfile.write('model_.SpikeThresh(\n')
+            spikeThresh_.exportLiteral(outfile, level, name_='SpikeThresh')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -2708,8 +2708,8 @@ class MembraneProperties(GeneratedsSuper):
         level += 1
         for specificCapacitance_ in self.specific_capacitances:
             showIndent(outfile, level)
-            outfile.write('model_.ValueAcrossSegOrSegGroup(\n')
-            specificCapacitance_.exportLiteral(outfile, level, name_='ValueAcrossSegOrSegGroup')
+            outfile.write('model_.SpecificCapacitance(\n')
+            specificCapacitance_.exportLiteral(outfile, level, name_='SpecificCapacitance')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -2720,8 +2720,8 @@ class MembraneProperties(GeneratedsSuper):
         level += 1
         for initMembPotential_ in self.init_memb_potentials:
             showIndent(outfile, level)
-            outfile.write('model_.ValueAcrossSegOrSegGroup(\n')
-            initMembPotential_.exportLiteral(outfile, level, name_='ValueAcrossSegOrSegGroup')
+            outfile.write('model_.InitMembPotential(\n')
+            initMembPotential_.exportLiteral(outfile, level, name_='InitMembPotential')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -2761,18 +2761,15 @@ class MembraneProperties(GeneratedsSuper):
             obj_.build(child_)
             self.channel_density_nernsts.append(obj_)
         elif nodeName_ == 'spikeThresh':
-            class_obj_ = self.get_class_obj_(child_, ValueAcrossSegOrSegGroup)
-            obj_ = class_obj_.factory()
+            obj_ = SpikeThresh.factory()
             obj_.build(child_)
             self.spike_threshes.append(obj_)
         elif nodeName_ == 'specificCapacitance':
-            class_obj_ = self.get_class_obj_(child_, ValueAcrossSegOrSegGroup)
-            obj_ = class_obj_.factory()
+            obj_ = SpecificCapacitance.factory()
             obj_.build(child_)
             self.specific_capacitances.append(obj_)
         elif nodeName_ == 'initMembPotential':
-            class_obj_ = self.get_class_obj_(child_, ValueAcrossSegOrSegGroup)
-            obj_ = class_obj_.factory()
+            obj_ = InitMembPotential.factory()
             obj_.build(child_)
             self.init_memb_potentials.append(obj_)
         elif nodeName_ == 'reversalPotential':
@@ -3313,7 +3310,7 @@ class Species(ValueAcrossSegOrSegGroup):
 class IntracellularProperties(GeneratedsSuper):
     member_data_items_ = [
         MemberSpec_('species', 'Species', 1),
-        MemberSpec_('resistivities', 'ValueAcrossSegOrSegGroup', 1),
+        MemberSpec_('resistivities', 'Resistivity', 1),
     ]
     subclass = None
     superclass = None
@@ -3393,8 +3390,8 @@ class IntracellularProperties(GeneratedsSuper):
         level += 1
         for resistivity_ in self.resistivities:
             showIndent(outfile, level)
-            outfile.write('model_.ValueAcrossSegOrSegGroup(\n')
-            resistivity_.exportLiteral(outfile, level, name_='ValueAcrossSegOrSegGroup')
+            outfile.write('model_.Resistivity(\n')
+            resistivity_.exportLiteral(outfile, level, name_='Resistivity')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -3414,8 +3411,7 @@ class IntracellularProperties(GeneratedsSuper):
             obj_.build(child_)
             self.species.append(obj_)
         elif nodeName_ == 'resistivity':
-            class_obj_ = self.get_class_obj_(child_, ValueAcrossSegOrSegGroup)
-            obj_ = class_obj_.factory()
+            obj_ = Resistivity.factory()
             obj_.build(child_)
             self.resistivities.append(obj_)
 # end class IntracellularProperties
@@ -8017,6 +8013,278 @@ class ChannelPopulation(Base):
             self.variable_parameters.append(obj_)
         super(ChannelPopulation, self).buildChildren(child_, node, nodeName_, True)
 # end class ChannelPopulation
+
+
+class Resistivity(ValueAcrossSegOrSegGroup):
+    """Using a thin extension of ValueAcrossSegOrSegGroup to facilitate
+    library generation (e.g. libNeuroML)"""
+    member_data_items_ = [
+    ]
+    subclass = None
+    superclass = ValueAcrossSegOrSegGroup
+    def __init__(self, segments=None, segment_groups='all', value=None):
+        super(Resistivity, self).__init__(segments, segment_groups, value, )
+        pass
+    def factory(*args_, **kwargs_):
+        if Resistivity.subclass:
+            return Resistivity.subclass(*args_, **kwargs_)
+        else:
+            return Resistivity(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            super(Resistivity, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='Resistivity', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='Resistivity')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Resistivity'):
+        super(Resistivity, self).exportAttributes(outfile, level, already_processed, namespace_, name_='Resistivity')
+    def exportChildren(self, outfile, level, namespace_='', name_='Resistivity', fromsubclass_=False, pretty_print=True):
+        super(Resistivity, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
+    def exportLiteral(self, outfile, level, name_='Resistivity'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        super(Resistivity, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(Resistivity, self).exportLiteralChildren(outfile, level, name_)
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+    def buildAttributes(self, node, attrs, already_processed):
+        super(Resistivity, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(Resistivity, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class Resistivity
+
+
+class InitMembPotential(ValueAcrossSegOrSegGroup):
+    """Using a thin extension of ValueAcrossSegOrSegGroup to facilitate
+    library generation (e.g. libNeuroML)"""
+    member_data_items_ = [
+    ]
+    subclass = None
+    superclass = ValueAcrossSegOrSegGroup
+    def __init__(self, segments=None, segment_groups='all', value=None):
+        super(InitMembPotential, self).__init__(segments, segment_groups, value, )
+        pass
+    def factory(*args_, **kwargs_):
+        if InitMembPotential.subclass:
+            return InitMembPotential.subclass(*args_, **kwargs_)
+        else:
+            return InitMembPotential(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            super(InitMembPotential, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='InitMembPotential', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='InitMembPotential')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='InitMembPotential'):
+        super(InitMembPotential, self).exportAttributes(outfile, level, already_processed, namespace_, name_='InitMembPotential')
+    def exportChildren(self, outfile, level, namespace_='', name_='InitMembPotential', fromsubclass_=False, pretty_print=True):
+        super(InitMembPotential, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
+    def exportLiteral(self, outfile, level, name_='InitMembPotential'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        super(InitMembPotential, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(InitMembPotential, self).exportLiteralChildren(outfile, level, name_)
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+    def buildAttributes(self, node, attrs, already_processed):
+        super(InitMembPotential, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(InitMembPotential, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class InitMembPotential
+
+
+class SpecificCapacitance(ValueAcrossSegOrSegGroup):
+    """Using a thin extension of ValueAcrossSegOrSegGroup to facilitate
+    library generation (e.g. libNeuroML)"""
+    member_data_items_ = [
+    ]
+    subclass = None
+    superclass = ValueAcrossSegOrSegGroup
+    def __init__(self, segments=None, segment_groups='all', value=None):
+        super(SpecificCapacitance, self).__init__(segments, segment_groups, value, )
+        pass
+    def factory(*args_, **kwargs_):
+        if SpecificCapacitance.subclass:
+            return SpecificCapacitance.subclass(*args_, **kwargs_)
+        else:
+            return SpecificCapacitance(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            super(SpecificCapacitance, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='SpecificCapacitance', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpecificCapacitance')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='SpecificCapacitance'):
+        super(SpecificCapacitance, self).exportAttributes(outfile, level, already_processed, namespace_, name_='SpecificCapacitance')
+    def exportChildren(self, outfile, level, namespace_='', name_='SpecificCapacitance', fromsubclass_=False, pretty_print=True):
+        super(SpecificCapacitance, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
+    def exportLiteral(self, outfile, level, name_='SpecificCapacitance'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        super(SpecificCapacitance, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(SpecificCapacitance, self).exportLiteralChildren(outfile, level, name_)
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+    def buildAttributes(self, node, attrs, already_processed):
+        super(SpecificCapacitance, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(SpecificCapacitance, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class SpecificCapacitance
+
+
+class SpikeThresh(ValueAcrossSegOrSegGroup):
+    """Using a thin extension of ValueAcrossSegOrSegGroup to facilitate
+    library generation (e.g. libNeuroML)"""
+    member_data_items_ = [
+    ]
+    subclass = None
+    superclass = ValueAcrossSegOrSegGroup
+    def __init__(self, segments=None, segment_groups='all', value=None):
+        super(SpikeThresh, self).__init__(segments, segment_groups, value, )
+        pass
+    def factory(*args_, **kwargs_):
+        if SpikeThresh.subclass:
+            return SpikeThresh.subclass(*args_, **kwargs_)
+        else:
+            return SpikeThresh(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            super(SpikeThresh, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='SpikeThresh', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpikeThresh')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='SpikeThresh'):
+        super(SpikeThresh, self).exportAttributes(outfile, level, already_processed, namespace_, name_='SpikeThresh')
+    def exportChildren(self, outfile, level, namespace_='', name_='SpikeThresh', fromsubclass_=False, pretty_print=True):
+        super(SpikeThresh, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
+    def exportLiteral(self, outfile, level, name_='SpikeThresh'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        super(SpikeThresh, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(SpikeThresh, self).exportLiteralChildren(outfile, level, name_)
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+    def buildAttributes(self, node, attrs, already_processed):
+        super(SpikeThresh, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(SpikeThresh, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class SpikeThresh
 
 
 class BiophysicalProperties(Standalone):
@@ -14388,7 +14656,7 @@ GDSClassesMapping = {
     'unstructured': UnstructuredLayout,
     'alphaCondSynapse': AlphaCondSynapse,
     'grid': GridLayout,
-    'spikeThresh': ValueAcrossSegOrSegGroup,
+    'spikeThresh': SpikeThresh,
     'inputList': InputList,
     'membraneProperties': MembraneProperties,
     'timeCourse': HHTime,
@@ -14429,8 +14697,8 @@ GDSClassesMapping = {
     'ionChannel': IonChannel,
     'expCurrSynapse': ExpCurrSynapse,
     'explicitInput': ExplicitInput,
-    'resistivity': ValueAcrossSegOrSegGroup,
-    'specificCapacitance': ValueAcrossSegOrSegGroup,
+    'resistivity': Resistivity,
+    'specificCapacitance': SpecificCapacitance,
     'iafCell': IaFCell,
     'iafTauRefCell': IaFTauRefCell,
     'species': Species,
@@ -14439,7 +14707,7 @@ GDSClassesMapping = {
     'instance': Instance,
     'gate': GateHHUndetermined,
     'steadyState': HHVariable,
-    'initMembPotential': ValueAcrossSegOrSegGroup,
+    'initMembPotential': InitMembPotential,
     'variableParameter': VariableParameter,
     'expTwoSynapse': ExpTwoSynapse,
     'segment': Segment,
@@ -14619,6 +14887,7 @@ __all__ = [
     "IncludeType",
     "InhomogeneousParam",
     "InhomogeneousValue",
+    "InitMembPotential",
     "Input",
     "InputList",
     "Instance",
@@ -14644,6 +14913,7 @@ __all__ = [
     "RandomLayout",
     "ReactionScheme",
     "Region",
+    "Resistivity",
     "ReversalPotential",
     "Segment",
     "SegmentEndPoint",
@@ -14653,12 +14923,14 @@ __all__ = [
     "Space",
     "SpaceStructure",
     "Species",
+    "SpecificCapacitance",
     "Spike",
     "SpikeArray",
     "SpikeGenerator",
     "SpikeGeneratorPoisson",
     "SpikeGeneratorRandom",
     "SpikeSourcePoisson",
+    "SpikeThresh",
     "Standalone",
     "SubTree",
     "SynapticConnection",
