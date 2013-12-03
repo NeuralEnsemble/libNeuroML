@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Oct 31 19:28:00 2013 by generateDS.py version 2.10b.
+# Generated Tue Dec  3 10:56:17 2013 by generateDS.py version 2.12a.
 #
 
 import sys
@@ -92,7 +92,10 @@ except ImportError, exp:
         def gds_format_string(self, input_data, input_name=''):
             return input_data
         def gds_validate_string(self, input_data, node, input_name=''):
-            return input_data
+            if not input_data:
+                return ''
+            else:
+                return input_data
         def gds_format_base64(self, input_data, input_name=''):
             return base64.b64encode(input_data)
         def gds_validate_base64(self, input_data, node, input_name=''):
@@ -112,7 +115,7 @@ except ImportError, exp:
                     raise_parse_error(node, 'Requires sequence of integers')
             return input_data
         def gds_format_float(self, input_data, input_name=''):
-            return '%f' % input_data
+            return ('%.15f' % input_data).rstrip('0')
         def gds_validate_float(self, input_data, node, input_name=''):
             return input_data
         def gds_format_float_list(self, input_data, input_name=''):
@@ -196,7 +199,7 @@ except ImportError, exp:
         def gds_parse_datetime(cls, input_data):
             tz = None
             if input_data[-1] == 'Z':
-                tz = GeneratedsSuper._FixedOffsetTZ(0, 'GMT')
+                tz = GeneratedsSuper._FixedOffsetTZ(0, 'UTC')
                 input_data = input_data[:-1]
             else:
                 results = GeneratedsSuper.tzoff_pattern.search(input_data)
@@ -247,7 +250,7 @@ except ImportError, exp:
         def gds_parse_date(cls, input_data):
             tz = None
             if input_data[-1] == 'Z':
-                tz = GeneratedsSuper._FixedOffsetTZ(0, 'GMT')
+                tz = GeneratedsSuper._FixedOffsetTZ(0, 'UTC')
                 input_data = input_data[:-1]
             else:
                 results = GeneratedsSuper.tzoff_pattern.search(input_data)
@@ -298,7 +301,7 @@ except ImportError, exp:
         def gds_parse_time(cls, input_data):
             tz = None
             if input_data[-1] == 'Z':
-                tz = GeneratedsSuper._FixedOffsetTZ(0, 'GMT')
+                tz = GeneratedsSuper._FixedOffsetTZ(0, 'UTC')
                 input_data = input_data[:-1]
             else:
                 results = GeneratedsSuper.tzoff_pattern.search(input_data)
@@ -681,6 +684,7 @@ class Annotation(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         pass
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -789,6 +793,7 @@ class ComponentType(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('extends', node)
         if value is not None and 'extends' not in already_processed:
@@ -885,6 +890,7 @@ class IncludeType(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('href', node)
         if value is not None and 'href' not in already_processed:
@@ -997,6 +1003,7 @@ class Q10Settings(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('fixedQ10', node)
         if value is not None and 'fixedQ10' not in already_processed:
@@ -1121,6 +1128,7 @@ class HHRate(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('midpoint', node)
         if value is not None and 'midpoint' not in already_processed:
@@ -1242,6 +1250,7 @@ class HHVariable(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('midpoint', node)
         if value is not None and 'midpoint' not in already_processed:
@@ -1377,6 +1386,7 @@ class HHTime(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('midpoint', node)
         if value is not None and 'midpoint' not in already_processed:
@@ -1518,6 +1528,7 @@ class BlockMechanism(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('blockConcentration', node)
         if value is not None and 'blockConcentration' not in already_processed:
@@ -1647,6 +1658,7 @@ class PlasticityMechanism(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
@@ -1753,6 +1765,7 @@ class SegmentParent(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('fractionAlong', node)
         if value is not None and 'fractionAlong' not in already_processed:
@@ -1905,6 +1918,7 @@ class Point3DWithDiam(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('y', node)
         if value is not None and 'y' not in already_processed:
@@ -2001,6 +2015,7 @@ class ProximalDetails(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('translationStart', node)
         if value is not None and 'translationStart' not in already_processed:
@@ -2076,6 +2091,7 @@ class DistalDetails(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('normalizationEnd', node)
         if value is not None and 'normalizationEnd' not in already_processed:
@@ -2154,6 +2170,7 @@ class Member(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('segment', node)
         if value is not None and 'segment' not in already_processed:
@@ -2235,6 +2252,7 @@ class Include(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('segmentGroup', node)
         if value is not None and 'segmentGroup' not in already_processed:
@@ -2324,6 +2342,7 @@ class Path(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         pass
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -2416,6 +2435,7 @@ class SubTree(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         pass
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -2495,6 +2515,7 @@ class SegmentEndPoint(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('segment', node)
         if value is not None and 'segment' not in already_processed:
@@ -2745,6 +2766,7 @@ class MembraneProperties(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         pass
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -2869,6 +2891,7 @@ class ValueAcrossSegOrSegGroup(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('segment', node)
         if value is not None and 'segment' not in already_processed:
@@ -2977,6 +3000,7 @@ class VariableParameter(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('segmentGroup', node)
         if value is not None and 'segmentGroup' not in already_processed:
@@ -3065,6 +3089,7 @@ class InhomogeneousValue(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('inhomogeneousParam', node)
         if value is not None and 'inhomogeneousParam' not in already_processed:
@@ -3149,6 +3174,7 @@ class ReversalPotential(ValueAcrossSegOrSegGroup):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('species', node)
         if value is not None and 'species' not in already_processed:
@@ -3274,6 +3300,7 @@ class Species(ValueAcrossSegOrSegGroup):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('ion', node)
         if value is not None and 'ion' not in already_processed:
@@ -3403,6 +3430,7 @@ class IntracellularProperties(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         pass
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -3493,6 +3521,7 @@ class ExtracellularPropertiesLocal(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         pass
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -3610,6 +3639,7 @@ class SpaceStructure(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('ySpacing', node)
         if value is not None and 'ySpacing' not in already_processed:
@@ -3757,6 +3787,7 @@ class Layout(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('space', node)
         if value is not None and 'space' not in already_processed:
@@ -3841,6 +3872,7 @@ class UnstructuredLayout(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('number', node)
         if value is not None and 'number' not in already_processed:
@@ -3930,6 +3962,7 @@ class RandomLayout(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('region', node)
         if value is not None and 'region' not in already_processed:
@@ -4030,6 +4063,7 @@ class GridLayout(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('zSize', node)
         if value is not None and 'zSize' not in already_processed:
@@ -4164,6 +4198,7 @@ class Instance(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('i', node)
         if value is not None and 'i' not in already_processed:
@@ -4289,6 +4324,7 @@ class Location(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('y', node)
         if value is not None and 'y' not in already_processed:
@@ -4411,6 +4447,7 @@ class SynapticConnection(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('to', node)
         if value is not None and 'to' not in already_processed:
@@ -4557,6 +4594,7 @@ class Connection(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('preFractionAlong', node)
         if value is not None and 'preFractionAlong' not in already_processed:
@@ -4699,6 +4737,7 @@ class ExplicitInput(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('input', node)
         if value is not None and 'input' not in already_processed:
@@ -4801,6 +4840,7 @@ class Input(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('destination', node)
         if value is not None and 'destination' not in already_processed:
@@ -4897,6 +4937,7 @@ class BaseWithoutId(GeneratedsSuper):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('neuroLexId', node)
         if value is not None and 'neuroLexId' not in already_processed:
@@ -4989,6 +5030,7 @@ class Base(BaseWithoutId):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('id', node)
         if value is not None and 'id' not in already_processed:
@@ -5108,6 +5150,7 @@ class Standalone(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('metaid', node)
         if value is not None and 'metaid' not in already_processed:
@@ -5223,6 +5266,7 @@ class SpikeSourcePoisson(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('duration', node)
         if value is not None and 'duration' not in already_processed:
@@ -5348,6 +5392,7 @@ class InputList(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('component', node)
         if value is not None and 'component' not in already_processed:
@@ -5480,6 +5525,7 @@ class Projection(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('postsynapticPopulation', node)
         if value is not None and 'postsynapticPopulation' not in already_processed:
@@ -5591,6 +5637,7 @@ class CellSet(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('select', node)
         if value is not None and 'select' not in already_processed:
@@ -5756,6 +5803,7 @@ class Population(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('extracellularProperties', node)
         if value is not None and 'extracellularProperties' not in already_processed:
@@ -5891,6 +5939,7 @@ class Region(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('space', node)
         if value is not None and 'space' not in already_processed:
@@ -5989,6 +6038,7 @@ class Space(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('basedOn', node)
         if value is not None and 'basedOn' not in already_processed:
@@ -6269,6 +6319,7 @@ class Network(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
@@ -6391,6 +6442,7 @@ class SpikeGeneratorPoisson(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('averageRate', node)
         if value is not None and 'averageRate' not in already_processed:
@@ -6482,6 +6534,7 @@ class SpikeGeneratorRandom(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('minISI', node)
         if value is not None and 'minISI' not in already_processed:
@@ -6569,6 +6622,7 @@ class SpikeGenerator(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('period', node)
         if value is not None and 'period' not in already_processed:
@@ -6662,6 +6716,7 @@ class SpikeArray(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         super(SpikeArray, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -6742,6 +6797,7 @@ class Spike(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('time', node)
         if value is not None and 'time' not in already_processed:
@@ -6857,6 +6913,7 @@ class VoltageClamp(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('delay', node)
         if value is not None and 'delay' not in already_processed:
@@ -6993,6 +7050,7 @@ class RampGenerator(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('delay', node)
         if value is not None and 'delay' not in already_processed:
@@ -7137,6 +7195,7 @@ class SineGenerator(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('delay', node)
         if value is not None and 'delay' not in already_processed:
@@ -7260,6 +7319,7 @@ class PulseGenerator(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('delay', node)
         if value is not None and 'delay' not in already_processed:
@@ -7377,6 +7437,7 @@ class ReactionScheme(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('source', node)
         if value is not None and 'source' not in already_processed:
@@ -7475,6 +7536,7 @@ class ExtracellularProperties(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         super(ExtracellularProperties, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -7601,6 +7663,7 @@ class ChannelDensityNernst(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('ionChannel', node)
         if value is not None and 'ionChannel' not in already_processed:
@@ -7783,6 +7846,7 @@ class ChannelDensity(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('segmentGroup', node)
         if value is not None and 'segmentGroup' not in already_processed:
@@ -7970,6 +8034,7 @@ class ChannelPopulation(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('segmentGroup', node)
         if value is not None and 'segmentGroup' not in already_processed:
@@ -8075,6 +8140,7 @@ class Resistivity(ValueAcrossSegOrSegGroup):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         super(Resistivity, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -8143,6 +8209,7 @@ class InitMembPotential(ValueAcrossSegOrSegGroup):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         super(InitMembPotential, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -8211,6 +8278,7 @@ class SpecificCapacitance(ValueAcrossSegOrSegGroup):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         super(SpecificCapacitance, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -8279,6 +8347,7 @@ class SpikeThresh(ValueAcrossSegOrSegGroup):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         super(SpikeThresh, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -8382,6 +8451,7 @@ class BiophysicalProperties(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         super(BiophysicalProperties, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -8504,6 +8574,7 @@ class InhomogeneousParam(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('variable', node)
         if value is not None and 'variable' not in already_processed:
@@ -8688,6 +8759,7 @@ class SegmentGroup(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         super(SegmentGroup, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -8867,6 +8939,7 @@ class Segment(BaseWithoutId):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('id', node)
         if value is not None and 'id' not in already_processed:
@@ -9040,6 +9113,7 @@ class Morphology(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         super(Morphology, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -9119,6 +9193,7 @@ class BaseCell(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
@@ -9192,6 +9267,7 @@ class BaseSynapse(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
@@ -9208,16 +9284,16 @@ class FixedFactorConcentrationModel(Standalone):
     """Should not be required, as it's present on the species element!"""
     member_data_items_ = [
         MemberSpec_('ion', 'NmlId', 0),
-        MemberSpec_('phi', 'Nml2Quantity_phiFactor', 0),
+        MemberSpec_('rho', 'Nml2Quantity_rhoFactor', 0),
         MemberSpec_('restingConc', 'Nml2Quantity_concentration', 0),
         MemberSpec_('decayConstant', 'Nml2Quantity_time', 0),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, ion=None, phi=None, resting_conc=None, decay_constant=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, ion=None, rho=None, resting_conc=None, decay_constant=None):
         super(FixedFactorConcentrationModel, self).__init__(neuro_lex_id, id, metaid, notes, annotation, )
         self.ion = _cast(None, ion)
-        self.phi = _cast(None, phi)
+        self.rho = _cast(None, rho)
         self.resting_conc = _cast(None, resting_conc)
         self.decay_constant = _cast(None, decay_constant)
         pass
@@ -9230,8 +9306,8 @@ class FixedFactorConcentrationModel(Standalone):
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         pass
-    def validate_Nml2Quantity_phiFactor(self, value):
-        # Validate type Nml2Quantity_phiFactor, a restriction on xs:string.
+    def validate_Nml2Quantity_rhoFactor(self, value):
+        # Validate type Nml2Quantity_rhoFactor, a restriction on xs:string.
         pass
     def validate_Nml2Quantity_concentration(self, value):
         # Validate type Nml2Quantity_concentration, a restriction on xs:string.
@@ -9267,9 +9343,9 @@ class FixedFactorConcentrationModel(Standalone):
         if self.ion is not None and 'ion' not in already_processed:
             already_processed.add('ion')
             outfile.write(' ion=%s' % (quote_attrib(self.ion), ))
-        if self.phi is not None and 'phi' not in already_processed:
-            already_processed.add('phi')
-            outfile.write(' phi=%s' % (quote_attrib(self.phi), ))
+        if self.rho is not None and 'rho' not in already_processed:
+            already_processed.add('rho')
+            outfile.write(' rho=%s' % (quote_attrib(self.rho), ))
         if self.resting_conc is not None and 'resting_conc' not in already_processed:
             already_processed.add('resting_conc')
             outfile.write(' restingConc=%s' % (quote_attrib(self.resting_conc), ))
@@ -9289,10 +9365,10 @@ class FixedFactorConcentrationModel(Standalone):
             already_processed.add('ion')
             showIndent(outfile, level)
             outfile.write('ion="%s",\n' % (self.ion,))
-        if self.phi is not None and 'phi' not in already_processed:
-            already_processed.add('phi')
+        if self.rho is not None and 'rho' not in already_processed:
+            already_processed.add('rho')
             showIndent(outfile, level)
-            outfile.write('phi="%s",\n' % (self.phi,))
+            outfile.write('rho="%s",\n' % (self.rho,))
         if self.resting_conc is not None and 'resting_conc' not in already_processed:
             already_processed.add('resting_conc')
             showIndent(outfile, level)
@@ -9310,17 +9386,18 @@ class FixedFactorConcentrationModel(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('ion', node)
         if value is not None and 'ion' not in already_processed:
             already_processed.add('ion')
             self.ion = value
             self.validate_NmlId(self.ion)    # validate type NmlId
-        value = find_attr_value_('phi', node)
-        if value is not None and 'phi' not in already_processed:
-            already_processed.add('phi')
-            self.phi = value
-            self.validate_Nml2Quantity_phiFactor(self.phi)    # validate type Nml2Quantity_phiFactor
+        value = find_attr_value_('rho', node)
+        if value is not None and 'rho' not in already_processed:
+            already_processed.add('rho')
+            self.rho = value
+            self.validate_Nml2Quantity_rhoFactor(self.rho)    # validate type Nml2Quantity_rhoFactor
         value = find_attr_value_('restingConc', node)
         if value is not None and 'restingConc' not in already_processed:
             already_processed.add('restingConc')
@@ -9448,6 +9525,7 @@ class DecayingPoolConcentrationModel(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('ion', node)
         if value is not None and 'ion' not in already_processed:
@@ -9617,6 +9695,7 @@ class GateHHRatesInf(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('instances', node)
         if value is not None and 'instances' not in already_processed:
@@ -9794,6 +9873,7 @@ class GateHHRatesTau(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('instances', node)
         if value is not None and 'instances' not in already_processed:
@@ -9960,6 +10040,7 @@ class GateHHTauInf(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('instances', node)
         if value is not None and 'instances' not in already_processed:
@@ -10122,6 +10203,7 @@ class GateHHRates(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('instances', node)
         if value is not None and 'instances' not in already_processed:
@@ -10306,6 +10388,7 @@ class GateHHUndetermined(Base):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('instances', node)
         if value is not None and 'instances' not in already_processed:
@@ -10546,6 +10629,7 @@ class IonChannel(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('conductance', node)
         if value is not None and 'conductance' not in already_processed:
@@ -11468,6 +11552,7 @@ class NeuroMLDocument(Standalone):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         super(NeuroMLDocument, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -11714,6 +11799,7 @@ class BasePynnSynapse(BaseSynapse):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('tau_syn', node)
         if value is not None and 'tau_syn' not in already_processed:
@@ -11839,6 +11925,7 @@ class basePyNNCell(BaseCell):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('tau_syn_I', node)
         if value is not None and 'tau_syn_I' not in already_processed:
@@ -11952,6 +12039,7 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
@@ -12068,6 +12156,7 @@ class Cell(BaseCell):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('biophysicalProperties', node)
         if value is not None and 'biophysical_properties_attr' not in already_processed:
@@ -12262,6 +12351,7 @@ class AdExIaFCell(BaseCell):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('reset', node)
         if value is not None and 'reset' not in already_processed:
@@ -12442,6 +12532,7 @@ class IzhikevichCell(BaseCell):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('a', node)
         if value is not None and 'a' not in already_processed:
@@ -12595,6 +12686,7 @@ class IaFCell(BaseCell):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('reset', node)
         if value is not None and 'reset' not in already_processed:
@@ -12735,6 +12827,7 @@ class IaFTauCell(BaseCell):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('reset', node)
         if value is not None and 'reset' not in already_processed:
@@ -12852,6 +12945,7 @@ class BaseConductanceBasedSynapse(BaseSynapse):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('erev', node)
         if value is not None and 'erev' not in already_processed:
@@ -12931,6 +13025,7 @@ class AlphaCurrSynapse(BasePynnSynapse):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         super(AlphaCurrSynapse, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -12996,6 +13091,7 @@ class ExpCurrSynapse(BasePynnSynapse):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         super(ExpCurrSynapse, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -13070,6 +13166,7 @@ class AlphaCondSynapse(BasePynnSynapse):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('e_rev', node)
         if value is not None and 'e_rev' not in already_processed:
@@ -13151,6 +13248,7 @@ class ExpCondSynapse(BasePynnSynapse):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('e_rev', node)
         if value is not None and 'e_rev' not in already_processed:
@@ -13304,6 +13402,7 @@ class HH_cond_exp(basePyNNCell):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('gbar_K', node)
         if value is not None and 'gbar_K' not in already_processed:
@@ -13481,6 +13580,7 @@ class basePyNNIaFCell(basePyNNCell):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('tau_refrac', node)
         if value is not None and 'tau_refrac' not in already_processed:
@@ -13597,6 +13697,7 @@ class IaFRefCell(IaFCell):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('refract', node)
         if value is not None and 'refract' not in already_processed:
@@ -13679,6 +13780,7 @@ class IaFTauRefCell(IaFTauCell):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('refract', node)
         if value is not None and 'refract' not in already_processed:
@@ -13774,6 +13876,7 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('tauDecay', node)
         if value is not None and 'tauDecay' not in already_processed:
@@ -13865,6 +13968,7 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('tauDecay', node)
         if value is not None and 'tauDecay' not in already_processed:
@@ -13935,6 +14039,7 @@ class IF_curr_exp(basePyNNIaFCell):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         super(IF_curr_exp, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -14000,6 +14105,7 @@ class IF_curr_alpha(basePyNNIaFCell):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         super(IF_curr_alpha, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -14087,6 +14193,7 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('e_rev_I', node)
         if value is not None and 'e_rev_I' not in already_processed:
@@ -14195,6 +14302,7 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         super(BlockingPlasticSynapse, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -14312,6 +14420,7 @@ class EIF_cond_alpha_isfa_ista(basePyNNIaFCondCell):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('a', node)
         if value is not None and 'a' not in already_processed:
@@ -14457,6 +14566,7 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         value = find_attr_value_('a', node)
         if value is not None and 'a' not in already_processed:
@@ -14557,6 +14667,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         super(IF_cond_exp, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -14622,6 +14733,7 @@ class IF_cond_alpha(basePyNNIaFCondCell):
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
+        return self
     def buildAttributes(self, node, attrs, already_processed):
         super(IF_cond_alpha, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -14739,7 +14851,7 @@ def get_root_tag(node):
     return tag, rootClass
 
 
-def parse(inFileName):
+def parse(inFileName, silence=False):
     doc = parsexml_(inFileName)
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
@@ -14750,15 +14862,16 @@ def parse(inFileName):
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
     doc = None
-##     sys.stdout.write('<?xml version="1.0" ?>\n')
-##     rootObj.export(
-##         sys.stdout, 0, name_=rootTag,
-##         namespacedef_='',
-##         pretty_print=True)
+##     if not silence:
+##         sys.stdout.write('<?xml version="1.0" ?>\n')
+##         rootObj.export(
+##             sys.stdout, 0, name_=rootTag,
+##             namespacedef_='',
+##             pretty_print=True)
     return rootObj
 
 
-def parseEtree(inFileName):
+def parseEtree(inFileName, silence=False):
     doc = parsexml_(inFileName)
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
@@ -14772,15 +14885,16 @@ def parseEtree(inFileName):
     mapping = {}
     rootElement = rootObj.to_etree(None, name_=rootTag, mapping_=mapping)
     reverse_mapping = rootObj.gds_reverse_node_mapping(mapping)
-##     content = etree_.tostring(
-##         rootElement, pretty_print=True,
-##         xml_declaration=True, encoding="utf-8")
-##     sys.stdout.write(content)
-##     sys.stdout.write('\n')
+##     if not silence:
+##         content = etree_.tostring(
+##             rootElement, pretty_print=True,
+##             xml_declaration=True, encoding="utf-8")
+##         sys.stdout.write(content)
+##         sys.stdout.write('\n')
     return rootObj, rootElement, mapping, reverse_mapping
 
 
-def parseString(inString):
+def parseString(inString, silence=False):
     from StringIO import StringIO
     doc = parsexml_(StringIO(inString))
     rootNode = doc.getroot()
@@ -14792,14 +14906,15 @@ def parseString(inString):
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
     doc = None
-##     sys.stdout.write('<?xml version="1.0" ?>\n')
-##     rootObj.export(
-##         sys.stdout, 0, name_="Annotation",
-##         namespacedef_='')
+##     if not silence:
+##         sys.stdout.write('<?xml version="1.0" ?>\n')
+##         rootObj.export(
+##             sys.stdout, 0, name_="Annotation",
+##             namespacedef_='')
     return rootObj
 
 
-def parseLiteral(inFileName):
+def parseLiteral(inFileName, silence=False):
     doc = parsexml_(inFileName)
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
@@ -14810,11 +14925,12 @@ def parseLiteral(inFileName):
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
     doc = None
-##     sys.stdout.write('#from nml import *\n\n')
-##     sys.stdout.write('import nml as model_\n\n')
-##     sys.stdout.write('rootObj = model_.rootTag(\n')
-##     rootObj.exportLiteral(sys.stdout, 0, name_=rootTag)
-##     sys.stdout.write(')\n')
+##     if not silence:
+##         sys.stdout.write('#from nml import *\n\n')
+##         sys.stdout.write('import nml as model_\n\n')
+##         sys.stdout.write('rootObj = model_.rootTag(\n')
+##         rootObj.exportLiteral(sys.stdout, 0, name_=rootTag)
+##         sys.stdout.write(')\n')
     return rootObj
 
 
