@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Dec  3 10:56:17 2013 by generateDS.py version 2.12a.
+# Generated Fri Dec 13 18:16:22 2013 by generateDS.py version 2.12a.
 #
 
 import sys
@@ -2575,6 +2575,7 @@ class MembraneProperties(GeneratedsSuper):
         MemberSpec_('channel_populations', 'ChannelPopulation', 1),
         MemberSpec_('channel_densities', 'ChannelDensity', 1),
         MemberSpec_('channel_density_nernsts', 'ChannelDensityNernst', 1),
+        MemberSpec_('channelDensityGHK', 'ChannelDensityGHK', 1),
         MemberSpec_('spike_threshes', 'SpikeThresh', 1),
         MemberSpec_('specific_capacitances', 'SpecificCapacitance', 1),
         MemberSpec_('init_memb_potentials', 'InitMembPotential', 1),
@@ -2582,7 +2583,7 @@ class MembraneProperties(GeneratedsSuper):
     ]
     subclass = None
     superclass = None
-    def __init__(self, channel_populations=None, channel_densities=None, channel_density_nernsts=None, spike_threshes=None, specific_capacitances=None, init_memb_potentials=None, reversal_potentials=None):
+    def __init__(self, channel_populations=None, channel_densities=None, channel_density_nernsts=None, channelDensityGHK=None, spike_threshes=None, specific_capacitances=None, init_memb_potentials=None, reversal_potentials=None):
         if channel_populations is None:
             self.channel_populations = []
         else:
@@ -2595,6 +2596,10 @@ class MembraneProperties(GeneratedsSuper):
             self.channel_density_nernsts = []
         else:
             self.channel_density_nernsts = channel_density_nernsts
+        if channelDensityGHK is None:
+            self.channelDensityGHK = []
+        else:
+            self.channelDensityGHK = channelDensityGHK
         if spike_threshes is None:
             self.spike_threshes = []
         else:
@@ -2622,6 +2627,7 @@ class MembraneProperties(GeneratedsSuper):
             self.channel_populations or
             self.channel_densities or
             self.channel_density_nernsts or
+            self.channelDensityGHK or
             self.spike_threshes or
             self.specific_capacitances or
             self.init_memb_potentials or
@@ -2659,6 +2665,8 @@ class MembraneProperties(GeneratedsSuper):
             channelDensity_.export(outfile, level, namespace_, name_='channelDensity', pretty_print=pretty_print)
         for channelDensityNernst_ in self.channel_density_nernsts:
             channelDensityNernst_.export(outfile, level, namespace_, name_='channelDensityNernst', pretty_print=pretty_print)
+        for channelDensityGHK_ in self.channelDensityGHK:
+            channelDensityGHK_.export(outfile, level, namespace_, name_='channelDensityGHK', pretty_print=pretty_print)
         for spikeThresh_ in self.spike_threshes:
             spikeThresh_.export(outfile, level, namespace_, name_='spikeThresh', pretty_print=pretty_print)
         for specificCapacitance_ in self.specific_capacitances:
@@ -2707,6 +2715,18 @@ class MembraneProperties(GeneratedsSuper):
             showIndent(outfile, level)
             outfile.write('model_.ChannelDensityNernst(\n')
             channelDensityNernst_.exportLiteral(outfile, level, name_='ChannelDensityNernst')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('channelDensityGHK=[\n')
+        level += 1
+        for channelDensityGHK_ in self.channelDensityGHK:
+            showIndent(outfile, level)
+            outfile.write('model_.ChannelDensityGHK(\n')
+            channelDensityGHK_.exportLiteral(outfile, level, name_='ChannelDensityGHK')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -2782,6 +2802,10 @@ class MembraneProperties(GeneratedsSuper):
             obj_ = ChannelDensityNernst.factory()
             obj_.build(child_)
             self.channel_density_nernsts.append(obj_)
+        elif nodeName_ == 'channelDensityGHK':
+            obj_ = ChannelDensityGHK.factory()
+            obj_.build(child_)
+            self.channelDensityGHK.append(obj_)
         elif nodeName_ == 'spikeThresh':
             obj_ = SpikeThresh.factory()
             obj_.build(child_)
@@ -7546,6 +7570,155 @@ class ExtracellularProperties(Base):
             self.species.append(obj_)
         super(ExtracellularProperties, self).buildChildren(child_, node, nodeName_, True)
 # end class ExtracellularProperties
+
+
+class ChannelDensityGHK(Base):
+    """Specifying the ion here again is redundant, this will be set in
+    ionChannel. It is added here TEMPORARILY as selecting all ca or
+    na conducting channel populations/densities in a cell would be
+    difficult otherwise. It should be removed in the longer term,
+    due to possible inconsistencies in this value and that in the
+    ionChannel element. TODO: remove."""
+    member_data_items_ = [
+        MemberSpec_('ionChannel', 'NmlId', 0),
+        MemberSpec_('permeability', 'Nml2Quantity_permeability', 0),
+        MemberSpec_('segmentGroup', 'NmlId', 0),
+        MemberSpec_('segment', 'NmlId', 0),
+        MemberSpec_('ion', 'NmlId', 0),
+    ]
+    subclass = None
+    superclass = Base
+    def __init__(self, neuro_lex_id=None, id=None, ion_channels=None, permeability=None, segment_groups='all', segments=None, ion=None):
+        super(ChannelDensityGHK, self).__init__(neuro_lex_id, id, )
+        self.ion_channels = _cast(None, ion_channels)
+        self.permeability = _cast(None, permeability)
+        self.segment_groups = _cast(None, segment_groups)
+        self.segments = _cast(None, segments)
+        self.ion = _cast(None, ion)
+        pass
+    def factory(*args_, **kwargs_):
+        if ChannelDensityGHK.subclass:
+            return ChannelDensityGHK.subclass(*args_, **kwargs_)
+        else:
+            return ChannelDensityGHK(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_permeability(self, value):
+        # Validate type Nml2Quantity_permeability, a restriction on xs:string.
+        pass
+    def hasContent_(self):
+        if (
+            super(ChannelDensityGHK, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='ChannelDensityGHK', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensityGHK')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ChannelDensityGHK'):
+        super(ChannelDensityGHK, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensityGHK')
+        if self.ion_channels is not None and 'ion_channels' not in already_processed:
+            already_processed.add('ion_channels')
+            outfile.write(' ionChannel=%s' % (quote_attrib(self.ion_channels), ))
+        if self.permeability is not None and 'permeability' not in already_processed:
+            already_processed.add('permeability')
+            outfile.write(' permeability=%s' % (quote_attrib(self.permeability), ))
+        if self.segment_groups is not None and 'segment_groups' not in already_processed:
+            already_processed.add('segment_groups')
+            outfile.write(' segmentGroup=%s' % (quote_attrib(self.segment_groups), ))
+        if self.segments is not None and 'segments' not in already_processed:
+            already_processed.add('segments')
+            outfile.write(' segment=%s' % (quote_attrib(self.segments), ))
+        if self.ion is not None and 'ion' not in already_processed:
+            already_processed.add('ion')
+            outfile.write(' ion=%s' % (quote_attrib(self.ion), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='ChannelDensityGHK', fromsubclass_=False, pretty_print=True):
+        super(ChannelDensityGHK, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
+    def exportLiteral(self, outfile, level, name_='ChannelDensityGHK'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.ion_channels is not None and 'ion_channels' not in already_processed:
+            already_processed.add('ion_channels')
+            showIndent(outfile, level)
+            outfile.write('ion_channels="%s",\n' % (self.ion_channels,))
+        if self.permeability is not None and 'permeability' not in already_processed:
+            already_processed.add('permeability')
+            showIndent(outfile, level)
+            outfile.write('permeability="%s",\n' % (self.permeability,))
+        if self.segment_groups is not None and 'segment_groups' not in already_processed:
+            already_processed.add('segment_groups')
+            showIndent(outfile, level)
+            outfile.write('segment_groups="%s",\n' % (self.segment_groups,))
+        if self.segments is not None and 'segments' not in already_processed:
+            already_processed.add('segments')
+            showIndent(outfile, level)
+            outfile.write('segments="%s",\n' % (self.segments,))
+        if self.ion is not None and 'ion' not in already_processed:
+            already_processed.add('ion')
+            showIndent(outfile, level)
+            outfile.write('ion="%s",\n' % (self.ion,))
+        super(ChannelDensityGHK, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(ChannelDensityGHK, self).exportLiteralChildren(outfile, level, name_)
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('ionChannel', node)
+        if value is not None and 'ionChannel' not in already_processed:
+            already_processed.add('ionChannel')
+            self.ion_channels = value
+            self.validate_NmlId(self.ion_channels)    # validate type NmlId
+        value = find_attr_value_('permeability', node)
+        if value is not None and 'permeability' not in already_processed:
+            already_processed.add('permeability')
+            self.permeability = value
+            self.validate_Nml2Quantity_permeability(self.permeability)    # validate type Nml2Quantity_permeability
+        value = find_attr_value_('segmentGroup', node)
+        if value is not None and 'segmentGroup' not in already_processed:
+            already_processed.add('segmentGroup')
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)    # validate type NmlId
+        value = find_attr_value_('segment', node)
+        if value is not None and 'segment' not in already_processed:
+            already_processed.add('segment')
+            self.segments = value
+            self.validate_NmlId(self.segments)    # validate type NmlId
+        value = find_attr_value_('ion', node)
+        if value is not None and 'ion' not in already_processed:
+            already_processed.add('ion')
+            self.ion = value
+            self.validate_NmlId(self.ion)    # validate type NmlId
+        super(ChannelDensityGHK, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(ChannelDensityGHK, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class ChannelDensityGHK
 
 
 class ChannelDensityNernst(Base):
@@ -14781,7 +14954,6 @@ GDSClassesMapping = {
     'space': Space,
     'cell': Cell,
     'forwardRate': HHRate,
-    'synapticConnection': SynapticConnection,
     'gateHHratesInf': GateHHRatesInf,
     'parent': SegmentParent,
     'alphaCurrSynapse': AlphaCurrSynapse,
@@ -14796,6 +14968,7 @@ GDSClassesMapping = {
     'projection': Projection,
     'q10Settings': Q10Settings,
     'distal': DistalDetails,
+    'specificCapacitance': SpecificCapacitance,
     'from': SegmentEndPoint,
     'decayingPoolConcentrationModel': DecayingPoolConcentrationModel,
     'cellSet': CellSet,
@@ -14806,11 +14979,12 @@ GDSClassesMapping = {
     'pulseGenerator': PulseGenerator,
     'gateHHrates': GateHHRates,
     'population': Population,
-    'ionChannel': IonChannel,
+    'synapticConnection': SynapticConnection,
     'expCurrSynapse': ExpCurrSynapse,
     'explicitInput': ExplicitInput,
     'resistivity': Resistivity,
-    'specificCapacitance': SpecificCapacitance,
+    'channelDensityGHK': ChannelDensityGHK,
+    'ionChannel': IonChannel,
     'iafCell': IaFCell,
     'iafTauRefCell': IaFTauRefCell,
     'species': Species,
@@ -14964,6 +15138,7 @@ __all__ = [
     "Cell",
     "CellSet",
     "ChannelDensity",
+    "ChannelDensityGHK",
     "ChannelDensityNernst",
     "ChannelPopulation",
     "ComponentType",
