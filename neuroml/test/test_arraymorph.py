@@ -148,7 +148,7 @@ class TestArrayMorphology(unittest.TestCase):
         self.small_morphology.segments.append(soma)
 
     def test_single_segment_morphology_instantiation(self):
-        print self.small_morphology.connectivity
+        print(self.small_morphology.connectivity)
         seg = self.small_morphology.segments[0]
         self.assertIsInstance(seg,neuroml.nml.nml.Segment)
 

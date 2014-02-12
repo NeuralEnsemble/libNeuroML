@@ -118,7 +118,7 @@ NameTable['intracellularProperties'] = 'intracellular_properties'
 NameTable['biophysicalProperties'] = 'biophysical_properties'
 
 print("NameTable is as follows:")
-print NameTable
+print(NameTable)
 
 print("Saving NameTable to csv file")
 writer = csv.writer(open('name_table.csv', 'wb'))
