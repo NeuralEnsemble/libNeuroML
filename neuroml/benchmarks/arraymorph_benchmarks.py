@@ -9,6 +9,7 @@ import tempfile
 from matplotlib import pyplot as plt
 import time                                                
 import os
+from os import path
 
 def timeit(method):
 
@@ -54,6 +55,8 @@ class AMWriteBenchmark(object):
         self.test_doc.cells.append(self.cell)
 
         self.__write_time = None
+
+        self.num_segments = num_segments
         
     @property
     def write_time(self):
@@ -84,6 +87,11 @@ class AMWriteBenchmark(object):
         except:
             self.fail("Exception raised!")
 
+        print 'JSON Number of segments:'
+        print self.num_segments
+        print 'JSON size in bytes:'
+        print self.file_size(filename)
+
         os.close(fh)
 
     def test_write_big_arraymorph_neuroml(self):
@@ -95,7 +103,15 @@ class AMWriteBenchmark(object):
         except:
             self.fail("Exception raised!")
 
+        print 'NeuroML (XML) Number of segments:'
+        print self.num_segments
+        print 'NeuroML (XML) size in bytes:'
+        print self.file_size(filename)
+
         os.close(fh)
+
+    def file_size(self,path):
+        return os.path.getsize(path)
 
 
     def test_write_big_arraymorph_hdf5(self):
@@ -106,6 +122,11 @@ class AMWriteBenchmark(object):
             writer_method(self.test_doc,filename)
         except:
             self.fail("Exception raised!")
+
+        print 'HDF5 Number of segments:'
+        print self.num_segments
+        print 'HDF5 size in bytes:'
+        print self.file_size(filename)
 
         os.close(fh)
 
@@ -160,7 +181,7 @@ def benchmark_arraymorph_writer():
     TODO: Add NeuroML Document benchmark
     TODO: Make the script a bit more understandable and modularised
     """
-    num_tests = 5
+    num_tests = 10
 
     json_results= []
     neuroml_results= []
@@ -175,12 +196,12 @@ def benchmark_arraymorph_writer():
         hdf5_num_segments_list = []
         neuroml_num_segments_list = []
 
-        for i in range(20):
+        for i in range(30):
             print "test %d" % (i)
 
             neuroml_num_segments_factor = 4e2
-            json_num_segments_factor = 4e3
-            hdf5_num_segments_factor = 2e5
+            json_num_segments_factor = 4e2
+            hdf5_num_segments_factor = 4e2
             
             neuroml_num_segments = i * neuroml_num_segments_factor
             json_num_segments = i * json_num_segments_factor
