@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Dec 13 18:16:22 2013 by generateDS.py version 2.12a.
+# Generated Thu Feb 13 20:16:21 2014 by generateDS.py version 2.12b.
 #
 
 import sys
@@ -75,7 +75,7 @@ def parsexml_(*args, **kwargs):
 
 try:
     from generatedssuper import GeneratedsSuper
-except ImportError as exp:
+except ImportError, exp:
 
     class GeneratedsSuper(object):
         tzoff_pattern = re_.compile(r'(\+|-)((0\d|1[0-3]):[0-5]\d|14:00)$')
@@ -392,7 +392,7 @@ def showIndent(outfile, level, pretty_print=True):
 def quote_xml(inStr):
     if not inStr:
         return ''
-    s1 = (isinstance(inStr, str) and inStr or
+    s1 = (isinstance(inStr, basestring) and inStr or
           '%s' % inStr)
     s1 = s1.replace('&', '&amp;')
     s1 = s1.replace('<', '&lt;')
@@ -401,7 +401,7 @@ def quote_xml(inStr):
 
 
 def quote_attrib(inStr):
-    s1 = (isinstance(inStr, str) and inStr or
+    s1 = (isinstance(inStr, basestring) and inStr or
           '%s' % inStr)
     s1 = s1.replace('&', '&amp;')
     s1 = s1.replace('<', '&lt;')
@@ -647,7 +647,7 @@ class Annotation(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Annotation')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Annotation', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -737,7 +737,7 @@ class ComponentType(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ComponentType')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ComponentType', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -953,7 +953,7 @@ class Q10Settings(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Q10Settings')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Q10Settings', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -1078,7 +1078,7 @@ class HHRate(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='HHRate')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='HHRate', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -1200,7 +1200,7 @@ class HHVariable(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='HHVariable')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='HHVariable', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -1262,7 +1262,7 @@ class HHVariable(GeneratedsSuper):
             already_processed.add('rate')
             try:
                 self.rate = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (rate): %s' % exp)
         value = find_attr_value_('scale', node)
         if value is not None and 'scale' not in already_processed:
@@ -1329,7 +1329,7 @@ class HHTime(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='HHTime')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='HHTime', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -1471,7 +1471,7 @@ class BlockMechanism(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='BlockMechanism')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='BlockMechanism', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -1608,7 +1608,7 @@ class PlasticityMechanism(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='PlasticityMechanism')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='PlasticityMechanism', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -1680,7 +1680,7 @@ class PlasticityMechanism(GeneratedsSuper):
             already_processed.add('initReleaseProb')
             try:
                 self.init_release_prob = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (initReleaseProb): %s' % exp)
             self.validate_ZeroToOne(self.init_release_prob)    # validate type ZeroToOne
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -1729,7 +1729,7 @@ class SegmentParent(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SegmentParent')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='SegmentParent', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -1772,7 +1772,7 @@ class SegmentParent(GeneratedsSuper):
             already_processed.add('fractionAlong')
             try:
                 self.fraction_along = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (fractionAlong): %s' % exp)
             self.validate_ZeroToOne(self.fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('segment', node)
@@ -1780,7 +1780,7 @@ class SegmentParent(GeneratedsSuper):
             already_processed.add('segment')
             try:
                 self.segments = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.segments < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -1868,7 +1868,7 @@ class Point3DWithDiam(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Point3DWithDiam')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Point3DWithDiam', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -1925,28 +1925,28 @@ class Point3DWithDiam(GeneratedsSuper):
             already_processed.add('y')
             try:
                 self.y = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (y): %s' % exp)
         value = find_attr_value_('x', node)
         if value is not None and 'x' not in already_processed:
             already_processed.add('x')
             try:
                 self.x = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (x): %s' % exp)
         value = find_attr_value_('z', node)
         if value is not None and 'z' not in already_processed:
             already_processed.add('z')
             try:
                 self.z = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (z): %s' % exp)
         value = find_attr_value_('diameter', node)
         if value is not None and 'diameter' not in already_processed:
             already_processed.add('diameter')
             try:
                 self.diameter = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (diameter): %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -1986,7 +1986,7 @@ class ProximalDetails(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ProximalDetails')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ProximalDetails', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -2022,7 +2022,7 @@ class ProximalDetails(GeneratedsSuper):
             already_processed.add('translationStart')
             try:
                 self.translation_start = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (translationStart): %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -2062,7 +2062,7 @@ class DistalDetails(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='DistalDetails')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='DistalDetails', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -2098,7 +2098,7 @@ class DistalDetails(GeneratedsSuper):
             already_processed.add('normalizationEnd')
             try:
                 self.normalization_end = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (normalizationEnd): %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -2141,7 +2141,7 @@ class Member(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Member')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Member', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -2177,7 +2177,7 @@ class Member(GeneratedsSuper):
             already_processed.add('segment')
             try:
                 self.segments = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.segments < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -2223,7 +2223,7 @@ class Include(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Include')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Include', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -2299,7 +2299,7 @@ class Path(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Path')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Path', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -2392,7 +2392,7 @@ class SubTree(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SubTree')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='SubTree', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -2486,7 +2486,7 @@ class SegmentEndPoint(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SegmentEndPoint')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='SegmentEndPoint', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -2522,7 +2522,7 @@ class SegmentEndPoint(GeneratedsSuper):
             already_processed.add('segment')
             try:
                 self.segments = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.segments < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -2647,7 +2647,7 @@ class MembraneProperties(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='MembraneProperties')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='MembraneProperties', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -2868,7 +2868,7 @@ class ValueAcrossSegOrSegGroup(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ValueAcrossSegOrSegGroup')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ValueAcrossSegOrSegGroup', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -2977,7 +2977,7 @@ class VariableParameter(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='VariableParameter')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='VariableParameter', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -3077,7 +3077,7 @@ class InhomogeneousValue(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='InhomogeneousValue')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='InhomogeneousValue', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -3165,7 +3165,7 @@ class ReversalPotential(ValueAcrossSegOrSegGroup):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ReversalPotential')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ReversalPotential', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -3263,7 +3263,7 @@ class Species(ValueAcrossSegOrSegGroup):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Species')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Species', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -3399,7 +3399,7 @@ class IntracellularProperties(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IntracellularProperties')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='IntracellularProperties', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -3504,7 +3504,7 @@ class ExtracellularPropertiesLocal(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ExtracellularPropertiesLocal')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ExtracellularPropertiesLocal', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -3599,7 +3599,7 @@ class SpaceStructure(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpaceStructure')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='SpaceStructure', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -3670,42 +3670,42 @@ class SpaceStructure(GeneratedsSuper):
             already_processed.add('ySpacing')
             try:
                 self.y_spacing = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (ySpacing): %s' % exp)
         value = find_attr_value_('zStart', node)
         if value is not None and 'zStart' not in already_processed:
             already_processed.add('zStart')
             try:
                 self.z_start = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (zStart): %s' % exp)
         value = find_attr_value_('yStart', node)
         if value is not None and 'yStart' not in already_processed:
             already_processed.add('yStart')
             try:
                 self.y_start = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (yStart): %s' % exp)
         value = find_attr_value_('zSpacing', node)
         if value is not None and 'zSpacing' not in already_processed:
             already_processed.add('zSpacing')
             try:
                 self.z_spacing = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (zSpacing): %s' % exp)
         value = find_attr_value_('xStart', node)
         if value is not None and 'xStart' not in already_processed:
             already_processed.add('xStart')
             try:
                 self.x_start = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (xStart): %s' % exp)
         value = find_attr_value_('xSpacing', node)
         if value is not None and 'xSpacing' not in already_processed:
             already_processed.add('xSpacing')
             try:
                 self.x_spacing = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (xSpacing): %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -3755,7 +3755,7 @@ class Layout(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Layout')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Layout', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -3867,7 +3867,7 @@ class UnstructuredLayout(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='UnstructuredLayout')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='UnstructuredLayout', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -3903,7 +3903,7 @@ class UnstructuredLayout(GeneratedsSuper):
             already_processed.add('number')
             try:
                 self.number = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.number < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -3950,7 +3950,7 @@ class RandomLayout(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='RandomLayout')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='RandomLayout', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -3998,7 +3998,7 @@ class RandomLayout(GeneratedsSuper):
             already_processed.add('number')
             try:
                 self.number = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.number < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4044,7 +4044,7 @@ class GridLayout(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='GridLayout')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='GridLayout', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -4094,7 +4094,7 @@ class GridLayout(GeneratedsSuper):
             already_processed.add('zSize')
             try:
                 self.z_size = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.z_size < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4103,7 +4103,7 @@ class GridLayout(GeneratedsSuper):
             already_processed.add('ySize')
             try:
                 self.y_size = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.y_size < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4112,7 +4112,7 @@ class GridLayout(GeneratedsSuper):
             already_processed.add('xSize')
             try:
                 self.x_size = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.x_size < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4161,7 +4161,7 @@ class Instance(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Instance')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Instance', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -4229,7 +4229,7 @@ class Instance(GeneratedsSuper):
             already_processed.add('i')
             try:
                 self.i = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.i < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4238,7 +4238,7 @@ class Instance(GeneratedsSuper):
             already_processed.add('k')
             try:
                 self.k = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.k < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4247,7 +4247,7 @@ class Instance(GeneratedsSuper):
             already_processed.add('j')
             try:
                 self.j = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.j < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4256,7 +4256,7 @@ class Instance(GeneratedsSuper):
             already_processed.add('id')
             try:
                 self.id = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4305,7 +4305,7 @@ class Location(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Location')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Location', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -4355,21 +4355,21 @@ class Location(GeneratedsSuper):
             already_processed.add('y')
             try:
                 self.y = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (y): %s' % exp)
         value = find_attr_value_('x', node)
         if value is not None and 'x' not in already_processed:
             already_processed.add('x')
             try:
                 self.x = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (x): %s' % exp)
         value = find_attr_value_('z', node)
         if value is not None and 'z' not in already_processed:
             already_processed.add('z')
             try:
                 self.z = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (z): %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -4421,7 +4421,7 @@ class SynapticConnection(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SynapticConnection')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='SynapticConnection', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -4547,7 +4547,7 @@ class Connection(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Connection')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Connection', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -4625,7 +4625,7 @@ class Connection(GeneratedsSuper):
             already_processed.add('preFractionAlong')
             try:
                 self.pre_fraction_along = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (preFractionAlong): %s' % exp)
             self.validate_ZeroToOne(self.pre_fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('preCellId', node)
@@ -4637,7 +4637,7 @@ class Connection(GeneratedsSuper):
             already_processed.add('postFractionAlong')
             try:
                 self.post_fraction_along = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (postFractionAlong): %s' % exp)
             self.validate_ZeroToOne(self.post_fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('postSegmentId', node)
@@ -4645,7 +4645,7 @@ class Connection(GeneratedsSuper):
             already_processed.add('postSegmentId')
             try:
                 self.post_segment_id = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.post_segment_id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4659,7 +4659,7 @@ class Connection(GeneratedsSuper):
             already_processed.add('preSegmentId')
             try:
                 self.pre_segment_id = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.pre_segment_id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4669,7 +4669,7 @@ class Connection(GeneratedsSuper):
             already_processed.add('id')
             try:
                 self.id = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4718,7 +4718,7 @@ class ExplicitInput(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ExplicitInput')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ExplicitInput', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -4821,7 +4821,7 @@ class Input(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Input')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Input', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -4876,7 +4876,7 @@ class Input(GeneratedsSuper):
             already_processed.add('id')
             try:
                 self.id = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4928,7 +4928,7 @@ class BaseWithoutId(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='BaseWithoutId')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='BaseWithoutId', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -5017,7 +5017,7 @@ class Base(BaseWithoutId):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Base')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Base', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -5120,7 +5120,7 @@ class Standalone(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Standalone')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Standalone', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -5244,7 +5244,7 @@ class SpikeSourcePoisson(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpikeSourcePoisson')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='SpikeSourcePoisson', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -5359,7 +5359,7 @@ class InputList(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='InputList')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='InputList', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -5485,7 +5485,7 @@ class Projection(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Projection')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Projection', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -5615,7 +5615,7 @@ class CellSet(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='CellSet')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='CellSet', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -5734,7 +5734,7 @@ class Population(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Population')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Population', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -5859,7 +5859,7 @@ class Population(Standalone):
             already_processed.add('size')
             try:
                 self.size = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         super(Population, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -5917,7 +5917,7 @@ class Region(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Region')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Region', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -6018,7 +6018,7 @@ class Space(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Space')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Space', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -6174,7 +6174,7 @@ class Network(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Network')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Network', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -6434,7 +6434,7 @@ class SpikeGeneratorPoisson(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpikeGeneratorPoisson')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='SpikeGeneratorPoisson', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -6519,7 +6519,7 @@ class SpikeGeneratorRandom(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpikeGeneratorRandom')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='SpikeGeneratorRandom', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -6614,7 +6614,7 @@ class SpikeGenerator(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpikeGenerator')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='SpikeGenerator', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -6697,7 +6697,7 @@ class SpikeArray(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpikeArray')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='SpikeArray', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -6789,7 +6789,7 @@ class Spike(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Spike')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Spike', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -6884,7 +6884,7 @@ class VoltageClamp(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='VoltageClamp')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='VoltageClamp', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -7014,7 +7014,7 @@ class RampGenerator(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='RampGenerator')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='RampGenerator', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -7159,7 +7159,7 @@ class SineGenerator(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SineGenerator')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='SineGenerator', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -7297,7 +7297,7 @@ class PulseGenerator(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='PulseGenerator')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='PulseGenerator', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -7408,7 +7408,7 @@ class ReactionScheme(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ReactionScheme')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ReactionScheme', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -7517,7 +7517,7 @@ class ExtracellularProperties(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ExtracellularProperties')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ExtracellularProperties', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -7626,7 +7626,7 @@ class ChannelDensityGHK(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensityGHK')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ChannelDensityGHK', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -7775,7 +7775,7 @@ class ChannelDensityNernst(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensityNernst')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ChannelDensityNernst', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -7934,7 +7934,7 @@ class ChannelDensity(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensity')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ChannelDensity', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -8122,7 +8122,7 @@ class ChannelPopulation(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelPopulation')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ChannelPopulation', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -8224,7 +8224,7 @@ class ChannelPopulation(Base):
             already_processed.add('number')
             try:
                 self.number = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.number < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -8287,7 +8287,7 @@ class Resistivity(ValueAcrossSegOrSegGroup):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Resistivity')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Resistivity', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -8356,7 +8356,7 @@ class InitMembPotential(ValueAcrossSegOrSegGroup):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='InitMembPotential')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='InitMembPotential', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -8425,7 +8425,7 @@ class SpecificCapacitance(ValueAcrossSegOrSegGroup):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpecificCapacitance')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='SpecificCapacitance', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -8494,7 +8494,7 @@ class SpikeThresh(ValueAcrossSegOrSegGroup):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpikeThresh')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='SpikeThresh', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -8571,7 +8571,7 @@ class BiophysicalProperties(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='BiophysicalProperties')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='BiophysicalProperties', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -8688,7 +8688,7 @@ class InhomogeneousParam(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='InhomogeneousParam')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='InhomogeneousParam', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -8833,7 +8833,7 @@ class SegmentGroup(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SegmentGroup')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='SegmentGroup', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -9045,7 +9045,7 @@ class Segment(BaseWithoutId):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Segment')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Segment', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -9119,7 +9119,7 @@ class Segment(BaseWithoutId):
             already_processed.add('id')
             try:
                 self.id = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -9229,7 +9229,7 @@ class Morphology(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Morphology')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Morphology', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -9337,7 +9337,7 @@ class BaseCell(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='BaseCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='BaseCell', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -9411,7 +9411,7 @@ class BaseSynapse(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='BaseSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='BaseSynapse', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -9506,7 +9506,7 @@ class FixedFactorConcentrationModel(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='FixedFactorConcentrationModel')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='FixedFactorConcentrationModel', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -9641,7 +9641,7 @@ class DecayingPoolConcentrationModel(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='DecayingPoolConcentrationModel')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='DecayingPoolConcentrationModel', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -9787,7 +9787,7 @@ class GateHHRatesInf(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRatesInf')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='GateHHRatesInf', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -9875,7 +9875,7 @@ class GateHHRatesInf(Base):
             already_processed.add('instances')
             try:
                 self.instances = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
@@ -9965,7 +9965,7 @@ class GateHHRatesTau(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRatesTau')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='GateHHRatesTau', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -10053,7 +10053,7 @@ class GateHHRatesTau(Base):
             already_processed.add('instances')
             try:
                 self.instances = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
@@ -10140,7 +10140,7 @@ class GateHHTauInf(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHTauInf')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='GateHHTauInf', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -10220,7 +10220,7 @@ class GateHHTauInf(Base):
             already_processed.add('instances')
             try:
                 self.instances = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
@@ -10303,7 +10303,7 @@ class GateHHRates(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRates')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='GateHHRates', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -10383,7 +10383,7 @@ class GateHHRates(Base):
             already_processed.add('instances')
             try:
                 self.instances = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
@@ -10472,7 +10472,7 @@ class GateHHUndetermined(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHUndetermined')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='GateHHUndetermined', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -10568,7 +10568,7 @@ class GateHHUndetermined(Base):
             already_processed.add('instances')
             try:
                 self.instances = int(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
@@ -10682,7 +10682,7 @@ class IonChannel(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IonChannel')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='IonChannel', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -10860,12 +10860,13 @@ class NeuroMLDocument(Standalone):
         MemberSpec_('biophysical_properties', 'BiophysicalProperties', 1),
         MemberSpec_('cells', 'Cell', 1),
         MemberSpec_('base_cells', 'BaseCell', 1),
-        MemberSpec_('iaf_tau_cells', 'IaFTauCell', 1),
-        MemberSpec_('iaf_tau_ref_cells', 'IaFTauRefCell', 1),
-        MemberSpec_('iaf_cells', 'IaFCell', 1),
-        MemberSpec_('iaf_ref_cells', 'IaFRefCell', 1),
+        MemberSpec_('iaf_tau_cells', 'IafTauCell', 1),
+        MemberSpec_('iaf_tau_ref_cells', 'IafTauRefCell', 1),
+        MemberSpec_('iaf_cells', 'IafCell', 1),
+        MemberSpec_('iaf_ref_cells', 'IafRefCell', 1),
         MemberSpec_('izhikevich_cells', 'IzhikevichCell', 1),
         MemberSpec_('ad_ex_ia_f_cells', 'AdExIaFCell', 1),
+        MemberSpec_('fitzHughNagumoCell', 'FitzHughNagumoCell', 1),
         MemberSpec_('pulse_generators', 'PulseGenerator', 1),
         MemberSpec_('sine_generators', 'SineGenerator', 1),
         MemberSpec_('ramp_generators', 'RampGenerator', 1),
@@ -10891,7 +10892,7 @@ class NeuroMLDocument(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channels=None, decaying_pool_concentration_models=None, fixedFactorConcentrationModel=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, biophysical_properties=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, ad_ex_ia_f_cells=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channels=None, decaying_pool_concentration_models=None, fixedFactorConcentrationModel=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, biophysical_properties=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, ad_ex_ia_f_cells=None, fitzHughNagumoCell=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
         super(NeuroMLDocument, self).__init__(neuro_lex_id, id, metaid, notes, annotation, )
         if includes is None:
             self.includes = []
@@ -10969,6 +10970,10 @@ class NeuroMLDocument(Standalone):
             self.ad_ex_ia_f_cells = []
         else:
             self.ad_ex_ia_f_cells = ad_ex_ia_f_cells
+        if fitzHughNagumoCell is None:
+            self.fitzHughNagumoCell = []
+        else:
+            self.fitzHughNagumoCell = fitzHughNagumoCell
         if pulse_generators is None:
             self.pulse_generators = []
         else:
@@ -11084,6 +11089,7 @@ class NeuroMLDocument(Standalone):
             self.iaf_ref_cells or
             self.izhikevich_cells or
             self.ad_ex_ia_f_cells or
+            self.fitzHughNagumoCell or
             self.pulse_generators or
             self.sine_generators or
             self.ramp_generators or
@@ -11122,7 +11128,7 @@ class NeuroMLDocument(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='NeuroMLDocument')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='NeuroMLDocument', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -11173,6 +11179,8 @@ class NeuroMLDocument(Standalone):
             izhikevichCell_.export(outfile, level, namespace_, name_='izhikevichCell', pretty_print=pretty_print)
         for adExIaFCell_ in self.ad_ex_ia_f_cells:
             adExIaFCell_.export(outfile, level, namespace_, name_='adExIaFCell', pretty_print=pretty_print)
+        for fitzHughNagumoCell_ in self.fitzHughNagumoCell:
+            fitzHughNagumoCell_.export(outfile, level, namespace_, name_='fitzHughNagumoCell', pretty_print=pretty_print)
         for pulseGenerator_ in self.pulse_generators:
             pulseGenerator_.export(outfile, level, namespace_, name_='pulseGenerator', pretty_print=pretty_print)
         for sineGenerator_ in self.sine_generators:
@@ -11388,8 +11396,8 @@ class NeuroMLDocument(Standalone):
         level += 1
         for iafTauCell_ in self.iaf_tau_cells:
             showIndent(outfile, level)
-            outfile.write('model_.IaFTauCell(\n')
-            iafTauCell_.exportLiteral(outfile, level, name_='IaFTauCell')
+            outfile.write('model_.IafTauCell(\n')
+            iafTauCell_.exportLiteral(outfile, level, name_='IafTauCell')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -11400,8 +11408,8 @@ class NeuroMLDocument(Standalone):
         level += 1
         for iafTauRefCell_ in self.iaf_tau_ref_cells:
             showIndent(outfile, level)
-            outfile.write('model_.IaFTauRefCell(\n')
-            iafTauRefCell_.exportLiteral(outfile, level, name_='IaFTauRefCell')
+            outfile.write('model_.IafTauRefCell(\n')
+            iafTauRefCell_.exportLiteral(outfile, level, name_='IafTauRefCell')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -11412,8 +11420,8 @@ class NeuroMLDocument(Standalone):
         level += 1
         for iafCell_ in self.iaf_cells:
             showIndent(outfile, level)
-            outfile.write('model_.IaFCell(\n')
-            iafCell_.exportLiteral(outfile, level, name_='IaFCell')
+            outfile.write('model_.IafCell(\n')
+            iafCell_.exportLiteral(outfile, level, name_='IafCell')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -11424,8 +11432,8 @@ class NeuroMLDocument(Standalone):
         level += 1
         for iafRefCell_ in self.iaf_ref_cells:
             showIndent(outfile, level)
-            outfile.write('model_.IaFRefCell(\n')
-            iafRefCell_.exportLiteral(outfile, level, name_='IaFRefCell')
+            outfile.write('model_.IafRefCell(\n')
+            iafRefCell_.exportLiteral(outfile, level, name_='IafRefCell')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -11450,6 +11458,18 @@ class NeuroMLDocument(Standalone):
             showIndent(outfile, level)
             outfile.write('model_.AdExIaFCell(\n')
             adExIaFCell_.exportLiteral(outfile, level, name_='AdExIaFCell')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('fitzHughNagumoCell=[\n')
+        level += 1
+        for fitzHughNagumoCell_ in self.fitzHughNagumoCell:
+            showIndent(outfile, level)
+            outfile.write('model_.FitzHughNagumoCell(\n')
+            fitzHughNagumoCell_.exportLiteral(outfile, level, name_='FitzHughNagumoCell')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -11785,21 +11805,21 @@ class NeuroMLDocument(Standalone):
             obj_.build(child_)
             self.base_cells.append(obj_)
         elif nodeName_ == 'iafTauCell':
-            class_obj_ = self.get_class_obj_(child_, IaFTauCell)
+            class_obj_ = self.get_class_obj_(child_, IafTauCell)
             obj_ = class_obj_.factory()
             obj_.build(child_)
             self.iaf_tau_cells.append(obj_)
         elif nodeName_ == 'iafTauRefCell':
-            obj_ = IaFTauRefCell.factory()
+            obj_ = IafTauRefCell.factory()
             obj_.build(child_)
             self.iaf_tau_ref_cells.append(obj_)
         elif nodeName_ == 'iafCell':
-            class_obj_ = self.get_class_obj_(child_, IaFCell)
+            class_obj_ = self.get_class_obj_(child_, IafCell)
             obj_ = class_obj_.factory()
             obj_.build(child_)
             self.iaf_cells.append(obj_)
         elif nodeName_ == 'iafRefCell':
-            obj_ = IaFRefCell.factory()
+            obj_ = IafRefCell.factory()
             obj_.build(child_)
             self.iaf_ref_cells.append(obj_)
         elif nodeName_ == 'izhikevichCell':
@@ -11810,6 +11830,10 @@ class NeuroMLDocument(Standalone):
             obj_ = AdExIaFCell.factory()
             obj_.build(child_)
             self.ad_ex_ia_f_cells.append(obj_)
+        elif nodeName_ == 'fitzHughNagumoCell':
+            obj_ = FitzHughNagumoCell.factory()
+            obj_.build(child_)
+            self.fitzHughNagumoCell.append(obj_)
         elif nodeName_ == 'pulseGenerator':
             obj_ = PulseGenerator.factory()
             obj_.build(child_)
@@ -11936,7 +11960,7 @@ class BasePynnSynapse(BaseSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='BasePynnSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='BasePynnSynapse', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -11979,7 +12003,7 @@ class BasePynnSynapse(BaseSynapse):
             already_processed.add('tau_syn')
             try:
                 self.tau_syn = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (tau_syn): %s' % exp)
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
@@ -12034,7 +12058,7 @@ class basePyNNCell(BaseCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='basePyNNCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='basePyNNCell', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -12105,35 +12129,35 @@ class basePyNNCell(BaseCell):
             already_processed.add('tau_syn_I')
             try:
                 self.tau_syn_I = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (tau_syn_I): %s' % exp)
         value = find_attr_value_('tau_syn_E', node)
         if value is not None and 'tau_syn_E' not in already_processed:
             already_processed.add('tau_syn_E')
             try:
                 self.tau_syn_E = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (tau_syn_E): %s' % exp)
         value = find_attr_value_('i_offset', node)
         if value is not None and 'i_offset' not in already_processed:
             already_processed.add('i_offset')
             try:
                 self.i_offset = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (i_offset): %s' % exp)
         value = find_attr_value_('cm', node)
         if value is not None and 'cm' not in already_processed:
             already_processed.add('cm')
             try:
                 self.cm = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (cm): %s' % exp)
         value = find_attr_value_('v_init', node)
         if value is not None and 'v_init' not in already_processed:
             already_processed.add('v_init')
             try:
                 self.v_init = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (v_init): %s' % exp)
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
@@ -12180,7 +12204,7 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ConcentrationModel_D')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ConcentrationModel_D', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -12270,7 +12294,7 @@ class Cell(BaseCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Cell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Cell', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -12353,6 +12377,89 @@ class Cell(BaseCell):
 # end class Cell
 
 
+class FitzHughNagumoCell(BaseCell):
+    member_data_items_ = [
+        MemberSpec_('I', 'Nml2Quantity_none', 0),
+    ]
+    subclass = None
+    superclass = BaseCell
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, I=None):
+        super(FitzHughNagumoCell, self).__init__(neuro_lex_id, id, metaid, notes, annotation, )
+        self.I = _cast(None, I)
+        pass
+    def factory(*args_, **kwargs_):
+        if FitzHughNagumoCell.subclass:
+            return FitzHughNagumoCell.subclass(*args_, **kwargs_)
+        else:
+            return FitzHughNagumoCell(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Nml2Quantity_none(self, value):
+        # Validate type Nml2Quantity_none, a restriction on xs:string.
+        pass
+    def hasContent_(self):
+        if (
+            super(FitzHughNagumoCell, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='FitzHughNagumoCell', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='FitzHughNagumoCell')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='FitzHughNagumoCell', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='FitzHughNagumoCell'):
+        super(FitzHughNagumoCell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='FitzHughNagumoCell')
+        if self.I is not None and 'I' not in already_processed:
+            already_processed.add('I')
+            outfile.write(' I=%s' % (quote_attrib(self.I), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='FitzHughNagumoCell', fromsubclass_=False, pretty_print=True):
+        super(FitzHughNagumoCell, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='FitzHughNagumoCell'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.I is not None and 'I' not in already_processed:
+            already_processed.add('I')
+            showIndent(outfile, level)
+            outfile.write('I="%s",\n' % (self.I,))
+        super(FitzHughNagumoCell, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(FitzHughNagumoCell, self).exportLiteralChildren(outfile, level, name_)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('I', node)
+        if value is not None and 'I' not in already_processed:
+            already_processed.add('I')
+            self.I = value
+            self.validate_Nml2Quantity_none(self.I)    # validate type Nml2Quantity_none
+        super(FitzHughNagumoCell, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(FitzHughNagumoCell, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class FitzHughNagumoCell
+
+
 class AdExIaFCell(BaseCell):
     member_data_items_ = [
         MemberSpec_('reset', 'Nml2Quantity_voltage', 0),
@@ -12422,7 +12529,7 @@ class AdExIaFCell(BaseCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='AdExIaFCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='AdExIaFCell', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -12638,7 +12745,7 @@ class IzhikevichCell(BaseCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IzhikevichCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='IzhikevichCell', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -12744,7 +12851,7 @@ class IzhikevichCell(BaseCell):
 # end class IzhikevichCell
 
 
-class IaFCell(BaseCell):
+class IafCell(BaseCell):
     member_data_items_ = [
         MemberSpec_('reset', 'Nml2Quantity_voltage', 0),
         MemberSpec_('C', 'Nml2Quantity_capacitance', 0),
@@ -12755,7 +12862,7 @@ class IaFCell(BaseCell):
     subclass = None
     superclass = BaseCell
     def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, reset=None, C=None, thresh=None, leak_conductance=None, leak_reversal=None, extensiontype_=None):
-        super(IaFCell, self).__init__(neuro_lex_id, id, metaid, notes, annotation, extensiontype_, )
+        super(IafCell, self).__init__(neuro_lex_id, id, metaid, notes, annotation, extensiontype_, )
         self.reset = _cast(None, reset)
         self.C = _cast(None, C)
         self.thresh = _cast(None, thresh)
@@ -12763,10 +12870,10 @@ class IaFCell(BaseCell):
         self.leak_reversal = _cast(None, leak_reversal)
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
-        if IaFCell.subclass:
-            return IaFCell.subclass(*args_, **kwargs_)
+        if IafCell.subclass:
+            return IafCell.subclass(*args_, **kwargs_)
         else:
-            return IaFCell(*args_, **kwargs_)
+            return IafCell(*args_, **kwargs_)
     factory = staticmethod(factory)
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
@@ -12779,12 +12886,12 @@ class IaFCell(BaseCell):
         pass
     def hasContent_(self):
         if (
-            super(IaFCell, self).hasContent_()
+            super(IafCell, self).hasContent_()
         ):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='IaFCell', namespacedef_='', pretty_print=True):
+    def export(self, outfile, level, namespace_='', name_='IafCell', namespacedef_='', pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -12792,16 +12899,16 @@ class IaFCell(BaseCell):
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='IaFCell')
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='IafCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='IafCell', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='IaFCell'):
-        super(IaFCell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='IaFCell')
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='IafCell'):
+        super(IafCell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='IafCell')
         if self.reset is not None and 'reset' not in already_processed:
             already_processed.add('reset')
             outfile.write(' reset=%s' % (quote_attrib(self.reset), ))
@@ -12821,9 +12928,9 @@ class IaFCell(BaseCell):
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
             outfile.write(' xsi:type="%s"' % self.extensiontype_)
-    def exportChildren(self, outfile, level, namespace_='', name_='IaFCell', fromsubclass_=False, pretty_print=True):
-        super(IaFCell, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
-    def exportLiteral(self, outfile, level, name_='IaFCell'):
+    def exportChildren(self, outfile, level, namespace_='', name_='IafCell', fromsubclass_=False, pretty_print=True):
+        super(IafCell, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='IafCell'):
         level += 1
         already_processed = set()
         self.exportLiteralAttributes(outfile, level, already_processed, name_)
@@ -12850,9 +12957,9 @@ class IaFCell(BaseCell):
             already_processed.add('leak_reversal')
             showIndent(outfile, level)
             outfile.write('leak_reversal="%s",\n' % (self.leak_reversal,))
-        super(IaFCell, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+        super(IafCell, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
-        super(IaFCell, self).exportLiteralChildren(outfile, level, name_)
+        super(IafCell, self).exportLiteralChildren(outfile, level, name_)
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -12890,14 +12997,14 @@ class IaFCell(BaseCell):
         if value is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             self.extensiontype_ = value
-        super(IaFCell, self).buildAttributes(node, attrs, already_processed)
+        super(IafCell, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        super(IaFCell, self).buildChildren(child_, node, nodeName_, True)
+        super(IafCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class IaFCell
+# end class IafCell
 
 
-class IaFTauCell(BaseCell):
+class IafTauCell(BaseCell):
     member_data_items_ = [
         MemberSpec_('reset', 'Nml2Quantity_voltage', 0),
         MemberSpec_('tau', 'Nml2Quantity_time', 0),
@@ -12907,17 +13014,17 @@ class IaFTauCell(BaseCell):
     subclass = None
     superclass = BaseCell
     def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, reset=None, tau=None, thresh=None, leak_reversal=None, extensiontype_=None):
-        super(IaFTauCell, self).__init__(neuro_lex_id, id, metaid, notes, annotation, extensiontype_, )
+        super(IafTauCell, self).__init__(neuro_lex_id, id, metaid, notes, annotation, extensiontype_, )
         self.reset = _cast(None, reset)
         self.tau = _cast(None, tau)
         self.thresh = _cast(None, thresh)
         self.leak_reversal = _cast(None, leak_reversal)
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
-        if IaFTauCell.subclass:
-            return IaFTauCell.subclass(*args_, **kwargs_)
+        if IafTauCell.subclass:
+            return IafTauCell.subclass(*args_, **kwargs_)
         else:
-            return IaFTauCell(*args_, **kwargs_)
+            return IafTauCell(*args_, **kwargs_)
     factory = staticmethod(factory)
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
@@ -12927,12 +13034,12 @@ class IaFTauCell(BaseCell):
         pass
     def hasContent_(self):
         if (
-            super(IaFTauCell, self).hasContent_()
+            super(IafTauCell, self).hasContent_()
         ):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='IaFTauCell', namespacedef_='', pretty_print=True):
+    def export(self, outfile, level, namespace_='', name_='IafTauCell', namespacedef_='', pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -12940,16 +13047,16 @@ class IaFTauCell(BaseCell):
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='IaFTauCell')
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='IafTauCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='IafTauCell', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='IaFTauCell'):
-        super(IaFTauCell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='IaFTauCell')
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='IafTauCell'):
+        super(IafTauCell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='IafTauCell')
         if self.reset is not None and 'reset' not in already_processed:
             already_processed.add('reset')
             outfile.write(' reset=%s' % (quote_attrib(self.reset), ))
@@ -12966,9 +13073,9 @@ class IaFTauCell(BaseCell):
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
             outfile.write(' xsi:type="%s"' % self.extensiontype_)
-    def exportChildren(self, outfile, level, namespace_='', name_='IaFTauCell', fromsubclass_=False, pretty_print=True):
-        super(IaFTauCell, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
-    def exportLiteral(self, outfile, level, name_='IaFTauCell'):
+    def exportChildren(self, outfile, level, namespace_='', name_='IafTauCell', fromsubclass_=False, pretty_print=True):
+        super(IafTauCell, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='IafTauCell'):
         level += 1
         already_processed = set()
         self.exportLiteralAttributes(outfile, level, already_processed, name_)
@@ -12991,9 +13098,9 @@ class IaFTauCell(BaseCell):
             already_processed.add('leak_reversal')
             showIndent(outfile, level)
             outfile.write('leak_reversal="%s",\n' % (self.leak_reversal,))
-        super(IaFTauCell, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+        super(IafTauCell, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
-        super(IaFTauCell, self).exportLiteralChildren(outfile, level, name_)
+        super(IafTauCell, self).exportLiteralChildren(outfile, level, name_)
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -13026,11 +13133,11 @@ class IaFTauCell(BaseCell):
         if value is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             self.extensiontype_ = value
-        super(IaFTauCell, self).buildAttributes(node, attrs, already_processed)
+        super(IafTauCell, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        super(IaFTauCell, self).buildChildren(child_, node, nodeName_, True)
+        super(IafTauCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class IaFTauCell
+# end class IafTauCell
 
 
 class BaseConductanceBasedSynapse(BaseSynapse):
@@ -13075,7 +13182,7 @@ class BaseConductanceBasedSynapse(BaseSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='BaseConductanceBasedSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='BaseConductanceBasedSynapse', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -13173,7 +13280,7 @@ class AlphaCurrSynapse(BasePynnSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='AlphaCurrSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='AlphaCurrSynapse', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -13239,7 +13346,7 @@ class ExpCurrSynapse(BasePynnSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ExpCurrSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ExpCurrSynapse', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -13307,7 +13414,7 @@ class AlphaCondSynapse(BasePynnSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='AlphaCondSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='AlphaCondSynapse', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -13346,7 +13453,7 @@ class AlphaCondSynapse(BasePynnSynapse):
             already_processed.add('e_rev')
             try:
                 self.e_rev = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (e_rev): %s' % exp)
         super(AlphaCondSynapse, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -13389,7 +13496,7 @@ class ExpCondSynapse(BasePynnSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ExpCondSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ExpCondSynapse', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -13428,7 +13535,7 @@ class ExpCondSynapse(BasePynnSynapse):
             already_processed.add('e_rev')
             try:
                 self.e_rev = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (e_rev): %s' % exp)
         super(ExpCondSynapse, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -13487,7 +13594,7 @@ class HH_cond_exp(basePyNNCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='HH_cond_exp')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='HH_cond_exp', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -13582,63 +13689,63 @@ class HH_cond_exp(basePyNNCell):
             already_processed.add('gbar_K')
             try:
                 self.gbar_K = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (gbar_K): %s' % exp)
         value = find_attr_value_('e_rev_E', node)
         if value is not None and 'e_rev_E' not in already_processed:
             already_processed.add('e_rev_E')
             try:
                 self.e_rev_E = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (e_rev_E): %s' % exp)
         value = find_attr_value_('g_leak', node)
         if value is not None and 'g_leak' not in already_processed:
             already_processed.add('g_leak')
             try:
                 self.g_leak = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (g_leak): %s' % exp)
         value = find_attr_value_('e_rev_Na', node)
         if value is not None and 'e_rev_Na' not in already_processed:
             already_processed.add('e_rev_Na')
             try:
                 self.e_rev_Na = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (e_rev_Na): %s' % exp)
         value = find_attr_value_('e_rev_I', node)
         if value is not None and 'e_rev_I' not in already_processed:
             already_processed.add('e_rev_I')
             try:
                 self.e_rev_I = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (e_rev_I): %s' % exp)
         value = find_attr_value_('e_rev_K', node)
         if value is not None and 'e_rev_K' not in already_processed:
             already_processed.add('e_rev_K')
             try:
                 self.e_rev_K = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (e_rev_K): %s' % exp)
         value = find_attr_value_('e_rev_leak', node)
         if value is not None and 'e_rev_leak' not in already_processed:
             already_processed.add('e_rev_leak')
             try:
                 self.e_rev_leak = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (e_rev_leak): %s' % exp)
         value = find_attr_value_('v_offset', node)
         if value is not None and 'v_offset' not in already_processed:
             already_processed.add('v_offset')
             try:
                 self.v_offset = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (v_offset): %s' % exp)
         value = find_attr_value_('gbar_Na', node)
         if value is not None and 'gbar_Na' not in already_processed:
             already_processed.add('gbar_Na')
             try:
                 self.gbar_Na = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (gbar_Na): %s' % exp)
         super(HH_cond_exp, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -13689,7 +13796,7 @@ class basePyNNIaFCell(basePyNNCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='basePyNNIaFCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='basePyNNIaFCell', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -13760,35 +13867,35 @@ class basePyNNIaFCell(basePyNNCell):
             already_processed.add('tau_refrac')
             try:
                 self.tau_refrac = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (tau_refrac): %s' % exp)
         value = find_attr_value_('v_thresh', node)
         if value is not None and 'v_thresh' not in already_processed:
             already_processed.add('v_thresh')
             try:
                 self.v_thresh = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (v_thresh): %s' % exp)
         value = find_attr_value_('tau_m', node)
         if value is not None and 'tau_m' not in already_processed:
             already_processed.add('tau_m')
             try:
                 self.tau_m = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (tau_m): %s' % exp)
         value = find_attr_value_('v_reset', node)
         if value is not None and 'v_reset' not in already_processed:
             already_processed.add('v_reset')
             try:
                 self.v_reset = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (v_reset): %s' % exp)
         value = find_attr_value_('v_rest', node)
         if value is not None and 'v_rest' not in already_processed:
             already_processed.add('v_rest')
             try:
                 self.v_rest = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (v_rest): %s' % exp)
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
@@ -13801,33 +13908,33 @@ class basePyNNIaFCell(basePyNNCell):
 # end class basePyNNIaFCell
 
 
-class IaFRefCell(IaFCell):
+class IafRefCell(IafCell):
     member_data_items_ = [
         MemberSpec_('refract', 'Nml2Quantity_time', 0),
     ]
     subclass = None
-    superclass = IaFCell
+    superclass = IafCell
     def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, reset=None, C=None, thresh=None, leak_conductance=None, leak_reversal=None, refract=None):
-        super(IaFRefCell, self).__init__(neuro_lex_id, id, metaid, notes, annotation, reset, C, thresh, leak_conductance, leak_reversal, )
+        super(IafRefCell, self).__init__(neuro_lex_id, id, metaid, notes, annotation, reset, C, thresh, leak_conductance, leak_reversal, )
         self.refract = _cast(None, refract)
         pass
     def factory(*args_, **kwargs_):
-        if IaFRefCell.subclass:
-            return IaFRefCell.subclass(*args_, **kwargs_)
+        if IafRefCell.subclass:
+            return IafRefCell.subclass(*args_, **kwargs_)
         else:
-            return IaFRefCell(*args_, **kwargs_)
+            return IafRefCell(*args_, **kwargs_)
     factory = staticmethod(factory)
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         pass
     def hasContent_(self):
         if (
-            super(IaFRefCell, self).hasContent_()
+            super(IafRefCell, self).hasContent_()
         ):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='IaFRefCell', namespacedef_='', pretty_print=True):
+    def export(self, outfile, level, namespace_='', name_='IafRefCell', namespacedef_='', pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -13835,22 +13942,22 @@ class IaFRefCell(IaFCell):
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='IaFRefCell')
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='IafRefCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='IafRefCell', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='IaFRefCell'):
-        super(IaFRefCell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='IaFRefCell')
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='IafRefCell'):
+        super(IafRefCell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='IafRefCell')
         if self.refract is not None and 'refract' not in already_processed:
             already_processed.add('refract')
             outfile.write(' refract=%s' % (quote_attrib(self.refract), ))
-    def exportChildren(self, outfile, level, namespace_='', name_='IaFRefCell', fromsubclass_=False, pretty_print=True):
-        super(IaFRefCell, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
-    def exportLiteral(self, outfile, level, name_='IaFRefCell'):
+    def exportChildren(self, outfile, level, namespace_='', name_='IafRefCell', fromsubclass_=False, pretty_print=True):
+        super(IafRefCell, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='IafRefCell'):
         level += 1
         already_processed = set()
         self.exportLiteralAttributes(outfile, level, already_processed, name_)
@@ -13861,9 +13968,9 @@ class IaFRefCell(IaFCell):
             already_processed.add('refract')
             showIndent(outfile, level)
             outfile.write('refract="%s",\n' % (self.refract,))
-        super(IaFRefCell, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+        super(IafRefCell, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
-        super(IaFRefCell, self).exportLiteralChildren(outfile, level, name_)
+        super(IafRefCell, self).exportLiteralChildren(outfile, level, name_)
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -13877,40 +13984,40 @@ class IaFRefCell(IaFCell):
             already_processed.add('refract')
             self.refract = value
             self.validate_Nml2Quantity_time(self.refract)    # validate type Nml2Quantity_time
-        super(IaFRefCell, self).buildAttributes(node, attrs, already_processed)
+        super(IafRefCell, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        super(IaFRefCell, self).buildChildren(child_, node, nodeName_, True)
+        super(IafRefCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class IaFRefCell
+# end class IafRefCell
 
 
-class IaFTauRefCell(IaFTauCell):
+class IafTauRefCell(IafTauCell):
     member_data_items_ = [
         MemberSpec_('refract', 'Nml2Quantity_time', 0),
     ]
     subclass = None
-    superclass = IaFTauCell
+    superclass = IafTauCell
     def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, reset=None, tau=None, thresh=None, leak_reversal=None, refract=None):
-        super(IaFTauRefCell, self).__init__(neuro_lex_id, id, metaid, notes, annotation, reset, tau, thresh, leak_reversal, )
+        super(IafTauRefCell, self).__init__(neuro_lex_id, id, metaid, notes, annotation, reset, tau, thresh, leak_reversal, )
         self.refract = _cast(None, refract)
         pass
     def factory(*args_, **kwargs_):
-        if IaFTauRefCell.subclass:
-            return IaFTauRefCell.subclass(*args_, **kwargs_)
+        if IafTauRefCell.subclass:
+            return IafTauRefCell.subclass(*args_, **kwargs_)
         else:
-            return IaFTauRefCell(*args_, **kwargs_)
+            return IafTauRefCell(*args_, **kwargs_)
     factory = staticmethod(factory)
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         pass
     def hasContent_(self):
         if (
-            super(IaFTauRefCell, self).hasContent_()
+            super(IafTauRefCell, self).hasContent_()
         ):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='IaFTauRefCell', namespacedef_='', pretty_print=True):
+    def export(self, outfile, level, namespace_='', name_='IafTauRefCell', namespacedef_='', pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -13918,22 +14025,22 @@ class IaFTauRefCell(IaFTauCell):
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='IaFTauRefCell')
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='IafTauRefCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='IafTauRefCell', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='IaFTauRefCell'):
-        super(IaFTauRefCell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='IaFTauRefCell')
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='IafTauRefCell'):
+        super(IafTauRefCell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='IafTauRefCell')
         if self.refract is not None and 'refract' not in already_processed:
             already_processed.add('refract')
             outfile.write(' refract=%s' % (quote_attrib(self.refract), ))
-    def exportChildren(self, outfile, level, namespace_='', name_='IaFTauRefCell', fromsubclass_=False, pretty_print=True):
-        super(IaFTauRefCell, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
-    def exportLiteral(self, outfile, level, name_='IaFTauRefCell'):
+    def exportChildren(self, outfile, level, namespace_='', name_='IafTauRefCell', fromsubclass_=False, pretty_print=True):
+        super(IafTauRefCell, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='IafTauRefCell'):
         level += 1
         already_processed = set()
         self.exportLiteralAttributes(outfile, level, already_processed, name_)
@@ -13944,9 +14051,9 @@ class IaFTauRefCell(IaFTauCell):
             already_processed.add('refract')
             showIndent(outfile, level)
             outfile.write('refract="%s",\n' % (self.refract,))
-        super(IaFTauRefCell, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+        super(IafTauRefCell, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
-        super(IaFTauRefCell, self).exportLiteralChildren(outfile, level, name_)
+        super(IafTauRefCell, self).exportLiteralChildren(outfile, level, name_)
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -13960,11 +14067,11 @@ class IaFTauRefCell(IaFTauCell):
             already_processed.add('refract')
             self.refract = value
             self.validate_Nml2Quantity_time(self.refract)    # validate type Nml2Quantity_time
-        super(IaFTauRefCell, self).buildAttributes(node, attrs, already_processed)
+        super(IafTauRefCell, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        super(IaFTauRefCell, self).buildChildren(child_, node, nodeName_, True)
+        super(IafTauRefCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class IaFTauRefCell
+# end class IafTauRefCell
 
 
 class ExpTwoSynapse(BaseConductanceBasedSynapse):
@@ -14006,7 +14113,7 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ExpTwoSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ExpTwoSynapse', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14109,7 +14216,7 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ExpOneSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ExpOneSynapse', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14187,7 +14294,7 @@ class IF_curr_exp(basePyNNIaFCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IF_curr_exp')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='IF_curr_exp', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14253,7 +14360,7 @@ class IF_curr_alpha(basePyNNIaFCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IF_curr_alpha')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='IF_curr_alpha', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14323,7 +14430,7 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='basePyNNIaFCondCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='basePyNNIaFCondCell', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14373,14 +14480,14 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
             already_processed.add('e_rev_I')
             try:
                 self.e_rev_I = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (e_rev_I): %s' % exp)
         value = find_attr_value_('e_rev_E', node)
         if value is not None and 'e_rev_E' not in already_processed:
             already_processed.add('e_rev_E')
             try:
                 self.e_rev_E = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (e_rev_E): %s' % exp)
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
@@ -14430,7 +14537,7 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='BlockingPlasticSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='BlockingPlasticSynapse', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14533,7 +14640,7 @@ class EIF_cond_alpha_isfa_ista(basePyNNIaFCondCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='EIF_cond_alpha_isfa_ista')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='EIF_cond_alpha_isfa_ista', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14600,35 +14707,35 @@ class EIF_cond_alpha_isfa_ista(basePyNNIaFCondCell):
             already_processed.add('a')
             try:
                 self.a = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (a): %s' % exp)
         value = find_attr_value_('delta_T', node)
         if value is not None and 'delta_T' not in already_processed:
             already_processed.add('delta_T')
             try:
                 self.delta_t = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (delta_T): %s' % exp)
         value = find_attr_value_('b', node)
         if value is not None and 'b' not in already_processed:
             already_processed.add('b')
             try:
                 self.b = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (b): %s' % exp)
         value = find_attr_value_('v_spike', node)
         if value is not None and 'v_spike' not in already_processed:
             already_processed.add('v_spike')
             try:
                 self.v_spike = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (v_spike): %s' % exp)
         value = find_attr_value_('tau_w', node)
         if value is not None and 'tau_w' not in already_processed:
             already_processed.add('tau_w')
             try:
                 self.tau_w = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (tau_w): %s' % exp)
         super(EIF_cond_alpha_isfa_ista, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -14679,7 +14786,7 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='EIF_cond_exp_isfa_ista')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='EIF_cond_exp_isfa_ista', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14746,35 +14853,35 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
             already_processed.add('a')
             try:
                 self.a = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (a): %s' % exp)
         value = find_attr_value_('delta_T', node)
         if value is not None and 'delta_T' not in already_processed:
             already_processed.add('delta_T')
             try:
                 self.delta_t = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (delta_T): %s' % exp)
         value = find_attr_value_('b', node)
         if value is not None and 'b' not in already_processed:
             already_processed.add('b')
             try:
                 self.b = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (b): %s' % exp)
         value = find_attr_value_('v_spike', node)
         if value is not None and 'v_spike' not in already_processed:
             already_processed.add('v_spike')
             try:
                 self.v_spike = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (v_spike): %s' % exp)
         value = find_attr_value_('tau_w', node)
         if value is not None and 'tau_w' not in already_processed:
             already_processed.add('tau_w')
             try:
                 self.tau_w = float(value)
-            except ValueError as exp:
+            except ValueError, exp:
                 raise ValueError('Bad float/double attribute (tau_w): %s' % exp)
         super(EIF_cond_exp_isfa_ista, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -14815,7 +14922,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IF_cond_exp')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='IF_cond_exp', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14881,7 +14988,7 @@ class IF_cond_alpha(basePyNNIaFCondCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IF_cond_alpha')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='IF_cond_alpha', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14928,7 +15035,7 @@ GDSClassesMapping = {
     'reverseRate': HHRate,
     'rampGenerator': RampGenerator,
     'channelDensityNernst': ChannelDensityNernst,
-    'iafRefCell': IaFRefCell,
+    'iafRefCell': IafRefCell,
     'to': SegmentEndPoint,
     'voltageClamp': VoltageClamp,
     'location': Location,
@@ -14973,9 +15080,10 @@ GDSClassesMapping = {
     'decayingPoolConcentrationModel': DecayingPoolConcentrationModel,
     'cellSet': CellSet,
     'spike': Spike,
+    'fitzHughNagumoCell': FitzHughNagumoCell,
     'channelPopulation': ChannelPopulation,
     'inhomogeneousValue': InhomogeneousValue,
-    'iafTauCell': IaFTauCell,
+    'iafTauCell': IafTauCell,
     'pulseGenerator': PulseGenerator,
     'gateHHrates': GateHHRates,
     'population': Population,
@@ -14985,8 +15093,8 @@ GDSClassesMapping = {
     'resistivity': Resistivity,
     'channelDensityGHK': ChannelDensityGHK,
     'ionChannel': IonChannel,
-    'iafCell': IaFCell,
-    'iafTauRefCell': IaFTauRefCell,
+    'iafCell': IafCell,
+    'iafTauRefCell': IafTauRefCell,
     'species': Species,
     'expCondSynapse': ExpCondSynapse,
     'member': Member,
@@ -15013,7 +15121,7 @@ Usage: python <Parser>.py [ -s ] <in_xml_file>
 
 
 def usage():
-    print(USAGE_TEXT)
+    print USAGE_TEXT
     sys.exit(1)
 
 
@@ -15155,6 +15263,7 @@ __all__ = [
     "ExplicitInput",
     "ExtracellularProperties",
     "ExtracellularPropertiesLocal",
+    "FitzHughNagumoCell",
     "FixedFactorConcentrationModel",
     "GateHHRates",
     "GateHHRatesInf",
@@ -15170,10 +15279,10 @@ __all__ = [
     "IF_cond_exp",
     "IF_curr_alpha",
     "IF_curr_exp",
-    "IaFCell",
-    "IaFRefCell",
-    "IaFTauCell",
-    "IaFTauRefCell",
+    "IafCell",
+    "IafRefCell",
+    "IafTauCell",
+    "IafTauRefCell",
     "Include",
     "IncludeType",
     "InhomogeneousParam",

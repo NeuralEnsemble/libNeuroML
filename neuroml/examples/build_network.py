@@ -6,7 +6,7 @@ through libNeuroML, save it as XML and validate it
 """
 
 from neuroml import NeuroMLDocument
-from neuroml import IaFCell
+from neuroml import IafCell
 from neuroml import Network
 from neuroml import ExpOneSynapse
 from neuroml import Population
@@ -19,23 +19,23 @@ from random import random
 
 nml_doc = NeuroMLDocument(id="IafNet")
 
-IaFCell0 = IaFCell(id="iaf0",
+IafCell0 = IafCell(id="iaf0",
                    C="1.0 nF",
                    thresh = "-50mV",
                    reset="-65mV",
                    leak_conductance="10 nS",
                    leak_reversal="-65mV")
 
-nml_doc.iaf_cells.append(IaFCell0)
+nml_doc.iaf_cells.append(IafCell0)
 
-IaFCell1 = IaFCell(id="iaf1",
+IafCell1 = IafCell(id="iaf1",
                    C="1.0 nF",
                    thresh = "-50mV",
                    reset="-65mV",
                    leak_conductance="20 nS",
                    leak_reversal="-65mV")
 
-nml_doc.iaf_cells.append(IaFCell1)
+nml_doc.iaf_cells.append(IafCell1)
 
 syn0 = ExpOneSynapse(id="syn0",
                      gbase="65nS",
@@ -50,14 +50,14 @@ nml_doc.networks.append(net)
 
 size0 = 5
 pop0 = Population(id="IafPop0",
-                  component=IaFCell0.id,
+                  component=IafCell0.id,
                   size=size0)
 
 net.populations.append(pop0)
 
 size1 = 5
 pop1 = Population(id="IafPop1",
-                  component=IaFCell0.id,
+                  component=IafCell0.id,
                   size=size1)
 
 net.populations.append(pop1)
