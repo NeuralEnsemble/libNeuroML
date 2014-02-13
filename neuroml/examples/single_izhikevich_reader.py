@@ -1,11 +1,11 @@
 #from neuroml import NeuroMLDocument
 from neuroml import IzhikevichCell
 from neuroml.loaders import NeuroMLLoader
-from neuroml.utils import validateNeuroML2
+from neuroml.utils import validate_neuroml2
 
 def load_izhikevich(filename="./test_files/SingleIzhikevich.nml"):
     nml_filename = filename
-    validateNeuroML2(nml_filename)
+    validate_neuroml2(nml_filename)
     nml_doc = NeuroMLLoader.load(nml_filename)
 
     iz_cells = nml_doc.izhikevich_cells

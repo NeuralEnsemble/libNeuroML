@@ -67,6 +67,6 @@ writers.NeuroMLWriter.write(neuroml_document_from_json,nml_file)
 
 ###### Validate the NeuroML ######    
 
-from neuroml.utils import validateNeuroML2
+from neuroml.utils import validate_neuroml2
 
-validateNeuroML2(nml_file)
+validate_neuroml2(nml_file)

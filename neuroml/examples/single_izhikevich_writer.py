@@ -1,7 +1,7 @@
 from neuroml import NeuroMLDocument
 from neuroml import IzhikevichCell
 from neuroml.writers import NeuroMLWriter
-from neuroml.utils import validateNeuroML2
+from neuroml.utils import validate_neuroml2
 
 
 def write_izhikevich(filename="./tmp/SingleIzhikevich_test.nml"):
@@ -13,7 +13,7 @@ def write_izhikevich(filename="./tmp/SingleIzhikevich_test.nml"):
     nml_doc.izhikevich_cells.append(iz0)
 
     NeuroMLWriter.write(nml_doc, nml_filename)
-    validateNeuroML2(nml_filename)
+    validate_neuroml2(nml_filename)
 
 
 if __name__ == "__main__":

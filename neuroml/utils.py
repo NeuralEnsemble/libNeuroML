@@ -4,10 +4,14 @@ Utilities for checking generated code
 
 """
 
-def validateNeuroML2(file_name):
+def validate_neuroml2(file_name):
 
     from lxml import etree
-    from urllib import urlopen
+    try:
+        from urllib2 import urlopen  # Python 2
+    except:
+        from urllib.request import urlopen # Python 3
+        
     #schema_file = urlopen("https://raw.github.com/NeuroML/NeuroML2/master/Schemas/NeuroML2/NeuroML_v2beta.xsd")
     schema_file = urlopen("https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta2.xsd")
     xmlschema = etree.XMLSchema(etree.parse(schema_file))

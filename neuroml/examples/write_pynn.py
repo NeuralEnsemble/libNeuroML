@@ -31,6 +31,6 @@ print("Saved to: "+nml_file)
 
 ###### Validate the NeuroML ######    
 
-from neuroml.utils import validateNeuroML2
+from neuroml.utils import validate_neuroml2
 
-validateNeuroML2(nml_file)
+validate_neuroml2(nml_file)

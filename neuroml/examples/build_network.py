@@ -1,7 +1,7 @@
 """
 
 Example to build a full spiking IaF network
-throught libNeuroML, save it as XML and validate it
+through libNeuroML, save it as XML and validate it
 
 """
 
@@ -95,6 +95,6 @@ print("Written network file to: "+nml_file)
 
 ###### Validate the NeuroML ######    
 
-from neuroml.utils import validateNeuroML2
+from neuroml.utils import validate_neuroml2
 
-validateNeuroML2(nml_file)
+validate_neuroml2(nml_file)
