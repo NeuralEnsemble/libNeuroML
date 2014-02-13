@@ -287,7 +287,7 @@ def benchmark_arraymorph_writer():
     plt.xlabel("Number of segments in morphology")
     plt.ylabel("Time to write to disk (s)")
 
-    plt.legend([plt_json, plt_hdf5,plt_neuroml], ["JSON serialization", "HDF5 serializtion","NeuroML serialization"])
+    plt.legend([plt_json, plt_hdf5,plt_neuroml], ["JSON serialization", "HDF5 serialization","NeuroML serialization"])
 
     plt.yscale('log')
     plt.xscale('log')
