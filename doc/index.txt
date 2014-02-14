@@ -20,6 +20,8 @@ Developer documentation
 
    how_to_contribute
    note_on_arraymorph   
+   implementation_of_bindings
+
 
 .. Source documentation
    ==================
