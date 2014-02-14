@@ -7,6 +7,7 @@ import numpy as np
 import numpy.ma as ma
 import neuroml
 
+
 class ArrayMorphology(neuroml.Morphology):
     """Core of the array-based object model backend.
 
@@ -149,8 +150,8 @@ class ArrayMorphology(neuroml.Morphology):
         return self.connectivity[index]
 
     def vertex(self,index):
-       """Return vertex corresponding to index in morphology"""
-       return self.vertices[index]
+        """Return vertex corresponding to index in morphology"""
+        return self.vertices[index]
 
     def __len__(self):
         return len(self.connectivity)
