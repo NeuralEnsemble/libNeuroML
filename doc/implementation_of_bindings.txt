@@ -21,6 +21,7 @@ Generation of bindings
 Once generateds_config.py and a helper methods module are present in the nml directory a valid XML Schema is required by GenerateDS. The following command generates the nml.py module which contains the XML-bindings:
 
 ::
-   $ generateDS.py -o nml.py --use-getter-setter=none --user-methods=helper_methods NeuroML_v2beta1.xsd
+
+    $ generateDS.py -o nml.py --use-getter-setter=none --user-methods=helper_methods NeuroML_v2beta1.xsd
 
 The -o flag sets the file which the module containing the bindings is to be written to. The --use-getter-setter=none option disables getters and setters for class attributes. The --user-methods flag indicates the name of the helper methods module (See section “Addition of helper methods”). The final parameter (NeuroML_v2beta1.xsd) is the name of the XML Schema used for generating the bindings.
