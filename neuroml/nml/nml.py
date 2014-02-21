@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Feb 13 20:16:21 2014 by generateDS.py version 2.12b.
+# Generated Fri Feb 21 17:55:25 2014 by generateDS.py version 2.12a.
 #
 
 import sys
@@ -647,7 +647,7 @@ class Annotation(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Annotation')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Annotation', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -737,7 +737,7 @@ class ComponentType(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ComponentType')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ComponentType', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -953,7 +953,7 @@ class Q10Settings(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Q10Settings')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Q10Settings', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -1078,7 +1078,7 @@ class HHRate(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='HHRate')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='HHRate', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -1200,7 +1200,7 @@ class HHVariable(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='HHVariable')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='HHVariable', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -1329,7 +1329,7 @@ class HHTime(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='HHTime')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='HHTime', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -1471,7 +1471,7 @@ class BlockMechanism(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='BlockMechanism')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='BlockMechanism', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -1608,7 +1608,7 @@ class PlasticityMechanism(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='PlasticityMechanism')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='PlasticityMechanism', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -1729,7 +1729,7 @@ class SegmentParent(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SegmentParent')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='SegmentParent', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -1868,7 +1868,7 @@ class Point3DWithDiam(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Point3DWithDiam')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Point3DWithDiam', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -1986,7 +1986,7 @@ class ProximalDetails(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ProximalDetails')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ProximalDetails', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -2062,7 +2062,7 @@ class DistalDetails(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='DistalDetails')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='DistalDetails', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -2141,7 +2141,7 @@ class Member(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Member')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Member', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -2223,7 +2223,7 @@ class Include(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Include')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Include', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -2299,7 +2299,7 @@ class Path(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Path')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Path', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -2392,7 +2392,7 @@ class SubTree(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SubTree')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='SubTree', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -2486,7 +2486,7 @@ class SegmentEndPoint(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SegmentEndPoint')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='SegmentEndPoint', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -2647,7 +2647,7 @@ class MembraneProperties(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='MembraneProperties')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='MembraneProperties', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -2868,7 +2868,7 @@ class ValueAcrossSegOrSegGroup(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ValueAcrossSegOrSegGroup')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ValueAcrossSegOrSegGroup', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -2977,7 +2977,7 @@ class VariableParameter(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='VariableParameter')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='VariableParameter', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -3077,7 +3077,7 @@ class InhomogeneousValue(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='InhomogeneousValue')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='InhomogeneousValue', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -3165,7 +3165,7 @@ class ReversalPotential(ValueAcrossSegOrSegGroup):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ReversalPotential')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ReversalPotential', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -3263,7 +3263,7 @@ class Species(ValueAcrossSegOrSegGroup):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Species')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Species', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -3399,7 +3399,7 @@ class IntracellularProperties(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IntracellularProperties')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='IntracellularProperties', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -3504,7 +3504,7 @@ class ExtracellularPropertiesLocal(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ExtracellularPropertiesLocal')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ExtracellularPropertiesLocal', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -3599,7 +3599,7 @@ class SpaceStructure(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpaceStructure')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='SpaceStructure', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -3755,7 +3755,7 @@ class Layout(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Layout')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Layout', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -3867,7 +3867,7 @@ class UnstructuredLayout(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='UnstructuredLayout')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='UnstructuredLayout', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -3950,7 +3950,7 @@ class RandomLayout(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='RandomLayout')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='RandomLayout', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -4044,7 +4044,7 @@ class GridLayout(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='GridLayout')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='GridLayout', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -4161,7 +4161,7 @@ class Instance(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Instance')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Instance', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -4305,7 +4305,7 @@ class Location(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Location')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Location', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -4421,7 +4421,7 @@ class SynapticConnection(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SynapticConnection')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='SynapticConnection', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -4547,7 +4547,7 @@ class Connection(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Connection')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Connection', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -4718,7 +4718,7 @@ class ExplicitInput(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ExplicitInput')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ExplicitInput', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -4821,7 +4821,7 @@ class Input(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Input')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Input', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -4928,7 +4928,7 @@ class BaseWithoutId(GeneratedsSuper):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='BaseWithoutId')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='BaseWithoutId', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -5017,7 +5017,7 @@ class Base(BaseWithoutId):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Base')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Base', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -5120,7 +5120,7 @@ class Standalone(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Standalone')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Standalone', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -5244,7 +5244,7 @@ class SpikeSourcePoisson(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpikeSourcePoisson')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='SpikeSourcePoisson', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -5359,7 +5359,7 @@ class InputList(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='InputList')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='InputList', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -5485,7 +5485,7 @@ class Projection(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Projection')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Projection', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -5615,7 +5615,7 @@ class CellSet(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='CellSet')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='CellSet', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -5734,7 +5734,7 @@ class Population(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Population')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Population', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -5917,7 +5917,7 @@ class Region(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Region')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Region', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -6018,7 +6018,7 @@ class Space(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Space')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Space', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -6174,7 +6174,7 @@ class Network(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Network')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Network', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -6434,7 +6434,7 @@ class SpikeGeneratorPoisson(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpikeGeneratorPoisson')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='SpikeGeneratorPoisson', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -6519,7 +6519,7 @@ class SpikeGeneratorRandom(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpikeGeneratorRandom')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='SpikeGeneratorRandom', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -6614,7 +6614,7 @@ class SpikeGenerator(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpikeGenerator')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='SpikeGenerator', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -6697,7 +6697,7 @@ class SpikeArray(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpikeArray')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='SpikeArray', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -6789,7 +6789,7 @@ class Spike(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Spike')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Spike', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -6884,7 +6884,7 @@ class VoltageClamp(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='VoltageClamp')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='VoltageClamp', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -7014,7 +7014,7 @@ class RampGenerator(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='RampGenerator')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='RampGenerator', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -7159,7 +7159,7 @@ class SineGenerator(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SineGenerator')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='SineGenerator', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -7297,7 +7297,7 @@ class PulseGenerator(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='PulseGenerator')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='PulseGenerator', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -7408,7 +7408,7 @@ class ReactionScheme(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ReactionScheme')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ReactionScheme', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -7517,7 +7517,7 @@ class ExtracellularProperties(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ExtracellularProperties')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ExtracellularProperties', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -7588,9 +7588,9 @@ class ChannelDensityGHK(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, ion_channels=None, permeability=None, segment_groups='all', segments=None, ion=None):
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, permeability=None, segment_groups='all', segments=None, ion=None):
         super(ChannelDensityGHK, self).__init__(neuro_lex_id, id, )
-        self.ion_channels = _cast(None, ion_channels)
+        self.ion_channel = _cast(None, ion_channel)
         self.permeability = _cast(None, permeability)
         self.segment_groups = _cast(None, segment_groups)
         self.segments = _cast(None, segments)
@@ -7626,15 +7626,15 @@ class ChannelDensityGHK(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensityGHK')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ChannelDensityGHK', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ChannelDensityGHK'):
         super(ChannelDensityGHK, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensityGHK')
-        if self.ion_channels is not None and 'ion_channels' not in already_processed:
-            already_processed.add('ion_channels')
-            outfile.write(' ionChannel=%s' % (quote_attrib(self.ion_channels), ))
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
+            outfile.write(' ionChannel=%s' % (quote_attrib(self.ion_channel), ))
         if self.permeability is not None and 'permeability' not in already_processed:
             already_processed.add('permeability')
             outfile.write(' permeability=%s' % (quote_attrib(self.permeability), ))
@@ -7657,10 +7657,10 @@ class ChannelDensityGHK(Base):
         if self.hasContent_():
             self.exportLiteralChildren(outfile, level, name_)
     def exportLiteralAttributes(self, outfile, level, already_processed, name_):
-        if self.ion_channels is not None and 'ion_channels' not in already_processed:
-            already_processed.add('ion_channels')
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
             showIndent(outfile, level)
-            outfile.write('ion_channels="%s",\n' % (self.ion_channels,))
+            outfile.write('ion_channel="%s",\n' % (self.ion_channel,))
         if self.permeability is not None and 'permeability' not in already_processed:
             already_processed.add('permeability')
             showIndent(outfile, level)
@@ -7692,8 +7692,8 @@ class ChannelDensityGHK(Base):
         value = find_attr_value_('ionChannel', node)
         if value is not None and 'ionChannel' not in already_processed:
             already_processed.add('ionChannel')
-            self.ion_channels = value
-            self.validate_NmlId(self.ion_channels)    # validate type NmlId
+            self.ion_channel = value
+            self.validate_NmlId(self.ion_channel)    # validate type NmlId
         value = find_attr_value_('permeability', node)
         if value is not None and 'permeability' not in already_processed:
             already_processed.add('permeability')
@@ -7737,9 +7737,9 @@ class ChannelDensityNernst(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, ion_channels=None, cond_density=None, segment_groups='all', segments=None, ion=None):
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, cond_density=None, segment_groups='all', segments=None, ion=None):
         super(ChannelDensityNernst, self).__init__(neuro_lex_id, id, )
-        self.ion_channels = _cast(None, ion_channels)
+        self.ion_channel = _cast(None, ion_channel)
         self.cond_density = _cast(None, cond_density)
         self.segment_groups = _cast(None, segment_groups)
         self.segments = _cast(None, segments)
@@ -7775,15 +7775,15 @@ class ChannelDensityNernst(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensityNernst')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ChannelDensityNernst', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ChannelDensityNernst'):
         super(ChannelDensityNernst, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensityNernst')
-        if self.ion_channels is not None and 'ion_channels' not in already_processed:
-            already_processed.add('ion_channels')
-            outfile.write(' ionChannel=%s' % (quote_attrib(self.ion_channels), ))
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
+            outfile.write(' ionChannel=%s' % (quote_attrib(self.ion_channel), ))
         if self.cond_density is not None and 'cond_density' not in already_processed:
             already_processed.add('cond_density')
             outfile.write(' condDensity=%s' % (quote_attrib(self.cond_density), ))
@@ -7806,10 +7806,10 @@ class ChannelDensityNernst(Base):
         if self.hasContent_():
             self.exportLiteralChildren(outfile, level, name_)
     def exportLiteralAttributes(self, outfile, level, already_processed, name_):
-        if self.ion_channels is not None and 'ion_channels' not in already_processed:
-            already_processed.add('ion_channels')
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
             showIndent(outfile, level)
-            outfile.write('ion_channels="%s",\n' % (self.ion_channels,))
+            outfile.write('ion_channel="%s",\n' % (self.ion_channel,))
         if self.cond_density is not None and 'cond_density' not in already_processed:
             already_processed.add('cond_density')
             showIndent(outfile, level)
@@ -7841,8 +7841,8 @@ class ChannelDensityNernst(Base):
         value = find_attr_value_('ionChannel', node)
         if value is not None and 'ionChannel' not in already_processed:
             already_processed.add('ionChannel')
-            self.ion_channels = value
-            self.validate_NmlId(self.ion_channels)    # validate type NmlId
+            self.ion_channel = value
+            self.validate_NmlId(self.ion_channel)    # validate type NmlId
         value = find_attr_value_('condDensity', node)
         if value is not None and 'condDensity' not in already_processed:
             already_processed.add('condDensity')
@@ -7888,11 +7888,11 @@ class ChannelDensity(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, segment_groups='all', ion=None, ion_channels=None, erev=None, cond_density=None, segments=None, variable_parameters=None):
+    def __init__(self, neuro_lex_id=None, id=None, segment_groups='all', ion=None, ion_channel=None, erev=None, cond_density=None, segments=None, variable_parameters=None):
         super(ChannelDensity, self).__init__(neuro_lex_id, id, )
         self.segment_groups = _cast(None, segment_groups)
         self.ion = _cast(None, ion)
-        self.ion_channels = _cast(None, ion_channels)
+        self.ion_channel = _cast(None, ion_channel)
         self.erev = _cast(None, erev)
         self.cond_density = _cast(None, cond_density)
         self.segments = _cast(None, segments)
@@ -7934,7 +7934,7 @@ class ChannelDensity(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensity')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ChannelDensity', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -7947,9 +7947,9 @@ class ChannelDensity(Base):
         if self.ion is not None and 'ion' not in already_processed:
             already_processed.add('ion')
             outfile.write(' ion=%s' % (quote_attrib(self.ion), ))
-        if self.ion_channels is not None and 'ion_channels' not in already_processed:
-            already_processed.add('ion_channels')
-            outfile.write(' ionChannel=%s' % (quote_attrib(self.ion_channels), ))
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
+            outfile.write(' ionChannel=%s' % (quote_attrib(self.ion_channel), ))
         if self.erev is not None and 'erev' not in already_processed:
             already_processed.add('erev')
             outfile.write(' erev=%s' % (quote_attrib(self.erev), ))
@@ -7982,10 +7982,10 @@ class ChannelDensity(Base):
             already_processed.add('ion')
             showIndent(outfile, level)
             outfile.write('ion="%s",\n' % (self.ion,))
-        if self.ion_channels is not None and 'ion_channels' not in already_processed:
-            already_processed.add('ion_channels')
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
             showIndent(outfile, level)
-            outfile.write('ion_channels="%s",\n' % (self.ion_channels,))
+            outfile.write('ion_channel="%s",\n' % (self.ion_channel,))
         if self.erev is not None and 'erev' not in already_processed:
             already_processed.add('erev')
             showIndent(outfile, level)
@@ -8034,8 +8034,8 @@ class ChannelDensity(Base):
         value = find_attr_value_('ionChannel', node)
         if value is not None and 'ionChannel' not in already_processed:
             already_processed.add('ionChannel')
-            self.ion_channels = value
-            self.validate_NmlId(self.ion_channels)    # validate type NmlId
+            self.ion_channel = value
+            self.validate_NmlId(self.ion_channel)    # validate type NmlId
         value = find_attr_value_('erev', node)
         if value is not None and 'erev' not in already_processed:
             already_processed.add('erev')
@@ -8079,12 +8079,12 @@ class ChannelPopulation(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, segment_groups='all', ion=None, number=None, ion_channels=None, erev=None, segments=None, variable_parameters=None):
+    def __init__(self, neuro_lex_id=None, id=None, segment_groups='all', ion=None, number=None, ion_channel=None, erev=None, segments=None, variable_parameters=None):
         super(ChannelPopulation, self).__init__(neuro_lex_id, id, )
         self.segment_groups = _cast(None, segment_groups)
         self.ion = _cast(None, ion)
         self.number = _cast(int, number)
-        self.ion_channels = _cast(None, ion_channels)
+        self.ion_channel = _cast(None, ion_channel)
         self.erev = _cast(None, erev)
         self.segments = _cast(None, segments)
         if variable_parameters is None:
@@ -8122,7 +8122,7 @@ class ChannelPopulation(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelPopulation')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ChannelPopulation', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -8138,9 +8138,9 @@ class ChannelPopulation(Base):
         if self.number is not None and 'number' not in already_processed:
             already_processed.add('number')
             outfile.write(' number="%s"' % self.gds_format_integer(self.number, input_name='number'))
-        if self.ion_channels is not None and 'ion_channels' not in already_processed:
-            already_processed.add('ion_channels')
-            outfile.write(' ionChannel=%s' % (quote_attrib(self.ion_channels), ))
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
+            outfile.write(' ionChannel=%s' % (quote_attrib(self.ion_channel), ))
         if self.erev is not None and 'erev' not in already_processed:
             already_processed.add('erev')
             outfile.write(' erev=%s' % (quote_attrib(self.erev), ))
@@ -8174,10 +8174,10 @@ class ChannelPopulation(Base):
             already_processed.add('number')
             showIndent(outfile, level)
             outfile.write('number=%d,\n' % (self.number,))
-        if self.ion_channels is not None and 'ion_channels' not in already_processed:
-            already_processed.add('ion_channels')
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
             showIndent(outfile, level)
-            outfile.write('ion_channels="%s",\n' % (self.ion_channels,))
+            outfile.write('ion_channel="%s",\n' % (self.ion_channel,))
         if self.erev is not None and 'erev' not in already_processed:
             already_processed.add('erev')
             showIndent(outfile, level)
@@ -8231,8 +8231,8 @@ class ChannelPopulation(Base):
         value = find_attr_value_('ionChannel', node)
         if value is not None and 'ionChannel' not in already_processed:
             already_processed.add('ionChannel')
-            self.ion_channels = value
-            self.validate_NmlId(self.ion_channels)    # validate type NmlId
+            self.ion_channel = value
+            self.validate_NmlId(self.ion_channel)    # validate type NmlId
         value = find_attr_value_('erev', node)
         if value is not None and 'erev' not in already_processed:
             already_processed.add('erev')
@@ -8287,7 +8287,7 @@ class Resistivity(ValueAcrossSegOrSegGroup):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Resistivity')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Resistivity', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -8356,7 +8356,7 @@ class InitMembPotential(ValueAcrossSegOrSegGroup):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='InitMembPotential')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='InitMembPotential', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -8425,7 +8425,7 @@ class SpecificCapacitance(ValueAcrossSegOrSegGroup):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpecificCapacitance')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='SpecificCapacitance', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -8494,7 +8494,7 @@ class SpikeThresh(ValueAcrossSegOrSegGroup):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpikeThresh')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='SpikeThresh', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -8571,7 +8571,7 @@ class BiophysicalProperties(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='BiophysicalProperties')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='BiophysicalProperties', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -8688,7 +8688,7 @@ class InhomogeneousParam(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='InhomogeneousParam')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='InhomogeneousParam', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -8833,7 +8833,7 @@ class SegmentGroup(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='SegmentGroup')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='SegmentGroup', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -9045,7 +9045,7 @@ class Segment(BaseWithoutId):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Segment')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Segment', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -9229,7 +9229,7 @@ class Morphology(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Morphology')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Morphology', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -9337,7 +9337,7 @@ class BaseCell(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='BaseCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='BaseCell', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -9411,7 +9411,7 @@ class BaseSynapse(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='BaseSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='BaseSynapse', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -9506,7 +9506,7 @@ class FixedFactorConcentrationModel(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='FixedFactorConcentrationModel')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='FixedFactorConcentrationModel', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -9641,7 +9641,7 @@ class DecayingPoolConcentrationModel(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='DecayingPoolConcentrationModel')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='DecayingPoolConcentrationModel', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -9787,7 +9787,7 @@ class GateHHRatesInf(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRatesInf')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='GateHHRatesInf', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -9965,7 +9965,7 @@ class GateHHRatesTau(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRatesTau')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='GateHHRatesTau', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -10140,7 +10140,7 @@ class GateHHTauInf(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHTauInf')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='GateHHTauInf', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -10303,7 +10303,7 @@ class GateHHRates(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRates')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='GateHHRates', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -10472,7 +10472,7 @@ class GateHHUndetermined(Base):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHUndetermined')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='GateHHUndetermined', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -10682,7 +10682,7 @@ class IonChannel(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IonChannel')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='IonChannel', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -10851,7 +10851,7 @@ class NeuroMLDocument(Standalone):
         MemberSpec_('extracellular_properties', 'ExtracellularProperties', 1),
         MemberSpec_('intracellular_properties', 'IntracellularProperties', 1),
         MemberSpec_('morphology', 'Morphology', 1),
-        MemberSpec_('ion_channels', 'IonChannel', 1),
+        MemberSpec_('ion_channel', 'IonChannel', 1),
         MemberSpec_('decaying_pool_concentration_models', 'DecayingPoolConcentrationModel', 1),
         MemberSpec_('fixedFactorConcentrationModel', 'FixedFactorConcentrationModel', 1),
         MemberSpec_('exp_one_synapses', 'ExpOneSynapse', 1),
@@ -10892,7 +10892,7 @@ class NeuroMLDocument(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channels=None, decaying_pool_concentration_models=None, fixedFactorConcentrationModel=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, biophysical_properties=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, ad_ex_ia_f_cells=None, fitzHughNagumoCell=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, decaying_pool_concentration_models=None, fixedFactorConcentrationModel=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, biophysical_properties=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, ad_ex_ia_f_cells=None, fitzHughNagumoCell=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
         super(NeuroMLDocument, self).__init__(neuro_lex_id, id, metaid, notes, annotation, )
         if includes is None:
             self.includes = []
@@ -10910,10 +10910,10 @@ class NeuroMLDocument(Standalone):
             self.morphology = []
         else:
             self.morphology = morphology
-        if ion_channels is None:
-            self.ion_channels = []
+        if ion_channel is None:
+            self.ion_channel = []
         else:
-            self.ion_channels = ion_channels
+            self.ion_channel = ion_channel
         if decaying_pool_concentration_models is None:
             self.decaying_pool_concentration_models = []
         else:
@@ -11074,7 +11074,7 @@ class NeuroMLDocument(Standalone):
             self.extracellular_properties or
             self.intracellular_properties or
             self.morphology or
-            self.ion_channels or
+            self.ion_channel or
             self.decaying_pool_concentration_models or
             self.fixedFactorConcentrationModel or
             self.exp_one_synapses or
@@ -11128,7 +11128,7 @@ class NeuroMLDocument(Standalone):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='NeuroMLDocument')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='NeuroMLDocument', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -11149,7 +11149,7 @@ class NeuroMLDocument(Standalone):
             intracellularProperties_.export(outfile, level, namespace_, name_='intracellularProperties', pretty_print=pretty_print)
         for morphology_ in self.morphology:
             morphology_.export(outfile, level, namespace_, name_='morphology', pretty_print=pretty_print)
-        for ionChannel_ in self.ion_channels:
+        for ionChannel_ in self.ion_channel:
             ionChannel_.export(outfile, level, namespace_, name_='ionChannel', pretty_print=pretty_print)
         for decayingPoolConcentrationModel_ in self.decaying_pool_concentration_models:
             decayingPoolConcentrationModel_.export(outfile, level, namespace_, name_='decayingPoolConcentrationModel', pretty_print=pretty_print)
@@ -11284,9 +11284,9 @@ class NeuroMLDocument(Standalone):
         showIndent(outfile, level)
         outfile.write('],\n')
         showIndent(outfile, level)
-        outfile.write('ion_channels=[\n')
+        outfile.write('ion_channel=[\n')
         level += 1
-        for ionChannel_ in self.ion_channels:
+        for ionChannel_ in self.ion_channel:
             showIndent(outfile, level)
             outfile.write('model_.IonChannel(\n')
             ionChannel_.exportLiteral(outfile, level, name_='IonChannel')
@@ -11768,7 +11768,7 @@ class NeuroMLDocument(Standalone):
         elif nodeName_ == 'ionChannel':
             obj_ = IonChannel.factory()
             obj_.build(child_)
-            self.ion_channels.append(obj_)
+            self.ion_channel.append(obj_)
         elif nodeName_ == 'decayingPoolConcentrationModel':
             class_obj_ = self.get_class_obj_(child_, DecayingPoolConcentrationModel)
             obj_ = class_obj_.factory()
@@ -11960,7 +11960,7 @@ class BasePynnSynapse(BaseSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='BasePynnSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='BasePynnSynapse', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -12058,7 +12058,7 @@ class basePyNNCell(BaseCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='basePyNNCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='basePyNNCell', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -12204,7 +12204,7 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ConcentrationModel_D')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ConcentrationModel_D', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -12294,7 +12294,7 @@ class Cell(BaseCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='Cell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Cell', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -12414,7 +12414,7 @@ class FitzHughNagumoCell(BaseCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='FitzHughNagumoCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='FitzHughNagumoCell', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -12529,7 +12529,7 @@ class AdExIaFCell(BaseCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='AdExIaFCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='AdExIaFCell', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -12745,7 +12745,7 @@ class IzhikevichCell(BaseCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IzhikevichCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='IzhikevichCell', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -12902,7 +12902,7 @@ class IafCell(BaseCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IafCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='IafCell', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -13050,7 +13050,7 @@ class IafTauCell(BaseCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IafTauCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='IafTauCell', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -13182,7 +13182,7 @@ class BaseConductanceBasedSynapse(BaseSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='BaseConductanceBasedSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='BaseConductanceBasedSynapse', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -13280,7 +13280,7 @@ class AlphaCurrSynapse(BasePynnSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='AlphaCurrSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='AlphaCurrSynapse', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -13346,7 +13346,7 @@ class ExpCurrSynapse(BasePynnSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ExpCurrSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ExpCurrSynapse', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -13414,7 +13414,7 @@ class AlphaCondSynapse(BasePynnSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='AlphaCondSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='AlphaCondSynapse', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -13496,7 +13496,7 @@ class ExpCondSynapse(BasePynnSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ExpCondSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ExpCondSynapse', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -13594,7 +13594,7 @@ class HH_cond_exp(basePyNNCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='HH_cond_exp')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='HH_cond_exp', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -13796,7 +13796,7 @@ class basePyNNIaFCell(basePyNNCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='basePyNNIaFCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='basePyNNIaFCell', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -13945,7 +13945,7 @@ class IafRefCell(IafCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IafRefCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='IafRefCell', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14028,7 +14028,7 @@ class IafTauRefCell(IafTauCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IafTauRefCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='IafTauRefCell', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14113,7 +14113,7 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ExpTwoSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ExpTwoSynapse', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14216,7 +14216,7 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='ExpOneSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ExpOneSynapse', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14294,7 +14294,7 @@ class IF_curr_exp(basePyNNIaFCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IF_curr_exp')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='IF_curr_exp', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14360,7 +14360,7 @@ class IF_curr_alpha(basePyNNIaFCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IF_curr_alpha')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='IF_curr_alpha', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14430,7 +14430,7 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='basePyNNIaFCondCell')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='basePyNNIaFCondCell', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14537,7 +14537,7 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='BlockingPlasticSynapse')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='BlockingPlasticSynapse', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14640,7 +14640,7 @@ class EIF_cond_alpha_isfa_ista(basePyNNIaFCondCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='EIF_cond_alpha_isfa_ista')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='EIF_cond_alpha_isfa_ista', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14786,7 +14786,7 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='EIF_cond_exp_isfa_ista')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='EIF_cond_exp_isfa_ista', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14922,7 +14922,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IF_cond_exp')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='IF_cond_exp', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
@@ -14988,7 +14988,7 @@ class IF_cond_alpha(basePyNNIaFCondCell):
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IF_cond_alpha')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='IF_cond_alpha', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:

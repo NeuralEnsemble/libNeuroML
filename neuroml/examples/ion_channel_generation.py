@@ -40,7 +40,7 @@ chan.gates.append(m_gate)
 chan.gates.append(h_gate)
 
 doc = neuroml.NeuroMLDocument()
-doc.ion_channels.append(chan)
+doc.ion_channel.append(chan)
 
 doc.id = "ChannelMLDemo"
 
