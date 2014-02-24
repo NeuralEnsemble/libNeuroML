@@ -22,10 +22,10 @@ class TestCommonProperties(unittest.TestCase):
         
         for name,test_class in inspect.getmembers(sys.modules[neuroml.__name__]):
             if sys.version_info >= (2, 7):
-                print sys.version_info
+                print(sys.version_info)
                 if inspect.isclass(test_class):
                     ob = test_class()
                     self.assertIsInstance(ob,test_class)
             else:
-                print "Warning - Python<2.7 does not support this test"
+                print("Warning - Python<2.7 does not support this test")
                 pass

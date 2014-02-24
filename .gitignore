@@ -5,6 +5,8 @@
 *.*~
 *.*#
 *~
+*.csv
+
 .project
 .pydevproject
 *.egg-info

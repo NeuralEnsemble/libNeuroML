@@ -1,8 +1,7 @@
 import numpy as np
-from nml.nml import parse as nmlparse
+from neuroml.nml.nml import parse as nmlparse
 from neuroml import arraymorph
 import neuroml
-from jsonpickle import decode as json_decode
 import neuroml
 
 class NeuroMLLoader(object):
@@ -70,7 +69,7 @@ class SWCLoader(object):
                 connection_indices[i]=-1
 
         #This needs to become an "Optimized Morphology" of some kind
-        return Backend(vertices=vertices, 
+        return arraymorph.ArrayMorphology(vertices=vertices, 
                        connectivity=connection_indices, 
                        name=name )
 
@@ -78,6 +77,8 @@ class JSONLoader(object):
 
     @classmethod
     def load(cls,file):
+
+        from jsonpickle import decode as json_decode
         if isinstance(file,str):
             fileh = open(file,'r')
         else:
@@ -97,6 +98,8 @@ class JSONLoader(object):
         from pymongo import MongoClient
         import simplejson as json
         
+        from jsonpickle import decode as json_decode
+
         if host == None:
             host = 'localhost'
         if port == None:

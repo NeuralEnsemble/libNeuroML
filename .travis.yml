@@ -4,6 +4,7 @@ language: python
 python:
   - "2.6"
   - "2.7"
+#  - "3.2"
 
 before_install:
     - sudo apt-get update -qq
@@ -13,17 +14,19 @@ before_install:
 
 # command to install dependencies
 install:
+  - "pip install lxml"
+  - "pip install numpy"
   - "pip install numexpr"
   - "pip install . --use-mirrors"
   - "pip install jsonpickle"
   - "pip install pymongo"
-  - "pip install simplejson"
+  - if [[ $TRAVIS_PYTHON_VERSION != "3.2" ]]; then pip install simplejson; fi
   - "pip install tables"
   - "pip install -r requirements.txt --use-mirrors"
 
 # command to run tests and examples, e.g. python setup.py test
 script:  
   - cd ./neuroml/test && nosetests 
-  - cd ../examples && mkdir ./tmp && python run_all.py
+  - cd ../examples && python run_all.py
 
 services: mongodb

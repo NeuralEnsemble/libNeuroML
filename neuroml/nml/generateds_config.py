@@ -93,6 +93,9 @@ NameTable['ionChannelHH'] = 'ion_channel_hh'
 NameTable['gateHHrates']  = 'gate_hh_rates'
 NameTable['gateHHtauInf'] = 'gate_hh_tau_infs'
 
+NameTable['ionChannel'] = 'ion_channel'
+
+
 
 NameTable['basePyNNCell'] = 'basePyNNCell'
 NameTable['basePyNNIaFCell'] = 'basePyNNIaFCell'
@@ -118,7 +121,7 @@ NameTable['intracellularProperties'] = 'intracellular_properties'
 NameTable['biophysicalProperties'] = 'biophysical_properties'
 
 print("NameTable is as follows:")
-print NameTable
+print(NameTable)
 
 print("Saving NameTable to csv file")
 writer = csv.writer(open('name_table.csv', 'wb'))

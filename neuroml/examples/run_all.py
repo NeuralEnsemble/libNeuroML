@@ -2,7 +2,7 @@ print("Running all examples...")
 
 def run_example(ex_file):
     print("-------------------------------------\nRunning %s"%ex_file)
-    exec "import %s"%ex_file[:-3]
+    exec("import %s"%ex_file[:-3])
 
 run_example("arraymorph_generation.py")
 run_example("build_3D_network.py")
@@ -15,3 +15,6 @@ run_example("morphology_generation.py")
 run_example("write_pynn.py")
 run_example("write_syns.py")
 run_example("json_serialization.py")
+run_example("json_serialization.py")
+run_example("single_izhikevich_reader.py")
+run_example("single_izhikevich_writer.py")

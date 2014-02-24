@@ -1,7 +1,4 @@
 import neuroml
-import numpy as np
-import tables
-from jsonpickle import encode as json_encode
 
 class NeuroMLWriter(object):
     @classmethod
@@ -17,10 +14,9 @@ class NeuroMLWriter(object):
 
         #TODO: this should be extracted from the schema:
         namespacedef = 'xmlns="http://www.neuroml.org/schema/neuroml2" '
-        namespacedef += ' xmlns:xi="http://www.w3.org/2001/XInclude"'
         namespacedef += ' xmlns:xs="http://www.w3.org/2001/XMLSchema"'
         namespacedef += ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'
-        namespacedef += ' xsi:schemaLocation="http://www.w3.org/2001/XMLSchema"'
+        namespacedef += ' xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta2.xsd"'
 
         nmldoc.export(file,0,name_="neuroml",
                       namespacedef_=namespacedef) #name_ param to ensure root element named correctly - generateDS limitation
@@ -31,9 +27,11 @@ class JSONWriter(object):
     when dealing with lots of ArrayMorphs.
     """
 
+    
     @classmethod
     def __encode_as_json(cls,neuroml_document):
         neuroml_document = cls.__sanitize_doc(neuroml_document)
+        from jsonpickle import encode as json_encode
         encoded = json_encode(neuroml_document)
         return encoded
     
@@ -57,6 +55,7 @@ class JSONWriter(object):
     @classmethod
     def __file_handle(file):
         if isinstance(cls,file,str):
+            import tables
             fileh = tables.openFile(filepath, mode = "w")
 
             
@@ -157,6 +156,7 @@ class ArrayMorphWriter(object):
     @classmethod
     def write(cls,data,filepath):
 
+        import tables
         fileh = tables.openFile(filepath, mode = "w")
         
         #Now instead we should go through a document/cell/morphology
