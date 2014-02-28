@@ -94,6 +94,7 @@ NameTable['gateHHrates']  = 'gate_hh_rates'
 NameTable['gateHHtauInf'] = 'gate_hh_tau_infs'
 
 NameTable['ionChannel'] = 'ion_channel'
+NameTable['ionChannelHH'] = 'ion_channel_hhs'
 
 
 

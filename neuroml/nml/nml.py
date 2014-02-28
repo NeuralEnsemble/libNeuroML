@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Feb 21 17:55:25 2014 by generateDS.py version 2.12a.
+# Generated Fri Feb 28 14:52:02 2014 by generateDS.py version 2.12a.
 #
 
 import sys
@@ -10607,6 +10607,10 @@ class GateHHUndetermined(Base):
 
 
 class IonChannel(Standalone):
+    """Note ionChannel and ionChannelHH are currently functionally
+    identical. This is needed since many existing examples use
+    ionChannel, some use ionChannelHH. NeuroML v2beta3 will remove
+    one of these, probably ionChannelHH."""
     member_data_items_ = [
         MemberSpec_('conductance', 'Nml2Quantity_conductance', 0),
         MemberSpec_('type', 'channelTypes', 0),
@@ -10619,8 +10623,8 @@ class IonChannel(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, conductance=None, type=None, species=None, gates=None, gate_hh_rates=None, gate_h_hrates_taus=None, gate_hh_tau_infs=None, gate_h_hrates_infs=None):
-        super(IonChannel, self).__init__(neuro_lex_id, id, metaid, notes, annotation, )
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, conductance=None, type=None, species=None, gates=None, gate_hh_rates=None, gate_h_hrates_taus=None, gate_hh_tau_infs=None, gate_h_hrates_infs=None, extensiontype_=None):
+        super(IonChannel, self).__init__(neuro_lex_id, id, metaid, notes, annotation, extensiontype_, )
         self.conductance = _cast(None, conductance)
         self.type = _cast(None, type)
         self.species = _cast(None, species)
@@ -10644,6 +10648,7 @@ class IonChannel(Standalone):
             self.gate_h_hrates_infs = []
         else:
             self.gate_h_hrates_infs = gate_h_hrates_infs
+        self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if IonChannel.subclass:
             return IonChannel.subclass(*args_, **kwargs_)
@@ -10698,6 +10703,10 @@ class IonChannel(Standalone):
         if self.species is not None and 'species' not in already_processed:
             already_processed.add('species')
             outfile.write(' species=%s' % (quote_attrib(self.species), ))
+        if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            outfile.write(' xsi:type="%s"' % self.extensiontype_)
     def exportChildren(self, outfile, level, namespace_='', name_='IonChannel', fromsubclass_=False, pretty_print=True):
         super(IonChannel, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -10819,6 +10828,10 @@ class IonChannel(Standalone):
             already_processed.add('species')
             self.species = value
             self.validate_NmlId(self.species)    # validate type NmlId
+        value = find_attr_value_('xsi:type', node)
+        if value is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            self.extensiontype_ = value
         super(IonChannel, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'gate':
@@ -10852,6 +10865,7 @@ class NeuroMLDocument(Standalone):
         MemberSpec_('intracellular_properties', 'IntracellularProperties', 1),
         MemberSpec_('morphology', 'Morphology', 1),
         MemberSpec_('ion_channel', 'IonChannel', 1),
+        MemberSpec_('ion_channel_hhs', 'IonChannelHH', 1),
         MemberSpec_('decaying_pool_concentration_models', 'DecayingPoolConcentrationModel', 1),
         MemberSpec_('fixedFactorConcentrationModel', 'FixedFactorConcentrationModel', 1),
         MemberSpec_('exp_one_synapses', 'ExpOneSynapse', 1),
@@ -10892,7 +10906,7 @@ class NeuroMLDocument(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, decaying_pool_concentration_models=None, fixedFactorConcentrationModel=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, biophysical_properties=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, ad_ex_ia_f_cells=None, fitzHughNagumoCell=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, ion_channel_hhs=None, decaying_pool_concentration_models=None, fixedFactorConcentrationModel=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, biophysical_properties=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, ad_ex_ia_f_cells=None, fitzHughNagumoCell=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
         super(NeuroMLDocument, self).__init__(neuro_lex_id, id, metaid, notes, annotation, )
         if includes is None:
             self.includes = []
@@ -10914,6 +10928,10 @@ class NeuroMLDocument(Standalone):
             self.ion_channel = []
         else:
             self.ion_channel = ion_channel
+        if ion_channel_hhs is None:
+            self.ion_channel_hhs = []
+        else:
+            self.ion_channel_hhs = ion_channel_hhs
         if decaying_pool_concentration_models is None:
             self.decaying_pool_concentration_models = []
         else:
@@ -11075,6 +11093,7 @@ class NeuroMLDocument(Standalone):
             self.intracellular_properties or
             self.morphology or
             self.ion_channel or
+            self.ion_channel_hhs or
             self.decaying_pool_concentration_models or
             self.fixedFactorConcentrationModel or
             self.exp_one_synapses or
@@ -11151,6 +11170,8 @@ class NeuroMLDocument(Standalone):
             morphology_.export(outfile, level, namespace_, name_='morphology', pretty_print=pretty_print)
         for ionChannel_ in self.ion_channel:
             ionChannel_.export(outfile, level, namespace_, name_='ionChannel', pretty_print=pretty_print)
+        for ionChannelHH_ in self.ion_channel_hhs:
+            ionChannelHH_.export(outfile, level, namespace_, name_='ionChannelHH', pretty_print=pretty_print)
         for decayingPoolConcentrationModel_ in self.decaying_pool_concentration_models:
             decayingPoolConcentrationModel_.export(outfile, level, namespace_, name_='decayingPoolConcentrationModel', pretty_print=pretty_print)
         for fixedFactorConcentrationModel_ in self.fixedFactorConcentrationModel:
@@ -11290,6 +11311,18 @@ class NeuroMLDocument(Standalone):
             showIndent(outfile, level)
             outfile.write('model_.IonChannel(\n')
             ionChannel_.exportLiteral(outfile, level, name_='IonChannel')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('ion_channel_hhs=[\n')
+        level += 1
+        for ionChannelHH_ in self.ion_channel_hhs:
+            showIndent(outfile, level)
+            outfile.write('model_.IonChannelHH(\n')
+            ionChannelHH_.exportLiteral(outfile, level, name_='IonChannelHH')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -11766,9 +11799,14 @@ class NeuroMLDocument(Standalone):
             obj_.build(child_)
             self.morphology.append(obj_)
         elif nodeName_ == 'ionChannel':
-            obj_ = IonChannel.factory()
+            class_obj_ = self.get_class_obj_(child_, IonChannel)
+            obj_ = class_obj_.factory()
             obj_.build(child_)
             self.ion_channel.append(obj_)
+        elif nodeName_ == 'ionChannelHH':
+            obj_ = IonChannelHH.factory()
+            obj_.build(child_)
+            self.ion_channel_hhs.append(obj_)
         elif nodeName_ == 'decayingPoolConcentrationModel':
             class_obj_ = self.get_class_obj_(child_, DecayingPoolConcentrationModel)
             obj_ = class_obj_.factory()
@@ -13246,6 +13284,76 @@ class BaseConductanceBasedSynapse(BaseSynapse):
         super(BaseConductanceBasedSynapse, self).buildChildren(child_, node, nodeName_, True)
         pass
 # end class BaseConductanceBasedSynapse
+
+
+class IonChannelHH(IonChannel):
+    """Note ionChannel and ionChannelHH are currently functionally
+    identical. This is needed since many existing examples use
+    ionChannel, some use ionChannelHH. NeuroML v2beta3 will remove
+    one of these, probably ionChannelHH."""
+    member_data_items_ = [
+    ]
+    subclass = None
+    superclass = IonChannel
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, conductance=None, type=None, species=None, gates=None, gate_hh_rates=None, gate_h_hrates_taus=None, gate_hh_tau_infs=None, gate_h_hrates_infs=None):
+        super(IonChannelHH, self).__init__(neuro_lex_id, id, metaid, notes, annotation, conductance, type, species, gates, gate_hh_rates, gate_h_hrates_taus, gate_hh_tau_infs, gate_h_hrates_infs, )
+        pass
+    def factory(*args_, **kwargs_):
+        if IonChannelHH.subclass:
+            return IonChannelHH.subclass(*args_, **kwargs_)
+        else:
+            return IonChannelHH(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            super(IonChannelHH, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='IonChannelHH', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='IonChannelHH')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='IonChannelHH'):
+        super(IonChannelHH, self).exportAttributes(outfile, level, already_processed, namespace_, name_='IonChannelHH')
+    def exportChildren(self, outfile, level, namespace_='', name_='IonChannelHH', fromsubclass_=False, pretty_print=True):
+        super(IonChannelHH, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='IonChannelHH'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        super(IonChannelHH, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(IonChannelHH, self).exportLiteralChildren(outfile, level, name_)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        super(IonChannelHH, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(IonChannelHH, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class IonChannelHH
 
 
 class AlphaCurrSynapse(BasePynnSynapse):
@@ -15091,6 +15199,7 @@ GDSClassesMapping = {
     'expCurrSynapse': ExpCurrSynapse,
     'explicitInput': ExplicitInput,
     'resistivity': Resistivity,
+    'ionChannelHH': IonChannelHH,
     'channelDensityGHK': ChannelDensityGHK,
     'ionChannel': IonChannel,
     'iafCell': IafCell,
@@ -15293,6 +15402,7 @@ __all__ = [
     "Instance",
     "IntracellularProperties",
     "IonChannel",
+    "IonChannelHH",
     "IzhikevichCell",
     "Layout",
     "Location",
