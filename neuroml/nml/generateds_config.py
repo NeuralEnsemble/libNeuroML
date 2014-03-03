@@ -93,6 +93,10 @@ NameTable['ionChannelHH'] = 'ion_channel_hh'
 NameTable['gateHHrates']  = 'gate_hh_rates'
 NameTable['gateHHtauInf'] = 'gate_hh_tau_infs'
 
+NameTable['ionChannel'] = 'ion_channel'
+NameTable['ionChannelHH'] = 'ion_channel_hhs'
+
+
 
 NameTable['basePyNNCell'] = 'basePyNNCell'
 NameTable['basePyNNIaFCell'] = 'basePyNNIaFCell'
