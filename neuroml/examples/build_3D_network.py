@@ -19,8 +19,6 @@ from neuroml import SegmentParent
 from neuroml import Projection
 from neuroml import Connection
 
-
-
 import neuroml.writers as writers
 from random import random
 
@@ -33,7 +31,6 @@ dend_num = 10
 def generateRandomMorphology():
 
     morphology = Morphology()
-
 
     p = Point3DWithDiam(x=0,y=0,z=0,diameter=soma_diam)
     d = Point3DWithDiam(x=soma_len,y=0,z=0,diameter=soma_diam)
