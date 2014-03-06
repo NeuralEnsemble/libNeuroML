@@ -111,7 +111,7 @@ xs:nonNegativeInteger,xs:non_negative_integer
 expCurrSynapse,exp_curr_synapses
 ySize,y_size
 concentrationModel,concentration_model
-ionChannelHH,ion_channel_hh
+ionChannelHH,ion_channel_hhs
 synapticConnection,synaptic_connections
 iafCell,iaf_cells
 iafTauRefCell,iaf_tau_ref_cells

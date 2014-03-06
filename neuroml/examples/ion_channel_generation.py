@@ -7,8 +7,7 @@ import neuroml.writers as writers
 from lxml import etree
 from urllib import urlopen
 
-chan = neuroml.IonChannel(id='na',
-                          type='ionChannelHH',
+chan = neuroml.IonChannelHH(id='na',
                           conductance='10pS',
                           species='na',
                           notes="This is an example voltage-gated Na channel")
@@ -40,7 +39,7 @@ chan.gates.append(m_gate)
 chan.gates.append(h_gate)
 
 doc = neuroml.NeuroMLDocument()
-doc.ion_channel.append(chan)
+doc.ion_channel_hhs.append(chan)
 
 doc.id = "ChannelMLDemo"
 

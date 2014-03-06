@@ -194,7 +194,7 @@ expCurrSynapse,exp_curr_synapses
 metric,metric
 ySize,y_size
 concentrationModel,concentration_model
-ionChannelHH,ion_channel_hh
+ionChannelHH,ion_channel_hhs
 synapticConnection,synaptic_connections
 variable,variable
 v_rest,v_rest
