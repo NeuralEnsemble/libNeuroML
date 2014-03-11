@@ -11,7 +11,7 @@ setup(
     data_files=[("",['neuroml/test/Purk2M9s.nml'])],
     install_requires=required,
     name = "libNeuroML",
-    version = '0.2.0',
+    version = '0.2.1',
     packages = ['neuroml', 'neuroml.test','neuroml.nml'],
     package_data = {'neuroml.test': ['*.nml']},
     author = "libNeuroML authors and contributors",
