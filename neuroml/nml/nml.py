@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Mar 11 12:17:59 2014 by generateDS.py version 2.12a.
+# Generated Mon Mar 17 12:17:22 2014 by generateDS.py version 2.12a.
 #
 
 import sys
@@ -2579,11 +2579,10 @@ class MembraneProperties(GeneratedsSuper):
         MemberSpec_('spike_threshes', 'SpikeThresh', 1),
         MemberSpec_('specific_capacitances', 'SpecificCapacitance', 1),
         MemberSpec_('init_memb_potentials', 'InitMembPotential', 1),
-        MemberSpec_('reversal_potentials', 'ReversalPotential', 1),
     ]
     subclass = None
     superclass = None
-    def __init__(self, channel_populations=None, channel_densities=None, channel_density_nernsts=None, channelDensityGHK=None, spike_threshes=None, specific_capacitances=None, init_memb_potentials=None, reversal_potentials=None):
+    def __init__(self, channel_populations=None, channel_densities=None, channel_density_nernsts=None, channelDensityGHK=None, spike_threshes=None, specific_capacitances=None, init_memb_potentials=None):
         if channel_populations is None:
             self.channel_populations = []
         else:
@@ -2612,10 +2611,6 @@ class MembraneProperties(GeneratedsSuper):
             self.init_memb_potentials = []
         else:
             self.init_memb_potentials = init_memb_potentials
-        if reversal_potentials is None:
-            self.reversal_potentials = []
-        else:
-            self.reversal_potentials = reversal_potentials
     def factory(*args_, **kwargs_):
         if MembraneProperties.subclass:
             return MembraneProperties.subclass(*args_, **kwargs_)
@@ -2630,8 +2625,7 @@ class MembraneProperties(GeneratedsSuper):
             self.channelDensityGHK or
             self.spike_threshes or
             self.specific_capacitances or
-            self.init_memb_potentials or
-            self.reversal_potentials
+            self.init_memb_potentials
         ):
             return True
         else:
@@ -2673,8 +2667,6 @@ class MembraneProperties(GeneratedsSuper):
             specificCapacitance_.export(outfile, level, namespace_, name_='specificCapacitance', pretty_print=pretty_print)
         for initMembPotential_ in self.init_memb_potentials:
             initMembPotential_.export(outfile, level, namespace_, name_='initMembPotential', pretty_print=pretty_print)
-        for reversalPotential_ in self.reversal_potentials:
-            reversalPotential_.export(outfile, level, namespace_, name_='reversalPotential', pretty_print=pretty_print)
     def exportLiteral(self, outfile, level, name_='MembraneProperties'):
         level += 1
         already_processed = set()
@@ -2768,18 +2760,6 @@ class MembraneProperties(GeneratedsSuper):
         level -= 1
         showIndent(outfile, level)
         outfile.write('],\n')
-        showIndent(outfile, level)
-        outfile.write('reversal_potentials=[\n')
-        level += 1
-        for reversalPotential_ in self.reversal_potentials:
-            showIndent(outfile, level)
-            outfile.write('model_.ReversalPotential(\n')
-            reversalPotential_.exportLiteral(outfile, level, name_='ReversalPotential')
-            showIndent(outfile, level)
-            outfile.write('),\n')
-        level -= 1
-        showIndent(outfile, level)
-        outfile.write('],\n')
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -2818,10 +2798,6 @@ class MembraneProperties(GeneratedsSuper):
             obj_ = InitMembPotential.factory()
             obj_.build(child_)
             self.init_memb_potentials.append(obj_)
-        elif nodeName_ == 'reversalPotential':
-            obj_ = ReversalPotential.factory()
-            obj_.build(child_)
-            self.reversal_potentials.append(obj_)
 # end class MembraneProperties
 
 
@@ -3126,90 +3102,6 @@ class InhomogeneousValue(GeneratedsSuper):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
 # end class InhomogeneousValue
-
-
-class ReversalPotential(ValueAcrossSegOrSegGroup):
-    member_data_items_ = [
-        MemberSpec_('species', 'NmlId', 0),
-    ]
-    subclass = None
-    superclass = ValueAcrossSegOrSegGroup
-    def __init__(self, segments=None, segment_groups='all', value=None, species=None):
-        super(ReversalPotential, self).__init__(segments, segment_groups, value, )
-        self.species = _cast(None, species)
-        pass
-    def factory(*args_, **kwargs_):
-        if ReversalPotential.subclass:
-            return ReversalPotential.subclass(*args_, **kwargs_)
-        else:
-            return ReversalPotential(*args_, **kwargs_)
-    factory = staticmethod(factory)
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        pass
-    def hasContent_(self):
-        if (
-            super(ReversalPotential, self).hasContent_()
-        ):
-            return True
-        else:
-            return False
-    def export(self, outfile, level, namespace_='', name_='ReversalPotential', namespacedef_='', pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ReversalPotential')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ReversalPotential'):
-        super(ReversalPotential, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ReversalPotential')
-        if self.species is not None and 'species' not in already_processed:
-            already_processed.add('species')
-            outfile.write(' species=%s' % (quote_attrib(self.species), ))
-    def exportChildren(self, outfile, level, namespace_='', name_='ReversalPotential', fromsubclass_=False, pretty_print=True):
-        super(ReversalPotential, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
-        pass
-    def exportLiteral(self, outfile, level, name_='ReversalPotential'):
-        level += 1
-        already_processed = set()
-        self.exportLiteralAttributes(outfile, level, already_processed, name_)
-        if self.hasContent_():
-            self.exportLiteralChildren(outfile, level, name_)
-    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
-        if self.species is not None and 'species' not in already_processed:
-            already_processed.add('species')
-            showIndent(outfile, level)
-            outfile.write('species="%s",\n' % (self.species,))
-        super(ReversalPotential, self).exportLiteralAttributes(outfile, level, already_processed, name_)
-    def exportLiteralChildren(self, outfile, level, name_):
-        super(ReversalPotential, self).exportLiteralChildren(outfile, level, name_)
-        pass
-    def build(self, node):
-        already_processed = set()
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_)
-        return self
-    def buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_('species', node)
-        if value is not None and 'species' not in already_processed:
-            already_processed.add('species')
-            self.species = value
-            self.validate_NmlId(self.species)    # validate type NmlId
-        super(ReversalPotential, self).buildAttributes(node, attrs, already_processed)
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        super(ReversalPotential, self).buildChildren(child_, node, nodeName_, True)
-        pass
-# end class ReversalPotential
 
 
 class Species(ValueAcrossSegOrSegGroup):
@@ -15218,7 +15110,6 @@ GDSClassesMapping = {
     'structure': SpaceStructure,
     'spikeArray': SpikeArray,
     'blockingPlasticSynapse': BlockingPlasticSynapse,
-    'reversalPotential': ReversalPotential,
     'expOneSynapse': ExpOneSynapse,
     'baseCell': BaseCell,
 }
@@ -15424,7 +15315,6 @@ __all__ = [
     "ReactionScheme",
     "Region",
     "Resistivity",
-    "ReversalPotential",
     "Segment",
     "SegmentEndPoint",
     "SegmentGroup",
