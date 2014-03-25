@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Mar 17 12:17:22 2014 by generateDS.py version 2.12a.
+# Generated Tue Mar 25 17:09:18 2014 by generateDS.py version 2.12a.
 #
 
 import sys
@@ -9979,6 +9979,199 @@ class GateHHRatesTau(Base):
 # end class GateHHRatesTau
 
 
+class GateHHRatesTauInf(Base):
+    member_data_items_ = [
+        MemberSpec_('instances', 'xs:integer', 0),
+        MemberSpec_('type', 'gateTypes', 0),
+        MemberSpec_('notes', ['Notes', 'xs:string'], 0),
+        MemberSpec_('q10_settings', 'Q10Settings', 0),
+        MemberSpec_('forward_rate', 'HHRate', 0),
+        MemberSpec_('reverse_rate', 'HHRate', 0),
+        MemberSpec_('time_course', 'HHTime', 0),
+        MemberSpec_('steady_state', 'HHVariable', 0),
+    ]
+    subclass = None
+    superclass = Base
+    def __init__(self, neuro_lex_id=None, id=None, instances=1, type=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None, steady_state=None):
+        super(GateHHRatesTauInf, self).__init__(neuro_lex_id, id, )
+        self.instances = _cast(int, instances)
+        self.type = _cast(None, type)
+        self.notes = notes
+        self.q10_settings = q10_settings
+        self.forward_rate = forward_rate
+        self.reverse_rate = reverse_rate
+        self.time_course = time_course
+        self.steady_state = steady_state
+    def factory(*args_, **kwargs_):
+        if GateHHRatesTauInf.subclass:
+            return GateHHRatesTauInf.subclass(*args_, **kwargs_)
+        else:
+            return GateHHRatesTauInf(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Notes(self, value):
+        # Validate type Notes, a restriction on xs:string.
+        pass
+    def validate_gateTypes(self, value):
+        # Validate type gateTypes, a restriction on xs:string.
+        pass
+    def hasContent_(self):
+        if (
+            self.notes is not None or
+            self.q10_settings is not None or
+            self.forward_rate is not None or
+            self.reverse_rate is not None or
+            self.time_course is not None or
+            self.steady_state is not None or
+            super(GateHHRatesTauInf, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='GateHHRatesTauInf', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRatesTauInf')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateHHRatesTauInf'):
+        super(GateHHRatesTauInf, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRatesTauInf')
+        if self.instances is not None and 'instances' not in already_processed:
+            already_processed.add('instances')
+            outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            outfile.write(' type=%s' % (quote_attrib(self.type), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='GateHHRatesTauInf', fromsubclass_=False, pretty_print=True):
+        super(GateHHRatesTauInf, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.notes is not None:
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%snotes>%s</%snotes>%s' % (namespace_, self.gds_format_string(quote_xml(self.notes).encode(ExternalEncoding), input_name='notes'), namespace_, eol_))
+        if self.q10_settings is not None:
+            self.q10_settings.export(outfile, level, namespace_, name_='q10Settings', pretty_print=pretty_print)
+        if self.forward_rate is not None:
+            self.forward_rate.export(outfile, level, namespace_, name_='forwardRate', pretty_print=pretty_print)
+        if self.reverse_rate is not None:
+            self.reverse_rate.export(outfile, level, namespace_, name_='reverseRate', pretty_print=pretty_print)
+        if self.time_course is not None:
+            self.time_course.export(outfile, level, namespace_, name_='timeCourse', pretty_print=pretty_print)
+        if self.steady_state is not None:
+            self.steady_state.export(outfile, level, namespace_, name_='steadyState', pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='GateHHRatesTauInf'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.instances is not None and 'instances' not in already_processed:
+            already_processed.add('instances')
+            showIndent(outfile, level)
+            outfile.write('instances=%d,\n' % (self.instances,))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            showIndent(outfile, level)
+            outfile.write('type="%s",\n' % (self.type,))
+        super(GateHHRatesTauInf, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(GateHHRatesTauInf, self).exportLiteralChildren(outfile, level, name_)
+        if self.notes is not None:
+            showIndent(outfile, level)
+            outfile.write('notes=%s,\n' % quote_python(self.notes).encode(ExternalEncoding))
+        if self.q10_settings is not None:
+            showIndent(outfile, level)
+            outfile.write('q10_settings=model_.Q10Settings(\n')
+            self.q10_settings.exportLiteral(outfile, level, name_='q10Settings')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        if self.forward_rate is not None:
+            showIndent(outfile, level)
+            outfile.write('forward_rate=model_.HHRate(\n')
+            self.forward_rate.exportLiteral(outfile, level, name_='forwardRate')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        if self.reverse_rate is not None:
+            showIndent(outfile, level)
+            outfile.write('reverse_rate=model_.HHRate(\n')
+            self.reverse_rate.exportLiteral(outfile, level, name_='reverseRate')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        if self.time_course is not None:
+            showIndent(outfile, level)
+            outfile.write('time_course=model_.HHTime(\n')
+            self.time_course.exportLiteral(outfile, level, name_='timeCourse')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        if self.steady_state is not None:
+            showIndent(outfile, level)
+            outfile.write('steady_state=model_.HHVariable(\n')
+            self.steady_state.exportLiteral(outfile, level, name_='steadyState')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('instances', node)
+        if value is not None and 'instances' not in already_processed:
+            already_processed.add('instances')
+            try:
+                self.instances = int(value)
+            except ValueError, exp:
+                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+        value = find_attr_value_('type', node)
+        if value is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            self.type = value
+            self.validate_gateTypes(self.type)    # validate type gateTypes
+        super(GateHHRatesTauInf, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        if nodeName_ == 'notes':
+            notes_ = child_.text
+            notes_ = self.gds_validate_string(notes_, node, 'notes')
+            self.notes = notes_
+            self.validate_Notes(self.notes)    # validate type Notes
+        elif nodeName_ == 'q10Settings':
+            obj_ = Q10Settings.factory()
+            obj_.build(child_)
+            self.q10_settings = obj_
+        elif nodeName_ == 'forwardRate':
+            obj_ = HHRate.factory()
+            obj_.build(child_)
+            self.forward_rate = obj_
+        elif nodeName_ == 'reverseRate':
+            obj_ = HHRate.factory()
+            obj_.build(child_)
+            self.reverse_rate = obj_
+        elif nodeName_ == 'timeCourse':
+            obj_ = HHTime.factory()
+            obj_.build(child_)
+            self.time_course = obj_
+        elif nodeName_ == 'steadyState':
+            obj_ = HHVariable.factory()
+            obj_.build(child_)
+            self.steady_state = obj_
+        super(GateHHRatesTauInf, self).buildChildren(child_, node, nodeName_, True)
+# end class GateHHRatesTauInf
+
+
 class GateHHTauInf(Base):
     member_data_items_ = [
         MemberSpec_('instances', 'xs:integer', 0),
@@ -10512,10 +10705,11 @@ class IonChannel(Standalone):
         MemberSpec_('gate_h_hrates_taus', 'GateHHRatesTau', 1),
         MemberSpec_('gate_hh_tau_infs', 'GateHHTauInf', 1),
         MemberSpec_('gate_h_hrates_infs', 'GateHHRatesInf', 1),
+        MemberSpec_('gateHHratesTauInf', 'GateHHRatesTauInf', 1),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, conductance=None, type=None, species=None, gates=None, gate_hh_rates=None, gate_h_hrates_taus=None, gate_hh_tau_infs=None, gate_h_hrates_infs=None, extensiontype_=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, conductance=None, type=None, species=None, gates=None, gate_hh_rates=None, gate_h_hrates_taus=None, gate_hh_tau_infs=None, gate_h_hrates_infs=None, gateHHratesTauInf=None, extensiontype_=None):
         super(IonChannel, self).__init__(neuro_lex_id, id, metaid, notes, annotation, extensiontype_, )
         self.conductance = _cast(None, conductance)
         self.type = _cast(None, type)
@@ -10540,6 +10734,10 @@ class IonChannel(Standalone):
             self.gate_h_hrates_infs = []
         else:
             self.gate_h_hrates_infs = gate_h_hrates_infs
+        if gateHHratesTauInf is None:
+            self.gateHHratesTauInf = []
+        else:
+            self.gateHHratesTauInf = gateHHratesTauInf
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if IonChannel.subclass:
@@ -10563,6 +10761,7 @@ class IonChannel(Standalone):
             self.gate_h_hrates_taus or
             self.gate_hh_tau_infs or
             self.gate_h_hrates_infs or
+            self.gateHHratesTauInf or
             super(IonChannel, self).hasContent_()
         ):
             return True
@@ -10615,6 +10814,8 @@ class IonChannel(Standalone):
             gateHHtauInf_.export(outfile, level, namespace_, name_='gateHHtauInf', pretty_print=pretty_print)
         for gateHHratesInf_ in self.gate_h_hrates_infs:
             gateHHratesInf_.export(outfile, level, namespace_, name_='gateHHratesInf', pretty_print=pretty_print)
+        for gateHHratesTauInf_ in self.gateHHratesTauInf:
+            gateHHratesTauInf_.export(outfile, level, namespace_, name_='gateHHratesTauInf', pretty_print=pretty_print)
     def exportLiteral(self, outfile, level, name_='IonChannel'):
         level += 1
         already_processed = set()
@@ -10697,6 +10898,18 @@ class IonChannel(Standalone):
         level -= 1
         showIndent(outfile, level)
         outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('gateHHratesTauInf=[\n')
+        level += 1
+        for gateHHratesTauInf_ in self.gateHHratesTauInf:
+            showIndent(outfile, level)
+            outfile.write('model_.GateHHRatesTauInf(\n')
+            gateHHratesTauInf_.exportLiteral(outfile, level, name_='GateHHRatesTauInf')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -10746,6 +10959,10 @@ class IonChannel(Standalone):
             obj_ = GateHHRatesInf.factory()
             obj_.build(child_)
             self.gate_h_hrates_infs.append(obj_)
+        elif nodeName_ == 'gateHHratesTauInf':
+            obj_ = GateHHRatesTauInf.factory()
+            obj_.build(child_)
+            self.gateHHratesTauInf.append(obj_)
         super(IonChannel, self).buildChildren(child_, node, nodeName_, True)
 # end class IonChannel
 
@@ -13187,8 +13404,8 @@ class IonChannelHH(IonChannel):
     ]
     subclass = None
     superclass = IonChannel
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, conductance=None, type=None, species=None, gates=None, gate_hh_rates=None, gate_h_hrates_taus=None, gate_hh_tau_infs=None, gate_h_hrates_infs=None):
-        super(IonChannelHH, self).__init__(neuro_lex_id, id, metaid, notes, annotation, conductance, type, species, gates, gate_hh_rates, gate_h_hrates_taus, gate_hh_tau_infs, gate_h_hrates_infs, )
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, conductance=None, type=None, species=None, gates=None, gate_hh_rates=None, gate_h_hrates_taus=None, gate_hh_tau_infs=None, gate_h_hrates_infs=None, gateHHratesTauInf=None):
+        super(IonChannelHH, self).__init__(neuro_lex_id, id, metaid, notes, annotation, conductance, type, species, gates, gate_hh_rates, gate_h_hrates_taus, gate_hh_tau_infs, gate_h_hrates_infs, gateHHratesTauInf, )
         pass
     def factory(*args_, **kwargs_):
         if IonChannelHH.subclass:
@@ -15066,6 +15283,7 @@ GDSClassesMapping = {
     'alphaCurrSynapse': AlphaCurrSynapse,
     'izhikevichCell': IzhikevichCell,
     'path': Path,
+    'gateHHratesTauInf': GateHHRatesTauInf,
     'fixedFactorConcentrationModel': FixedFactorConcentrationModel,
     'region': Region,
     'extracellularProperties': ExtracellularPropertiesLocal,
@@ -15268,6 +15486,7 @@ __all__ = [
     "GateHHRates",
     "GateHHRatesInf",
     "GateHHRatesTau",
+    "GateHHRatesTauInf",
     "GateHHTauInf",
     "GateHHUndetermined",
     "GridLayout",
