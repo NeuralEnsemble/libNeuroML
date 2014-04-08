@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Mar 25 17:09:18 2014 by generateDS.py version 2.12a.
+# Generated Tue Apr  8 10:30:32 2014 by generateDS.py version 2.12a.
 #
 
 import sys
@@ -609,6 +609,93 @@ def _cast(typ, value):
 #
 # Data representation classes.
 #
+
+
+class Property(GeneratedsSuper):
+    """Generic property with a tag and value"""
+    member_data_items_ = [
+        MemberSpec_('tag', 'xs:string', 0),
+        MemberSpec_('value', 'xs:string', 0),
+    ]
+    subclass = None
+    superclass = None
+    def __init__(self, tag=None, value=None):
+        self.tag = _cast(None, tag)
+        self.value = _cast(None, value)
+        pass
+    def factory(*args_, **kwargs_):
+        if Property.subclass:
+            return Property.subclass(*args_, **kwargs_)
+        else:
+            return Property(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='Property', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='Property')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Property'):
+        if self.tag is not None and 'tag' not in already_processed:
+            already_processed.add('tag')
+            outfile.write(' tag=%s' % (self.gds_format_string(quote_attrib(self.tag).encode(ExternalEncoding), input_name='tag'), ))
+        if self.value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            outfile.write(' value=%s' % (self.gds_format_string(quote_attrib(self.value).encode(ExternalEncoding), input_name='value'), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='Property', fromsubclass_=False, pretty_print=True):
+        pass
+    def exportLiteral(self, outfile, level, name_='Property'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.tag is not None and 'tag' not in already_processed:
+            already_processed.add('tag')
+            showIndent(outfile, level)
+            outfile.write('tag="%s",\n' % (self.tag,))
+        if self.value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            showIndent(outfile, level)
+            outfile.write('value="%s",\n' % (self.value,))
+    def exportLiteralChildren(self, outfile, level, name_):
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('tag', node)
+        if value is not None and 'tag' not in already_processed:
+            already_processed.add('tag')
+            self.tag = value
+        value = find_attr_value_('value', node)
+        if value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            self.value = value
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        pass
+# end class Property
 
 
 class Annotation(GeneratedsSuper):
@@ -15356,8 +15443,8 @@ def parse(inFileName, silence=False):
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
-        rootTag = 'Annotation'
-        rootClass = Annotation
+        rootTag = 'Property'
+        rootClass = Property
     rootObj = rootClass.factory()
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
@@ -15376,8 +15463,8 @@ def parseEtree(inFileName, silence=False):
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
-        rootTag = 'Annotation'
-        rootClass = Annotation
+        rootTag = 'Property'
+        rootClass = Property
     rootObj = rootClass.factory()
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
@@ -15401,7 +15488,7 @@ def parseString(inString, silence=False):
     roots = get_root_tag(rootNode)
     rootClass = roots[1]
     if rootClass is None:
-        rootClass = Annotation
+        rootClass = Property
     rootObj = rootClass.factory()
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
@@ -15409,7 +15496,7 @@ def parseString(inString, silence=False):
 ##     if not silence:
 ##         sys.stdout.write('<?xml version="1.0" ?>\n')
 ##         rootObj.export(
-##             sys.stdout, 0, name_="Annotation",
+##             sys.stdout, 0, name_="Property",
 ##             namespacedef_='')
     return rootObj
 
@@ -15419,8 +15506,8 @@ def parseLiteral(inFileName, silence=False):
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
-        rootTag = 'Annotation'
-        rootClass = Annotation
+        rootTag = 'Property'
+        rootClass = Property
     rootObj = rootClass.factory()
     rootObj.build(rootNode)
     # Enable Python to collect the space used by the DOM.
@@ -15526,6 +15613,7 @@ __all__ = [
     "Point3DWithDiam",
     "Population",
     "Projection",
+    "Property",
     "ProximalDetails",
     "PulseGenerator",
     "Q10Settings",
