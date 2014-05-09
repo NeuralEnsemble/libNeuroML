@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Apr  8 10:30:32 2014 by generateDS.py version 2.12a.
+# Generated Fri May  9 20:01:27 2014 by generateDS.py version 2.12a.
 #
 
 import sys
@@ -6818,16 +6818,16 @@ class VoltageClamp(Standalone):
     member_data_items_ = [
         MemberSpec_('delay', 'Nml2Quantity_time', 0),
         MemberSpec_('duration', 'Nml2Quantity_time', 0),
-        MemberSpec_('seriesResistance', 'Nml2Quantity_resistance', 0),
+        MemberSpec_('simpleSeriesResistance', 'Nml2Quantity_resistance', 0),
         MemberSpec_('targetVoltage', 'Nml2Quantity_voltage', 0),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, delay=None, duration=None, series_resistance=None, target_voltage=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, annotation=None, delay=None, duration=None, simpleSeriesResistance=None, target_voltage=None):
         super(VoltageClamp, self).__init__(neuro_lex_id, id, metaid, notes, annotation, )
         self.delay = _cast(None, delay)
         self.duration = _cast(None, duration)
-        self.series_resistance = _cast(None, series_resistance)
+        self.simpleSeriesResistance = _cast(None, simpleSeriesResistance)
         self.target_voltage = _cast(None, target_voltage)
         pass
     def factory(*args_, **kwargs_):
@@ -6876,9 +6876,9 @@ class VoltageClamp(Standalone):
         if self.duration is not None and 'duration' not in already_processed:
             already_processed.add('duration')
             outfile.write(' duration=%s' % (quote_attrib(self.duration), ))
-        if self.series_resistance is not None and 'series_resistance' not in already_processed:
-            already_processed.add('series_resistance')
-            outfile.write(' seriesResistance=%s' % (quote_attrib(self.series_resistance), ))
+        if self.simpleSeriesResistance is not None and 'simpleSeriesResistance' not in already_processed:
+            already_processed.add('simpleSeriesResistance')
+            outfile.write(' simpleSeriesResistance=%s' % (quote_attrib(self.simpleSeriesResistance), ))
         if self.target_voltage is not None and 'target_voltage' not in already_processed:
             already_processed.add('target_voltage')
             outfile.write(' targetVoltage=%s' % (quote_attrib(self.target_voltage), ))
@@ -6899,10 +6899,10 @@ class VoltageClamp(Standalone):
             already_processed.add('duration')
             showIndent(outfile, level)
             outfile.write('duration="%s",\n' % (self.duration,))
-        if self.series_resistance is not None and 'series_resistance' not in already_processed:
-            already_processed.add('series_resistance')
+        if self.simpleSeriesResistance is not None and 'simpleSeriesResistance' not in already_processed:
+            already_processed.add('simpleSeriesResistance')
             showIndent(outfile, level)
-            outfile.write('series_resistance="%s",\n' % (self.series_resistance,))
+            outfile.write('simpleSeriesResistance="%s",\n' % (self.simpleSeriesResistance,))
         if self.target_voltage is not None and 'target_voltage' not in already_processed:
             already_processed.add('target_voltage')
             showIndent(outfile, level)
@@ -6928,11 +6928,11 @@ class VoltageClamp(Standalone):
             already_processed.add('duration')
             self.duration = value
             self.validate_Nml2Quantity_time(self.duration)    # validate type Nml2Quantity_time
-        value = find_attr_value_('seriesResistance', node)
-        if value is not None and 'seriesResistance' not in already_processed:
-            already_processed.add('seriesResistance')
-            self.series_resistance = value
-            self.validate_Nml2Quantity_resistance(self.series_resistance)    # validate type Nml2Quantity_resistance
+        value = find_attr_value_('simpleSeriesResistance', node)
+        if value is not None and 'simpleSeriesResistance' not in already_processed:
+            already_processed.add('simpleSeriesResistance')
+            self.simpleSeriesResistance = value
+            self.validate_Nml2Quantity_resistance(self.simpleSeriesResistance)    # validate type Nml2Quantity_resistance
         value = find_attr_value_('targetVoltage', node)
         if value is not None and 'targetVoltage' not in already_processed:
             already_processed.add('targetVoltage')
