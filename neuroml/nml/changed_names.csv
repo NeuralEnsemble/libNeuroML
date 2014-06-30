@@ -19,13 +19,14 @@ gateHHrates,gate_hh_rates
 voltageClamp,voltage_clamps
 voltageConcDepBlockMechanism,voltage_conc_dep_block_mechanism
 xSpacing,x_spacing
+iafCell,iaf_cells
 blockMechanism,block_mechanism
 initReleaseProb,init_release_prob
 plasticityMechanism,plasticity_mechanism
 channelTypes,channel_types
 spikeThresh,spike_threshes
 maxISI,max_isi
-ionChannelKS,ion_channel_ks
+alphaCondSynapse,alpha_cond_synapses
 preSegmentId,pre_segment_id
 zStart,z_start
 inputList,input_lists
@@ -55,6 +56,7 @@ normalizationEnd,normalization_end
 forwardRate,forward_rate
 targetVoltage,target_voltage
 sineGenerator,sine_generators
+fixedFactorConcentrationModel,fixed_factor_concentration_models
 postCellId,post_cell_id
 region,regions
 condDensity,cond_density
@@ -85,6 +87,7 @@ spikeGeneratorRandom,spike_generator_randoms
 leakConductance,leak_conductance
 spike,spikes
 spikeArray,spike_arrays
+fitzHughNagumoCell,fitz_hugh_nagumo_cells
 preCellId,pre_cell_id
 tauFac,tau_fac
 q10Factor,q10_factor
@@ -112,8 +115,8 @@ expCurrSynapse,exp_curr_synapses
 ySize,y_size
 concentrationModel,concentration_model
 ionChannelHH,ion_channel_hhs
+channelDensityGHK,channel_density_ghks
 synapticConnection,synaptic_connections
-iafCell,iaf_cells
 iafTauRefCell,iaf_tau_ref_cells
 channelPopulation,channel_populations
 subTree,sub_trees
@@ -137,7 +140,6 @@ segment,segments
 leakReversal,leak_reversal
 gateKS,gate_ks
 blockingPlasticSynapse,blocking_plastic_synapses
-alphaCondSynapse,alpha_cond_synapses
 postFractionAlong,post_fraction_along
 reversalPotential,reversal_potentials
 expOneSynapse,exp_one_synapses
