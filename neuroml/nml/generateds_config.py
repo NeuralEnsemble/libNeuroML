@@ -7,6 +7,9 @@ from lxml import objectify
 import re
 from config import variables
 import csv
+import sys
+
+sys.setrecursionlimit(1500)
 
 def remove_curlies(string):
     return re.sub("{.*}","",string)
