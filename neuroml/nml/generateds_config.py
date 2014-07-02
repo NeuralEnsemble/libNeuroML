@@ -71,7 +71,17 @@ def _node_to_python(node):
 
 filename = variables['schema_name']
 
-doc = objectify.parse(filename)
+import StringIO
+import process_includes
+
+outfile = StringIO.StringIO()
+infile = open(filename, 'r')
+
+process_includes.process_include_files(infile, outfile,
+        inpath=filename)
+infile.close()
+outfile.seek(0)
+doc = objectify.parse(outfile)
 root = doc.getroot()
 queue = [root]
 
