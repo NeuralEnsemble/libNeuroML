@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Jul  2 10:41:38 2014 by generateDS.py version 2.12e.
+# Generated Tue Jul  8 17:59:12 2014 by generateDS.py version 2.12e.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -14,7 +14,7 @@
 #   NeuroML_v2beta3.xsd
 #
 # Command line:
-#   generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2beta3.xsd
+#   /usr/local/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2beta3.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -4883,16 +4883,20 @@ class ExplicitInput(GeneratedsSuper):
 class Input(GeneratedsSuper):
     """Subject to change as it gets tested with LEMS"""
     member_data_items_ = [
+        MemberSpec_('fractionAlong', 'ZeroToOne', 0),
         MemberSpec_('destination', 'NmlId', 0),
         MemberSpec_('id', 'xs:nonNegativeInteger', 0),
+        MemberSpec_('segmentId', 'SegmentId', 0),
         MemberSpec_('target', 'xs:string', 0),
     ]
     subclass = None
     superclass = None
-    def __init__(self, destination=None, id=None, target=None):
+    def __init__(self, fraction_along=None, destination=None, id=None, segment_id=None, target=None):
         self.original_tagname_ = None
+        self.fraction_along = _cast(None, fraction_along)
         self.destination = _cast(None, destination)
         self.id = _cast(int, id)
+        self.segment_id = _cast(None, segment_id)
         self.target = _cast(None, target)
     def factory(*args_, **kwargs_):
         if Input.subclass:
@@ -4900,8 +4904,14 @@ class Input(GeneratedsSuper):
         else:
             return Input(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_ZeroToOne(self, value):
+        # Validate type ZeroToOne, a restriction on xs:double.
+        pass
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
+        pass
+    def validate_SegmentId(self, value):
+        # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
         pass
     def hasContent_(self):
         if (
@@ -4928,12 +4938,18 @@ class Input(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Input'):
+        if self.fraction_along is not None and 'fraction_along' not in already_processed:
+            already_processed.add('fraction_along')
+            outfile.write(' fractionAlong=%s' % (quote_attrib(self.fraction_along), ))
         if self.destination is not None and 'destination' not in already_processed:
             already_processed.add('destination')
             outfile.write(' destination=%s' % (quote_attrib(self.destination), ))
         if self.id is not None and 'id' not in already_processed:
             already_processed.add('id')
             outfile.write(' id="%s"' % self.gds_format_integer(self.id, input_name='id'))
+        if self.segment_id is not None and 'segment_id' not in already_processed:
+            already_processed.add('segment_id')
+            outfile.write(' segmentId=%s' % (quote_attrib(self.segment_id), ))
         if self.target is not None and 'target' not in already_processed:
             already_processed.add('target')
             outfile.write(' target=%s' % (self.gds_format_string(quote_attrib(self.target).encode(ExternalEncoding), input_name='target'), ))
@@ -4946,6 +4962,10 @@ class Input(GeneratedsSuper):
         if self.hasContent_():
             self.exportLiteralChildren(outfile, level, name_)
     def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.fraction_along is not None and 'fraction_along' not in already_processed:
+            already_processed.add('fraction_along')
+            showIndent(outfile, level)
+            outfile.write('fraction_along=%e,\n' % (self.fraction_along,))
         if self.destination is not None and 'destination' not in already_processed:
             already_processed.add('destination')
             showIndent(outfile, level)
@@ -4954,6 +4974,10 @@ class Input(GeneratedsSuper):
             already_processed.add('id')
             showIndent(outfile, level)
             outfile.write('id=%d,\n' % (self.id,))
+        if self.segment_id is not None and 'segment_id' not in already_processed:
+            already_processed.add('segment_id')
+            showIndent(outfile, level)
+            outfile.write('segment_id=%d,\n' % (self.segment_id,))
         if self.target is not None and 'target' not in already_processed:
             already_processed.add('target')
             showIndent(outfile, level)
@@ -4968,6 +4992,14 @@ class Input(GeneratedsSuper):
             self.buildChildren(child, node, nodeName_)
         return self
     def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('fractionAlong', node)
+        if value is not None and 'fractionAlong' not in already_processed:
+            already_processed.add('fractionAlong')
+            try:
+                self.fraction_along = float(value)
+            except ValueError, exp:
+                raise ValueError('Bad float/double attribute (fractionAlong): %s' % exp)
+            self.validate_ZeroToOne(self.fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('destination', node)
         if value is not None and 'destination' not in already_processed:
             already_processed.add('destination')
@@ -4982,6 +5014,16 @@ class Input(GeneratedsSuper):
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
+        value = find_attr_value_('segmentId', node)
+        if value is not None and 'segmentId' not in already_processed:
+            already_processed.add('segmentId')
+            try:
+                self.segment_id = int(value)
+            except ValueError, exp:
+                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.segment_id < 0:
+                raise_parse_error(node, 'Invalid NonNegativeInteger')
+            self.validate_SegmentId(self.segment_id)    # validate type SegmentId
         value = find_attr_value_('target', node)
         if value is not None and 'target' not in already_processed:
             already_processed.add('target')

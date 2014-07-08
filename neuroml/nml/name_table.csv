@@ -18,7 +18,7 @@ tauRise,tau_rise
 member,members
 tau_m,tau_m
 layout,layout
-q10Settings,q10_settings
+segmentId,segment_id
 reverseRate,reverse_rate
 true,true
 rampGenerator,ramp_generators
@@ -203,6 +203,7 @@ concentrationModel,concentration_model
 ionChannelHH,ion_channel_hhs
 channelDensityGHK,channel_density_ghks
 synapticConnection,synaptic_connections
+q10Settings,q10_settings
 tag,tag
 v_rest,v_rest
 v_spike,v_spike

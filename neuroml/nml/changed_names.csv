@@ -11,7 +11,7 @@ xStart,x_start
 startAmplitude,start_amplitude
 tauRise,tau_rise
 member,members
-q10Settings,q10_settings
+segmentId,segment_id
 reverseRate,reverse_rate
 rampGenerator,ramp_generators
 channelDensityNernst,channel_density_nernsts
@@ -118,6 +118,7 @@ concentrationModel,concentration_model
 ionChannelHH,ion_channel_hhs
 channelDensityGHK,channel_density_ghks
 synapticConnection,synaptic_connections
+q10Settings,q10_settings
 iafTauRefCell,iaf_tau_ref_cells
 channelPopulation,channel_populations
 subTree,sub_trees
