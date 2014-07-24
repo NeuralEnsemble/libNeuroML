@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Jul  8 17:59:12 2014 by generateDS.py version 2.12e.
+# Generated Thu Jul 24 15:22:28 2014 by generateDS.py version 2.12e.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -7803,10 +7803,11 @@ class ChannelDensityGHK(Base):
         MemberSpec_('segmentGroup', 'NmlId', 0),
         MemberSpec_('segment', 'NmlId', 0),
         MemberSpec_('ion', 'NmlId', 0),
+        MemberSpec_('variable_parameters', 'VariableParameter', 1),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, permeability=None, segment_groups='all', segments=None, ion=None):
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, permeability=None, segment_groups='all', segments=None, ion=None, variable_parameters=None):
         self.original_tagname_ = None
         super(ChannelDensityGHK, self).__init__(neuro_lex_id, id, )
         self.ion_channel = _cast(None, ion_channel)
@@ -7814,6 +7815,10 @@ class ChannelDensityGHK(Base):
         self.segment_groups = _cast(None, segment_groups)
         self.segments = _cast(None, segments)
         self.ion = _cast(None, ion)
+        if variable_parameters is None:
+            self.variable_parameters = []
+        else:
+            self.variable_parameters = variable_parameters
     def factory(*args_, **kwargs_):
         if ChannelDensityGHK.subclass:
             return ChannelDensityGHK.subclass(*args_, **kwargs_)
@@ -7828,6 +7833,7 @@ class ChannelDensityGHK(Base):
         pass
     def hasContent_(self):
         if (
+            self.variable_parameters or
             super(ChannelDensityGHK, self).hasContent_()
         ):
             return True
@@ -7847,6 +7853,7 @@ class ChannelDensityGHK(Base):
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
             self.exportChildren(outfile, level + 1, namespace_='', name_='ChannelDensityGHK', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -7869,7 +7876,12 @@ class ChannelDensityGHK(Base):
             outfile.write(' ion=%s' % (quote_attrib(self.ion), ))
     def exportChildren(self, outfile, level, namespace_='', name_='ChannelDensityGHK', fromsubclass_=False, pretty_print=True):
         super(ChannelDensityGHK, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
-        pass
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        for variableParameter_ in self.variable_parameters:
+            variableParameter_.export(outfile, level, namespace_, name_='variableParameter', pretty_print=pretty_print)
     def exportLiteral(self, outfile, level, name_='ChannelDensityGHK'):
         level += 1
         already_processed = set()
@@ -7900,7 +7912,18 @@ class ChannelDensityGHK(Base):
         super(ChannelDensityGHK, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
         super(ChannelDensityGHK, self).exportLiteralChildren(outfile, level, name_)
-        pass
+        showIndent(outfile, level)
+        outfile.write('variable_parameters=[\n')
+        level += 1
+        for variableParameter_ in self.variable_parameters:
+            showIndent(outfile, level)
+            outfile.write('model_.VariableParameter(\n')
+            variableParameter_.exportLiteral(outfile, level, name_='VariableParameter')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -7936,8 +7959,12 @@ class ChannelDensityGHK(Base):
             self.validate_NmlId(self.ion)    # validate type NmlId
         super(ChannelDensityGHK, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        if nodeName_ == 'variableParameter':
+            obj_ = VariableParameter.factory()
+            obj_.build(child_)
+            self.variable_parameters.append(obj_)
+            obj_.original_tagname_ = 'variableParameter'
         super(ChannelDensityGHK, self).buildChildren(child_, node, nodeName_, True)
-        pass
 # end class ChannelDensityGHK
 
 
@@ -7954,10 +7981,11 @@ class ChannelDensityNernst(Base):
         MemberSpec_('segmentGroup', 'NmlId', 0),
         MemberSpec_('segment', 'NmlId', 0),
         MemberSpec_('ion', 'NmlId', 0),
+        MemberSpec_('variable_parameters', 'VariableParameter', 1),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, cond_density=None, segment_groups='all', segments=None, ion=None):
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, cond_density=None, segment_groups='all', segments=None, ion=None, variable_parameters=None):
         self.original_tagname_ = None
         super(ChannelDensityNernst, self).__init__(neuro_lex_id, id, )
         self.ion_channel = _cast(None, ion_channel)
@@ -7965,6 +7993,10 @@ class ChannelDensityNernst(Base):
         self.segment_groups = _cast(None, segment_groups)
         self.segments = _cast(None, segments)
         self.ion = _cast(None, ion)
+        if variable_parameters is None:
+            self.variable_parameters = []
+        else:
+            self.variable_parameters = variable_parameters
     def factory(*args_, **kwargs_):
         if ChannelDensityNernst.subclass:
             return ChannelDensityNernst.subclass(*args_, **kwargs_)
@@ -7979,6 +8011,7 @@ class ChannelDensityNernst(Base):
         pass
     def hasContent_(self):
         if (
+            self.variable_parameters or
             super(ChannelDensityNernst, self).hasContent_()
         ):
             return True
@@ -7998,6 +8031,7 @@ class ChannelDensityNernst(Base):
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
             self.exportChildren(outfile, level + 1, namespace_='', name_='ChannelDensityNernst', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -8020,7 +8054,12 @@ class ChannelDensityNernst(Base):
             outfile.write(' ion=%s' % (quote_attrib(self.ion), ))
     def exportChildren(self, outfile, level, namespace_='', name_='ChannelDensityNernst', fromsubclass_=False, pretty_print=True):
         super(ChannelDensityNernst, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
-        pass
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        for variableParameter_ in self.variable_parameters:
+            variableParameter_.export(outfile, level, namespace_, name_='variableParameter', pretty_print=pretty_print)
     def exportLiteral(self, outfile, level, name_='ChannelDensityNernst'):
         level += 1
         already_processed = set()
@@ -8051,7 +8090,18 @@ class ChannelDensityNernst(Base):
         super(ChannelDensityNernst, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
         super(ChannelDensityNernst, self).exportLiteralChildren(outfile, level, name_)
-        pass
+        showIndent(outfile, level)
+        outfile.write('variable_parameters=[\n')
+        level += 1
+        for variableParameter_ in self.variable_parameters:
+            showIndent(outfile, level)
+            outfile.write('model_.VariableParameter(\n')
+            variableParameter_.exportLiteral(outfile, level, name_='VariableParameter')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -8087,8 +8137,12 @@ class ChannelDensityNernst(Base):
             self.validate_NmlId(self.ion)    # validate type NmlId
         super(ChannelDensityNernst, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        if nodeName_ == 'variableParameter':
+            obj_ = VariableParameter.factory()
+            obj_.build(child_)
+            self.variable_parameters.append(obj_)
+            obj_.original_tagname_ = 'variableParameter'
         super(ChannelDensityNernst, self).buildChildren(child_, node, nodeName_, True)
-        pass
 # end class ChannelDensityNernst
 
 
