@@ -1,4 +1,4 @@
-import numpy as np
+
 from neuroml.nml.nml import parse as nmlparse
 from neuroml import arraymorph
 import neuroml
@@ -30,6 +30,8 @@ class SWCLoader(object):
     
     @classmethod
     def load_swc_single(cls,  src, name=None):
+        
+        import numpy as np
       
         dtype= {'names':   ('id', 'type', 'x','y','z','r','pid'),
                 'formats': ('int32', 'int32', 'f4','f4','f4','f4','int32') }
