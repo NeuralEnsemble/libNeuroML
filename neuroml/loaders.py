@@ -1,6 +1,5 @@
 
 from neuroml.nml.nml import parse as nmlparse
-from neuroml import arraymorph
 import neuroml
 import neuroml
 
@@ -32,6 +31,7 @@ class SWCLoader(object):
     def load_swc_single(cls,  src, name=None):
         
         import numpy as np
+        from neuroml import arraymorph
       
         dtype= {'names':   ('id', 'type', 'x','y','z','r','pid'),
                 'formats': ('int32', 'int32', 'f4','f4','f4','f4','int32') }
@@ -127,6 +127,9 @@ class ArrayMorphLoader(object):
 
     @classmethod
     def __extract_morphology(cls, node):
+        
+            from neuroml import arraymorph
+            
             loaded_morphology = arraymorph.ArrayMorphology()
             loaded_morphology.physical_mask = node.physical_mask[:]
             loaded_morphology.vertices = node.vertices[:]
