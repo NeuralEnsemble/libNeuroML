@@ -1,5 +1,4 @@
 izhikevichCell,izhikevich_cells
-inhomogeneousParam,inhomogeneous_params
 tsodyksMarkramDepMechanism,tsodyks_markram_dep_mechanism
 skip,skips
 tauDecay,tau_decay
@@ -31,6 +30,7 @@ preSegmentId,pre_segment_id
 zStart,z_start
 inputList,input_lists
 membraneProperties,membrane_properties
+inhomogeneousParameter,inhomogeneous_parameters
 delT,del_t
 postsynapticPopulation,postsynaptic_population
 fixedQ10,fixed_q10
@@ -119,6 +119,7 @@ ionChannelHH,ion_channel_hhs
 channelDensityGHK,channel_density_ghks
 synapticConnection,synaptic_connections
 q10Settings,q10_settings
+channelDensityNonUniformNernst,channel_density_non_uniform_nernsts
 iafTauRefCell,iaf_tau_ref_cells
 channelPopulation,channel_populations
 subTree,sub_trees
@@ -143,5 +144,6 @@ leakReversal,leak_reversal
 gateKS,gate_ks
 blockingPlasticSynapse,blocking_plastic_synapses
 postFractionAlong,post_fraction_along
+channelDensityNonUniform,channel_density_non_uniforms
 expOneSynapse,exp_one_synapses
 baseCell,base_cells

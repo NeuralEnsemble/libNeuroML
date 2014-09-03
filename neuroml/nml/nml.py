@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Jul 24 15:22:28 2014 by generateDS.py version 2.12e.
+# Generated Wed Sep  3 18:17:21 2014 by generateDS.py version 2.12e.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -2728,13 +2728,15 @@ class MembraneProperties(GeneratedsSuper):
         MemberSpec_('channel_densities', 'ChannelDensity', 1),
         MemberSpec_('channel_density_nernsts', 'ChannelDensityNernst', 1),
         MemberSpec_('channel_density_ghks', 'ChannelDensityGHK', 1),
+        MemberSpec_('channel_density_non_uniforms', 'ChannelDensityNonUniform', 1),
+        MemberSpec_('channel_density_non_uniform_nernsts', 'ChannelDensityNonUniformNernst', 1),
         MemberSpec_('spike_threshes', 'SpikeThresh', 1),
         MemberSpec_('specific_capacitances', 'SpecificCapacitance', 1),
         MemberSpec_('init_memb_potentials', 'InitMembPotential', 1),
     ]
     subclass = None
     superclass = None
-    def __init__(self, channel_populations=None, channel_densities=None, channel_density_nernsts=None, channel_density_ghks=None, spike_threshes=None, specific_capacitances=None, init_memb_potentials=None):
+    def __init__(self, channel_populations=None, channel_densities=None, channel_density_nernsts=None, channel_density_ghks=None, channel_density_non_uniforms=None, channel_density_non_uniform_nernsts=None, spike_threshes=None, specific_capacitances=None, init_memb_potentials=None):
         self.original_tagname_ = None
         if channel_populations is None:
             self.channel_populations = []
@@ -2752,6 +2754,14 @@ class MembraneProperties(GeneratedsSuper):
             self.channel_density_ghks = []
         else:
             self.channel_density_ghks = channel_density_ghks
+        if channel_density_non_uniforms is None:
+            self.channel_density_non_uniforms = []
+        else:
+            self.channel_density_non_uniforms = channel_density_non_uniforms
+        if channel_density_non_uniform_nernsts is None:
+            self.channel_density_non_uniform_nernsts = []
+        else:
+            self.channel_density_non_uniform_nernsts = channel_density_non_uniform_nernsts
         if spike_threshes is None:
             self.spike_threshes = []
         else:
@@ -2776,6 +2786,8 @@ class MembraneProperties(GeneratedsSuper):
             self.channel_densities or
             self.channel_density_nernsts or
             self.channel_density_ghks or
+            self.channel_density_non_uniforms or
+            self.channel_density_non_uniform_nernsts or
             self.spike_threshes or
             self.specific_capacitances or
             self.init_memb_potentials
@@ -2816,6 +2828,10 @@ class MembraneProperties(GeneratedsSuper):
             channelDensityNernst_.export(outfile, level, namespace_, name_='channelDensityNernst', pretty_print=pretty_print)
         for channelDensityGHK_ in self.channel_density_ghks:
             channelDensityGHK_.export(outfile, level, namespace_, name_='channelDensityGHK', pretty_print=pretty_print)
+        for channelDensityNonUniform_ in self.channel_density_non_uniforms:
+            channelDensityNonUniform_.export(outfile, level, namespace_, name_='channelDensityNonUniform', pretty_print=pretty_print)
+        for channelDensityNonUniformNernst_ in self.channel_density_non_uniform_nernsts:
+            channelDensityNonUniformNernst_.export(outfile, level, namespace_, name_='channelDensityNonUniformNernst', pretty_print=pretty_print)
         for spikeThresh_ in self.spike_threshes:
             spikeThresh_.export(outfile, level, namespace_, name_='spikeThresh', pretty_print=pretty_print)
         for specificCapacitance_ in self.specific_capacitances:
@@ -2874,6 +2890,30 @@ class MembraneProperties(GeneratedsSuper):
             showIndent(outfile, level)
             outfile.write('model_.ChannelDensityGHK(\n')
             channelDensityGHK_.exportLiteral(outfile, level, name_='ChannelDensityGHK')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('channel_density_non_uniforms=[\n')
+        level += 1
+        for channelDensityNonUniform_ in self.channel_density_non_uniforms:
+            showIndent(outfile, level)
+            outfile.write('model_.ChannelDensityNonUniform(\n')
+            channelDensityNonUniform_.exportLiteral(outfile, level, name_='ChannelDensityNonUniform')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('channel_density_non_uniform_nernsts=[\n')
+        level += 1
+        for channelDensityNonUniformNernst_ in self.channel_density_non_uniform_nernsts:
+            showIndent(outfile, level)
+            outfile.write('model_.ChannelDensityNonUniformNernst(\n')
+            channelDensityNonUniformNernst_.exportLiteral(outfile, level, name_='ChannelDensityNonUniformNernst')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -2945,6 +2985,16 @@ class MembraneProperties(GeneratedsSuper):
             obj_.build(child_)
             self.channel_density_ghks.append(obj_)
             obj_.original_tagname_ = 'channelDensityGHK'
+        elif nodeName_ == 'channelDensityNonUniform':
+            obj_ = ChannelDensityNonUniform.factory()
+            obj_.build(child_)
+            self.channel_density_non_uniforms.append(obj_)
+            obj_.original_tagname_ = 'channelDensityNonUniform'
+        elif nodeName_ == 'channelDensityNonUniformNernst':
+            obj_ = ChannelDensityNonUniformNernst.factory()
+            obj_.build(child_)
+            self.channel_density_non_uniform_nernsts.append(obj_)
+            obj_.original_tagname_ = 'channelDensityNonUniformNernst'
         elif nodeName_ == 'spikeThresh':
             obj_ = SpikeThresh.factory()
             obj_.build(child_)
@@ -3189,15 +3239,15 @@ class VariableParameter(GeneratedsSuper):
 
 class InhomogeneousValue(GeneratedsSuper):
     member_data_items_ = [
-        MemberSpec_('inhomogeneousParam', 'xs:string', 0),
         MemberSpec_('value', 'xs:string', 0),
+        MemberSpec_('inhomogeneousParameter', 'xs:string', 0),
     ]
     subclass = None
     superclass = None
-    def __init__(self, inhomogeneous_params=None, value=None):
+    def __init__(self, value=None, inhomogeneous_parameters=None):
         self.original_tagname_ = None
-        self.inhomogeneous_params = _cast(None, inhomogeneous_params)
         self.value = _cast(None, value)
+        self.inhomogeneous_parameters = _cast(None, inhomogeneous_parameters)
     def factory(*args_, **kwargs_):
         if InhomogeneousValue.subclass:
             return InhomogeneousValue.subclass(*args_, **kwargs_)
@@ -3229,12 +3279,12 @@ class InhomogeneousValue(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='InhomogeneousValue'):
-        if self.inhomogeneous_params is not None and 'inhomogeneous_params' not in already_processed:
-            already_processed.add('inhomogeneous_params')
-            outfile.write(' inhomogeneousParam=%s' % (self.gds_format_string(quote_attrib(self.inhomogeneous_params).encode(ExternalEncoding), input_name='inhomogeneousParam'), ))
         if self.value is not None and 'value' not in already_processed:
             already_processed.add('value')
             outfile.write(' value=%s' % (self.gds_format_string(quote_attrib(self.value).encode(ExternalEncoding), input_name='value'), ))
+        if self.inhomogeneous_parameters is not None and 'inhomogeneous_parameters' not in already_processed:
+            already_processed.add('inhomogeneous_parameters')
+            outfile.write(' inhomogeneousParameter=%s' % (self.gds_format_string(quote_attrib(self.inhomogeneous_parameters).encode(ExternalEncoding), input_name='inhomogeneousParameter'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='InhomogeneousValue', fromsubclass_=False, pretty_print=True):
         pass
     def exportLiteral(self, outfile, level, name_='InhomogeneousValue'):
@@ -3244,14 +3294,14 @@ class InhomogeneousValue(GeneratedsSuper):
         if self.hasContent_():
             self.exportLiteralChildren(outfile, level, name_)
     def exportLiteralAttributes(self, outfile, level, already_processed, name_):
-        if self.inhomogeneous_params is not None and 'inhomogeneous_params' not in already_processed:
-            already_processed.add('inhomogeneous_params')
-            showIndent(outfile, level)
-            outfile.write('inhomogeneous_params="%s",\n' % (self.inhomogeneous_params,))
         if self.value is not None and 'value' not in already_processed:
             already_processed.add('value')
             showIndent(outfile, level)
             outfile.write('value="%s",\n' % (self.value,))
+        if self.inhomogeneous_parameters is not None and 'inhomogeneous_parameters' not in already_processed:
+            already_processed.add('inhomogeneous_parameters')
+            showIndent(outfile, level)
+            outfile.write('inhomogeneous_parameters="%s",\n' % (self.inhomogeneous_parameters,))
     def exportLiteralChildren(self, outfile, level, name_):
         pass
     def build(self, node):
@@ -3262,14 +3312,14 @@ class InhomogeneousValue(GeneratedsSuper):
             self.buildChildren(child, node, nodeName_)
         return self
     def buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_('inhomogeneousParam', node)
-        if value is not None and 'inhomogeneousParam' not in already_processed:
-            already_processed.add('inhomogeneousParam')
-            self.inhomogeneous_params = value
         value = find_attr_value_('value', node)
         if value is not None and 'value' not in already_processed:
             already_processed.add('value')
             self.value = value
+        value = find_attr_value_('inhomogeneousParameter', node)
+        if value is not None and 'inhomogeneousParameter' not in already_processed:
+            already_processed.add('inhomogeneousParameter')
+            self.inhomogeneous_parameters = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
 # end class InhomogeneousValue
@@ -8341,6 +8391,289 @@ class ChannelDensity(Base):
 # end class ChannelDensity
 
 
+class ChannelDensityNonUniformNernst(Base):
+    """Specifying the ion here again is redundant, this will be set in
+    ionChannel. It is added here TEMPORARILY as selecting all ca or
+    na conducting channel populations/densities in a cell would be
+    difficult otherwise. It should be removed in the longer term,
+    due to possible inconsistencies in this value and that in the
+    ionChannel element. TODO: remove."""
+    member_data_items_ = [
+        MemberSpec_('ionChannel', 'NmlId', 0),
+        MemberSpec_('ion', 'NmlId', 0),
+        MemberSpec_('variable_parameters', 'VariableParameter', 1),
+    ]
+    subclass = None
+    superclass = Base
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, ion=None, variable_parameters=None):
+        self.original_tagname_ = None
+        super(ChannelDensityNonUniformNernst, self).__init__(neuro_lex_id, id, )
+        self.ion_channel = _cast(None, ion_channel)
+        self.ion = _cast(None, ion)
+        if variable_parameters is None:
+            self.variable_parameters = []
+        else:
+            self.variable_parameters = variable_parameters
+    def factory(*args_, **kwargs_):
+        if ChannelDensityNonUniformNernst.subclass:
+            return ChannelDensityNonUniformNernst.subclass(*args_, **kwargs_)
+        else:
+            return ChannelDensityNonUniformNernst(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
+    def hasContent_(self):
+        if (
+            self.variable_parameters or
+            super(ChannelDensityNonUniformNernst, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='ChannelDensityNonUniformNernst', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensityNonUniformNernst')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ChannelDensityNonUniformNernst', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ChannelDensityNonUniformNernst'):
+        super(ChannelDensityNonUniformNernst, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensityNonUniformNernst')
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
+            outfile.write(' ionChannel=%s' % (quote_attrib(self.ion_channel), ))
+        if self.ion is not None and 'ion' not in already_processed:
+            already_processed.add('ion')
+            outfile.write(' ion=%s' % (quote_attrib(self.ion), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='ChannelDensityNonUniformNernst', fromsubclass_=False, pretty_print=True):
+        super(ChannelDensityNonUniformNernst, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        for variableParameter_ in self.variable_parameters:
+            variableParameter_.export(outfile, level, namespace_, name_='variableParameter', pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='ChannelDensityNonUniformNernst'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
+            showIndent(outfile, level)
+            outfile.write('ion_channel="%s",\n' % (self.ion_channel,))
+        if self.ion is not None and 'ion' not in already_processed:
+            already_processed.add('ion')
+            showIndent(outfile, level)
+            outfile.write('ion="%s",\n' % (self.ion,))
+        super(ChannelDensityNonUniformNernst, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(ChannelDensityNonUniformNernst, self).exportLiteralChildren(outfile, level, name_)
+        showIndent(outfile, level)
+        outfile.write('variable_parameters=[\n')
+        level += 1
+        for variableParameter_ in self.variable_parameters:
+            showIndent(outfile, level)
+            outfile.write('model_.VariableParameter(\n')
+            variableParameter_.exportLiteral(outfile, level, name_='VariableParameter')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('ionChannel', node)
+        if value is not None and 'ionChannel' not in already_processed:
+            already_processed.add('ionChannel')
+            self.ion_channel = value
+            self.validate_NmlId(self.ion_channel)    # validate type NmlId
+        value = find_attr_value_('ion', node)
+        if value is not None and 'ion' not in already_processed:
+            already_processed.add('ion')
+            self.ion = value
+            self.validate_NmlId(self.ion)    # validate type NmlId
+        super(ChannelDensityNonUniformNernst, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        if nodeName_ == 'variableParameter':
+            obj_ = VariableParameter.factory()
+            obj_.build(child_)
+            self.variable_parameters.append(obj_)
+            obj_.original_tagname_ = 'variableParameter'
+        super(ChannelDensityNonUniformNernst, self).buildChildren(child_, node, nodeName_, True)
+# end class ChannelDensityNonUniformNernst
+
+
+class ChannelDensityNonUniform(Base):
+    """Specifying the ion here again is redundant, this will be set in
+    ionChannel. It is added here TEMPORARILY as selecting all ca or
+    na conducting channel populations/densities in a cell would be
+    difficult otherwise. It should be removed in the longer term,
+    due to possible inconsistencies in this value and that in the
+    ionChannel element. TODO: remove."""
+    member_data_items_ = [
+        MemberSpec_('ionChannel', 'NmlId', 0),
+        MemberSpec_('erev', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('ion', 'NmlId', 0),
+        MemberSpec_('variable_parameters', 'VariableParameter', 1),
+    ]
+    subclass = None
+    superclass = Base
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, erev=None, ion=None, variable_parameters=None):
+        self.original_tagname_ = None
+        super(ChannelDensityNonUniform, self).__init__(neuro_lex_id, id, )
+        self.ion_channel = _cast(None, ion_channel)
+        self.erev = _cast(None, erev)
+        self.ion = _cast(None, ion)
+        if variable_parameters is None:
+            self.variable_parameters = []
+        else:
+            self.variable_parameters = variable_parameters
+    def factory(*args_, **kwargs_):
+        if ChannelDensityNonUniform.subclass:
+            return ChannelDensityNonUniform.subclass(*args_, **kwargs_)
+        else:
+            return ChannelDensityNonUniform(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        pass
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        pass
+    def hasContent_(self):
+        if (
+            self.variable_parameters or
+            super(ChannelDensityNonUniform, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='ChannelDensityNonUniform', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensityNonUniform')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ChannelDensityNonUniform', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ChannelDensityNonUniform'):
+        super(ChannelDensityNonUniform, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensityNonUniform')
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
+            outfile.write(' ionChannel=%s' % (quote_attrib(self.ion_channel), ))
+        if self.erev is not None and 'erev' not in already_processed:
+            already_processed.add('erev')
+            outfile.write(' erev=%s' % (quote_attrib(self.erev), ))
+        if self.ion is not None and 'ion' not in already_processed:
+            already_processed.add('ion')
+            outfile.write(' ion=%s' % (quote_attrib(self.ion), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='ChannelDensityNonUniform', fromsubclass_=False, pretty_print=True):
+        super(ChannelDensityNonUniform, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        for variableParameter_ in self.variable_parameters:
+            variableParameter_.export(outfile, level, namespace_, name_='variableParameter', pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='ChannelDensityNonUniform'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
+            showIndent(outfile, level)
+            outfile.write('ion_channel="%s",\n' % (self.ion_channel,))
+        if self.erev is not None and 'erev' not in already_processed:
+            already_processed.add('erev')
+            showIndent(outfile, level)
+            outfile.write('erev="%s",\n' % (self.erev,))
+        if self.ion is not None and 'ion' not in already_processed:
+            already_processed.add('ion')
+            showIndent(outfile, level)
+            outfile.write('ion="%s",\n' % (self.ion,))
+        super(ChannelDensityNonUniform, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(ChannelDensityNonUniform, self).exportLiteralChildren(outfile, level, name_)
+        showIndent(outfile, level)
+        outfile.write('variable_parameters=[\n')
+        level += 1
+        for variableParameter_ in self.variable_parameters:
+            showIndent(outfile, level)
+            outfile.write('model_.VariableParameter(\n')
+            variableParameter_.exportLiteral(outfile, level, name_='VariableParameter')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('ionChannel', node)
+        if value is not None and 'ionChannel' not in already_processed:
+            already_processed.add('ionChannel')
+            self.ion_channel = value
+            self.validate_NmlId(self.ion_channel)    # validate type NmlId
+        value = find_attr_value_('erev', node)
+        if value is not None and 'erev' not in already_processed:
+            already_processed.add('erev')
+            self.erev = value
+            self.validate_Nml2Quantity_voltage(self.erev)    # validate type Nml2Quantity_voltage
+        value = find_attr_value_('ion', node)
+        if value is not None and 'ion' not in already_processed:
+            already_processed.add('ion')
+            self.ion = value
+            self.validate_NmlId(self.ion)    # validate type NmlId
+        super(ChannelDensityNonUniform, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        if nodeName_ == 'variableParameter':
+            obj_ = VariableParameter.factory()
+            obj_.build(child_)
+            self.variable_parameters.append(obj_)
+            obj_.original_tagname_ = 'variableParameter'
+        super(ChannelDensityNonUniform, self).buildChildren(child_, node, nodeName_, True)
+# end class ChannelDensityNonUniform
+
+
 class ChannelPopulation(Base):
     """Specifying the ion here again is redundant, this will be set in
     ionChannel. It is added here TEMPORARILY as selecting all ca or
@@ -8942,7 +9275,7 @@ class BiophysicalProperties(Standalone):
 # end class BiophysicalProperties
 
 
-class InhomogeneousParam(Base):
+class InhomogeneousParameter(Base):
     member_data_items_ = [
         MemberSpec_('variable', 'xs:string', 0),
         MemberSpec_('metric', 'Metric', 0),
@@ -8953,16 +9286,16 @@ class InhomogeneousParam(Base):
     superclass = Base
     def __init__(self, neuro_lex_id=None, id=None, variable=None, metric=None, proximal=None, distal=None):
         self.original_tagname_ = None
-        super(InhomogeneousParam, self).__init__(neuro_lex_id, id, )
+        super(InhomogeneousParameter, self).__init__(neuro_lex_id, id, )
         self.variable = _cast(None, variable)
         self.metric = _cast(None, metric)
         self.proximal = proximal
         self.distal = distal
     def factory(*args_, **kwargs_):
-        if InhomogeneousParam.subclass:
-            return InhomogeneousParam.subclass(*args_, **kwargs_)
+        if InhomogeneousParameter.subclass:
+            return InhomogeneousParameter.subclass(*args_, **kwargs_)
         else:
-            return InhomogeneousParam(*args_, **kwargs_)
+            return InhomogeneousParameter(*args_, **kwargs_)
     factory = staticmethod(factory)
     def validate_Metric(self, value):
         # Validate type Metric, a restriction on xs:string.
@@ -8971,12 +9304,12 @@ class InhomogeneousParam(Base):
         if (
             self.proximal is not None or
             self.distal is not None or
-            super(InhomogeneousParam, self).hasContent_()
+            super(InhomogeneousParameter, self).hasContent_()
         ):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='InhomogeneousParam', namespacedef_='', pretty_print=True):
+    def export(self, outfile, level, namespace_='', name_='InhomogeneousParameter', namespacedef_='', pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -8986,24 +9319,24 @@ class InhomogeneousParam(Base):
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='InhomogeneousParam')
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='InhomogeneousParameter')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='InhomogeneousParam', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='InhomogeneousParameter', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='InhomogeneousParam'):
-        super(InhomogeneousParam, self).exportAttributes(outfile, level, already_processed, namespace_, name_='InhomogeneousParam')
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='InhomogeneousParameter'):
+        super(InhomogeneousParameter, self).exportAttributes(outfile, level, already_processed, namespace_, name_='InhomogeneousParameter')
         if self.variable is not None and 'variable' not in already_processed:
             already_processed.add('variable')
             outfile.write(' variable=%s' % (self.gds_format_string(quote_attrib(self.variable).encode(ExternalEncoding), input_name='variable'), ))
         if self.metric is not None and 'metric' not in already_processed:
             already_processed.add('metric')
             outfile.write(' metric=%s' % (quote_attrib(self.metric), ))
-    def exportChildren(self, outfile, level, namespace_='', name_='InhomogeneousParam', fromsubclass_=False, pretty_print=True):
-        super(InhomogeneousParam, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportChildren(self, outfile, level, namespace_='', name_='InhomogeneousParameter', fromsubclass_=False, pretty_print=True):
+        super(InhomogeneousParameter, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
             eol_ = '\n'
         else:
@@ -9012,7 +9345,7 @@ class InhomogeneousParam(Base):
             self.proximal.export(outfile, level, namespace_, name_='proximal', pretty_print=pretty_print)
         if self.distal is not None:
             self.distal.export(outfile, level, namespace_, name_='distal', pretty_print=pretty_print)
-    def exportLiteral(self, outfile, level, name_='InhomogeneousParam'):
+    def exportLiteral(self, outfile, level, name_='InhomogeneousParameter'):
         level += 1
         already_processed = set()
         self.exportLiteralAttributes(outfile, level, already_processed, name_)
@@ -9027,9 +9360,9 @@ class InhomogeneousParam(Base):
             already_processed.add('metric')
             showIndent(outfile, level)
             outfile.write('metric="%s",\n' % (self.metric,))
-        super(InhomogeneousParam, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+        super(InhomogeneousParameter, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
-        super(InhomogeneousParam, self).exportLiteralChildren(outfile, level, name_)
+        super(InhomogeneousParameter, self).exportLiteralChildren(outfile, level, name_)
         if self.proximal is not None:
             showIndent(outfile, level)
             outfile.write('proximal=model_.ProximalDetails(\n')
@@ -9059,7 +9392,7 @@ class InhomogeneousParam(Base):
             already_processed.add('metric')
             self.metric = value
             self.validate_Metric(self.metric)    # validate type Metric
-        super(InhomogeneousParam, self).buildAttributes(node, attrs, already_processed)
+        super(InhomogeneousParameter, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'proximal':
             obj_ = ProximalDetails.factory()
@@ -9071,23 +9404,27 @@ class InhomogeneousParam(Base):
             obj_.build(child_)
             self.distal = obj_
             obj_.original_tagname_ = 'distal'
-        super(InhomogeneousParam, self).buildChildren(child_, node, nodeName_, True)
-# end class InhomogeneousParam
+        super(InhomogeneousParameter, self).buildChildren(child_, node, nodeName_, True)
+# end class InhomogeneousParameter
 
 
 class SegmentGroup(Base):
     member_data_items_ = [
+        MemberSpec_('notes', ['Notes', 'xs:string'], 0),
+        MemberSpec_('annotation', 'Annotation', 0),
         MemberSpec_('members', 'Member', 1),
         MemberSpec_('includes', 'Include', 1),
         MemberSpec_('paths', 'Path', 1),
         MemberSpec_('sub_trees', 'SubTree', 1),
-        MemberSpec_('inhomogeneous_params', 'InhomogeneousParam', 1),
+        MemberSpec_('inhomogeneous_parameters', 'InhomogeneousParameter', 1),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, members=None, includes=None, paths=None, sub_trees=None, inhomogeneous_params=None):
+    def __init__(self, neuro_lex_id=None, id=None, notes=None, annotation=None, members=None, includes=None, paths=None, sub_trees=None, inhomogeneous_parameters=None):
         self.original_tagname_ = None
         super(SegmentGroup, self).__init__(neuro_lex_id, id, )
+        self.notes = notes
+        self.annotation = annotation
         if members is None:
             self.members = []
         else:
@@ -9104,23 +9441,28 @@ class SegmentGroup(Base):
             self.sub_trees = []
         else:
             self.sub_trees = sub_trees
-        if inhomogeneous_params is None:
-            self.inhomogeneous_params = []
+        if inhomogeneous_parameters is None:
+            self.inhomogeneous_parameters = []
         else:
-            self.inhomogeneous_params = inhomogeneous_params
+            self.inhomogeneous_parameters = inhomogeneous_parameters
     def factory(*args_, **kwargs_):
         if SegmentGroup.subclass:
             return SegmentGroup.subclass(*args_, **kwargs_)
         else:
             return SegmentGroup(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_Notes(self, value):
+        # Validate type Notes, a restriction on xs:string.
+        pass
     def hasContent_(self):
         if (
+            self.notes is not None or
+            self.annotation is not None or
             self.members or
             self.includes or
             self.paths or
             self.sub_trees or
-            self.inhomogeneous_params or
+            self.inhomogeneous_parameters or
             super(SegmentGroup, self).hasContent_()
         ):
             return True
@@ -9152,6 +9494,11 @@ class SegmentGroup(Base):
             eol_ = '\n'
         else:
             eol_ = ''
+        if self.notes is not None:
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%snotes>%s</%snotes>%s' % (namespace_, self.gds_format_string(quote_xml(self.notes).encode(ExternalEncoding), input_name='notes'), namespace_, eol_))
+        if self.annotation is not None:
+            self.annotation.export(outfile, level, namespace_, name_='annotation', pretty_print=pretty_print)
         for member_ in self.members:
             member_.export(outfile, level, namespace_, name_='member', pretty_print=pretty_print)
         for include_ in self.includes:
@@ -9160,8 +9507,8 @@ class SegmentGroup(Base):
             path_.export(outfile, level, namespace_, name_='path', pretty_print=pretty_print)
         for subTree_ in self.sub_trees:
             subTree_.export(outfile, level, namespace_, name_='subTree', pretty_print=pretty_print)
-        for inhomogeneousParam_ in self.inhomogeneous_params:
-            inhomogeneousParam_.export(outfile, level, namespace_, name_='inhomogeneousParam', pretty_print=pretty_print)
+        for inhomogeneousParameter_ in self.inhomogeneous_parameters:
+            inhomogeneousParameter_.export(outfile, level, namespace_, name_='inhomogeneousParameter', pretty_print=pretty_print)
     def exportLiteral(self, outfile, level, name_='SegmentGroup'):
         level += 1
         already_processed = set()
@@ -9172,6 +9519,15 @@ class SegmentGroup(Base):
         super(SegmentGroup, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
         super(SegmentGroup, self).exportLiteralChildren(outfile, level, name_)
+        if self.notes is not None:
+            showIndent(outfile, level)
+            outfile.write('notes=%s,\n' % quote_python(self.notes).encode(ExternalEncoding))
+        if self.annotation is not None:
+            showIndent(outfile, level)
+            outfile.write('annotation=model_.Annotation(\n')
+            self.annotation.exportLiteral(outfile, level, name_='annotation')
+            showIndent(outfile, level)
+            outfile.write('),\n')
         showIndent(outfile, level)
         outfile.write('members=[\n')
         level += 1
@@ -9221,12 +9577,12 @@ class SegmentGroup(Base):
         showIndent(outfile, level)
         outfile.write('],\n')
         showIndent(outfile, level)
-        outfile.write('inhomogeneous_params=[\n')
+        outfile.write('inhomogeneous_parameters=[\n')
         level += 1
-        for inhomogeneousParam_ in self.inhomogeneous_params:
+        for inhomogeneousParameter_ in self.inhomogeneous_parameters:
             showIndent(outfile, level)
-            outfile.write('model_.InhomogeneousParam(\n')
-            inhomogeneousParam_.exportLiteral(outfile, level, name_='InhomogeneousParam')
+            outfile.write('model_.InhomogeneousParameter(\n')
+            inhomogeneousParameter_.exportLiteral(outfile, level, name_='InhomogeneousParameter')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -9242,7 +9598,17 @@ class SegmentGroup(Base):
     def buildAttributes(self, node, attrs, already_processed):
         super(SegmentGroup, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        if nodeName_ == 'member':
+        if nodeName_ == 'notes':
+            notes_ = child_.text
+            notes_ = self.gds_validate_string(notes_, node, 'notes')
+            self.notes = notes_
+            self.validate_Notes(self.notes)    # validate type Notes
+        elif nodeName_ == 'annotation':
+            obj_ = Annotation.factory()
+            obj_.build(child_)
+            self.annotation = obj_
+            obj_.original_tagname_ = 'annotation'
+        elif nodeName_ == 'member':
             obj_ = Member.factory()
             obj_.build(child_)
             self.members.append(obj_)
@@ -9262,11 +9628,11 @@ class SegmentGroup(Base):
             obj_.build(child_)
             self.sub_trees.append(obj_)
             obj_.original_tagname_ = 'subTree'
-        elif nodeName_ == 'inhomogeneousParam':
-            obj_ = InhomogeneousParam.factory()
+        elif nodeName_ == 'inhomogeneousParameter':
+            obj_ = InhomogeneousParameter.factory()
             obj_.build(child_)
-            self.inhomogeneous_params.append(obj_)
-            obj_.original_tagname_ = 'inhomogeneousParam'
+            self.inhomogeneous_parameters.append(obj_)
+            obj_.original_tagname_ = 'inhomogeneousParameter'
         super(SegmentGroup, self).buildChildren(child_, node, nodeName_, True)
     @property
     def length(self):
@@ -15850,7 +16216,6 @@ class IF_cond_alpha(basePyNNIaFCondCell):
 
 
 GDSClassesMapping = {
-    'inhomogeneousParam': InhomogeneousParam,
     'random': RandomLayout,
     'gateHHtauInf': GateHHTauInf,
     'spikeGeneratorPoisson': SpikeGeneratorPoisson,
@@ -15874,10 +16239,11 @@ GDSClassesMapping = {
     'adExIaFCell': AdExIaFCell,
     'unstructured': UnstructuredLayout,
     'alphaCondSynapse': AlphaCondSynapse,
-    'grid': GridLayout,
+    'channelDensityNonUniform': ChannelDensityNonUniform,
     'spikeThresh': SpikeThresh,
     'inputList': InputList,
     'membraneProperties': MembraneProperties,
+    'inhomogeneousParameter': InhomogeneousParameter,
     'timeCourse': HHTime,
     'spikeGenerator': SpikeGenerator,
     'subTree': SubTree,
@@ -15922,6 +16288,7 @@ GDSClassesMapping = {
     'ionChannelHH': IonChannelHH,
     'channelDensityGHK': ChannelDensityGHK,
     'ionChannel': IonChannel,
+    'channelDensityNonUniformNernst': ChannelDensityNonUniformNernst,
     'iafCell': IafCell,
     'iafTauRefCell': IafTauRefCell,
     'species': Species,
@@ -15938,6 +16305,7 @@ GDSClassesMapping = {
     'structure': SpaceStructure,
     'spikeArray': SpikeArray,
     'blockingPlasticSynapse': BlockingPlasticSynapse,
+    'grid': GridLayout,
     'expOneSynapse': ExpOneSynapse,
     'baseCell': BaseCell,
 }
@@ -16076,6 +16444,8 @@ __all__ = [
     "ChannelDensity",
     "ChannelDensityGHK",
     "ChannelDensityNernst",
+    "ChannelDensityNonUniform",
+    "ChannelDensityNonUniformNernst",
     "ChannelPopulation",
     "ComponentType",
     "ConcentrationModel_D",
@@ -16114,7 +16484,7 @@ __all__ = [
     "IafTauRefCell",
     "Include",
     "IncludeType",
-    "InhomogeneousParam",
+    "InhomogeneousParameter",
     "InhomogeneousValue",
     "InitMembPotential",
     "Input",
