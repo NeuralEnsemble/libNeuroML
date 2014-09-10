@@ -4,6 +4,8 @@ Utilities for checking generated code
 
 """
 
+current_neuroml_version = "v2beta3"
+
 def validate_neuroml2(file_name):
 
     from lxml import etree
@@ -12,8 +14,7 @@ def validate_neuroml2(file_name):
     except:
         from urllib.request import urlopen # Python 3
         
-    #schema_file = urlopen("https://raw.github.com/NeuroML/NeuroML2/master/Schemas/NeuroML2/NeuroML_v2beta.xsd")
-    schema_file = urlopen("https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta2.xsd")
+    schema_file = urlopen("https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_"+current_neuroml_version+".xsd")
     xmlschema = etree.XMLSchema(etree.parse(schema_file))
     print("Validating %s against %s" %(file_name, schema_file.geturl()))
     xmlschema.assertValid(etree.parse(file_name))
