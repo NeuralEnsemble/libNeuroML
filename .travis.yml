@@ -21,6 +21,7 @@ install:
   - "pip install jsonpickle"
   - "pip install pymongo"
   - if [[ $TRAVIS_PYTHON_VERSION != "3.2" ]]; then pip install simplejson; fi
+  - "pip install cython"
   - "pip install tables"
   - "pip install -r requirements.txt --use-mirrors"
 
