@@ -10,15 +10,15 @@ before_install:
     - sudo apt-get update -qq
     - sudo apt-get install -qq libhdf5-serial-dev
     - if [[ $TRAVIS_PYTHON_VERSION == "2.6" ]]; then pip install unittest2; fi
-    - pip install cython numpy
+    - pip install cython==0.20.2
+    - pip install numpy
 
 # command to install dependencies
 install:
   - "pip install lxml"
-  - "pip install numpy"
   - "pip install numexpr"
   - "pip install . --use-mirrors"
-  - "pip install jsonpickle"
+  - "pip install jsonpickle==0.7.2"
   - "pip install pymongo"
   - if [[ $TRAVIS_PYTHON_VERSION != "3.2" ]]; then pip install simplejson; fi
   - "pip install tables"

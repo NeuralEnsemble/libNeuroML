@@ -1,5 +1,7 @@
 import neuroml
 
+from utils import current_neuroml_version
+
 class NeuroMLWriter(object):
     @classmethod
     def write(cls,nmldoc,file):
@@ -16,7 +18,7 @@ class NeuroMLWriter(object):
         namespacedef = 'xmlns="http://www.neuroml.org/schema/neuroml2" '
         namespacedef += ' xmlns:xs="http://www.w3.org/2001/XMLSchema"'
         namespacedef += ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'
-        namespacedef += ' xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta2.xsd"'
+        namespacedef += ' xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_%s.xsd"'%current_neuroml_version
 
         nmldoc.export(file,0,name_="neuroml",
                       namespacedef_=namespacedef) #name_ param to ensure root element named correctly - generateDS limitation
