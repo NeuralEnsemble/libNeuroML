@@ -7,11 +7,14 @@ with open('requirements.txt') as f:
 
 long_description = open("README.md").read()
 
+import neuroml
+version = neuroml.__version__
+
 setup(
     data_files=[("",['neuroml/test/Purk2M9s.nml'])],
     requires=required,
     name = "libNeuroML",
-    version = '0.2.2',
+    version = version,
     packages = ['neuroml', 'neuroml.test','neuroml.nml'],
     package_data = {'neuroml.test': ['*.nml'], 'neuroml.nml': ['*.xsd']},
     author = "libNeuroML authors and contributors",
