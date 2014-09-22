@@ -9,7 +9,7 @@ A working version is installable via pip:
     pip install libNeuroML
 
 This is always the latest (stable) branch corresponding to the master
-branch on github.
+branch on GitHub.
 
 
 Get a read only copy of libNeuroML
