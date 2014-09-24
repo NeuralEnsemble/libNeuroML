@@ -12,12 +12,13 @@ soma = neuroml.Segment(proximal=p, distal=d)
 soma.name = 'Soma'
 soma.id = 0
 
-#now make an axon with 100 compartments:
+# Make an axon with 100 compartments:
 
 parent = neuroml.SegmentParent(segments=soma.id)
 parent_segment = soma
 axon_segments = []
 seg_id = 1
+
 for i in range(100):
     p = neuroml.Point3DWithDiam(x=parent_segment.distal.x,
                                 y=parent_segment.distal.y,
@@ -55,11 +56,9 @@ cell.id = 'TestCell'
 cell.morphology = test_morphology
 
 
-doc = neuroml.NeuroMLDocument()
-#doc.name = "Test neuroML document"
+doc = neuroml.NeuroMLDocument(id = "TestNeuroMLDocument")
 
 doc.cells.append(cell)
-doc.id = "TestNeuroMLDocument"
 
 nml_file = 'tmp/testmorphwrite.nml'
     
