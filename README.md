@@ -1,6 +1,7 @@
 ## Introduction
 
-This package provides Python libNeuroML, for working with neuronal models specified in NeuroML (http://neuroml.org)
+This package provides Python libNeuroML, for working with neuronal models specified in NeuroML 2 (http://neuroml.org/neuromlv2).
+
 
 Documentation is available at http://readthedocs.org/docs/libneuroml/en/latest/
 
