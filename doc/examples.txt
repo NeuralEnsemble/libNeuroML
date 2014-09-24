@@ -47,7 +47,7 @@ Synapses
 .. literalinclude:: ../neuroml/examples/write_syns.py
 
 Working with JSON serialization
-------------------------
+-------------------------------
 
 One thing to note is that the JSONWriter, unlike NeuroMLWriter, will
 serializing using array-based (Arraymorph) representation if this has

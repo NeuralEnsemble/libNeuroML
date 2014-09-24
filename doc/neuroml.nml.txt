@@ -1,0 +1,12 @@
+v2 Package
+==========
+
+
+:mod:`NeuroMLDocument` Module
+-----------------------------
+
+.. automodule:: neuroml.nml.NeuroMLDocument
+    :members:
+    :undoc-members:
+    :show-inheritance:
+

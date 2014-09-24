@@ -9,14 +9,6 @@ neuroml Package
     :undoc-members:
     :show-inheritance:
 
-:mod:`kinetics` Module
-----------------------
-
-.. automodule:: neuroml.kinetics
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 :mod:`loaders` Module
 ---------------------
 
@@ -25,18 +17,26 @@ neuroml Package
     :undoc-members:
     :show-inheritance:
 
-:mod:`morphology` Module
-------------------------
+:mod:`writers` Module
+---------------------
 
-.. automodule:: neuroml.morphology
+.. automodule:: neuroml.writers
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`predefined` Module
+:mod:`utils` Module
+---------------------
+
+.. automodule:: neuroml.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`arraymorph` Module
 ------------------------
 
-.. automodule:: neuroml.predefined
+.. automodule:: neuroml.arraymorph
     :members:
     :undoc-members:
     :show-inheritance:
@@ -46,6 +46,5 @@ Subpackages
 
 .. toctree::
 
-    neuroml.test
-    neuroml.v2
+    neuroml.nml
 

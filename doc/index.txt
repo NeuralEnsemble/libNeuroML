@@ -8,8 +8,7 @@ libNeuroML: documentation
    introduction
    install
    examples
-   tools
-   note_on_arraymorph   
+   tools 
 
 =======================
 Developer documentation
@@ -19,24 +18,23 @@ Developer documentation
    :maxdepth: 2
 
    how_to_contribute
-   note_on_arraymorph   
    implementation_of_bindings
 
 
-.. Source documentation
-   ==================
-   
-   .. toctree::
-      :maxdepth: 3
-      
-      modules
+..        .. Source documentation
+..           ==================
+..          
+..          .. toctree::
+..             :maxdepth: 3
+..              
+..        modules
 
-Indices and tables
-==================
+..        Indices and tables
+..        ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+..        * :ref:`genindex`
+..        * :ref:`modindex`
+..        * :ref:`search`
 
 
 

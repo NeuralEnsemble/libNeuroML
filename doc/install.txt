@@ -1,36 +1,61 @@
 Installation
 ============
 
-A working version is installable via pip:
+
+Requirements
+----------------------------------------
+
+
+For the default XML serialization (saving NeuroML to XML files), only *lxml* is required:
+
+::
+
+    sudo pip install lxml
+
+To use the other serializations (e.g. HDF5, JSON, see `Vella et al. 2014 <http://journal.frontiersin.org/Journal/10.3389/fninf.2014.00038/abstract>`_) 
+the following will also be required:
+
+::
+
+    sudo apt-get install libhdf5-serial-dev
+    sudo pip install cython
+    sudo pip install numpy
+    sudo pip install numexpr
+    sudo pip install jsonpickle
+    sudo pip install pymongo
+    sudo pip install simplejson
+    sudo pip install tables
+
+See `.travis.yml <https://github.com/NeuralEnsemble/libNeuroML/blob/master/.travis.yml>`_ for the latest requirements on libraries etc.
+
+Install libNeuroML via pip
 ----------------------------------------
 
 ::
 
     pip install libNeuroML
 
-This is always the latest (stable) branch corresponding to the master
-branch on GitHub.
+This is always the latest (stable) branch corresponding to the master branch on GitHub.
 
 
-Get a read only copy of libNeuroML
-----------------------------------
+
+
+Install using a local copy of libNeuroML source
+-----------------------------------------------
 
 Install `git`_ and type:
 
 ::
 
     git clone git://github.com/NeuralEnsemble/libNeuroML.git
+    cd libNeuroML
 
 
 More details about the git repository and making your own branch/fork are `here <how_to_contribute.html>`_.
 
 
-
 .. _Git: http://rogerdudler.github.com/git-guide/
 
-
-Install libNeuroML
-------------------
 
 Use the standard install method for Python packages:
 
@@ -39,23 +64,26 @@ Use the standard install method for Python packages:
 
     sudo python setup.py install
 
+To use the **latest development version of libNeuroML**, switch to the development branch:
+
+
+::
+
+    git checkout development
+    sudo python setup.py install
+
 
 Run an example
 --------------
 
-Some sample scripts are included in `neuroml/examples`:
+Some sample scripts are included in `neuroml/examples`, e.g. :
 
 ::
 
-     arraymorph.py
-     build_3D_network.py
-     build_network.py
-     ion_channel_generation.py
-     loading_modifying_writing_large.py
-     loading_modifying_writing.py
-     morphology_generation.py
-     write_pynn.py
-     write_syns.py
+     cd neuroml/examples
+     python build_network.py
+
+The standard examples can also be found `here <examples.html>`_
 
 Unit tests
 ----------
@@ -72,6 +100,6 @@ If everything worked your output should look something like this:
 
     .......
     ----------------------------------------------------------------------
-    Ran 40 tests in 4.01s
+    Ran 55 tests in 40.1s
     
     OK
