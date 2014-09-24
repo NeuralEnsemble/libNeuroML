@@ -2,14 +2,20 @@
 
 This package provides Python libNeuroML, for working with neuronal models specified in NeuroML 2 (http://neuroml.org/neuromlv2).
 
+For more about libNeuroML see:
+
+Michael Vella, Robert C. Cannon, Sharon Crook, Andrew P. Davison, Gautham Ganapathy, Hugh P. C. Robinson, R. Angus Silver and Padraig Gleeson,
+**libNeuroML and PyLEMS: using Python to combine procedural and declarative modeling approaches in computational neuroscience**
+[Frontiers in Neuroinformatics 2014](http://journal.frontiersin.org/Journal/10.3389/fninf.2014.00038/abstract), doi: 10.3389/fninf.2014.00038
+
+_**PLEASE CITE THE PAPER ABOVE IF YOU USE PYLEMS!**_
+
 
 Documentation is available at http://readthedocs.org/docs/libneuroml/en/latest/
 
 For installation instructions, see http://readthedocs.org/docs/libneuroml/en/latest/install.html
 
 For details on how to contribute, see http://readthedocs.org/docs/libneuroml/en/latest/how_to_contribute.html
-
-The initial target version of NeuroML is v2.0. The latest details on that version is at http://neuroml.org/neuroml2.
 
 ## Travis integration
 
