@@ -3,6 +3,9 @@ Introduction
 
 An overview of the motivation for libNeuroML, and the various scenarios in which such an API can be useful.
 
+NOTE: libNeuroML targets `NeuroML v2.0`_ (described in 
+`Cannon et al, 2014 <http://journal.frontiersin.org/Journal/10.3389/fninf.2014.00079/abstract>`_) not NeuroML v1.8.1.
+
 NeuroML
 -------
 
@@ -84,6 +87,7 @@ building small networks of multicompartmental neurons with MorphForge, parameter
 Other packages then can be developed (e.g. for visualisation in 3D, for analysis of morphological or network properties) 
 which will be usable on any simulator which supports libNeuroML+PyNN, e.g. NEURON, MOOSE...
 
-.. _NeuroML v2.0: http://www.neuroml.org/neuroml2
-.. _LEMS: http://www.neuroml.org/lems/index.html
+.. _NeuroML v2.0: http://www.neuroml.org/neuromlv2
+.. _LEMS: http://lems.github.io/LEMS/
 .. _NeuroHDF: http://neurohdf.readthedocs.org/en/latest/
+
