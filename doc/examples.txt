@@ -10,15 +10,15 @@ be tested to confirm they work by running the run_all.py script.
 
 .. contents:: Examples
 
-Making a NeuroML morphology
----------------------------
+Creating a NeuroML morphology
+-----------------------------
 
 .. literalinclude:: ../neuroml/examples/morphology_generation.py
 
 Loading and modifying a file
 ----------------------------
 
-.. literalinclude:: ../neuroml/examples/loading_modifying_writing_large.py
+.. literalinclude:: ../neuroml/examples/loading_modifying_writing.py
  
 
 Building a network
@@ -36,7 +36,7 @@ Ion channels
 
 .. literalinclude:: ../neuroml/examples/ion_channel_generation.py
 
-Pynn models
+PyNN models
 -----------
 
 .. literalinclude:: ../neuroml/examples/write_pynn.py

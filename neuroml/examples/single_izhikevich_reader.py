@@ -17,5 +17,4 @@ def load_izhikevich(filename="./test_files/SingleIzhikevich.nml"):
             print "Error: Cell %d is not an IzhikevichCell" % i
 
 
-if __name__ == "__main__":
-    load_izhikevich()
+load_izhikevich()

@@ -16,5 +16,7 @@ def write_izhikevich(filename="./tmp/SingleIzhikevich_test.nml"):
     validate_neuroml2(nml_filename)
 
 
-if __name__ == "__main__":
-    write_izhikevich()
+
+write_izhikevich()
+    
+
