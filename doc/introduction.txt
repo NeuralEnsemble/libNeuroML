@@ -13,7 +13,7 @@ For a detailed description of libNeuroML see:
 |  **libNeuroML and PyLEMS: using Python to combine procedural and declarative modeling approaches in computational neuroscience**
 |  `Frontiers in Neuroinformatics 2014 <http://journal.frontiersin.org/Journal/10.3389/fninf.2014.00038/abstract.>`_, doi: 10.3389/fninf.2014.00038
 
-**PLEASE CITE THE PAPER ABOVE IF YOU USE PYLEMS!**
+**PLEASE CITE THE PAPER ABOVE IF YOU USE libNeuroML!**
 
 NeuroML
 -------
@@ -35,68 +35,11 @@ object model. The format of the XML will be specified by the XML Schema definiti
 LEMS definitions of NeuroML ComponentTypes (defining what izhikevichCell does with a, b, c...)
 and this XSD file (only saying the izhikevichCell element requires a, b, c...) are currently manually kept in line.
 
-Other serialisations have been developed. See:
-
-Michael Vella, Robert C. Cannon, Sharon Crook, Andrew P. Davison, Gautham Ganapathy, Hugh P. C. Robinson, R. Angus Silver and Padraig Gleeson,
-**libNeuroML and PyLEMS: using Python to combine procedural and declarative modeling approaches in computational neuroscience**
-`Frontiers in Neuroinformatics 2014 <http://journal.frontiersin.org/Journal/10.3389/fninf.2014.00038/abstract.>`_, doi: 10.3389/fninf.2014.00038
+Other serialisations have been developed (HDF5, JSON, SWC). See 
+`Vella et al. 2014 <http://journal.frontiersin.org/Journal/10.3389/fninf.2014.00038/abstract>`_ for more details.
 
 
 
-APIs for accessing NeuroML files
---------------------------------
-
-APIs in any given language (e.g. Java, Python) should be independent of the serialisation format, and be based on the 
-NeuroML object model.
-
-Core read/write methods will be here, e.g. read_neuroml(xmlOrHdfFormat), get_cells(), cell.get_segments(), get_populations(), 
-get_projections(), cell.add_segment(), cell.getsegments_in_group(grp), add_population(), save_as_xml(), save_as_hdf5(), 
-etc. Additional helper methods could be envisioned across the implementations, e.g. cell.retrieveCoordinates(), etc. 
-
-The naming convention of methods will be a thorny issue: Java and Python have their own preferred formats,. The consensus for now is
-to allow each of the APIs to develop with the best practices of the specific language (e.g. PEP8 for Python) to get the maximum
-benefit and buy in from that user community.
-
-
-Backends
---------
- 
-A backend consists of a specific implementation which stores structure of the cells, network, etc. when the
-model is loaded in from XML/HDF5. Scenarios for this can include:
-
-A) A language specific object model generated from the NeuroML schema, e.g. Java or Python class hierarchy for Cell, 
-Segment, Network, etc. is used to store the data
-
-B) Optimised version of above with certain objects substituted for more optimal representations of data (e.g. a numpy 
-array for 3D points)
-
-C) Simulator specific backend, i.e. when add_cell(...) or cell.add_segment() are called, equivalent entities 
-in the native simulator are created. Similarly when save_as_xml() is called in the API the native object tree is 
-parsed for this information.
-
-Scenario A) above already has an initial implementation in Python (see 
-https://github.com/NeuralEnsemble/libNeuroML/tree/master/ideas/padraig/generatedFromV2Schema).
-
-Scenario B) would fulfil most people's requirements for a standalone Python API to read/write large data sets of 
-cell/network data, and could be build from A.
-
-Scenario C) could be implemented in Python by extending PyNN for multicompartmental simulators, and by hooking 
-commands for building networks in libNeuroML (e.g. add_cell(), add_population, create_segment()) to existing or new 
-PyNN commands, and similarly parsing the simulator's internally instantiated network with PyNN commands when the 
-network needs to be saved to XML/HDF5. This would facilitate running/saving/plotting models on PyNN simulators.
-A version of Mike Vella's example file https://github.com/NeuralEnsemble/libNeuroML/blob/master/ideas/mike/example.py
-would certainly be possible through a libNeuroML+PyNN API like this.
-
-
-Extensions
-----------
-
-The core libNeuroML API should be kept to the minimal set of commands for reading/writing/parsing the object tree.
-Extension packages can be built on this (and PyNN) which use this functionality with specific workflows in mind, e.g.
-building small networks of multicompartmental neurons with MorphForge, parameter fitting neuron models (Mike Vella's package).
-
-Other packages then can be developed (e.g. for visualisation in 3D, for analysis of morphological or network properties) 
-which will be usable on any simulator which supports libNeuroML+PyNN, e.g. NEURON, MOOSE...
 
 .. _NeuroML v2.0: http://www.neuroml.org/neuromlv2
 .. _LEMS: http://lems.github.io/LEMS/
