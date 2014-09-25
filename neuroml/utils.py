@@ -5,7 +5,7 @@ Utilities for checking generated code
 """
 import os.path
 
-current_neuroml_version = "v2beta3"
+current_neuroml_version = "v2beta4"
 
 def validate_neuroml2(file_name):
 

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Sep  3 18:17:21 2014 by generateDS.py version 2.12e.
+# Generated Thu Sep 25 12:08:15 2014 by generateDS.py version 2.12e.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -11,10 +11,10 @@
 #   ('--user-methods', 'helper_methods')
 #
 # Command line arguments:
-#   NeuroML_v2beta3.xsd
+#   NeuroML_v2beta4.xsd
 #
 # Command line:
-#   /usr/local/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2beta3.xsd
+#   /usr/local/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2beta4.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -11543,7 +11543,7 @@ class GateHHUndetermined(Base):
 class IonChannel(Standalone):
     """Note ionChannel and ionChannelHH are currently functionally
     identical. This is needed since many existing examples use
-    ionChannel, some use ionChannelHH. NeuroML v2beta3 will remove
+    ionChannel, some use ionChannelHH. NeuroML v2beta4 should remove
     one of these, probably ionChannelHH."""
     member_data_items_ = [
         MemberSpec_('conductance', 'Nml2Quantity_conductance', 0),
@@ -14330,7 +14330,7 @@ class BaseConductanceBasedSynapse(BaseSynapse):
 class IonChannelHH(IonChannel):
     """Note ionChannel and ionChannelHH are currently functionally
     identical. This is needed since many existing examples use
-    ionChannel, some use ionChannelHH. NeuroML v2beta3 will remove
+    ionChannel, some use ionChannelHH. NeuroML v2beta4 should remove
     one of these, probably ionChannelHH."""
     member_data_items_ = [
     ]

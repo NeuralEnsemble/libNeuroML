@@ -1,1 +1,1 @@
-variables={'schema_name':'NeuroML_v2beta3.xsd'}
+variables={'schema_name':'NeuroML_v2beta4.xsd'}

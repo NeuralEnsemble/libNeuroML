@@ -25,6 +25,10 @@ libNeuroML is integrated with the the [Travis Continuous Integration service](ht
 
 ##Changelog
 
+###version 0.2.4
+ - Updated to use the Schema for NeuroML v2beta4
+ - ???
+
 ###version 0.2.2
  - Updated to use the Schema for NeuroML v2beta3
  - Ensures numpy & pytables are only required when using non-XML loaders/writers 
