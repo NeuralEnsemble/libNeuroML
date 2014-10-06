@@ -111,6 +111,7 @@ condDensity,cond_density
 optional,optional
 gL,g_l
 c,c
+property,property
 e_rev_E,e_rev_E
 baselineAmplitude,baseline_amplitude
 e_rev_I,e_rev_I

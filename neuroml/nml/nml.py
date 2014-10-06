@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Sep 25 12:08:15 2014 by generateDS.py version 2.12e.
+# Generated Mon Oct  6 18:45:22 2014 by generateDS.py version 2.12e.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -716,6 +716,96 @@ class Property(GeneratedsSuper):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
 # end class Property
+
+
+class property(GeneratedsSuper):
+    """Generic property with a tag and value. Note: lowercase alternative
+    to ensure APIs can use name"""
+    member_data_items_ = [
+        MemberSpec_('tag', 'xs:string', 0),
+        MemberSpec_('value', 'xs:string', 0),
+    ]
+    subclass = None
+    superclass = None
+    def __init__(self, tag=None, value=None):
+        self.original_tagname_ = None
+        self.tag = _cast(None, tag)
+        self.value = _cast(None, value)
+    def factory(*args_, **kwargs_):
+        if property.subclass:
+            return property.subclass(*args_, **kwargs_)
+        else:
+            return property(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='property', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='property')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='property', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='property'):
+        if self.tag is not None and 'tag' not in already_processed:
+            already_processed.add('tag')
+            outfile.write(' tag=%s' % (self.gds_format_string(quote_attrib(self.tag).encode(ExternalEncoding), input_name='tag'), ))
+        if self.value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            outfile.write(' value=%s' % (self.gds_format_string(quote_attrib(self.value).encode(ExternalEncoding), input_name='value'), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='property', fromsubclass_=False, pretty_print=True):
+        pass
+    def exportLiteral(self, outfile, level, name_='property'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.tag is not None and 'tag' not in already_processed:
+            already_processed.add('tag')
+            showIndent(outfile, level)
+            outfile.write('tag="%s",\n' % (self.tag,))
+        if self.value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            showIndent(outfile, level)
+            outfile.write('value="%s",\n' % (self.value,))
+    def exportLiteralChildren(self, outfile, level, name_):
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('tag', node)
+        if value is not None and 'tag' not in already_processed:
+            already_processed.add('tag')
+            self.tag = value
+        value = find_attr_value_('value', node)
+        if value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            self.value = value
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        pass
+# end class property
 
 
 class Annotation(GeneratedsSuper):
@@ -10433,7 +10523,6 @@ class DecayingPoolConcentrationModel(Standalone):
 class GateHHRatesInf(Base):
     member_data_items_ = [
         MemberSpec_('instances', 'xs:integer', 0),
-        MemberSpec_('type', 'gateTypes', 0),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0),
         MemberSpec_('q10_settings', 'Q10Settings', 0),
         MemberSpec_('forward_rate', 'HHRate', 0),
@@ -10442,11 +10531,10 @@ class GateHHRatesInf(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, instances=1, type=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, steady_state=None):
+    def __init__(self, neuro_lex_id=None, id=None, instances=1, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, steady_state=None):
         self.original_tagname_ = None
         super(GateHHRatesInf, self).__init__(neuro_lex_id, id, )
         self.instances = _cast(int, instances)
-        self.type = _cast(None, type)
         self.notes = notes
         self.q10_settings = q10_settings
         self.forward_rate = forward_rate
@@ -10460,9 +10548,6 @@ class GateHHRatesInf(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
-        pass
-    def validate_gateTypes(self, value):
-        # Validate type gateTypes, a restriction on xs:string.
         pass
     def hasContent_(self):
         if (
@@ -10499,9 +10584,6 @@ class GateHHRatesInf(Base):
         if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
-        if self.type is not None and 'type' not in already_processed:
-            already_processed.add('type')
-            outfile.write(' type=%s' % (quote_attrib(self.type), ))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHRatesInf', fromsubclass_=False, pretty_print=True):
         super(GateHHRatesInf, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -10530,10 +10612,6 @@ class GateHHRatesInf(Base):
             already_processed.add('instances')
             showIndent(outfile, level)
             outfile.write('instances=%d,\n' % (self.instances,))
-        if self.type is not None and 'type' not in already_processed:
-            already_processed.add('type')
-            showIndent(outfile, level)
-            outfile.write('type="%s",\n' % (self.type,))
         super(GateHHRatesInf, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
         super(GateHHRatesInf, self).exportLiteralChildren(outfile, level, name_)
@@ -10579,11 +10657,6 @@ class GateHHRatesInf(Base):
                 self.instances = int(value)
             except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
-        value = find_attr_value_('type', node)
-        if value is not None and 'type' not in already_processed:
-            already_processed.add('type')
-            self.type = value
-            self.validate_gateTypes(self.type)    # validate type gateTypes
         super(GateHHRatesInf, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'notes':
@@ -10618,7 +10691,6 @@ class GateHHRatesInf(Base):
 class GateHHRatesTau(Base):
     member_data_items_ = [
         MemberSpec_('instances', 'xs:integer', 0),
-        MemberSpec_('type', 'gateTypes', 0),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0),
         MemberSpec_('q10_settings', 'Q10Settings', 0),
         MemberSpec_('forward_rate', 'HHRate', 0),
@@ -10627,11 +10699,10 @@ class GateHHRatesTau(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, instances=1, type=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None):
+    def __init__(self, neuro_lex_id=None, id=None, instances=1, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None):
         self.original_tagname_ = None
         super(GateHHRatesTau, self).__init__(neuro_lex_id, id, )
         self.instances = _cast(int, instances)
-        self.type = _cast(None, type)
         self.notes = notes
         self.q10_settings = q10_settings
         self.forward_rate = forward_rate
@@ -10645,9 +10716,6 @@ class GateHHRatesTau(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
-        pass
-    def validate_gateTypes(self, value):
-        # Validate type gateTypes, a restriction on xs:string.
         pass
     def hasContent_(self):
         if (
@@ -10684,9 +10752,6 @@ class GateHHRatesTau(Base):
         if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
-        if self.type is not None and 'type' not in already_processed:
-            already_processed.add('type')
-            outfile.write(' type=%s' % (quote_attrib(self.type), ))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHRatesTau', fromsubclass_=False, pretty_print=True):
         super(GateHHRatesTau, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -10715,10 +10780,6 @@ class GateHHRatesTau(Base):
             already_processed.add('instances')
             showIndent(outfile, level)
             outfile.write('instances=%d,\n' % (self.instances,))
-        if self.type is not None and 'type' not in already_processed:
-            already_processed.add('type')
-            showIndent(outfile, level)
-            outfile.write('type="%s",\n' % (self.type,))
         super(GateHHRatesTau, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
         super(GateHHRatesTau, self).exportLiteralChildren(outfile, level, name_)
@@ -10764,11 +10825,6 @@ class GateHHRatesTau(Base):
                 self.instances = int(value)
             except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
-        value = find_attr_value_('type', node)
-        if value is not None and 'type' not in already_processed:
-            already_processed.add('type')
-            self.type = value
-            self.validate_gateTypes(self.type)    # validate type gateTypes
         super(GateHHRatesTau, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'notes':
@@ -10803,7 +10859,6 @@ class GateHHRatesTau(Base):
 class GateHHRatesTauInf(Base):
     member_data_items_ = [
         MemberSpec_('instances', 'xs:integer', 0),
-        MemberSpec_('type', 'gateTypes', 0),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0),
         MemberSpec_('q10_settings', 'Q10Settings', 0),
         MemberSpec_('forward_rate', 'HHRate', 0),
@@ -10813,11 +10868,10 @@ class GateHHRatesTauInf(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, instances=1, type=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None, steady_state=None):
+    def __init__(self, neuro_lex_id=None, id=None, instances=1, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None, steady_state=None):
         self.original_tagname_ = None
         super(GateHHRatesTauInf, self).__init__(neuro_lex_id, id, )
         self.instances = _cast(int, instances)
-        self.type = _cast(None, type)
         self.notes = notes
         self.q10_settings = q10_settings
         self.forward_rate = forward_rate
@@ -10832,9 +10886,6 @@ class GateHHRatesTauInf(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
-        pass
-    def validate_gateTypes(self, value):
-        # Validate type gateTypes, a restriction on xs:string.
         pass
     def hasContent_(self):
         if (
@@ -10872,9 +10923,6 @@ class GateHHRatesTauInf(Base):
         if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
-        if self.type is not None and 'type' not in already_processed:
-            already_processed.add('type')
-            outfile.write(' type=%s' % (quote_attrib(self.type), ))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHRatesTauInf', fromsubclass_=False, pretty_print=True):
         super(GateHHRatesTauInf, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -10905,10 +10953,6 @@ class GateHHRatesTauInf(Base):
             already_processed.add('instances')
             showIndent(outfile, level)
             outfile.write('instances=%d,\n' % (self.instances,))
-        if self.type is not None and 'type' not in already_processed:
-            already_processed.add('type')
-            showIndent(outfile, level)
-            outfile.write('type="%s",\n' % (self.type,))
         super(GateHHRatesTauInf, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
         super(GateHHRatesTauInf, self).exportLiteralChildren(outfile, level, name_)
@@ -10960,11 +11004,6 @@ class GateHHRatesTauInf(Base):
                 self.instances = int(value)
             except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
-        value = find_attr_value_('type', node)
-        if value is not None and 'type' not in already_processed:
-            already_processed.add('type')
-            self.type = value
-            self.validate_gateTypes(self.type)    # validate type gateTypes
         super(GateHHRatesTauInf, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'notes':
@@ -11004,7 +11043,6 @@ class GateHHRatesTauInf(Base):
 class GateHHTauInf(Base):
     member_data_items_ = [
         MemberSpec_('instances', 'xs:integer', 0),
-        MemberSpec_('type', 'gateTypes', 0),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0),
         MemberSpec_('q10_settings', 'Q10Settings', 0),
         MemberSpec_('time_course', 'HHTime', 0),
@@ -11012,11 +11050,10 @@ class GateHHTauInf(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, instances=1, type=None, notes=None, q10_settings=None, time_course=None, steady_state=None):
+    def __init__(self, neuro_lex_id=None, id=None, instances=1, notes=None, q10_settings=None, time_course=None, steady_state=None):
         self.original_tagname_ = None
         super(GateHHTauInf, self).__init__(neuro_lex_id, id, )
         self.instances = _cast(int, instances)
-        self.type = _cast(None, type)
         self.notes = notes
         self.q10_settings = q10_settings
         self.time_course = time_course
@@ -11029,9 +11066,6 @@ class GateHHTauInf(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
-        pass
-    def validate_gateTypes(self, value):
-        # Validate type gateTypes, a restriction on xs:string.
         pass
     def hasContent_(self):
         if (
@@ -11067,9 +11101,6 @@ class GateHHTauInf(Base):
         if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
-        if self.type is not None and 'type' not in already_processed:
-            already_processed.add('type')
-            outfile.write(' type=%s' % (quote_attrib(self.type), ))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHTauInf', fromsubclass_=False, pretty_print=True):
         super(GateHHTauInf, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -11096,10 +11127,6 @@ class GateHHTauInf(Base):
             already_processed.add('instances')
             showIndent(outfile, level)
             outfile.write('instances=%d,\n' % (self.instances,))
-        if self.type is not None and 'type' not in already_processed:
-            already_processed.add('type')
-            showIndent(outfile, level)
-            outfile.write('type="%s",\n' % (self.type,))
         super(GateHHTauInf, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
         super(GateHHTauInf, self).exportLiteralChildren(outfile, level, name_)
@@ -11139,11 +11166,6 @@ class GateHHTauInf(Base):
                 self.instances = int(value)
             except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
-        value = find_attr_value_('type', node)
-        if value is not None and 'type' not in already_processed:
-            already_processed.add('type')
-            self.type = value
-            self.validate_gateTypes(self.type)    # validate type gateTypes
         super(GateHHTauInf, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'notes':
@@ -11173,7 +11195,6 @@ class GateHHTauInf(Base):
 class GateHHRates(Base):
     member_data_items_ = [
         MemberSpec_('instances', 'xs:integer', 0),
-        MemberSpec_('type', 'gateTypes', 0),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0),
         MemberSpec_('q10_settings', 'Q10Settings', 0),
         MemberSpec_('forward_rate', 'HHRate', 0),
@@ -11181,11 +11202,10 @@ class GateHHRates(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, instances=1, type=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None):
+    def __init__(self, neuro_lex_id=None, id=None, instances=1, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None):
         self.original_tagname_ = None
         super(GateHHRates, self).__init__(neuro_lex_id, id, )
         self.instances = _cast(int, instances)
-        self.type = _cast(None, type)
         self.notes = notes
         self.q10_settings = q10_settings
         self.forward_rate = forward_rate
@@ -11198,9 +11218,6 @@ class GateHHRates(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
-        pass
-    def validate_gateTypes(self, value):
-        # Validate type gateTypes, a restriction on xs:string.
         pass
     def hasContent_(self):
         if (
@@ -11236,9 +11253,6 @@ class GateHHRates(Base):
         if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
-        if self.type is not None and 'type' not in already_processed:
-            already_processed.add('type')
-            outfile.write(' type=%s' % (quote_attrib(self.type), ))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHRates', fromsubclass_=False, pretty_print=True):
         super(GateHHRates, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -11265,10 +11279,6 @@ class GateHHRates(Base):
             already_processed.add('instances')
             showIndent(outfile, level)
             outfile.write('instances=%d,\n' % (self.instances,))
-        if self.type is not None and 'type' not in already_processed:
-            already_processed.add('type')
-            showIndent(outfile, level)
-            outfile.write('type="%s",\n' % (self.type,))
         super(GateHHRates, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
         super(GateHHRates, self).exportLiteralChildren(outfile, level, name_)
@@ -11308,11 +11318,6 @@ class GateHHRates(Base):
                 self.instances = int(value)
             except ValueError, exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
-        value = find_attr_value_('type', node)
-        if value is not None and 'type' not in already_processed:
-            already_processed.add('type')
-            self.type = value
-            self.validate_gateTypes(self.type)    # validate type gateTypes
         super(GateHHRates, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'notes':
@@ -16540,5 +16545,6 @@ __all__ = [
     "VoltageClamp",
     "basePyNNCell",
     "basePyNNIaFCell",
-    "basePyNNIaFCondCell"
+    "basePyNNIaFCondCell",
+    "property"
 ]
