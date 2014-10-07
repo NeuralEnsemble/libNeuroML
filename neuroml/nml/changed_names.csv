@@ -7,7 +7,7 @@ ySpacing,y_spacing
 spikeGeneratorPoisson,spike_generator_poissons
 tsodyksMarkramDepFacMechanism,tsodyks_markram_dep_fac_mechanism
 xStart,x_start
-startAmplitude,start_amplitude
+projection,projections
 tauRise,tau_rise
 member,members
 segmentId,segment_id
@@ -19,6 +19,7 @@ voltageClamp,voltage_clamps
 voltageConcDepBlockMechanism,voltage_conc_dep_block_mechanism
 xSpacing,x_spacing
 iafCell,iaf_cells
+gateHHratesTau,gate_h_hrates_taus
 blockMechanism,block_mechanism
 initReleaseProb,init_release_prob
 plasticityMechanism,plasticity_mechanism
@@ -54,6 +55,8 @@ include,includes
 fractionAlong,fraction_along
 normalizationEnd,normalization_end
 forwardRate,forward_rate
+electricalProjection,electrical_projections
+gapJunction,gap_junctions
 targetVoltage,target_voltage
 simpleSeriesResistance,simple_series_resistance
 sineGenerator,sine_generators
@@ -62,6 +65,7 @@ postCellId,post_cell_id
 region,regions
 condDensity,cond_density
 gL,g_l
+property,properties
 baselineAmplitude,baseline_amplitude
 extracellularProperties,extracellular_properties
 connection,connections
@@ -72,7 +76,6 @@ http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd,http://www
 intracellularProperties,intracellular_properties
 cellSet,cell_sets
 preFractionAlong,pre_fraction_along
-projection,projections
 averageRate,average_rate
 unbounded,unboundeds
 translationStart,translation_start
@@ -103,7 +106,6 @@ ionChannel,ion_channel
 allowedSpaces,allowed_spaces
 shellThickness,shell_thickness
 experimentalTemp,experimental_temp
-gateHHratesTau,gate_h_hrates_taus
 delta_T,delta_t
 xSize,x_size
 javax.xml.bind.DatatypeConverter.printInt,javax.xml.bind._datatype_converter.print_int
@@ -115,10 +117,12 @@ xs:nonNegativeInteger,xs:non_negative_integer
 expCurrSynapse,exp_curr_synapses
 ySize,y_size
 concentrationModel,concentration_model
+electricalConnection,electrical_connections
 ionChannelHH,ion_channel_hhs
 channelDensityGHK,channel_density_ghks
 synapticConnection,synaptic_connections
 q10Settings,q10_settings
+startAmplitude,start_amplitude
 channelDensityNonUniformNernst,channel_density_non_uniform_nernsts
 iafTauRefCell,iaf_tau_ref_cells
 channelPopulation,channel_populations
@@ -132,12 +136,14 @@ explicitInput,explicit_inputs
 gate,gates
 steadyState,steady_state
 populationTypes,population_types
+preCell,pre_cell
 scalingVolt,scaling_volt
 blockConcentration,block_concentration
 initMembPotential,init_memb_potentials
 decayConstant,decay_constant
 alphaCurrSynapse,alpha_curr_synapses
 variableParameter,variable_parameters
+postCell,post_cell
 expTwoSynapse,exp_two_synapses
 segment,segments
 leakReversal,leak_reversal

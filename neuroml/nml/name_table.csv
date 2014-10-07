@@ -12,7 +12,7 @@ morphology,morphology
 tsodyksMarkramDepFacMechanism,tsodyks_markram_dep_fac_mechanism
 xStart,x_start
 xs:float,xs:float
-startAmplitude,start_amplitude
+projection,projections
 tauRise,tau_rise
 member,members
 tau_m,tau_m
@@ -34,6 +34,7 @@ xSpacing,x_spacing
 iafCell,iaf_cells
 tau_refrac,tau_refrac
 neuroml,neuroml
+gateHHratesTau,gate_h_hrates_taus
 blockMechanism,block_mechanism
 initReleaseProb,init_release_prob
 plasticityMechanism,plasticity_mechanism
@@ -51,6 +52,7 @@ synapse,synapse
 IF_cond_alpha,IF_cond_alpha
 name,name
 instances,instances
+parameter,parameter
 notes,notes
 zStart,z_start
 inputList,input_lists
@@ -73,6 +75,7 @@ rate,rate
 biophysicalProperties,biophysical_properties
 presynapticPopulation,presynaptic_population
 tauRec,tau_rec
+IF_curr_exp,IF_curr_exp
 finishAmplitude,finish_amplitude
 duration,duration
 gateHHratesInf,gate_h_hrates_infs
@@ -93,7 +96,8 @@ normalizationEnd,normalization_end
 gbase,gbase
 forwardRate,forward_rate
 tauw,tauw
-IF_curr_exp,IF_curr_exp
+electricalProjection,electrical_projections
+gapJunction,gap_junctions
 targetVoltage,target_voltage
 parent,parent
 midpoint,midpoint
@@ -111,7 +115,7 @@ condDensity,cond_density
 optional,optional
 gL,g_l
 c,c
-property,property
+property,properties
 e_rev_E,e_rev_E
 baselineAmplitude,baseline_amplitude
 e_rev_I,e_rev_I
@@ -130,7 +134,7 @@ diameter,diameter
 intracellularProperties,intracellular_properties
 cellSet,cell_sets
 preFractionAlong,pre_fraction_along
-projection,projections
+unqualified,unqualified
 cm,cm
 averageRate,average_rate
 unbounded,unboundeds
@@ -156,7 +160,6 @@ postSegmentId,post_segment_id
 start,start
 spikeGeneratorRandom,spike_generator_randoms
 leakConductance,leak_conductance
-conductance,conductance
 spike,spikes
 spikeArray,spike_arrays
 type,type
@@ -183,7 +186,7 @@ allowedSpaces,allowed_spaces
 shellThickness,shell_thickness
 j,j
 experimentalTemp,experimental_temp
-gateHHratesTau,gate_h_hrates_taus
+conductance,conductance
 value,value
 delta_T,delta_t
 ion,ion
@@ -201,11 +204,13 @@ expCurrSynapse,exp_curr_synapses
 metric,metric
 ySize,y_size
 concentrationModel,concentration_model
+electricalConnection,electrical_connections
 ionChannelHH,ion_channel_hhs
 channelDensityGHK,channel_density_ghks
 synapticConnection,synaptic_connections
 q10Settings,q10_settings
 tag,tag
+startAmplitude,start_amplitude
 v_rest,v_rest
 v_spike,v_spike
 channelDensityNonUniformNernst,channel_density_non_uniform_nernsts
@@ -227,7 +232,7 @@ explicitInput,explicit_inputs
 gate,gates
 steadyState,steady_state
 populationTypes,population_types
-parameter,parameter
+preCell,pre_cell
 scalingVolt,scaling_volt
 blockConcentration,block_concentration
 gbar_K,gbar_K
@@ -238,7 +243,7 @@ alphaCurrSynapse,alpha_curr_synapses
 v0,v0
 e_rev_leak,e_rev_leak
 variableParameter,variable_parameters
-unqualified,unqualified
+postCell,post_cell
 phase,phase
 erev,erev
 expTwoSynapse,exp_two_synapses
