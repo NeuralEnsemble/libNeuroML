@@ -1,4 +1,4 @@
-Autogeneration of API, using genreateds_config.py to ensure correct naming conventions.
+Autogeneration of API, using generateds_config.py to ensure correct naming conventions.
 
 NOTE: requires the latest version of generateDS.py from https://bitbucket.org/dkuhlman/generateds
 
