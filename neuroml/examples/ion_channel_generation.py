@@ -4,8 +4,6 @@ Generating a Hodgkin-Huxley Ion Channel and writing it to NeuroML
 
 import neuroml
 import neuroml.writers as writers
-from lxml import etree
-from urllib import urlopen
 
 chan = neuroml.IonChannelHH(id='na',
                           conductance='10pS',

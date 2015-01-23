@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Jan 21 12:25:17 2015 by generateDS.py version 2.12e.
+# Generated Fri Jan 23 16:45:54 2015 by generateDS.py version 2.14a.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -21,10 +21,14 @@
 #
 
 import sys
-import getopt
 import re as re_
 import base64
 import datetime as datetime_
+import warnings as warnings_
+
+
+Validate_simpletypes_ = True
+
 
 etree_ = None
 Verbose_import_ = False
@@ -90,7 +94,7 @@ def parsexml_(*args, **kwargs):
 
 try:
     from generatedssuper import GeneratedsSuper
-except ImportError, exp:
+except ImportError as exp:
 
     class GeneratedsSuper(object):
         tzoff_pattern = re_.compile(r'(\+|-)((0\d|1[0-3]):[0-5]\d|14:00)$')
@@ -106,64 +110,68 @@ except ImportError, exp:
                 return None
         def gds_format_string(self, input_data, input_name=''):
             return input_data
-        def gds_validate_string(self, input_data, node, input_name=''):
+        def gds_validate_string(self, input_data, node=None, input_name=''):
             if not input_data:
                 return ''
             else:
                 return input_data
         def gds_format_base64(self, input_data, input_name=''):
             return base64.b64encode(input_data)
-        def gds_validate_base64(self, input_data, node, input_name=''):
+        def gds_validate_base64(self, input_data, node=None, input_name=''):
             return input_data
         def gds_format_integer(self, input_data, input_name=''):
             return '%d' % input_data
-        def gds_validate_integer(self, input_data, node, input_name=''):
+        def gds_validate_integer(self, input_data, node=None, input_name=''):
             return input_data
         def gds_format_integer_list(self, input_data, input_name=''):
-            return '%s' % input_data
-        def gds_validate_integer_list(self, input_data, node, input_name=''):
+            return '%s' % ' '.join(input_data)
+        def gds_validate_integer_list(
+                self, input_data, node=None, input_name=''):
             values = input_data.split()
             for value in values:
                 try:
-                    float(value)
+                    int(value)
                 except (TypeError, ValueError):
                     raise_parse_error(node, 'Requires sequence of integers')
-            return input_data
+            return values
         def gds_format_float(self, input_data, input_name=''):
             return ('%.15f' % input_data).rstrip('0')
-        def gds_validate_float(self, input_data, node, input_name=''):
+        def gds_validate_float(self, input_data, node=None, input_name=''):
             return input_data
         def gds_format_float_list(self, input_data, input_name=''):
-            return '%s' % input_data
-        def gds_validate_float_list(self, input_data, node, input_name=''):
+            return '%s' % ' '.join(input_data)
+        def gds_validate_float_list(
+                self, input_data, node=None, input_name=''):
             values = input_data.split()
             for value in values:
                 try:
                     float(value)
                 except (TypeError, ValueError):
                     raise_parse_error(node, 'Requires sequence of floats')
-            return input_data
+            return values
         def gds_format_double(self, input_data, input_name=''):
             return '%e' % input_data
-        def gds_validate_double(self, input_data, node, input_name=''):
+        def gds_validate_double(self, input_data, node=None, input_name=''):
             return input_data
         def gds_format_double_list(self, input_data, input_name=''):
-            return '%s' % input_data
-        def gds_validate_double_list(self, input_data, node, input_name=''):
+            return '%s' % ' '.join(input_data)
+        def gds_validate_double_list(
+                self, input_data, node=None, input_name=''):
             values = input_data.split()
             for value in values:
                 try:
                     float(value)
                 except (TypeError, ValueError):
                     raise_parse_error(node, 'Requires sequence of doubles')
-            return input_data
+            return values
         def gds_format_boolean(self, input_data, input_name=''):
             return ('%s' % input_data).lower()
-        def gds_validate_boolean(self, input_data, node, input_name=''):
+        def gds_validate_boolean(self, input_data, node=None, input_name=''):
             return input_data
         def gds_format_boolean_list(self, input_data, input_name=''):
-            return '%s' % input_data
-        def gds_validate_boolean_list(self, input_data, node, input_name=''):
+            return '%s' % ' '.join(input_data)
+        def gds_validate_boolean_list(
+                self, input_data, node=None, input_name=''):
             values = input_data.split()
             for value in values:
                 if value not in ('true', '1', 'false', '0', ):
@@ -171,8 +179,8 @@ except ImportError, exp:
                         node,
                         'Requires sequence of booleans '
                         '("true", "1", "false", "0")')
-            return input_data
-        def gds_validate_datetime(self, input_data, node, input_name=''):
+            return values
+        def gds_validate_datetime(self, input_data, node=None, input_name=''):
             return input_data
         def gds_format_datetime(self, input_data, input_name=''):
             if input_data.microsecond == 0:
@@ -237,7 +245,7 @@ except ImportError, exp:
                     input_data, '%Y-%m-%dT%H:%M:%S')
             dt = dt.replace(tzinfo=tz)
             return dt
-        def gds_validate_date(self, input_data, node, input_name=''):
+        def gds_validate_date(self, input_data, node=None, input_name=''):
             return input_data
         def gds_format_date(self, input_data, input_name=''):
             _svalue = '%04d-%02d-%02d' % (
@@ -283,7 +291,7 @@ except ImportError, exp:
             dt = datetime_.datetime.strptime(input_data, '%Y-%m-%d')
             dt = dt.replace(tzinfo=tz)
             return dt.date()
-        def gds_validate_time(self, input_data, node, input_name=''):
+        def gds_validate_time(self, input_data, node=None, input_name=''):
             return input_data
         def gds_format_time(self, input_data, input_name=''):
             if input_data.microsecond == 0:
@@ -315,6 +323,21 @@ except ImportError, exp:
                         minutes = (total_seconds - (hours * 3600)) // 60
                         _svalue += '{0:02d}:{1:02d}'.format(hours, minutes)
             return _svalue
+        def gds_validate_simple_patterns(self, patterns, target):
+            # pat is a list of lists of strings/patterns.  We should:
+            # - AND the outer elements
+            # - OR the inner elements
+            found1 = True
+            for patterns1 in patterns:
+                found2 = False
+                for patterns2 in patterns1:
+                    if re_.search(patterns2, target) is not None:
+                        found2 = True
+                        break
+                if not found2:
+                    found1 = False
+                    break
+            return found1
         @classmethod
         def gds_parse_time(cls, input_data):
             tz = None
@@ -410,7 +433,7 @@ def showIndent(outfile, level, pretty_print=True):
 def quote_xml(inStr):
     if not inStr:
         return ''
-    s1 = (isinstance(inStr, basestring) and inStr or
+    s1 = (isinstance(inStr, str) and inStr or
           '%s' % inStr)
     s1 = s1.replace('&', '&amp;')
     s1 = s1.replace('<', '&lt;')
@@ -419,7 +442,7 @@ def quote_xml(inStr):
 
 
 def quote_attrib(inStr):
-    s1 = (isinstance(inStr, basestring) and inStr or
+    s1 = (isinstance(inStr, str) and inStr or
           '%s' % inStr)
     s1 = s1.replace('&', '&amp;')
     s1 = s1.replace('<', '&lt;')
@@ -1044,13 +1067,25 @@ class Q10Settings(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_none(self, value):
         # Validate type Nml2Quantity_none, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_none_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_none_patterns_, ))
+    validate_Nml2Quantity_none_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?$']]
     def validate_Nml2Quantity_temperature(self, value):
         # Validate type Nml2Quantity_temperature, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_temperature_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_temperature_patterns_, ))
+    validate_Nml2Quantity_temperature_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(degC)$']]
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
 
@@ -1171,13 +1206,25 @@ class HHRate(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
     def validate_Nml2Quantity_pertime(self, value):
         # Validate type Nml2Quantity_pertime, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_pertime_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_pertime_patterns_, ))
+    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz)$']]
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
 
@@ -1298,10 +1345,18 @@ class HHVariable(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
 
@@ -1384,7 +1439,7 @@ class HHVariable(GeneratedsSuper):
             already_processed.add('rate')
             try:
                 self.rate = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (rate): %s' % exp)
         value = find_attr_value_('scale', node)
         if value is not None and 'scale' not in already_processed:
@@ -1426,13 +1481,25 @@ class HHTime(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
 
@@ -1567,16 +1634,36 @@ class BlockMechanism(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_concentration(self, value):
         # Validate type Nml2Quantity_concentration, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_concentration_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_concentration_patterns_, ))
+    validate_Nml2Quantity_concentration_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM)$']]
     def validate_BlockTypes(self, value):
         # Validate type BlockTypes, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            enumerations = ['voltageConcDepBlockMechanism']
+            enumeration_respectee = False
+            for enum in enumerations:
+                if value == enum:
+                    enumeration_respectee = True
+                    break
+            if not enumeration_respectee:
+                warnings_.warn('Value "%(value)s" does not match xsd enumeration restriction on BlockTypes' % {"value" : value.encode("utf-8")} )
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
     def hasContent_(self):
         if (
 
@@ -1709,13 +1796,29 @@ class PlasticityMechanism(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_PlasticityTypes(self, value):
         # Validate type PlasticityTypes, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            enumerations = ['tsodyksMarkramDepMechanism', 'tsodyksMarkramDepFacMechanism']
+            enumeration_respectee = False
+            for enum in enumerations:
+                if value == enum:
+                    enumeration_respectee = True
+                    break
+            if not enumeration_respectee:
+                warnings_.warn('Value "%(value)s" does not match xsd enumeration restriction on PlasticityTypes' % {"value" : value.encode("utf-8")} )
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def validate_ZeroToOne(self, value):
         # Validate type ZeroToOne, a restriction on xs:double.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if value < 0:
+                warnings_.warn('Value "%(value)s" does not match xsd minInclusive restriction on ZeroToOne' % {"value" : value} )
+            if value > 1:
+                warnings_.warn('Value "%(value)s" does not match xsd maxInclusive restriction on ZeroToOne' % {"value" : value} )
     def hasContent_(self):
         if (
 
@@ -1808,7 +1911,7 @@ class PlasticityMechanism(GeneratedsSuper):
             already_processed.add('initReleaseProb')
             try:
                 self.init_release_prob = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (initReleaseProb): %s' % exp)
             self.validate_ZeroToOne(self.init_release_prob)    # validate type ZeroToOne
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -1835,10 +1938,15 @@ class SegmentParent(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_ZeroToOne(self, value):
         # Validate type ZeroToOne, a restriction on xs:double.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if value < 0:
+                warnings_.warn('Value "%(value)s" does not match xsd minInclusive restriction on ZeroToOne' % {"value" : value} )
+            if value > 1:
+                warnings_.warn('Value "%(value)s" does not match xsd maxInclusive restriction on ZeroToOne' % {"value" : value} )
     def validate_SegmentId(self, value):
         # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
-        pass
+        if value is not None and Validate_simpletypes_:
+            pass
     def hasContent_(self):
         if (
 
@@ -1902,7 +2010,7 @@ class SegmentParent(GeneratedsSuper):
             already_processed.add('fractionAlong')
             try:
                 self.fraction_along = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (fractionAlong): %s' % exp)
             self.validate_ZeroToOne(self.fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('segment', node)
@@ -1910,7 +2018,7 @@ class SegmentParent(GeneratedsSuper):
             already_processed.add('segment')
             try:
                 self.segments = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.segments < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -2057,28 +2165,28 @@ class Point3DWithDiam(GeneratedsSuper):
             already_processed.add('y')
             try:
                 self.y = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (y): %s' % exp)
         value = find_attr_value_('x', node)
         if value is not None and 'x' not in already_processed:
             already_processed.add('x')
             try:
                 self.x = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (x): %s' % exp)
         value = find_attr_value_('z', node)
         if value is not None and 'z' not in already_processed:
             already_processed.add('z')
             try:
                 self.z = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (z): %s' % exp)
         value = find_attr_value_('diameter', node)
         if value is not None and 'diameter' not in already_processed:
             already_processed.add('diameter')
             try:
                 self.diameter = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (diameter): %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -2156,7 +2264,7 @@ class ProximalDetails(GeneratedsSuper):
             already_processed.add('translationStart')
             try:
                 self.translation_start = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (translationStart): %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -2234,7 +2342,7 @@ class DistalDetails(GeneratedsSuper):
             already_processed.add('normalizationEnd')
             try:
                 self.normalization_end = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (normalizationEnd): %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -2258,7 +2366,8 @@ class Member(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_SegmentId(self, value):
         # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
-        pass
+        if value is not None and Validate_simpletypes_:
+            pass
     def hasContent_(self):
         if (
 
@@ -2315,7 +2424,7 @@ class Member(GeneratedsSuper):
             already_processed.add('segment')
             try:
                 self.segments = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.segments < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -2342,7 +2451,11 @@ class Include(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
 
@@ -2617,7 +2730,8 @@ class SegmentEndPoint(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_SegmentId(self, value):
         # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
-        pass
+        if value is not None and Validate_simpletypes_:
+            pass
     def hasContent_(self):
         if (
 
@@ -2674,7 +2788,7 @@ class SegmentEndPoint(GeneratedsSuper):
             already_processed.add('segment')
             try:
                 self.segments = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.segments < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -3035,10 +3149,18 @@ class ValueAcrossSegOrSegGroup(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity(self, value):
         # Validate type Nml2Quantity, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_patterns_, ))
+    validate_Nml2Quantity_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*([_a-zA-Z0-9])*$']]
     def hasContent_(self):
         if (
 
@@ -3354,10 +3476,18 @@ class Species(ValueAcrossSegOrSegGroup):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity_concentration(self, value):
         # Validate type Nml2Quantity_concentration, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_concentration_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_concentration_patterns_, ))
+    validate_Nml2Quantity_concentration_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM)$']]
     def hasContent_(self):
         if (
             super(Species, self).hasContent_()
@@ -3796,42 +3926,42 @@ class SpaceStructure(GeneratedsSuper):
             already_processed.add('ySpacing')
             try:
                 self.y_spacing = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (ySpacing): %s' % exp)
         value = find_attr_value_('zStart', node)
         if value is not None and 'zStart' not in already_processed:
             already_processed.add('zStart')
             try:
                 self.z_start = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (zStart): %s' % exp)
         value = find_attr_value_('yStart', node)
         if value is not None and 'yStart' not in already_processed:
             already_processed.add('yStart')
             try:
                 self.y_start = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (yStart): %s' % exp)
         value = find_attr_value_('zSpacing', node)
         if value is not None and 'zSpacing' not in already_processed:
             already_processed.add('zSpacing')
             try:
                 self.z_spacing = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (zSpacing): %s' % exp)
         value = find_attr_value_('xStart', node)
         if value is not None and 'xStart' not in already_processed:
             already_processed.add('xStart')
             try:
                 self.x_start = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (xStart): %s' % exp)
         value = find_attr_value_('xSpacing', node)
         if value is not None and 'xSpacing' not in already_processed:
             already_processed.add('xSpacing')
             try:
                 self.x_spacing = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (xSpacing): %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -3861,7 +3991,11 @@ class Layout(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
             self.random is not None or
@@ -4037,7 +4171,7 @@ class UnstructuredLayout(GeneratedsSuper):
             already_processed.add('number')
             try:
                 self.number = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.number < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4065,7 +4199,11 @@ class RandomLayout(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
 
@@ -4134,7 +4272,7 @@ class RandomLayout(GeneratedsSuper):
             already_processed.add('number')
             try:
                 self.number = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.number < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4232,7 +4370,7 @@ class GridLayout(GeneratedsSuper):
             already_processed.add('zSize')
             try:
                 self.z_size = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.z_size < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4241,7 +4379,7 @@ class GridLayout(GeneratedsSuper):
             already_processed.add('ySize')
             try:
                 self.y_size = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.y_size < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4250,7 +4388,7 @@ class GridLayout(GeneratedsSuper):
             already_processed.add('xSize')
             try:
                 self.x_size = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.x_size < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4370,7 +4508,7 @@ class Instance(GeneratedsSuper):
             already_processed.add('i')
             try:
                 self.i = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.i < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4379,7 +4517,7 @@ class Instance(GeneratedsSuper):
             already_processed.add('k')
             try:
                 self.k = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.k < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4388,7 +4526,7 @@ class Instance(GeneratedsSuper):
             already_processed.add('j')
             try:
                 self.j = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.j < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4397,7 +4535,7 @@ class Instance(GeneratedsSuper):
             already_processed.add('id')
             try:
                 self.id = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4499,21 +4637,21 @@ class Location(GeneratedsSuper):
             already_processed.add('y')
             try:
                 self.y = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (y): %s' % exp)
         value = find_attr_value_('x', node)
         if value is not None and 'x' not in already_processed:
             already_processed.add('x')
             try:
                 self.x = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (x): %s' % exp)
         value = find_attr_value_('z', node)
         if value is not None and 'z' not in already_processed:
             already_processed.add('z')
             try:
                 self.z = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (z): %s' % exp)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
@@ -4546,7 +4684,11 @@ class SynapticConnection(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
 
@@ -4671,10 +4813,15 @@ class Connection(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_ZeroToOne(self, value):
         # Validate type ZeroToOne, a restriction on xs:double.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if value < 0:
+                warnings_.warn('Value "%(value)s" does not match xsd minInclusive restriction on ZeroToOne' % {"value" : value} )
+            if value > 1:
+                warnings_.warn('Value "%(value)s" does not match xsd maxInclusive restriction on ZeroToOne' % {"value" : value} )
     def validate_SegmentId(self, value):
         # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
-        pass
+        if value is not None and Validate_simpletypes_:
+            pass
     def hasContent_(self):
         if (
 
@@ -4773,7 +4920,7 @@ class Connection(GeneratedsSuper):
             already_processed.add('preFractionAlong')
             try:
                 self.pre_fraction_along = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (preFractionAlong): %s' % exp)
             self.validate_ZeroToOne(self.pre_fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('preCellId', node)
@@ -4785,7 +4932,7 @@ class Connection(GeneratedsSuper):
             already_processed.add('postFractionAlong')
             try:
                 self.post_fraction_along = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (postFractionAlong): %s' % exp)
             self.validate_ZeroToOne(self.post_fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('postSegmentId', node)
@@ -4793,7 +4940,7 @@ class Connection(GeneratedsSuper):
             already_processed.add('postSegmentId')
             try:
                 self.post_segment_id = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.post_segment_id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4807,7 +4954,7 @@ class Connection(GeneratedsSuper):
             already_processed.add('preSegmentId')
             try:
                 self.pre_segment_id = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.pre_segment_id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4817,7 +4964,7 @@ class Connection(GeneratedsSuper):
             already_processed.add('id')
             try:
                 self.id = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -4850,7 +4997,11 @@ class ElectricalConnection(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
 
@@ -4937,7 +5088,7 @@ class ElectricalConnection(GeneratedsSuper):
             already_processed.add('id')
             try:
                 self.id = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -5080,13 +5231,22 @@ class Input(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_ZeroToOne(self, value):
         # Validate type ZeroToOne, a restriction on xs:double.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if value < 0:
+                warnings_.warn('Value "%(value)s" does not match xsd minInclusive restriction on ZeroToOne' % {"value" : value} )
+            if value > 1:
+                warnings_.warn('Value "%(value)s" does not match xsd maxInclusive restriction on ZeroToOne' % {"value" : value} )
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def validate_SegmentId(self, value):
         # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
-        pass
+        if value is not None and Validate_simpletypes_:
+            pass
     def hasContent_(self):
         if (
 
@@ -5171,7 +5331,7 @@ class Input(GeneratedsSuper):
             already_processed.add('fractionAlong')
             try:
                 self.fraction_along = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (fractionAlong): %s' % exp)
             self.validate_ZeroToOne(self.fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('destination', node)
@@ -5184,7 +5344,7 @@ class Input(GeneratedsSuper):
             already_processed.add('id')
             try:
                 self.id = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -5193,7 +5353,7 @@ class Input(GeneratedsSuper):
             already_processed.add('segmentId')
             try:
                 self.segment_id = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.segment_id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -5228,7 +5388,11 @@ class BaseWithoutId(GeneratedsSuper):
     factory = staticmethod(factory)
     def validate_NeuroLexId(self, value):
         # Validate type NeuroLexId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NeuroLexId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NeuroLexId_patterns_, ))
+    validate_NeuroLexId_patterns_ = [['^[a-zA-Z0-9_:]*$']]
     def hasContent_(self):
         if (
 
@@ -5320,7 +5484,11 @@ class Base(BaseWithoutId):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
             super(Base, self).hasContent_()
@@ -5412,6 +5580,7 @@ class Standalone(Base):
         super(Standalone, self).__init__(neuro_lex_id, id, extensiontype_, )
         self.metaid = _cast(None, metaid)
         self.notes = notes
+        self.validate_Notes(self.notes)
         if properties is None:
             self.properties = []
         else:
@@ -5426,10 +5595,15 @@ class Standalone(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            pass
     def validate_MetaId(self, value):
         # Validate type MetaId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_MetaId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_MetaId_patterns_, ))
+    validate_MetaId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
             self.notes is not None or
@@ -5575,10 +5749,18 @@ class SpikeSourcePoisson(Standalone):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def validate_Nml2Quantity_pertime(self, value):
         # Validate type Nml2Quantity_pertime, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_pertime_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_pertime_patterns_, ))
+    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz)$']]
     def hasContent_(self):
         if (
             super(SpikeSourcePoisson, self).hasContent_()
@@ -5695,7 +5877,11 @@ class InputList(Base):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
             self.input or
@@ -5823,7 +6009,11 @@ class ElectricalProjection(Base):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
             self.electrical_connections or
@@ -5953,7 +6143,11 @@ class Projection(Base):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
             self.connections or
@@ -6205,10 +6399,22 @@ class Population(Standalone):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def validate_populationTypes(self, value):
         # Validate type populationTypes, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            enumerations = ['population', 'populationList']
+            enumeration_respectee = False
+            for enum in enumerations:
+                if value == enum:
+                    enumeration_respectee = True
+                    break
+            if not enumeration_respectee:
+                warnings_.warn('Value "%(value)s" does not match xsd enumeration restriction on populationTypes' % {"value" : value.encode("utf-8")} )
     def hasContent_(self):
         if (
             self.layout is not None or
@@ -6356,7 +6562,7 @@ class Population(Standalone):
             already_processed.add('size')
             try:
                 self.size = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         super(Population, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -6397,7 +6603,11 @@ class Region(Base):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
             self.anytypeobjs_ or
@@ -6501,7 +6711,15 @@ class Space(Base):
     factory = staticmethod(factory)
     def validate_allowedSpaces(self, value):
         # Validate type allowedSpaces, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            enumerations = ['Euclidean_1D', 'Euclidean_2D', 'Euclidean_3D', 'Grid_1D', 'Grid_2D', 'Grid_3D']
+            enumeration_respectee = False
+            for enum in enumerations:
+                if value == enum:
+                    enumeration_respectee = True
+                    break
+            if not enumeration_respectee:
+                warnings_.warn('Value "%(value)s" does not match xsd enumeration restriction on allowedSpaces' % {"value" : value.encode("utf-8")} )
     def hasContent_(self):
         if (
             self.structure is not None or
@@ -6655,10 +6873,22 @@ class Network(Standalone):
     factory = staticmethod(factory)
     def validate_networkTypes(self, value):
         # Validate type networkTypes, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            enumerations = ['network', 'networkWithTemperature']
+            enumeration_respectee = False
+            for enum in enumerations:
+                if value == enum:
+                    enumeration_respectee = True
+                    break
+            if not enumeration_respectee:
+                warnings_.warn('Value "%(value)s" does not match xsd enumeration restriction on networkTypes' % {"value" : value.encode("utf-8")} )
     def validate_Nml2Quantity_temperature(self, value):
         # Validate type Nml2Quantity_temperature, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_temperature_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_temperature_patterns_, ))
+    validate_Nml2Quantity_temperature_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(degC)$']]
     def hasContent_(self):
         if (
             self.spaces or
@@ -6958,7 +7188,11 @@ class SpikeGeneratorPoisson(Standalone):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_pertime(self, value):
         # Validate type Nml2Quantity_pertime, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_pertime_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_pertime_patterns_, ))
+    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz)$']]
     def hasContent_(self):
         if (
             super(SpikeGeneratorPoisson, self).hasContent_()
@@ -7045,7 +7279,11 @@ class SpikeGeneratorRandom(Standalone):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def hasContent_(self):
         if (
             super(SpikeGeneratorRandom, self).hasContent_()
@@ -7142,7 +7380,11 @@ class SpikeGenerator(Standalone):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def hasContent_(self):
         if (
             super(SpikeGenerator, self).hasContent_()
@@ -7323,7 +7565,11 @@ class Spike(Standalone):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def hasContent_(self):
         if (
             super(Spike, self).hasContent_()
@@ -7414,13 +7660,25 @@ class VoltageClamp(Standalone):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def validate_Nml2Quantity_resistance(self, value):
         # Validate type Nml2Quantity_resistance, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_resistance_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_resistance_patterns_, ))
+    validate_Nml2Quantity_resistance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(ohm|kohm|Mohm)$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
     def hasContent_(self):
         if (
             super(VoltageClamp, self).hasContent_()
@@ -7549,10 +7807,18 @@ class RampGenerator(Standalone):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def validate_Nml2Quantity_current(self, value):
         # Validate type Nml2Quantity_current, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_current_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_current_patterns_, ))
+    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA)$']]
     def hasContent_(self):
         if (
             super(RampGenerator, self).hasContent_()
@@ -7693,13 +7959,25 @@ class SineGenerator(Standalone):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def validate_Nml2Quantity_none(self, value):
         # Validate type Nml2Quantity_none, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_none_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_none_patterns_, ))
+    validate_Nml2Quantity_none_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?$']]
     def validate_Nml2Quantity_current(self, value):
         # Validate type Nml2Quantity_current, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_current_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_current_patterns_, ))
+    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA)$']]
     def hasContent_(self):
         if (
             super(SineGenerator, self).hasContent_()
@@ -7836,10 +8114,18 @@ class PulseGenerator(Standalone):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def validate_Nml2Quantity_current(self, value):
         # Validate type Nml2Quantity_current, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_current_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_current_patterns_, ))
+    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA)$']]
     def hasContent_(self):
         if (
             super(PulseGenerator, self).hasContent_()
@@ -8179,10 +8465,18 @@ class ChannelDensityGHK(Base):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity_permeability(self, value):
         # Validate type Nml2Quantity_permeability, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_permeability_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_permeability_patterns_, ))
+    validate_Nml2Quantity_permeability_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(m_per_s|                        um_per_ms|cm_per_s|cm_per_ms)$']]
     def hasContent_(self):
         if (
             self.variable_parameters or
@@ -8357,10 +8651,18 @@ class ChannelDensityNernst(Base):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity_conductanceDensity(self, value):
         # Validate type Nml2Quantity_conductanceDensity, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_conductanceDensity_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductanceDensity_patterns_, ))
+    validate_Nml2Quantity_conductanceDensity_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S_per_m2|mS_per_cm2|S_per_cm2)$']]
     def hasContent_(self):
         if (
             self.variable_parameters or
@@ -8537,13 +8839,25 @@ class ChannelDensity(Base):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
     def validate_Nml2Quantity_conductanceDensity(self, value):
         # Validate type Nml2Quantity_conductanceDensity, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_conductanceDensity_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductanceDensity_patterns_, ))
+    validate_Nml2Quantity_conductanceDensity_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S_per_m2|mS_per_cm2|S_per_cm2)$']]
     def hasContent_(self):
         if (
             self.variable_parameters or
@@ -8724,7 +9038,11 @@ class ChannelDensityNonUniformNernst(Base):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
             self.variable_parameters or
@@ -8859,10 +9177,18 @@ class ChannelDensityNonUniform(Base):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
     def hasContent_(self):
         if (
             self.variable_parameters or
@@ -9015,10 +9341,18 @@ class ChannelPopulation(Base):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
     def hasContent_(self):
         if (
             self.variable_parameters or
@@ -9142,7 +9476,7 @@ class ChannelPopulation(Base):
             already_processed.add('number')
             try:
                 self.number = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.number < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -9601,7 +9935,15 @@ class InhomogeneousParameter(Base):
     factory = staticmethod(factory)
     def validate_Metric(self, value):
         # Validate type Metric, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            enumerations = ['Path Length from root']
+            enumeration_respectee = False
+            for enum in enumerations:
+                if value == enum:
+                    enumeration_respectee = True
+                    break
+            if not enumeration_respectee:
+                warnings_.warn('Value "%(value)s" does not match xsd enumeration restriction on Metric' % {"value" : value.encode("utf-8")} )
     def hasContent_(self):
         if (
             self.proximal is not None or
@@ -9726,6 +10068,7 @@ class SegmentGroup(Base):
         self.original_tagname_ = None
         super(SegmentGroup, self).__init__(neuro_lex_id, id, )
         self.notes = notes
+        self.validate_Notes(self.notes)
         self.annotation = annotation
         if members is None:
             self.members = []
@@ -9755,7 +10098,8 @@ class SegmentGroup(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            pass
     def hasContent_(self):
         if (
             self.notes is not None or
@@ -10003,7 +10347,8 @@ class Segment(BaseWithoutId):
     factory = staticmethod(factory)
     def validate_SegmentId(self, value):
         # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
-        pass
+        if value is not None and Validate_simpletypes_:
+            pass
     def hasContent_(self):
         if (
             self.parent is not None or
@@ -10101,7 +10446,7 @@ class Segment(BaseWithoutId):
             already_processed.add('id')
             try:
                 self.id = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
@@ -10474,16 +10819,32 @@ class FixedFactorConcentrationModel(Standalone):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity_rhoFactor(self, value):
         # Validate type Nml2Quantity_rhoFactor, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_rhoFactor_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_rhoFactor_patterns_, ))
+    validate_Nml2Quantity_rhoFactor_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m_per_A_per_s)$']]
     def validate_Nml2Quantity_concentration(self, value):
         # Validate type Nml2Quantity_concentration, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_concentration_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_concentration_patterns_, ))
+    validate_Nml2Quantity_concentration_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM)$']]
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def hasContent_(self):
         if (
             super(FixedFactorConcentrationModel, self).hasContent_()
@@ -10612,16 +10973,32 @@ class DecayingPoolConcentrationModel(Standalone):
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity_length(self, value):
         # Validate type Nml2Quantity_length, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_length_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_length_patterns_, ))
+    validate_Nml2Quantity_length_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(m|cm|um)$']]
     def validate_Nml2Quantity_concentration(self, value):
         # Validate type Nml2Quantity_concentration, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_concentration_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_concentration_patterns_, ))
+    validate_Nml2Quantity_concentration_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM)$']]
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def hasContent_(self):
         if (
             super(DecayingPoolConcentrationModel, self).hasContent_()
@@ -10748,6 +11125,7 @@ class GateHHRatesInf(Base):
         super(GateHHRatesInf, self).__init__(neuro_lex_id, id, )
         self.instances = _cast(int, instances)
         self.notes = notes
+        self.validate_Notes(self.notes)
         self.q10_settings = q10_settings
         self.forward_rate = forward_rate
         self.reverse_rate = reverse_rate
@@ -10760,7 +11138,8 @@ class GateHHRatesInf(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            pass
     def hasContent_(self):
         if (
             self.notes is not None or
@@ -10867,7 +11246,7 @@ class GateHHRatesInf(Base):
             already_processed.add('instances')
             try:
                 self.instances = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         super(GateHHRatesInf, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -10916,6 +11295,7 @@ class GateHHRatesTau(Base):
         super(GateHHRatesTau, self).__init__(neuro_lex_id, id, )
         self.instances = _cast(int, instances)
         self.notes = notes
+        self.validate_Notes(self.notes)
         self.q10_settings = q10_settings
         self.forward_rate = forward_rate
         self.reverse_rate = reverse_rate
@@ -10928,7 +11308,8 @@ class GateHHRatesTau(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            pass
     def hasContent_(self):
         if (
             self.notes is not None or
@@ -11035,7 +11416,7 @@ class GateHHRatesTau(Base):
             already_processed.add('instances')
             try:
                 self.instances = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         super(GateHHRatesTau, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -11085,6 +11466,7 @@ class GateHHRatesTauInf(Base):
         super(GateHHRatesTauInf, self).__init__(neuro_lex_id, id, )
         self.instances = _cast(int, instances)
         self.notes = notes
+        self.validate_Notes(self.notes)
         self.q10_settings = q10_settings
         self.forward_rate = forward_rate
         self.reverse_rate = reverse_rate
@@ -11098,7 +11480,8 @@ class GateHHRatesTauInf(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            pass
     def hasContent_(self):
         if (
             self.notes is not None or
@@ -11214,7 +11597,7 @@ class GateHHRatesTauInf(Base):
             already_processed.add('instances')
             try:
                 self.instances = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         super(GateHHRatesTauInf, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -11267,6 +11650,7 @@ class GateHHTauInf(Base):
         super(GateHHTauInf, self).__init__(neuro_lex_id, id, )
         self.instances = _cast(int, instances)
         self.notes = notes
+        self.validate_Notes(self.notes)
         self.q10_settings = q10_settings
         self.time_course = time_course
         self.steady_state = steady_state
@@ -11278,7 +11662,8 @@ class GateHHTauInf(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            pass
     def hasContent_(self):
         if (
             self.notes is not None or
@@ -11376,7 +11761,7 @@ class GateHHTauInf(Base):
             already_processed.add('instances')
             try:
                 self.instances = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         super(GateHHTauInf, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -11419,6 +11804,7 @@ class GateHHRates(Base):
         super(GateHHRates, self).__init__(neuro_lex_id, id, )
         self.instances = _cast(int, instances)
         self.notes = notes
+        self.validate_Notes(self.notes)
         self.q10_settings = q10_settings
         self.forward_rate = forward_rate
         self.reverse_rate = reverse_rate
@@ -11430,7 +11816,8 @@ class GateHHRates(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            pass
     def hasContent_(self):
         if (
             self.notes is not None or
@@ -11528,7 +11915,7 @@ class GateHHRates(Base):
             already_processed.add('instances')
             try:
                 self.instances = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         super(GateHHRates, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -11575,6 +11962,7 @@ class GateHHUndetermined(Base):
         self.instances = _cast(int, instances)
         self.type = _cast(None, type)
         self.notes = notes
+        self.validate_Notes(self.notes)
         self.q10_settings = q10_settings
         self.forward_rate = forward_rate
         self.reverse_rate = reverse_rate
@@ -11588,10 +11976,19 @@ class GateHHUndetermined(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            pass
     def validate_gateTypes(self, value):
         # Validate type gateTypes, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            enumerations = ['gateHHrates', 'gateHHratesTau', 'gateHHtauInf', 'gateHHratesInf', 'gateHHratesTauInf', 'gateKS']
+            enumeration_respectee = False
+            for enum in enumerations:
+                if value == enum:
+                    enumeration_respectee = True
+                    break
+            if not enumeration_respectee:
+                warnings_.warn('Value "%(value)s" does not match xsd enumeration restriction on gateTypes' % {"value" : value.encode("utf-8")} )
     def hasContent_(self):
         if (
             self.notes is not None or
@@ -11714,7 +12111,7 @@ class GateHHUndetermined(Base):
             already_processed.add('instances')
             try:
                 self.instances = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
@@ -11814,13 +12211,29 @@ class IonChannel(Standalone):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_conductance(self, value):
         # Validate type Nml2Quantity_conductance, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_conductance_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
     def validate_channelTypes(self, value):
         # Validate type channelTypes, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            enumerations = ['ionChannelPassive', 'ionChannelHH']
+            enumeration_respectee = False
+            for enum in enumerations:
+                if value == enum:
+                    enumeration_respectee = True
+                    break
+            if not enumeration_respectee:
+                warnings_.warn('Value "%(value)s" does not match xsd enumeration restriction on channelTypes' % {"value" : value.encode("utf-8")} )
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
             self.gates or
@@ -13299,7 +13712,7 @@ class BasePynnSynapse(BaseSynapse):
             already_processed.add('tau_syn')
             try:
                 self.tau_syn = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (tau_syn): %s' % exp)
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
@@ -13428,35 +13841,35 @@ class basePyNNCell(BaseCell):
             already_processed.add('tau_syn_I')
             try:
                 self.tau_syn_I = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (tau_syn_I): %s' % exp)
         value = find_attr_value_('tau_syn_E', node)
         if value is not None and 'tau_syn_E' not in already_processed:
             already_processed.add('tau_syn_E')
             try:
                 self.tau_syn_E = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (tau_syn_E): %s' % exp)
         value = find_attr_value_('i_offset', node)
         if value is not None and 'i_offset' not in already_processed:
             already_processed.add('i_offset')
             try:
                 self.i_offset = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (i_offset): %s' % exp)
         value = find_attr_value_('cm', node)
         if value is not None and 'cm' not in already_processed:
             already_processed.add('cm')
             try:
                 self.cm = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (cm): %s' % exp)
         value = find_attr_value_('v_init', node)
         if value is not None and 'v_init' not in already_processed:
             already_processed.add('v_init')
             try:
                 self.v_init = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (v_init): %s' % exp)
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
@@ -13701,7 +14114,11 @@ class FitzHughNagumoCell(BaseCell):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_none(self, value):
         # Validate type Nml2Quantity_none, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_none_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_none_patterns_, ))
+    validate_Nml2Quantity_none_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?$']]
     def hasContent_(self):
         if (
             super(FitzHughNagumoCell, self).hasContent_()
@@ -13806,19 +14223,39 @@ class AdExIaFCell(BaseCell):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
     def validate_Nml2Quantity_capacitance(self, value):
         # Validate type Nml2Quantity_capacitance, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_capacitance_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_capacitance_patterns_, ))
+    validate_Nml2Quantity_capacitance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(F|uF|nF|pF)$']]
     def validate_Nml2Quantity_current(self, value):
         # Validate type Nml2Quantity_current, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_current_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_current_patterns_, ))
+    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA)$']]
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def validate_Nml2Quantity_conductance(self, value):
         # Validate type Nml2Quantity_conductance, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_conductance_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
     def hasContent_(self):
         if (
             super(AdExIaFCell, self).hasContent_()
@@ -14033,10 +14470,18 @@ class IzhikevichCell(BaseCell):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_none(self, value):
         # Validate type Nml2Quantity_none, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_none_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_none_patterns_, ))
+    validate_Nml2Quantity_none_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
     def hasContent_(self):
         if (
             super(IzhikevichCell, self).hasContent_()
@@ -14190,13 +14635,25 @@ class IafCell(BaseCell):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
     def validate_Nml2Quantity_capacitance(self, value):
         # Validate type Nml2Quantity_capacitance, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_capacitance_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_capacitance_patterns_, ))
+    validate_Nml2Quantity_capacitance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(F|uF|nF|pF)$']]
     def validate_Nml2Quantity_conductance(self, value):
         # Validate type Nml2Quantity_conductance, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_conductance_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
     def hasContent_(self):
         if (
             super(IafCell, self).hasContent_()
@@ -14344,10 +14801,18 @@ class IafTauCell(BaseCell):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def hasContent_(self):
         if (
             super(IafTauCell, self).hasContent_()
@@ -14476,7 +14941,11 @@ class GapJunction(BaseSynapse):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_conductance(self, value):
         # Validate type Nml2Quantity_conductance, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_conductance_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
     def hasContent_(self):
         if (
             super(GapJunction, self).hasContent_()
@@ -14564,10 +15033,18 @@ class BaseConductanceBasedSynapse(BaseSynapse):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
     def validate_Nml2Quantity_conductance(self, value):
         # Validate type Nml2Quantity_conductance, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_conductance_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
     def hasContent_(self):
         if (
             super(BaseConductanceBasedSynapse, self).hasContent_()
@@ -14937,7 +15414,7 @@ class AlphaCondSynapse(BasePynnSynapse):
             already_processed.add('e_rev')
             try:
                 self.e_rev = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (e_rev): %s' % exp)
         super(AlphaCondSynapse, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -15021,7 +15498,7 @@ class ExpCondSynapse(BasePynnSynapse):
             already_processed.add('e_rev')
             try:
                 self.e_rev = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (e_rev): %s' % exp)
         super(ExpCondSynapse, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -15177,63 +15654,63 @@ class HH_cond_exp(basePyNNCell):
             already_processed.add('gbar_K')
             try:
                 self.gbar_K = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (gbar_K): %s' % exp)
         value = find_attr_value_('e_rev_E', node)
         if value is not None and 'e_rev_E' not in already_processed:
             already_processed.add('e_rev_E')
             try:
                 self.e_rev_E = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (e_rev_E): %s' % exp)
         value = find_attr_value_('g_leak', node)
         if value is not None and 'g_leak' not in already_processed:
             already_processed.add('g_leak')
             try:
                 self.g_leak = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (g_leak): %s' % exp)
         value = find_attr_value_('e_rev_Na', node)
         if value is not None and 'e_rev_Na' not in already_processed:
             already_processed.add('e_rev_Na')
             try:
                 self.e_rev_Na = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (e_rev_Na): %s' % exp)
         value = find_attr_value_('e_rev_I', node)
         if value is not None and 'e_rev_I' not in already_processed:
             already_processed.add('e_rev_I')
             try:
                 self.e_rev_I = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (e_rev_I): %s' % exp)
         value = find_attr_value_('e_rev_K', node)
         if value is not None and 'e_rev_K' not in already_processed:
             already_processed.add('e_rev_K')
             try:
                 self.e_rev_K = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (e_rev_K): %s' % exp)
         value = find_attr_value_('e_rev_leak', node)
         if value is not None and 'e_rev_leak' not in already_processed:
             already_processed.add('e_rev_leak')
             try:
                 self.e_rev_leak = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (e_rev_leak): %s' % exp)
         value = find_attr_value_('v_offset', node)
         if value is not None and 'v_offset' not in already_processed:
             already_processed.add('v_offset')
             try:
                 self.v_offset = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (v_offset): %s' % exp)
         value = find_attr_value_('gbar_Na', node)
         if value is not None and 'gbar_Na' not in already_processed:
             already_processed.add('gbar_Na')
             try:
                 self.gbar_Na = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (gbar_Na): %s' % exp)
         super(HH_cond_exp, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -15358,35 +15835,35 @@ class basePyNNIaFCell(basePyNNCell):
             already_processed.add('tau_refrac')
             try:
                 self.tau_refrac = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (tau_refrac): %s' % exp)
         value = find_attr_value_('v_thresh', node)
         if value is not None and 'v_thresh' not in already_processed:
             already_processed.add('v_thresh')
             try:
                 self.v_thresh = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (v_thresh): %s' % exp)
         value = find_attr_value_('tau_m', node)
         if value is not None and 'tau_m' not in already_processed:
             already_processed.add('tau_m')
             try:
                 self.tau_m = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (tau_m): %s' % exp)
         value = find_attr_value_('v_reset', node)
         if value is not None and 'v_reset' not in already_processed:
             already_processed.add('v_reset')
             try:
                 self.v_reset = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (v_reset): %s' % exp)
         value = find_attr_value_('v_rest', node)
         if value is not None and 'v_rest' not in already_processed:
             already_processed.add('v_rest')
             try:
                 self.v_rest = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (v_rest): %s' % exp)
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
@@ -15417,7 +15894,11 @@ class IafRefCell(IafCell):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def hasContent_(self):
         if (
             super(IafRefCell, self).hasContent_()
@@ -15502,7 +15983,11 @@ class IafTauRefCell(IafTauCell):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def hasContent_(self):
         if (
             super(IafTauRefCell, self).hasContent_()
@@ -15590,7 +16075,11 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def hasContent_(self):
         if (
             super(ExpTwoSynapse, self).hasContent_()
@@ -15695,7 +16184,11 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
     factory = staticmethod(factory)
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
-        pass
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
     def hasContent_(self):
         if (
             super(ExpOneSynapse, self).hasContent_()
@@ -15987,14 +16480,14 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
             already_processed.add('e_rev_I')
             try:
                 self.e_rev_I = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (e_rev_I): %s' % exp)
         value = find_attr_value_('e_rev_E', node)
         if value is not None and 'e_rev_E' not in already_processed:
             already_processed.add('e_rev_E')
             try:
                 self.e_rev_E = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (e_rev_E): %s' % exp)
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
@@ -16221,35 +16714,35 @@ class EIF_cond_alpha_isfa_ista(basePyNNIaFCondCell):
             already_processed.add('a')
             try:
                 self.a = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (a): %s' % exp)
         value = find_attr_value_('delta_T', node)
         if value is not None and 'delta_T' not in already_processed:
             already_processed.add('delta_T')
             try:
                 self.delta_t = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (delta_T): %s' % exp)
         value = find_attr_value_('b', node)
         if value is not None and 'b' not in already_processed:
             already_processed.add('b')
             try:
                 self.b = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (b): %s' % exp)
         value = find_attr_value_('v_spike', node)
         if value is not None and 'v_spike' not in already_processed:
             already_processed.add('v_spike')
             try:
                 self.v_spike = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (v_spike): %s' % exp)
         value = find_attr_value_('tau_w', node)
         if value is not None and 'tau_w' not in already_processed:
             already_processed.add('tau_w')
             try:
                 self.tau_w = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (tau_w): %s' % exp)
         super(EIF_cond_alpha_isfa_ista, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -16369,35 +16862,35 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
             already_processed.add('a')
             try:
                 self.a = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (a): %s' % exp)
         value = find_attr_value_('delta_T', node)
         if value is not None and 'delta_T' not in already_processed:
             already_processed.add('delta_T')
             try:
                 self.delta_t = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (delta_T): %s' % exp)
         value = find_attr_value_('b', node)
         if value is not None and 'b' not in already_processed:
             already_processed.add('b')
             try:
                 self.b = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (b): %s' % exp)
         value = find_attr_value_('v_spike', node)
         if value is not None and 'v_spike' not in already_processed:
             already_processed.add('v_spike')
             try:
                 self.v_spike = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (v_spike): %s' % exp)
         value = find_attr_value_('tau_w', node)
         if value is not None and 'tau_w' not in already_processed:
             already_processed.add('tau_w')
             try:
                 self.tau_w = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (tau_w): %s' % exp)
         super(EIF_cond_exp_isfa_ista, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
@@ -16648,7 +17141,7 @@ Usage: python <Parser>.py [ -s ] <in_xml_file>
 
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 
