@@ -41,7 +41,7 @@ doc.ion_channel_hhs.append(chan)
 
 doc.id = "ChannelMLDemo"
 
-nml_file = './tmp/channelMLtest.xml'
+nml_file = './tmp/ionChannelTest.xml'
 writers.NeuroMLWriter.write(doc,nml_file)
 
 print("Written channel file to: "+nml_file)
