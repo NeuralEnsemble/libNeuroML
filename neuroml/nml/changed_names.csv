@@ -62,7 +62,7 @@ simpleSeriesResistance,simple_series_resistance
 sineGenerator,sine_generators
 fixedFactorConcentrationModel,fixed_factor_concentration_models
 postCellId,post_cell_id
-region,regions
+averageRate,average_rate
 condDensity,cond_density
 gL,g_l
 property,properties
@@ -76,7 +76,6 @@ http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd,http://www
 intracellularProperties,intracellular_properties
 cellSet,cell_sets
 preFractionAlong,pre_fraction_along
-averageRate,average_rate
 unbounded,unboundeds
 translationStart,translation_start
 spikeGenerator,spike_generators
@@ -92,6 +91,7 @@ leakConductance,leak_conductance
 spike,spikes
 spikeArray,spike_arrays
 fitzHughNagumoCell,fitz_hugh_nagumo_cells
+javax.xml.bind.DatatypeConverter.printInt,javax.xml.bind._datatype_converter.print_int
 preCellId,pre_cell_id
 tauFac,tau_fac
 q10Factor,q10_factor
@@ -106,15 +106,16 @@ ionChannel,ion_channel
 allowedSpaces,allowed_spaces
 shellThickness,shell_thickness
 experimentalTemp,experimental_temp
+postSegment,post_segment
 delta_T,delta_t
 xSize,x_size
-javax.xml.bind.DatatypeConverter.printInt,javax.xml.bind._datatype_converter.print_int
+region,regions
 gateTypes,gate_types
 zSize,z_size
 minISI,min_isi
 resistivity,resistivities
 xs:nonNegativeInteger,xs:non_negative_integer
-expCurrSynapse,exp_curr_synapses
+preSegment,pre_segment
 ySize,y_size
 concentrationModel,concentration_model
 electricalConnection,electrical_connections
@@ -150,6 +151,7 @@ leakReversal,leak_reversal
 gateKS,gate_ks
 blockingPlasticSynapse,blocking_plastic_synapses
 postFractionAlong,post_fraction_along
+expCurrSynapse,exp_curr_synapses
 channelDensityNonUniform,channel_density_non_uniforms
 expOneSynapse,exp_one_synapses
 baseCell,base_cells

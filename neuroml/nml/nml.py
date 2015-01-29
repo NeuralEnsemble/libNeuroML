@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Jan 23 17:47:22 2015 by generateDS.py version 2.14a.
+# Generated Thu Jan 29 16:33:45 2015 by generateDS.py version 2.14a.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -4783,324 +4783,6 @@ class SynapticConnection(GeneratedsSuper):
 # end class SynapticConnection
 
 
-class Connection(GeneratedsSuper):
-    """Subject to change as it gets tested with LEMS!!"""
-    member_data_items_ = [
-        MemberSpec_('preFractionAlong', 'ZeroToOne', 0),
-        MemberSpec_('preCellId', 'xs:string', 0),
-        MemberSpec_('postFractionAlong', 'ZeroToOne', 0),
-        MemberSpec_('postSegmentId', 'SegmentId', 0),
-        MemberSpec_('postCellId', 'xs:string', 0),
-        MemberSpec_('preSegmentId', 'SegmentId', 0),
-        MemberSpec_('id', 'xs:nonNegativeInteger', 0),
-    ]
-    subclass = None
-    superclass = None
-    def __init__(self, pre_fraction_along=None, pre_cell_id=None, post_fraction_along=None, post_segment_id=None, post_cell_id=None, pre_segment_id=None, id=None):
-        self.original_tagname_ = None
-        self.pre_fraction_along = _cast(None, pre_fraction_along)
-        self.pre_cell_id = _cast(None, pre_cell_id)
-        self.post_fraction_along = _cast(None, post_fraction_along)
-        self.post_segment_id = _cast(None, post_segment_id)
-        self.post_cell_id = _cast(None, post_cell_id)
-        self.pre_segment_id = _cast(None, pre_segment_id)
-        self.id = _cast(int, id)
-    def factory(*args_, **kwargs_):
-        if Connection.subclass:
-            return Connection.subclass(*args_, **kwargs_)
-        else:
-            return Connection(*args_, **kwargs_)
-    factory = staticmethod(factory)
-    def validate_ZeroToOne(self, value):
-        # Validate type ZeroToOne, a restriction on xs:double.
-        if value is not None and Validate_simpletypes_:
-            if value < 0:
-                warnings_.warn('Value "%(value)s" does not match xsd minInclusive restriction on ZeroToOne' % {"value" : value} )
-            if value > 1:
-                warnings_.warn('Value "%(value)s" does not match xsd maxInclusive restriction on ZeroToOne' % {"value" : value} )
-    def validate_SegmentId(self, value):
-        # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
-        if value is not None and Validate_simpletypes_:
-            pass
-    def hasContent_(self):
-        if (
-
-        ):
-            return True
-        else:
-            return False
-    def export(self, outfile, level, namespace_='', name_='Connection', namespacedef_='', pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='Connection')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Connection', pretty_print=pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Connection'):
-        if self.pre_fraction_along is not None and 'pre_fraction_along' not in already_processed:
-            already_processed.add('pre_fraction_along')
-            outfile.write(' preFractionAlong=%s' % (quote_attrib(self.pre_fraction_along), ))
-        if self.pre_cell_id is not None and 'pre_cell_id' not in already_processed:
-            already_processed.add('pre_cell_id')
-            outfile.write(' preCellId=%s' % (self.gds_format_string(quote_attrib(self.pre_cell_id).encode(ExternalEncoding), input_name='preCellId'), ))
-        if self.post_fraction_along is not None and 'post_fraction_along' not in already_processed:
-            already_processed.add('post_fraction_along')
-            outfile.write(' postFractionAlong=%s' % (quote_attrib(self.post_fraction_along), ))
-        if self.post_segment_id is not None and 'post_segment_id' not in already_processed:
-            already_processed.add('post_segment_id')
-            outfile.write(' postSegmentId=%s' % (quote_attrib(self.post_segment_id), ))
-        if self.post_cell_id is not None and 'post_cell_id' not in already_processed:
-            already_processed.add('post_cell_id')
-            outfile.write(' postCellId=%s' % (self.gds_format_string(quote_attrib(self.post_cell_id).encode(ExternalEncoding), input_name='postCellId'), ))
-        if self.pre_segment_id is not None and 'pre_segment_id' not in already_processed:
-            already_processed.add('pre_segment_id')
-            outfile.write(' preSegmentId=%s' % (quote_attrib(self.pre_segment_id), ))
-        if self.id is not None and 'id' not in already_processed:
-            already_processed.add('id')
-            outfile.write(' id="%s"' % self.gds_format_integer(self.id, input_name='id'))
-    def exportChildren(self, outfile, level, namespace_='', name_='Connection', fromsubclass_=False, pretty_print=True):
-        pass
-    def exportLiteral(self, outfile, level, name_='Connection'):
-        level += 1
-        already_processed = set()
-        self.exportLiteralAttributes(outfile, level, already_processed, name_)
-        if self.hasContent_():
-            self.exportLiteralChildren(outfile, level, name_)
-    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
-        if self.pre_fraction_along is not None and 'pre_fraction_along' not in already_processed:
-            already_processed.add('pre_fraction_along')
-            showIndent(outfile, level)
-            outfile.write('pre_fraction_along=%e,\n' % (self.pre_fraction_along,))
-        if self.pre_cell_id is not None and 'pre_cell_id' not in already_processed:
-            already_processed.add('pre_cell_id')
-            showIndent(outfile, level)
-            outfile.write('pre_cell_id="%s",\n' % (self.pre_cell_id,))
-        if self.post_fraction_along is not None and 'post_fraction_along' not in already_processed:
-            already_processed.add('post_fraction_along')
-            showIndent(outfile, level)
-            outfile.write('post_fraction_along=%e,\n' % (self.post_fraction_along,))
-        if self.post_segment_id is not None and 'post_segment_id' not in already_processed:
-            already_processed.add('post_segment_id')
-            showIndent(outfile, level)
-            outfile.write('post_segment_id=%d,\n' % (self.post_segment_id,))
-        if self.post_cell_id is not None and 'post_cell_id' not in already_processed:
-            already_processed.add('post_cell_id')
-            showIndent(outfile, level)
-            outfile.write('post_cell_id="%s",\n' % (self.post_cell_id,))
-        if self.pre_segment_id is not None and 'pre_segment_id' not in already_processed:
-            already_processed.add('pre_segment_id')
-            showIndent(outfile, level)
-            outfile.write('pre_segment_id=%d,\n' % (self.pre_segment_id,))
-        if self.id is not None and 'id' not in already_processed:
-            already_processed.add('id')
-            showIndent(outfile, level)
-            outfile.write('id=%d,\n' % (self.id,))
-    def exportLiteralChildren(self, outfile, level, name_):
-        pass
-    def build(self, node):
-        already_processed = set()
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_)
-        return self
-    def buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_('preFractionAlong', node)
-        if value is not None and 'preFractionAlong' not in already_processed:
-            already_processed.add('preFractionAlong')
-            try:
-                self.pre_fraction_along = float(value)
-            except ValueError as exp:
-                raise ValueError('Bad float/double attribute (preFractionAlong): %s' % exp)
-            self.validate_ZeroToOne(self.pre_fraction_along)    # validate type ZeroToOne
-        value = find_attr_value_('preCellId', node)
-        if value is not None and 'preCellId' not in already_processed:
-            already_processed.add('preCellId')
-            self.pre_cell_id = value
-        value = find_attr_value_('postFractionAlong', node)
-        if value is not None and 'postFractionAlong' not in already_processed:
-            already_processed.add('postFractionAlong')
-            try:
-                self.post_fraction_along = float(value)
-            except ValueError as exp:
-                raise ValueError('Bad float/double attribute (postFractionAlong): %s' % exp)
-            self.validate_ZeroToOne(self.post_fraction_along)    # validate type ZeroToOne
-        value = find_attr_value_('postSegmentId', node)
-        if value is not None and 'postSegmentId' not in already_processed:
-            already_processed.add('postSegmentId')
-            try:
-                self.post_segment_id = int(value)
-            except ValueError as exp:
-                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
-            if self.post_segment_id < 0:
-                raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_SegmentId(self.post_segment_id)    # validate type SegmentId
-        value = find_attr_value_('postCellId', node)
-        if value is not None and 'postCellId' not in already_processed:
-            already_processed.add('postCellId')
-            self.post_cell_id = value
-        value = find_attr_value_('preSegmentId', node)
-        if value is not None and 'preSegmentId' not in already_processed:
-            already_processed.add('preSegmentId')
-            try:
-                self.pre_segment_id = int(value)
-            except ValueError as exp:
-                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
-            if self.pre_segment_id < 0:
-                raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_SegmentId(self.pre_segment_id)    # validate type SegmentId
-        value = find_attr_value_('id', node)
-        if value is not None and 'id' not in already_processed:
-            already_processed.add('id')
-            try:
-                self.id = int(value)
-            except ValueError as exp:
-                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
-            if self.id < 0:
-                raise_parse_error(node, 'Invalid NonNegativeInteger')
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        pass
-# end class Connection
-
-
-class ElectricalConnection(GeneratedsSuper):
-    """Subject to change as it gets tested with LEMS!!"""
-    member_data_items_ = [
-        MemberSpec_('synapse', 'NmlId', 0),
-        MemberSpec_('preCell', 'xs:string', 0),
-        MemberSpec_('id', 'xs:nonNegativeInteger', 0),
-        MemberSpec_('postCell', 'xs:string', 0),
-    ]
-    subclass = None
-    superclass = None
-    def __init__(self, synapse=None, pre_cell=None, id=None, post_cell=None):
-        self.original_tagname_ = None
-        self.synapse = _cast(None, synapse)
-        self.pre_cell = _cast(None, pre_cell)
-        self.id = _cast(int, id)
-        self.post_cell = _cast(None, post_cell)
-    def factory(*args_, **kwargs_):
-        if ElectricalConnection.subclass:
-            return ElectricalConnection.subclass(*args_, **kwargs_)
-        else:
-            return ElectricalConnection(*args_, **kwargs_)
-    factory = staticmethod(factory)
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if value is not None and Validate_simpletypes_:
-            if not self.gds_validate_simple_patterns(
-                    self.validate_NmlId_patterns_, value):
-                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
-    def hasContent_(self):
-        if (
-
-        ):
-            return True
-        else:
-            return False
-    def export(self, outfile, level, namespace_='', name_='ElectricalConnection', namespacedef_='', pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ElectricalConnection')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ElectricalConnection', pretty_print=pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ElectricalConnection'):
-        if self.synapse is not None and 'synapse' not in already_processed:
-            already_processed.add('synapse')
-            outfile.write(' synapse=%s' % (quote_attrib(self.synapse), ))
-        if self.pre_cell is not None and 'pre_cell' not in already_processed:
-            already_processed.add('pre_cell')
-            outfile.write(' preCell=%s' % (self.gds_format_string(quote_attrib(self.pre_cell).encode(ExternalEncoding), input_name='preCell'), ))
-        if self.id is not None and 'id' not in already_processed:
-            already_processed.add('id')
-            outfile.write(' id="%s"' % self.gds_format_integer(self.id, input_name='id'))
-        if self.post_cell is not None and 'post_cell' not in already_processed:
-            already_processed.add('post_cell')
-            outfile.write(' postCell=%s' % (self.gds_format_string(quote_attrib(self.post_cell).encode(ExternalEncoding), input_name='postCell'), ))
-    def exportChildren(self, outfile, level, namespace_='', name_='ElectricalConnection', fromsubclass_=False, pretty_print=True):
-        pass
-    def exportLiteral(self, outfile, level, name_='ElectricalConnection'):
-        level += 1
-        already_processed = set()
-        self.exportLiteralAttributes(outfile, level, already_processed, name_)
-        if self.hasContent_():
-            self.exportLiteralChildren(outfile, level, name_)
-    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
-        if self.synapse is not None and 'synapse' not in already_processed:
-            already_processed.add('synapse')
-            showIndent(outfile, level)
-            outfile.write('synapse="%s",\n' % (self.synapse,))
-        if self.pre_cell is not None and 'pre_cell' not in already_processed:
-            already_processed.add('pre_cell')
-            showIndent(outfile, level)
-            outfile.write('pre_cell="%s",\n' % (self.pre_cell,))
-        if self.id is not None and 'id' not in already_processed:
-            already_processed.add('id')
-            showIndent(outfile, level)
-            outfile.write('id=%d,\n' % (self.id,))
-        if self.post_cell is not None and 'post_cell' not in already_processed:
-            already_processed.add('post_cell')
-            showIndent(outfile, level)
-            outfile.write('post_cell="%s",\n' % (self.post_cell,))
-    def exportLiteralChildren(self, outfile, level, name_):
-        pass
-    def build(self, node):
-        already_processed = set()
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_)
-        return self
-    def buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_('synapse', node)
-        if value is not None and 'synapse' not in already_processed:
-            already_processed.add('synapse')
-            self.synapse = value
-            self.validate_NmlId(self.synapse)    # validate type NmlId
-        value = find_attr_value_('preCell', node)
-        if value is not None and 'preCell' not in already_processed:
-            already_processed.add('preCell')
-            self.pre_cell = value
-        value = find_attr_value_('id', node)
-        if value is not None and 'id' not in already_processed:
-            already_processed.add('id')
-            try:
-                self.id = int(value)
-            except ValueError as exp:
-                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
-            if self.id < 0:
-                raise_parse_error(node, 'Invalid NonNegativeInteger')
-        value = find_attr_value_('postCell', node)
-        if value is not None and 'postCell' not in already_processed:
-            already_processed.add('postCell')
-            self.post_cell = value
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        pass
-# end class ElectricalConnection
-
-
 class ExplicitInput(GeneratedsSuper):
     """Single explicit input. Introduced to test inputs in LEMS. Will
     probably be removed in favour of inputs wrapped in inputList
@@ -5983,8 +5665,209 @@ class InputList(Base):
 # end class InputList
 
 
+class ElectricalConnection(Base):
+    """Individual electrical synaptic connection"""
+    member_data_items_ = [
+        MemberSpec_('synapse', 'NmlId', 0),
+        MemberSpec_('preFractionAlong', 'ZeroToOne', 0),
+        MemberSpec_('preSegment', 'SegmentId', 0),
+        MemberSpec_('postFractionAlong', 'ZeroToOne', 0),
+        MemberSpec_('postSegment', 'SegmentId', 0),
+        MemberSpec_('postCell', 'xs:string', 0),
+        MemberSpec_('preCell', 'xs:string', 0),
+    ]
+    subclass = None
+    superclass = Base
+    def __init__(self, neuro_lex_id=None, id=None, synapse=None, pre_fraction_along=None, pre_segment=None, post_fraction_along=None, post_segment=None, post_cell=None, pre_cell=None):
+        self.original_tagname_ = None
+        super(ElectricalConnection, self).__init__(neuro_lex_id, id, )
+        self.synapse = _cast(None, synapse)
+        self.pre_fraction_along = _cast(None, pre_fraction_along)
+        self.pre_segment = _cast(None, pre_segment)
+        self.post_fraction_along = _cast(None, post_fraction_along)
+        self.post_segment = _cast(None, post_segment)
+        self.post_cell = _cast(None, post_cell)
+        self.pre_cell = _cast(None, pre_cell)
+    def factory(*args_, **kwargs_):
+        if ElectricalConnection.subclass:
+            return ElectricalConnection.subclass(*args_, **kwargs_)
+        else:
+            return ElectricalConnection(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    def validate_ZeroToOne(self, value):
+        # Validate type ZeroToOne, a restriction on xs:double.
+        if value is not None and Validate_simpletypes_:
+            if value < 0:
+                warnings_.warn('Value "%(value)s" does not match xsd minInclusive restriction on ZeroToOne' % {"value" : value} )
+            if value > 1:
+                warnings_.warn('Value "%(value)s" does not match xsd maxInclusive restriction on ZeroToOne' % {"value" : value} )
+    def validate_SegmentId(self, value):
+        # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
+        if value is not None and Validate_simpletypes_:
+            pass
+    def hasContent_(self):
+        if (
+            super(ElectricalConnection, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='ElectricalConnection', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ElectricalConnection')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ElectricalConnection', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ElectricalConnection'):
+        super(ElectricalConnection, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ElectricalConnection')
+        if self.synapse is not None and 'synapse' not in already_processed:
+            already_processed.add('synapse')
+            outfile.write(' synapse=%s' % (quote_attrib(self.synapse), ))
+        if self.pre_fraction_along is not None and 'pre_fraction_along' not in already_processed:
+            already_processed.add('pre_fraction_along')
+            outfile.write(' preFractionAlong=%s' % (quote_attrib(self.pre_fraction_along), ))
+        if self.pre_segment is not None and 'pre_segment' not in already_processed:
+            already_processed.add('pre_segment')
+            outfile.write(' preSegment=%s' % (quote_attrib(self.pre_segment), ))
+        if self.post_fraction_along is not None and 'post_fraction_along' not in already_processed:
+            already_processed.add('post_fraction_along')
+            outfile.write(' postFractionAlong=%s' % (quote_attrib(self.post_fraction_along), ))
+        if self.post_segment is not None and 'post_segment' not in already_processed:
+            already_processed.add('post_segment')
+            outfile.write(' postSegment=%s' % (quote_attrib(self.post_segment), ))
+        if self.post_cell is not None and 'post_cell' not in already_processed:
+            already_processed.add('post_cell')
+            outfile.write(' postCell=%s' % (self.gds_format_string(quote_attrib(self.post_cell).encode(ExternalEncoding), input_name='postCell'), ))
+        if self.pre_cell is not None and 'pre_cell' not in already_processed:
+            already_processed.add('pre_cell')
+            outfile.write(' preCell=%s' % (self.gds_format_string(quote_attrib(self.pre_cell).encode(ExternalEncoding), input_name='preCell'), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='ElectricalConnection', fromsubclass_=False, pretty_print=True):
+        super(ElectricalConnection, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
+    def exportLiteral(self, outfile, level, name_='ElectricalConnection'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.synapse is not None and 'synapse' not in already_processed:
+            already_processed.add('synapse')
+            showIndent(outfile, level)
+            outfile.write('synapse="%s",\n' % (self.synapse,))
+        if self.pre_fraction_along is not None and 'pre_fraction_along' not in already_processed:
+            already_processed.add('pre_fraction_along')
+            showIndent(outfile, level)
+            outfile.write('pre_fraction_along=%e,\n' % (self.pre_fraction_along,))
+        if self.pre_segment is not None and 'pre_segment' not in already_processed:
+            already_processed.add('pre_segment')
+            showIndent(outfile, level)
+            outfile.write('pre_segment=%d,\n' % (self.pre_segment,))
+        if self.post_fraction_along is not None and 'post_fraction_along' not in already_processed:
+            already_processed.add('post_fraction_along')
+            showIndent(outfile, level)
+            outfile.write('post_fraction_along=%e,\n' % (self.post_fraction_along,))
+        if self.post_segment is not None and 'post_segment' not in already_processed:
+            already_processed.add('post_segment')
+            showIndent(outfile, level)
+            outfile.write('post_segment=%d,\n' % (self.post_segment,))
+        if self.post_cell is not None and 'post_cell' not in already_processed:
+            already_processed.add('post_cell')
+            showIndent(outfile, level)
+            outfile.write('post_cell="%s",\n' % (self.post_cell,))
+        if self.pre_cell is not None and 'pre_cell' not in already_processed:
+            already_processed.add('pre_cell')
+            showIndent(outfile, level)
+            outfile.write('pre_cell="%s",\n' % (self.pre_cell,))
+        super(ElectricalConnection, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(ElectricalConnection, self).exportLiteralChildren(outfile, level, name_)
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('synapse', node)
+        if value is not None and 'synapse' not in already_processed:
+            already_processed.add('synapse')
+            self.synapse = value
+            self.validate_NmlId(self.synapse)    # validate type NmlId
+        value = find_attr_value_('preFractionAlong', node)
+        if value is not None and 'preFractionAlong' not in already_processed:
+            already_processed.add('preFractionAlong')
+            try:
+                self.pre_fraction_along = float(value)
+            except ValueError as exp:
+                raise ValueError('Bad float/double attribute (preFractionAlong): %s' % exp)
+            self.validate_ZeroToOne(self.pre_fraction_along)    # validate type ZeroToOne
+        value = find_attr_value_('preSegment', node)
+        if value is not None and 'preSegment' not in already_processed:
+            already_processed.add('preSegment')
+            try:
+                self.pre_segment = int(value)
+            except ValueError as exp:
+                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.pre_segment < 0:
+                raise_parse_error(node, 'Invalid NonNegativeInteger')
+            self.validate_SegmentId(self.pre_segment)    # validate type SegmentId
+        value = find_attr_value_('postFractionAlong', node)
+        if value is not None and 'postFractionAlong' not in already_processed:
+            already_processed.add('postFractionAlong')
+            try:
+                self.post_fraction_along = float(value)
+            except ValueError as exp:
+                raise ValueError('Bad float/double attribute (postFractionAlong): %s' % exp)
+            self.validate_ZeroToOne(self.post_fraction_along)    # validate type ZeroToOne
+        value = find_attr_value_('postSegment', node)
+        if value is not None and 'postSegment' not in already_processed:
+            already_processed.add('postSegment')
+            try:
+                self.post_segment = int(value)
+            except ValueError as exp:
+                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.post_segment < 0:
+                raise_parse_error(node, 'Invalid NonNegativeInteger')
+            self.validate_SegmentId(self.post_segment)    # validate type SegmentId
+        value = find_attr_value_('postCell', node)
+        if value is not None and 'postCell' not in already_processed:
+            already_processed.add('postCell')
+            self.post_cell = value
+        value = find_attr_value_('preCell', node)
+        if value is not None and 'preCell' not in already_processed:
+            already_processed.add('preCell')
+            self.pre_cell = value
+        super(ElectricalConnection, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(ElectricalConnection, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class ElectricalConnection
+
+
 class ElectricalProjection(Base):
-    """Subject to change as it gets tested with LEMS"""
+    """Projection between two populations consisting of electrical
+    connections (gap junctions)"""
     member_data_items_ = [
         MemberSpec_('postsynapticPopulation', 'NmlId', 0),
         MemberSpec_('presynapticPopulation', 'NmlId', 0),
@@ -6115,8 +5998,187 @@ class ElectricalProjection(Base):
 # end class ElectricalProjection
 
 
+class Connection(Base):
+    """Individual synaptic connection"""
+    member_data_items_ = [
+        MemberSpec_('preFractionAlong', 'ZeroToOne', 0),
+        MemberSpec_('preCellId', 'xs:string', 0),
+        MemberSpec_('postFractionAlong', 'ZeroToOne', 0),
+        MemberSpec_('postSegmentId', 'SegmentId', 0),
+        MemberSpec_('postCellId', 'xs:string', 0),
+        MemberSpec_('preSegmentId', 'SegmentId', 0),
+    ]
+    subclass = None
+    superclass = Base
+    def __init__(self, neuro_lex_id=None, id=None, pre_fraction_along=None, pre_cell_id=None, post_fraction_along=None, post_segment_id=None, post_cell_id=None, pre_segment_id=None):
+        self.original_tagname_ = None
+        super(Connection, self).__init__(neuro_lex_id, id, )
+        self.pre_fraction_along = _cast(None, pre_fraction_along)
+        self.pre_cell_id = _cast(None, pre_cell_id)
+        self.post_fraction_along = _cast(None, post_fraction_along)
+        self.post_segment_id = _cast(None, post_segment_id)
+        self.post_cell_id = _cast(None, post_cell_id)
+        self.pre_segment_id = _cast(None, pre_segment_id)
+    def factory(*args_, **kwargs_):
+        if Connection.subclass:
+            return Connection.subclass(*args_, **kwargs_)
+        else:
+            return Connection(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_ZeroToOne(self, value):
+        # Validate type ZeroToOne, a restriction on xs:double.
+        if value is not None and Validate_simpletypes_:
+            if value < 0:
+                warnings_.warn('Value "%(value)s" does not match xsd minInclusive restriction on ZeroToOne' % {"value" : value} )
+            if value > 1:
+                warnings_.warn('Value "%(value)s" does not match xsd maxInclusive restriction on ZeroToOne' % {"value" : value} )
+    def validate_SegmentId(self, value):
+        # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
+        if value is not None and Validate_simpletypes_:
+            pass
+    def hasContent_(self):
+        if (
+            super(Connection, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='Connection', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='Connection')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Connection', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Connection'):
+        super(Connection, self).exportAttributes(outfile, level, already_processed, namespace_, name_='Connection')
+        if self.pre_fraction_along is not None and 'pre_fraction_along' not in already_processed:
+            already_processed.add('pre_fraction_along')
+            outfile.write(' preFractionAlong=%s' % (quote_attrib(self.pre_fraction_along), ))
+        if self.pre_cell_id is not None and 'pre_cell_id' not in already_processed:
+            already_processed.add('pre_cell_id')
+            outfile.write(' preCellId=%s' % (self.gds_format_string(quote_attrib(self.pre_cell_id).encode(ExternalEncoding), input_name='preCellId'), ))
+        if self.post_fraction_along is not None and 'post_fraction_along' not in already_processed:
+            already_processed.add('post_fraction_along')
+            outfile.write(' postFractionAlong=%s' % (quote_attrib(self.post_fraction_along), ))
+        if self.post_segment_id is not None and 'post_segment_id' not in already_processed:
+            already_processed.add('post_segment_id')
+            outfile.write(' postSegmentId=%s' % (quote_attrib(self.post_segment_id), ))
+        if self.post_cell_id is not None and 'post_cell_id' not in already_processed:
+            already_processed.add('post_cell_id')
+            outfile.write(' postCellId=%s' % (self.gds_format_string(quote_attrib(self.post_cell_id).encode(ExternalEncoding), input_name='postCellId'), ))
+        if self.pre_segment_id is not None and 'pre_segment_id' not in already_processed:
+            already_processed.add('pre_segment_id')
+            outfile.write(' preSegmentId=%s' % (quote_attrib(self.pre_segment_id), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='Connection', fromsubclass_=False, pretty_print=True):
+        super(Connection, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
+    def exportLiteral(self, outfile, level, name_='Connection'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.pre_fraction_along is not None and 'pre_fraction_along' not in already_processed:
+            already_processed.add('pre_fraction_along')
+            showIndent(outfile, level)
+            outfile.write('pre_fraction_along=%e,\n' % (self.pre_fraction_along,))
+        if self.pre_cell_id is not None and 'pre_cell_id' not in already_processed:
+            already_processed.add('pre_cell_id')
+            showIndent(outfile, level)
+            outfile.write('pre_cell_id="%s",\n' % (self.pre_cell_id,))
+        if self.post_fraction_along is not None and 'post_fraction_along' not in already_processed:
+            already_processed.add('post_fraction_along')
+            showIndent(outfile, level)
+            outfile.write('post_fraction_along=%e,\n' % (self.post_fraction_along,))
+        if self.post_segment_id is not None and 'post_segment_id' not in already_processed:
+            already_processed.add('post_segment_id')
+            showIndent(outfile, level)
+            outfile.write('post_segment_id=%d,\n' % (self.post_segment_id,))
+        if self.post_cell_id is not None and 'post_cell_id' not in already_processed:
+            already_processed.add('post_cell_id')
+            showIndent(outfile, level)
+            outfile.write('post_cell_id="%s",\n' % (self.post_cell_id,))
+        if self.pre_segment_id is not None and 'pre_segment_id' not in already_processed:
+            already_processed.add('pre_segment_id')
+            showIndent(outfile, level)
+            outfile.write('pre_segment_id=%d,\n' % (self.pre_segment_id,))
+        super(Connection, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(Connection, self).exportLiteralChildren(outfile, level, name_)
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('preFractionAlong', node)
+        if value is not None and 'preFractionAlong' not in already_processed:
+            already_processed.add('preFractionAlong')
+            try:
+                self.pre_fraction_along = float(value)
+            except ValueError as exp:
+                raise ValueError('Bad float/double attribute (preFractionAlong): %s' % exp)
+            self.validate_ZeroToOne(self.pre_fraction_along)    # validate type ZeroToOne
+        value = find_attr_value_('preCellId', node)
+        if value is not None and 'preCellId' not in already_processed:
+            already_processed.add('preCellId')
+            self.pre_cell_id = value
+        value = find_attr_value_('postFractionAlong', node)
+        if value is not None and 'postFractionAlong' not in already_processed:
+            already_processed.add('postFractionAlong')
+            try:
+                self.post_fraction_along = float(value)
+            except ValueError as exp:
+                raise ValueError('Bad float/double attribute (postFractionAlong): %s' % exp)
+            self.validate_ZeroToOne(self.post_fraction_along)    # validate type ZeroToOne
+        value = find_attr_value_('postSegmentId', node)
+        if value is not None and 'postSegmentId' not in already_processed:
+            already_processed.add('postSegmentId')
+            try:
+                self.post_segment_id = int(value)
+            except ValueError as exp:
+                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.post_segment_id < 0:
+                raise_parse_error(node, 'Invalid NonNegativeInteger')
+            self.validate_SegmentId(self.post_segment_id)    # validate type SegmentId
+        value = find_attr_value_('postCellId', node)
+        if value is not None and 'postCellId' not in already_processed:
+            already_processed.add('postCellId')
+            self.post_cell_id = value
+        value = find_attr_value_('preSegmentId', node)
+        if value is not None and 'preSegmentId' not in already_processed:
+            already_processed.add('preSegmentId')
+            try:
+                self.pre_segment_id = int(value)
+            except ValueError as exp:
+                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.pre_segment_id < 0:
+                raise_parse_error(node, 'Invalid NonNegativeInteger')
+            self.validate_SegmentId(self.pre_segment_id)    # validate type SegmentId
+        super(Connection, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(Connection, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class Connection
+
+
 class Projection(Base):
-    """Subject to change as it gets tested with LEMS"""
+    """Projection (set of synaptic connections) between two populations"""
     member_data_items_ = [
         MemberSpec_('postsynapticPopulation', 'NmlId', 0),
         MemberSpec_('presynapticPopulation', 'NmlId', 0),
