@@ -256,7 +256,7 @@ class SegmentList(object):
         if num_segments < 0:
             num_segments = 0
 
-        return num_segments
+        return int(num_segments)
 
     def __iadd__(self,segment_list):
         for segment in segment_list:
