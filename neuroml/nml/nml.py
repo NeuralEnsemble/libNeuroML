@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Jan 29 16:33:45 2015 by generateDS.py version 2.14a.
+# Generated Tue Feb 10 14:07:14 2015 by generateDS.py version 2.15a.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -25,60 +25,14 @@ import re as re_
 import base64
 import datetime as datetime_
 import warnings as warnings_
+from lxml import etree as etree_
 
 
 Validate_simpletypes_ = True
 
 
-etree_ = None
-Verbose_import_ = False
-(
-    XMLParser_import_none, XMLParser_import_lxml,
-    XMLParser_import_elementtree
-) = range(3)
-XMLParser_import_library = None
-try:
-    # lxml
-    from lxml import etree as etree_
-    XMLParser_import_library = XMLParser_import_lxml
-    if Verbose_import_:
-        print("running with lxml.etree")
-except ImportError:
-    try:
-        # cElementTree from Python 2.5+
-        import xml.etree.cElementTree as etree_
-        XMLParser_import_library = XMLParser_import_elementtree
-        if Verbose_import_:
-            print("running with cElementTree on Python 2.5+")
-    except ImportError:
-        try:
-            # ElementTree from Python 2.5+
-            import xml.etree.ElementTree as etree_
-            XMLParser_import_library = XMLParser_import_elementtree
-            if Verbose_import_:
-                print("running with ElementTree on Python 2.5+")
-        except ImportError:
-            try:
-                # normal cElementTree install
-                import cElementTree as etree_
-                XMLParser_import_library = XMLParser_import_elementtree
-                if Verbose_import_:
-                    print("running with cElementTree")
-            except ImportError:
-                try:
-                    # normal ElementTree install
-                    import elementtree.ElementTree as etree_
-                    XMLParser_import_library = XMLParser_import_elementtree
-                    if Verbose_import_:
-                        print("running with ElementTree")
-                except ImportError:
-                    raise ImportError(
-                        "Failed to import ElementTree from any known place")
-
-
 def parsexml_(*args, **kwargs):
-    if (XMLParser_import_library == XMLParser_import_lxml and
-            'parser' not in kwargs):
+    if 'parser' not in kwargs:
         # Use the lxml ElementTree compatible parser so that, e.g.,
         #   we ignore comments.
         kwargs['parser'] = etree_.ETCompatXMLParser()
@@ -109,7 +63,7 @@ except ImportError as exp:
             def dst(self, dt):
                 return None
         def gds_format_string(self, input_data, input_name=''):
-            return input_data
+            return input_data.decode('ascii')
         def gds_validate_string(self, input_data, node=None, input_name=''):
             if not input_data:
                 return ''
@@ -392,7 +346,7 @@ except ImportError as exp:
             return None
         @classmethod
         def gds_reverse_node_mapping(cls, mapping):
-            return dict(((v, k) for k, v in mapping.iteritems()))
+            return dict(((v, k) for k, v in mapping.items()))
 
 
 #
@@ -433,7 +387,7 @@ def showIndent(outfile, level, pretty_print=True):
 def quote_xml(inStr):
     if not inStr:
         return ''
-    s1 = (isinstance(inStr, basestring) and inStr or
+    s1 = (isinstance(inStr, str) and inStr or
           '%s' % inStr)
     s1 = s1.replace('&', '&amp;')
     s1 = s1.replace('<', '&lt;')
@@ -442,7 +396,7 @@ def quote_xml(inStr):
 
 
 def quote_attrib(inStr):
-    s1 = (isinstance(inStr, basestring) and inStr or
+    s1 = (isinstance(inStr, str) and inStr or
           '%s' % inStr)
     s1 = s1.replace('&', '&amp;')
     s1 = s1.replace('<', '&lt;')
@@ -1642,6 +1596,7 @@ class BlockMechanism(GeneratedsSuper):
     def validate_BlockTypes(self, value):
         # Validate type BlockTypes, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
+            value = str(value)
             enumerations = ['voltageConcDepBlockMechanism']
             enumeration_respectee = False
             for enum in enumerations:
@@ -1797,6 +1752,7 @@ class PlasticityMechanism(GeneratedsSuper):
     def validate_PlasticityTypes(self, value):
         # Validate type PlasticityTypes, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
+            value = str(value)
             enumerations = ['tsodyksMarkramDepMechanism', 'tsodyksMarkramDepFacMechanism']
             enumeration_respectee = False
             for enum in enumerations:
@@ -6469,6 +6425,7 @@ class Population(Standalone):
     def validate_populationTypes(self, value):
         # Validate type populationTypes, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
+            value = str(value)
             enumerations = ['population', 'populationList']
             enumeration_respectee = False
             for enum in enumerations:
@@ -6774,6 +6731,7 @@ class Space(Base):
     def validate_allowedSpaces(self, value):
         # Validate type allowedSpaces, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
+            value = str(value)
             enumerations = ['Euclidean_1D', 'Euclidean_2D', 'Euclidean_3D', 'Grid_1D', 'Grid_2D', 'Grid_3D']
             enumeration_respectee = False
             for enum in enumerations:
@@ -6936,6 +6894,7 @@ class Network(Standalone):
     def validate_networkTypes(self, value):
         # Validate type networkTypes, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
+            value = str(value)
             enumerations = ['network', 'networkWithTemperature']
             enumeration_respectee = False
             for enum in enumerations:
@@ -9998,6 +9957,7 @@ class InhomogeneousParameter(Base):
     def validate_Metric(self, value):
         # Validate type Metric, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
+            value = str(value)
             enumerations = ['Path Length from root']
             enumeration_respectee = False
             for enum in enumerations:
@@ -12043,6 +12003,7 @@ class GateHHUndetermined(Base):
     def validate_gateTypes(self, value):
         # Validate type gateTypes, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
+            value = str(value)
             enumerations = ['gateHHrates', 'gateHHratesTau', 'gateHHtauInf', 'gateHHratesInf', 'gateHHratesTauInf', 'gateKS']
             enumeration_respectee = False
             for enum in enumerations:
@@ -12281,6 +12242,7 @@ class IonChannel(Standalone):
     def validate_channelTypes(self, value):
         # Validate type channelTypes, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
+            value = str(value)
             enumerations = ['ionChannelPassive', 'ionChannelHH']
             enumeration_respectee = False
             for enum in enumerations:
@@ -17259,7 +17221,7 @@ def parseEtree(inFileName, silence=False):
 
 
 def parseString(inString, silence=False):
-    from StringIO import StringIO
+    from io import StringIO
     doc = parsexml_(StringIO(inString))
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
