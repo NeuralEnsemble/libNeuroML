@@ -29,8 +29,8 @@ for n in range(numCells):
     #get the parent segment:
 #    parent_segment = doc.cells[0].morphology.segments[0]
 
-    print "Cell %i has %i segments"%(n,len(doc.cells[0].morphology.segments))
-    print h.heap()
+    print("Cell %i has %i segments"%(n,len(doc.cells[0].morphology.segments)))
+    print(h.heap())
 
 
     '''
@@ -75,7 +75,7 @@ writers.NeuroMLWriter.write(doc,fn)
 print("Saved modified morphology file to: "+fn)
 '''
 
-print "Done"
+print("Done")
 
 
 
