@@ -18,7 +18,7 @@ install:
   - "pip install lxml"
   - "pip install numexpr"
   - "pip install . --use-mirrors"
-  - "pip install jsonpickle==0.7.2"
+  - "pip install jsonpickle"
   - "pip install pymongo"
   - "pip install simplejson"
   - "pip install tables"
