@@ -1,19 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from distutils.core import setup
-
-with open('requirements.txt') as f:
-    required = f.read().splitlines()
+from setuptools import setup
 
 long_description = open("README.md").read()
 
-import neuroml
-version = neuroml.__version__
+for line in open('neuroml/__init__.py'):
+    if line.startswith("__version__"):
+        version = line.split("=")[1].strip()[1:-1]
 
 setup(
     data_files=[("",['neuroml/test/Purk2M9s.nml'])],
-    requires=required,
-    install_requires=['lxml'],
     name = "libNeuroML",
     version = version,
     packages = ['neuroml', 'neuroml.test','neuroml.nml'],
@@ -22,6 +18,7 @@ setup(
     author_email = "vellamike@gmail.com",
     description = "A Python library for working with NeuroML descriptions of neuronal models",
     long_description = long_description,
+    install_requires=['lxml'],
     license = "BSD",
     url="http://libneuroml.readthedocs.org/en/latest/",
     classifiers = [
