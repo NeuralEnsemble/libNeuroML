@@ -13,6 +13,7 @@ version = neuroml.__version__
 setup(
     data_files=[("",['neuroml/test/Purk2M9s.nml'])],
     requires=required,
+    install_requires=['lxml'],
     name = "libNeuroML",
     version = version,
     packages = ['neuroml', 'neuroml.test','neuroml.nml'],
