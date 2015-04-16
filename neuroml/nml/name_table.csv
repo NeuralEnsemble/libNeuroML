@@ -86,7 +86,9 @@ segmentGroup,segment_groups
 network,networks
 metaid,metaid
 space,spaces
+poissonFiringSynapse,poisson_firing_synapses
 networkWithTemperature,network_with_temperature
+iafRefCell,iaf_ref_cells
 cell,cells
 include,includes
 amplitude,amplitude
@@ -150,7 +152,7 @@ select,select
 size,size
 rho,rho
 temperature,temperature
-iafRefCell,iaf_ref_cells
+spikeTarget,spike_target
 source,source
 decayingPoolConcentrationModel,decaying_pool_concentration_models
 gateHHratesTauInf,gate_h_hrates_tau_infs

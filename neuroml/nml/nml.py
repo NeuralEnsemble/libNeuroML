@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Feb 10 14:07:14 2015 by generateDS.py version 2.15a.
+# Generated Thu Apr 16 11:26:55 2015 by generateDS.py version 2.15b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -63,7 +63,7 @@ except ImportError as exp:
             def dst(self, dt):
                 return None
         def gds_format_string(self, input_data, input_name=''):
-            return input_data.decode('ascii')
+            return input_data
         def gds_validate_string(self, input_data, node=None, input_name=''):
             if not input_data:
                 return ''
@@ -346,7 +346,7 @@ except ImportError as exp:
             return None
         @classmethod
         def gds_reverse_node_mapping(cls, mapping):
-            return dict(((v, k) for k, v in mapping.items()))
+            return dict(((v, k) for k, v in mapping.iteritems()))
 
 
 #
@@ -372,6 +372,7 @@ ExternalEncoding = 'ascii'
 Tag_pattern_ = re_.compile(r'({.*})?(.*)')
 String_cleanup_pat_ = re_.compile(r"[\n\r\s]+")
 Namespace_extract_pat_ = re_.compile(r'{(.*)}(.*)')
+CDATA_pattern_ = re_.compile(r"<!\[CDATA\[.*?\]\]>", re_.DOTALL)
 
 #
 # Support/utility functions.
@@ -385,18 +386,33 @@ def showIndent(outfile, level, pretty_print=True):
 
 
 def quote_xml(inStr):
+    "Escape markup chars, but do not modify CDATA sections."
     if not inStr:
         return ''
-    s1 = (isinstance(inStr, str) and inStr or
+    s1 = (isinstance(inStr, basestring) and inStr or
           '%s' % inStr)
-    s1 = s1.replace('&', '&amp;')
+    s2 = ''
+    pos = 0
+    matchobjects = CDATA_pattern_.finditer(s1)
+    for mo in matchobjects:
+        s3 = s1[pos:mo.start()]
+        s2 += quote_xml_aux(s3)
+        s2 += s1[mo.start():mo.end()]
+        pos = mo.end()
+    s3 = s1[pos:]
+    s2 += quote_xml_aux(s3)
+    return s2
+
+
+def quote_xml_aux(inStr):
+    s1 = inStr.replace('&', '&amp;')
     s1 = s1.replace('<', '&lt;')
     s1 = s1.replace('>', '&gt;')
     return s1
 
 
 def quote_attrib(inStr):
-    s1 = (isinstance(inStr, str) and inStr or
+    s1 = (isinstance(inStr, basestring) and inStr or
           '%s' % inStr)
     s1 = s1.replace('&', '&amp;')
     s1 = s1.replace('<', '&lt;')
@@ -1928,7 +1944,7 @@ class SegmentParent(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='SegmentParent'):
-        if self.fraction_along is not None and 'fraction_along' not in already_processed:
+        if self.fraction_along != 1 and 'fraction_along' not in already_processed:
             already_processed.add('fraction_along')
             outfile.write(' fractionAlong=%s' % (quote_attrib(self.fraction_along), ))
         if self.segments is not None and 'segments' not in already_processed:
@@ -3145,7 +3161,7 @@ class ValueAcrossSegOrSegGroup(GeneratedsSuper):
         if self.segments is not None and 'segments' not in already_processed:
             already_processed.add('segments')
             outfile.write(' segment=%s' % (quote_attrib(self.segments), ))
-        if self.segment_groups is not None and 'segment_groups' not in already_processed:
+        if self.segment_groups != all and 'segment_groups' not in already_processed:
             already_processed.add('segment_groups')
             outfile.write(' segmentGroup=%s' % (quote_attrib(self.segment_groups), ))
         if self.value is not None and 'value' not in already_processed:
@@ -3819,16 +3835,16 @@ class SpaceStructure(GeneratedsSuper):
         if self.y_spacing is not None and 'y_spacing' not in already_processed:
             already_processed.add('y_spacing')
             outfile.write(' ySpacing="%s"' % self.gds_format_float(self.y_spacing, input_name='ySpacing'))
-        if self.z_start is not None and 'z_start' not in already_processed:
+        if self.z_start != 0 and 'z_start' not in already_processed:
             already_processed.add('z_start')
             outfile.write(' zStart="%s"' % self.gds_format_float(self.z_start, input_name='zStart'))
-        if self.y_start is not None and 'y_start' not in already_processed:
+        if self.y_start != 0 and 'y_start' not in already_processed:
             already_processed.add('y_start')
             outfile.write(' yStart="%s"' % self.gds_format_float(self.y_start, input_name='yStart'))
         if self.z_spacing is not None and 'z_spacing' not in already_processed:
             already_processed.add('z_spacing')
             outfile.write(' zSpacing="%s"' % self.gds_format_float(self.z_spacing, input_name='zSpacing'))
-        if self.x_start is not None and 'x_start' not in already_processed:
+        if self.x_start != 0 and 'x_start' not in already_processed:
             already_processed.add('x_start')
             outfile.write(' xStart="%s"' % self.gds_format_float(self.x_start, input_name='xStart'))
         if self.x_spacing is not None and 'x_spacing' not in already_processed:
@@ -5350,7 +5366,8 @@ class Standalone(Base):
             notes_ = child_.text
             notes_ = self.gds_validate_string(notes_, node, 'notes')
             self.notes = notes_
-            self.validate_Notes(self.notes)    # validate type Notes
+            # validate type Notes
+            self.validate_Notes(self.notes)
         elif nodeName_ == 'property':
             obj_ = Property.factory()
             obj_.build(child_)
@@ -7191,6 +7208,121 @@ class Network(Standalone):
 # end class Network
 
 
+class PoissonFiringSynapse(Standalone):
+    member_data_items_ = [
+        MemberSpec_('synapse', 'xs:string', 0),
+        MemberSpec_('averageRate', 'Nml2Quantity_pertime', 0),
+        MemberSpec_('spikeTarget', 'xs:string', 0),
+    ]
+    subclass = None
+    superclass = Standalone
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, synapse=None, average_rate=None, spike_target=None):
+        self.original_tagname_ = None
+        super(PoissonFiringSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
+        self.synapse = _cast(None, synapse)
+        self.average_rate = _cast(None, average_rate)
+        self.spike_target = _cast(None, spike_target)
+    def factory(*args_, **kwargs_):
+        if PoissonFiringSynapse.subclass:
+            return PoissonFiringSynapse.subclass(*args_, **kwargs_)
+        else:
+            return PoissonFiringSynapse(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Nml2Quantity_pertime(self, value):
+        # Validate type Nml2Quantity_pertime, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_pertime_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_pertime_patterns_, ))
+    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz)$']]
+    def hasContent_(self):
+        if (
+            super(PoissonFiringSynapse, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='PoissonFiringSynapse', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='PoissonFiringSynapse')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='PoissonFiringSynapse', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='PoissonFiringSynapse'):
+        super(PoissonFiringSynapse, self).exportAttributes(outfile, level, already_processed, namespace_, name_='PoissonFiringSynapse')
+        if self.synapse is not None and 'synapse' not in already_processed:
+            already_processed.add('synapse')
+            outfile.write(' synapse=%s' % (self.gds_format_string(quote_attrib(self.synapse).encode(ExternalEncoding), input_name='synapse'), ))
+        if self.average_rate is not None and 'average_rate' not in already_processed:
+            already_processed.add('average_rate')
+            outfile.write(' averageRate=%s' % (quote_attrib(self.average_rate), ))
+        if self.spike_target is not None and 'spike_target' not in already_processed:
+            already_processed.add('spike_target')
+            outfile.write(' spikeTarget=%s' % (self.gds_format_string(quote_attrib(self.spike_target).encode(ExternalEncoding), input_name='spikeTarget'), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='PoissonFiringSynapse', fromsubclass_=False, pretty_print=True):
+        super(PoissonFiringSynapse, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='PoissonFiringSynapse'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.synapse is not None and 'synapse' not in already_processed:
+            already_processed.add('synapse')
+            showIndent(outfile, level)
+            outfile.write('synapse="%s",\n' % (self.synapse,))
+        if self.average_rate is not None and 'average_rate' not in already_processed:
+            already_processed.add('average_rate')
+            showIndent(outfile, level)
+            outfile.write('average_rate="%s",\n' % (self.average_rate,))
+        if self.spike_target is not None and 'spike_target' not in already_processed:
+            already_processed.add('spike_target')
+            showIndent(outfile, level)
+            outfile.write('spike_target="%s",\n' % (self.spike_target,))
+        super(PoissonFiringSynapse, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(PoissonFiringSynapse, self).exportLiteralChildren(outfile, level, name_)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('synapse', node)
+        if value is not None and 'synapse' not in already_processed:
+            already_processed.add('synapse')
+            self.synapse = value
+        value = find_attr_value_('averageRate', node)
+        if value is not None and 'averageRate' not in already_processed:
+            already_processed.add('averageRate')
+            self.average_rate = value
+            self.validate_Nml2Quantity_pertime(self.average_rate)    # validate type Nml2Quantity_pertime
+        value = find_attr_value_('spikeTarget', node)
+        if value is not None and 'spikeTarget' not in already_processed:
+            already_processed.add('spikeTarget')
+            self.spike_target = value
+        super(PoissonFiringSynapse, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(PoissonFiringSynapse, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class PoissonFiringSynapse
+
+
 class SpikeGeneratorPoisson(Standalone):
     member_data_items_ = [
         MemberSpec_('averageRate', 'Nml2Quantity_pertime', 0),
@@ -8532,7 +8664,7 @@ class ChannelDensityGHK(Base):
         if self.permeability is not None and 'permeability' not in already_processed:
             already_processed.add('permeability')
             outfile.write(' permeability=%s' % (quote_attrib(self.permeability), ))
-        if self.segment_groups is not None and 'segment_groups' not in already_processed:
+        if self.segment_groups != all and 'segment_groups' not in already_processed:
             already_processed.add('segment_groups')
             outfile.write(' segmentGroup=%s' % (quote_attrib(self.segment_groups), ))
         if self.segments is not None and 'segments' not in already_processed:
@@ -8718,7 +8850,7 @@ class ChannelDensityNernst(Base):
         if self.cond_density is not None and 'cond_density' not in already_processed:
             already_processed.add('cond_density')
             outfile.write(' condDensity=%s' % (quote_attrib(self.cond_density), ))
-        if self.segment_groups is not None and 'segment_groups' not in already_processed:
+        if self.segment_groups != all and 'segment_groups' not in already_processed:
             already_processed.add('segment_groups')
             outfile.write(' segmentGroup=%s' % (quote_attrib(self.segment_groups), ))
         if self.segments is not None and 'segments' not in already_processed:
@@ -8907,7 +9039,7 @@ class ChannelDensity(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ChannelDensity'):
         super(ChannelDensity, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensity')
-        if self.segment_groups is not None and 'segment_groups' not in already_processed:
+        if self.segment_groups != all and 'segment_groups' not in already_processed:
             already_processed.add('segment_groups')
             outfile.write(' segmentGroup=%s' % (quote_attrib(self.segment_groups), ))
         if self.ion is not None and 'ion' not in already_processed:
@@ -9402,7 +9534,7 @@ class ChannelPopulation(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ChannelPopulation'):
         super(ChannelPopulation, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelPopulation')
-        if self.segment_groups is not None and 'segment_groups' not in already_processed:
+        if self.segment_groups != all and 'segment_groups' not in already_processed:
             already_processed.add('segment_groups')
             outfile.write(' segmentGroup=%s' % (quote_attrib(self.segment_groups), ))
         if self.ion is not None and 'ion' not in already_processed:
@@ -10270,7 +10402,8 @@ class SegmentGroup(Base):
             notes_ = child_.text
             notes_ = self.gds_validate_string(notes_, node, 'notes')
             self.notes = notes_
-            self.validate_Notes(self.notes)    # validate type Notes
+            # validate type Notes
+            self.validate_Notes(self.notes)
         elif nodeName_ == 'annotation':
             obj_ = Annotation.factory()
             obj_.build(child_)
@@ -11194,7 +11327,7 @@ class GateHHRatesInf(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateHHRatesInf'):
         super(GateHHRatesInf, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRatesInf')
-        if self.instances is not None and 'instances' not in already_processed:
+        if self.instances != 1 and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHRatesInf', fromsubclass_=False, pretty_print=True):
@@ -11276,7 +11409,8 @@ class GateHHRatesInf(Base):
             notes_ = child_.text
             notes_ = self.gds_validate_string(notes_, node, 'notes')
             self.notes = notes_
-            self.validate_Notes(self.notes)    # validate type Notes
+            # validate type Notes
+            self.validate_Notes(self.notes)
         elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory()
             obj_.build(child_)
@@ -11364,7 +11498,7 @@ class GateHHRatesTau(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateHHRatesTau'):
         super(GateHHRatesTau, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRatesTau')
-        if self.instances is not None and 'instances' not in already_processed:
+        if self.instances != 1 and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHRatesTau', fromsubclass_=False, pretty_print=True):
@@ -11446,7 +11580,8 @@ class GateHHRatesTau(Base):
             notes_ = child_.text
             notes_ = self.gds_validate_string(notes_, node, 'notes')
             self.notes = notes_
-            self.validate_Notes(self.notes)    # validate type Notes
+            # validate type Notes
+            self.validate_Notes(self.notes)
         elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory()
             obj_.build(child_)
@@ -11537,7 +11672,7 @@ class GateHHRatesTauInf(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateHHRatesTauInf'):
         super(GateHHRatesTauInf, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRatesTauInf')
-        if self.instances is not None and 'instances' not in already_processed:
+        if self.instances != 1 and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHRatesTauInf', fromsubclass_=False, pretty_print=True):
@@ -11627,7 +11762,8 @@ class GateHHRatesTauInf(Base):
             notes_ = child_.text
             notes_ = self.gds_validate_string(notes_, node, 'notes')
             self.notes = notes_
-            self.validate_Notes(self.notes)    # validate type Notes
+            # validate type Notes
+            self.validate_Notes(self.notes)
         elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory()
             obj_.build(child_)
@@ -11717,7 +11853,7 @@ class GateHHTauInf(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateHHTauInf'):
         super(GateHHTauInf, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHTauInf')
-        if self.instances is not None and 'instances' not in already_processed:
+        if self.instances != 1 and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHTauInf', fromsubclass_=False, pretty_print=True):
@@ -11791,7 +11927,8 @@ class GateHHTauInf(Base):
             notes_ = child_.text
             notes_ = self.gds_validate_string(notes_, node, 'notes')
             self.notes = notes_
-            self.validate_Notes(self.notes)    # validate type Notes
+            # validate type Notes
+            self.validate_Notes(self.notes)
         elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory()
             obj_.build(child_)
@@ -11871,7 +12008,7 @@ class GateHHRates(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateHHRates'):
         super(GateHHRates, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRates')
-        if self.instances is not None and 'instances' not in already_processed:
+        if self.instances != 1 and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHRates', fromsubclass_=False, pretty_print=True):
@@ -11945,7 +12082,8 @@ class GateHHRates(Base):
             notes_ = child_.text
             notes_ = self.gds_validate_string(notes_, node, 'notes')
             self.notes = notes_
-            self.validate_Notes(self.notes)    # validate type Notes
+            # validate type Notes
+            self.validate_Notes(self.notes)
         elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory()
             obj_.build(child_)
@@ -12045,7 +12183,7 @@ class GateHHUndetermined(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateHHUndetermined'):
         super(GateHHUndetermined, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHUndetermined')
-        if self.instances is not None and 'instances' not in already_processed:
+        if self.instances != 1 and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
         if self.type is not None and 'type' not in already_processed:
@@ -12147,7 +12285,8 @@ class GateHHUndetermined(Base):
             notes_ = child_.text
             notes_ = self.gds_validate_string(notes_, node, 'notes')
             self.notes = notes_
-            self.validate_Notes(self.notes)    # validate type Notes
+            # validate type Notes
+            self.validate_Notes(self.notes)
         elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory()
             obj_.build(child_)
@@ -12511,6 +12650,7 @@ class NeuroMLDocument(Standalone):
         MemberSpec_('spike_generators', 'SpikeGenerator', 1),
         MemberSpec_('spike_generator_randoms', 'SpikeGeneratorRandom', 1),
         MemberSpec_('spike_generator_poissons', 'SpikeGeneratorPoisson', 1),
+        MemberSpec_('poisson_firing_synapses', 'PoissonFiringSynapse', 1),
         MemberSpec_('IF_curr_alpha', 'IF_curr_alpha', 1),
         MemberSpec_('IF_curr_exp', 'IF_curr_exp', 1),
         MemberSpec_('IF_cond_alpha', 'IF_cond_alpha', 1),
@@ -12528,7 +12668,7 @@ class NeuroMLDocument(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, ion_channel_hhs=None, decaying_pool_concentration_models=None, fixed_factor_concentration_models=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, gap_junctions=None, biophysical_properties=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, ad_ex_ia_f_cells=None, fitz_hugh_nagumo_cells=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, ion_channel_hhs=None, decaying_pool_concentration_models=None, fixed_factor_concentration_models=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, gap_junctions=None, biophysical_properties=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, ad_ex_ia_f_cells=None, fitz_hugh_nagumo_cells=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, poisson_firing_synapses=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
         self.original_tagname_ = None
         super(NeuroMLDocument, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
         if includes is None:
@@ -12651,6 +12791,10 @@ class NeuroMLDocument(Standalone):
             self.spike_generator_poissons = []
         else:
             self.spike_generator_poissons = spike_generator_poissons
+        if poisson_firing_synapses is None:
+            self.poisson_firing_synapses = []
+        else:
+            self.poisson_firing_synapses = poisson_firing_synapses
         if IF_curr_alpha is None:
             self.IF_curr_alpha = []
         else:
@@ -12745,6 +12889,7 @@ class NeuroMLDocument(Standalone):
             self.spike_generators or
             self.spike_generator_randoms or
             self.spike_generator_poissons or
+            self.poisson_firing_synapses or
             self.IF_curr_alpha or
             self.IF_curr_exp or
             self.IF_cond_alpha or
@@ -12850,6 +12995,8 @@ class NeuroMLDocument(Standalone):
             spikeGeneratorRandom_.export(outfile, level, namespace_, name_='spikeGeneratorRandom', pretty_print=pretty_print)
         for spikeGeneratorPoisson_ in self.spike_generator_poissons:
             spikeGeneratorPoisson_.export(outfile, level, namespace_, name_='spikeGeneratorPoisson', pretty_print=pretty_print)
+        for poissonFiringSynapse_ in self.poisson_firing_synapses:
+            poissonFiringSynapse_.export(outfile, level, namespace_, name_='poissonFiringSynapse', pretty_print=pretty_print)
         for IF_curr_alpha_ in self.IF_curr_alpha:
             IF_curr_alpha_.export(outfile, level, namespace_, name_='IF_curr_alpha', pretty_print=pretty_print)
         for IF_curr_exp_ in self.IF_curr_exp:
@@ -13249,6 +13396,18 @@ class NeuroMLDocument(Standalone):
         showIndent(outfile, level)
         outfile.write('],\n')
         showIndent(outfile, level)
+        outfile.write('poisson_firing_synapses=[\n')
+        level += 1
+        for poissonFiringSynapse_ in self.poisson_firing_synapses:
+            showIndent(outfile, level)
+            outfile.write('model_.PoissonFiringSynapse(\n')
+            poissonFiringSynapse_.exportLiteral(outfile, level, name_='PoissonFiringSynapse')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
         outfile.write('IF_curr_alpha=[\n')
         level += 1
         for IF_curr_alpha_ in self.IF_curr_alpha:
@@ -13582,6 +13741,11 @@ class NeuroMLDocument(Standalone):
             obj_.build(child_)
             self.spike_generator_poissons.append(obj_)
             obj_.original_tagname_ = 'spikeGeneratorPoisson'
+        elif nodeName_ == 'poissonFiringSynapse':
+            obj_ = PoissonFiringSynapse.factory()
+            obj_.build(child_)
+            self.poisson_firing_synapses.append(obj_)
+            obj_.original_tagname_ = 'poissonFiringSynapse'
         elif nodeName_ == 'IF_curr_alpha':
             obj_ = IF_curr_alpha.factory()
             obj_.build(child_)
@@ -17096,6 +17260,7 @@ GDSClassesMapping = {
     'segmentGroup': SegmentGroup,
     'network': Network,
     'space': Space,
+    'poissonFiringSynapse': PoissonFiringSynapse,
     'cell': Cell,
     'forwardRate': HHRate,
     'electricalProjection': ElectricalProjection,
@@ -17221,7 +17386,7 @@ def parseEtree(inFileName, silence=False):
 
 
 def parseString(inString, silence=False):
-    from io import StringIO
+    from StringIO import StringIO
     doc = parsexml_(StringIO(inString))
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
@@ -17355,6 +17520,7 @@ __all__ = [
     "Path",
     "PlasticityMechanism",
     "Point3DWithDiam",
+    "PoissonFiringSynapse",
     "Population",
     "Projection",
     "Property",

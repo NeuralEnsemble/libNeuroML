@@ -49,7 +49,9 @@ adExIaFCell,ad_ex_ia_f_cells
 segmentGroup,segment_groups
 network,networks
 space,spaces
+poissonFiringSynapse,poisson_firing_synapses
 networkWithTemperature,network_with_temperature
+iafRefCell,iaf_ref_cells
 cell,cells
 include,includes
 fractionAlong,fraction_along
@@ -82,7 +84,7 @@ spikeGenerator,spike_generators
 initialConcentration,initial_concentration
 specificCapacitance,specific_capacitances
 path,paths
-iafRefCell,iaf_ref_cells
+spikeTarget,spike_target
 decayingPoolConcentrationModel,decaying_pool_concentration_models
 gateHHratesTauInf,gate_h_hrates_tau_infs
 postSegmentId,post_segment_id
