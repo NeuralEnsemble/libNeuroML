@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Apr 16 11:26:55 2015 by generateDS.py version 2.15b.
+# Generated Wed May 20 13:42:10 2015 by generateDS.py version 2.15b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -31,12 +31,12 @@ from lxml import etree as etree_
 Validate_simpletypes_ = True
 
 
-def parsexml_(*args, **kwargs):
-    if 'parser' not in kwargs:
+def parsexml_(infile, parser=None, **kwargs):
+    if parser is None:
         # Use the lxml ElementTree compatible parser so that, e.g.,
         #   we ignore comments.
-        kwargs['parser'] = etree_.ETCompatXMLParser()
-    doc = etree_.parse(*args, **kwargs)
+        parser = etree_.ETCompatXMLParser()
+    doc = etree_.parse(infile, parser=parser, **kwargs)
     return doc
 
 #
@@ -346,7 +346,7 @@ except ImportError as exp:
             return None
         @classmethod
         def gds_reverse_node_mapping(cls, mapping):
-            return dict(((v, k) for k, v in mapping.iteritems()))
+            return dict(((v, k) for k, v in list(mapping.items())))
 
 
 #
@@ -389,7 +389,7 @@ def quote_xml(inStr):
     "Escape markup chars, but do not modify CDATA sections."
     if not inStr:
         return ''
-    s1 = (isinstance(inStr, basestring) and inStr or
+    s1 = (isinstance(inStr, str) and inStr or
           '%s' % inStr)
     s2 = ''
     pos = 0
@@ -412,7 +412,7 @@ def quote_xml_aux(inStr):
 
 
 def quote_attrib(inStr):
-    s1 = (isinstance(inStr, basestring) and inStr or
+    s1 = (isinstance(inStr, str) and inStr or
           '%s' % inStr)
     s1 = s1.replace('&', '&amp;')
     s1 = s1.replace('<', '&lt;')
@@ -6402,24 +6402,20 @@ class CellSet(Base):
 class Population(Standalone):
     member_data_items_ = [
         MemberSpec_('extracellularProperties', 'NmlId', 0),
-        MemberSpec_('network', 'NmlId', 0),
-        MemberSpec_('component', 'NmlId', 0),
-        MemberSpec_('cell', 'NmlId', 0),
         MemberSpec_('type', 'populationTypes', 0),
+        MemberSpec_('component', 'NmlId', 0),
         MemberSpec_('size', 'xs:integer', 0),
         MemberSpec_('layout', 'Layout', 0),
         MemberSpec_('instances', 'Instance', 1),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, extracellular_properties=None, networks=None, component=None, cells=None, type=None, size=None, layout=None, instances=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, extracellular_properties=None, type=None, component=None, size=None, layout=None, instances=None):
         self.original_tagname_ = None
         super(Population, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
         self.extracellular_properties = _cast(None, extracellular_properties)
-        self.networks = _cast(None, networks)
-        self.component = _cast(None, component)
-        self.cells = _cast(None, cells)
         self.type = _cast(None, type)
+        self.component = _cast(None, component)
         self.size = _cast(int, size)
         self.layout = layout
         if instances is None:
@@ -6483,18 +6479,12 @@ class Population(Standalone):
         if self.extracellular_properties is not None and 'extracellular_properties' not in already_processed:
             already_processed.add('extracellular_properties')
             outfile.write(' extracellularProperties=%s' % (quote_attrib(self.extracellular_properties), ))
-        if self.networks is not None and 'networks' not in already_processed:
-            already_processed.add('networks')
-            outfile.write(' network=%s' % (quote_attrib(self.networks), ))
-        if self.component is not None and 'component' not in already_processed:
-            already_processed.add('component')
-            outfile.write(' component=%s' % (quote_attrib(self.component), ))
-        if self.cells is not None and 'cells' not in already_processed:
-            already_processed.add('cells')
-            outfile.write(' cell=%s' % (quote_attrib(self.cells), ))
         if self.type is not None and 'type' not in already_processed:
             already_processed.add('type')
             outfile.write(' type=%s' % (quote_attrib(self.type), ))
+        if self.component is not None and 'component' not in already_processed:
+            already_processed.add('component')
+            outfile.write(' component=%s' % (quote_attrib(self.component), ))
         if self.size is not None and 'size' not in already_processed:
             already_processed.add('size')
             outfile.write(' size="%s"' % self.gds_format_integer(self.size, input_name='size'))
@@ -6519,22 +6509,14 @@ class Population(Standalone):
             already_processed.add('extracellular_properties')
             showIndent(outfile, level)
             outfile.write('extracellular_properties="%s",\n' % (self.extracellular_properties,))
-        if self.networks is not None and 'networks' not in already_processed:
-            already_processed.add('networks')
-            showIndent(outfile, level)
-            outfile.write('networks="%s",\n' % (self.networks,))
-        if self.component is not None and 'component' not in already_processed:
-            already_processed.add('component')
-            showIndent(outfile, level)
-            outfile.write('component="%s",\n' % (self.component,))
-        if self.cells is not None and 'cells' not in already_processed:
-            already_processed.add('cells')
-            showIndent(outfile, level)
-            outfile.write('cells="%s",\n' % (self.cells,))
         if self.type is not None and 'type' not in already_processed:
             already_processed.add('type')
             showIndent(outfile, level)
             outfile.write('type="%s",\n' % (self.type,))
+        if self.component is not None and 'component' not in already_processed:
+            already_processed.add('component')
+            showIndent(outfile, level)
+            outfile.write('component="%s",\n' % (self.component,))
         if self.size is not None and 'size' not in already_processed:
             already_processed.add('size')
             showIndent(outfile, level)
@@ -6573,26 +6555,16 @@ class Population(Standalone):
             already_processed.add('extracellularProperties')
             self.extracellular_properties = value
             self.validate_NmlId(self.extracellular_properties)    # validate type NmlId
-        value = find_attr_value_('network', node)
-        if value is not None and 'network' not in already_processed:
-            already_processed.add('network')
-            self.networks = value
-            self.validate_NmlId(self.networks)    # validate type NmlId
-        value = find_attr_value_('component', node)
-        if value is not None and 'component' not in already_processed:
-            already_processed.add('component')
-            self.component = value
-            self.validate_NmlId(self.component)    # validate type NmlId
-        value = find_attr_value_('cell', node)
-        if value is not None and 'cell' not in already_processed:
-            already_processed.add('cell')
-            self.cells = value
-            self.validate_NmlId(self.cells)    # validate type NmlId
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
             already_processed.add('type')
             self.type = value
             self.validate_populationTypes(self.type)    # validate type populationTypes
+        value = find_attr_value_('component', node)
+        if value is not None and 'component' not in already_processed:
+            already_processed.add('component')
+            self.component = value
+            self.validate_NmlId(self.component)    # validate type NmlId
         value = find_attr_value_('size', node)
         if value is not None and 'size' not in already_processed:
             already_processed.add('size')
@@ -11275,7 +11247,7 @@ class GateHHRatesInf(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, instances=1, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, steady_state=None):
+    def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, steady_state=None):
         self.original_tagname_ = None
         super(GateHHRatesInf, self).__init__(neuro_lex_id, id, )
         self.instances = _cast(int, instances)
@@ -11327,7 +11299,7 @@ class GateHHRatesInf(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateHHRatesInf'):
         super(GateHHRatesInf, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRatesInf')
-        if self.instances != 1 and 'instances' not in already_processed:
+        if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHRatesInf', fromsubclass_=False, pretty_print=True):
@@ -11446,7 +11418,7 @@ class GateHHRatesTau(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, instances=1, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None):
+    def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None):
         self.original_tagname_ = None
         super(GateHHRatesTau, self).__init__(neuro_lex_id, id, )
         self.instances = _cast(int, instances)
@@ -11498,7 +11470,7 @@ class GateHHRatesTau(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateHHRatesTau'):
         super(GateHHRatesTau, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRatesTau')
-        if self.instances != 1 and 'instances' not in already_processed:
+        if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHRatesTau', fromsubclass_=False, pretty_print=True):
@@ -11618,7 +11590,7 @@ class GateHHRatesTauInf(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, instances=1, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None, steady_state=None):
+    def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None, steady_state=None):
         self.original_tagname_ = None
         super(GateHHRatesTauInf, self).__init__(neuro_lex_id, id, )
         self.instances = _cast(int, instances)
@@ -11672,7 +11644,7 @@ class GateHHRatesTauInf(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateHHRatesTauInf'):
         super(GateHHRatesTauInf, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRatesTauInf')
-        if self.instances != 1 and 'instances' not in already_processed:
+        if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHRatesTauInf', fromsubclass_=False, pretty_print=True):
@@ -11803,7 +11775,7 @@ class GateHHTauInf(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, instances=1, notes=None, q10_settings=None, time_course=None, steady_state=None):
+    def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, time_course=None, steady_state=None):
         self.original_tagname_ = None
         super(GateHHTauInf, self).__init__(neuro_lex_id, id, )
         self.instances = _cast(int, instances)
@@ -11853,7 +11825,7 @@ class GateHHTauInf(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateHHTauInf'):
         super(GateHHTauInf, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHTauInf')
-        if self.instances != 1 and 'instances' not in already_processed:
+        if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHTauInf', fromsubclass_=False, pretty_print=True):
@@ -11958,7 +11930,7 @@ class GateHHRates(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, instances=1, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None):
+    def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None):
         self.original_tagname_ = None
         super(GateHHRates, self).__init__(neuro_lex_id, id, )
         self.instances = _cast(int, instances)
@@ -12008,7 +11980,7 @@ class GateHHRates(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateHHRates'):
         super(GateHHRates, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRates')
-        if self.instances != 1 and 'instances' not in already_processed:
+        if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHRates', fromsubclass_=False, pretty_print=True):
@@ -12116,7 +12088,7 @@ class GateHHUndetermined(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, instances=1, type=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None, steady_state=None):
+    def __init__(self, neuro_lex_id=None, id=None, instances=None, type=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None, steady_state=None):
         self.original_tagname_ = None
         super(GateHHUndetermined, self).__init__(neuro_lex_id, id, )
         self.instances = _cast(int, instances)
@@ -12183,7 +12155,7 @@ class GateHHUndetermined(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateHHUndetermined'):
         super(GateHHUndetermined, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHUndetermined')
-        if self.instances != 1 and 'instances' not in already_processed:
+        if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
         if self.type is not None and 'type' not in already_processed:
@@ -17343,7 +17315,8 @@ def get_root_tag(node):
 
 
 def parse(inFileName, silence=False):
-    doc = parsexml_(inFileName)
+    parser = None
+    doc = parsexml_(inFileName, parser)
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
@@ -17363,7 +17336,8 @@ def parse(inFileName, silence=False):
 
 
 def parseEtree(inFileName, silence=False):
-    doc = parsexml_(inFileName)
+    parser = None
+    doc = parsexml_(inFileName, parser)
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
@@ -17386,8 +17360,9 @@ def parseEtree(inFileName, silence=False):
 
 
 def parseString(inString, silence=False):
-    from StringIO import StringIO
-    doc = parsexml_(StringIO(inString))
+    from io import StringIO
+    parser = None
+    doc = parsexml_(StringIO(inString), parser)
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
@@ -17406,7 +17381,8 @@ def parseString(inString, silence=False):
 
 
 def parseLiteral(inFileName, silence=False):
-    doc = parsexml_(inFileName)
+    parser = None
+    doc = parsexml_(inFileName, parser)
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
