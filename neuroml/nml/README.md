@@ -13,3 +13,8 @@ generateDS.py should be invoked in this folder (so that generateds_config.py can
 You may have to add the current folder to your PYTHONPATH, i.e.
 
     export PYTHONPATH=$PYTHONPATH:.
+
+
+After generating nml.py, convert it to pythin 3 compatibility with:
+
+    2to3
