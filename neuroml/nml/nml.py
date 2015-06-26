@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed May 20 13:42:10 2015 by generateDS.py version 2.15b.
+# Generated Fri Jun 26 14:56:43 2015 by generateDS.py version 2.15b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -31,12 +31,12 @@ from lxml import etree as etree_
 Validate_simpletypes_ = True
 
 
-def parsexml_(infile, parser=None, **kwargs):
-    if parser is None:
+def parsexml_(*args, **kwargs):
+    if 'parser' not in kwargs:
         # Use the lxml ElementTree compatible parser so that, e.g.,
         #   we ignore comments.
-        parser = etree_.ETCompatXMLParser()
-    doc = etree_.parse(infile, parser=parser, **kwargs)
+        kwargs['parser'] = etree_.ETCompatXMLParser()
+    doc = etree_.parse(*args, **kwargs)
     return doc
 
 #
@@ -346,7 +346,7 @@ except ImportError as exp:
             return None
         @classmethod
         def gds_reverse_node_mapping(cls, mapping):
-            return dict(((v, k) for k, v in list(mapping.items())))
+            return dict(((v, k) for k, v in mapping.items()))
 
 
 #
@@ -2014,27 +2014,26 @@ class SegmentParent(GeneratedsSuper):
     def volume(self):
         from math import pi
 
-        prox_diam = self.proximal.diameter
-        dist_diam = self.distal.diameter
-
+        prox_rad = self.proximal.diameter/2.0
+        dist_rad = self.distal.diameter/2.0
         length = self.length
 
-        volume = (pi/3)*length*(prox_diam**2+dist_diam**2+prox_diam*dist_diam)
+        volume = (pi/3)*length*(prox_rad**2+dist_rad**2+prox_rad*dist_rad)
 
         return volume
     
     @property
-    def area(self):
+    def surface_area(self):
         from math import pi
         from math import sqrt
 
-        prox_diam = self.proximal.diameter
-        dist_diam = self.distal.diameter
+        prox_rad = self.proximal.diameter/2.0
+        dist_rad = self.distal.diameter/2.0
         length = self.length
 
-        area = pi*(prox_diam+dist_diam)*sqrt((prox_diam-dist_diam)**2+length**2)
+        surface_area = pi*(prox_rad+dist_rad)*sqrt((prox_rad-dist_rad)**2+length**2)
         
-        return area
+        return surface_area
     # end class SegmentParent
 
 
@@ -2784,27 +2783,26 @@ class SegmentEndPoint(GeneratedsSuper):
     def volume(self):
         from math import pi
 
-        prox_diam = self.proximal.diameter
-        dist_diam = self.distal.diameter
-
+        prox_rad = self.proximal.diameter/2.0
+        dist_rad = self.distal.diameter/2.0
         length = self.length
 
-        volume = (pi/3)*length*(prox_diam**2+dist_diam**2+prox_diam*dist_diam)
+        volume = (pi/3)*length*(prox_rad**2+dist_rad**2+prox_rad*dist_rad)
 
         return volume
     
     @property
-    def area(self):
+    def surface_area(self):
         from math import pi
         from math import sqrt
 
-        prox_diam = self.proximal.diameter
-        dist_diam = self.distal.diameter
+        prox_rad = self.proximal.diameter/2.0
+        dist_rad = self.distal.diameter/2.0
         length = self.length
 
-        area = pi*(prox_diam+dist_diam)*sqrt((prox_diam-dist_diam)**2+length**2)
+        surface_area = pi*(prox_rad+dist_rad)*sqrt((prox_rad-dist_rad)**2+length**2)
         
-        return area
+        return surface_area
     # end class SegmentEndPoint
 
 
@@ -10424,27 +10422,26 @@ class SegmentGroup(Base):
     def volume(self):
         from math import pi
 
-        prox_diam = self.proximal.diameter
-        dist_diam = self.distal.diameter
-
+        prox_rad = self.proximal.diameter/2.0
+        dist_rad = self.distal.diameter/2.0
         length = self.length
 
-        volume = (pi/3)*length*(prox_diam**2+dist_diam**2+prox_diam*dist_diam)
+        volume = (pi/3)*length*(prox_rad**2+dist_rad**2+prox_rad*dist_rad)
 
         return volume
     
     @property
-    def area(self):
+    def surface_area(self):
         from math import pi
         from math import sqrt
 
-        prox_diam = self.proximal.diameter
-        dist_diam = self.distal.diameter
+        prox_rad = self.proximal.diameter/2.0
+        dist_rad = self.distal.diameter/2.0
         length = self.length
 
-        area = pi*(prox_diam+dist_diam)*sqrt((prox_diam-dist_diam)**2+length**2)
+        surface_area = pi*(prox_rad+dist_rad)*sqrt((prox_rad-dist_rad)**2+length**2)
         
-        return area
+        return surface_area
     # end class SegmentGroup
 
 
@@ -10617,27 +10614,26 @@ class Segment(BaseWithoutId):
     def volume(self):
         from math import pi
 
-        prox_diam = self.proximal.diameter
-        dist_diam = self.distal.diameter
-
+        prox_rad = self.proximal.diameter/2.0
+        dist_rad = self.distal.diameter/2.0
         length = self.length
 
-        volume = (pi/3)*length*(prox_diam**2+dist_diam**2+prox_diam*dist_diam)
+        volume = (pi/3)*length*(prox_rad**2+dist_rad**2+prox_rad*dist_rad)
 
         return volume
     
     @property
-    def area(self):
+    def surface_area(self):
         from math import pi
         from math import sqrt
 
-        prox_diam = self.proximal.diameter
-        dist_diam = self.distal.diameter
+        prox_rad = self.proximal.diameter/2.0
+        dist_rad = self.distal.diameter/2.0
         length = self.length
 
-        area = pi*(prox_diam+dist_diam)*sqrt((prox_diam-dist_diam)**2+length**2)
+        surface_area = pi*(prox_rad+dist_rad)*sqrt((prox_rad-dist_rad)**2+length**2)
         
-        return area
+        return surface_area
     # end class Segment
 
 
@@ -17315,8 +17311,7 @@ def get_root_tag(node):
 
 
 def parse(inFileName, silence=False):
-    parser = None
-    doc = parsexml_(inFileName, parser)
+    doc = parsexml_(inFileName)
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
@@ -17336,8 +17331,7 @@ def parse(inFileName, silence=False):
 
 
 def parseEtree(inFileName, silence=False):
-    parser = None
-    doc = parsexml_(inFileName, parser)
+    doc = parsexml_(inFileName)
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
@@ -17361,8 +17355,7 @@ def parseEtree(inFileName, silence=False):
 
 def parseString(inString, silence=False):
     from io import StringIO
-    parser = None
-    doc = parsexml_(StringIO(inString), parser)
+    doc = parsexml_(StringIO(inString))
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:
@@ -17381,8 +17374,7 @@ def parseString(inString, silence=False):
 
 
 def parseLiteral(inFileName, silence=False):
-    parser = None
-    doc = parsexml_(inFileName, parser)
+    doc = parsexml_(inFileName)
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:

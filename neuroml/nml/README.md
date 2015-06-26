@@ -14,7 +14,8 @@ You may have to add the current folder to your PYTHONPATH, i.e.
 
     export PYTHONPATH=$PYTHONPATH:.
 
+After generating nml.py, convert it to python 3 compatibility with:
 
-After generating nml.py, convert it to pythin 3 compatibility with:
+    2to3 -w nml.py
 
-    2to3
+

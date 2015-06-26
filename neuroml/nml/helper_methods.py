@@ -113,33 +113,32 @@ volume = MethodSpec(name='volume',
     def volume(self):
         from math import pi
 
-        prox_diam = self.proximal.diameter
-        dist_diam = self.distal.diameter
-
+        prox_rad = self.proximal.diameter/2.0
+        dist_rad = self.distal.diameter/2.0
         length = self.length
 
-        volume = (pi/3)*length*(prox_diam**2+dist_diam**2+prox_diam*dist_diam)
+        volume = (pi/3)*length*(prox_rad**2+dist_rad**2+prox_rad*dist_rad)
 
         return volume
     ''',
     class_names=("Segment")
     )
 
-area = MethodSpec(name='area',
+surface_area = MethodSpec(name='surface_area',
     source='''\
 
     @property
-    def area(self):
+    def surface_area(self):
         from math import pi
         from math import sqrt
 
-        prox_diam = self.proximal.diameter
-        dist_diam = self.distal.diameter
+        prox_rad = self.proximal.diameter/2.0
+        dist_rad = self.distal.diameter/2.0
         length = self.length
 
-        area = pi*(prox_diam+dist_diam)*sqrt((prox_diam-dist_diam)**2+length**2)
+        surface_area = pi*(prox_rad+dist_rad)*sqrt((prox_rad-dist_rad)**2+length**2)
         
-        return area
+        return surface_area
     ''',
     class_names=("Segment")
     )
@@ -153,7 +152,7 @@ area = MethodSpec(name='area',
 #
 METHOD_SPECS=(length,
               volume,
-              area,
+              surface_area,
               num_segments,
              )
 
