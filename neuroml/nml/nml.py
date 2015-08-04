@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Jun 26 15:32:52 2015 by generateDS.py version 2.16a.
+# Generated Tue Aug  4 19:09:45 2015 by generateDS.py version 2.16a.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -800,19 +800,29 @@ class ComponentType(GeneratedsSuper):
         MemberSpec_('extends', 'xs:string', 0),
         MemberSpec_('name', 'xs:string', 0),
         MemberSpec_('description', 'xs:string', 0),
-        MemberSpec_('', 'xs:string', 1),
+        MemberSpec_('Constant', 'Constant', 1),
+        MemberSpec_('Requirement', 'Requirement', 1),
+        MemberSpec_('Dynamics', 'Dynamics', 1),
     ]
     subclass = None
     superclass = None
-    def __init__(self, extends=None, name=None, description=None, anytypeobjs_=None):
+    def __init__(self, extends=None, name=None, description=None, Constant=None, Requirement=None, Dynamics=None):
         self.original_tagname_ = None
         self.extends = _cast(None, extends)
         self.name = _cast(None, name)
         self.description = _cast(None, description)
-        if anytypeobjs_ is None:
-            self.anytypeobjs_ = []
+        if Constant is None:
+            self.Constant = []
         else:
-            self.anytypeobjs_ = anytypeobjs_
+            self.Constant = Constant
+        if Requirement is None:
+            self.Requirement = []
+        else:
+            self.Requirement = Requirement
+        if Dynamics is None:
+            self.Dynamics = []
+        else:
+            self.Dynamics = Dynamics
     def factory(*args_, **kwargs_):
         if ComponentType.subclass:
             return ComponentType.subclass(*args_, **kwargs_)
@@ -821,7 +831,9 @@ class ComponentType(GeneratedsSuper):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.anytypeobjs_
+            self.Constant or
+            self.Requirement or
+            self.Dynamics
         ):
             return True
         else:
@@ -859,8 +871,12 @@ class ComponentType(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        for obj_ in self.anytypeobjs_:
-            obj_.export(outfile, level, namespace_, pretty_print=pretty_print)
+        for Constant_ in self.Constant:
+            Constant_.export(outfile, level, namespace_, name_='Constant', pretty_print=pretty_print)
+        for Requirement_ in self.Requirement:
+            Requirement_.export(outfile, level, namespace_, name_='Requirement', pretty_print=pretty_print)
+        for Dynamics_ in self.Dynamics:
+            Dynamics_.export(outfile, level, namespace_, name_='Dynamics', pretty_print=pretty_print)
     def exportLiteral(self, outfile, level, name_='ComponentType'):
         level += 1
         already_processed = set()
@@ -882,10 +898,38 @@ class ComponentType(GeneratedsSuper):
             outfile.write('description="%s",\n' % (self.description,))
     def exportLiteralChildren(self, outfile, level, name_):
         showIndent(outfile, level)
-        outfile.write('anytypeobjs_=[\n')
+        outfile.write('Constant=[\n')
         level += 1
-        for anytypeobjs_ in self.anytypeobjs_:
-            anytypeobjs_.exportLiteral(outfile, level)
+        for Constant_ in self.Constant:
+            showIndent(outfile, level)
+            outfile.write('model_.Constant(\n')
+            Constant_.exportLiteral(outfile, level)
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('Requirement=[\n')
+        level += 1
+        for Requirement_ in self.Requirement:
+            showIndent(outfile, level)
+            outfile.write('model_.Requirement(\n')
+            Requirement_.exportLiteral(outfile, level)
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('Dynamics=[\n')
+        level += 1
+        for Dynamics_ in self.Dynamics:
+            showIndent(outfile, level)
+            outfile.write('model_.Dynamics(\n')
+            Dynamics_.exportLiteral(outfile, level)
+            showIndent(outfile, level)
+            outfile.write('),\n')
         level -= 1
         showIndent(outfile, level)
         outfile.write('],\n')
@@ -910,10 +954,772 @@ class ComponentType(GeneratedsSuper):
             already_processed.add('description')
             self.description = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        obj_ = self.gds_build_any(child_, 'ComponentType')
-        if obj_ is not None:
-            self.add_anytypeobjs_(obj_)
+        if nodeName_ == 'Constant':
+            obj_ = Constant.factory()
+            obj_.build(child_)
+            self.Constant.append(obj_)
+            obj_.original_tagname_ = 'Constant'
+        elif nodeName_ == 'Requirement':
+            obj_ = Requirement.factory()
+            obj_.build(child_)
+            self.Requirement.append(obj_)
+            obj_.original_tagname_ = 'Requirement'
+        elif nodeName_ == 'Dynamics':
+            obj_ = Dynamics.factory()
+            obj_.build(child_)
+            self.Dynamics.append(obj_)
+            obj_.original_tagname_ = 'Dynamics'
 # end class ComponentType
+
+
+class Constant(GeneratedsSuper):
+    """LEMS ComponentType for Constant."""
+    member_data_items_ = [
+        MemberSpec_('description', 'xs:string', 0),
+        MemberSpec_('name', 'xs:string', 0),
+        MemberSpec_('value', 'Nml2Quantity', 0),
+        MemberSpec_('dimension', 'xs:string', 0),
+    ]
+    subclass = None
+    superclass = None
+    def __init__(self, description=None, name=None, value=None, dimension=None):
+        self.original_tagname_ = None
+        self.description = _cast(None, description)
+        self.name = _cast(None, name)
+        self.value = _cast(None, value)
+        self.dimension = _cast(None, dimension)
+    def factory(*args_, **kwargs_):
+        if Constant.subclass:
+            return Constant.subclass(*args_, **kwargs_)
+        else:
+            return Constant(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Nml2Quantity(self, value):
+        # Validate type Nml2Quantity, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_patterns_, ))
+    validate_Nml2Quantity_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*([_a-zA-Z0-9])*$']]
+    def hasContent_(self):
+        if (
+
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='Constant', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='Constant')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Constant', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Constant'):
+        if self.description is not None and 'description' not in already_processed:
+            already_processed.add('description')
+            outfile.write(' description=%s' % (self.gds_format_string(quote_attrib(self.description).encode(ExternalEncoding), input_name='description'), ))
+        if self.name is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            outfile.write(' name=%s' % (self.gds_format_string(quote_attrib(self.name).encode(ExternalEncoding), input_name='name'), ))
+        if self.value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            outfile.write(' value=%s' % (quote_attrib(self.value), ))
+        if self.dimension is not None and 'dimension' not in already_processed:
+            already_processed.add('dimension')
+            outfile.write(' dimension=%s' % (self.gds_format_string(quote_attrib(self.dimension).encode(ExternalEncoding), input_name='dimension'), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='Constant', fromsubclass_=False, pretty_print=True):
+        pass
+    def exportLiteral(self, outfile, level, name_='Constant'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.description is not None and 'description' not in already_processed:
+            already_processed.add('description')
+            showIndent(outfile, level)
+            outfile.write('description="%s",\n' % (self.description,))
+        if self.name is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            showIndent(outfile, level)
+            outfile.write('name="%s",\n' % (self.name,))
+        if self.value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            showIndent(outfile, level)
+            outfile.write('value="%s",\n' % (self.value,))
+        if self.dimension is not None and 'dimension' not in already_processed:
+            already_processed.add('dimension')
+            showIndent(outfile, level)
+            outfile.write('dimension="%s",\n' % (self.dimension,))
+    def exportLiteralChildren(self, outfile, level, name_):
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('description', node)
+        if value is not None and 'description' not in already_processed:
+            already_processed.add('description')
+            self.description = value
+        value = find_attr_value_('name', node)
+        if value is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            self.name = value
+        value = find_attr_value_('value', node)
+        if value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            self.value = value
+            self.validate_Nml2Quantity(self.value)    # validate type Nml2Quantity
+        value = find_attr_value_('dimension', node)
+        if value is not None and 'dimension' not in already_processed:
+            already_processed.add('dimension')
+            self.dimension = value
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        pass
+# end class Constant
+
+
+class NamedDimensionalType(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('description', 'xs:string', 0),
+        MemberSpec_('name', 'xs:string', 0),
+        MemberSpec_('dimension', 'xs:string', 0),
+    ]
+    subclass = None
+    superclass = None
+    def __init__(self, description=None, name=None, dimension='none', extensiontype_=None):
+        self.original_tagname_ = None
+        self.description = _cast(None, description)
+        self.name = _cast(None, name)
+        self.dimension = _cast(None, dimension)
+        self.extensiontype_ = extensiontype_
+    def factory(*args_, **kwargs_):
+        if NamedDimensionalType.subclass:
+            return NamedDimensionalType.subclass(*args_, **kwargs_)
+        else:
+            return NamedDimensionalType(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='NamedDimensionalType', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='NamedDimensionalType')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='NamedDimensionalType', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='NamedDimensionalType'):
+        if self.description is not None and 'description' not in already_processed:
+            already_processed.add('description')
+            outfile.write(' description=%s' % (self.gds_format_string(quote_attrib(self.description).encode(ExternalEncoding), input_name='description'), ))
+        if self.name is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            outfile.write(' name=%s' % (self.gds_format_string(quote_attrib(self.name).encode(ExternalEncoding), input_name='name'), ))
+        if self.dimension != "none" and 'dimension' not in already_processed:
+            already_processed.add('dimension')
+            outfile.write(' dimension=%s' % (self.gds_format_string(quote_attrib(self.dimension).encode(ExternalEncoding), input_name='dimension'), ))
+        if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            outfile.write(' xsi:type="%s"' % self.extensiontype_)
+    def exportChildren(self, outfile, level, namespace_='', name_='NamedDimensionalType', fromsubclass_=False, pretty_print=True):
+        pass
+    def exportLiteral(self, outfile, level, name_='NamedDimensionalType'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.description is not None and 'description' not in already_processed:
+            already_processed.add('description')
+            showIndent(outfile, level)
+            outfile.write('description="%s",\n' % (self.description,))
+        if self.name is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            showIndent(outfile, level)
+            outfile.write('name="%s",\n' % (self.name,))
+        if self.dimension is not None and 'dimension' not in already_processed:
+            already_processed.add('dimension')
+            showIndent(outfile, level)
+            outfile.write('dimension="%s",\n' % (self.dimension,))
+    def exportLiteralChildren(self, outfile, level, name_):
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('description', node)
+        if value is not None and 'description' not in already_processed:
+            already_processed.add('description')
+            self.description = value
+        value = find_attr_value_('name', node)
+        if value is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            self.name = value
+        value = find_attr_value_('dimension', node)
+        if value is not None and 'dimension' not in already_processed:
+            already_processed.add('dimension')
+            self.dimension = value
+        value = find_attr_value_('xsi:type', node)
+        if value is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            self.extensiontype_ = value
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        pass
+# end class NamedDimensionalType
+
+
+class Requirement(NamedDimensionalType):
+    member_data_items_ = [
+    ]
+    subclass = None
+    superclass = NamedDimensionalType
+    def __init__(self, description=None, name=None, dimension='none'):
+        self.original_tagname_ = None
+        super(Requirement, self).__init__(description, name, dimension, )
+    def factory(*args_, **kwargs_):
+        if Requirement.subclass:
+            return Requirement.subclass(*args_, **kwargs_)
+        else:
+            return Requirement(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            super(Requirement, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='Requirement', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='Requirement')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Requirement', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Requirement'):
+        super(Requirement, self).exportAttributes(outfile, level, already_processed, namespace_, name_='Requirement')
+    def exportChildren(self, outfile, level, namespace_='', name_='Requirement', fromsubclass_=False, pretty_print=True):
+        super(Requirement, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
+    def exportLiteral(self, outfile, level, name_='Requirement'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        super(Requirement, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(Requirement, self).exportLiteralChildren(outfile, level, name_)
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        super(Requirement, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(Requirement, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class Requirement
+
+
+class Dynamics(GeneratedsSuper):
+    """LEMS ComponentType for Dynamics"""
+    member_data_items_ = [
+        MemberSpec_('DerivedVariable', 'DerivedVariable', 1),
+        MemberSpec_('ConditionalDerivedVariable', 'ConditionalDerivedVariable', 1),
+    ]
+    subclass = None
+    superclass = None
+    def __init__(self, DerivedVariable=None, ConditionalDerivedVariable=None):
+        self.original_tagname_ = None
+        if DerivedVariable is None:
+            self.DerivedVariable = []
+        else:
+            self.DerivedVariable = DerivedVariable
+        if ConditionalDerivedVariable is None:
+            self.ConditionalDerivedVariable = []
+        else:
+            self.ConditionalDerivedVariable = ConditionalDerivedVariable
+    def factory(*args_, **kwargs_):
+        if Dynamics.subclass:
+            return Dynamics.subclass(*args_, **kwargs_)
+        else:
+            return Dynamics(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            self.DerivedVariable or
+            self.ConditionalDerivedVariable
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='Dynamics', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='Dynamics')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Dynamics', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Dynamics'):
+        pass
+    def exportChildren(self, outfile, level, namespace_='', name_='Dynamics', fromsubclass_=False, pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        for DerivedVariable_ in self.DerivedVariable:
+            DerivedVariable_.export(outfile, level, namespace_, name_='DerivedVariable', pretty_print=pretty_print)
+        for ConditionalDerivedVariable_ in self.ConditionalDerivedVariable:
+            ConditionalDerivedVariable_.export(outfile, level, namespace_, name_='ConditionalDerivedVariable', pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='Dynamics'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        pass
+    def exportLiteralChildren(self, outfile, level, name_):
+        showIndent(outfile, level)
+        outfile.write('DerivedVariable=[\n')
+        level += 1
+        for DerivedVariable_ in self.DerivedVariable:
+            showIndent(outfile, level)
+            outfile.write('model_.DerivedVariable(\n')
+            DerivedVariable_.exportLiteral(outfile, level)
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('ConditionalDerivedVariable=[\n')
+        level += 1
+        for ConditionalDerivedVariable_ in self.ConditionalDerivedVariable:
+            showIndent(outfile, level)
+            outfile.write('model_.ConditionalDerivedVariable(\n')
+            ConditionalDerivedVariable_.exportLiteral(outfile, level)
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        pass
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        if nodeName_ == 'DerivedVariable':
+            obj_ = DerivedVariable.factory()
+            obj_.build(child_)
+            self.DerivedVariable.append(obj_)
+            obj_.original_tagname_ = 'DerivedVariable'
+        elif nodeName_ == 'ConditionalDerivedVariable':
+            obj_ = ConditionalDerivedVariable.factory()
+            obj_.build(child_)
+            self.ConditionalDerivedVariable.append(obj_)
+            obj_.original_tagname_ = 'ConditionalDerivedVariable'
+# end class Dynamics
+
+
+class DerivedVariable(GeneratedsSuper):
+    """LEMS ComponentType for DerivedVariable"""
+    member_data_items_ = [
+        MemberSpec_('exposure', 'xs:string', 0),
+        MemberSpec_('name', 'xs:string', 0),
+        MemberSpec_('value', 'xs:string', 0),
+        MemberSpec_('dimension', 'xs:string', 0),
+    ]
+    subclass = None
+    superclass = None
+    def __init__(self, exposure=None, name=None, value=None, dimension=None):
+        self.original_tagname_ = None
+        self.exposure = _cast(None, exposure)
+        self.name = _cast(None, name)
+        self.value = _cast(None, value)
+        self.dimension = _cast(None, dimension)
+    def factory(*args_, **kwargs_):
+        if DerivedVariable.subclass:
+            return DerivedVariable.subclass(*args_, **kwargs_)
+        else:
+            return DerivedVariable(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='DerivedVariable', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='DerivedVariable')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='DerivedVariable', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='DerivedVariable'):
+        if self.exposure is not None and 'exposure' not in already_processed:
+            already_processed.add('exposure')
+            outfile.write(' exposure=%s' % (self.gds_format_string(quote_attrib(self.exposure).encode(ExternalEncoding), input_name='exposure'), ))
+        if self.name is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            outfile.write(' name=%s' % (self.gds_format_string(quote_attrib(self.name).encode(ExternalEncoding), input_name='name'), ))
+        if self.value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            outfile.write(' value=%s' % (self.gds_format_string(quote_attrib(self.value).encode(ExternalEncoding), input_name='value'), ))
+        if self.dimension is not None and 'dimension' not in already_processed:
+            already_processed.add('dimension')
+            outfile.write(' dimension=%s' % (self.gds_format_string(quote_attrib(self.dimension).encode(ExternalEncoding), input_name='dimension'), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='DerivedVariable', fromsubclass_=False, pretty_print=True):
+        pass
+    def exportLiteral(self, outfile, level, name_='DerivedVariable'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.exposure is not None and 'exposure' not in already_processed:
+            already_processed.add('exposure')
+            showIndent(outfile, level)
+            outfile.write('exposure="%s",\n' % (self.exposure,))
+        if self.name is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            showIndent(outfile, level)
+            outfile.write('name="%s",\n' % (self.name,))
+        if self.value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            showIndent(outfile, level)
+            outfile.write('value="%s",\n' % (self.value,))
+        if self.dimension is not None and 'dimension' not in already_processed:
+            already_processed.add('dimension')
+            showIndent(outfile, level)
+            outfile.write('dimension="%s",\n' % (self.dimension,))
+    def exportLiteralChildren(self, outfile, level, name_):
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('exposure', node)
+        if value is not None and 'exposure' not in already_processed:
+            already_processed.add('exposure')
+            self.exposure = value
+        value = find_attr_value_('name', node)
+        if value is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            self.name = value
+        value = find_attr_value_('value', node)
+        if value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            self.value = value
+        value = find_attr_value_('dimension', node)
+        if value is not None and 'dimension' not in already_processed:
+            already_processed.add('dimension')
+            self.dimension = value
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        pass
+# end class DerivedVariable
+
+
+class ConditionalDerivedVariable(GeneratedsSuper):
+    """LEMS ComponentType for ConditionalDerivedVariable"""
+    member_data_items_ = [
+        MemberSpec_('exposure', 'xs:string', 0),
+        MemberSpec_('name', 'xs:string', 0),
+        MemberSpec_('dimension', 'xs:string', 0),
+        MemberSpec_('Case', 'Case', 1),
+    ]
+    subclass = None
+    superclass = None
+    def __init__(self, exposure=None, name=None, dimension='none', Case=None):
+        self.original_tagname_ = None
+        self.exposure = _cast(None, exposure)
+        self.name = _cast(None, name)
+        self.dimension = _cast(None, dimension)
+        if Case is None:
+            self.Case = []
+        else:
+            self.Case = Case
+    def factory(*args_, **kwargs_):
+        if ConditionalDerivedVariable.subclass:
+            return ConditionalDerivedVariable.subclass(*args_, **kwargs_)
+        else:
+            return ConditionalDerivedVariable(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            self.Case
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='ConditionalDerivedVariable', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ConditionalDerivedVariable')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ConditionalDerivedVariable', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ConditionalDerivedVariable'):
+        if self.exposure is not None and 'exposure' not in already_processed:
+            already_processed.add('exposure')
+            outfile.write(' exposure=%s' % (self.gds_format_string(quote_attrib(self.exposure).encode(ExternalEncoding), input_name='exposure'), ))
+        if self.name is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            outfile.write(' name=%s' % (self.gds_format_string(quote_attrib(self.name).encode(ExternalEncoding), input_name='name'), ))
+        if self.dimension != "none" and 'dimension' not in already_processed:
+            already_processed.add('dimension')
+            outfile.write(' dimension=%s' % (self.gds_format_string(quote_attrib(self.dimension).encode(ExternalEncoding), input_name='dimension'), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='ConditionalDerivedVariable', fromsubclass_=False, pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        for Case_ in self.Case:
+            Case_.export(outfile, level, namespace_, name_='Case', pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='ConditionalDerivedVariable'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.exposure is not None and 'exposure' not in already_processed:
+            already_processed.add('exposure')
+            showIndent(outfile, level)
+            outfile.write('exposure="%s",\n' % (self.exposure,))
+        if self.name is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            showIndent(outfile, level)
+            outfile.write('name="%s",\n' % (self.name,))
+        if self.dimension is not None and 'dimension' not in already_processed:
+            already_processed.add('dimension')
+            showIndent(outfile, level)
+            outfile.write('dimension="%s",\n' % (self.dimension,))
+    def exportLiteralChildren(self, outfile, level, name_):
+        showIndent(outfile, level)
+        outfile.write('Case=[\n')
+        level += 1
+        for Case_ in self.Case:
+            showIndent(outfile, level)
+            outfile.write('model_.Case(\n')
+            Case_.exportLiteral(outfile, level)
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('exposure', node)
+        if value is not None and 'exposure' not in already_processed:
+            already_processed.add('exposure')
+            self.exposure = value
+        value = find_attr_value_('name', node)
+        if value is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            self.name = value
+        value = find_attr_value_('dimension', node)
+        if value is not None and 'dimension' not in already_processed:
+            already_processed.add('dimension')
+            self.dimension = value
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        if nodeName_ == 'Case':
+            obj_ = Case.factory()
+            obj_.build(child_)
+            self.Case.append(obj_)
+            obj_.original_tagname_ = 'Case'
+# end class ConditionalDerivedVariable
+
+
+class Case(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('value', 'xs:string', 0),
+        MemberSpec_('condition', 'xs:string', 0),
+    ]
+    subclass = None
+    superclass = None
+    def __init__(self, value=None, condition=None):
+        self.original_tagname_ = None
+        self.value = _cast(None, value)
+        self.condition = _cast(None, condition)
+    def factory(*args_, **kwargs_):
+        if Case.subclass:
+            return Case.subclass(*args_, **kwargs_)
+        else:
+            return Case(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='Case', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='Case')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Case', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Case'):
+        if self.value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            outfile.write(' value=%s' % (self.gds_format_string(quote_attrib(self.value).encode(ExternalEncoding), input_name='value'), ))
+        if self.condition is not None and 'condition' not in already_processed:
+            already_processed.add('condition')
+            outfile.write(' condition=%s' % (self.gds_format_string(quote_attrib(self.condition).encode(ExternalEncoding), input_name='condition'), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='Case', fromsubclass_=False, pretty_print=True):
+        pass
+    def exportLiteral(self, outfile, level, name_='Case'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            showIndent(outfile, level)
+            outfile.write('value="%s",\n' % (self.value,))
+        if self.condition is not None and 'condition' not in already_processed:
+            already_processed.add('condition')
+            showIndent(outfile, level)
+            outfile.write('condition="%s",\n' % (self.condition,))
+    def exportLiteralChildren(self, outfile, level, name_):
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('value', node)
+        if value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            self.value = value
+        value = find_attr_value_('condition', node)
+        if value is not None and 'condition' not in already_processed:
+            already_processed.add('condition')
+            self.condition = value
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        pass
+# end class Case
 
 
 class IncludeType(GeneratedsSuper):
@@ -17420,6 +18226,7 @@ __all__ = [
     "BiophysicalProperties",
     "BlockMechanism",
     "BlockingPlasticSynapse",
+    "Case",
     "Cell",
     "CellSet",
     "ChannelDensity",
@@ -17430,9 +18237,13 @@ __all__ = [
     "ChannelPopulation",
     "ComponentType",
     "ConcentrationModel_D",
+    "ConditionalDerivedVariable",
     "Connection",
+    "Constant",
     "DecayingPoolConcentrationModel",
+    "DerivedVariable",
     "DistalDetails",
+    "Dynamics",
     "EIF_cond_alpha_isfa_ista",
     "EIF_cond_exp_isfa_ista",
     "ElectricalConnection",
@@ -17483,6 +18294,7 @@ __all__ = [
     "Member",
     "MembraneProperties",
     "Morphology",
+    "NamedDimensionalType",
     "Network",
     "NeuroMLDocument",
     "Path",
@@ -17499,6 +18311,7 @@ __all__ = [
     "RandomLayout",
     "ReactionScheme",
     "Region",
+    "Requirement",
     "Resistivity",
     "Segment",
     "SegmentEndPoint",

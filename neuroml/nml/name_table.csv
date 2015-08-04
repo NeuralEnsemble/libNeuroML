@@ -47,6 +47,7 @@ alphaCondSynapse,alpha_cond_synapses
 qualified,qualified
 grid,grid
 preSegmentId,pre_segment_id
+condition,condition
 target,target
 synapse,synapse
 IF_cond_alpha,IF_cond_alpha
@@ -182,6 +183,7 @@ pulseGenerator,pulse_generators
 basePyNNIaFCell,basePyNNIaFCell
 population,populations
 reset,reset
+none,none
 b,b
 i_offset,i_offset
 ionChannel,ion_channel
@@ -202,6 +204,7 @@ gateTypes,gate_types
 zSize,z_size
 minISI,min_isi
 resistivity,resistivities
+exposure,exposure
 xs:nonNegativeInteger,xs:non_negative_integer
 preSegment,pre_segment
 metric,metric
@@ -263,6 +266,7 @@ i,i
 required,required
 IF_curr_alpha,IF_curr_alpha
 postFractionAlong,post_fraction_along
+dimension,dimension
 expCurrSynapse,exp_curr_synapses
 time,time
 y,y
