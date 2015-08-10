@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Aug  4 19:09:45 2015 by generateDS.py version 2.16a.
+# Generated Mon Aug 10 12:28:41 2015 by generateDS.py version 2.15b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -473,7 +473,11 @@ class GDSParseError(Exception):
 
 
 def raise_parse_error(node, msg):
-    msg = '%s (element %s/line %d)' % (msg, node.tag, node.sourceline, )
+    if XMLParser_import_library == XMLParser_import_lxml:
+        msg = '%s (element %s/line %d)' % (
+            msg, node.tag, node.sourceline, )
+    else:
+        msg = '%s (element %s)' % (msg, node.tag, )
     raise GDSParseError(msg)
 
 
@@ -13412,6 +13416,7 @@ class NeuroMLDocument(Standalone):
         MemberSpec_('izhikevich_cells', 'IzhikevichCell', 1),
         MemberSpec_('ad_ex_ia_f_cells', 'AdExIaFCell', 1),
         MemberSpec_('fitz_hugh_nagumo_cells', 'FitzHughNagumoCell', 1),
+        MemberSpec_('fitz_hugh_nagumo1969_cells', 'FitzHughNagumo1969Cell', 1),
         MemberSpec_('pulse_generators', 'PulseGenerator', 1),
         MemberSpec_('sine_generators', 'SineGenerator', 1),
         MemberSpec_('ramp_generators', 'RampGenerator', 1),
@@ -13438,7 +13443,7 @@ class NeuroMLDocument(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, ion_channel_hhs=None, decaying_pool_concentration_models=None, fixed_factor_concentration_models=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, gap_junctions=None, biophysical_properties=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, ad_ex_ia_f_cells=None, fitz_hugh_nagumo_cells=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, poisson_firing_synapses=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, ion_channel_hhs=None, decaying_pool_concentration_models=None, fixed_factor_concentration_models=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, gap_junctions=None, biophysical_properties=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, ad_ex_ia_f_cells=None, fitz_hugh_nagumo_cells=None, fitz_hugh_nagumo1969_cells=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, poisson_firing_synapses=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
         self.original_tagname_ = None
         super(NeuroMLDocument, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
         if includes is None:
@@ -13529,6 +13534,10 @@ class NeuroMLDocument(Standalone):
             self.fitz_hugh_nagumo_cells = []
         else:
             self.fitz_hugh_nagumo_cells = fitz_hugh_nagumo_cells
+        if fitz_hugh_nagumo1969_cells is None:
+            self.fitz_hugh_nagumo1969_cells = []
+        else:
+            self.fitz_hugh_nagumo1969_cells = fitz_hugh_nagumo1969_cells
         if pulse_generators is None:
             self.pulse_generators = []
         else:
@@ -13651,6 +13660,7 @@ class NeuroMLDocument(Standalone):
             self.izhikevich_cells or
             self.ad_ex_ia_f_cells or
             self.fitz_hugh_nagumo_cells or
+            self.fitz_hugh_nagumo1969_cells or
             self.pulse_generators or
             self.sine_generators or
             self.ramp_generators or
@@ -13749,6 +13759,8 @@ class NeuroMLDocument(Standalone):
             adExIaFCell_.export(outfile, level, namespace_, name_='adExIaFCell', pretty_print=pretty_print)
         for fitzHughNagumoCell_ in self.fitz_hugh_nagumo_cells:
             fitzHughNagumoCell_.export(outfile, level, namespace_, name_='fitzHughNagumoCell', pretty_print=pretty_print)
+        for fitzHughNagumo1969Cell_ in self.fitz_hugh_nagumo1969_cells:
+            fitzHughNagumo1969Cell_.export(outfile, level, namespace_, name_='fitzHughNagumo1969Cell', pretty_print=pretty_print)
         for pulseGenerator_ in self.pulse_generators:
             pulseGenerator_.export(outfile, level, namespace_, name_='pulseGenerator', pretty_print=pretty_print)
         for sineGenerator_ in self.sine_generators:
@@ -14064,6 +14076,18 @@ class NeuroMLDocument(Standalone):
             showIndent(outfile, level)
             outfile.write('model_.FitzHughNagumoCell(\n')
             fitzHughNagumoCell_.exportLiteral(outfile, level, name_='FitzHughNagumoCell')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('fitz_hugh_nagumo1969_cells=[\n')
+        level += 1
+        for fitzHughNagumo1969Cell_ in self.fitz_hugh_nagumo1969_cells:
+            showIndent(outfile, level)
+            outfile.write('model_.FitzHughNagumo1969Cell(\n')
+            fitzHughNagumo1969Cell_.exportLiteral(outfile, level, name_='FitzHughNagumo1969Cell')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -14471,6 +14495,11 @@ class NeuroMLDocument(Standalone):
             obj_.build(child_)
             self.fitz_hugh_nagumo_cells.append(obj_)
             obj_.original_tagname_ = 'fitzHughNagumoCell'
+        elif nodeName_ == 'fitzHughNagumo1969Cell':
+            obj_ = FitzHughNagumo1969Cell.factory()
+            obj_.build(child_)
+            self.fitz_hugh_nagumo1969_cells.append(obj_)
+            obj_.original_tagname_ = 'fitzHughNagumo1969Cell'
         elif nodeName_ == 'pulseGenerator':
             obj_ = PulseGenerator.factory()
             obj_.build(child_)
@@ -15052,6 +15081,165 @@ class Cell(BaseCell):
             obj_.original_tagname_ = 'biophysicalProperties'
         super(Cell, self).buildChildren(child_, node, nodeName_, True)
 # end class Cell
+
+
+class FitzHughNagumo1969Cell(BaseCell):
+    member_data_items_ = [
+        MemberSpec_('a', 'Nml2Quantity_none', 0),
+        MemberSpec_('phi', 'Nml2Quantity_none', 0),
+        MemberSpec_('b', 'Nml2Quantity_none', 0),
+        MemberSpec_('I', 'Nml2Quantity_none', 0),
+        MemberSpec_('v0', 'Nml2Quantity_none', 0),
+        MemberSpec_('w0', 'Nml2Quantity_none', 0),
+    ]
+    subclass = None
+    superclass = BaseCell
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, a=None, phi=None, b=None, I=None, v0=None, w0=None):
+        self.original_tagname_ = None
+        super(FitzHughNagumo1969Cell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
+        self.a = _cast(None, a)
+        self.phi = _cast(None, phi)
+        self.b = _cast(None, b)
+        self.I = _cast(None, I)
+        self.v0 = _cast(None, v0)
+        self.w0 = _cast(None, w0)
+    def factory(*args_, **kwargs_):
+        if FitzHughNagumo1969Cell.subclass:
+            return FitzHughNagumo1969Cell.subclass(*args_, **kwargs_)
+        else:
+            return FitzHughNagumo1969Cell(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Nml2Quantity_none(self, value):
+        # Validate type Nml2Quantity_none, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_none_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_none_patterns_, ))
+    validate_Nml2Quantity_none_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?$']]
+    def hasContent_(self):
+        if (
+            super(FitzHughNagumo1969Cell, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='FitzHughNagumo1969Cell', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='FitzHughNagumo1969Cell')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='FitzHughNagumo1969Cell', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='FitzHughNagumo1969Cell'):
+        super(FitzHughNagumo1969Cell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='FitzHughNagumo1969Cell')
+        if self.a is not None and 'a' not in already_processed:
+            already_processed.add('a')
+            outfile.write(' a=%s' % (quote_attrib(self.a), ))
+        if self.phi is not None and 'phi' not in already_processed:
+            already_processed.add('phi')
+            outfile.write(' phi=%s' % (quote_attrib(self.phi), ))
+        if self.b is not None and 'b' not in already_processed:
+            already_processed.add('b')
+            outfile.write(' b=%s' % (quote_attrib(self.b), ))
+        if self.I is not None and 'I' not in already_processed:
+            already_processed.add('I')
+            outfile.write(' I=%s' % (quote_attrib(self.I), ))
+        if self.v0 is not None and 'v0' not in already_processed:
+            already_processed.add('v0')
+            outfile.write(' v0=%s' % (quote_attrib(self.v0), ))
+        if self.w0 is not None and 'w0' not in already_processed:
+            already_processed.add('w0')
+            outfile.write(' w0=%s' % (quote_attrib(self.w0), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='FitzHughNagumo1969Cell', fromsubclass_=False, pretty_print=True):
+        super(FitzHughNagumo1969Cell, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='FitzHughNagumo1969Cell'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.a is not None and 'a' not in already_processed:
+            already_processed.add('a')
+            showIndent(outfile, level)
+            outfile.write('a="%s",\n' % (self.a,))
+        if self.phi is not None and 'phi' not in already_processed:
+            already_processed.add('phi')
+            showIndent(outfile, level)
+            outfile.write('phi="%s",\n' % (self.phi,))
+        if self.b is not None and 'b' not in already_processed:
+            already_processed.add('b')
+            showIndent(outfile, level)
+            outfile.write('b="%s",\n' % (self.b,))
+        if self.I is not None and 'I' not in already_processed:
+            already_processed.add('I')
+            showIndent(outfile, level)
+            outfile.write('I="%s",\n' % (self.I,))
+        if self.v0 is not None and 'v0' not in already_processed:
+            already_processed.add('v0')
+            showIndent(outfile, level)
+            outfile.write('v0="%s",\n' % (self.v0,))
+        if self.w0 is not None and 'w0' not in already_processed:
+            already_processed.add('w0')
+            showIndent(outfile, level)
+            outfile.write('w0="%s",\n' % (self.w0,))
+        super(FitzHughNagumo1969Cell, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(FitzHughNagumo1969Cell, self).exportLiteralChildren(outfile, level, name_)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('a', node)
+        if value is not None and 'a' not in already_processed:
+            already_processed.add('a')
+            self.a = value
+            self.validate_Nml2Quantity_none(self.a)    # validate type Nml2Quantity_none
+        value = find_attr_value_('phi', node)
+        if value is not None and 'phi' not in already_processed:
+            already_processed.add('phi')
+            self.phi = value
+            self.validate_Nml2Quantity_none(self.phi)    # validate type Nml2Quantity_none
+        value = find_attr_value_('b', node)
+        if value is not None and 'b' not in already_processed:
+            already_processed.add('b')
+            self.b = value
+            self.validate_Nml2Quantity_none(self.b)    # validate type Nml2Quantity_none
+        value = find_attr_value_('I', node)
+        if value is not None and 'I' not in already_processed:
+            already_processed.add('I')
+            self.I = value
+            self.validate_Nml2Quantity_none(self.I)    # validate type Nml2Quantity_none
+        value = find_attr_value_('v0', node)
+        if value is not None and 'v0' not in already_processed:
+            already_processed.add('v0')
+            self.v0 = value
+            self.validate_Nml2Quantity_none(self.v0)    # validate type Nml2Quantity_none
+        value = find_attr_value_('w0', node)
+        if value is not None and 'w0' not in already_processed:
+            already_processed.add('w0')
+            self.w0 = value
+            self.validate_Nml2Quantity_none(self.w0)    # validate type Nml2Quantity_none
+        super(FitzHughNagumo1969Cell, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(FitzHughNagumo1969Cell, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class FitzHughNagumo1969Cell
 
 
 class FitzHughNagumoCell(BaseCell):
@@ -17999,7 +18187,7 @@ GDSClassesMapping = {
     'spikeGeneratorPoisson': SpikeGeneratorPoisson,
     'proximal': ProximalDetails,
     'morphology': Morphology,
-    'spikeGeneratorRandom': SpikeGeneratorRandom,
+    'fitzHughNagumo1969Cell': FitzHughNagumo1969Cell,
     'sineGenerator': SineGenerator,
     'layout': Layout,
     'reverseRate': HHRate,
@@ -18053,6 +18241,7 @@ GDSClassesMapping = {
     'from': SegmentEndPoint,
     'decayingPoolConcentrationModel': DecayingPoolConcentrationModel,
     'cellSet': CellSet,
+    'spikeGeneratorRandom': SpikeGeneratorRandom,
     'spike': Spike,
     'fitzHughNagumoCell': FitzHughNagumoCell,
     'channelPopulation': ChannelPopulation,
@@ -18255,6 +18444,7 @@ __all__ = [
     "ExplicitInput",
     "ExtracellularProperties",
     "ExtracellularPropertiesLocal",
+    "FitzHughNagumo1969Cell",
     "FitzHughNagumoCell",
     "FixedFactorConcentrationModel",
     "GapJunction",

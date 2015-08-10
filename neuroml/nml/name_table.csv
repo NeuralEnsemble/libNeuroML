@@ -24,7 +24,7 @@ rampGenerator,ramp_generators
 channelDensityNernst,channel_density_nernsts
 gateHHrates,gate_hh_rates
 to,to
-voltageClamp,voltage_clamps
+w0,w0
 extends,extends
 basePyNNIaFCondCell,basePyNNIaFCondCell
 distal,distal
@@ -102,6 +102,7 @@ electricalProjection,electrical_projections
 gapJunction,gap_junctions
 targetVoltage,target_voltage
 parent,parent
+fitzHughNagumo1969Cell,fitz_hugh_nagumo1969_cells
 midpoint,midpoint
 component,component
 simpleSeriesResistance,simple_series_resistance
@@ -183,6 +184,7 @@ pulseGenerator,pulse_generators
 basePyNNIaFCell,basePyNNIaFCell
 population,populations
 reset,reset
+voltageClamp,voltage_clamps
 none,none
 b,b
 i_offset,i_offset
@@ -243,6 +245,7 @@ scalingVolt,scaling_volt
 blockConcentration,block_concentration
 gbar_K,gbar_K
 description,description
+phi,phi
 initMembPotential,init_memb_potentials
 decayConstant,decay_constant
 alphaCurrSynapse,alpha_curr_synapses

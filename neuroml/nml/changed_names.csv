@@ -15,7 +15,6 @@ reverseRate,reverse_rate
 rampGenerator,ramp_generators
 channelDensityNernst,channel_density_nernsts
 gateHHrates,gate_hh_rates
-voltageClamp,voltage_clamps
 voltageConcDepBlockMechanism,voltage_conc_dep_block_mechanism
 xSpacing,x_spacing
 iafCell,iaf_cells
@@ -60,6 +59,7 @@ forwardRate,forward_rate
 electricalProjection,electrical_projections
 gapJunction,gap_junctions
 targetVoltage,target_voltage
+fitzHughNagumo1969Cell,fitz_hugh_nagumo1969_cells
 simpleSeriesResistance,simple_series_resistance
 sineGenerator,sine_generators
 fixedFactorConcentrationModel,fixed_factor_concentration_models
@@ -104,6 +104,7 @@ iafTauCell,iaf_tau_cells
 zSpacing,z_spacing
 pulseGenerator,pulse_generators
 population,populations
+voltageClamp,voltage_clamps
 ionChannel,ion_channel
 allowedSpaces,allowed_spaces
 shellThickness,shell_thickness
