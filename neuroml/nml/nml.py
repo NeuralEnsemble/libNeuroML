@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Aug 10 12:28:41 2015 by generateDS.py version 2.15b.
+# Generated Tue Aug 18 09:29:47 2015 by generateDS.py version 2.15b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -1520,7 +1520,7 @@ class ConditionalDerivedVariable(GeneratedsSuper):
     ]
     subclass = None
     superclass = None
-    def __init__(self, exposure=None, name=None, dimension='none', Case=None):
+    def __init__(self, exposure=None, name=None, dimension=None, Case=None):
         self.original_tagname_ = None
         self.exposure = _cast(None, exposure)
         self.name = _cast(None, name)
@@ -1567,7 +1567,7 @@ class ConditionalDerivedVariable(GeneratedsSuper):
         if self.name is not None and 'name' not in already_processed:
             already_processed.add('name')
             outfile.write(' name=%s' % (self.gds_format_string(quote_attrib(self.name).encode(ExternalEncoding), input_name='name'), ))
-        if self.dimension != "none" and 'dimension' not in already_processed:
+        if self.dimension is not None and 'dimension' not in already_processed:
             already_processed.add('dimension')
             outfile.write(' dimension=%s' % (self.gds_format_string(quote_attrib(self.dimension).encode(ExternalEncoding), input_name='dimension'), ))
     def exportChildren(self, outfile, level, namespace_='', name_='ConditionalDerivedVariable', fromsubclass_=False, pretty_print=True):
