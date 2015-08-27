@@ -81,7 +81,6 @@ finishAmplitude,finish_amplitude
 duration,duration
 gateHHratesInf,gate_h_hrates_infs
 adExIaFCell,ad_ex_ia_f_cells
-xs:integer,xs:integer
 scale,scale
 segmentGroup,segment_groups
 network,networks
@@ -152,6 +151,7 @@ path,paths
 xs:string,xs:string
 select,select
 size,size
+xs:positiveInteger,xs:positive_integer
 rho,rho
 temperature,temperature
 spikeTarget,spike_target

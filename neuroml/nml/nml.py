@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Aug 18 09:29:47 2015 by generateDS.py version 2.15b.
+# Generated Thu Aug 27 10:11:28 2015 by generateDS.py version 2.15b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -1861,7 +1861,7 @@ class Q10Settings(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
 
@@ -2000,7 +2000,7 @@ class HHRate(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
 
@@ -2132,7 +2132,7 @@ class HHVariable(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
 
@@ -2275,7 +2275,7 @@ class HHTime(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
 
@@ -2433,7 +2433,7 @@ class BlockMechanism(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -2700,7 +2700,7 @@ class PlasticityMechanism(GeneratedsSuper):
 class SegmentParent(GeneratedsSuper):
     member_data_items_ = [
         MemberSpec_('fractionAlong', 'ZeroToOne', 0),
-        MemberSpec_('segment', 'SegmentId', 0),
+        MemberSpec_('segment', 'NonNegativeInteger', 0),
     ]
     subclass = None
     superclass = None
@@ -2721,8 +2721,8 @@ class SegmentParent(GeneratedsSuper):
                 warnings_.warn('Value "%(value)s" does not match xsd minInclusive restriction on ZeroToOne' % {"value" : value} )
             if value > 1:
                 warnings_.warn('Value "%(value)s" does not match xsd maxInclusive restriction on ZeroToOne' % {"value" : value} )
-    def validate_SegmentId(self, value):
-        # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
+    def validate_NonNegativeInteger(self, value):
+        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
         if value is not None and Validate_simpletypes_:
             pass
     def hasContent_(self):
@@ -2800,7 +2800,7 @@ class SegmentParent(GeneratedsSuper):
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.segments < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_SegmentId(self.segments)    # validate type SegmentId
+            self.validate_NonNegativeInteger(self.segments)    # validate type NonNegativeInteger
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
     @property
@@ -3128,7 +3128,7 @@ class DistalDetails(GeneratedsSuper):
 
 class Member(GeneratedsSuper):
     member_data_items_ = [
-        MemberSpec_('segment', 'SegmentId', 0),
+        MemberSpec_('segment', 'NonNegativeInteger', 0),
     ]
     subclass = None
     superclass = None
@@ -3141,8 +3141,8 @@ class Member(GeneratedsSuper):
         else:
             return Member(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def validate_SegmentId(self, value):
-        # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
+    def validate_NonNegativeInteger(self, value):
+        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
         if value is not None and Validate_simpletypes_:
             pass
     def hasContent_(self):
@@ -3205,7 +3205,7 @@ class Member(GeneratedsSuper):
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.segments < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_SegmentId(self.segments)    # validate type SegmentId
+            self.validate_NonNegativeInteger(self.segments)    # validate type NonNegativeInteger
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
 # end class Member
@@ -3232,7 +3232,7 @@ class Include(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
 
@@ -3492,7 +3492,7 @@ class SubTree(GeneratedsSuper):
 
 class SegmentEndPoint(GeneratedsSuper):
     member_data_items_ = [
-        MemberSpec_('segment', 'SegmentId', 0),
+        MemberSpec_('segment', 'NonNegativeInteger', 0),
     ]
     subclass = None
     superclass = None
@@ -3505,8 +3505,8 @@ class SegmentEndPoint(GeneratedsSuper):
         else:
             return SegmentEndPoint(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def validate_SegmentId(self, value):
-        # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
+    def validate_NonNegativeInteger(self, value):
+        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
         if value is not None and Validate_simpletypes_:
             pass
     def hasContent_(self):
@@ -3569,7 +3569,7 @@ class SegmentEndPoint(GeneratedsSuper):
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.segments < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_SegmentId(self.segments)    # validate type SegmentId
+            self.validate_NonNegativeInteger(self.segments)    # validate type NonNegativeInteger
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
     @property
@@ -3929,7 +3929,7 @@ class ValueAcrossSegOrSegGroup(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity(self, value):
         # Validate type Nml2Quantity, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -4256,7 +4256,7 @@ class Species(ValueAcrossSegOrSegGroup):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity_concentration(self, value):
         # Validate type Nml2Quantity_concentration, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -4771,7 +4771,7 @@ class Layout(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
             self.random is not None or
@@ -4979,7 +4979,7 @@ class RandomLayout(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
 
@@ -5464,7 +5464,7 @@ class SynapticConnection(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
 
@@ -5668,8 +5668,8 @@ class Input(GeneratedsSuper):
     member_data_items_ = [
         MemberSpec_('fractionAlong', 'ZeroToOne', 0),
         MemberSpec_('destination', 'NmlId', 0),
-        MemberSpec_('id', 'xs:nonNegativeInteger', 0),
-        MemberSpec_('segmentId', 'SegmentId', 0),
+        MemberSpec_('id', 'NonNegativeInteger', 0),
+        MemberSpec_('segmentId', 'NonNegativeInteger', 0),
         MemberSpec_('target', 'xs:string', 0),
     ]
     subclass = None
@@ -5678,7 +5678,7 @@ class Input(GeneratedsSuper):
         self.original_tagname_ = None
         self.fraction_along = _cast(None, fraction_along)
         self.destination = _cast(None, destination)
-        self.id = _cast(int, id)
+        self.id = _cast(None, id)
         self.segment_id = _cast(None, segment_id)
         self.target = _cast(None, target)
     def factory(*args_, **kwargs_):
@@ -5700,9 +5700,9 @@ class Input(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
-    def validate_SegmentId(self, value):
-        # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
+    def validate_NonNegativeInteger(self, value):
+        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
         if value is not None and Validate_simpletypes_:
             pass
     def hasContent_(self):
@@ -5738,7 +5738,7 @@ class Input(GeneratedsSuper):
             outfile.write(' destination=%s' % (quote_attrib(self.destination), ))
         if self.id is not None and 'id' not in already_processed:
             already_processed.add('id')
-            outfile.write(' id="%s"' % self.gds_format_integer(self.id, input_name='id'))
+            outfile.write(' id=%s' % (quote_attrib(self.id), ))
         if self.segment_id is not None and 'segment_id' not in already_processed:
             already_processed.add('segment_id')
             outfile.write(' segmentId=%s' % (quote_attrib(self.segment_id), ))
@@ -5806,6 +5806,7 @@ class Input(GeneratedsSuper):
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
+            self.validate_NonNegativeInteger(self.id)    # validate type NonNegativeInteger
         value = find_attr_value_('segmentId', node)
         if value is not None and 'segmentId' not in already_processed:
             already_processed.add('segmentId')
@@ -5815,7 +5816,7 @@ class Input(GeneratedsSuper):
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.segment_id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_SegmentId(self.segment_id)    # validate type SegmentId
+            self.validate_NonNegativeInteger(self.segment_id)    # validate type NonNegativeInteger
         value = find_attr_value_('target', node)
         if value is not None and 'target' not in already_processed:
             already_processed.add('target')
@@ -5920,6 +5921,109 @@ class BaseWithoutId(GeneratedsSuper):
 # end class BaseWithoutId
 
 
+class BaseNonNegativeIntegerId(BaseWithoutId):
+    """Anything which can have a unique (within its parent) id, which must
+    be an integer zero or greater."""
+    member_data_items_ = [
+        MemberSpec_('id', 'NonNegativeInteger', 0),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+    def __init__(self, neuro_lex_id=None, id=None, extensiontype_=None):
+        self.original_tagname_ = None
+        super(BaseNonNegativeIntegerId, self).__init__(neuro_lex_id, extensiontype_, )
+        self.id = _cast(None, id)
+        self.extensiontype_ = extensiontype_
+    def factory(*args_, **kwargs_):
+        if BaseNonNegativeIntegerId.subclass:
+            return BaseNonNegativeIntegerId.subclass(*args_, **kwargs_)
+        else:
+            return BaseNonNegativeIntegerId(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_NonNegativeInteger(self, value):
+        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
+        if value is not None and Validate_simpletypes_:
+            pass
+    def hasContent_(self):
+        if (
+            super(BaseNonNegativeIntegerId, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='BaseNonNegativeIntegerId', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='BaseNonNegativeIntegerId')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='BaseNonNegativeIntegerId', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='BaseNonNegativeIntegerId'):
+        super(BaseNonNegativeIntegerId, self).exportAttributes(outfile, level, already_processed, namespace_, name_='BaseNonNegativeIntegerId')
+        if self.id is not None and 'id' not in already_processed:
+            already_processed.add('id')
+            outfile.write(' id=%s' % (quote_attrib(self.id), ))
+        if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            outfile.write(' xsi:type="%s"' % self.extensiontype_)
+    def exportChildren(self, outfile, level, namespace_='', name_='BaseNonNegativeIntegerId', fromsubclass_=False, pretty_print=True):
+        super(BaseNonNegativeIntegerId, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
+    def exportLiteral(self, outfile, level, name_='BaseNonNegativeIntegerId'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.id is not None and 'id' not in already_processed:
+            already_processed.add('id')
+            showIndent(outfile, level)
+            outfile.write('id=%d,\n' % (self.id,))
+        super(BaseNonNegativeIntegerId, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(BaseNonNegativeIntegerId, self).exportLiteralChildren(outfile, level, name_)
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('id', node)
+        if value is not None and 'id' not in already_processed:
+            already_processed.add('id')
+            try:
+                self.id = int(value)
+            except ValueError as exp:
+                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.id < 0:
+                raise_parse_error(node, 'Invalid NonNegativeInteger')
+            self.validate_NonNegativeInteger(self.id)    # validate type NonNegativeInteger
+        value = find_attr_value_('xsi:type', node)
+        if value is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            self.extensiontype_ = value
+        super(BaseNonNegativeIntegerId, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(BaseNonNegativeIntegerId, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class BaseNonNegativeIntegerId
+
+
 class Base(BaseWithoutId):
     """Anything which can have a unique (within its parent) id of the form
     NmlId (spaceless combination of letters, numbers and
@@ -5946,7 +6050,7 @@ class Base(BaseWithoutId):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
             super(Base, self).hasContent_()
@@ -6340,7 +6444,7 @@ class InputList(Base):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
             self.input or
@@ -6442,19 +6546,19 @@ class InputList(Base):
 # end class InputList
 
 
-class ElectricalConnection(Base):
+class ElectricalConnection(BaseNonNegativeIntegerId):
     """Individual electrical synaptic connection"""
     member_data_items_ = [
         MemberSpec_('synapse', 'NmlId', 0),
         MemberSpec_('preFractionAlong', 'ZeroToOne', 0),
-        MemberSpec_('preSegment', 'SegmentId', 0),
+        MemberSpec_('preSegment', 'NonNegativeInteger', 0),
         MemberSpec_('postFractionAlong', 'ZeroToOne', 0),
-        MemberSpec_('postSegment', 'SegmentId', 0),
+        MemberSpec_('postSegment', 'NonNegativeInteger', 0),
         MemberSpec_('postCell', 'xs:string', 0),
         MemberSpec_('preCell', 'xs:string', 0),
     ]
     subclass = None
-    superclass = Base
+    superclass = BaseNonNegativeIntegerId
     def __init__(self, neuro_lex_id=None, id=None, synapse=None, pre_fraction_along=None, pre_segment=None, post_fraction_along=None, post_segment=None, post_cell=None, pre_cell=None):
         self.original_tagname_ = None
         super(ElectricalConnection, self).__init__(neuro_lex_id, id, )
@@ -6477,7 +6581,7 @@ class ElectricalConnection(Base):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def validate_ZeroToOne(self, value):
         # Validate type ZeroToOne, a restriction on xs:double.
         if value is not None and Validate_simpletypes_:
@@ -6485,8 +6589,8 @@ class ElectricalConnection(Base):
                 warnings_.warn('Value "%(value)s" does not match xsd minInclusive restriction on ZeroToOne' % {"value" : value} )
             if value > 1:
                 warnings_.warn('Value "%(value)s" does not match xsd maxInclusive restriction on ZeroToOne' % {"value" : value} )
-    def validate_SegmentId(self, value):
-        # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
+    def validate_NonNegativeInteger(self, value):
+        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
         if value is not None and Validate_simpletypes_:
             pass
     def hasContent_(self):
@@ -6608,7 +6712,7 @@ class ElectricalConnection(Base):
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.pre_segment < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_SegmentId(self.pre_segment)    # validate type SegmentId
+            self.validate_NonNegativeInteger(self.pre_segment)    # validate type NonNegativeInteger
         value = find_attr_value_('postFractionAlong', node)
         if value is not None and 'postFractionAlong' not in already_processed:
             already_processed.add('postFractionAlong')
@@ -6626,7 +6730,7 @@ class ElectricalConnection(Base):
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.post_segment < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_SegmentId(self.post_segment)    # validate type SegmentId
+            self.validate_NonNegativeInteger(self.post_segment)    # validate type NonNegativeInteger
         value = find_attr_value_('postCell', node)
         if value is not None and 'postCell' not in already_processed:
             already_processed.add('postCell')
@@ -6673,7 +6777,7 @@ class ElectricalProjection(Base):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
             self.electrical_connections or
@@ -6775,18 +6879,18 @@ class ElectricalProjection(Base):
 # end class ElectricalProjection
 
 
-class Connection(Base):
+class Connection(BaseNonNegativeIntegerId):
     """Individual synaptic connection"""
     member_data_items_ = [
         MemberSpec_('preFractionAlong', 'ZeroToOne', 0),
         MemberSpec_('preCellId', 'xs:string', 0),
         MemberSpec_('postFractionAlong', 'ZeroToOne', 0),
-        MemberSpec_('postSegmentId', 'SegmentId', 0),
+        MemberSpec_('postSegmentId', 'NonNegativeInteger', 0),
         MemberSpec_('postCellId', 'xs:string', 0),
-        MemberSpec_('preSegmentId', 'SegmentId', 0),
+        MemberSpec_('preSegmentId', 'NonNegativeInteger', 0),
     ]
     subclass = None
-    superclass = Base
+    superclass = BaseNonNegativeIntegerId
     def __init__(self, neuro_lex_id=None, id=None, pre_fraction_along=None, pre_cell_id=None, post_fraction_along=None, post_segment_id=None, post_cell_id=None, pre_segment_id=None):
         self.original_tagname_ = None
         super(Connection, self).__init__(neuro_lex_id, id, )
@@ -6809,8 +6913,8 @@ class Connection(Base):
                 warnings_.warn('Value "%(value)s" does not match xsd minInclusive restriction on ZeroToOne' % {"value" : value} )
             if value > 1:
                 warnings_.warn('Value "%(value)s" does not match xsd maxInclusive restriction on ZeroToOne' % {"value" : value} )
-    def validate_SegmentId(self, value):
-        # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
+    def validate_NonNegativeInteger(self, value):
+        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
         if value is not None and Validate_simpletypes_:
             pass
     def hasContent_(self):
@@ -6932,7 +7036,7 @@ class Connection(Base):
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.post_segment_id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_SegmentId(self.post_segment_id)    # validate type SegmentId
+            self.validate_NonNegativeInteger(self.post_segment_id)    # validate type NonNegativeInteger
         value = find_attr_value_('postCellId', node)
         if value is not None and 'postCellId' not in already_processed:
             already_processed.add('postCellId')
@@ -6946,7 +7050,7 @@ class Connection(Base):
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.pre_segment_id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_SegmentId(self.pre_segment_id)    # validate type SegmentId
+            self.validate_NonNegativeInteger(self.pre_segment_id)    # validate type NonNegativeInteger
         super(Connection, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(Connection, self).buildChildren(child_, node, nodeName_, True)
@@ -6986,7 +7090,7 @@ class Projection(Base):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
             self.connections or
@@ -7208,7 +7312,7 @@ class Population(Standalone):
         MemberSpec_('extracellularProperties', 'NmlId', 0),
         MemberSpec_('type', 'populationTypes', 0),
         MemberSpec_('component', 'NmlId', 0),
-        MemberSpec_('size', 'xs:integer', 0),
+        MemberSpec_('size', 'NonNegativeInteger', 0),
         MemberSpec_('layout', 'Layout', 0),
         MemberSpec_('instances', 'Instance', 1),
     ]
@@ -7220,7 +7324,7 @@ class Population(Standalone):
         self.extracellular_properties = _cast(None, extracellular_properties)
         self.type = _cast(None, type)
         self.component = _cast(None, component)
-        self.size = _cast(int, size)
+        self.size = _cast(None, size)
         self.layout = layout
         if instances is None:
             self.instances = []
@@ -7238,7 +7342,7 @@ class Population(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def validate_populationTypes(self, value):
         # Validate type populationTypes, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -7251,6 +7355,10 @@ class Population(Standalone):
                     break
             if not enumeration_respectee:
                 warnings_.warn('Value "%(value)s" does not match xsd enumeration restriction on populationTypes' % {"value" : value.encode("utf-8")} )
+    def validate_NonNegativeInteger(self, value):
+        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
+        if value is not None and Validate_simpletypes_:
+            pass
     def hasContent_(self):
         if (
             self.layout is not None or
@@ -7291,7 +7399,7 @@ class Population(Standalone):
             outfile.write(' component=%s' % (quote_attrib(self.component), ))
         if self.size is not None and 'size' not in already_processed:
             already_processed.add('size')
-            outfile.write(' size="%s"' % self.gds_format_integer(self.size, input_name='size'))
+            outfile.write(' size=%s' % (quote_attrib(self.size), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Population', fromsubclass_=False, pretty_print=True):
         super(Population, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -7376,6 +7484,9 @@ class Population(Standalone):
                 self.size = int(value)
             except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.size < 0:
+                raise_parse_error(node, 'Invalid NonNegativeInteger')
+            self.validate_NonNegativeInteger(self.size)    # validate type NonNegativeInteger
         super(Population, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'layout':
@@ -7419,7 +7530,7 @@ class Region(Base):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
             self.anytypeobjs_ or
@@ -8476,15 +8587,15 @@ class SpikeArray(Standalone):
 # end class SpikeArray
 
 
-class Spike(Standalone):
+class Spike(BaseNonNegativeIntegerId):
     member_data_items_ = [
         MemberSpec_('time', 'Nml2Quantity_time', 0),
     ]
     subclass = None
-    superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, time=None):
+    superclass = BaseNonNegativeIntegerId
+    def __init__(self, neuro_lex_id=None, id=None, time=None):
         self.original_tagname_ = None
-        super(Spike, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
+        super(Spike, self).__init__(neuro_lex_id, id, )
         self.time = _cast(None, time)
     def factory(*args_, **kwargs_):
         if Spike.subclass:
@@ -8520,7 +8631,6 @@ class Spike(Standalone):
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
             self.exportChildren(outfile, level + 1, namespace_='', name_='Spike', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
@@ -8531,6 +8641,7 @@ class Spike(Standalone):
             outfile.write(' time=%s' % (quote_attrib(self.time), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Spike', fromsubclass_=False, pretty_print=True):
         super(Spike, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
     def exportLiteral(self, outfile, level, name_='Spike'):
         level += 1
         already_processed = set()
@@ -8545,6 +8656,7 @@ class Spike(Standalone):
         super(Spike, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
         super(Spike, self).exportLiteralChildren(outfile, level, name_)
+        pass
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -9398,7 +9510,7 @@ class ChannelDensityGHK(Base):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity_permeability(self, value):
         # Validate type Nml2Quantity_permeability, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -9584,7 +9696,7 @@ class ChannelDensityNernst(Base):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity_conductanceDensity(self, value):
         # Validate type Nml2Quantity_conductanceDensity, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -9742,7 +9854,7 @@ class ChannelDensity(Base):
         MemberSpec_('ionChannel', 'NmlId', 0),
         MemberSpec_('erev', 'Nml2Quantity_voltage', 0),
         MemberSpec_('condDensity', 'Nml2Quantity_conductanceDensity', 0),
-        MemberSpec_('segment', 'NmlId', 0),
+        MemberSpec_('segment', 'NonNegativeInteger', 0),
         MemberSpec_('variable_parameters', 'VariableParameter', 1),
     ]
     subclass = None
@@ -9772,7 +9884,7 @@ class ChannelDensity(Base):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -9787,6 +9899,10 @@ class ChannelDensity(Base):
                     self.validate_Nml2Quantity_conductanceDensity_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductanceDensity_patterns_, ))
     validate_Nml2Quantity_conductanceDensity_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S_per_m2|mS_per_cm2|S_per_cm2)$']]
+    def validate_NonNegativeInteger(self, value):
+        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
+        if value is not None and Validate_simpletypes_:
+            pass
     def hasContent_(self):
         if (
             self.variable_parameters or
@@ -9871,7 +9987,7 @@ class ChannelDensity(Base):
         if self.segments is not None and 'segments' not in already_processed:
             already_processed.add('segments')
             showIndent(outfile, level)
-            outfile.write('segments="%s",\n' % (self.segments,))
+            outfile.write('segments=%d,\n' % (self.segments,))
         super(ChannelDensity, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
         super(ChannelDensity, self).exportLiteralChildren(outfile, level, name_)
@@ -9923,8 +10039,13 @@ class ChannelDensity(Base):
         value = find_attr_value_('segment', node)
         if value is not None and 'segment' not in already_processed:
             already_processed.add('segment')
-            self.segments = value
-            self.validate_NmlId(self.segments)    # validate type NmlId
+            try:
+                self.segments = int(value)
+            except ValueError as exp:
+                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.segments < 0:
+                raise_parse_error(node, 'Invalid NonNegativeInteger')
+            self.validate_NonNegativeInteger(self.segments)    # validate type NonNegativeInteger
         super(ChannelDensity, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'variableParameter':
@@ -9971,7 +10092,7 @@ class ChannelDensityNonUniformNernst(Base):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
             self.variable_parameters or
@@ -10110,7 +10231,7 @@ class ChannelDensityNonUniform(Base):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -10241,10 +10362,10 @@ class ChannelPopulation(Base):
     member_data_items_ = [
         MemberSpec_('segmentGroup', 'NmlId', 0),
         MemberSpec_('ion', 'NmlId', 0),
-        MemberSpec_('number', 'xs:nonNegativeInteger', 0),
+        MemberSpec_('number', 'NonNegativeInteger', 0),
         MemberSpec_('ionChannel', 'NmlId', 0),
         MemberSpec_('erev', 'Nml2Quantity_voltage', 0),
-        MemberSpec_('segment', 'NmlId', 0),
+        MemberSpec_('segment', 'NonNegativeInteger', 0),
         MemberSpec_('variable_parameters', 'VariableParameter', 1),
     ]
     subclass = None
@@ -10254,7 +10375,7 @@ class ChannelPopulation(Base):
         super(ChannelPopulation, self).__init__(neuro_lex_id, id, )
         self.segment_groups = _cast(None, segment_groups)
         self.ion = _cast(None, ion)
-        self.number = _cast(int, number)
+        self.number = _cast(None, number)
         self.ion_channel = _cast(None, ion_channel)
         self.erev = _cast(None, erev)
         self.segments = _cast(None, segments)
@@ -10274,7 +10395,11 @@ class ChannelPopulation(Base):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
+    def validate_NonNegativeInteger(self, value):
+        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
+        if value is not None and Validate_simpletypes_:
+            pass
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -10318,7 +10443,7 @@ class ChannelPopulation(Base):
             outfile.write(' ion=%s' % (quote_attrib(self.ion), ))
         if self.number is not None and 'number' not in already_processed:
             already_processed.add('number')
-            outfile.write(' number="%s"' % self.gds_format_integer(self.number, input_name='number'))
+            outfile.write(' number=%s' % (quote_attrib(self.number), ))
         if self.ion_channel is not None and 'ion_channel' not in already_processed:
             already_processed.add('ion_channel')
             outfile.write(' ionChannel=%s' % (quote_attrib(self.ion_channel), ))
@@ -10366,7 +10491,7 @@ class ChannelPopulation(Base):
         if self.segments is not None and 'segments' not in already_processed:
             already_processed.add('segments')
             showIndent(outfile, level)
-            outfile.write('segments="%s",\n' % (self.segments,))
+            outfile.write('segments=%d,\n' % (self.segments,))
         super(ChannelPopulation, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
         super(ChannelPopulation, self).exportLiteralChildren(outfile, level, name_)
@@ -10409,6 +10534,7 @@ class ChannelPopulation(Base):
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.number < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
+            self.validate_NonNegativeInteger(self.number)    # validate type NonNegativeInteger
         value = find_attr_value_('ionChannel', node)
         if value is not None and 'ionChannel' not in already_processed:
             already_processed.add('ionChannel')
@@ -10422,8 +10548,13 @@ class ChannelPopulation(Base):
         value = find_attr_value_('segment', node)
         if value is not None and 'segment' not in already_processed:
             already_processed.add('segment')
-            self.segments = value
-            self.validate_NmlId(self.segments)    # validate type NmlId
+            try:
+                self.segments = int(value)
+            except ValueError as exp:
+                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.segments < 0:
+                raise_parse_error(node, 'Invalid NonNegativeInteger')
+            self.validate_NonNegativeInteger(self.segments)    # validate type NonNegativeInteger
         super(ChannelPopulation, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'variableParameter':
@@ -10985,6 +11116,7 @@ class InhomogeneousParameter(Base):
 class SegmentGroup(Base):
     member_data_items_ = [
         MemberSpec_('notes', ['Notes', 'xs:string'], 0),
+        MemberSpec_('properties', 'Property', 1),
         MemberSpec_('annotation', 'Annotation', 0),
         MemberSpec_('members', 'Member', 1),
         MemberSpec_('includes', 'Include', 1),
@@ -10994,11 +11126,15 @@ class SegmentGroup(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, notes=None, annotation=None, members=None, includes=None, paths=None, sub_trees=None, inhomogeneous_parameters=None):
+    def __init__(self, neuro_lex_id=None, id=None, notes=None, properties=None, annotation=None, members=None, includes=None, paths=None, sub_trees=None, inhomogeneous_parameters=None):
         self.original_tagname_ = None
         super(SegmentGroup, self).__init__(neuro_lex_id, id, )
         self.notes = notes
         self.validate_Notes(self.notes)
+        if properties is None:
+            self.properties = []
+        else:
+            self.properties = properties
         self.annotation = annotation
         if members is None:
             self.members = []
@@ -11033,6 +11169,7 @@ class SegmentGroup(Base):
     def hasContent_(self):
         if (
             self.notes is not None or
+            self.properties or
             self.annotation is not None or
             self.members or
             self.includes or
@@ -11073,6 +11210,8 @@ class SegmentGroup(Base):
         if self.notes is not None:
             showIndent(outfile, level, pretty_print)
             outfile.write('<%snotes>%s</%snotes>%s' % (namespace_, self.gds_format_string(quote_xml(self.notes).encode(ExternalEncoding), input_name='notes'), namespace_, eol_))
+        for property_ in self.properties:
+            property_.export(outfile, level, namespace_, name_='property', pretty_print=pretty_print)
         if self.annotation is not None:
             self.annotation.export(outfile, level, namespace_, name_='annotation', pretty_print=pretty_print)
         for member_ in self.members:
@@ -11098,6 +11237,18 @@ class SegmentGroup(Base):
         if self.notes is not None:
             showIndent(outfile, level)
             outfile.write('notes=%s,\n' % quote_python(self.notes).encode(ExternalEncoding))
+        showIndent(outfile, level)
+        outfile.write('properties=[\n')
+        level += 1
+        for property_ in self.properties:
+            showIndent(outfile, level)
+            outfile.write('model_.Property(\n')
+            property_.exportLiteral(outfile, level, name_='Property')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
         if self.annotation is not None:
             showIndent(outfile, level)
             outfile.write('annotation=model_.Annotation(\n')
@@ -11180,6 +11331,11 @@ class SegmentGroup(Base):
             self.notes = notes_
             # validate type Notes
             self.validate_Notes(self.notes)
+        elif nodeName_ == 'property':
+            obj_ = Property.factory()
+            obj_.build(child_)
+            self.properties.append(obj_)
+            obj_.original_tagname_ = 'property'
         elif nodeName_ == 'annotation':
             obj_ = Annotation.factory()
             obj_.build(child_)
@@ -11251,20 +11407,18 @@ class SegmentGroup(Base):
     # end class SegmentGroup
 
 
-class Segment(BaseWithoutId):
+class Segment(BaseNonNegativeIntegerId):
     member_data_items_ = [
-        MemberSpec_('id', 'SegmentId', 0),
         MemberSpec_('name', 'xs:string', 0),
         MemberSpec_('parent', 'SegmentParent', 0),
         MemberSpec_('proximal', 'Point3DWithDiam', 0),
         MemberSpec_('distal', 'Point3DWithDiam', 0),
     ]
     subclass = None
-    superclass = BaseWithoutId
+    superclass = BaseNonNegativeIntegerId
     def __init__(self, neuro_lex_id=None, id=None, name=None, parent=None, proximal=None, distal=None):
         self.original_tagname_ = None
-        super(Segment, self).__init__(neuro_lex_id, )
-        self.id = _cast(None, id)
+        super(Segment, self).__init__(neuro_lex_id, id, )
         self.name = _cast(None, name)
         self.parent = parent
         self.proximal = proximal
@@ -11275,10 +11429,6 @@ class Segment(BaseWithoutId):
         else:
             return Segment(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def validate_SegmentId(self, value):
-        # Validate type SegmentId, a restriction on xs:nonNegativeInteger.
-        if value is not None and Validate_simpletypes_:
-            pass
     def hasContent_(self):
         if (
             self.parent is not None or
@@ -11309,9 +11459,6 @@ class Segment(BaseWithoutId):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Segment'):
         super(Segment, self).exportAttributes(outfile, level, already_processed, namespace_, name_='Segment')
-        if self.id is not None and 'id' not in already_processed:
-            already_processed.add('id')
-            outfile.write(' id=%s' % (quote_attrib(self.id), ))
         if self.name is not None and 'name' not in already_processed:
             already_processed.add('name')
             outfile.write(' name=%s' % (self.gds_format_string(quote_attrib(self.name).encode(ExternalEncoding), input_name='name'), ))
@@ -11334,10 +11481,6 @@ class Segment(BaseWithoutId):
         if self.hasContent_():
             self.exportLiteralChildren(outfile, level, name_)
     def exportLiteralAttributes(self, outfile, level, already_processed, name_):
-        if self.id is not None and 'id' not in already_processed:
-            already_processed.add('id')
-            showIndent(outfile, level)
-            outfile.write('id=%d,\n' % (self.id,))
         if self.name is not None and 'name' not in already_processed:
             already_processed.add('name')
             showIndent(outfile, level)
@@ -11371,16 +11514,6 @@ class Segment(BaseWithoutId):
             self.buildChildren(child, node, nodeName_)
         return self
     def buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_('id', node)
-        if value is not None and 'id' not in already_processed:
-            already_processed.add('id')
-            try:
-                self.id = int(value)
-            except ValueError as exp:
-                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
-            if self.id < 0:
-                raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_SegmentId(self.id)    # validate type SegmentId
         value = find_attr_value_('name', node)
         if value is not None and 'name' not in already_processed:
             already_processed.add('name')
@@ -11752,7 +11885,7 @@ class FixedFactorConcentrationModel(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity_rhoFactor(self, value):
         # Validate type Nml2Quantity_rhoFactor, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -11906,7 +12039,7 @@ class DecayingPoolConcentrationModel(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def validate_Nml2Quantity_length(self, value):
         # Validate type Nml2Quantity_length, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -12040,7 +12173,7 @@ class DecayingPoolConcentrationModel(Standalone):
 
 class GateHHRatesInf(Base):
     member_data_items_ = [
-        MemberSpec_('instances', 'xs:integer', 0),
+        MemberSpec_('instances', 'PositiveInteger', 0),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0),
         MemberSpec_('q10_settings', 'Q10Settings', 0),
         MemberSpec_('forward_rate', 'HHRate', 0),
@@ -12052,7 +12185,7 @@ class GateHHRatesInf(Base):
     def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, steady_state=None):
         self.original_tagname_ = None
         super(GateHHRatesInf, self).__init__(neuro_lex_id, id, )
-        self.instances = _cast(int, instances)
+        self.instances = _cast(None, instances)
         self.notes = notes
         self.validate_Notes(self.notes)
         self.q10_settings = q10_settings
@@ -12067,6 +12200,10 @@ class GateHHRatesInf(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            pass
+    def validate_PositiveInteger(self, value):
+        # Validate type PositiveInteger, a restriction on xs:positiveInteger.
         if value is not None and Validate_simpletypes_:
             pass
     def hasContent_(self):
@@ -12103,7 +12240,7 @@ class GateHHRatesInf(Base):
         super(GateHHRatesInf, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRatesInf')
         if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
-            outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
+            outfile.write(' instances=%s' % (quote_attrib(self.instances), ))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHRatesInf', fromsubclass_=False, pretty_print=True):
         super(GateHHRatesInf, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -12177,6 +12314,9 @@ class GateHHRatesInf(Base):
                 self.instances = int(value)
             except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.instances <= 0:
+                raise_parse_error(node, 'Invalid PositiveInteger')
+            self.validate_PositiveInteger(self.instances)    # validate type PositiveInteger
         super(GateHHRatesInf, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'notes':
@@ -12211,7 +12351,7 @@ class GateHHRatesInf(Base):
 
 class GateHHRatesTau(Base):
     member_data_items_ = [
-        MemberSpec_('instances', 'xs:integer', 0),
+        MemberSpec_('instances', 'PositiveInteger', 0),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0),
         MemberSpec_('q10_settings', 'Q10Settings', 0),
         MemberSpec_('forward_rate', 'HHRate', 0),
@@ -12223,7 +12363,7 @@ class GateHHRatesTau(Base):
     def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None):
         self.original_tagname_ = None
         super(GateHHRatesTau, self).__init__(neuro_lex_id, id, )
-        self.instances = _cast(int, instances)
+        self.instances = _cast(None, instances)
         self.notes = notes
         self.validate_Notes(self.notes)
         self.q10_settings = q10_settings
@@ -12238,6 +12378,10 @@ class GateHHRatesTau(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            pass
+    def validate_PositiveInteger(self, value):
+        # Validate type PositiveInteger, a restriction on xs:positiveInteger.
         if value is not None and Validate_simpletypes_:
             pass
     def hasContent_(self):
@@ -12274,7 +12418,7 @@ class GateHHRatesTau(Base):
         super(GateHHRatesTau, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRatesTau')
         if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
-            outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
+            outfile.write(' instances=%s' % (quote_attrib(self.instances), ))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHRatesTau', fromsubclass_=False, pretty_print=True):
         super(GateHHRatesTau, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -12348,6 +12492,9 @@ class GateHHRatesTau(Base):
                 self.instances = int(value)
             except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.instances <= 0:
+                raise_parse_error(node, 'Invalid PositiveInteger')
+            self.validate_PositiveInteger(self.instances)    # validate type PositiveInteger
         super(GateHHRatesTau, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'notes':
@@ -12382,7 +12529,7 @@ class GateHHRatesTau(Base):
 
 class GateHHRatesTauInf(Base):
     member_data_items_ = [
-        MemberSpec_('instances', 'xs:integer', 0),
+        MemberSpec_('instances', 'PositiveInteger', 0),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0),
         MemberSpec_('q10_settings', 'Q10Settings', 0),
         MemberSpec_('forward_rate', 'HHRate', 0),
@@ -12395,7 +12542,7 @@ class GateHHRatesTauInf(Base):
     def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None, steady_state=None):
         self.original_tagname_ = None
         super(GateHHRatesTauInf, self).__init__(neuro_lex_id, id, )
-        self.instances = _cast(int, instances)
+        self.instances = _cast(None, instances)
         self.notes = notes
         self.validate_Notes(self.notes)
         self.q10_settings = q10_settings
@@ -12411,6 +12558,10 @@ class GateHHRatesTauInf(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            pass
+    def validate_PositiveInteger(self, value):
+        # Validate type PositiveInteger, a restriction on xs:positiveInteger.
         if value is not None and Validate_simpletypes_:
             pass
     def hasContent_(self):
@@ -12448,7 +12599,7 @@ class GateHHRatesTauInf(Base):
         super(GateHHRatesTauInf, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRatesTauInf')
         if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
-            outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
+            outfile.write(' instances=%s' % (quote_attrib(self.instances), ))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHRatesTauInf', fromsubclass_=False, pretty_print=True):
         super(GateHHRatesTauInf, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -12530,6 +12681,9 @@ class GateHHRatesTauInf(Base):
                 self.instances = int(value)
             except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.instances <= 0:
+                raise_parse_error(node, 'Invalid PositiveInteger')
+            self.validate_PositiveInteger(self.instances)    # validate type PositiveInteger
         super(GateHHRatesTauInf, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'notes':
@@ -12569,7 +12723,7 @@ class GateHHRatesTauInf(Base):
 
 class GateHHTauInf(Base):
     member_data_items_ = [
-        MemberSpec_('instances', 'xs:integer', 0),
+        MemberSpec_('instances', 'PositiveInteger', 0),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0),
         MemberSpec_('q10_settings', 'Q10Settings', 0),
         MemberSpec_('time_course', 'HHTime', 0),
@@ -12580,7 +12734,7 @@ class GateHHTauInf(Base):
     def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, time_course=None, steady_state=None):
         self.original_tagname_ = None
         super(GateHHTauInf, self).__init__(neuro_lex_id, id, )
-        self.instances = _cast(int, instances)
+        self.instances = _cast(None, instances)
         self.notes = notes
         self.validate_Notes(self.notes)
         self.q10_settings = q10_settings
@@ -12594,6 +12748,10 @@ class GateHHTauInf(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            pass
+    def validate_PositiveInteger(self, value):
+        # Validate type PositiveInteger, a restriction on xs:positiveInteger.
         if value is not None and Validate_simpletypes_:
             pass
     def hasContent_(self):
@@ -12629,7 +12787,7 @@ class GateHHTauInf(Base):
         super(GateHHTauInf, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHTauInf')
         if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
-            outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
+            outfile.write(' instances=%s' % (quote_attrib(self.instances), ))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHTauInf', fromsubclass_=False, pretty_print=True):
         super(GateHHTauInf, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -12695,6 +12853,9 @@ class GateHHTauInf(Base):
                 self.instances = int(value)
             except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.instances <= 0:
+                raise_parse_error(node, 'Invalid PositiveInteger')
+            self.validate_PositiveInteger(self.instances)    # validate type PositiveInteger
         super(GateHHTauInf, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'notes':
@@ -12724,7 +12885,7 @@ class GateHHTauInf(Base):
 
 class GateHHRates(Base):
     member_data_items_ = [
-        MemberSpec_('instances', 'xs:integer', 0),
+        MemberSpec_('instances', 'PositiveInteger', 0),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0),
         MemberSpec_('q10_settings', 'Q10Settings', 0),
         MemberSpec_('forward_rate', 'HHRate', 0),
@@ -12735,7 +12896,7 @@ class GateHHRates(Base):
     def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None):
         self.original_tagname_ = None
         super(GateHHRates, self).__init__(neuro_lex_id, id, )
-        self.instances = _cast(int, instances)
+        self.instances = _cast(None, instances)
         self.notes = notes
         self.validate_Notes(self.notes)
         self.q10_settings = q10_settings
@@ -12749,6 +12910,10 @@ class GateHHRates(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            pass
+    def validate_PositiveInteger(self, value):
+        # Validate type PositiveInteger, a restriction on xs:positiveInteger.
         if value is not None and Validate_simpletypes_:
             pass
     def hasContent_(self):
@@ -12784,7 +12949,7 @@ class GateHHRates(Base):
         super(GateHHRates, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHRates')
         if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
-            outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
+            outfile.write(' instances=%s' % (quote_attrib(self.instances), ))
     def exportChildren(self, outfile, level, namespace_='', name_='GateHHRates', fromsubclass_=False, pretty_print=True):
         super(GateHHRates, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -12850,6 +13015,9 @@ class GateHHRates(Base):
                 self.instances = int(value)
             except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.instances <= 0:
+                raise_parse_error(node, 'Invalid PositiveInteger')
+            self.validate_PositiveInteger(self.instances)    # validate type PositiveInteger
         super(GateHHRates, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'notes':
@@ -12879,7 +13047,7 @@ class GateHHRates(Base):
 
 class GateHHUndetermined(Base):
     member_data_items_ = [
-        MemberSpec_('instances', 'xs:integer', 0),
+        MemberSpec_('instances', 'PositiveInteger', 0),
         MemberSpec_('type', 'gateTypes', 0),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0),
         MemberSpec_('q10_settings', 'Q10Settings', 0),
@@ -12893,7 +13061,7 @@ class GateHHUndetermined(Base):
     def __init__(self, neuro_lex_id=None, id=None, instances=None, type=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None, steady_state=None):
         self.original_tagname_ = None
         super(GateHHUndetermined, self).__init__(neuro_lex_id, id, )
-        self.instances = _cast(int, instances)
+        self.instances = _cast(None, instances)
         self.type = _cast(None, type)
         self.notes = notes
         self.validate_Notes(self.notes)
@@ -12910,6 +13078,10 @@ class GateHHUndetermined(Base):
     factory = staticmethod(factory)
     def validate_Notes(self, value):
         # Validate type Notes, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            pass
+    def validate_PositiveInteger(self, value):
+        # Validate type PositiveInteger, a restriction on xs:positiveInteger.
         if value is not None and Validate_simpletypes_:
             pass
     def validate_gateTypes(self, value):
@@ -12959,7 +13131,7 @@ class GateHHUndetermined(Base):
         super(GateHHUndetermined, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateHHUndetermined')
         if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
-            outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
+            outfile.write(' instances=%s' % (quote_attrib(self.instances), ))
         if self.type is not None and 'type' not in already_processed:
             already_processed.add('type')
             outfile.write(' type=%s' % (quote_attrib(self.type), ))
@@ -13048,6 +13220,9 @@ class GateHHUndetermined(Base):
                 self.instances = int(value)
             except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.instances <= 0:
+                raise_parse_error(node, 'Invalid PositiveInteger')
+            self.validate_PositiveInteger(self.instances)    # validate type PositiveInteger
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
             already_processed.add('type')
@@ -13170,7 +13345,7 @@ class IonChannel(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_NmlId_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z0-9_]*$']]
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
             self.gates or
@@ -18409,6 +18584,7 @@ __all__ = [
     "Base",
     "BaseCell",
     "BaseConductanceBasedSynapse",
+    "BaseNonNegativeIntegerId",
     "BasePynnSynapse",
     "BaseSynapse",
     "BaseWithoutId",

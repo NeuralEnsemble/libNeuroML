@@ -84,6 +84,7 @@ spikeGenerator,spike_generators
 initialConcentration,initial_concentration
 specificCapacitance,specific_capacitances
 path,paths
+xs:positiveInteger,xs:positive_integer
 spikeTarget,spike_target
 decayingPoolConcentrationModel,decaying_pool_concentration_models
 gateHHratesTauInf,gate_h_hrates_tau_infs
