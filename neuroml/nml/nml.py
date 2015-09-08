@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Aug 27 10:11:28 2015 by generateDS.py version 2.15b.
+# Generated Tue Sep  8 18:00:21 2015 by generateDS.py version 2.16a.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -473,11 +473,7 @@ class GDSParseError(Exception):
 
 
 def raise_parse_error(node, msg):
-    if XMLParser_import_library == XMLParser_import_lxml:
-        msg = '%s (element %s/line %d)' % (
-            msg, node.tag, node.sourceline, )
-    else:
-        msg = '%s (element %s)' % (msg, node.tag, )
+    msg = '%s (element %s/line %d)' % (msg, node.tag, node.sourceline, )
     raise GDSParseError(msg)
 
 
@@ -13589,6 +13585,7 @@ class NeuroMLDocument(Standalone):
         MemberSpec_('iaf_cells', 'IafCell', 1),
         MemberSpec_('iaf_ref_cells', 'IafRefCell', 1),
         MemberSpec_('izhikevich_cells', 'IzhikevichCell', 1),
+        MemberSpec_('izhikevich2007_cells', 'Izhikevich2007Cell', 1),
         MemberSpec_('ad_ex_ia_f_cells', 'AdExIaFCell', 1),
         MemberSpec_('fitz_hugh_nagumo_cells', 'FitzHughNagumoCell', 1),
         MemberSpec_('fitz_hugh_nagumo1969_cells', 'FitzHughNagumo1969Cell', 1),
@@ -13618,7 +13615,7 @@ class NeuroMLDocument(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, ion_channel_hhs=None, decaying_pool_concentration_models=None, fixed_factor_concentration_models=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, gap_junctions=None, biophysical_properties=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, ad_ex_ia_f_cells=None, fitz_hugh_nagumo_cells=None, fitz_hugh_nagumo1969_cells=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, poisson_firing_synapses=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, ion_channel_hhs=None, decaying_pool_concentration_models=None, fixed_factor_concentration_models=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, gap_junctions=None, biophysical_properties=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, izhikevich2007_cells=None, ad_ex_ia_f_cells=None, fitz_hugh_nagumo_cells=None, fitz_hugh_nagumo1969_cells=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, poisson_firing_synapses=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
         self.original_tagname_ = None
         super(NeuroMLDocument, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
         if includes is None:
@@ -13701,6 +13698,10 @@ class NeuroMLDocument(Standalone):
             self.izhikevich_cells = []
         else:
             self.izhikevich_cells = izhikevich_cells
+        if izhikevich2007_cells is None:
+            self.izhikevich2007_cells = []
+        else:
+            self.izhikevich2007_cells = izhikevich2007_cells
         if ad_ex_ia_f_cells is None:
             self.ad_ex_ia_f_cells = []
         else:
@@ -13833,6 +13834,7 @@ class NeuroMLDocument(Standalone):
             self.iaf_cells or
             self.iaf_ref_cells or
             self.izhikevich_cells or
+            self.izhikevich2007_cells or
             self.ad_ex_ia_f_cells or
             self.fitz_hugh_nagumo_cells or
             self.fitz_hugh_nagumo1969_cells or
@@ -13930,6 +13932,8 @@ class NeuroMLDocument(Standalone):
             iafRefCell_.export(outfile, level, namespace_, name_='iafRefCell', pretty_print=pretty_print)
         for izhikevichCell_ in self.izhikevich_cells:
             izhikevichCell_.export(outfile, level, namespace_, name_='izhikevichCell', pretty_print=pretty_print)
+        for izhikevich2007Cell_ in self.izhikevich2007_cells:
+            izhikevich2007Cell_.export(outfile, level, namespace_, name_='izhikevich2007Cell', pretty_print=pretty_print)
         for adExIaFCell_ in self.ad_ex_ia_f_cells:
             adExIaFCell_.export(outfile, level, namespace_, name_='adExIaFCell', pretty_print=pretty_print)
         for fitzHughNagumoCell_ in self.fitz_hugh_nagumo_cells:
@@ -14227,6 +14231,18 @@ class NeuroMLDocument(Standalone):
             showIndent(outfile, level)
             outfile.write('model_.IzhikevichCell(\n')
             izhikevichCell_.exportLiteral(outfile, level, name_='IzhikevichCell')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('izhikevich2007_cells=[\n')
+        level += 1
+        for izhikevich2007Cell_ in self.izhikevich2007_cells:
+            showIndent(outfile, level)
+            outfile.write('model_.Izhikevich2007Cell(\n')
+            izhikevich2007Cell_.exportLiteral(outfile, level, name_='Izhikevich2007Cell')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -14660,6 +14676,11 @@ class NeuroMLDocument(Standalone):
             obj_.build(child_)
             self.izhikevich_cells.append(obj_)
             obj_.original_tagname_ = 'izhikevichCell'
+        elif nodeName_ == 'izhikevich2007Cell':
+            obj_ = Izhikevich2007Cell.factory()
+            obj_.build(child_)
+            self.izhikevich2007_cells.append(obj_)
+            obj_.original_tagname_ = 'izhikevich2007Cell'
         elif nodeName_ == 'adExIaFCell':
             obj_ = AdExIaFCell.factory()
             obj_.build(child_)
@@ -15506,49 +15527,25 @@ class FitzHughNagumoCell(BaseCell):
 # end class FitzHughNagumoCell
 
 
-class AdExIaFCell(BaseCell):
+class BaseCellMembPotCap(BaseCell):
+    """This is to prevent it conflicting with attribute c (lowercase) e.g.
+    in izhikevichCell2007"""
     member_data_items_ = [
-        MemberSpec_('reset', 'Nml2Quantity_voltage', 0),
-        MemberSpec_('EL', 'Nml2Quantity_voltage', 0),
         MemberSpec_('C', 'Nml2Quantity_capacitance', 0),
-        MemberSpec_('b', 'Nml2Quantity_current', 0),
-        MemberSpec_('refract', 'Nml2Quantity_time', 0),
-        MemberSpec_('VT', 'Nml2Quantity_voltage', 0),
-        MemberSpec_('delT', 'Nml2Quantity_voltage', 0),
-        MemberSpec_('a', 'Nml2Quantity_conductance', 0),
-        MemberSpec_('thresh', 'Nml2Quantity_voltage', 0),
-        MemberSpec_('gL', 'Nml2Quantity_conductance', 0),
-        MemberSpec_('tauw', 'Nml2Quantity_time', 0),
     ]
     subclass = None
     superclass = BaseCell
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, reset=None, EL=None, C=None, b=None, refract=None, VT=None, del_t=None, a=None, thresh=None, g_l=None, tauw=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, C=None, extensiontype_=None):
         self.original_tagname_ = None
-        super(AdExIaFCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
-        self.reset = _cast(None, reset)
-        self.EL = _cast(None, EL)
+        super(BaseCellMembPotCap, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_, )
         self.C = _cast(None, C)
-        self.b = _cast(None, b)
-        self.refract = _cast(None, refract)
-        self.VT = _cast(None, VT)
-        self.del_t = _cast(None, del_t)
-        self.a = _cast(None, a)
-        self.thresh = _cast(None, thresh)
-        self.g_l = _cast(None, g_l)
-        self.tauw = _cast(None, tauw)
+        self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
-        if AdExIaFCell.subclass:
-            return AdExIaFCell.subclass(*args_, **kwargs_)
+        if BaseCellMembPotCap.subclass:
+            return BaseCellMembPotCap.subclass(*args_, **kwargs_)
         else:
-            return AdExIaFCell(*args_, **kwargs_)
+            return BaseCellMembPotCap(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        if value is not None and Validate_simpletypes_:
-            if not self.gds_validate_simple_patterns(
-                    self.validate_Nml2Quantity_voltage_patterns_, value):
-                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
     def validate_Nml2Quantity_capacitance(self, value):
         # Validate type Nml2Quantity_capacitance, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -15556,35 +15553,14 @@ class AdExIaFCell(BaseCell):
                     self.validate_Nml2Quantity_capacitance_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_capacitance_patterns_, ))
     validate_Nml2Quantity_capacitance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(F|uF|nF|pF)$']]
-    def validate_Nml2Quantity_current(self, value):
-        # Validate type Nml2Quantity_current, a restriction on xs:string.
-        if value is not None and Validate_simpletypes_:
-            if not self.gds_validate_simple_patterns(
-                    self.validate_Nml2Quantity_current_patterns_, value):
-                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_current_patterns_, ))
-    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA)$']]
-    def validate_Nml2Quantity_time(self, value):
-        # Validate type Nml2Quantity_time, a restriction on xs:string.
-        if value is not None and Validate_simpletypes_:
-            if not self.gds_validate_simple_patterns(
-                    self.validate_Nml2Quantity_time_patterns_, value):
-                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
-    def validate_Nml2Quantity_conductance(self, value):
-        # Validate type Nml2Quantity_conductance, a restriction on xs:string.
-        if value is not None and Validate_simpletypes_:
-            if not self.gds_validate_simple_patterns(
-                    self.validate_Nml2Quantity_conductance_patterns_, value):
-                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
-    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
     def hasContent_(self):
         if (
-            super(AdExIaFCell, self).hasContent_()
+            super(BaseCellMembPotCap, self).hasContent_()
         ):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='AdExIaFCell', namespacedef_='', pretty_print=True):
+    def export(self, outfile, level, namespace_='', name_='BaseCellMembPotCap', namespacedef_='', pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -15594,105 +15570,39 @@ class AdExIaFCell(BaseCell):
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='AdExIaFCell')
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='BaseCellMembPotCap')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='AdExIaFCell', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='BaseCellMembPotCap', pretty_print=pretty_print)
             showIndent(outfile, level, pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='AdExIaFCell'):
-        super(AdExIaFCell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='AdExIaFCell')
-        if self.reset is not None and 'reset' not in already_processed:
-            already_processed.add('reset')
-            outfile.write(' reset=%s' % (quote_attrib(self.reset), ))
-        if self.EL is not None and 'EL' not in already_processed:
-            already_processed.add('EL')
-            outfile.write(' EL=%s' % (quote_attrib(self.EL), ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='BaseCellMembPotCap'):
+        super(BaseCellMembPotCap, self).exportAttributes(outfile, level, already_processed, namespace_, name_='BaseCellMembPotCap')
         if self.C is not None and 'C' not in already_processed:
             already_processed.add('C')
             outfile.write(' C=%s' % (quote_attrib(self.C), ))
-        if self.b is not None and 'b' not in already_processed:
-            already_processed.add('b')
-            outfile.write(' b=%s' % (quote_attrib(self.b), ))
-        if self.refract is not None and 'refract' not in already_processed:
-            already_processed.add('refract')
-            outfile.write(' refract=%s' % (quote_attrib(self.refract), ))
-        if self.VT is not None and 'VT' not in already_processed:
-            already_processed.add('VT')
-            outfile.write(' VT=%s' % (quote_attrib(self.VT), ))
-        if self.del_t is not None and 'del_t' not in already_processed:
-            already_processed.add('del_t')
-            outfile.write(' delT=%s' % (quote_attrib(self.del_t), ))
-        if self.a is not None and 'a' not in already_processed:
-            already_processed.add('a')
-            outfile.write(' a=%s' % (quote_attrib(self.a), ))
-        if self.thresh is not None and 'thresh' not in already_processed:
-            already_processed.add('thresh')
-            outfile.write(' thresh=%s' % (quote_attrib(self.thresh), ))
-        if self.g_l is not None and 'g_l' not in already_processed:
-            already_processed.add('g_l')
-            outfile.write(' gL=%s' % (quote_attrib(self.g_l), ))
-        if self.tauw is not None and 'tauw' not in already_processed:
-            already_processed.add('tauw')
-            outfile.write(' tauw=%s' % (quote_attrib(self.tauw), ))
-    def exportChildren(self, outfile, level, namespace_='', name_='AdExIaFCell', fromsubclass_=False, pretty_print=True):
-        super(AdExIaFCell, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
-    def exportLiteral(self, outfile, level, name_='AdExIaFCell'):
+        if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            outfile.write(' xsi:type="%s"' % self.extensiontype_)
+    def exportChildren(self, outfile, level, namespace_='', name_='BaseCellMembPotCap', fromsubclass_=False, pretty_print=True):
+        super(BaseCellMembPotCap, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='BaseCellMembPotCap'):
         level += 1
         already_processed = set()
         self.exportLiteralAttributes(outfile, level, already_processed, name_)
         if self.hasContent_():
             self.exportLiteralChildren(outfile, level, name_)
     def exportLiteralAttributes(self, outfile, level, already_processed, name_):
-        if self.reset is not None and 'reset' not in already_processed:
-            already_processed.add('reset')
-            showIndent(outfile, level)
-            outfile.write('reset="%s",\n' % (self.reset,))
-        if self.EL is not None and 'EL' not in already_processed:
-            already_processed.add('EL')
-            showIndent(outfile, level)
-            outfile.write('EL="%s",\n' % (self.EL,))
         if self.C is not None and 'C' not in already_processed:
             already_processed.add('C')
             showIndent(outfile, level)
             outfile.write('C="%s",\n' % (self.C,))
-        if self.b is not None and 'b' not in already_processed:
-            already_processed.add('b')
-            showIndent(outfile, level)
-            outfile.write('b="%s",\n' % (self.b,))
-        if self.refract is not None and 'refract' not in already_processed:
-            already_processed.add('refract')
-            showIndent(outfile, level)
-            outfile.write('refract="%s",\n' % (self.refract,))
-        if self.VT is not None and 'VT' not in already_processed:
-            already_processed.add('VT')
-            showIndent(outfile, level)
-            outfile.write('VT="%s",\n' % (self.VT,))
-        if self.del_t is not None and 'del_t' not in already_processed:
-            already_processed.add('del_t')
-            showIndent(outfile, level)
-            outfile.write('del_t="%s",\n' % (self.del_t,))
-        if self.a is not None and 'a' not in already_processed:
-            already_processed.add('a')
-            showIndent(outfile, level)
-            outfile.write('a="%s",\n' % (self.a,))
-        if self.thresh is not None and 'thresh' not in already_processed:
-            already_processed.add('thresh')
-            showIndent(outfile, level)
-            outfile.write('thresh="%s",\n' % (self.thresh,))
-        if self.g_l is not None and 'g_l' not in already_processed:
-            already_processed.add('g_l')
-            showIndent(outfile, level)
-            outfile.write('g_l="%s",\n' % (self.g_l,))
-        if self.tauw is not None and 'tauw' not in already_processed:
-            already_processed.add('tauw')
-            showIndent(outfile, level)
-            outfile.write('tauw="%s",\n' % (self.tauw,))
-        super(AdExIaFCell, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+        super(BaseCellMembPotCap, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
-        super(AdExIaFCell, self).exportLiteralChildren(outfile, level, name_)
+        super(BaseCellMembPotCap, self).exportLiteralChildren(outfile, level, name_)
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -15701,66 +15611,20 @@ class AdExIaFCell(BaseCell):
             self.buildChildren(child, node, nodeName_)
         return self
     def buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_('reset', node)
-        if value is not None and 'reset' not in already_processed:
-            already_processed.add('reset')
-            self.reset = value
-            self.validate_Nml2Quantity_voltage(self.reset)    # validate type Nml2Quantity_voltage
-        value = find_attr_value_('EL', node)
-        if value is not None and 'EL' not in already_processed:
-            already_processed.add('EL')
-            self.EL = value
-            self.validate_Nml2Quantity_voltage(self.EL)    # validate type Nml2Quantity_voltage
         value = find_attr_value_('C', node)
         if value is not None and 'C' not in already_processed:
             already_processed.add('C')
             self.C = value
             self.validate_Nml2Quantity_capacitance(self.C)    # validate type Nml2Quantity_capacitance
-        value = find_attr_value_('b', node)
-        if value is not None and 'b' not in already_processed:
-            already_processed.add('b')
-            self.b = value
-            self.validate_Nml2Quantity_current(self.b)    # validate type Nml2Quantity_current
-        value = find_attr_value_('refract', node)
-        if value is not None and 'refract' not in already_processed:
-            already_processed.add('refract')
-            self.refract = value
-            self.validate_Nml2Quantity_time(self.refract)    # validate type Nml2Quantity_time
-        value = find_attr_value_('VT', node)
-        if value is not None and 'VT' not in already_processed:
-            already_processed.add('VT')
-            self.VT = value
-            self.validate_Nml2Quantity_voltage(self.VT)    # validate type Nml2Quantity_voltage
-        value = find_attr_value_('delT', node)
-        if value is not None and 'delT' not in already_processed:
-            already_processed.add('delT')
-            self.del_t = value
-            self.validate_Nml2Quantity_voltage(self.del_t)    # validate type Nml2Quantity_voltage
-        value = find_attr_value_('a', node)
-        if value is not None and 'a' not in already_processed:
-            already_processed.add('a')
-            self.a = value
-            self.validate_Nml2Quantity_conductance(self.a)    # validate type Nml2Quantity_conductance
-        value = find_attr_value_('thresh', node)
-        if value is not None and 'thresh' not in already_processed:
-            already_processed.add('thresh')
-            self.thresh = value
-            self.validate_Nml2Quantity_voltage(self.thresh)    # validate type Nml2Quantity_voltage
-        value = find_attr_value_('gL', node)
-        if value is not None and 'gL' not in already_processed:
-            already_processed.add('gL')
-            self.g_l = value
-            self.validate_Nml2Quantity_conductance(self.g_l)    # validate type Nml2Quantity_conductance
-        value = find_attr_value_('tauw', node)
-        if value is not None and 'tauw' not in already_processed:
-            already_processed.add('tauw')
-            self.tauw = value
-            self.validate_Nml2Quantity_time(self.tauw)    # validate type Nml2Quantity_time
-        super(AdExIaFCell, self).buildAttributes(node, attrs, already_processed)
+        value = find_attr_value_('xsi:type', node)
+        if value is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            self.extensiontype_ = value
+        super(BaseCellMembPotCap, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        super(AdExIaFCell, self).buildChildren(child_, node, nodeName_, True)
+        super(BaseCellMembPotCap, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class AdExIaFCell
+# end class BaseCellMembPotCap
 
 
 class IzhikevichCell(BaseCell):
@@ -17197,6 +17061,471 @@ class basePyNNIaFCell(basePyNNCell):
 # end class basePyNNIaFCell
 
 
+class AdExIaFCell(BaseCellMembPotCap):
+    member_data_items_ = [
+        MemberSpec_('reset', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('EL', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('b', 'Nml2Quantity_current', 0),
+        MemberSpec_('refract', 'Nml2Quantity_time', 0),
+        MemberSpec_('VT', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('delT', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('a', 'Nml2Quantity_conductance', 0),
+        MemberSpec_('thresh', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('gL', 'Nml2Quantity_conductance', 0),
+        MemberSpec_('tauw', 'Nml2Quantity_time', 0),
+    ]
+    subclass = None
+    superclass = BaseCellMembPotCap
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, C=None, reset=None, EL=None, b=None, refract=None, VT=None, del_t=None, a=None, thresh=None, g_l=None, tauw=None):
+        self.original_tagname_ = None
+        super(AdExIaFCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, C, )
+        self.reset = _cast(None, reset)
+        self.EL = _cast(None, EL)
+        self.b = _cast(None, b)
+        self.refract = _cast(None, refract)
+        self.VT = _cast(None, VT)
+        self.del_t = _cast(None, del_t)
+        self.a = _cast(None, a)
+        self.thresh = _cast(None, thresh)
+        self.g_l = _cast(None, g_l)
+        self.tauw = _cast(None, tauw)
+    def factory(*args_, **kwargs_):
+        if AdExIaFCell.subclass:
+            return AdExIaFCell.subclass(*args_, **kwargs_)
+        else:
+            return AdExIaFCell(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    def validate_Nml2Quantity_current(self, value):
+        # Validate type Nml2Quantity_current, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_current_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_current_patterns_, ))
+    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA)$']]
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    def validate_Nml2Quantity_conductance(self, value):
+        # Validate type Nml2Quantity_conductance, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_conductance_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
+    def hasContent_(self):
+        if (
+            super(AdExIaFCell, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='AdExIaFCell', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='AdExIaFCell')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='AdExIaFCell', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='AdExIaFCell'):
+        super(AdExIaFCell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='AdExIaFCell')
+        if self.reset is not None and 'reset' not in already_processed:
+            already_processed.add('reset')
+            outfile.write(' reset=%s' % (quote_attrib(self.reset), ))
+        if self.EL is not None and 'EL' not in already_processed:
+            already_processed.add('EL')
+            outfile.write(' EL=%s' % (quote_attrib(self.EL), ))
+        if self.b is not None and 'b' not in already_processed:
+            already_processed.add('b')
+            outfile.write(' b=%s' % (quote_attrib(self.b), ))
+        if self.refract is not None and 'refract' not in already_processed:
+            already_processed.add('refract')
+            outfile.write(' refract=%s' % (quote_attrib(self.refract), ))
+        if self.VT is not None and 'VT' not in already_processed:
+            already_processed.add('VT')
+            outfile.write(' VT=%s' % (quote_attrib(self.VT), ))
+        if self.del_t is not None and 'del_t' not in already_processed:
+            already_processed.add('del_t')
+            outfile.write(' delT=%s' % (quote_attrib(self.del_t), ))
+        if self.a is not None and 'a' not in already_processed:
+            already_processed.add('a')
+            outfile.write(' a=%s' % (quote_attrib(self.a), ))
+        if self.thresh is not None and 'thresh' not in already_processed:
+            already_processed.add('thresh')
+            outfile.write(' thresh=%s' % (quote_attrib(self.thresh), ))
+        if self.g_l is not None and 'g_l' not in already_processed:
+            already_processed.add('g_l')
+            outfile.write(' gL=%s' % (quote_attrib(self.g_l), ))
+        if self.tauw is not None and 'tauw' not in already_processed:
+            already_processed.add('tauw')
+            outfile.write(' tauw=%s' % (quote_attrib(self.tauw), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='AdExIaFCell', fromsubclass_=False, pretty_print=True):
+        super(AdExIaFCell, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='AdExIaFCell'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.reset is not None and 'reset' not in already_processed:
+            already_processed.add('reset')
+            showIndent(outfile, level)
+            outfile.write('reset="%s",\n' % (self.reset,))
+        if self.EL is not None and 'EL' not in already_processed:
+            already_processed.add('EL')
+            showIndent(outfile, level)
+            outfile.write('EL="%s",\n' % (self.EL,))
+        if self.b is not None and 'b' not in already_processed:
+            already_processed.add('b')
+            showIndent(outfile, level)
+            outfile.write('b="%s",\n' % (self.b,))
+        if self.refract is not None and 'refract' not in already_processed:
+            already_processed.add('refract')
+            showIndent(outfile, level)
+            outfile.write('refract="%s",\n' % (self.refract,))
+        if self.VT is not None and 'VT' not in already_processed:
+            already_processed.add('VT')
+            showIndent(outfile, level)
+            outfile.write('VT="%s",\n' % (self.VT,))
+        if self.del_t is not None and 'del_t' not in already_processed:
+            already_processed.add('del_t')
+            showIndent(outfile, level)
+            outfile.write('del_t="%s",\n' % (self.del_t,))
+        if self.a is not None and 'a' not in already_processed:
+            already_processed.add('a')
+            showIndent(outfile, level)
+            outfile.write('a="%s",\n' % (self.a,))
+        if self.thresh is not None and 'thresh' not in already_processed:
+            already_processed.add('thresh')
+            showIndent(outfile, level)
+            outfile.write('thresh="%s",\n' % (self.thresh,))
+        if self.g_l is not None and 'g_l' not in already_processed:
+            already_processed.add('g_l')
+            showIndent(outfile, level)
+            outfile.write('g_l="%s",\n' % (self.g_l,))
+        if self.tauw is not None and 'tauw' not in already_processed:
+            already_processed.add('tauw')
+            showIndent(outfile, level)
+            outfile.write('tauw="%s",\n' % (self.tauw,))
+        super(AdExIaFCell, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(AdExIaFCell, self).exportLiteralChildren(outfile, level, name_)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('reset', node)
+        if value is not None and 'reset' not in already_processed:
+            already_processed.add('reset')
+            self.reset = value
+            self.validate_Nml2Quantity_voltage(self.reset)    # validate type Nml2Quantity_voltage
+        value = find_attr_value_('EL', node)
+        if value is not None and 'EL' not in already_processed:
+            already_processed.add('EL')
+            self.EL = value
+            self.validate_Nml2Quantity_voltage(self.EL)    # validate type Nml2Quantity_voltage
+        value = find_attr_value_('b', node)
+        if value is not None and 'b' not in already_processed:
+            already_processed.add('b')
+            self.b = value
+            self.validate_Nml2Quantity_current(self.b)    # validate type Nml2Quantity_current
+        value = find_attr_value_('refract', node)
+        if value is not None and 'refract' not in already_processed:
+            already_processed.add('refract')
+            self.refract = value
+            self.validate_Nml2Quantity_time(self.refract)    # validate type Nml2Quantity_time
+        value = find_attr_value_('VT', node)
+        if value is not None and 'VT' not in already_processed:
+            already_processed.add('VT')
+            self.VT = value
+            self.validate_Nml2Quantity_voltage(self.VT)    # validate type Nml2Quantity_voltage
+        value = find_attr_value_('delT', node)
+        if value is not None and 'delT' not in already_processed:
+            already_processed.add('delT')
+            self.del_t = value
+            self.validate_Nml2Quantity_voltage(self.del_t)    # validate type Nml2Quantity_voltage
+        value = find_attr_value_('a', node)
+        if value is not None and 'a' not in already_processed:
+            already_processed.add('a')
+            self.a = value
+            self.validate_Nml2Quantity_conductance(self.a)    # validate type Nml2Quantity_conductance
+        value = find_attr_value_('thresh', node)
+        if value is not None and 'thresh' not in already_processed:
+            already_processed.add('thresh')
+            self.thresh = value
+            self.validate_Nml2Quantity_voltage(self.thresh)    # validate type Nml2Quantity_voltage
+        value = find_attr_value_('gL', node)
+        if value is not None and 'gL' not in already_processed:
+            already_processed.add('gL')
+            self.g_l = value
+            self.validate_Nml2Quantity_conductance(self.g_l)    # validate type Nml2Quantity_conductance
+        value = find_attr_value_('tauw', node)
+        if value is not None and 'tauw' not in already_processed:
+            already_processed.add('tauw')
+            self.tauw = value
+            self.validate_Nml2Quantity_time(self.tauw)    # validate type Nml2Quantity_time
+        super(AdExIaFCell, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(AdExIaFCell, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class AdExIaFCell
+
+
+class Izhikevich2007Cell(BaseCellMembPotCap):
+    member_data_items_ = [
+        MemberSpec_('a', 'Nml2Quantity_pertime', 0),
+        MemberSpec_('c', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('b', 'Nml2Quantity_conductance', 0),
+        MemberSpec_('d', 'Nml2Quantity_current', 0),
+        MemberSpec_('vpeak', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('k', 'Nml2Quantity_conductancePerVoltage', 0),
+        MemberSpec_('v0', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('vr', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('vt', 'Nml2Quantity_voltage', 0),
+    ]
+    subclass = None
+    superclass = BaseCellMembPotCap
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, C=None, a=None, c=None, b=None, d=None, vpeak=None, k=None, v0=None, vr=None, vt=None):
+        self.original_tagname_ = None
+        super(Izhikevich2007Cell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, C, )
+        self.a = _cast(None, a)
+        self.c = _cast(None, c)
+        self.b = _cast(None, b)
+        self.d = _cast(None, d)
+        self.vpeak = _cast(None, vpeak)
+        self.k = _cast(None, k)
+        self.v0 = _cast(None, v0)
+        self.vr = _cast(None, vr)
+        self.vt = _cast(None, vt)
+    def factory(*args_, **kwargs_):
+        if Izhikevich2007Cell.subclass:
+            return Izhikevich2007Cell.subclass(*args_, **kwargs_)
+        else:
+            return Izhikevich2007Cell(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Nml2Quantity_pertime(self, value):
+        # Validate type Nml2Quantity_pertime, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_pertime_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_pertime_patterns_, ))
+    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz)$']]
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    def validate_Nml2Quantity_conductance(self, value):
+        # Validate type Nml2Quantity_conductance, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_conductance_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
+    def validate_Nml2Quantity_current(self, value):
+        # Validate type Nml2Quantity_current, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_current_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_current_patterns_, ))
+    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA)$']]
+    def validate_Nml2Quantity_conductancePerVoltage(self, value):
+        # Validate type Nml2Quantity_conductancePerVoltage, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_conductancePerVoltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductancePerVoltage_patterns_, ))
+    validate_Nml2Quantity_conductancePerVoltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S_per_V|nS_per_mV)$']]
+    def hasContent_(self):
+        if (
+            super(Izhikevich2007Cell, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='Izhikevich2007Cell', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='Izhikevich2007Cell')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Izhikevich2007Cell', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Izhikevich2007Cell'):
+        super(Izhikevich2007Cell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='Izhikevich2007Cell')
+        if self.a is not None and 'a' not in already_processed:
+            already_processed.add('a')
+            outfile.write(' a=%s' % (quote_attrib(self.a), ))
+        if self.c is not None and 'c' not in already_processed:
+            already_processed.add('c')
+            outfile.write(' c=%s' % (quote_attrib(self.c), ))
+        if self.b is not None and 'b' not in already_processed:
+            already_processed.add('b')
+            outfile.write(' b=%s' % (quote_attrib(self.b), ))
+        if self.d is not None and 'd' not in already_processed:
+            already_processed.add('d')
+            outfile.write(' d=%s' % (quote_attrib(self.d), ))
+        if self.vpeak is not None and 'vpeak' not in already_processed:
+            already_processed.add('vpeak')
+            outfile.write(' vpeak=%s' % (quote_attrib(self.vpeak), ))
+        if self.k is not None and 'k' not in already_processed:
+            already_processed.add('k')
+            outfile.write(' k=%s' % (quote_attrib(self.k), ))
+        if self.v0 is not None and 'v0' not in already_processed:
+            already_processed.add('v0')
+            outfile.write(' v0=%s' % (quote_attrib(self.v0), ))
+        if self.vr is not None and 'vr' not in already_processed:
+            already_processed.add('vr')
+            outfile.write(' vr=%s' % (quote_attrib(self.vr), ))
+        if self.vt is not None and 'vt' not in already_processed:
+            already_processed.add('vt')
+            outfile.write(' vt=%s' % (quote_attrib(self.vt), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='Izhikevich2007Cell', fromsubclass_=False, pretty_print=True):
+        super(Izhikevich2007Cell, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='Izhikevich2007Cell'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.a is not None and 'a' not in already_processed:
+            already_processed.add('a')
+            showIndent(outfile, level)
+            outfile.write('a="%s",\n' % (self.a,))
+        if self.c is not None and 'c' not in already_processed:
+            already_processed.add('c')
+            showIndent(outfile, level)
+            outfile.write('c="%s",\n' % (self.c,))
+        if self.b is not None and 'b' not in already_processed:
+            already_processed.add('b')
+            showIndent(outfile, level)
+            outfile.write('b="%s",\n' % (self.b,))
+        if self.d is not None and 'd' not in already_processed:
+            already_processed.add('d')
+            showIndent(outfile, level)
+            outfile.write('d="%s",\n' % (self.d,))
+        if self.vpeak is not None and 'vpeak' not in already_processed:
+            already_processed.add('vpeak')
+            showIndent(outfile, level)
+            outfile.write('vpeak="%s",\n' % (self.vpeak,))
+        if self.k is not None and 'k' not in already_processed:
+            already_processed.add('k')
+            showIndent(outfile, level)
+            outfile.write('k="%s",\n' % (self.k,))
+        if self.v0 is not None and 'v0' not in already_processed:
+            already_processed.add('v0')
+            showIndent(outfile, level)
+            outfile.write('v0="%s",\n' % (self.v0,))
+        if self.vr is not None and 'vr' not in already_processed:
+            already_processed.add('vr')
+            showIndent(outfile, level)
+            outfile.write('vr="%s",\n' % (self.vr,))
+        if self.vt is not None and 'vt' not in already_processed:
+            already_processed.add('vt')
+            showIndent(outfile, level)
+            outfile.write('vt="%s",\n' % (self.vt,))
+        super(Izhikevich2007Cell, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(Izhikevich2007Cell, self).exportLiteralChildren(outfile, level, name_)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('a', node)
+        if value is not None and 'a' not in already_processed:
+            already_processed.add('a')
+            self.a = value
+            self.validate_Nml2Quantity_pertime(self.a)    # validate type Nml2Quantity_pertime
+        value = find_attr_value_('c', node)
+        if value is not None and 'c' not in already_processed:
+            already_processed.add('c')
+            self.c = value
+            self.validate_Nml2Quantity_voltage(self.c)    # validate type Nml2Quantity_voltage
+        value = find_attr_value_('b', node)
+        if value is not None and 'b' not in already_processed:
+            already_processed.add('b')
+            self.b = value
+            self.validate_Nml2Quantity_conductance(self.b)    # validate type Nml2Quantity_conductance
+        value = find_attr_value_('d', node)
+        if value is not None and 'd' not in already_processed:
+            already_processed.add('d')
+            self.d = value
+            self.validate_Nml2Quantity_current(self.d)    # validate type Nml2Quantity_current
+        value = find_attr_value_('vpeak', node)
+        if value is not None and 'vpeak' not in already_processed:
+            already_processed.add('vpeak')
+            self.vpeak = value
+            self.validate_Nml2Quantity_voltage(self.vpeak)    # validate type Nml2Quantity_voltage
+        value = find_attr_value_('k', node)
+        if value is not None and 'k' not in already_processed:
+            already_processed.add('k')
+            self.k = value
+            self.validate_Nml2Quantity_conductancePerVoltage(self.k)    # validate type Nml2Quantity_conductancePerVoltage
+        value = find_attr_value_('v0', node)
+        if value is not None and 'v0' not in already_processed:
+            already_processed.add('v0')
+            self.v0 = value
+            self.validate_Nml2Quantity_voltage(self.v0)    # validate type Nml2Quantity_voltage
+        value = find_attr_value_('vr', node)
+        if value is not None and 'vr' not in already_processed:
+            already_processed.add('vr')
+            self.vr = value
+            self.validate_Nml2Quantity_voltage(self.vr)    # validate type Nml2Quantity_voltage
+        value = find_attr_value_('vt', node)
+        if value is not None and 'vt' not in already_processed:
+            already_processed.add('vt')
+            self.vt = value
+            self.validate_Nml2Quantity_voltage(self.vt)    # validate type Nml2Quantity_voltage
+        super(Izhikevich2007Cell, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(Izhikevich2007Cell, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class Izhikevich2007Cell
+
+
 class IafRefCell(IafCell):
     member_data_items_ = [
         MemberSpec_('refract', 'Nml2Quantity_time', 0),
@@ -18452,6 +18781,7 @@ GDSClassesMapping = {
     'structure': SpaceStructure,
     'spikeArray': SpikeArray,
     'blockingPlasticSynapse': BlockingPlasticSynapse,
+    'izhikevich2007Cell': Izhikevich2007Cell,
     'grid': GridLayout,
     'expOneSynapse': ExpOneSynapse,
     'baseCell': BaseCell,
@@ -18583,6 +18913,7 @@ __all__ = [
     "Annotation",
     "Base",
     "BaseCell",
+    "BaseCellMembPotCap",
     "BaseConductanceBasedSynapse",
     "BaseNonNegativeIntegerId",
     "BasePynnSynapse",
@@ -18654,6 +18985,7 @@ __all__ = [
     "IntracellularProperties",
     "IonChannel",
     "IonChannelHH",
+    "Izhikevich2007Cell",
     "IzhikevichCell",
     "Layout",
     "Location",

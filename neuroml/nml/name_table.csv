@@ -23,6 +23,7 @@ true,true
 rampGenerator,ramp_generators
 channelDensityNernst,channel_density_nernsts
 gateHHrates,gate_hh_rates
+q10Settings,q10_settings
 to,to
 w0,w0
 extends,extends
@@ -119,6 +120,7 @@ gL,g_l
 c,c
 property,properties
 e_rev_E,e_rev_E
+vpeak,vpeak
 baselineAmplitude,baseline_amplitude
 e_rev_I,e_rev_I
 e_rev_K,e_rev_K
@@ -165,6 +167,7 @@ spikeGeneratorRandom,spike_generator_randoms
 leakConductance,leak_conductance
 conductance,conductance
 spike,spikes
+vt,vt
 spikeArray,spike_arrays
 type,type
 location,location
@@ -216,7 +219,7 @@ electricalConnection,electrical_connections
 ionChannelHH,ion_channel_hhs
 channelDensityGHK,channel_density_ghks
 synapticConnection,synaptic_connections
-q10Settings,q10_settings
+vr,vr
 tag,tag
 startAmplitude,start_amplitude
 v_rest,v_rest
@@ -270,6 +273,7 @@ required,required
 IF_curr_alpha,IF_curr_alpha
 postFractionAlong,post_fraction_along
 dimension,dimension
+izhikevich2007Cell,izhikevich2007_cells
 expCurrSynapse,exp_curr_synapses
 time,time
 y,y

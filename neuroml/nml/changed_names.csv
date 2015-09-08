@@ -15,6 +15,7 @@ reverseRate,reverse_rate
 rampGenerator,ramp_generators
 channelDensityNernst,channel_density_nernsts
 gateHHrates,gate_hh_rates
+q10Settings,q10_settings
 voltageConcDepBlockMechanism,voltage_conc_dep_block_mechanism
 xSpacing,x_spacing
 iafCell,iaf_cells
@@ -126,7 +127,6 @@ electricalConnection,electrical_connections
 ionChannelHH,ion_channel_hhs
 channelDensityGHK,channel_density_ghks
 synapticConnection,synaptic_connections
-q10Settings,q10_settings
 startAmplitude,start_amplitude
 channelDensityNonUniformNernst,channel_density_non_uniform_nernsts
 iafTauRefCell,iaf_tau_ref_cells
@@ -155,6 +155,7 @@ leakReversal,leak_reversal
 gateKS,gate_ks
 blockingPlasticSynapse,blocking_plastic_synapses
 postFractionAlong,post_fraction_along
+izhikevich2007Cell,izhikevich2007_cells
 expCurrSynapse,exp_curr_synapses
 channelDensityNonUniform,channel_density_non_uniforms
 expOneSynapse,exp_one_synapses
