@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Sep  8 18:00:21 2015 by generateDS.py version 2.16a.
+# Generated Tue Sep  8 18:55:23 2015 by generateDS.py version 2.16a.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -15285,20 +15285,20 @@ class FitzHughNagumo1969Cell(BaseCell):
         MemberSpec_('phi', 'Nml2Quantity_none', 0),
         MemberSpec_('b', 'Nml2Quantity_none', 0),
         MemberSpec_('I', 'Nml2Quantity_none', 0),
-        MemberSpec_('v0', 'Nml2Quantity_none', 0),
-        MemberSpec_('w0', 'Nml2Quantity_none', 0),
+        MemberSpec_('V0', 'Nml2Quantity_none', 0),
+        MemberSpec_('W0', 'Nml2Quantity_none', 0),
     ]
     subclass = None
     superclass = BaseCell
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, a=None, phi=None, b=None, I=None, v0=None, w0=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, a=None, phi=None, b=None, I=None, V0=None, W0=None):
         self.original_tagname_ = None
         super(FitzHughNagumo1969Cell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
         self.a = _cast(None, a)
         self.phi = _cast(None, phi)
         self.b = _cast(None, b)
         self.I = _cast(None, I)
-        self.v0 = _cast(None, v0)
-        self.w0 = _cast(None, w0)
+        self.V0 = _cast(None, V0)
+        self.W0 = _cast(None, W0)
     def factory(*args_, **kwargs_):
         if FitzHughNagumo1969Cell.subclass:
             return FitzHughNagumo1969Cell.subclass(*args_, **kwargs_)
@@ -15351,12 +15351,12 @@ class FitzHughNagumo1969Cell(BaseCell):
         if self.I is not None and 'I' not in already_processed:
             already_processed.add('I')
             outfile.write(' I=%s' % (quote_attrib(self.I), ))
-        if self.v0 is not None and 'v0' not in already_processed:
-            already_processed.add('v0')
-            outfile.write(' v0=%s' % (quote_attrib(self.v0), ))
-        if self.w0 is not None and 'w0' not in already_processed:
-            already_processed.add('w0')
-            outfile.write(' w0=%s' % (quote_attrib(self.w0), ))
+        if self.V0 is not None and 'V0' not in already_processed:
+            already_processed.add('V0')
+            outfile.write(' V0=%s' % (quote_attrib(self.V0), ))
+        if self.W0 is not None and 'W0' not in already_processed:
+            already_processed.add('W0')
+            outfile.write(' W0=%s' % (quote_attrib(self.W0), ))
     def exportChildren(self, outfile, level, namespace_='', name_='FitzHughNagumo1969Cell', fromsubclass_=False, pretty_print=True):
         super(FitzHughNagumo1969Cell, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
     def exportLiteral(self, outfile, level, name_='FitzHughNagumo1969Cell'):
@@ -15382,14 +15382,14 @@ class FitzHughNagumo1969Cell(BaseCell):
             already_processed.add('I')
             showIndent(outfile, level)
             outfile.write('I="%s",\n' % (self.I,))
-        if self.v0 is not None and 'v0' not in already_processed:
-            already_processed.add('v0')
+        if self.V0 is not None and 'V0' not in already_processed:
+            already_processed.add('V0')
             showIndent(outfile, level)
-            outfile.write('v0="%s",\n' % (self.v0,))
-        if self.w0 is not None and 'w0' not in already_processed:
-            already_processed.add('w0')
+            outfile.write('V0="%s",\n' % (self.V0,))
+        if self.W0 is not None and 'W0' not in already_processed:
+            already_processed.add('W0')
             showIndent(outfile, level)
-            outfile.write('w0="%s",\n' % (self.w0,))
+            outfile.write('W0="%s",\n' % (self.W0,))
         super(FitzHughNagumo1969Cell, self).exportLiteralAttributes(outfile, level, already_processed, name_)
     def exportLiteralChildren(self, outfile, level, name_):
         super(FitzHughNagumo1969Cell, self).exportLiteralChildren(outfile, level, name_)
@@ -15421,16 +15421,16 @@ class FitzHughNagumo1969Cell(BaseCell):
             already_processed.add('I')
             self.I = value
             self.validate_Nml2Quantity_none(self.I)    # validate type Nml2Quantity_none
-        value = find_attr_value_('v0', node)
-        if value is not None and 'v0' not in already_processed:
-            already_processed.add('v0')
-            self.v0 = value
-            self.validate_Nml2Quantity_none(self.v0)    # validate type Nml2Quantity_none
-        value = find_attr_value_('w0', node)
-        if value is not None and 'w0' not in already_processed:
-            already_processed.add('w0')
-            self.w0 = value
-            self.validate_Nml2Quantity_none(self.w0)    # validate type Nml2Quantity_none
+        value = find_attr_value_('V0', node)
+        if value is not None and 'V0' not in already_processed:
+            already_processed.add('V0')
+            self.V0 = value
+            self.validate_Nml2Quantity_none(self.V0)    # validate type Nml2Quantity_none
+        value = find_attr_value_('W0', node)
+        if value is not None and 'W0' not in already_processed:
+            already_processed.add('W0')
+            self.W0 = value
+            self.validate_Nml2Quantity_none(self.W0)    # validate type Nml2Quantity_none
         super(FitzHughNagumo1969Cell, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(FitzHughNagumo1969Cell, self).buildChildren(child_, node, nodeName_, True)
