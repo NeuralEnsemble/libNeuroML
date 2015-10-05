@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Sep  8 18:55:23 2015 by generateDS.py version 2.16a.
+# Generated Mon Oct  5 13:18:15 2015 by generateDS.py version 2.16a.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -6542,6 +6542,353 @@ class InputList(Base):
 # end class InputList
 
 
+class ContinuousConnection(BaseNonNegativeIntegerId):
+    """Individual continuous/analog synaptic connection"""
+    member_data_items_ = [
+        MemberSpec_('preFractionAlong', 'ZeroToOne', 0),
+        MemberSpec_('preSegment', 'NonNegativeInteger', 0),
+        MemberSpec_('postFractionAlong', 'ZeroToOne', 0),
+        MemberSpec_('preComponent', 'NmlId', 0),
+        MemberSpec_('postSegment', 'NonNegativeInteger', 0),
+        MemberSpec_('postCell', 'xs:string', 0),
+        MemberSpec_('preCell', 'xs:string', 0),
+        MemberSpec_('postComponent', 'NmlId', 0),
+    ]
+    subclass = None
+    superclass = BaseNonNegativeIntegerId
+    def __init__(self, neuro_lex_id=None, id=None, pre_fraction_along=None, pre_segment=None, post_fraction_along=None, pre_component=None, post_segment=None, post_cell=None, pre_cell=None, post_component=None):
+        self.original_tagname_ = None
+        super(ContinuousConnection, self).__init__(neuro_lex_id, id, )
+        self.pre_fraction_along = _cast(None, pre_fraction_along)
+        self.pre_segment = _cast(None, pre_segment)
+        self.post_fraction_along = _cast(None, post_fraction_along)
+        self.pre_component = _cast(None, pre_component)
+        self.post_segment = _cast(None, post_segment)
+        self.post_cell = _cast(None, post_cell)
+        self.pre_cell = _cast(None, pre_cell)
+        self.post_component = _cast(None, post_component)
+    def factory(*args_, **kwargs_):
+        if ContinuousConnection.subclass:
+            return ContinuousConnection.subclass(*args_, **kwargs_)
+        else:
+            return ContinuousConnection(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_ZeroToOne(self, value):
+        # Validate type ZeroToOne, a restriction on xs:double.
+        if value is not None and Validate_simpletypes_:
+            if value < 0:
+                warnings_.warn('Value "%(value)s" does not match xsd minInclusive restriction on ZeroToOne' % {"value" : value} )
+            if value > 1:
+                warnings_.warn('Value "%(value)s" does not match xsd maxInclusive restriction on ZeroToOne' % {"value" : value} )
+    def validate_NonNegativeInteger(self, value):
+        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
+        if value is not None and Validate_simpletypes_:
+            pass
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
+    def hasContent_(self):
+        if (
+            super(ContinuousConnection, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='ContinuousConnection', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ContinuousConnection')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ContinuousConnection', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ContinuousConnection'):
+        super(ContinuousConnection, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ContinuousConnection')
+        if self.pre_fraction_along is not None and 'pre_fraction_along' not in already_processed:
+            already_processed.add('pre_fraction_along')
+            outfile.write(' preFractionAlong=%s' % (quote_attrib(self.pre_fraction_along), ))
+        if self.pre_segment is not None and 'pre_segment' not in already_processed:
+            already_processed.add('pre_segment')
+            outfile.write(' preSegment=%s' % (quote_attrib(self.pre_segment), ))
+        if self.post_fraction_along is not None and 'post_fraction_along' not in already_processed:
+            already_processed.add('post_fraction_along')
+            outfile.write(' postFractionAlong=%s' % (quote_attrib(self.post_fraction_along), ))
+        if self.pre_component is not None and 'pre_component' not in already_processed:
+            already_processed.add('pre_component')
+            outfile.write(' preComponent=%s' % (quote_attrib(self.pre_component), ))
+        if self.post_segment is not None and 'post_segment' not in already_processed:
+            already_processed.add('post_segment')
+            outfile.write(' postSegment=%s' % (quote_attrib(self.post_segment), ))
+        if self.post_cell is not None and 'post_cell' not in already_processed:
+            already_processed.add('post_cell')
+            outfile.write(' postCell=%s' % (self.gds_format_string(quote_attrib(self.post_cell).encode(ExternalEncoding), input_name='postCell'), ))
+        if self.pre_cell is not None and 'pre_cell' not in already_processed:
+            already_processed.add('pre_cell')
+            outfile.write(' preCell=%s' % (self.gds_format_string(quote_attrib(self.pre_cell).encode(ExternalEncoding), input_name='preCell'), ))
+        if self.post_component is not None and 'post_component' not in already_processed:
+            already_processed.add('post_component')
+            outfile.write(' postComponent=%s' % (quote_attrib(self.post_component), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='ContinuousConnection', fromsubclass_=False, pretty_print=True):
+        super(ContinuousConnection, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
+    def exportLiteral(self, outfile, level, name_='ContinuousConnection'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.pre_fraction_along is not None and 'pre_fraction_along' not in already_processed:
+            already_processed.add('pre_fraction_along')
+            showIndent(outfile, level)
+            outfile.write('pre_fraction_along=%e,\n' % (self.pre_fraction_along,))
+        if self.pre_segment is not None and 'pre_segment' not in already_processed:
+            already_processed.add('pre_segment')
+            showIndent(outfile, level)
+            outfile.write('pre_segment=%d,\n' % (self.pre_segment,))
+        if self.post_fraction_along is not None and 'post_fraction_along' not in already_processed:
+            already_processed.add('post_fraction_along')
+            showIndent(outfile, level)
+            outfile.write('post_fraction_along=%e,\n' % (self.post_fraction_along,))
+        if self.pre_component is not None and 'pre_component' not in already_processed:
+            already_processed.add('pre_component')
+            showIndent(outfile, level)
+            outfile.write('pre_component="%s",\n' % (self.pre_component,))
+        if self.post_segment is not None and 'post_segment' not in already_processed:
+            already_processed.add('post_segment')
+            showIndent(outfile, level)
+            outfile.write('post_segment=%d,\n' % (self.post_segment,))
+        if self.post_cell is not None and 'post_cell' not in already_processed:
+            already_processed.add('post_cell')
+            showIndent(outfile, level)
+            outfile.write('post_cell="%s",\n' % (self.post_cell,))
+        if self.pre_cell is not None and 'pre_cell' not in already_processed:
+            already_processed.add('pre_cell')
+            showIndent(outfile, level)
+            outfile.write('pre_cell="%s",\n' % (self.pre_cell,))
+        if self.post_component is not None and 'post_component' not in already_processed:
+            already_processed.add('post_component')
+            showIndent(outfile, level)
+            outfile.write('post_component="%s",\n' % (self.post_component,))
+        super(ContinuousConnection, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(ContinuousConnection, self).exportLiteralChildren(outfile, level, name_)
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('preFractionAlong', node)
+        if value is not None and 'preFractionAlong' not in already_processed:
+            already_processed.add('preFractionAlong')
+            try:
+                self.pre_fraction_along = float(value)
+            except ValueError as exp:
+                raise ValueError('Bad float/double attribute (preFractionAlong): %s' % exp)
+            self.validate_ZeroToOne(self.pre_fraction_along)    # validate type ZeroToOne
+        value = find_attr_value_('preSegment', node)
+        if value is not None and 'preSegment' not in already_processed:
+            already_processed.add('preSegment')
+            try:
+                self.pre_segment = int(value)
+            except ValueError as exp:
+                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.pre_segment < 0:
+                raise_parse_error(node, 'Invalid NonNegativeInteger')
+            self.validate_NonNegativeInteger(self.pre_segment)    # validate type NonNegativeInteger
+        value = find_attr_value_('postFractionAlong', node)
+        if value is not None and 'postFractionAlong' not in already_processed:
+            already_processed.add('postFractionAlong')
+            try:
+                self.post_fraction_along = float(value)
+            except ValueError as exp:
+                raise ValueError('Bad float/double attribute (postFractionAlong): %s' % exp)
+            self.validate_ZeroToOne(self.post_fraction_along)    # validate type ZeroToOne
+        value = find_attr_value_('preComponent', node)
+        if value is not None and 'preComponent' not in already_processed:
+            already_processed.add('preComponent')
+            self.pre_component = value
+            self.validate_NmlId(self.pre_component)    # validate type NmlId
+        value = find_attr_value_('postSegment', node)
+        if value is not None and 'postSegment' not in already_processed:
+            already_processed.add('postSegment')
+            try:
+                self.post_segment = int(value)
+            except ValueError as exp:
+                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.post_segment < 0:
+                raise_parse_error(node, 'Invalid NonNegativeInteger')
+            self.validate_NonNegativeInteger(self.post_segment)    # validate type NonNegativeInteger
+        value = find_attr_value_('postCell', node)
+        if value is not None and 'postCell' not in already_processed:
+            already_processed.add('postCell')
+            self.post_cell = value
+        value = find_attr_value_('preCell', node)
+        if value is not None and 'preCell' not in already_processed:
+            already_processed.add('preCell')
+            self.pre_cell = value
+        value = find_attr_value_('postComponent', node)
+        if value is not None and 'postComponent' not in already_processed:
+            already_processed.add('postComponent')
+            self.post_component = value
+            self.validate_NmlId(self.post_component)    # validate type NmlId
+        super(ContinuousConnection, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(ContinuousConnection, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class ContinuousConnection
+
+
+class ContinuousProjection(Base):
+    """Projection between two populations consisting of analog connections
+    (e.g. graded synapses)"""
+    member_data_items_ = [
+        MemberSpec_('postsynapticPopulation', 'NmlId', 0),
+        MemberSpec_('presynapticPopulation', 'NmlId', 0),
+        MemberSpec_('continuous_connections', 'ContinuousConnection', 1),
+    ]
+    subclass = None
+    superclass = Base
+    def __init__(self, neuro_lex_id=None, id=None, postsynaptic_population=None, presynaptic_population=None, continuous_connections=None):
+        self.original_tagname_ = None
+        super(ContinuousProjection, self).__init__(neuro_lex_id, id, )
+        self.postsynaptic_population = _cast(None, postsynaptic_population)
+        self.presynaptic_population = _cast(None, presynaptic_population)
+        if continuous_connections is None:
+            self.continuous_connections = []
+        else:
+            self.continuous_connections = continuous_connections
+    def factory(*args_, **kwargs_):
+        if ContinuousProjection.subclass:
+            return ContinuousProjection.subclass(*args_, **kwargs_)
+        else:
+            return ContinuousProjection(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
+    def hasContent_(self):
+        if (
+            self.continuous_connections or
+            super(ContinuousProjection, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='ContinuousProjection', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ContinuousProjection')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ContinuousProjection', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ContinuousProjection'):
+        super(ContinuousProjection, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ContinuousProjection')
+        if self.postsynaptic_population is not None and 'postsynaptic_population' not in already_processed:
+            already_processed.add('postsynaptic_population')
+            outfile.write(' postsynapticPopulation=%s' % (quote_attrib(self.postsynaptic_population), ))
+        if self.presynaptic_population is not None and 'presynaptic_population' not in already_processed:
+            already_processed.add('presynaptic_population')
+            outfile.write(' presynapticPopulation=%s' % (quote_attrib(self.presynaptic_population), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='ContinuousProjection', fromsubclass_=False, pretty_print=True):
+        super(ContinuousProjection, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        for continuousConnection_ in self.continuous_connections:
+            continuousConnection_.export(outfile, level, namespace_, name_='continuousConnection', pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='ContinuousProjection'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.postsynaptic_population is not None and 'postsynaptic_population' not in already_processed:
+            already_processed.add('postsynaptic_population')
+            showIndent(outfile, level)
+            outfile.write('postsynaptic_population="%s",\n' % (self.postsynaptic_population,))
+        if self.presynaptic_population is not None and 'presynaptic_population' not in already_processed:
+            already_processed.add('presynaptic_population')
+            showIndent(outfile, level)
+            outfile.write('presynaptic_population="%s",\n' % (self.presynaptic_population,))
+        super(ContinuousProjection, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(ContinuousProjection, self).exportLiteralChildren(outfile, level, name_)
+        showIndent(outfile, level)
+        outfile.write('continuous_connections=[\n')
+        level += 1
+        for continuousConnection_ in self.continuous_connections:
+            showIndent(outfile, level)
+            outfile.write('model_.ContinuousConnection(\n')
+            continuousConnection_.exportLiteral(outfile, level, name_='ContinuousConnection')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('postsynapticPopulation', node)
+        if value is not None and 'postsynapticPopulation' not in already_processed:
+            already_processed.add('postsynapticPopulation')
+            self.postsynaptic_population = value
+            self.validate_NmlId(self.postsynaptic_population)    # validate type NmlId
+        value = find_attr_value_('presynapticPopulation', node)
+        if value is not None and 'presynapticPopulation' not in already_processed:
+            already_processed.add('presynapticPopulation')
+            self.presynaptic_population = value
+            self.validate_NmlId(self.presynaptic_population)    # validate type NmlId
+        super(ContinuousProjection, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        if nodeName_ == 'continuousConnection':
+            obj_ = ContinuousConnection.factory()
+            obj_.build(child_)
+            self.continuous_connections.append(obj_)
+            obj_.original_tagname_ = 'continuousConnection'
+        super(ContinuousProjection, self).buildChildren(child_, node, nodeName_, True)
+# end class ContinuousProjection
+
+
 class ElectricalConnection(BaseNonNegativeIntegerId):
     """Individual electrical synaptic connection"""
     member_data_items_ = [
@@ -7735,12 +8082,13 @@ class Network(Standalone):
         MemberSpec_('synaptic_connections', 'SynapticConnection', 1),
         MemberSpec_('projections', 'Projection', 1),
         MemberSpec_('electrical_projections', 'ElectricalProjection', 1),
+        MemberSpec_('continuous_projections', 'ContinuousProjection', 1),
         MemberSpec_('explicit_inputs', 'ExplicitInput', 1),
         MemberSpec_('input_lists', 'InputList', 1),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, type=None, temperature=None, spaces=None, regions=None, extracellular_properties=None, populations=None, cell_sets=None, synaptic_connections=None, projections=None, electrical_projections=None, explicit_inputs=None, input_lists=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, type=None, temperature=None, spaces=None, regions=None, extracellular_properties=None, populations=None, cell_sets=None, synaptic_connections=None, projections=None, electrical_projections=None, continuous_projections=None, explicit_inputs=None, input_lists=None):
         self.original_tagname_ = None
         super(Network, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
         self.type = _cast(None, type)
@@ -7777,6 +8125,10 @@ class Network(Standalone):
             self.electrical_projections = []
         else:
             self.electrical_projections = electrical_projections
+        if continuous_projections is None:
+            self.continuous_projections = []
+        else:
+            self.continuous_projections = continuous_projections
         if explicit_inputs is None:
             self.explicit_inputs = []
         else:
@@ -7820,6 +8172,7 @@ class Network(Standalone):
             self.synaptic_connections or
             self.projections or
             self.electrical_projections or
+            self.continuous_projections or
             self.explicit_inputs or
             self.input_lists or
             super(Network, self).hasContent_()
@@ -7875,6 +8228,8 @@ class Network(Standalone):
             projection_.export(outfile, level, namespace_, name_='projection', pretty_print=pretty_print)
         for electricalProjection_ in self.electrical_projections:
             electricalProjection_.export(outfile, level, namespace_, name_='electricalProjection', pretty_print=pretty_print)
+        for continuousProjection_ in self.continuous_projections:
+            continuousProjection_.export(outfile, level, namespace_, name_='continuousProjection', pretty_print=pretty_print)
         for explicitInput_ in self.explicit_inputs:
             explicitInput_.export(outfile, level, namespace_, name_='explicitInput', pretty_print=pretty_print)
         for inputList_ in self.input_lists:
@@ -7994,6 +8349,18 @@ class Network(Standalone):
         showIndent(outfile, level)
         outfile.write('],\n')
         showIndent(outfile, level)
+        outfile.write('continuous_projections=[\n')
+        level += 1
+        for continuousProjection_ in self.continuous_projections:
+            showIndent(outfile, level)
+            outfile.write('model_.ContinuousProjection(\n')
+            continuousProjection_.exportLiteral(outfile, level, name_='ContinuousProjection')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
         outfile.write('explicit_inputs=[\n')
         level += 1
         for explicitInput_ in self.explicit_inputs:
@@ -8077,6 +8444,11 @@ class Network(Standalone):
             obj_.build(child_)
             self.electrical_projections.append(obj_)
             obj_.original_tagname_ = 'electricalProjection'
+        elif nodeName_ == 'continuousProjection':
+            obj_ = ContinuousProjection.factory()
+            obj_.build(child_)
+            self.continuous_projections.append(obj_)
+            obj_.original_tagname_ = 'continuousProjection'
         elif nodeName_ == 'explicitInput':
             obj_ = ExplicitInput.factory()
             obj_.build(child_)
@@ -13577,6 +13949,9 @@ class NeuroMLDocument(Standalone):
         MemberSpec_('exp_two_synapses', 'ExpTwoSynapse', 1),
         MemberSpec_('blocking_plastic_synapses', 'BlockingPlasticSynapse', 1),
         MemberSpec_('gap_junctions', 'GapJunction', 1),
+        MemberSpec_('silent_synapses', 'SilentSynapse', 1),
+        MemberSpec_('linear_graded_synapses', 'LinearGradedSynapse', 1),
+        MemberSpec_('graded_synapses', 'GradedSynapse', 1),
         MemberSpec_('biophysical_properties', 'BiophysicalProperties', 1),
         MemberSpec_('cells', 'Cell', 1),
         MemberSpec_('base_cells', 'BaseCell', 1),
@@ -13615,7 +13990,7 @@ class NeuroMLDocument(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, ion_channel_hhs=None, decaying_pool_concentration_models=None, fixed_factor_concentration_models=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, gap_junctions=None, biophysical_properties=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, izhikevich2007_cells=None, ad_ex_ia_f_cells=None, fitz_hugh_nagumo_cells=None, fitz_hugh_nagumo1969_cells=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, poisson_firing_synapses=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, ion_channel_hhs=None, decaying_pool_concentration_models=None, fixed_factor_concentration_models=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, gap_junctions=None, silent_synapses=None, linear_graded_synapses=None, graded_synapses=None, biophysical_properties=None, cells=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, izhikevich2007_cells=None, ad_ex_ia_f_cells=None, fitz_hugh_nagumo_cells=None, fitz_hugh_nagumo1969_cells=None, pulse_generators=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, poisson_firing_synapses=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
         self.original_tagname_ = None
         super(NeuroMLDocument, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
         if includes is None:
@@ -13666,6 +14041,18 @@ class NeuroMLDocument(Standalone):
             self.gap_junctions = []
         else:
             self.gap_junctions = gap_junctions
+        if silent_synapses is None:
+            self.silent_synapses = []
+        else:
+            self.silent_synapses = silent_synapses
+        if linear_graded_synapses is None:
+            self.linear_graded_synapses = []
+        else:
+            self.linear_graded_synapses = linear_graded_synapses
+        if graded_synapses is None:
+            self.graded_synapses = []
+        else:
+            self.graded_synapses = graded_synapses
         if biophysical_properties is None:
             self.biophysical_properties = []
         else:
@@ -13826,6 +14213,9 @@ class NeuroMLDocument(Standalone):
             self.exp_two_synapses or
             self.blocking_plastic_synapses or
             self.gap_junctions or
+            self.silent_synapses or
+            self.linear_graded_synapses or
+            self.graded_synapses or
             self.biophysical_properties or
             self.cells or
             self.base_cells or
@@ -13916,6 +14306,12 @@ class NeuroMLDocument(Standalone):
             blockingPlasticSynapse_.export(outfile, level, namespace_, name_='blockingPlasticSynapse', pretty_print=pretty_print)
         for gapJunction_ in self.gap_junctions:
             gapJunction_.export(outfile, level, namespace_, name_='gapJunction', pretty_print=pretty_print)
+        for silentSynapse_ in self.silent_synapses:
+            silentSynapse_.export(outfile, level, namespace_, name_='silentSynapse', pretty_print=pretty_print)
+        for linearGradedSynapse_ in self.linear_graded_synapses:
+            linearGradedSynapse_.export(outfile, level, namespace_, name_='linearGradedSynapse', pretty_print=pretty_print)
+        for gradedSynapse_ in self.graded_synapses:
+            gradedSynapse_.export(outfile, level, namespace_, name_='gradedSynapse', pretty_print=pretty_print)
         for biophysicalProperties_ in self.biophysical_properties:
             biophysicalProperties_.export(outfile, level, namespace_, name_='biophysicalProperties', pretty_print=pretty_print)
         for cell_ in self.cells:
@@ -14135,6 +14531,42 @@ class NeuroMLDocument(Standalone):
             showIndent(outfile, level)
             outfile.write('model_.GapJunction(\n')
             gapJunction_.exportLiteral(outfile, level, name_='GapJunction')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('silent_synapses=[\n')
+        level += 1
+        for silentSynapse_ in self.silent_synapses:
+            showIndent(outfile, level)
+            outfile.write('model_.SilentSynapse(\n')
+            silentSynapse_.exportLiteral(outfile, level, name_='SilentSynapse')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('linear_graded_synapses=[\n')
+        level += 1
+        for linearGradedSynapse_ in self.linear_graded_synapses:
+            showIndent(outfile, level)
+            outfile.write('model_.LinearGradedSynapse(\n')
+            linearGradedSynapse_.exportLiteral(outfile, level, name_='LinearGradedSynapse')
+            showIndent(outfile, level)
+            outfile.write('),\n')
+        level -= 1
+        showIndent(outfile, level)
+        outfile.write('],\n')
+        showIndent(outfile, level)
+        outfile.write('graded_synapses=[\n')
+        level += 1
+        for gradedSynapse_ in self.graded_synapses:
+            showIndent(outfile, level)
+            outfile.write('model_.GradedSynapse(\n')
+            gradedSynapse_.exportLiteral(outfile, level, name_='GradedSynapse')
             showIndent(outfile, level)
             outfile.write('),\n')
         level -= 1
@@ -14633,6 +15065,21 @@ class NeuroMLDocument(Standalone):
             obj_.build(child_)
             self.gap_junctions.append(obj_)
             obj_.original_tagname_ = 'gapJunction'
+        elif nodeName_ == 'silentSynapse':
+            obj_ = SilentSynapse.factory()
+            obj_.build(child_)
+            self.silent_synapses.append(obj_)
+            obj_.original_tagname_ = 'silentSynapse'
+        elif nodeName_ == 'linearGradedSynapse':
+            obj_ = LinearGradedSynapse.factory()
+            obj_.build(child_)
+            self.linear_graded_synapses.append(obj_)
+            obj_.original_tagname_ = 'linearGradedSynapse'
+        elif nodeName_ == 'gradedSynapse':
+            obj_ = GradedSynapse.factory()
+            obj_.build(child_)
+            self.graded_synapses.append(obj_)
+            obj_.original_tagname_ = 'gradedSynapse'
         elif nodeName_ == 'biophysicalProperties':
             obj_ = BiophysicalProperties.factory()
             obj_.build(child_)
@@ -16108,7 +16555,329 @@ class IafTauCell(BaseCell):
 # end class IafTauCell
 
 
+class GradedSynapse(BaseSynapse):
+    """Based on synapse in Methods of
+    http://www.nature.com/neuro/journal/v7/n12/abs/nn1352.html."""
+    member_data_items_ = [
+        MemberSpec_('Vth', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('conductance', 'Nml2Quantity_conductance', 0),
+        MemberSpec_('erev', 'Nml2Quantity_voltage', 0),
+        MemberSpec_('k', 'Nml2Quantity_pertime', 0),
+        MemberSpec_('delta', 'Nml2Quantity_voltage', 0),
+    ]
+    subclass = None
+    superclass = BaseSynapse
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, Vth=None, conductance=None, erev=None, k=None, delta=None):
+        self.original_tagname_ = None
+        super(GradedSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
+        self.Vth = _cast(None, Vth)
+        self.conductance = _cast(None, conductance)
+        self.erev = _cast(None, erev)
+        self.k = _cast(None, k)
+        self.delta = _cast(None, delta)
+    def factory(*args_, **kwargs_):
+        if GradedSynapse.subclass:
+            return GradedSynapse.subclass(*args_, **kwargs_)
+        else:
+            return GradedSynapse(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    def validate_Nml2Quantity_conductance(self, value):
+        # Validate type Nml2Quantity_conductance, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_conductance_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
+    def validate_Nml2Quantity_pertime(self, value):
+        # Validate type Nml2Quantity_pertime, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_pertime_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_pertime_patterns_, ))
+    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz)$']]
+    def hasContent_(self):
+        if (
+            super(GradedSynapse, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='GradedSynapse', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='GradedSynapse')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='GradedSynapse', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GradedSynapse'):
+        super(GradedSynapse, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GradedSynapse')
+        if self.Vth is not None and 'Vth' not in already_processed:
+            already_processed.add('Vth')
+            outfile.write(' Vth=%s' % (quote_attrib(self.Vth), ))
+        if self.conductance is not None and 'conductance' not in already_processed:
+            already_processed.add('conductance')
+            outfile.write(' conductance=%s' % (quote_attrib(self.conductance), ))
+        if self.erev is not None and 'erev' not in already_processed:
+            already_processed.add('erev')
+            outfile.write(' erev=%s' % (quote_attrib(self.erev), ))
+        if self.k is not None and 'k' not in already_processed:
+            already_processed.add('k')
+            outfile.write(' k=%s' % (quote_attrib(self.k), ))
+        if self.delta is not None and 'delta' not in already_processed:
+            already_processed.add('delta')
+            outfile.write(' delta=%s' % (quote_attrib(self.delta), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='GradedSynapse', fromsubclass_=False, pretty_print=True):
+        super(GradedSynapse, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='GradedSynapse'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.Vth is not None and 'Vth' not in already_processed:
+            already_processed.add('Vth')
+            showIndent(outfile, level)
+            outfile.write('Vth="%s",\n' % (self.Vth,))
+        if self.conductance is not None and 'conductance' not in already_processed:
+            already_processed.add('conductance')
+            showIndent(outfile, level)
+            outfile.write('conductance="%s",\n' % (self.conductance,))
+        if self.erev is not None and 'erev' not in already_processed:
+            already_processed.add('erev')
+            showIndent(outfile, level)
+            outfile.write('erev="%s",\n' % (self.erev,))
+        if self.k is not None and 'k' not in already_processed:
+            already_processed.add('k')
+            showIndent(outfile, level)
+            outfile.write('k="%s",\n' % (self.k,))
+        if self.delta is not None and 'delta' not in already_processed:
+            already_processed.add('delta')
+            showIndent(outfile, level)
+            outfile.write('delta="%s",\n' % (self.delta,))
+        super(GradedSynapse, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(GradedSynapse, self).exportLiteralChildren(outfile, level, name_)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('Vth', node)
+        if value is not None and 'Vth' not in already_processed:
+            already_processed.add('Vth')
+            self.Vth = value
+            self.validate_Nml2Quantity_voltage(self.Vth)    # validate type Nml2Quantity_voltage
+        value = find_attr_value_('conductance', node)
+        if value is not None and 'conductance' not in already_processed:
+            already_processed.add('conductance')
+            self.conductance = value
+            self.validate_Nml2Quantity_conductance(self.conductance)    # validate type Nml2Quantity_conductance
+        value = find_attr_value_('erev', node)
+        if value is not None and 'erev' not in already_processed:
+            already_processed.add('erev')
+            self.erev = value
+            self.validate_Nml2Quantity_voltage(self.erev)    # validate type Nml2Quantity_voltage
+        value = find_attr_value_('k', node)
+        if value is not None and 'k' not in already_processed:
+            already_processed.add('k')
+            self.k = value
+            self.validate_Nml2Quantity_pertime(self.k)    # validate type Nml2Quantity_pertime
+        value = find_attr_value_('delta', node)
+        if value is not None and 'delta' not in already_processed:
+            already_processed.add('delta')
+            self.delta = value
+            self.validate_Nml2Quantity_voltage(self.delta)    # validate type Nml2Quantity_voltage
+        super(GradedSynapse, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(GradedSynapse, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class GradedSynapse
+
+
+class LinearGradedSynapse(BaseSynapse):
+    """Behaves just like a one way gap junction."""
+    member_data_items_ = [
+        MemberSpec_('conductance', 'Nml2Quantity_conductance', 0),
+    ]
+    subclass = None
+    superclass = BaseSynapse
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, conductance=None):
+        self.original_tagname_ = None
+        super(LinearGradedSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
+        self.conductance = _cast(None, conductance)
+    def factory(*args_, **kwargs_):
+        if LinearGradedSynapse.subclass:
+            return LinearGradedSynapse.subclass(*args_, **kwargs_)
+        else:
+            return LinearGradedSynapse(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Nml2Quantity_conductance(self, value):
+        # Validate type Nml2Quantity_conductance, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_conductance_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
+    def hasContent_(self):
+        if (
+            super(LinearGradedSynapse, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='LinearGradedSynapse', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='LinearGradedSynapse')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='LinearGradedSynapse', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='LinearGradedSynapse'):
+        super(LinearGradedSynapse, self).exportAttributes(outfile, level, already_processed, namespace_, name_='LinearGradedSynapse')
+        if self.conductance is not None and 'conductance' not in already_processed:
+            already_processed.add('conductance')
+            outfile.write(' conductance=%s' % (quote_attrib(self.conductance), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='LinearGradedSynapse', fromsubclass_=False, pretty_print=True):
+        super(LinearGradedSynapse, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='LinearGradedSynapse'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        if self.conductance is not None and 'conductance' not in already_processed:
+            already_processed.add('conductance')
+            showIndent(outfile, level)
+            outfile.write('conductance="%s",\n' % (self.conductance,))
+        super(LinearGradedSynapse, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(LinearGradedSynapse, self).exportLiteralChildren(outfile, level, name_)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('conductance', node)
+        if value is not None and 'conductance' not in already_processed:
+            already_processed.add('conductance')
+            self.conductance = value
+            self.validate_Nml2Quantity_conductance(self.conductance)    # validate type Nml2Quantity_conductance
+        super(LinearGradedSynapse, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(LinearGradedSynapse, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class LinearGradedSynapse
+
+
+class SilentSynapse(BaseSynapse):
+    """Dummy synapse which emits no current. Used as presynaptic endpoint
+    for analog synaptic connection (continuousConnection)."""
+    member_data_items_ = [
+    ]
+    subclass = None
+    superclass = BaseSynapse
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None):
+        self.original_tagname_ = None
+        super(SilentSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
+    def factory(*args_, **kwargs_):
+        if SilentSynapse.subclass:
+            return SilentSynapse.subclass(*args_, **kwargs_)
+        else:
+            return SilentSynapse(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            super(SilentSynapse, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='SilentSynapse', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='SilentSynapse')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='SilentSynapse', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='SilentSynapse'):
+        super(SilentSynapse, self).exportAttributes(outfile, level, already_processed, namespace_, name_='SilentSynapse')
+    def exportChildren(self, outfile, level, namespace_='', name_='SilentSynapse', fromsubclass_=False, pretty_print=True):
+        super(SilentSynapse, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def exportLiteral(self, outfile, level, name_='SilentSynapse'):
+        level += 1
+        already_processed = set()
+        self.exportLiteralAttributes(outfile, level, already_processed, name_)
+        if self.hasContent_():
+            self.exportLiteralChildren(outfile, level, name_)
+    def exportLiteralAttributes(self, outfile, level, already_processed, name_):
+        super(SilentSynapse, self).exportLiteralAttributes(outfile, level, already_processed, name_)
+    def exportLiteralChildren(self, outfile, level, name_):
+        super(SilentSynapse, self).exportLiteralChildren(outfile, level, name_)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        super(SilentSynapse, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(SilentSynapse, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class SilentSynapse
+
+
 class GapJunction(BaseSynapse):
+    """Gap junction/single electrical connection"""
     member_data_items_ = [
         MemberSpec_('conductance', 'Nml2Quantity_conductance', 0),
     ]
@@ -18691,7 +19460,7 @@ GDSClassesMapping = {
     'spikeGeneratorPoisson': SpikeGeneratorPoisson,
     'proximal': ProximalDetails,
     'morphology': Morphology,
-    'fitzHughNagumo1969Cell': FitzHughNagumo1969Cell,
+    'spikeGeneratorRandom': SpikeGeneratorRandom,
     'sineGenerator': SineGenerator,
     'layout': Layout,
     'reverseRate': HHRate,
@@ -18719,15 +19488,18 @@ GDSClassesMapping = {
     'subTree': SubTree,
     'gateHHratesTau': GateHHRatesTau,
     'biophysicalProperties': BiophysicalProperties,
+    'continuousConnection': ContinuousConnection,
     'segmentGroup': SegmentGroup,
     'network': Network,
     'space': Space,
     'poissonFiringSynapse': PoissonFiringSynapse,
     'cell': Cell,
     'forwardRate': HHRate,
+    'synapticConnection': SynapticConnection,
     'electricalProjection': ElectricalProjection,
     'gateHHratesInf': GateHHRatesInf,
     'parent': SegmentParent,
+    'fitzHughNagumo1969Cell': FitzHughNagumo1969Cell,
     'alphaCurrSynapse': AlphaCurrSynapse,
     'izhikevichCell': IzhikevichCell,
     'path': Path,
@@ -18741,20 +19513,19 @@ GDSClassesMapping = {
     'projection': Projection,
     'q10Settings': Q10Settings,
     'distal': DistalDetails,
-    'specificCapacitance': SpecificCapacitance,
     'from': SegmentEndPoint,
     'decayingPoolConcentrationModel': DecayingPoolConcentrationModel,
     'cellSet': CellSet,
-    'spikeGeneratorRandom': SpikeGeneratorRandom,
     'spike': Spike,
     'fitzHughNagumoCell': FitzHughNagumoCell,
     'channelPopulation': ChannelPopulation,
     'inhomogeneousValue': InhomogeneousValue,
+    'continuousProjection': ContinuousProjection,
     'iafTauCell': IafTauCell,
     'pulseGenerator': PulseGenerator,
     'gateHHrates': GateHHRates,
     'population': Population,
-    'synapticConnection': SynapticConnection,
+    'specificCapacitance': SpecificCapacitance,
     'expCurrSynapse': ExpCurrSynapse,
     'property': Property,
     'explicitInput': ExplicitInput,
@@ -18764,14 +19535,17 @@ GDSClassesMapping = {
     'channelDensityGHK': ChannelDensityGHK,
     'ionChannel': IonChannel,
     'channelDensityNonUniformNernst': ChannelDensityNonUniformNernst,
+    'linearGradedSynapse': LinearGradedSynapse,
     'iafCell': IafCell,
     'iafTauRefCell': IafTauRefCell,
     'species': Species,
+    'silentSynapse': SilentSynapse,
     'expCondSynapse': ExpCondSynapse,
     'member': Member,
     'instance': Instance,
     'gate': GateHHUndetermined,
     'steadyState': HHVariable,
+    'gradedSynapse': GradedSynapse,
     'initMembPotential': InitMembPotential,
     'gapJunction': GapJunction,
     'variableParameter': VariableParameter,
@@ -18936,6 +19710,8 @@ __all__ = [
     "ConditionalDerivedVariable",
     "Connection",
     "Constant",
+    "ContinuousConnection",
+    "ContinuousProjection",
     "DecayingPoolConcentrationModel",
     "DerivedVariable",
     "DistalDetails",
@@ -18961,6 +19737,7 @@ __all__ = [
     "GateHHRatesTauInf",
     "GateHHTauInf",
     "GateHHUndetermined",
+    "GradedSynapse",
     "GridLayout",
     "HHRate",
     "HHTime",
@@ -18988,6 +19765,7 @@ __all__ = [
     "Izhikevich2007Cell",
     "IzhikevichCell",
     "Layout",
+    "LinearGradedSynapse",
     "Location",
     "Member",
     "MembraneProperties",
@@ -19015,6 +19793,7 @@ __all__ = [
     "SegmentEndPoint",
     "SegmentGroup",
     "SegmentParent",
+    "SilentSynapse",
     "SineGenerator",
     "Space",
     "SpaceStructure",

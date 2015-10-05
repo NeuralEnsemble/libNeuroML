@@ -23,7 +23,7 @@ true,true
 rampGenerator,ramp_generators
 channelDensityNernst,channel_density_nernsts
 gateHHrates,gate_hh_rates
-q10Settings,q10_settings
+preComponent,pre_component
 to,to
 voltageClamp,voltage_clamps
 extends,extends
@@ -33,6 +33,8 @@ tau_w,tau_w
 voltageConcDepBlockMechanism,voltage_conc_dep_block_mechanism
 xSpacing,x_spacing
 iafCell,iaf_cells
+tauRec,tau_rec
+postComponent,post_component
 tau_refrac,tau_refrac
 neuroml,neuroml
 gateHHratesTau,gate_h_hrates_taus
@@ -76,7 +78,7 @@ d,d
 rate,rate
 biophysicalProperties,biophysical_properties
 presynapticPopulation,presynaptic_population
-tauRec,tau_rec
+continuousConnection,continuous_connections
 IF_curr_exp,IF_curr_exp
 finishAmplitude,finish_amplitude
 duration,duration
@@ -89,16 +91,18 @@ metaid,metaid
 space,spaces
 poissonFiringSynapse,poisson_firing_synapses
 networkWithTemperature,network_with_temperature
-iafRefCell,iaf_ref_cells
+tau,tau
 cell,cells
 include,includes
 amplitude,amplitude
+q10Settings,q10_settings
 fractionAlong,fraction_along
 normalizationEnd,normalization_end
 gbase,gbase
 forwardRate,forward_rate
 tauw,tauw
 electricalProjection,electrical_projections
+gradedSynapse,graded_synapses
 gapJunction,gap_junctions
 targetVoltage,target_voltage
 parent,parent
@@ -112,7 +116,7 @@ tau_syn_E,tau_syn_E
 fixedFactorConcentrationModel,fixed_factor_concentration_models
 postCellId,post_cell_id
 tau_syn_I,tau_syn_I
-averageRate,average_rate
+region,regions
 tau_syn,tau_syn
 condDensity,cond_density
 optional,optional
@@ -140,7 +144,7 @@ cellSet,cell_sets
 preFractionAlong,pre_fraction_along
 unqualified,unqualified
 cm,cm
-tau,tau
+averageRate,average_rate
 unbounded,unboundeds
 translationStart,translation_start
 spikeGenerator,spike_generators
@@ -167,7 +171,6 @@ spikeGeneratorRandom,spike_generator_randoms
 leakConductance,leak_conductance
 conductance,conductance
 spike,spikes
-vt,vt
 spikeArray,spike_arrays
 type,type
 location,location
@@ -180,6 +183,7 @@ inhomogeneousValue,inhomogeneous_value
 javax.xml.bind.DatatypeConverter.parseInt,javax.xml.bind._datatype_converter.parse_int
 populationList,population_list
 thresh,thresh
+continuousProjection,continuous_projections
 input,input
 iafTauCell,iaf_tau_cells
 zSpacing,z_spacing
@@ -201,9 +205,9 @@ delta_T,delta_t
 ion,ion
 v_reset,v_reset
 xSize,x_size
-k,k
+vt,vt
 z,z
-region,regions
+k,k
 gateTypes,gate_types
 zSize,z_size
 minISI,min_isi
@@ -224,12 +228,14 @@ startAmplitude,start_amplitude
 v_rest,v_rest
 v_spike,v_spike
 channelDensityNonUniformNernst,channel_density_non_uniform_nernsts
+linearGradedSynapse,linear_graded_synapses
 permeability,permeability
 iafTauRefCell,iaf_tau_ref_cells
 id,id
 basePyNNCell,basePyNNCell
 channelPopulation,channel_populations
 subTree,sub_trees
+silentSynapse,silent_synapses
 scalingConc,scaling_conc
 expCondSynapse,exp_cond_synapses
 restingConc,resting_conc
@@ -246,6 +252,7 @@ preCell,pre_cell
 scalingVolt,scaling_volt
 blockConcentration,block_concentration
 gbar_K,gbar_K
+iafRefCell,iaf_ref_cells
 description,description
 phi,phi
 initMembPotential,init_memb_potentials
@@ -273,6 +280,7 @@ IF_curr_alpha,IF_curr_alpha
 postFractionAlong,post_fraction_along
 dimension,dimension
 izhikevich2007Cell,izhikevich2007_cells
+delta,delta
 expCurrSynapse,exp_curr_synapses
 time,time
 y,y
