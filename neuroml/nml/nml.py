@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Oct  5 13:18:15 2015 by generateDS.py version 2.16a.
+# Generated Mon Oct 26 13:34:59 2015 by generateDS.py version 2.16a.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -12260,7 +12260,7 @@ class FixedFactorConcentrationModel(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_rhoFactor_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_rhoFactor_patterns_, ))
-    validate_Nml2Quantity_rhoFactor_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m_per_A_per_s)$']]
+    validate_Nml2Quantity_rhoFactor_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m_per_A_per_s|mol_per_cm_per_uA_per_ms)$']]
     def validate_Nml2Quantity_concentration(self, value):
         # Validate type Nml2Quantity_concentration, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
