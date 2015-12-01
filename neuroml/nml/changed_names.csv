@@ -1,3 +1,4 @@
+alphaCurrentSynapse,alpha_current_synapses
 izhikevichCell,izhikevich_cells
 tsodyksMarkramDepMechanism,tsodyks_markram_dep_mechanism
 skip,skips
@@ -7,6 +8,7 @@ ySpacing,y_spacing
 spikeGeneratorPoisson,spike_generator_poissons
 tsodyksMarkramDepFacMechanism,tsodyks_markram_dep_fac_mechanism
 xStart,x_start
+synapticCurrentWeightDelay,synaptic_current_weight_delays
 projection,projections
 tauRise,tau_rise
 member,members
@@ -39,7 +41,6 @@ delT,del_t
 postsynapticPopulation,postsynaptic_population
 fixedQ10,fixed_q10
 xs:anyURI,xs:any_uri
-timeCourse,time_course
 ionChannelPassive,ion_channel_passive
 networkTypes,network_types
 yStart,y_start
@@ -74,6 +75,8 @@ condDensity,cond_density
 gL,g_l
 property,properties
 baselineAmplitude,baseline_amplitude
+q10ConductanceScaling,q10_conductance_scalings
+timeCourse,time_course
 extracellularProperties,extracellular_properties
 connection,connections
 neuroLexId,neuro_lex_id
@@ -98,6 +101,7 @@ postSegmentId,post_segment_id
 spikeGeneratorRandom,spike_generator_randoms
 leakConductance,leak_conductance
 spike,spikes
+tauSyn,tau_syn
 spikeArray,spike_arrays
 fitzHughNagumoCell,fitz_hugh_nagumo_cells
 javax.xml.bind.DatatypeConverter.printInt,javax.xml.bind._datatype_converter.print_int
@@ -143,6 +147,7 @@ expCondSynapse,exp_cond_synapses
 restingConc,resting_conc
 basedOn,based_on
 instance,instances
+gateHHInstantaneous,gate_hh_instantaneouses
 explicitInput,explicit_inputs
 gate,gates
 steadyState,steady_state
