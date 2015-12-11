@@ -107,6 +107,7 @@ fitzHughNagumoCell,fitz_hugh_nagumo_cells
 javax.xml.bind.DatatypeConverter.printInt,javax.xml.bind._datatype_converter.print_int
 preCellId,pre_cell_id
 tauFac,tau_fac
+pulseGeneratorDL,pulse_generator_dls
 q10Factor,q10_factor
 inhomogeneousValue,inhomogeneous_value
 javax.xml.bind.DatatypeConverter.parseInt,javax.xml.bind._datatype_converter.parse_int
