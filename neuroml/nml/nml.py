@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Dec 11 15:01:47 2015 by generateDS.py version 2.17a.
+# Generated Tue Dec 22 19:43:42 2015 by generateDS.py version 2.17a.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -4526,13 +4526,12 @@ class SynapticConnection(GeneratedsSuper):
     ]
     subclass = None
     superclass = None
-    def __init__(self, to=None, synapse=None, destination=None, from_=None, extensiontype_=None):
+    def __init__(self, to=None, synapse=None, destination=None, from_=None):
         self.original_tagname_ = None
         self.to = _cast(None, to)
         self.synapse = _cast(None, synapse)
         self.destination = _cast(None, destination)
         self.from_ = _cast(None, from_)
-        self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if SynapticConnection.subclass:
             return SynapticConnection.subclass(*args_, **kwargs_)
@@ -4583,10 +4582,6 @@ class SynapticConnection(GeneratedsSuper):
         if self.from_ is not None and 'from_' not in already_processed:
             already_processed.add('from_')
             outfile.write(' from=%s' % (self.gds_format_string(quote_attrib(self.from_).encode(ExternalEncoding), input_name='from'), ))
-        if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
-            already_processed.add('xsi:type')
-            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
-            outfile.write(' xsi:type="%s"' % self.extensiontype_)
     def exportChildren(self, outfile, level, namespace_='', name_='SynapticConnection', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node):
@@ -4614,108 +4609,9 @@ class SynapticConnection(GeneratedsSuper):
         if value is not None and 'from' not in already_processed:
             already_processed.add('from')
             self.from_ = value
-        value = find_attr_value_('xsi:type', node)
-        if value is not None and 'xsi:type' not in already_processed:
-            already_processed.add('xsi:type')
-            self.extensiontype_ = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
 # end class SynapticConnection
-
-
-class SynapticCurrentWeightDelay(SynapticConnection):
-    """Single explicit connection via a weighed/delayed currents.
-    Introduced to test connections in LEMS. Will probably be removed
-    in favour of connections wrapped in projection element"""
-    member_data_items_ = [
-        MemberSpec_('delay', 'Nml2Quantity_time', 0),
-        MemberSpec_('weight', 'Nml2Quantity_current', 0),
-    ]
-    subclass = None
-    superclass = SynapticConnection
-    def __init__(self, to=None, synapse=None, destination=None, from_=None, delay=None, weight=None):
-        self.original_tagname_ = None
-        super(SynapticCurrentWeightDelay, self).__init__(to, synapse, destination, from_, )
-        self.delay = _cast(None, delay)
-        self.weight = _cast(None, weight)
-    def factory(*args_, **kwargs_):
-        if SynapticCurrentWeightDelay.subclass:
-            return SynapticCurrentWeightDelay.subclass(*args_, **kwargs_)
-        else:
-            return SynapticCurrentWeightDelay(*args_, **kwargs_)
-    factory = staticmethod(factory)
-    def validate_Nml2Quantity_time(self, value):
-        # Validate type Nml2Quantity_time, a restriction on xs:string.
-        if value is not None and Validate_simpletypes_:
-            if not self.gds_validate_simple_patterns(
-                    self.validate_Nml2Quantity_time_patterns_, value):
-                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
-    def validate_Nml2Quantity_current(self, value):
-        # Validate type Nml2Quantity_current, a restriction on xs:string.
-        if value is not None and Validate_simpletypes_:
-            if not self.gds_validate_simple_patterns(
-                    self.validate_Nml2Quantity_current_patterns_, value):
-                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_current_patterns_, ))
-    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA)$']]
-    def hasContent_(self):
-        if (
-            super(SynapticCurrentWeightDelay, self).hasContent_()
-        ):
-            return True
-        else:
-            return False
-    def export(self, outfile, level, namespace_='', name_='SynapticCurrentWeightDelay', namespacedef_='', pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='SynapticCurrentWeightDelay')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='SynapticCurrentWeightDelay', pretty_print=pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='SynapticCurrentWeightDelay'):
-        super(SynapticCurrentWeightDelay, self).exportAttributes(outfile, level, already_processed, namespace_, name_='SynapticCurrentWeightDelay')
-        if self.delay is not None and 'delay' not in already_processed:
-            already_processed.add('delay')
-            outfile.write(' delay=%s' % (quote_attrib(self.delay), ))
-        if self.weight is not None and 'weight' not in already_processed:
-            already_processed.add('weight')
-            outfile.write(' weight=%s' % (quote_attrib(self.weight), ))
-    def exportChildren(self, outfile, level, namespace_='', name_='SynapticCurrentWeightDelay', fromsubclass_=False, pretty_print=True):
-        super(SynapticCurrentWeightDelay, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
-        pass
-    def build(self, node):
-        already_processed = set()
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_)
-        return self
-    def buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_('delay', node)
-        if value is not None and 'delay' not in already_processed:
-            already_processed.add('delay')
-            self.delay = value
-            self.validate_Nml2Quantity_time(self.delay)    # validate type Nml2Quantity_time
-        value = find_attr_value_('weight', node)
-        if value is not None and 'weight' not in already_processed:
-            already_processed.add('weight')
-            self.weight = value
-            self.validate_Nml2Quantity_current(self.weight)    # validate type Nml2Quantity_current
-        super(SynapticCurrentWeightDelay, self).buildAttributes(node, attrs, already_processed)
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        super(SynapticCurrentWeightDelay, self).buildChildren(child_, node, nodeName_, True)
-        pass
-# end class SynapticCurrentWeightDelay
 
 
 class ExplicitInput(GeneratedsSuper):
@@ -6744,7 +6640,6 @@ class Network(Standalone):
         MemberSpec_('populations', 'Population', 1),
         MemberSpec_('cell_sets', 'CellSet', 1),
         MemberSpec_('synaptic_connections', 'SynapticConnection', 1),
-        MemberSpec_('synaptic_current_weight_delays', 'SynapticCurrentWeightDelay', 1),
         MemberSpec_('projections', 'Projection', 1),
         MemberSpec_('electrical_projections', 'ElectricalProjection', 1),
         MemberSpec_('continuous_projections', 'ContinuousProjection', 1),
@@ -6753,7 +6648,7 @@ class Network(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, type=None, temperature=None, spaces=None, regions=None, extracellular_properties=None, populations=None, cell_sets=None, synaptic_connections=None, synaptic_current_weight_delays=None, projections=None, electrical_projections=None, continuous_projections=None, explicit_inputs=None, input_lists=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, type=None, temperature=None, spaces=None, regions=None, extracellular_properties=None, populations=None, cell_sets=None, synaptic_connections=None, projections=None, electrical_projections=None, continuous_projections=None, explicit_inputs=None, input_lists=None):
         self.original_tagname_ = None
         super(Network, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
         self.type = _cast(None, type)
@@ -6782,10 +6677,6 @@ class Network(Standalone):
             self.synaptic_connections = []
         else:
             self.synaptic_connections = synaptic_connections
-        if synaptic_current_weight_delays is None:
-            self.synaptic_current_weight_delays = []
-        else:
-            self.synaptic_current_weight_delays = synaptic_current_weight_delays
         if projections is None:
             self.projections = []
         else:
@@ -6839,7 +6730,6 @@ class Network(Standalone):
             self.populations or
             self.cell_sets or
             self.synaptic_connections or
-            self.synaptic_current_weight_delays or
             self.projections or
             self.electrical_projections or
             self.continuous_projections or
@@ -6894,8 +6784,6 @@ class Network(Standalone):
             cellSet_.export(outfile, level, namespace_, name_='cellSet', pretty_print=pretty_print)
         for synapticConnection_ in self.synaptic_connections:
             synapticConnection_.export(outfile, level, namespace_, name_='synapticConnection', pretty_print=pretty_print)
-        for synapticCurrentWeightDelay_ in self.synaptic_current_weight_delays:
-            synapticCurrentWeightDelay_.export(outfile, level, namespace_, name_='synapticCurrentWeightDelay', pretty_print=pretty_print)
         for projection_ in self.projections:
             projection_.export(outfile, level, namespace_, name_='projection', pretty_print=pretty_print)
         for electricalProjection_ in self.electrical_projections:
@@ -6952,16 +6840,10 @@ class Network(Standalone):
             self.cell_sets.append(obj_)
             obj_.original_tagname_ = 'cellSet'
         elif nodeName_ == 'synapticConnection':
-            class_obj_ = self.get_class_obj_(child_, SynapticConnection)
-            obj_ = class_obj_.factory()
+            obj_ = SynapticConnection.factory()
             obj_.build(child_)
             self.synaptic_connections.append(obj_)
             obj_.original_tagname_ = 'synapticConnection'
-        elif nodeName_ == 'synapticCurrentWeightDelay':
-            obj_ = SynapticCurrentWeightDelay.factory()
-            obj_.build(child_)
-            self.synaptic_current_weight_delays.append(obj_)
-            obj_.original_tagname_ = 'synapticCurrentWeightDelay'
         elif nodeName_ == 'projection':
             obj_ = Projection.factory()
             obj_.build(child_)
@@ -14940,13 +14822,15 @@ class IafTauRefCell(IafTauCell):
 class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
     member_data_items_ = [
         MemberSpec_('tauSyn', 'Nml2Quantity_time', 0),
+        MemberSpec_('ibase', 'Nml2Quantity_current', 0),
     ]
     subclass = None
     superclass = BaseCurrentBasedSynapse
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, tau_syn=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, tau_syn=None, ibase=None):
         self.original_tagname_ = None
         super(AlphaCurrentSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
         self.tau_syn = _cast(None, tau_syn)
+        self.ibase = _cast(None, ibase)
     def factory(*args_, **kwargs_):
         if AlphaCurrentSynapse.subclass:
             return AlphaCurrentSynapse.subclass(*args_, **kwargs_)
@@ -14960,6 +14844,13 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
     validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    def validate_Nml2Quantity_current(self, value):
+        # Validate type Nml2Quantity_current, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_current_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_current_patterns_, ))
+    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA)$']]
     def hasContent_(self):
         if (
             super(AlphaCurrentSynapse, self).hasContent_()
@@ -14990,6 +14881,9 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
         if self.tau_syn is not None and 'tau_syn' not in already_processed:
             already_processed.add('tau_syn')
             outfile.write(' tauSyn=%s' % (quote_attrib(self.tau_syn), ))
+        if self.ibase is not None and 'ibase' not in already_processed:
+            already_processed.add('ibase')
+            outfile.write(' ibase=%s' % (quote_attrib(self.ibase), ))
     def exportChildren(self, outfile, level, namespace_='', name_='AlphaCurrentSynapse', fromsubclass_=False, pretty_print=True):
         super(AlphaCurrentSynapse, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
     def build(self, node):
@@ -15005,6 +14899,11 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
             already_processed.add('tauSyn')
             self.tau_syn = value
             self.validate_Nml2Quantity_time(self.tau_syn)    # validate type Nml2Quantity_time
+        value = find_attr_value_('ibase', node)
+        if value is not None and 'ibase' not in already_processed:
+            already_processed.add('ibase')
+            self.ibase = value
+            self.validate_Nml2Quantity_current(self.ibase)    # validate type Nml2Quantity_current
         super(AlphaCurrentSynapse, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(AlphaCurrentSynapse, self).buildChildren(child_, node, nodeName_, True)
@@ -15990,7 +15889,6 @@ GDSClassesMapping = {
     'spikeGeneratorPoisson': SpikeGeneratorPoisson,
     'proximal': ProximalDetails,
     'morphology': Morphology,
-    'synapticCurrentWeightDelay': SynapticCurrentWeightDelay,
     'spikeGeneratorRandom': SpikeGeneratorRandom,
     'sineGenerator': SineGenerator,
     'layout': Layout,
@@ -16351,7 +16249,6 @@ __all__ = [
     "Standalone",
     "SubTree",
     "SynapticConnection",
-    "SynapticCurrentWeightDelay",
     "UnstructuredLayout",
     "ValueAcrossSegOrSegGroup",
     "VariableParameter",

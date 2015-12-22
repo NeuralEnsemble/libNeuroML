@@ -13,7 +13,6 @@ morphology,morphology
 tsodyksMarkramDepFacMechanism,tsodyks_markram_dep_fac_mechanism
 xStart,x_start
 xs:float,xs:float
-synapticCurrentWeightDelay,synaptic_current_weight_delays
 projection,projections
 tauRise,tau_rise
 member,members
@@ -72,7 +71,7 @@ x,x
 e_rev,e_rev
 v_offset,v_offset
 xs:anyURI,xs:any_uri
-weight,weight
+timeCourse,time_course
 ionChannelPassive,ion_channel_passive
 networkTypes,network_types
 yStart,y_start
@@ -133,7 +132,6 @@ e_rev_K,e_rev_K
 q10ConductanceScaling,q10_conductance_scalings
 gbar_Na,gbar_Na
 v_init,v_init
-timeCourse,time_course
 xs:double,xs:double
 extracellularProperties,extracellular_properties
 connection,connections
@@ -262,6 +260,7 @@ gbar_K,gbar_K
 iafRefCell,iaf_ref_cells
 description,description
 phi,phi
+ibase,ibase
 initMembPotential,init_memb_potentials
 decayConstant,decay_constant
 alphaCurrSynapse,alpha_curr_synapses
