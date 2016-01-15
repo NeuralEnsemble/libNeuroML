@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from __future__ import print_function
 #Maps from NeuroML element space (Key) to python object space (value)
 #The class names are essentially correct, the instance names need converting
 #also attributes need fixing
@@ -5,7 +7,7 @@
 import lxml
 from lxml import objectify
 import re
-from config import variables
+from .config import variables
 import csv
 import sys
 
@@ -139,7 +141,7 @@ print(NameTable)
 
 print("Saving NameTable to csv file")
 writer = csv.writer(open('name_table.csv', 'wb'))
-for key, value in NameTable.items():
+for key, value in list(NameTable.items()):
    writer.writerow([key, value])
 
 print ("Saving name changes table to csv file")

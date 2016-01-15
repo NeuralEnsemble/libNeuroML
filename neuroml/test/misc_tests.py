@@ -2,6 +2,8 @@
 Miscelaneous unit tests
 
 """
+from __future__ import absolute_import
+from __future__ import print_function
 
 import sys
 import inspect
@@ -22,7 +24,7 @@ class TestCommonProperties(unittest.TestCase):
         
         for name,test_class in inspect.getmembers(sys.modules[neuroml.__name__]):
             if sys.version_info >= (2, 7):
-                print(sys.version_info)
+                print((sys.version_info))
                 if inspect.isclass(test_class):
                     ob = test_class()
                     self.assertIsInstance(ob,test_class)

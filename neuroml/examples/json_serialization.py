@@ -3,14 +3,17 @@ In this example an axon is built, a morphology is loaded, the axon is
 then connected to the loadeed morphology. The whole thing is serialized
 in JSON format, reloaded and validated.
 """
+from __future__ import absolute_import
+from __future__ import print_function
 
 import neuroml
 import neuroml.loaders as loaders
 import neuroml.writers as writers
+from six.moves import range
 
 fn = './test_files/Purk2M9s.nml'
 doc = loaders.NeuroMLLoader.load(fn)
-print("Loaded morphology file from: "+fn)
+print(("Loaded morphology file from: "+fn))
 
 #get the parent segment:
 parent_segment = doc.cells[0].morphology.segments[0]
@@ -52,7 +55,7 @@ json_file = './tmp/modified_morphology.json'
 
 writers.JSONWriter.write(doc,json_file)
 
-print("Saved modified morphology in JSON format to: " + json_file)
+print(("Saved modified morphology in JSON format to: " + json_file))
 
 
 ##### load it again, this time write it to a normal neuroml file ###

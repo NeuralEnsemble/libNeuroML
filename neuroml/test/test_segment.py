@@ -3,6 +3,7 @@ Unit tests for the Segment class
 
 
 """
+from __future__ import absolute_import
 
 from neuroml import Segment
 from neuroml import Point3DWithDiam

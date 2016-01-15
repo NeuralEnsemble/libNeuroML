@@ -3,6 +3,8 @@
 Example to build a PyNN based network
 
 """
+from __future__ import absolute_import
+from __future__ import print_function
 
 from neuroml import NeuroMLDocument
 from neuroml import *
@@ -26,7 +28,7 @@ nml_doc.exp_cond_synapses.append(pynnSynn0)
 
 nml_file = 'tmp/pynn_network.xml'
 writers.NeuroMLWriter.write(nml_doc, nml_file)
-print("Saved to: "+nml_file)
+print(("Saved to: "+nml_file))
 
 
 ###### Validate the NeuroML ######    

@@ -1,11 +1,13 @@
 r"""
 Prototype for object model backend for the libNeuroML project
 """
+from __future__ import absolute_import
 
 import math
 import numpy as np
 import numpy.ma as ma
 import neuroml
+from six.moves import range
 
 
 class ArrayMorphology(neuroml.Morphology):
@@ -89,7 +91,7 @@ class ArrayMorphology(neuroml.Morphology):
     def valid_ids(self):
         valid_flag = True
 
-        for internal_id in self.segments.instantiated_segments.keys():
+        for internal_id in list(self.segments.instantiated_segments.keys()):
             external_id = self.segments.instantiated_segments[internal_id].id
             valid_flag = (internal_id == external_id) * valid_flag
 

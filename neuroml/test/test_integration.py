@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import neuroml
 import neuroml.arraymorph as am
 import neuroml.writers as writers

@@ -1,8 +1,11 @@
+from __future__ import absolute_import
+from __future__ import print_function
 import neuroml.arraymorph as am
 import neuroml
 import numpy as np
 import neuroml.writers as writers
 import neuroml.loaders as loaders
+from six.moves import range
 
 try:
     import unittest2 as unittest
@@ -104,7 +107,7 @@ class TestArrayMorphology(unittest.TestCase):
         z = np.zeros(num_vertices)
         d = np.linspace(1,0.01,num_vertices)
 
-        connectivity = range(-1,num_segments)
+        connectivity = list(range(-1,num_segments))
 
         vertices = np.array([x,y,z,d]).T
 
@@ -148,7 +151,7 @@ class TestArrayMorphology(unittest.TestCase):
         self.small_morphology.segments.append(soma)
 
     def test_single_segment_morphology_instantiation(self):
-        print(self.small_morphology.connectivity)
+        print((self.small_morphology.connectivity))
         seg = self.small_morphology.segments[0]
         self.assertIsInstance(seg,neuroml.nml.nml.Segment)
 
@@ -421,7 +424,7 @@ class TestArrayMorphology(unittest.TestCase):
 
         vertices = np.array([x,y,z,d]).T
         
-        connectivity = range(-1,num_segments)
+        connectivity = list(range(-1,num_segments))
 
         big_arraymorph = am.ArrayMorphology(vertices = vertices,
                                             connectivity = connectivity)

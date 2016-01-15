@@ -1,6 +1,8 @@
 """
 Benchmarks for reading and writing arraymorphs.
 """
+from __future__ import absolute_import
+from __future__ import print_function
 import numpy as np
 from neuroml import arraymorph as am
 import neuroml
@@ -10,6 +12,7 @@ from matplotlib import pyplot as plt
 import time                                                
 import os
 from os import path
+from six.moves import range
 
 def timeit(method):
 
@@ -18,8 +21,8 @@ def timeit(method):
         result = method(*args, **kw)
         te = time.time()
 
-        print '%r (%r, %r) %2.2f sec' % \
-              (method.__name__, args, kw, te-ts)
+        print('%r (%r, %r) %2.2f sec' % \
+              (method.__name__, args, kw, te-ts))
         return te-ts
 
     return timed
@@ -39,7 +42,7 @@ class AMWriteBenchmark(object):
 
         vertices = np.array([x,y,z,d]).T
         
-        connectivity = range(-1,num_segments)
+        connectivity = list(range(-1,num_segments))
 
         big_arraymorph = am.ArrayMorphology(vertices = vertices,
                                             connectivity = connectivity)
@@ -87,10 +90,10 @@ class AMWriteBenchmark(object):
         except:
             self.fail("Exception raised!")
 
-        print 'JSON Number of segments:'
-        print self.num_segments
-        print 'JSON size in bytes:'
-        print self.file_size(filename)
+        print('JSON Number of segments:')
+        print(self.num_segments)
+        print('JSON size in bytes:')
+        print(self.file_size(filename))
 
         os.close(fh)
 
@@ -103,10 +106,10 @@ class AMWriteBenchmark(object):
         except:
             self.fail("Exception raised!")
 
-        print 'NeuroML (XML) Number of segments:'
-        print self.num_segments
-        print 'NeuroML (XML) size in bytes:'
-        print self.file_size(filename)
+        print('NeuroML (XML) Number of segments:')
+        print(self.num_segments)
+        print('NeuroML (XML) size in bytes:')
+        print(self.file_size(filename))
 
         os.close(fh)
 
@@ -123,10 +126,10 @@ class AMWriteBenchmark(object):
         except:
             self.fail("Exception raised!")
 
-        print 'HDF5 Number of segments:'
-        print self.num_segments
-        print 'HDF5 size in bytes:'
-        print self.file_size(filename)
+        print('HDF5 Number of segments:')
+        print(self.num_segments)
+        print('HDF5 size in bytes:')
+        print(self.file_size(filename))
 
         os.close(fh)
 
@@ -197,7 +200,7 @@ def benchmark_arraymorph_writer():
         neuroml_num_segments_list = []
 
         for i in range(30):
-            print "test %d" % (i)
+            print("test %d" % (i))
 
             neuroml_num_segments_factor = 4e2
             json_num_segments_factor = 4e2

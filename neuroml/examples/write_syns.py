@@ -3,6 +3,8 @@
 Example to create a file with multiple synapse types
 
 """
+from __future__ import absolute_import
+from __future__ import print_function
 
 from neuroml import NeuroMLDocument
 from neuroml import *
@@ -28,7 +30,7 @@ nml_doc.blocking_plastic_synapses.append(bpSyn)
 
 nml_file = 'tmp/synapses.xml'
 writers.NeuroMLWriter.write(nml_doc, nml_file)
-print("Saved to: "+nml_file)
+print(("Saved to: "+nml_file))
 
 
 ###### Validate the NeuroML ######    

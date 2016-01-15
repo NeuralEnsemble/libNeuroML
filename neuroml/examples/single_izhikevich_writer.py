@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from neuroml import NeuroMLDocument
 from neuroml import IzhikevichCell
 from neuroml.writers import NeuroMLWriter

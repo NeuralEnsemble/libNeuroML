@@ -2,6 +2,8 @@
 In this example an axon is built, a morphology is loaded, the axon is
 then connected to the loadeed morphology.
 """
+from __future__ import absolute_import
+from __future__ import print_function
 
 import neuroml
 import neuroml.loaders as loaders
@@ -9,6 +11,7 @@ import neuroml.writers as writers
 
 
 from guppy import hpy
+from six.moves import range
 h = hpy()
 
 
@@ -29,8 +32,8 @@ for n in range(numCells):
     #get the parent segment:
 #    parent_segment = doc.cells[0].morphology.segments[0]
 
-    print "Cell %i has %i segments"%(n,len(doc.cells[0].morphology.segments))
-    print h.heap()
+    print("Cell %i has %i segments"%(n,len(doc.cells[0].morphology.segments)))
+    print(h.heap())
 
 
     '''
@@ -75,7 +78,7 @@ writers.NeuroMLWriter.write(doc,fn)
 print("Saved modified morphology file to: "+fn)
 '''
 
-print "Done"
+print("Done")
 
 
 
