@@ -89,7 +89,7 @@ class ArrayMorphology(neuroml.Morphology):
     def valid_ids(self):
         valid_flag = True
 
-        for internal_id in list(self.segments.instantiated_segments.keys()):
+        for internal_id in self.segments.instantiated_segments:
             external_id = self.segments.instantiated_segments[internal_id].id
             valid_flag = (internal_id == external_id) * valid_flag
 
