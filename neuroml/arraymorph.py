@@ -3,9 +3,7 @@ Prototype for object model backend for the libNeuroML project
 """
 from __future__ import absolute_import
 
-import math
 import numpy as np
-import numpy.ma as ma
 import neuroml
 from six.moves import range
 
