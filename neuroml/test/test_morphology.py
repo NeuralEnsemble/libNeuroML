@@ -2,8 +2,10 @@
 Unit tests for the Morphology class
 
 """
+from __future__ import absolute_import
 
 import neuroml
+from six.moves import range
 
 try:
     import unittest2 as unittest

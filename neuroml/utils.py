@@ -3,6 +3,8 @@
 Utilities for checking generated code
 
 """
+from __future__ import absolute_import
+from __future__ import print_function
 import os.path
 
 current_neuroml_version = "v2beta3"
@@ -20,7 +22,7 @@ def validate_neuroml2(file_name):
     schema_file = open(xsd_file)
     xmlschema = etree.XMLSchema(etree.parse(schema_file))
     
-    print("Validating %s against %s" %(file_name, xsd_file))
+    print(("Validating %s against %s" %(file_name, xsd_file)))
     xmlschema.assertValid(etree.parse(file_name))
     print("It's valid!")
 

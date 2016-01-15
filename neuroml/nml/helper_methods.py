@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 import re
 
@@ -63,10 +65,10 @@ class MethodSpec(object):
         return source
     def show(self):
         print('specification:')
-        print('    name: %s' % (self.name, ))
-        print(self.source)
-        print('    class_names: %s' % (self.class_names, ))
-        print('    names pat  : %s' % (self.class_names_compiled.pattern, ))
+        print(('    name: %s' % (self.name, )))
+        print((self.source))
+        print(('    class_names: %s' % (self.class_names, )))
+        print(('    names pat  : %s' % (self.class_names_compiled.pattern, )))
 
 
 #

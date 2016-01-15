@@ -3,6 +3,8 @@
 Example to build a full spiking IaF network throught libNeuroML & save it as XML & validate it
 
 """
+from __future__ import absolute_import
+from __future__ import print_function
 
 from neuroml import NeuroMLDocument
 from neuroml import Network
@@ -22,6 +24,7 @@ from neuroml import Connection
 
 import neuroml.writers as writers
 from random import random
+from six.moves import range
 
 soma_diam = 10
 soma_len = 10
@@ -122,7 +125,7 @@ def run():
     nml_file = 'tmp/net3d.nml'
     writers.NeuroMLWriter.write(nml_doc, nml_file)
     
-    print("Written network file to: "+nml_file)
+    print(("Written network file to: "+nml_file))
 
 
     ###### Validate the NeuroML ######    

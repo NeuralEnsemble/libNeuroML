@@ -2,6 +2,7 @@
 Unit tests for writers
 
 """
+from __future__ import absolute_import
 
 import neuroml
 from neuroml import writers
@@ -10,6 +11,7 @@ import os
 import numpy as np
 from neuroml import arraymorph as am
 import tempfile
+from six.moves import range
 
 try:
     import unittest2 as unittest
@@ -29,7 +31,7 @@ class TestJSONWriter(unittest.TestCase):
 
         vertices = np.array([x,y,z,d]).T
         
-        connectivity = range(-1,num_segments)
+        connectivity = list(range(-1,num_segments))
 
         big_arraymorph = am.ArrayMorphology(vertices = vertices,
                                             connectivity = connectivity)
@@ -179,7 +181,7 @@ class TestArrayMorphWriter(unittest.TestCase):
 
         vertices = np.array([x,y,z,d]).T
         
-        connectivity = range(-1,num_segments)
+        connectivity = list(range(-1,num_segments))
 
         big_arraymorph = am.ArrayMorphology(vertices = vertices,
                                             connectivity = connectivity)

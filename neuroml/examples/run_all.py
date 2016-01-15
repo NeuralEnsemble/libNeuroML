@@ -1,7 +1,8 @@
+from __future__ import print_function
 print("Running all examples...")
 
 def run_example(ex_file):
-    print("-------------------------------------\nRunning %s"%ex_file)
+    print(("-------------------------------------\nRunning %s"%ex_file))
     exec("import %s"%ex_file[:-3])
 
 run_example("arraymorph_generation.py")

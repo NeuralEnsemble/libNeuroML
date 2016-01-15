@@ -1,7 +1,10 @@
+from __future__ import absolute_import
+from __future__ import print_function
 
 from neuroml.nml.nml import parse as nmlparse
 import neuroml
 import neuroml
+from six.moves import range
 
 class NeuroMLLoader(object):
 
@@ -17,7 +20,7 @@ class NeuroMLLoader(object):
         try:
             nml2_doc = nmlparse(src)
         except Exception:
-            print("Not a valid NeuroML 2 doc: %s" % str(sys.exc_info())) 
+            print(("Not a valid NeuroML 2 doc: %s" % str(sys.exc_info()))) 
             return None    
         return nml2_doc
 

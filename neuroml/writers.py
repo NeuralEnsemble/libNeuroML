@@ -1,6 +1,7 @@
+from __future__ import absolute_import
 import neuroml
 
-from utils import current_neuroml_version
+from .utils import current_neuroml_version
 
 class NeuroMLWriter(object):
     @classmethod

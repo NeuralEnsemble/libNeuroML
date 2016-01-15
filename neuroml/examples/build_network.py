@@ -4,6 +4,8 @@ Example to build a full spiking IaF network
 through libNeuroML, save it as XML and validate it
 
 """
+from __future__ import absolute_import
+from __future__ import print_function
 
 from neuroml import NeuroMLDocument
 from neuroml import IafCell
@@ -15,6 +17,7 @@ from neuroml import ExplicitInput
 from neuroml import SynapticConnection
 import neuroml.writers as writers
 from random import random
+from six.moves import range
 
 
 nml_doc = NeuroMLDocument(id="IafNet")
@@ -90,7 +93,7 @@ nml_file = 'tmp/testnet.nml'
 writers.NeuroMLWriter.write(nml_doc, nml_file)
 
 
-print("Written network file to: "+nml_file)
+print(("Written network file to: "+nml_file))
 
 
 ###### Validate the NeuroML ######    

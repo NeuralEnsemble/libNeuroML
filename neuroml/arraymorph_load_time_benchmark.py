@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from six.moves import range
 class Benchmark:
     def __init__(num_segments):
         self.num_segments = num_segments
@@ -13,7 +15,7 @@ class Benchmark:
 
         vertices = np.array([x,y,z,d]).T
         
-        connectivity = range(-1,num_segments)
+        connectivity = list(range(-1,num_segments))
 
         big_arraymorph = am.ArrayMorphology(vertices = vertices,
                                             connectivity = connectivity)

@@ -1,6 +1,8 @@
 """
 Generating a Hodgkin-Huxley Ion Channel and writing it to NeuroML
 """
+from __future__ import absolute_import
+from __future__ import print_function
 
 import neuroml
 import neuroml.writers as writers
@@ -46,7 +48,7 @@ doc.id = "ChannelMLDemo"
 nml_file = './tmp/channelMLtest.xml'
 writers.NeuroMLWriter.write(doc,nml_file)
 
-print("Written channel file to: "+nml_file)
+print(("Written channel file to: "+nml_file))
 
 
 ###### Validate the NeuroML ######    

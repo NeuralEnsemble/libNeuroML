@@ -2,14 +2,17 @@
 In this example an axon is built, a morphology is loaded, the axon is
 then connected to the loadeed morphology.
 """
+from __future__ import absolute_import
+from __future__ import print_function
 
 import neuroml
 import neuroml.loaders as loaders
 import neuroml.writers as writers
+from six.moves import range
 
 fn = './test_files/Purk2M9s.nml'
 doc = loaders.NeuroMLLoader.load(fn)
-print("Loaded morphology file from: "+fn)
+print(("Loaded morphology file from: "+fn))
 
 #get the parent segment:
 parent_segment = doc.cells[0].morphology.segments[0]
@@ -51,7 +54,7 @@ nml_file = './tmp/modified_morphology.nml'
 
 writers.NeuroMLWriter.write(doc,nml_file)
 
-print("Saved modified morphology file to: "+nml_file)
+print(("Saved modified morphology file to: "+nml_file))
 
 
 ###### Validate the NeuroML ######    

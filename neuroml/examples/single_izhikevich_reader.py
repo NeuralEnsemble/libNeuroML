@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from __future__ import print_function
 #from neuroml import NeuroMLDocument
 from neuroml import IzhikevichCell
 from neuroml.loaders import NeuroMLLoader
@@ -12,9 +14,9 @@ def load_izhikevich(filename="./test_files/SingleIzhikevich.nml"):
     for i, iz in enumerate(iz_cells):
         if isinstance(iz, IzhikevichCell):
             neuron_string = "%d %s %s %s %s %s (%s)" % (i, iz.v0, iz.a, iz.b, iz.c, iz.d, iz.id)
-            print neuron_string
+            print(neuron_string)
         else:
-            print "Error: Cell %d is not an IzhikevichCell" % i
+            print("Error: Cell %d is not an IzhikevichCell" % i)
 
 
 load_izhikevich()
