@@ -125,6 +125,8 @@ NameTable['e_rev_K'] = 'e_rev_K'
 NameTable['gbar_K'] = 'gbar_K'
 NameTable['gbar_Na'] = 'gbar_Na'
 
+NameTable['delta_T'] = 'delta_T'
+
 NameTable['IF_curr_alpha'] = 'IF_curr_alpha'
 NameTable['IF_curr_exp'] = 'IF_curr_exp'
 NameTable['IF_cond_alpha'] = 'IF_cond_alpha'
