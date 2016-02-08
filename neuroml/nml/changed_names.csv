@@ -15,6 +15,7 @@ tauRise,tau_rise
 member,members
 segmentId,segment_id
 reverseRate,reverse_rate
+sineGeneratorDL,sine_generator_dls
 rampGenerator,ramp_generators
 cell2CaPools,cell2_ca_poolses
 channelDensityNernst,channel_density_nernsts
@@ -48,6 +49,7 @@ delT,del_t
 postsynapticPopulation,postsynaptic_population
 fixedQ10,fixed_q10
 xs:anyURI,xs:any_uri
+compoundInputDL,compound_input_dls
 ionChannelPassive,ion_channel_passive
 networkTypes,network_types
 gLd,g_ld
@@ -128,6 +130,7 @@ fitzHughNagumoCell,fitz_hugh_nagumo_cells
 javax.xml.bind.DatatypeConverter.printInt,javax.xml.bind._datatype_converter.print_int
 preCellId,pre_cell_id
 tauFac,tau_fac
+compoundInput,compound_inputs
 pulseGeneratorDL,pulse_generator_dls
 pinskyRinzelCA3Cell,pinsky_rinzel_ca3_cells
 q10Factor,q10_factor
@@ -146,6 +149,7 @@ shellThickness,shell_thickness
 experimentalTemp,experimental_temp
 postSegment,post_segment
 xSize,x_size
+transientPoissonFiringSynapse,transient_poisson_firing_synapses
 gateTypes,gate_types
 zSize,z_size
 minISI,min_isi
@@ -185,6 +189,7 @@ iafRefCell,iaf_ref_cells
 initMembPotential,init_memb_potentials
 decayConstant,decay_constant
 alphaCurrSynapse,alpha_curr_synapses
+rampGeneratorDL,ramp_generator_dls
 variableParameter,variable_parameters
 postCell,post_cell
 expTwoSynapse,exp_two_synapses

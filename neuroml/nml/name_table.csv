@@ -3,6 +3,7 @@ gCa,g_ca
 all,all
 izhikevichCell,izhikevich_cells
 tsodyksMarkramDepMechanism,tsodyks_markram_dep_mechanism
+true,true
 skip,skips
 random,random
 tauDecay,tau_decay
@@ -23,7 +24,7 @@ tau_m,tau_m
 layout,layout
 segmentId,segment_id
 reverseRate,reverse_rate
-true,true
+sineGeneratorDL,sine_generator_dls
 rampGenerator,ramp_generators
 cell2CaPools,cell2_ca_poolses
 channelDensityNernst,channel_density_nernsts
@@ -82,6 +83,7 @@ e_rev,e_rev
 v_offset,v_offset
 xs:anyURI,xs:any_uri
 j,j
+compoundInputDL,compound_input_dls
 weight,weight
 ionChannelPassive,ion_channel_passive
 networkTypes,network_types
@@ -142,6 +144,7 @@ optional,optional
 gKC,g_kc
 gL,g_l
 membraneProperties2CaPools,membrane_properties2_ca_pools
+v0,v0
 c,c
 property,properties
 e_rev_E,e_rev_E
@@ -208,6 +211,7 @@ fitzHughNagumoCell,fitz_hugh_nagumo_cells
 javax.xml.bind.DatatypeConverter.printInt,javax.xml.bind._datatype_converter.print_int
 preCellId,pre_cell_id
 tauFac,tau_fac
+compoundInput,compound_inputs
 pulseGeneratorDL,pulse_generator_dls
 pinskyRinzelCA3Cell,pinsky_rinzel_ca3_cells
 q10Factor,q10_factor
@@ -239,6 +243,7 @@ delta_T,delta_T
 ion,ion
 v_reset,v_reset
 xSize,x_size
+transientPoissonFiringSynapse,transient_poisson_firing_synapses
 vt,vt
 z,z
 k,k
@@ -297,7 +302,7 @@ ibase,ibase
 initMembPotential,init_memb_potentials
 decayConstant,decay_constant
 alphaCurrSynapse,alpha_curr_synapses
-v0,v0
+rampGeneratorDL,ramp_generator_dls
 e_rev_leak,e_rev_leak
 variableParameter,variable_parameters
 postCell,post_cell

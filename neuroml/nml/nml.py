@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Feb  1 17:26:35 2016 by generateDS.py version 2.17a.
+# Generated Mon Feb  8 12:28:58 2016 by generateDS.py version 2.17a.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -7302,6 +7302,126 @@ class Network(Standalone):
 # end class Network
 
 
+class TransientPoissonFiringSynapse(Standalone):
+    member_data_items_ = [
+        MemberSpec_('delay', 'Nml2Quantity_time', 0),
+        MemberSpec_('duration', 'Nml2Quantity_time', 0),
+        MemberSpec_('synapse', 'xs:string', 0),
+        MemberSpec_('averageRate', 'Nml2Quantity_pertime', 0),
+        MemberSpec_('spikeTarget', 'xs:string', 0),
+    ]
+    subclass = None
+    superclass = Standalone
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, delay=None, duration=None, synapse=None, average_rate=None, spike_target=None):
+        self.original_tagname_ = None
+        super(TransientPoissonFiringSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
+        self.delay = _cast(None, delay)
+        self.duration = _cast(None, duration)
+        self.synapse = _cast(None, synapse)
+        self.average_rate = _cast(None, average_rate)
+        self.spike_target = _cast(None, spike_target)
+    def factory(*args_, **kwargs_):
+        if TransientPoissonFiringSynapse.subclass:
+            return TransientPoissonFiringSynapse.subclass(*args_, **kwargs_)
+        else:
+            return TransientPoissonFiringSynapse(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    def validate_Nml2Quantity_pertime(self, value):
+        # Validate type Nml2Quantity_pertime, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_pertime_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_pertime_patterns_, ))
+    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz)$']]
+    def hasContent_(self):
+        if (
+            super(TransientPoissonFiringSynapse, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='TransientPoissonFiringSynapse', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='TransientPoissonFiringSynapse')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='TransientPoissonFiringSynapse', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='TransientPoissonFiringSynapse'):
+        super(TransientPoissonFiringSynapse, self).exportAttributes(outfile, level, already_processed, namespace_, name_='TransientPoissonFiringSynapse')
+        if self.delay is not None and 'delay' not in already_processed:
+            already_processed.add('delay')
+            outfile.write(' delay=%s' % (quote_attrib(self.delay), ))
+        if self.duration is not None and 'duration' not in already_processed:
+            already_processed.add('duration')
+            outfile.write(' duration=%s' % (quote_attrib(self.duration), ))
+        if self.synapse is not None and 'synapse' not in already_processed:
+            already_processed.add('synapse')
+            outfile.write(' synapse=%s' % (self.gds_format_string(quote_attrib(self.synapse).encode(ExternalEncoding), input_name='synapse'), ))
+        if self.average_rate is not None and 'average_rate' not in already_processed:
+            already_processed.add('average_rate')
+            outfile.write(' averageRate=%s' % (quote_attrib(self.average_rate), ))
+        if self.spike_target is not None and 'spike_target' not in already_processed:
+            already_processed.add('spike_target')
+            outfile.write(' spikeTarget=%s' % (self.gds_format_string(quote_attrib(self.spike_target).encode(ExternalEncoding), input_name='spikeTarget'), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='TransientPoissonFiringSynapse', fromsubclass_=False, pretty_print=True):
+        super(TransientPoissonFiringSynapse, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('delay', node)
+        if value is not None and 'delay' not in already_processed:
+            already_processed.add('delay')
+            self.delay = value
+            self.validate_Nml2Quantity_time(self.delay)    # validate type Nml2Quantity_time
+        value = find_attr_value_('duration', node)
+        if value is not None and 'duration' not in already_processed:
+            already_processed.add('duration')
+            self.duration = value
+            self.validate_Nml2Quantity_time(self.duration)    # validate type Nml2Quantity_time
+        value = find_attr_value_('synapse', node)
+        if value is not None and 'synapse' not in already_processed:
+            already_processed.add('synapse')
+            self.synapse = value
+        value = find_attr_value_('averageRate', node)
+        if value is not None and 'averageRate' not in already_processed:
+            already_processed.add('averageRate')
+            self.average_rate = value
+            self.validate_Nml2Quantity_pertime(self.average_rate)    # validate type Nml2Quantity_pertime
+        value = find_attr_value_('spikeTarget', node)
+        if value is not None and 'spikeTarget' not in already_processed:
+            already_processed.add('spikeTarget')
+            self.spike_target = value
+        super(TransientPoissonFiringSynapse, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(TransientPoissonFiringSynapse, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class TransientPoissonFiringSynapse
+
+
 class PoissonFiringSynapse(Standalone):
     member_data_items_ = [
         MemberSpec_('synapse', 'xs:string', 0),
@@ -7898,6 +8018,328 @@ class VoltageClamp(Standalone):
 # end class VoltageClamp
 
 
+class CompoundInputDL(Standalone):
+    member_data_items_ = [
+        MemberSpec_('pulse_generator_dls', 'PulseGeneratorDL', 1),
+        MemberSpec_('sine_generator_dls', 'SineGeneratorDL', 1),
+        MemberSpec_('ramp_generator_dls', 'RampGeneratorDL', 1),
+    ]
+    subclass = None
+    superclass = Standalone
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, pulse_generator_dls=None, sine_generator_dls=None, ramp_generator_dls=None):
+        self.original_tagname_ = None
+        super(CompoundInputDL, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
+        if pulse_generator_dls is None:
+            self.pulse_generator_dls = []
+        else:
+            self.pulse_generator_dls = pulse_generator_dls
+        if sine_generator_dls is None:
+            self.sine_generator_dls = []
+        else:
+            self.sine_generator_dls = sine_generator_dls
+        if ramp_generator_dls is None:
+            self.ramp_generator_dls = []
+        else:
+            self.ramp_generator_dls = ramp_generator_dls
+    def factory(*args_, **kwargs_):
+        if CompoundInputDL.subclass:
+            return CompoundInputDL.subclass(*args_, **kwargs_)
+        else:
+            return CompoundInputDL(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            self.pulse_generator_dls or
+            self.sine_generator_dls or
+            self.ramp_generator_dls or
+            super(CompoundInputDL, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='CompoundInputDL', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='CompoundInputDL')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='CompoundInputDL', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='CompoundInputDL'):
+        super(CompoundInputDL, self).exportAttributes(outfile, level, already_processed, namespace_, name_='CompoundInputDL')
+    def exportChildren(self, outfile, level, namespace_='', name_='CompoundInputDL', fromsubclass_=False, pretty_print=True):
+        super(CompoundInputDL, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        for pulseGeneratorDL_ in self.pulse_generator_dls:
+            pulseGeneratorDL_.export(outfile, level, namespace_, name_='pulseGeneratorDL', pretty_print=pretty_print)
+        for sineGeneratorDL_ in self.sine_generator_dls:
+            sineGeneratorDL_.export(outfile, level, namespace_, name_='sineGeneratorDL', pretty_print=pretty_print)
+        for rampGeneratorDL_ in self.ramp_generator_dls:
+            rampGeneratorDL_.export(outfile, level, namespace_, name_='rampGeneratorDL', pretty_print=pretty_print)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        super(CompoundInputDL, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        if nodeName_ == 'pulseGeneratorDL':
+            obj_ = PulseGeneratorDL.factory()
+            obj_.build(child_)
+            self.pulse_generator_dls.append(obj_)
+            obj_.original_tagname_ = 'pulseGeneratorDL'
+        elif nodeName_ == 'sineGeneratorDL':
+            obj_ = SineGeneratorDL.factory()
+            obj_.build(child_)
+            self.sine_generator_dls.append(obj_)
+            obj_.original_tagname_ = 'sineGeneratorDL'
+        elif nodeName_ == 'rampGeneratorDL':
+            obj_ = RampGeneratorDL.factory()
+            obj_.build(child_)
+            self.ramp_generator_dls.append(obj_)
+            obj_.original_tagname_ = 'rampGeneratorDL'
+        super(CompoundInputDL, self).buildChildren(child_, node, nodeName_, True)
+# end class CompoundInputDL
+
+
+class CompoundInput(Standalone):
+    member_data_items_ = [
+        MemberSpec_('pulse_generators', 'PulseGenerator', 1),
+        MemberSpec_('sine_generators', 'SineGenerator', 1),
+        MemberSpec_('ramp_generators', 'RampGenerator', 1),
+    ]
+    subclass = None
+    superclass = Standalone
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, pulse_generators=None, sine_generators=None, ramp_generators=None):
+        self.original_tagname_ = None
+        super(CompoundInput, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
+        if pulse_generators is None:
+            self.pulse_generators = []
+        else:
+            self.pulse_generators = pulse_generators
+        if sine_generators is None:
+            self.sine_generators = []
+        else:
+            self.sine_generators = sine_generators
+        if ramp_generators is None:
+            self.ramp_generators = []
+        else:
+            self.ramp_generators = ramp_generators
+    def factory(*args_, **kwargs_):
+        if CompoundInput.subclass:
+            return CompoundInput.subclass(*args_, **kwargs_)
+        else:
+            return CompoundInput(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            self.pulse_generators or
+            self.sine_generators or
+            self.ramp_generators or
+            super(CompoundInput, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='CompoundInput', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='CompoundInput')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='CompoundInput', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='CompoundInput'):
+        super(CompoundInput, self).exportAttributes(outfile, level, already_processed, namespace_, name_='CompoundInput')
+    def exportChildren(self, outfile, level, namespace_='', name_='CompoundInput', fromsubclass_=False, pretty_print=True):
+        super(CompoundInput, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        for pulseGenerator_ in self.pulse_generators:
+            pulseGenerator_.export(outfile, level, namespace_, name_='pulseGenerator', pretty_print=pretty_print)
+        for sineGenerator_ in self.sine_generators:
+            sineGenerator_.export(outfile, level, namespace_, name_='sineGenerator', pretty_print=pretty_print)
+        for rampGenerator_ in self.ramp_generators:
+            rampGenerator_.export(outfile, level, namespace_, name_='rampGenerator', pretty_print=pretty_print)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        super(CompoundInput, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        if nodeName_ == 'pulseGenerator':
+            obj_ = PulseGenerator.factory()
+            obj_.build(child_)
+            self.pulse_generators.append(obj_)
+            obj_.original_tagname_ = 'pulseGenerator'
+        elif nodeName_ == 'sineGenerator':
+            obj_ = SineGenerator.factory()
+            obj_.build(child_)
+            self.sine_generators.append(obj_)
+            obj_.original_tagname_ = 'sineGenerator'
+        elif nodeName_ == 'rampGenerator':
+            obj_ = RampGenerator.factory()
+            obj_.build(child_)
+            self.ramp_generators.append(obj_)
+            obj_.original_tagname_ = 'rampGenerator'
+        super(CompoundInput, self).buildChildren(child_, node, nodeName_, True)
+# end class CompoundInput
+
+
+class RampGeneratorDL(Standalone):
+    member_data_items_ = [
+        MemberSpec_('delay', 'Nml2Quantity_time', 0),
+        MemberSpec_('duration', 'Nml2Quantity_time', 0),
+        MemberSpec_('baselineAmplitude', 'Nml2Quantity_none', 0),
+        MemberSpec_('startAmplitude', 'Nml2Quantity_none', 0),
+        MemberSpec_('finishAmplitude', 'Nml2Quantity_none', 0),
+    ]
+    subclass = None
+    superclass = Standalone
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, delay=None, duration=None, baseline_amplitude=None, start_amplitude=None, finish_amplitude=None):
+        self.original_tagname_ = None
+        super(RampGeneratorDL, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
+        self.delay = _cast(None, delay)
+        self.duration = _cast(None, duration)
+        self.baseline_amplitude = _cast(None, baseline_amplitude)
+        self.start_amplitude = _cast(None, start_amplitude)
+        self.finish_amplitude = _cast(None, finish_amplitude)
+    def factory(*args_, **kwargs_):
+        if RampGeneratorDL.subclass:
+            return RampGeneratorDL.subclass(*args_, **kwargs_)
+        else:
+            return RampGeneratorDL(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    def validate_Nml2Quantity_none(self, value):
+        # Validate type Nml2Quantity_none, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_none_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_none_patterns_, ))
+    validate_Nml2Quantity_none_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?$']]
+    def hasContent_(self):
+        if (
+            super(RampGeneratorDL, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='RampGeneratorDL', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='RampGeneratorDL')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='RampGeneratorDL', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='RampGeneratorDL'):
+        super(RampGeneratorDL, self).exportAttributes(outfile, level, already_processed, namespace_, name_='RampGeneratorDL')
+        if self.delay is not None and 'delay' not in already_processed:
+            already_processed.add('delay')
+            outfile.write(' delay=%s' % (quote_attrib(self.delay), ))
+        if self.duration is not None and 'duration' not in already_processed:
+            already_processed.add('duration')
+            outfile.write(' duration=%s' % (quote_attrib(self.duration), ))
+        if self.baseline_amplitude is not None and 'baseline_amplitude' not in already_processed:
+            already_processed.add('baseline_amplitude')
+            outfile.write(' baselineAmplitude=%s' % (quote_attrib(self.baseline_amplitude), ))
+        if self.start_amplitude is not None and 'start_amplitude' not in already_processed:
+            already_processed.add('start_amplitude')
+            outfile.write(' startAmplitude=%s' % (quote_attrib(self.start_amplitude), ))
+        if self.finish_amplitude is not None and 'finish_amplitude' not in already_processed:
+            already_processed.add('finish_amplitude')
+            outfile.write(' finishAmplitude=%s' % (quote_attrib(self.finish_amplitude), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='RampGeneratorDL', fromsubclass_=False, pretty_print=True):
+        super(RampGeneratorDL, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('delay', node)
+        if value is not None and 'delay' not in already_processed:
+            already_processed.add('delay')
+            self.delay = value
+            self.validate_Nml2Quantity_time(self.delay)    # validate type Nml2Quantity_time
+        value = find_attr_value_('duration', node)
+        if value is not None and 'duration' not in already_processed:
+            already_processed.add('duration')
+            self.duration = value
+            self.validate_Nml2Quantity_time(self.duration)    # validate type Nml2Quantity_time
+        value = find_attr_value_('baselineAmplitude', node)
+        if value is not None and 'baselineAmplitude' not in already_processed:
+            already_processed.add('baselineAmplitude')
+            self.baseline_amplitude = value
+            self.validate_Nml2Quantity_none(self.baseline_amplitude)    # validate type Nml2Quantity_none
+        value = find_attr_value_('startAmplitude', node)
+        if value is not None and 'startAmplitude' not in already_processed:
+            already_processed.add('startAmplitude')
+            self.start_amplitude = value
+            self.validate_Nml2Quantity_none(self.start_amplitude)    # validate type Nml2Quantity_none
+        value = find_attr_value_('finishAmplitude', node)
+        if value is not None and 'finishAmplitude' not in already_processed:
+            already_processed.add('finishAmplitude')
+            self.finish_amplitude = value
+            self.validate_Nml2Quantity_none(self.finish_amplitude)    # validate type Nml2Quantity_none
+        super(RampGeneratorDL, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(RampGeneratorDL, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class RampGeneratorDL
+
+
 class RampGenerator(Standalone):
     member_data_items_ = [
         MemberSpec_('delay', 'Nml2Quantity_time', 0),
@@ -8018,6 +8460,128 @@ class RampGenerator(Standalone):
         super(RampGenerator, self).buildChildren(child_, node, nodeName_, True)
         pass
 # end class RampGenerator
+
+
+class SineGeneratorDL(Standalone):
+    member_data_items_ = [
+        MemberSpec_('delay', 'Nml2Quantity_time', 0),
+        MemberSpec_('phase', 'Nml2Quantity_none', 0),
+        MemberSpec_('duration', 'Nml2Quantity_time', 0),
+        MemberSpec_('period', 'Nml2Quantity_time', 0),
+        MemberSpec_('amplitude', 'Nml2Quantity_none', 0),
+    ]
+    subclass = None
+    superclass = Standalone
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, delay=None, phase=None, duration=None, period=None, amplitude=None):
+        self.original_tagname_ = None
+        super(SineGeneratorDL, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
+        self.delay = _cast(None, delay)
+        self.phase = _cast(None, phase)
+        self.duration = _cast(None, duration)
+        self.period = _cast(None, period)
+        self.amplitude = _cast(None, amplitude)
+    def factory(*args_, **kwargs_):
+        if SineGeneratorDL.subclass:
+            return SineGeneratorDL.subclass(*args_, **kwargs_)
+        else:
+            return SineGeneratorDL(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    def validate_Nml2Quantity_none(self, value):
+        # Validate type Nml2Quantity_none, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_none_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_none_patterns_, ))
+    validate_Nml2Quantity_none_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?$']]
+    def hasContent_(self):
+        if (
+            super(SineGeneratorDL, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='SineGeneratorDL', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='SineGeneratorDL')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='SineGeneratorDL', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='SineGeneratorDL'):
+        super(SineGeneratorDL, self).exportAttributes(outfile, level, already_processed, namespace_, name_='SineGeneratorDL')
+        if self.delay is not None and 'delay' not in already_processed:
+            already_processed.add('delay')
+            outfile.write(' delay=%s' % (quote_attrib(self.delay), ))
+        if self.phase is not None and 'phase' not in already_processed:
+            already_processed.add('phase')
+            outfile.write(' phase=%s' % (quote_attrib(self.phase), ))
+        if self.duration is not None and 'duration' not in already_processed:
+            already_processed.add('duration')
+            outfile.write(' duration=%s' % (quote_attrib(self.duration), ))
+        if self.period is not None and 'period' not in already_processed:
+            already_processed.add('period')
+            outfile.write(' period=%s' % (quote_attrib(self.period), ))
+        if self.amplitude is not None and 'amplitude' not in already_processed:
+            already_processed.add('amplitude')
+            outfile.write(' amplitude=%s' % (quote_attrib(self.amplitude), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='SineGeneratorDL', fromsubclass_=False, pretty_print=True):
+        super(SineGeneratorDL, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('delay', node)
+        if value is not None and 'delay' not in already_processed:
+            already_processed.add('delay')
+            self.delay = value
+            self.validate_Nml2Quantity_time(self.delay)    # validate type Nml2Quantity_time
+        value = find_attr_value_('phase', node)
+        if value is not None and 'phase' not in already_processed:
+            already_processed.add('phase')
+            self.phase = value
+            self.validate_Nml2Quantity_none(self.phase)    # validate type Nml2Quantity_none
+        value = find_attr_value_('duration', node)
+        if value is not None and 'duration' not in already_processed:
+            already_processed.add('duration')
+            self.duration = value
+            self.validate_Nml2Quantity_time(self.duration)    # validate type Nml2Quantity_time
+        value = find_attr_value_('period', node)
+        if value is not None and 'period' not in already_processed:
+            already_processed.add('period')
+            self.period = value
+            self.validate_Nml2Quantity_time(self.period)    # validate type Nml2Quantity_time
+        value = find_attr_value_('amplitude', node)
+        if value is not None and 'amplitude' not in already_processed:
+            already_processed.add('amplitude')
+            self.amplitude = value
+            self.validate_Nml2Quantity_none(self.amplitude)    # validate type Nml2Quantity_none
+        super(SineGeneratorDL, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(SineGeneratorDL, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class SineGeneratorDL
 
 
 class SineGenerator(Standalone):
@@ -12427,13 +12991,18 @@ class NeuroMLDocument(Standalone):
         MemberSpec_('pulse_generators', 'PulseGenerator', 1),
         MemberSpec_('pulse_generator_dls', 'PulseGeneratorDL', 1),
         MemberSpec_('sine_generators', 'SineGenerator', 1),
+        MemberSpec_('sine_generator_dls', 'SineGeneratorDL', 1),
         MemberSpec_('ramp_generators', 'RampGenerator', 1),
+        MemberSpec_('ramp_generator_dls', 'RampGeneratorDL', 1),
+        MemberSpec_('compound_inputs', 'CompoundInput', 1),
+        MemberSpec_('compound_input_dls', 'CompoundInputDL', 1),
         MemberSpec_('voltage_clamps', 'VoltageClamp', 1),
         MemberSpec_('spike_arrays', 'SpikeArray', 1),
         MemberSpec_('spike_generators', 'SpikeGenerator', 1),
         MemberSpec_('spike_generator_randoms', 'SpikeGeneratorRandom', 1),
         MemberSpec_('spike_generator_poissons', 'SpikeGeneratorPoisson', 1),
         MemberSpec_('poisson_firing_synapses', 'PoissonFiringSynapse', 1),
+        MemberSpec_('transient_poisson_firing_synapses', 'TransientPoissonFiringSynapse', 1),
         MemberSpec_('IF_curr_alpha', 'IF_curr_alpha', 1),
         MemberSpec_('IF_curr_exp', 'IF_curr_exp', 1),
         MemberSpec_('IF_cond_alpha', 'IF_cond_alpha', 1),
@@ -12451,7 +13020,7 @@ class NeuroMLDocument(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, ion_channel_hhs=None, ion_channel_kses=None, decaying_pool_concentration_models=None, fixed_factor_concentration_models=None, alpha_current_synapses=None, alpha_synapses=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, gap_junctions=None, silent_synapses=None, linear_graded_synapses=None, graded_synapses=None, biophysical_properties=None, cells=None, cell2_ca_poolses=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, izhikevich2007_cells=None, ad_ex_ia_f_cells=None, fitz_hugh_nagumo_cells=None, fitz_hugh_nagumo1969_cells=None, pinsky_rinzel_ca3_cells=None, pulse_generators=None, pulse_generator_dls=None, sine_generators=None, ramp_generators=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, poisson_firing_synapses=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, ion_channel_hhs=None, ion_channel_kses=None, decaying_pool_concentration_models=None, fixed_factor_concentration_models=None, alpha_current_synapses=None, alpha_synapses=None, exp_one_synapses=None, exp_two_synapses=None, blocking_plastic_synapses=None, gap_junctions=None, silent_synapses=None, linear_graded_synapses=None, graded_synapses=None, biophysical_properties=None, cells=None, cell2_ca_poolses=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, izhikevich2007_cells=None, ad_ex_ia_f_cells=None, fitz_hugh_nagumo_cells=None, fitz_hugh_nagumo1969_cells=None, pinsky_rinzel_ca3_cells=None, pulse_generators=None, pulse_generator_dls=None, sine_generators=None, sine_generator_dls=None, ramp_generators=None, ramp_generator_dls=None, compound_inputs=None, compound_input_dls=None, voltage_clamps=None, spike_arrays=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, poisson_firing_synapses=None, transient_poisson_firing_synapses=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
         self.original_tagname_ = None
         super(NeuroMLDocument, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
         if includes is None:
@@ -12594,10 +13163,26 @@ class NeuroMLDocument(Standalone):
             self.sine_generators = []
         else:
             self.sine_generators = sine_generators
+        if sine_generator_dls is None:
+            self.sine_generator_dls = []
+        else:
+            self.sine_generator_dls = sine_generator_dls
         if ramp_generators is None:
             self.ramp_generators = []
         else:
             self.ramp_generators = ramp_generators
+        if ramp_generator_dls is None:
+            self.ramp_generator_dls = []
+        else:
+            self.ramp_generator_dls = ramp_generator_dls
+        if compound_inputs is None:
+            self.compound_inputs = []
+        else:
+            self.compound_inputs = compound_inputs
+        if compound_input_dls is None:
+            self.compound_input_dls = []
+        else:
+            self.compound_input_dls = compound_input_dls
         if voltage_clamps is None:
             self.voltage_clamps = []
         else:
@@ -12622,6 +13207,10 @@ class NeuroMLDocument(Standalone):
             self.poisson_firing_synapses = []
         else:
             self.poisson_firing_synapses = poisson_firing_synapses
+        if transient_poisson_firing_synapses is None:
+            self.transient_poisson_firing_synapses = []
+        else:
+            self.transient_poisson_firing_synapses = transient_poisson_firing_synapses
         if IF_curr_alpha is None:
             self.IF_curr_alpha = []
         else:
@@ -12721,13 +13310,18 @@ class NeuroMLDocument(Standalone):
             self.pulse_generators or
             self.pulse_generator_dls or
             self.sine_generators or
+            self.sine_generator_dls or
             self.ramp_generators or
+            self.ramp_generator_dls or
+            self.compound_inputs or
+            self.compound_input_dls or
             self.voltage_clamps or
             self.spike_arrays or
             self.spike_generators or
             self.spike_generator_randoms or
             self.spike_generator_poissons or
             self.poisson_firing_synapses or
+            self.transient_poisson_firing_synapses or
             self.IF_curr_alpha or
             self.IF_curr_exp or
             self.IF_cond_alpha or
@@ -12843,8 +13437,16 @@ class NeuroMLDocument(Standalone):
             pulseGeneratorDL_.export(outfile, level, namespace_, name_='pulseGeneratorDL', pretty_print=pretty_print)
         for sineGenerator_ in self.sine_generators:
             sineGenerator_.export(outfile, level, namespace_, name_='sineGenerator', pretty_print=pretty_print)
+        for sineGeneratorDL_ in self.sine_generator_dls:
+            sineGeneratorDL_.export(outfile, level, namespace_, name_='sineGeneratorDL', pretty_print=pretty_print)
         for rampGenerator_ in self.ramp_generators:
             rampGenerator_.export(outfile, level, namespace_, name_='rampGenerator', pretty_print=pretty_print)
+        for rampGeneratorDL_ in self.ramp_generator_dls:
+            rampGeneratorDL_.export(outfile, level, namespace_, name_='rampGeneratorDL', pretty_print=pretty_print)
+        for compoundInput_ in self.compound_inputs:
+            compoundInput_.export(outfile, level, namespace_, name_='compoundInput', pretty_print=pretty_print)
+        for compoundInputDL_ in self.compound_input_dls:
+            compoundInputDL_.export(outfile, level, namespace_, name_='compoundInputDL', pretty_print=pretty_print)
         for voltageClamp_ in self.voltage_clamps:
             voltageClamp_.export(outfile, level, namespace_, name_='voltageClamp', pretty_print=pretty_print)
         for spikeArray_ in self.spike_arrays:
@@ -12857,6 +13459,8 @@ class NeuroMLDocument(Standalone):
             spikeGeneratorPoisson_.export(outfile, level, namespace_, name_='spikeGeneratorPoisson', pretty_print=pretty_print)
         for poissonFiringSynapse_ in self.poisson_firing_synapses:
             poissonFiringSynapse_.export(outfile, level, namespace_, name_='poissonFiringSynapse', pretty_print=pretty_print)
+        for transientPoissonFiringSynapse_ in self.transient_poisson_firing_synapses:
+            transientPoissonFiringSynapse_.export(outfile, level, namespace_, name_='transientPoissonFiringSynapse', pretty_print=pretty_print)
         for IF_curr_alpha_ in self.IF_curr_alpha:
             IF_curr_alpha_.export(outfile, level, namespace_, name_='IF_curr_alpha', pretty_print=pretty_print)
         for IF_curr_exp_ in self.IF_curr_exp:
@@ -13078,11 +13682,31 @@ class NeuroMLDocument(Standalone):
             obj_.build(child_)
             self.sine_generators.append(obj_)
             obj_.original_tagname_ = 'sineGenerator'
+        elif nodeName_ == 'sineGeneratorDL':
+            obj_ = SineGeneratorDL.factory()
+            obj_.build(child_)
+            self.sine_generator_dls.append(obj_)
+            obj_.original_tagname_ = 'sineGeneratorDL'
         elif nodeName_ == 'rampGenerator':
             obj_ = RampGenerator.factory()
             obj_.build(child_)
             self.ramp_generators.append(obj_)
             obj_.original_tagname_ = 'rampGenerator'
+        elif nodeName_ == 'rampGeneratorDL':
+            obj_ = RampGeneratorDL.factory()
+            obj_.build(child_)
+            self.ramp_generator_dls.append(obj_)
+            obj_.original_tagname_ = 'rampGeneratorDL'
+        elif nodeName_ == 'compoundInput':
+            obj_ = CompoundInput.factory()
+            obj_.build(child_)
+            self.compound_inputs.append(obj_)
+            obj_.original_tagname_ = 'compoundInput'
+        elif nodeName_ == 'compoundInputDL':
+            obj_ = CompoundInputDL.factory()
+            obj_.build(child_)
+            self.compound_input_dls.append(obj_)
+            obj_.original_tagname_ = 'compoundInputDL'
         elif nodeName_ == 'voltageClamp':
             obj_ = VoltageClamp.factory()
             obj_.build(child_)
@@ -13113,6 +13737,11 @@ class NeuroMLDocument(Standalone):
             obj_.build(child_)
             self.poisson_firing_synapses.append(obj_)
             obj_.original_tagname_ = 'poissonFiringSynapse'
+        elif nodeName_ == 'transientPoissonFiringSynapse':
+            obj_ = TransientPoissonFiringSynapse.factory()
+            obj_.build(child_)
+            self.transient_poisson_firing_synapses.append(obj_)
+            obj_.original_tagname_ = 'transientPoissonFiringSynapse'
         elif nodeName_ == 'IF_curr_alpha':
             obj_ = IF_curr_alpha.factory()
             obj_.build(child_)
@@ -17657,6 +18286,7 @@ GDSClassesMapping = {
     'sineGenerator': SineGenerator,
     'layout': Layout,
     'reverseRate': HHRate,
+    'sineGeneratorDL': SineGeneratorDL,
     'rampGenerator': RampGenerator,
     'cell2CaPools': Cell2CaPools,
     'channelDensityNernst': ChannelDensityNernst,
@@ -17674,6 +18304,7 @@ GDSClassesMapping = {
     'ionChannelKS': IonChannelKS,
     'channelDensityNonUniform': ChannelDensityNonUniform,
     'spikeThresh': SpikeThresh,
+    'transientPoissonFiringSynapse': TransientPoissonFiringSynapse,
     'inputList': InputList,
     'membraneProperties': MembraneProperties,
     'inhomogeneousParameter': InhomogeneousParameter,
@@ -17711,6 +18342,7 @@ GDSClassesMapping = {
     'distal': DistalDetails,
     'closedState': ClosedState,
     'specificCapacitance': SpecificCapacitance,
+    'compoundInputDL': CompoundInputDL,
     'forwardTransition': ForwardTransition,
     'from': SegmentEndPoint,
     'membraneProperties2CaPools': MembraneProperties2CaPools,
@@ -17728,16 +18360,17 @@ GDSClassesMapping = {
     'pulseGenerator': PulseGenerator,
     'gateHHrates': GateHHRates,
     'population': Population,
-    'ionChannel': IonChannel,
+    'intracellularProperties2CaPools': IntracellularProperties2CaPools,
     'expCurrSynapse': ExpCurrSynapse,
     'openState': OpenState,
     'property': Property,
     'explicitInput': ExplicitInput,
     'resistivity': Resistivity,
+    'compoundInput': CompoundInput,
     'electricalConnection': ElectricalConnection,
     'ionChannelHH': IonChannelHH,
     'channelDensityGHK': ChannelDensityGHK,
-    'intracellularProperties2CaPools': IntracellularProperties2CaPools,
+    'ionChannel': IonChannel,
     'channelDensityNonUniformNernst': ChannelDensityNonUniformNernst,
     'linearGradedSynapse': LinearGradedSynapse,
     'iafCell': IafCell,
@@ -17754,6 +18387,7 @@ GDSClassesMapping = {
     'gradedSynapse': GradedSynapse,
     'initMembPotential': InitMembPotential,
     'gapJunction': GapJunction,
+    'rampGeneratorDL': RampGeneratorDL,
     'variableParameter': VariableParameter,
     'expCondSynapse': ExpCondSynapse,
     'expTwoSynapse': ExpTwoSynapse,
@@ -17925,6 +18559,8 @@ __all__ = [
     "ChannelPopulation",
     "ClosedState",
     "ComponentType",
+    "CompoundInput",
+    "CompoundInputDL",
     "ConcentrationModel_D",
     "ConditionalDerivedVariable",
     "Connection",
@@ -18017,6 +18653,7 @@ __all__ = [
     "Q10ConductanceScaling",
     "Q10Settings",
     "RampGenerator",
+    "RampGeneratorDL",
     "RandomLayout",
     "ReactionScheme",
     "Region",
@@ -18029,6 +18666,7 @@ __all__ = [
     "SegmentParent",
     "SilentSynapse",
     "SineGenerator",
+    "SineGeneratorDL",
     "Space",
     "SpaceStructure",
     "Species",
@@ -18043,6 +18681,7 @@ __all__ = [
     "Standalone",
     "SubTree",
     "SynapticConnection",
+    "TransientPoissonFiringSynapse",
     "UnstructuredLayout",
     "ValueAcrossSegOrSegGroup",
     "VariableParameter",
