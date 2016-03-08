@@ -1,11 +1,10 @@
 language: python
 
-# Python 3 not fully supported as generateDS is not generating fully p3 compatible code
-# But see: https://github.com/NeuralEnsemble/libNeuroML/issues/58
+# Python 3: see: https://github.com/NeuralEnsemble/libNeuroML/issues/58
 python:
   - "2.6"
   - "2.7"
-  #- "3.2"  #  see above...
+  - "3.2"  
 
 before_install:
     - sudo apt-get update -qq

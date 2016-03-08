@@ -15,7 +15,7 @@ setup(
     packages = ['neuroml', 'neuroml.test','neuroml.nml'],
     package_data = {'neuroml.test': ['*.nml'], 'neuroml.nml': ['*.xsd']},
     author = "libNeuroML authors and contributors",
-    author_email = "vellamike@gmail.com",
+    author_email = "vellamike@gmail.com, p.gleeson@gmail.com",
     description = "A Python library for working with NeuroML descriptions of neuronal models",
     long_description = long_description,
     install_requires=['lxml'],
