@@ -29,7 +29,7 @@ from lxml import etree as etree_
 
 
 Validate_simpletypes_ = True
-if sys.version_info.major == 2:
+if sys.version_info[0] == 2:
     BaseStrType_ = basestring
 else:
     BaseStrType_ = str
