@@ -499,13 +499,14 @@
             <xs:element name="alphaSynapse" type="AlphaSynapse" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="expOneSynapse" type="ExpOneSynapse" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="expTwoSynapse" type="ExpTwoSynapse" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="expThreeSynapse" type="ExpThreeSynapse" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="blockingPlasticSynapse" type="BlockingPlasticSynapse" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="gapJunction" type="GapJunction" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="silentSynapse" type="SilentSynapse" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="linearGradedSynapse" type="LinearGradedSynapse" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="gradedSynapse" type="GradedSynapse" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
-    </xs:group>
+    </xs:group>       
 
 
     <xs:group name="PyNNSynapseTypes">
@@ -544,6 +545,8 @@
             <xs:element name="voltageClamp" type="VoltageClamp"
                     minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="spikeArray" type="SpikeArray" minOccurs="0"
+                    maxOccurs="unbounded"/>
+            <xs:element name="timedSynapticInput" type="TimedSynapticInput" minOccurs="0"
                     maxOccurs="unbounded"/>
             <xs:element name="spikeGenerator" type="SpikeGenerator"
                     minOccurs="0" maxOccurs="unbounded"/>
@@ -734,6 +737,20 @@
         </xs:sequence>
     </xs:group>
 
+    <xs:complexType name="TauInfTransition">
+        <xs:complexContent>
+            <xs:extension base="Base">
+                <xs:all>
+                    <xs:element name="steadyState" type="HHVariable"/>
+                    <xs:element name="timeCourse" type="HHTime"/>
+                </xs:all>
+                <xs:attribute name="from" type="NmlId" use="required"/>
+                <xs:attribute name="to" type="NmlId" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
     <xs:complexType name="GateKS">
         <xs:complexContent>
             <xs:extension base="Base">
@@ -743,8 +760,10 @@
                     
                     <xs:element name="closedState" type="ClosedState" minOccurs="1" maxOccurs="unbounded"/>
                     <xs:element name="openState" type="OpenState" minOccurs="1"  maxOccurs="unbounded"/>
-                    
-                    <xs:group ref="ForwardReverseTransition" minOccurs="1"  maxOccurs="unbounded"/>
+                    <xs:choice minOccurs="1"  maxOccurs="unbounded"> 
+                        <xs:group ref="ForwardReverseTransition"/>
+                        <xs:element name ="tauInfTransition" type="TauInfTransition"/>
+                    </xs:choice> 
                     
                 </xs:sequence>
                 
@@ -989,6 +1008,22 @@
     </xs:complexType>
 
 
+    <xs:complexType name="BaseConductanceBasedSynapseTwo">
+
+        <xs:complexContent>
+            <xs:extension base="BaseVoltageDepSynapse">
+
+                <xs:attribute name="gbase1" type="Nml2Quantity_conductance" use="required"/>
+                <xs:attribute name="gbase2" type="Nml2Quantity_conductance" use="required"/>
+                <xs:attribute name="erev" type="Nml2Quantity_voltage" use="required"/>
+
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+   
+
+
     <xs:complexType name="GapJunction">
 
         <xs:complexContent>
@@ -1098,6 +1133,20 @@
     </xs:complexType>
 
 
+   <xs:complexType name="ExpThreeSynapse">
+
+        <xs:complexContent>
+            <xs:extension base="BaseConductanceBasedSynapseTwo">
+
+                <xs:attribute name="tauDecay1" type="Nml2Quantity_time" use="required"/>
+                <xs:attribute name="tauDecay2" type="Nml2Quantity_time" use="required"/>
+                <xs:attribute name="tauRise" type="Nml2Quantity_time" use="required"/>
+
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
     <xs:complexType name="BlockingPlasticSynapse">
         <xs:complexContent>
             <xs:extension base="ExpTwoSynapse">
@@ -1112,6 +1161,9 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
+
+    
+    
 
     <xs:simpleType name="BlockTypes">
         <xs:restriction base="xs:string">
@@ -1561,6 +1613,7 @@
 
             <xs:element name="channelDensityNonUniform" type="ChannelDensityNonUniform" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="channelDensityNonUniformNernst" type="ChannelDensityNonUniformNernst" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="channelDensityNonUniformGHK" type="ChannelDensityNonUniformGHK" minOccurs="0" maxOccurs="unbounded"/>
 
             <xs:element name="spikeThresh" type="SpikeThresh" minOccurs="0" maxOccurs="unbounded"/>
 
@@ -1694,6 +1747,35 @@
     </xs:complexType>
 
     <xs:complexType name="ChannelDensityNonUniformNernst">
+
+        <xs:complexContent>
+            <xs:extension base="Base">
+
+                <xs:sequence>
+                    <xs:element name="variableParameter" type="VariableParameter" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+
+                <xs:attribute name="ionChannel" type="NmlId" use="required"/>
+
+                <xs:attribute name="ion" type="NmlId" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
+                        TEMPORARILY since selecting all ca or na conducting channel populations/densities in a cell would be difficult otherwise.
+                        Also, it will make it easier to set the correct native simulator value for erev (e.g. ek for ion = k in NEURON).
+                        Currently a required attribute.
+                        It should be removed in the longer term, due to possible inconsistencies in this value and that in the ionChannel
+                        element. TODO: remove.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+
+            </xs:extension>
+        </xs:complexContent>
+
+    </xs:complexType>
+
+
+    <xs:complexType name="ChannelDensityNonUniformGHK">
 
         <xs:complexContent>
             <xs:extension base="Base">
@@ -2162,6 +2244,22 @@
                     <xs:element name="spike" type="Spike" minOccurs="0"
                                 maxOccurs="unbounded"/>
                 </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="TimedSynapticInput">
+        <xs:complexContent>
+            <xs:extension base="Standalone">
+                <xs:sequence>
+                    <xs:element name="spike" type="Spike" minOccurs="0"
+                                maxOccurs="unbounded"/>
+                </xs:sequence>
+                <xs:attribute name="synapse" type="NmlId"
+                              use="required"/>
+                <xs:attribute name="spikeTarget" type="xs:string"
+                              use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
