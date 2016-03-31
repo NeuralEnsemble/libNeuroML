@@ -188,6 +188,7 @@ unbounded,unboundeds
 compoundInputDL,compound_input_dls
 xs:positiveInteger,xs:positive_integer
 membraneProperties2CaPools,membrane_properties2_ca_pools
+continuousConnectionInstance,continuous_connection_instances
 tauDecay1,tau_decay1
 leakConductance,leak_conductance
 tauDecay2,tau_decay2

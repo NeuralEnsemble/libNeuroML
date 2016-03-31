@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Mar 23 10:28:27 2016 by generateDS.py version 2.20a.
+# Generated Thu Mar 31 10:01:31 2016 by generateDS.py version 2.20a.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -5954,9 +5954,9 @@ class ContinuousConnection(BaseNonNegativeIntegerId):
     ]
     subclass = None
     superclass = BaseNonNegativeIntegerId
-    def __init__(self, neuro_lex_id=None, id=None, pre_cell=None, pre_segment='0', pre_fraction_along='0.5', post_cell=None, post_segment='0', post_fraction_along='0.5', pre_component=None, post_component=None):
+    def __init__(self, neuro_lex_id=None, id=None, pre_cell=None, pre_segment='0', pre_fraction_along='0.5', post_cell=None, post_segment='0', post_fraction_along='0.5', pre_component=None, post_component=None, extensiontype_=None):
         self.original_tagname_ = None
-        super(ContinuousConnection, self).__init__(neuro_lex_id, id, )
+        super(ContinuousConnection, self).__init__(neuro_lex_id, id, extensiontype_, )
         self.pre_cell = _cast(None, pre_cell)
         self.pre_segment = _cast(None, pre_segment)
         self.pre_fraction_along = _cast(None, pre_fraction_along)
@@ -5965,6 +5965,7 @@ class ContinuousConnection(BaseNonNegativeIntegerId):
         self.post_fraction_along = _cast(None, post_fraction_along)
         self.pre_component = _cast(None, pre_component)
         self.post_component = _cast(None, post_component)
+        self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -6044,6 +6045,10 @@ class ContinuousConnection(BaseNonNegativeIntegerId):
         if self.post_component is not None and 'post_component' not in already_processed:
             already_processed.add('post_component')
             outfile.write(' postComponent=%s' % (quote_attrib(self.post_component), ))
+        if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            outfile.write(' xsi:type="%s"' % self.extensiontype_)
     def exportChildren(self, outfile, level, namespace_='', name_='ContinuousConnection', fromsubclass_=False, pretty_print=True):
         super(ContinuousConnection, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         pass
@@ -6109,6 +6114,10 @@ class ContinuousConnection(BaseNonNegativeIntegerId):
             already_processed.add('postComponent')
             self.post_component = value
             self.validate_NmlId(self.post_component)    # validate type NmlId
+        value = find_attr_value_('xsi:type', node)
+        if value is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            self.extensiontype_ = value
         super(ContinuousConnection, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(ContinuousConnection, self).buildChildren(child_, node, nodeName_, True)
@@ -6123,10 +6132,11 @@ class ContinuousProjection(Base):
         MemberSpec_('presynapticPopulation', 'NmlId', 0),
         MemberSpec_('postsynapticPopulation', 'NmlId', 0),
         MemberSpec_('continuous_connections', 'ContinuousConnection', 1),
+        MemberSpec_('continuous_connection_instances', 'ContinuousConnectionInstance', 1),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, continuous_connections=None):
+    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, continuous_connections=None, continuous_connection_instances=None):
         self.original_tagname_ = None
         super(ContinuousProjection, self).__init__(neuro_lex_id, id, )
         self.presynaptic_population = _cast(None, presynaptic_population)
@@ -6135,6 +6145,10 @@ class ContinuousProjection(Base):
             self.continuous_connections = []
         else:
             self.continuous_connections = continuous_connections
+        if continuous_connection_instances is None:
+            self.continuous_connection_instances = []
+        else:
+            self.continuous_connection_instances = continuous_connection_instances
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -6156,6 +6170,7 @@ class ContinuousProjection(Base):
     def hasContent_(self):
         if (
             self.continuous_connections or
+            self.continuous_connection_instances or
             super(ContinuousProjection, self).hasContent_()
         ):
             return True
@@ -6195,6 +6210,8 @@ class ContinuousProjection(Base):
             eol_ = ''
         for continuousConnection_ in self.continuous_connections:
             continuousConnection_.export(outfile, level, namespace_, name_='continuousConnection', pretty_print=pretty_print)
+        for continuousConnectionInstance_ in self.continuous_connection_instances:
+            continuousConnectionInstance_.export(outfile, level, namespace_, name_='continuousConnectionInstance', pretty_print=pretty_print)
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -6216,10 +6233,16 @@ class ContinuousProjection(Base):
         super(ContinuousProjection, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'continuousConnection':
-            obj_ = ContinuousConnection.factory()
+            class_obj_ = self.get_class_obj_(child_, ContinuousConnection)
+            obj_ = class_obj_.factory()
             obj_.build(child_)
             self.continuous_connections.append(obj_)
             obj_.original_tagname_ = 'continuousConnection'
+        elif nodeName_ == 'continuousConnectionInstance':
+            obj_ = ContinuousConnectionInstance.factory()
+            obj_.build(child_)
+            self.continuous_connection_instances.append(obj_)
+            obj_.original_tagname_ = 'continuousConnectionInstance'
         super(ContinuousProjection, self).buildChildren(child_, node, nodeName_, True)
 # end class ContinuousProjection
 
@@ -15028,6 +15051,70 @@ class basePyNNCell(BaseCell):
 # end class basePyNNCell
 
 
+class ContinuousConnectionInstance(ContinuousConnection):
+    """Individual continuous/analog synaptic connection - instance based"""
+    member_data_items_ = [
+    ]
+    subclass = None
+    superclass = ContinuousConnection
+    def __init__(self, neuro_lex_id=None, id=None, pre_cell=None, pre_segment='0', pre_fraction_along='0.5', post_cell=None, post_segment='0', post_fraction_along='0.5', pre_component=None, post_component=None):
+        self.original_tagname_ = None
+        super(ContinuousConnectionInstance, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, pre_component, post_component, )
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, ContinuousConnectionInstance)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if ContinuousConnectionInstance.subclass:
+            return ContinuousConnectionInstance.subclass(*args_, **kwargs_)
+        else:
+            return ContinuousConnectionInstance(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            super(ContinuousConnectionInstance, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='ContinuousConnectionInstance', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ContinuousConnectionInstance')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ContinuousConnectionInstance', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ContinuousConnectionInstance'):
+        super(ContinuousConnectionInstance, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ContinuousConnectionInstance')
+    def exportChildren(self, outfile, level, namespace_='', name_='ContinuousConnectionInstance', fromsubclass_=False, pretty_print=True):
+        super(ContinuousConnectionInstance, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        super(ContinuousConnectionInstance, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(ContinuousConnectionInstance, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class ContinuousConnectionInstance
+
+
 class ElectricalConnectionInstance(ElectricalConnection):
     """Projection between two populations consisting of analog connections
     (e.g. graded synapses)"""
@@ -19741,6 +19828,7 @@ GDSClassesMapping = {
     'connection': Connection,
     'connectionWD': ConnectionWD,
     'continuousConnection': ContinuousConnection,
+    'continuousConnectionInstance': ContinuousConnectionInstance,
     'continuousProjection': ContinuousProjection,
     'decayingPoolConcentrationModel': DecayingPoolConcentrationModel,
     'distal': DistalDetails,
@@ -20010,6 +20098,7 @@ __all__ = [
     "ConnectionWD",
     "Constant",
     "ContinuousConnection",
+    "ContinuousConnectionInstance",
     "ContinuousProjection",
     "DecayingPoolConcentrationModel",
     "DerivedVariable",
