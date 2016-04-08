@@ -20,13 +20,13 @@ install:
   - conda create -n testenv --yes nose setuptools cython numpy python=${TRAVIS_PYTHON_VERSION}
   - source activate testenv
   - if [[ $TRAVIS_PYTHON_VERSION == "2.6" ]]; then conda install unittest2; fi
-  - pip install . --use-mirrors
+  - pip install .
   - conda install jsonpickle
   - conda install pymongo
   - conda install simplejson
   - conda install numexpr
   - conda install pytables
-  - pip install -r requirements.txt --use-mirrors
+  - pip install -r requirements.txt
 
 # command to run tests and examples, e.g. python setup.py test
 script:  
