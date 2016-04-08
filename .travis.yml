@@ -10,16 +10,15 @@ before_install:
     - if [ ${TRAVIS_PYTHON_VERSION:O:1} == "2" ]; then wget http://repo.continuum.io/miniconda/Miniconda2-3.19.0-Linux-x86_64.sh -O miniconda.sh; else wget http://repo.continuum.io/miniconda/Miniconda3-3.19.0-Linux-x86_64.sh -O miniconda.sh; fi
     - bash miniconda.sh -b -p /home/travis/mc
     - export PATH=/home/travis/mc/bin:$PATH
-    - sudo apt-get update -qq
-    - sudo apt-get install -qq libhdf5-serial-dev
 
 # command to install dependencies
 install:
   - conda update --yes conda
   #- conda config --add channels soft-matter
-  - conda create -n testenv --yes nose setuptools cython numpy pymongo numexpr pytables python=${TRAVIS_PYTHON_VERSION}
+  - conda create -n testenv --yes nose setuptools cython numpy pymongo numexpr pytables jsonpickle=0.7.2 python=${TRAVIS_PYTHON_VERSION}
   - source activate testenv
   - if [[ $TRAVIS_PYTHON_VERSION == "2.6" ]]; then conda install unittest2 --yes; fi
+  - if [[ $TRAVIS_PYTHON_VERSION -ne "3.5" ]]; then conda install simplejson; fi
   - pip install -r requirements.txt
   - pip install .
 
