@@ -19,13 +19,13 @@ install:
   #- conda config --add channels soft-matter
   - conda create -n testenv --yes nose setuptools cython numpy python=${TRAVIS_PYTHON_VERSION}
   - source activate testenv
-  - if [[ $TRAVIS_PYTHON_VERSION == "2.6" ]]; then conda install unittest2; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == "2.6" ]]; then conda install unittest2 --yes; fi
   - pip install .
-  - conda install jsonpickle
-  - conda install pymongo
-  - conda install simplejson
-  - conda install numexpr
-  - conda install pytables
+  - conda install jsonpickle --yes
+  - conda install pymongo --yes
+  - conda install simplejson --yes
+  - conda install numexpr --yes
+  - conda install pytables --yes
   - pip install -r requirements.txt
 
 # command to run tests and examples, e.g. python setup.py test
