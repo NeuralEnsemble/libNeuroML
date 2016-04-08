@@ -19,7 +19,7 @@ install:
   - source activate testenv
   - if [[ $TRAVIS_PYTHON_VERSION == "2.6" ]]; then conda install unittest2 --yes; fi
   - if [[ $TRAVIS_PYTHON_VERSION -ne "3.5" ]]; then conda install simplejson; fi
-  - pip install jsonpickle=0.7.2
+  - pip install jsonpickle==0.7.2
   - pip install -r requirements.txt
   - pip install .
 
