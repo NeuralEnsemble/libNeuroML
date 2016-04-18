@@ -101,6 +101,7 @@ expCurrSynapse,exp_curr_synapses
 resistivity,resistivities
 ySpacing,y_spacing
 ySize,y_size
+gateFractional,gate_fractional
 blockMechanism,block_mechanism
 instance,instances
 connectionWD,connection_wds
@@ -119,6 +120,7 @@ preSegmentId,pre_segment_id
 spikeThresh,spike_threshes
 spikeGeneratorPoisson,spike_generator_poissons
 ionChannelPassive,ion_channel_passive
+subGate,sub_gate
 gL,g_l
 tauRise,tau_rise
 izhikevichCell,izhikevich_cells
@@ -158,6 +160,7 @@ populationTypes,population_types
 variableParameter,variable_parameters
 iSoma,i_soma
 biophysicalProperties2CaPools,biophysical_properties2_ca_pools
+fractionalConductance,fractional_conductance
 tsodyksMarkramDepMechanism,tsodyks_markram_dep_mechanism
 fitzHughNagumo1969Cell,fitz_hugh_nagumo1969_cells
 segmentId,segment_id

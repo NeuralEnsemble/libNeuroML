@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Mar 31 10:01:31 2016 by generateDS.py version 2.20a.
+# Generated Mon Apr 18 14:07:18 2016 by generateDS.py version 2.22a.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -12130,6 +12130,256 @@ class DecayingPoolConcentrationModel(Standalone):
 # end class DecayingPoolConcentrationModel
 
 
+class GateFractionalSubgate(Base):
+    member_data_items_ = [
+        MemberSpec_('fractionalConductance', 'Nml2Quantity_none', 0),
+        MemberSpec_('notes', ['Notes', 'xs:string'], 0),
+        MemberSpec_('q10_settings', 'Q10Settings', 0),
+        MemberSpec_('steady_state', 'HHVariable', 0),
+        MemberSpec_('time_course', 'HHTime', 0),
+    ]
+    subclass = None
+    superclass = Base
+    def __init__(self, neuro_lex_id=None, id=None, fractional_conductance=None, notes=None, q10_settings=None, steady_state=None, time_course=None):
+        self.original_tagname_ = None
+        super(GateFractionalSubgate, self).__init__(neuro_lex_id, id, )
+        self.fractional_conductance = _cast(None, fractional_conductance)
+        self.notes = notes
+        self.validate_Notes(self.notes)
+        self.q10_settings = q10_settings
+        self.steady_state = steady_state
+        self.time_course = time_course
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, GateFractionalSubgate)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if GateFractionalSubgate.subclass:
+            return GateFractionalSubgate.subclass(*args_, **kwargs_)
+        else:
+            return GateFractionalSubgate(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Notes(self, value):
+        # Validate type Notes, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            pass
+    def validate_Nml2Quantity_none(self, value):
+        # Validate type Nml2Quantity_none, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_none_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_none_patterns_, ))
+    validate_Nml2Quantity_none_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?$']]
+    def hasContent_(self):
+        if (
+            self.notes is not None or
+            self.q10_settings is not None or
+            self.steady_state is not None or
+            self.time_course is not None or
+            super(GateFractionalSubgate, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='GateFractionalSubgate', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='GateFractionalSubgate')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='GateFractionalSubgate', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateFractionalSubgate'):
+        super(GateFractionalSubgate, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateFractionalSubgate')
+        if self.fractional_conductance is not None and 'fractional_conductance' not in already_processed:
+            already_processed.add('fractional_conductance')
+            outfile.write(' fractionalConductance=%s' % (quote_attrib(self.fractional_conductance), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='GateFractionalSubgate', fromsubclass_=False, pretty_print=True):
+        super(GateFractionalSubgate, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.notes is not None:
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%snotes>%s</%snotes>%s' % (namespace_, self.gds_encode(self.gds_format_string(quote_xml(self.notes), input_name='notes')), namespace_, eol_))
+        if self.q10_settings is not None:
+            self.q10_settings.export(outfile, level, namespace_, name_='q10Settings', pretty_print=pretty_print)
+        if self.steady_state is not None:
+            self.steady_state.export(outfile, level, namespace_, name_='steadyState', pretty_print=pretty_print)
+        if self.time_course is not None:
+            self.time_course.export(outfile, level, namespace_, name_='timeCourse', pretty_print=pretty_print)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('fractionalConductance', node)
+        if value is not None and 'fractionalConductance' not in already_processed:
+            already_processed.add('fractionalConductance')
+            self.fractional_conductance = value
+            self.validate_Nml2Quantity_none(self.fractional_conductance)    # validate type Nml2Quantity_none
+        super(GateFractionalSubgate, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        if nodeName_ == 'notes':
+            notes_ = child_.text
+            notes_ = self.gds_validate_string(notes_, node, 'notes')
+            self.notes = notes_
+            # validate type Notes
+            self.validate_Notes(self.notes)
+        elif nodeName_ == 'q10Settings':
+            obj_ = Q10Settings.factory()
+            obj_.build(child_)
+            self.q10_settings = obj_
+            obj_.original_tagname_ = 'q10Settings'
+        elif nodeName_ == 'steadyState':
+            obj_ = HHVariable.factory()
+            obj_.build(child_)
+            self.steady_state = obj_
+            obj_.original_tagname_ = 'steadyState'
+        elif nodeName_ == 'timeCourse':
+            obj_ = HHTime.factory()
+            obj_.build(child_)
+            self.time_course = obj_
+            obj_.original_tagname_ = 'timeCourse'
+        super(GateFractionalSubgate, self).buildChildren(child_, node, nodeName_, True)
+# end class GateFractionalSubgate
+
+
+class GateFractional(Base):
+    member_data_items_ = [
+        MemberSpec_('fractionalConductance', 'Nml2Quantity_none', 0),
+        MemberSpec_('notes', ['Notes', 'xs:string'], 0),
+        MemberSpec_('q10_settings', 'Q10Settings', 0),
+        MemberSpec_('sub_gate', 'GateFractionalSubgate', 0),
+    ]
+    subclass = None
+    superclass = Base
+    def __init__(self, neuro_lex_id=None, id=None, fractional_conductance=None, notes=None, q10_settings=None, sub_gate=None):
+        self.original_tagname_ = None
+        super(GateFractional, self).__init__(neuro_lex_id, id, )
+        self.fractional_conductance = _cast(None, fractional_conductance)
+        self.notes = notes
+        self.validate_Notes(self.notes)
+        self.q10_settings = q10_settings
+        self.sub_gate = sub_gate
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, GateFractional)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if GateFractional.subclass:
+            return GateFractional.subclass(*args_, **kwargs_)
+        else:
+            return GateFractional(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Notes(self, value):
+        # Validate type Notes, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            pass
+    def validate_Nml2Quantity_none(self, value):
+        # Validate type Nml2Quantity_none, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_none_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_none_patterns_, ))
+    validate_Nml2Quantity_none_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?$']]
+    def hasContent_(self):
+        if (
+            self.notes is not None or
+            self.q10_settings is not None or
+            self.sub_gate is not None or
+            super(GateFractional, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='GateFractional', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='GateFractional')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='GateFractional', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateFractional'):
+        super(GateFractional, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateFractional')
+        if self.fractional_conductance is not None and 'fractional_conductance' not in already_processed:
+            already_processed.add('fractional_conductance')
+            outfile.write(' fractionalConductance=%s' % (quote_attrib(self.fractional_conductance), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='GateFractional', fromsubclass_=False, pretty_print=True):
+        super(GateFractional, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.notes is not None:
+            showIndent(outfile, level, pretty_print)
+            outfile.write('<%snotes>%s</%snotes>%s' % (namespace_, self.gds_encode(self.gds_format_string(quote_xml(self.notes), input_name='notes')), namespace_, eol_))
+        if self.q10_settings is not None:
+            self.q10_settings.export(outfile, level, namespace_, name_='q10Settings', pretty_print=pretty_print)
+        if self.sub_gate is not None:
+            self.sub_gate.export(outfile, level, namespace_, name_='subGate', pretty_print=pretty_print)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('fractionalConductance', node)
+        if value is not None and 'fractionalConductance' not in already_processed:
+            already_processed.add('fractionalConductance')
+            self.fractional_conductance = value
+            self.validate_Nml2Quantity_none(self.fractional_conductance)    # validate type Nml2Quantity_none
+        super(GateFractional, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        if nodeName_ == 'notes':
+            notes_ = child_.text
+            notes_ = self.gds_validate_string(notes_, node, 'notes')
+            self.notes = notes_
+            # validate type Notes
+            self.validate_Notes(self.notes)
+        elif nodeName_ == 'q10Settings':
+            obj_ = Q10Settings.factory()
+            obj_.build(child_)
+            self.q10_settings = obj_
+            obj_.original_tagname_ = 'q10Settings'
+        elif nodeName_ == 'subGate':
+            obj_ = GateFractionalSubgate.factory()
+            obj_.build(child_)
+            self.sub_gate = obj_
+            obj_.original_tagname_ = 'subGate'
+        super(GateFractional, self).buildChildren(child_, node, nodeName_, True)
+# end class GateFractional
+
+
 class GateHHInstantaneous(Base):
     member_data_items_ = [
         MemberSpec_('instances', 'PositiveInteger', 0),
@@ -12990,7 +13240,7 @@ class GateHHUndetermined(Base):
         # Validate type gateTypes, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             value = str(value)
-            enumerations = ['gateHHrates', 'gateHHratesTau', 'gateHHtauInf', 'gateHHratesInf', 'gateHHratesTauInf', 'gateHHInstantaneous', 'gateKS']
+            enumerations = ['gateHHrates', 'gateHHratesTau', 'gateHHtauInf', 'gateHHratesInf', 'gateHHratesTauInf', 'gateHHInstantaneous', 'gateKS', 'gateFractional']
             enumeration_respectee = False
             for enum in enumerations:
                 if value == enum:
@@ -19923,6 +20173,7 @@ GDSClassesMapping = {
     'spikeThresh': SpikeThresh,
     'steadyState': HHVariable,
     'structure': SpaceStructure,
+    'subGate': GateFractionalSubgate,
     'subTree': SubTree,
     'synapticConnection': SynapticConnection,
     'tauInfTransition': TauInfTransition,
@@ -20122,6 +20373,8 @@ __all__ = [
     "FixedFactorConcentrationModel",
     "ForwardTransition",
     "GapJunction",
+    "GateFractional",
+    "GateFractionalSubgate",
     "GateHHInstantaneous",
     "GateHHRates",
     "GateHHRatesInf",

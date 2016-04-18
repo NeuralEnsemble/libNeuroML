@@ -157,6 +157,7 @@ amplitude,amplitude
 resistivity,resistivities
 ySpacing,y_spacing
 ySize,y_size
+gateFractional,gate_fractional
 blockMechanism,block_mechanism
 instance,instances
 connectionWD,connection_wds
@@ -188,6 +189,7 @@ x,x
 e_rev,e_rev
 v_offset,v_offset
 ionChannelPassive,ion_channel_passive
+subGate,sub_gate
 erev,erev
 parent,parent
 gL,g_l
@@ -251,6 +253,7 @@ iSoma,i_soma
 g_leak,g_leak
 i,i
 biophysicalProperties2CaPools,biophysical_properties2_ca_pools
+fractionalConductance,fractional_conductance
 dimension,dimension
 http://www.neuroml.org/schema/neuroml2,http://www.neuroml.org/schema/neuroml2
 tsodyksMarkramDepMechanism,tsodyks_markram_dep_mechanism
