@@ -48,7 +48,7 @@ class NeuroMLHDF5Handler():
   def parse(self, filename):
     h5file=tables.openFile(filename)
     
-    self.log.debug("Opened HDF5 file: "+ h5file.filename)
+    self.log.debug("Opened HDF5 file: "+ h5file.filename)  
     
     self.parseGroup(h5file.root.neuroml)
     
@@ -227,9 +227,14 @@ class NeuroMLHDF5Handler():
   def startGroup(self, g):
     self.log.debug("Going into a group: "+ g._v_name)
     
+    
+    if g._v_name == 'neuroml':
+    
+        self.netHandler.handleDocumentStart(g._v_attrs.id,g._v_attrs.notes)  
+    
     if g._v_name == 'network':
         
-        self.netHandler.handleNetwork(g._v_attrs.id)
+        self.netHandler.handleNetwork(g._v_attrs.id,g._v_attrs.notes)
     
     if g._v_name.count('population_')>=1:
         # TODO: a better check to see if the attribute is a str or numpy.ndarray
@@ -245,6 +250,9 @@ class NeuroMLHDF5Handler():
         for node in g:
             if node._c_classId == 'ARRAY' and node.name == self.currPopulation:
               size = node.shape[0]
+              
+        if size == -1:
+            size = g._v_attrs.size
               
         self.log.debug("Found a population: "+ self.currPopulation+", component: "+self.currentComponent+", size: "+ str(size))
         

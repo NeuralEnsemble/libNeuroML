@@ -73,7 +73,8 @@ net.populations.append(pop1)
 
 
 
-pop = Population(id="Pop_x", component=IafCell0.id, type="populationList")
+cell_num = 4*scale
+pop = Population(id="Pop_x", component=IafCell0.id, type="populationList",size=cell_num)
 net.populations.append(pop)
 pop.properties.append(Property(tag="color", value="1 0 0"))
 
@@ -81,7 +82,6 @@ x_size = 500
 y_size = 500
 z_size = 500
     
-cell_num = 4*scale
 for i in range(cell_num):
     inst = Instance(id=i)
     pop.instances.append(inst)

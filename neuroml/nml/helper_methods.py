@@ -222,8 +222,15 @@ inserts['Population'] = '''
               a[count,3] = instance.location.z
 
               count=count+1
+        
+            popGroup._f_setAttr("size", count)
+            popGroup._f_setAttr("type", "populationList")
 
             h5file.createArray(popGroup, self.id, a, "Locations of cells in "+ self.id)
+            
+        else:
+            popGroup._f_setAttr("size", self.size)
+        
         
 '''
 

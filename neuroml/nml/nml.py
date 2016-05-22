@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Sun May 22 16:21:41 2016 by generateDS.py version 2.22b.
+# Generated Sun May 22 16:41:12 2016 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -7442,8 +7442,15 @@ class Population(Standalone):
               a[count,3] = instance.location.z
 
               count=count+1
+        
+            popGroup._f_setAttr("size", count)
+            popGroup._f_setAttr("type", "populationList")
 
             h5file.createArray(popGroup, self.id, a, "Locations of cells in "+ self.id)
+            
+        else:
+            popGroup._f_setAttr("size", self.size)
+        
         
 
     # end class Population
@@ -10940,8 +10947,15 @@ class ChannelPopulation(Base):
               a[count,3] = instance.location.z
 
               count=count+1
+        
+            popGroup._f_setAttr("size", count)
+            popGroup._f_setAttr("type", "populationList")
 
             h5file.createArray(popGroup, self.id, a, "Locations of cells in "+ self.id)
+            
+        else:
+            popGroup._f_setAttr("size", self.size)
+        
         
 
     # end class ChannelPopulation

@@ -53,11 +53,20 @@ class NetworkHandler:
     
 
     #
+    #  Should be overridden
+    #  
+    def handleDocumentStart(self, id, notes):
+            
+        self.log.info("Document: "+id)
+        self.log.info("  Notes: "+notes)
+
+    #
     #  Should be overridden to create network
     #  
-    def handleNetwork(self, network_id):
+    def handleNetwork(self, network_id, notes):
             
         self.log.info("Network: "+network_id)
+        self.log.info("  Notes: "+notes)
 
     #
     #  Should be overridden to create population array

@@ -23,8 +23,6 @@ import neuroml
 class NetworkBuilder(NetworkHandler):
     
     log = logging.getLogger("NetworkBuilder")
-  
-    nml_doc = neuroml.NeuroMLDocument()
     
     populations = {}
     
@@ -35,10 +33,20 @@ class NetworkBuilder(NetworkHandler):
     #
     #  Overridden from NetworkHandler
     #    
-    def handleNetwork(self, network_id):
+    def handleDocumentStart(self, id, notes):
+        self.nml_doc = neuroml.NeuroMLDocument(id=id)
+        if notes and len(notes)>0:
+            self.nml_doc.notes = notes
+    
+    #
+    #  Overridden from NetworkHandler
+    #    
+    def handleNetwork(self, network_id, notes):
         
         self.network = neuroml.Network(id=network_id)
         self.nml_doc.networks.append(self.network)
+        if notes and len(notes)>0:
+            self.network.notes = notes
    
     #
     #  Overridden from NetworkHandler
@@ -68,6 +76,7 @@ class NetworkBuilder(NetworkHandler):
 
         inst.location = neuroml.Location(x=x,y=y,z=z)
         self.populations[population_id].instances.append(inst)
+        self.populations[population_id].type = 'populationList'
           
     #
     #  Overridden from NetworkHandler
