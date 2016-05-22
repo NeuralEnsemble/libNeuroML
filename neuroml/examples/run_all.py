@@ -7,7 +7,6 @@ def run_example(ex_file):
 run_example("arraymorph_generation.py")
 run_example("build_3D_network.py")
 run_example("build_network.py")
-run_example("build_network2.py")
 run_example("ion_channel_generation.py")
 run_example("json_serialization.py")
 run_example("loading_modifying_writing.py")

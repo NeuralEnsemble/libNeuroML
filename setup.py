@@ -12,7 +12,7 @@ setup(
     data_files=[("",['neuroml/test/Purk2M9s.nml'])],
     name = "libNeuroML",
     version = version,
-    packages = ['neuroml', 'neuroml.test','neuroml.nml'],
+    packages = ['neuroml', 'neuroml.test','neuroml.nml','neuroml.hdf5'],
     package_data = {'neuroml.test': ['*.nml'], 'neuroml.nml': ['*.xsd']},
     author = "libNeuroML authors and contributors",
     author_email = "vellamike@gmail.com, p.gleeson@gmail.com",

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Sun May 22 15:14:58 2016 by generateDS.py version 2.22b.
+# Generated Sun May 22 16:21:41 2016 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -7893,7 +7893,7 @@ class Network(Standalone):
          
         import numpy
         
-        netGroup = h5file.createGroup(h5Group, self.id)
+        netGroup = h5file.createGroup(h5Group, 'network')
         netGroup._f_setAttr("id", self.id)
         netGroup._f_setAttr("notes", self.notes)
        

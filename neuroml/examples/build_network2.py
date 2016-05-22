@@ -20,7 +20,7 @@ from neuroml import Location
 import neuroml.writers as writers
 from random import random
 
-scale = 100
+scale = 2
 
 nml_doc = NeuroMLDocument(id="IafNet")
 
@@ -91,12 +91,13 @@ for i in range(cell_num):
 prob_connection = 0.5
 proj_count = 0
 
-
+'''
 from_pop = "Pop_x"
 to_pop = "Pop_x"
 projection = Projection(id="Proj", presynaptic_population=from_pop, postsynaptic_population=to_pop, synapse=syn0.id)
 
 net.projections.append(projection)
+
 for pre_index in range(0,cell_num):
     for post_index in range(0,cell_num):
         if pre_index != post_index and random() <= prob_connection:
@@ -114,7 +115,7 @@ for pre_index in range(0,cell_num):
                                     post_fraction_along=random())
 
             projection.connections.append(connection)
-            proj_count += 1
+            proj_count += 1'''
 
 nml_file = 'tmp/testh5.nml'
 writers.NeuroMLWriter.write(nml_doc, nml_file)

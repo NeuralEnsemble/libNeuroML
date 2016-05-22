@@ -184,7 +184,7 @@ inserts['Network'] = '''
          
         import numpy
         
-        netGroup = h5file.createGroup(h5Group, self.id)
+        netGroup = h5file.createGroup(h5Group, 'network')
         netGroup._f_setAttr("id", self.id)
         netGroup._f_setAttr("notes", self.notes)
        
