@@ -22,6 +22,34 @@ class NeuroMLWriter(object):
         nmldoc.export(file,0,name_="neuroml",
                       namespacedef_=namespacedef) #name_ param to ensure root element named correctly - generateDS limitation
 
+
+class NeuroMLHdf5Writer(object):
+    @classmethod
+    def write(cls,nml_doc,h5_file_name):
+        
+        import tables
+        
+        h5file = tables.openFile(h5_file_name, mode = "w", title = nml_doc.id)
+        
+        rootGroup = h5file.createGroup("/", 'neuroml', 'Root NeuroML group')
+        
+        rootGroup._f_setAttr("notes", nml_doc.notes)
+        
+        for network in nml_doc.networks:
+
+            network.exportHdf5(h5file, rootGroup)
+        
+        '''
+        projsGroup = h5file.createGroup(rootGroup, 'projections', 'Projections group')
+        projsGroup._f_setAttr("units", self.projUnits)
+        
+        for projection in self.projections:
+            projection.generateHDF5(h5file, projsGroup)'''
+            
+        
+        h5file.close()  # Close (and flush) the file
+        
+        
 class JSONWriter(object):
     """
     Write a NeuroMLDocument to JSON, particularly useful

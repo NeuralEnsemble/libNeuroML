@@ -124,6 +124,7 @@ volume = MethodSpec(name='volume',
     class_names=("Segment")
     )
 
+
 surface_area = MethodSpec(name='surface_area',
     source='''\
 
@@ -143,9 +144,6 @@ surface_area = MethodSpec(name='surface_area',
     class_names=("Segment")
     )
 
-
-
-
 #
 # Provide a list of your method specifications.
 #   This list of specifications must be named METHOD_SPECS.
@@ -155,6 +153,126 @@ METHOD_SPECS=(length,
               surface_area,
               num_segments,
              )
+
+
+connection_cell_ids = MethodSpec(name='connection_cell_ids',
+    source='''\
+
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+
+    def get_pre_cell_id(self):
+        
+        return self._get_cell_id(self.pre_cell_id)
+        
+    def get_post_cell_id(self):
+        
+        return self._get_cell_id(self.post_cell_id)
+        
+    ''',
+    class_names=("Connection")
+    )
+  
+METHOD_SPECS+=(connection_cell_ids,)
+    
+inserts  = {}
+
+inserts['Network'] = '''
+         
+        import numpy
+        
+        netGroup = h5file.createGroup(h5Group, self.id)
+        netGroup._f_setAttr("id", self.id)
+        netGroup._f_setAttr("notes", self.notes)
+       
+        for pop in self.populations:
+            pop.exportHdf5(h5file, netGroup)
+            
+        if len(self.synaptic_connections) > 0:
+            raise Exception("<synapticConnection> not yet supported in HDF5 export")
+        if len(self.explicit_inputs) > 0:
+            raise Exception("<explicitInput> not yet supported in HDF5 export")
+
+        for proj in self.projections:
+            proj.exportHdf5(h5file, netGroup)
+        
+'''
+
+inserts['Population'] = '''
+         
+        import numpy
+        
+        popGroup = h5file.createGroup(h5Group, 'population_'+self.id)
+        popGroup._f_setAttr("id", self.id)
+        popGroup._f_setAttr("component", self.component)
+        
+        if len(self.instances)>0:
+
+            colCount = 4
+            a = numpy.ones([len(self.instances), colCount], numpy.float32)
+
+            count=0
+            for instance in self.instances:
+              a[count,0] = instance.id
+              a[count,1] = instance.location.x
+              a[count,2] = instance.location.y
+              a[count,3] = instance.location.z
+
+              count=count+1
+
+            h5file.createArray(popGroup, self.id, a, "Locations of cells in "+ self.id)
+        
+'''
+
+inserts['Projection'] = '''
+         
+        import numpy
+        
+        projGroup = h5file.createGroup(h5Group, 'projection_'+self.id)
+        projGroup._f_setAttr("id", self.id)
+        projGroup._f_setAttr("presynapticPopulation", self.presynaptic_population)
+        projGroup._f_setAttr("postsynapticPopulation", self.postsynaptic_population)
+        projGroup._f_setAttr("synapse", self.synapse)
+        
+        cols = 3
+        
+        #TODO: optimise ...for conn in self.connections:
+        #    if
+        
+        a = numpy.ones([len(self.connections), cols], numpy.float32)
+        
+        count=0
+        for connection in self.connections:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()          
+          count=count+1
+        
+        array = h5file.createArray(projGroup, self.id, a, "Connections of cells in "+ self.id)
+        array._f_setAttr("column_0", "id")
+        array._f_setAttr("column_1", "preCellId")
+        array._f_setAttr("column_2", "postCellId")
+        
+        
+'''
+
+
+
+             
+for insert in inserts.keys():
+    ms = MethodSpec(name='exportHdf5',
+    source='''\
+
+    def exportHdf5(self, h5file, h5Group):
+        print("Exporting %s: "+str(self.id)+" as HDF5")
+        %s
+    '''%(insert,inserts[insert]),
+    class_names=(insert)
+    )
+    METHOD_SPECS+=(ms,)
 
 
 def test():

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Apr 18 14:07:18 2016 by generateDS.py version 2.22a.
+# Generated Sun May 22 15:14:58 2016 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -5090,7 +5090,22 @@ class SynapticConnection(GeneratedsSuper):
             self.validate_NmlId(self.destination)    # validate type NmlId
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
-# end class SynapticConnection
+
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+
+    def get_pre_cell_id(self):
+        
+        return self._get_cell_id(self.pre_cell_id)
+        
+    def get_post_cell_id(self):
+        
+        return self._get_cell_id(self.post_cell_id)
+        
+    # end class SynapticConnection
 
 
 class ExplicitInput(GeneratedsSuper):
@@ -6122,7 +6137,22 @@ class ContinuousConnection(BaseNonNegativeIntegerId):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(ContinuousConnection, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class ContinuousConnection
+
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+
+    def get_pre_cell_id(self):
+        
+        return self._get_cell_id(self.pre_cell_id)
+        
+    def get_post_cell_id(self):
+        
+        return self._get_cell_id(self.post_cell_id)
+        
+    # end class ContinuousConnection
 
 
 class ContinuousProjection(Base):
@@ -6244,7 +6274,41 @@ class ContinuousProjection(Base):
             self.continuous_connection_instances.append(obj_)
             obj_.original_tagname_ = 'continuousConnectionInstance'
         super(ContinuousProjection, self).buildChildren(child_, node, nodeName_, True)
-# end class ContinuousProjection
+
+    def exportHdf5(self, h5file, h5Group):
+        print("Exporting Projection: "+str(self.id)+" as HDF5")
+        
+         
+        import numpy
+        
+        projGroup = h5file.createGroup(h5Group, 'projection_'+self.id)
+        projGroup._f_setAttr("id", self.id)
+        projGroup._f_setAttr("presynapticPopulation", self.presynaptic_population)
+        projGroup._f_setAttr("postsynapticPopulation", self.postsynaptic_population)
+        projGroup._f_setAttr("synapse", self.synapse)
+        
+        cols = 3
+        
+        #TODO: optimise ...for conn in self.connections:
+        #    if
+        
+        a = numpy.ones([len(self.connections), cols], numpy.float32)
+        
+        count=0
+        for connection in self.connections:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()          
+          count=count+1
+        
+        array = h5file.createArray(projGroup, self.id, a, "Connections of cells in "+ self.id)
+        array._f_setAttr("column_0", "id")
+        array._f_setAttr("column_1", "preCellId")
+        array._f_setAttr("column_2", "postCellId")
+        
+        
+
+    # end class ContinuousProjection
 
 
 class ElectricalConnection(BaseNonNegativeIntegerId):
@@ -6419,7 +6483,22 @@ class ElectricalConnection(BaseNonNegativeIntegerId):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(ElectricalConnection, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class ElectricalConnection
+
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+
+    def get_pre_cell_id(self):
+        
+        return self._get_cell_id(self.pre_cell_id)
+        
+    def get_post_cell_id(self):
+        
+        return self._get_cell_id(self.post_cell_id)
+        
+    # end class ElectricalConnection
 
 
 class ElectricalProjection(Base):
@@ -6541,7 +6620,41 @@ class ElectricalProjection(Base):
             self.electrical_connection_instances.append(obj_)
             obj_.original_tagname_ = 'electricalConnectionInstance'
         super(ElectricalProjection, self).buildChildren(child_, node, nodeName_, True)
-# end class ElectricalProjection
+
+    def exportHdf5(self, h5file, h5Group):
+        print("Exporting Projection: "+str(self.id)+" as HDF5")
+        
+         
+        import numpy
+        
+        projGroup = h5file.createGroup(h5Group, 'projection_'+self.id)
+        projGroup._f_setAttr("id", self.id)
+        projGroup._f_setAttr("presynapticPopulation", self.presynaptic_population)
+        projGroup._f_setAttr("postsynapticPopulation", self.postsynaptic_population)
+        projGroup._f_setAttr("synapse", self.synapse)
+        
+        cols = 3
+        
+        #TODO: optimise ...for conn in self.connections:
+        #    if
+        
+        a = numpy.ones([len(self.connections), cols], numpy.float32)
+        
+        count=0
+        for connection in self.connections:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()          
+          count=count+1
+        
+        array = h5file.createArray(projGroup, self.id, a, "Connections of cells in "+ self.id)
+        array._f_setAttr("column_0", "id")
+        array._f_setAttr("column_1", "preCellId")
+        array._f_setAttr("column_2", "postCellId")
+        
+        
+
+    # end class ElectricalProjection
 
 
 class ConnectionWD(BaseNonNegativeIntegerId):
@@ -6719,7 +6832,22 @@ class ConnectionWD(BaseNonNegativeIntegerId):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(ConnectionWD, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class ConnectionWD
+
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+
+    def get_pre_cell_id(self):
+        
+        return self._get_cell_id(self.pre_cell_id)
+        
+    def get_post_cell_id(self):
+        
+        return self._get_cell_id(self.post_cell_id)
+        
+    # end class ConnectionWD
 
 
 class Connection(BaseNonNegativeIntegerId):
@@ -6868,7 +6996,22 @@ class Connection(BaseNonNegativeIntegerId):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(Connection, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class Connection
+
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+
+    def get_pre_cell_id(self):
+        
+        return self._get_cell_id(self.pre_cell_id)
+        
+    def get_post_cell_id(self):
+        
+        return self._get_cell_id(self.post_cell_id)
+        
+    # end class Connection
 
 
 class Projection(Base):
@@ -6998,7 +7141,41 @@ class Projection(Base):
             self.connection_wds.append(obj_)
             obj_.original_tagname_ = 'connectionWD'
         super(Projection, self).buildChildren(child_, node, nodeName_, True)
-# end class Projection
+
+    def exportHdf5(self, h5file, h5Group):
+        print("Exporting Projection: "+str(self.id)+" as HDF5")
+        
+         
+        import numpy
+        
+        projGroup = h5file.createGroup(h5Group, 'projection_'+self.id)
+        projGroup._f_setAttr("id", self.id)
+        projGroup._f_setAttr("presynapticPopulation", self.presynaptic_population)
+        projGroup._f_setAttr("postsynapticPopulation", self.postsynaptic_population)
+        projGroup._f_setAttr("synapse", self.synapse)
+        
+        cols = 3
+        
+        #TODO: optimise ...for conn in self.connections:
+        #    if
+        
+        a = numpy.ones([len(self.connections), cols], numpy.float32)
+        
+        count=0
+        for connection in self.connections:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()          
+          count=count+1
+        
+        array = h5file.createArray(projGroup, self.id, a, "Connections of cells in "+ self.id)
+        array._f_setAttr("column_0", "id")
+        array._f_setAttr("column_1", "preCellId")
+        array._f_setAttr("column_2", "postCellId")
+        
+        
+
+    # end class Projection
 
 
 class CellSet(Base):
@@ -7241,7 +7418,35 @@ class Population(Standalone):
             self.instances.append(obj_)
             obj_.original_tagname_ = 'instance'
         super(Population, self).buildChildren(child_, node, nodeName_, True)
-# end class Population
+
+    def exportHdf5(self, h5file, h5Group):
+        print("Exporting Population: "+str(self.id)+" as HDF5")
+        
+         
+        import numpy
+        
+        popGroup = h5file.createGroup(h5Group, 'population_'+self.id)
+        popGroup._f_setAttr("id", self.id)
+        popGroup._f_setAttr("component", self.component)
+        
+        if len(self.instances)>0:
+
+            colCount = 4
+            a = numpy.ones([len(self.instances), colCount], numpy.float32)
+
+            count=0
+            for instance in self.instances:
+              a[count,0] = instance.id
+              a[count,1] = instance.location.x
+              a[count,2] = instance.location.y
+              a[count,3] = instance.location.z
+
+              count=count+1
+
+            h5file.createArray(popGroup, self.id, a, "Locations of cells in "+ self.id)
+        
+
+    # end class Population
 
 
 class Region(Base):
@@ -7681,7 +7886,30 @@ class Network(Standalone):
             self.input_lists.append(obj_)
             obj_.original_tagname_ = 'inputList'
         super(Network, self).buildChildren(child_, node, nodeName_, True)
-# end class Network
+
+    def exportHdf5(self, h5file, h5Group):
+        print("Exporting Network: "+str(self.id)+" as HDF5")
+        
+         
+        import numpy
+        
+        netGroup = h5file.createGroup(h5Group, self.id)
+        netGroup._f_setAttr("id", self.id)
+        netGroup._f_setAttr("notes", self.notes)
+       
+        for pop in self.populations:
+            pop.exportHdf5(h5file, netGroup)
+            
+        if len(self.synaptic_connections) > 0:
+            raise Exception("<synapticConnection> not yet supported in HDF5 export")
+        if len(self.explicit_inputs) > 0:
+            raise Exception("<explicitInput> not yet supported in HDF5 export")
+
+        for proj in self.projections:
+            proj.exportHdf5(h5file, netGroup)
+        
+
+    # end class Network
 
 
 class TransientPoissonFiringSynapse(Standalone):
@@ -10688,7 +10916,35 @@ class ChannelPopulation(Base):
             self.variable_parameters.append(obj_)
             obj_.original_tagname_ = 'variableParameter'
         super(ChannelPopulation, self).buildChildren(child_, node, nodeName_, True)
-# end class ChannelPopulation
+
+    def exportHdf5(self, h5file, h5Group):
+        print("Exporting Population: "+str(self.id)+" as HDF5")
+        
+         
+        import numpy
+        
+        popGroup = h5file.createGroup(h5Group, 'population_'+self.id)
+        popGroup._f_setAttr("id", self.id)
+        popGroup._f_setAttr("component", self.component)
+        
+        if len(self.instances)>0:
+
+            colCount = 4
+            a = numpy.ones([len(self.instances), colCount], numpy.float32)
+
+            count=0
+            for instance in self.instances:
+              a[count,0] = instance.id
+              a[count,1] = instance.location.x
+              a[count,2] = instance.location.y
+              a[count,3] = instance.location.z
+
+              count=count+1
+
+            h5file.createArray(popGroup, self.id, a, "Locations of cells in "+ self.id)
+        
+
+    # end class ChannelPopulation
 
 
 class Resistivity(ValueAcrossSegOrSegGroup):
@@ -15362,7 +15618,22 @@ class ContinuousConnectionInstance(ContinuousConnection):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(ContinuousConnectionInstance, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class ContinuousConnectionInstance
+
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+
+    def get_pre_cell_id(self):
+        
+        return self._get_cell_id(self.pre_cell_id)
+        
+    def get_post_cell_id(self):
+        
+        return self._get_cell_id(self.post_cell_id)
+        
+    # end class ContinuousConnectionInstance
 
 
 class ElectricalConnectionInstance(ElectricalConnection):
@@ -15427,7 +15698,22 @@ class ElectricalConnectionInstance(ElectricalConnection):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(ElectricalConnectionInstance, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class ElectricalConnectionInstance
+
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+
+    def get_pre_cell_id(self):
+        
+        return self._get_cell_id(self.pre_cell_id)
+        
+    def get_post_cell_id(self):
+        
+        return self._get_cell_id(self.post_cell_id)
+        
+    # end class ElectricalConnectionInstance
 
 
 class ConcentrationModel_D(DecayingPoolConcentrationModel):
