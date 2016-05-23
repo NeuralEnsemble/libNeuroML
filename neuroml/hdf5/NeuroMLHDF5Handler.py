@@ -26,15 +26,10 @@ class NeuroMLHDF5Handler():
   currentComponent = ""
   totalInstances = 0
   
-  currentProjectionName = ""
-  currentProjectionSource = ""
-  currentProjectionTarget = ""
-  
-  isSynapseTypeElement = 0
-  
-  globalSynapseProps = {}
-  
-  latestSynapseType = ""
+  currentProjectionId = ""
+  currentProjectionPrePop = ""
+  currentProjectionPostPop = ""
+  currentSynapse = ""
     
     
     
@@ -95,15 +90,14 @@ class NeuroMLHDF5Handler():
                                             float(d[i,3]))       \
             
       
-    elif self.currentProjectionName!="":
-        self.log.debug("Using data for proj: "+ self.currentProjectionName)
+    elif self.currentProjectionId!="":
+        self.log.debug("Using data for proj: "+ self.currentProjectionId)
         self.log.debug("Size is: "+str(d.shape[0])+" rows of: "+ str(d.shape[1])+ " entries")
 
-        self.netHandler.handleProjection(self.currentProjectionName,
-                                         self.currentProjectionSource,
-                                         self.currentProjectionTarget,
-                                         self.globalSynapseProps,
-                                         d.shape[0])
+        self.netHandler.handleProjection(self.currentProjectionId,
+                                         self.currentProjectionPrePop,
+                                         self.currentProjectionPostPop,
+                                         self.currentSynapse)
         
 
         indexId = -1
@@ -145,9 +139,6 @@ class NeuroMLHDF5Handler():
             elif val == 'post_fraction_along' or val[0] == 'post_fraction_along':
                 indexPostFractAlong = int(attrName[len('column_'):])
             
-            for synType in self.globalSynapseProps.keys():
-                if str(val).count(synType) >0:
-                    extraParamIndices[str(val)] = int(attrName[len('column_'):])
                 
         
         self.log.debug("Cols: Id: %d precell: %d, postcell: %d, pre fract: %d, post fract: %d" % (indexId, indexPreCellId, indexPostCellId, indexPreFractAlong, indexPostFractAlong))
@@ -158,10 +149,11 @@ class NeuroMLHDF5Handler():
         
         for i in range(0, d.shape[0]):
             row = d[i,:]
+            '''
             localSynapseProps = {}
             synTypes = self.globalSynapseProps.keys()
             for synType in synTypes:
-                localSynapseProps[synType] = self.globalSynapseProps[synType].copy()
+                localSynapseProps[synType] = self.globalSynapseProps[synType].copy()'''
             
             id =  int(row[indexId])
             
@@ -200,28 +192,21 @@ class NeuroMLHDF5Handler():
             
             
             self.log.debug("Connection %d from %f to %f" % (id, preCellId, postCellId))
-        
-            for synType in localSynapseProps.keys():
-              
-                synProps = localSynapseProps[synType]
-                
-                self.netHandler.handleConnection(self.currentProjectionName, \
-                                                id, \
-                                                self.currentProjectionSource, \
-                                                self.currentProjectionTarget, \
-                                                synType, \
-                                                preCellId, \
-                                                postCellId, \
-                                                preSegId, \
-                                                preFractAlong, \
-                                                postSegId, \
-                                                postFractAlong,
-                                                synProps.internalDelay, \
-                                                synProps.preDelay, \
-                                                synProps.postDelay, \
-                                                synProps.propDelay, \
-                                                synProps.weight, \
-                                                synProps.threshold)
+
+
+            self.netHandler.handleConnection(self.currentProjectionId, \
+                                            id, \
+                                            self.currentProjectionPrePop, \
+                                            self.currentProjectionPostPop, \
+                                            self.currentSynapse, \
+                                            preCellId, \
+                                            postCellId, \
+                                            preSegId, \
+                                            preFractAlong, \
+                                            postSegId, \
+                                            postFractAlong,
+                                            delay=0,
+                                            weight=1)
     
     
   def startGroup(self, g):
@@ -260,12 +245,13 @@ class NeuroMLHDF5Handler():
         
     if g._v_name.count('projection_')>=1:
       
-        self.currentProjectionName = g._v_attrs.id[0]
-        self.currentProjectionSource = g._v_attrs.source[0]
-        self.currentProjectionTarget = g._v_attrs.target[0]
-        self.globalSynapseProps = {}
+        self.currentProjectionId = g._v_attrs.id
+        self.currentProjectionPrePop = g._v_attrs.presynapticPopulation
+        self.currentProjectionPostPop = g._v_attrs.postsynapticPopulation
+        self.currentSynapse = g._v_attrs.synapse
           
-        self.log.debug("------    Found a projection: "+ self.currentProjectionName+ ", from "+ self.currentProjectionSource+" to "+ self.currentProjectionTarget)
+        self.log.debug("------    Found a projection: "+ self.currentProjectionId+ ", from "+ self.currentProjectionPrePop
+        +" to "+ self.currentProjectionPostPop+" through "+self.currentSynapse)
     
     
     
@@ -278,10 +264,11 @@ class NeuroMLHDF5Handler():
         self.currentComponent = ""
     
     if g._v_name.count('projection_')>=1:
-        self.netHandler.finaliseProjection(self.currentProjectionName, self.currentProjectionSource, self.currentProjectionTarget)
-        self.currentProjectionName = ""
-        self.currentProjectionSource = ""
-        self.currentProjectionTarget = ""
+        self.netHandler.finaliseProjection(self.currentProjectionId, self.currentProjectionPrePop, self.currentProjectionPostPop)
+        self.currentProjectionId = ""
+        self.currentProjectionPrePop = ""
+        self.currentProjectionPostPop = ""
+        self.currentSynapse = ""
         
     if g._v_name.count('input_')>=1:
         # TODO: support inputs in HDF5

@@ -244,7 +244,7 @@ inserts['Projection'] = '''
         projGroup._f_setAttr("postsynapticPopulation", self.postsynaptic_population)
         projGroup._f_setAttr("synapse", self.synapse)
         
-        cols = 3
+        cols = 7
         
         #TODO: optimise ...for conn in self.connections:
         #    if
@@ -255,13 +255,21 @@ inserts['Projection'] = '''
         for connection in self.connections:
           a[count,0] = connection.id
           a[count,1] = connection.get_pre_cell_id()
-          a[count,2] = connection.get_post_cell_id()          
+          a[count,2] = connection.get_post_cell_id()  
+          a[count,3] = connection.pre_segment_id  
+          a[count,4] = connection.post_segment_id  
+          a[count,5] = connection.pre_fraction_along 
+          a[count,6] = connection.post_fraction_along          
           count=count+1
         
         array = h5file.createArray(projGroup, self.id, a, "Connections of cells in "+ self.id)
         array._f_setAttr("column_0", "id")
-        array._f_setAttr("column_1", "preCellId")
-        array._f_setAttr("column_2", "postCellId")
+        array._f_setAttr("column_1", "pre_cell_id")
+        array._f_setAttr("column_2", "post_cell_id")
+        array._f_setAttr("column_3", "pre_segment_id")
+        array._f_setAttr("column_4", "post_segment_id")
+        array._f_setAttr("column_5", "pre_fraction_along")
+        array._f_setAttr("column_6", "post_fraction_along")
         
         
 '''

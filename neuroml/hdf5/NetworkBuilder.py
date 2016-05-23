@@ -25,6 +25,7 @@ class NetworkBuilder(NetworkHandler):
     log = logging.getLogger("NetworkBuilder")
     
     populations = {}
+    projections = {}
     
     
     def get_nml_doc(self):
@@ -81,43 +82,41 @@ class NetworkBuilder(NetworkHandler):
     #
     #  Overridden from NetworkHandler
     #
-    def handleProjection(self, projName, source, target, synapseTypes, size=-1):
+    def handleProjection(self, id, prePop, postPop, synapse):
 
-        proj = self.nmlNet.addProjection(projName, source, target, size)
+        proj = neuroml.Projection(id=id, presynaptic_population=prePop, postsynaptic_population=postPop, synapse=synapse)
+        self.projections[id] = proj
+        self.network.projections.append(proj)
 
-        sizeInfo = "as yet unspecified size"
-        if (size>=0):
-            sizeInfo = " size: "+ str(size)+ " connections"
 
-        self.log.info("Projection: "+projName+" from "+source+" to "+target+" with syns: "+str(synapseTypes.keys())+" with "+sizeInfo)
+        self.log.info("Projection: "+id+" from "+prePop+" to "+postPop+" with syn: "+synapse)
      
         
     #
     #  Overridden from NetworkHandler
     #    
-    def handleConnection(self, projName, id, source, target, synapseType, \
+    def handleConnection(self, proj_id, conn_id, prePop, postPop, synapseType, \
                                                     preCellId, \
                                                     postCellId, \
                                                     preSegId = 0, \
                                                     preFract = 0.5, \
                                                     postSegId = 0, \
                                                     postFract = 0.5, \
-                                                    localInternalDelay = 0, \
-                                                    localPreDelay = 0, \
-                                                    localPostDelay = 0, \
-                                                    localPropDelay = 0, \
-                                                    localWeight = 1, \
-                                                    localThreshold = 0):
+                                                    delay=0,
+                                                    weight=1):
         
-        self.printConnectionInformation(projName, id, source, target, synapseType, preCellId, postCellId, localWeight)
+        self.printConnectionInformation(proj_id, conn_id, prePop, postPop, synapseType, preCellId, postCellId, weight)
           
-        
-        proj = self.nmlNet.getProjection(projName)
-        if proj == None:
-            proj = self.nmlNet.addProjection(projName, source, target)
-            
-            
-        # NOTE: segment ID, fractalong, synapse props not supported yet in NetworkMLFile!!
-        proj.addConnection(preCellId, postSegId)
+
+
+        connection = neuroml.Connection(id=conn_id, \
+                                pre_cell_id="../%s/%i/%s"%(prePop,preCellId,self.populations[prePop].component), \
+                                pre_segment_id=preSegId, \
+                                pre_fraction_along=preFract,
+                                post_cell_id="../%s/%i/%s"%(postPop,postCellId,self.populations[postPop].component), \
+                                post_segment_id=postSegId,
+                                post_fraction_along=postFract)
+
+        self.projections[proj_id].connections.append(connection)
         
         

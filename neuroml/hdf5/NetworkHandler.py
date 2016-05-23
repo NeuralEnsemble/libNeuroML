@@ -38,9 +38,9 @@ class NetworkHandler:
     #
     #  Internal info method, can be reused in overriding classes for debugging
     #        
-    def printConnectionInformation(self,  projName, id, source, target, synapseType, preCellId, postCellId, weight):
-        self.log.debug("Connection "+str(id)+" of: "+projName+": cell "+str(preCellId)+" in "+source \
-                              +" -> cell "+str(postCellId)+" in "+target+", syn: "+ str(synapseType)+", weight: "+str(weight))
+    def printConnectionInformation(self,  projName, id, prePop, postPop, synapseType, preCellId, postCellId, weight):
+        self.log.debug("Connection "+str(id)+" of: "+projName+": cell "+str(preCellId)+" in "+prePop \
+                              +" -> cell "+str(postCellId)+" in "+postPop+", syn: "+ str(synapseType)+", weight: "+str(weight))
         
          
     #
@@ -91,42 +91,35 @@ class NetworkHandler:
     #
     #  Should be overridden to create population array
     #
-    def handleProjection(self, projName, source, target, synapseTypes, size=-1):
+    def handleProjection(self, projName, prePop, postPop, synapse):
 
-        sizeInfo = " as yet unspecified size"
-        if (size>=0):
-            sizeInfo = " size: "+ str(size)+ " connections"
 
-        self.log.info("Projection: "+projName+" from "+source+" to "+target+" with syns: "+str(synapseTypes)+" with "+sizeInfo)
+        self.log.info("Projection: "+projName+" from "+prePop+" to "+postPop+" with syn: "+synapse)
 
 
     #
     #  Should be overridden to handle network connection
     #  
-    def handleConnection(self, projName, id, source, target, synapseType, \
+    def handleConnection(self, projName, id, prePop, postPop, synapseType, \
                                                     preCellId, \
                                                     postCellId, \
                                                     preSegId = 0, \
                                                     preFract = 0.5, \
                                                     postSegId = 0, \
                                                     postFract = 0.5, \
-                                                    localInternalDelay = 0, \
-                                                    localPreDelay = 0, \
-                                                    localPostDelay = 0, \
-                                                    localPropDelay = 0, \
-                                                    localWeight = 1, \
-                                                    localThreshold = 0):
+                                                    delay = 0, \
+                                                    weight = 1):
         
-        self.printConnectionInformation(projName, id, source, target, synapseType, preCellId, postCellId, localWeight)
+        self.printConnectionInformation(projName, id, prePop, postPop, synapseType, preCellId, postCellId, weight)
         if preSegId != 0 or postSegId!=0 or preFract != 0.5 or postFract != 0.5:
             self.log.debug("Src cell: %d, seg: %f, fract: %f -> Tgt cell %d, seg: %f, fract: %f" % (preCellId,preSegId,preFract,postCellId,postSegId,postFract))
         
     #
     #  Should be overridden to handle end of network connection
     #  
-    def finaliseProjection(self, projName, source, target):
+    def finaliseProjection(self, projName, prePop, postPop):
    
-        self.log.info("Projection: "+projName+" from "+source+" to "+target+" completed")
+        self.log.info("Projection: "+projName+" from "+prePop+" to "+postPop+" completed")
         
         
     #
