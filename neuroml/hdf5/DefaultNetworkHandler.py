@@ -1,8 +1,8 @@
 #
 #
-#   A class to handle events from the NeuroMLHDF5Handler, etc.
+#   A class to handle events from the NeuroMLHDF5Parser, etc.
 #   This should be overridden by simulator specific implementations.
-#   File parsing classes, e.g. NeuroMLHDF5Handler should call the appropriate
+#   Parsing classes, e.g. NetworkBuilder should call the appropriate
 #   function here when a cell location, connection, etc. is encountered.
 #
 #   Use of this handler class should mean that the network setup is 
@@ -13,7 +13,7 @@
 #   Author: Padraig Gleeson
 #
 #   This file has been developed as part of the neuroConstruct project
-#   This work has been funded by the Medical Research Council
+#   This work has been funded by the Medical Research Council & Wellcome Trust
 #
 #
 
@@ -21,9 +21,9 @@
 import logging
 
 
-class NetworkHandler:
+class DefaultNetworkHandler:
         
-    log = logging.getLogger("NetworkHandler")
+    log = logging.getLogger("DefaultNetworkHandler")
     
     isParallel = 0
 

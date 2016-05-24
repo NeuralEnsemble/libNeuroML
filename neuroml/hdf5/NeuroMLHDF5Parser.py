@@ -1,13 +1,16 @@
 #
 #
-#   A class to handle HDF5 based NeuroML files.
-#   Calls the appropriate methods in NetworkHandler when cell locations,
-#   network connections are found. The NetworkHandler can either print 
-#   information, or if it's a class overriding NetworkHandler can create
+#   A class to parse HDF5 based NeuroML files.
+#   Calls the appropriate methods in DefaultNetworkHandler when cell locations,
+#   network connections are found. The DefaultNetworkHandler can either print 
+#   information, or if it's a class overriding DefaultNetworkHandler can create
 #   the appropriate network in a simulator dependent fashion
 #
 #
 #   Author: Padraig Gleeson
+#
+#   This file has been developed as part of the neuroConstruct project
+#   This work has been funded by the Medical Research Council & Wellcome Trust
 #
 #
   
@@ -16,11 +19,9 @@ import logging
 
 import tables   # pytables for HDF5 support
 
-class NeuroMLHDF5Handler():
+class NeuroMLHDF5Parser():
     
-  log = logging.getLogger("NeuroMLHDF5Handler")
-  
-  myNodeId = -1    # If myNodeId <0, ignore node_id attribute and handle all cells, otherwise handle only cells with myNodeId = node_id
+  log = logging.getLogger("NeuroMLHDF5Parser")
   
   currPopulation = ""
   currentComponent = ""
@@ -30,15 +31,11 @@ class NeuroMLHDF5Handler():
   currentProjectionPrePop = ""
   currentProjectionPostPop = ""
   currentSynapse = ""
-    
-    
-    
-  def setNodeId(self, node_id):
-    self.myNodeId = node_id
        
     
   def __init__ (self, netHandler): 
     self.netHandler = netHandler
+    
     
   def parse(self, filename):
     h5file=tables.openFile(filename)
@@ -81,7 +78,7 @@ class NeuroMLHDF5Handler():
         self.log.debug("Size is: "+str(d.shape[0])+" rows of: "+ str(d.shape[1])+ " entries")
         
         for i in range(0, d.shape[0]):
-            if self.myNodeId == -1 or (d.shape[1] > 4 and self.myNodeId == d[i,4]):
+            
                 self.netHandler.handleLocation( int(d[i,0]),                      \
                                             self.currPopulation,     \
                                             self.currentComponent,    \
@@ -286,13 +283,13 @@ if __name__ == '__main__':
 
     logging.basicConfig(level=logging.DEBUG, format="%(name)-19s %(levelname)-5s - %(message)s")
 
-    from neuroml.hdf5.NetworkHandler import NetworkHandler
+    from neuroml.hdf5.DefaultNetworkHandler import DefaultNetworkHandler
 
-    nmlHandler = NetworkHandler()   
+    nmlHandler = DefaultNetworkHandler()   
 
-    curHandler = NeuroMLHDF5Handler(nmlHandler) # The HDF5 handler knows of the structure of NetworkML and calls appropriate functions in NetworkHandler
+    currParser = NeuroMLHDF5Parser(nmlHandler) # The HDF5 handler knows of the structure of NetworkML and calls appropriate functions in NetworkHandler
 
-    curHandler.parse(file_name)
+    currParser.parse(file_name)
     
     print('-------------------------------\n\n')
     
@@ -300,9 +297,9 @@ if __name__ == '__main__':
 
     nmlHandler = NetworkBuilder()   
 
-    curHandler = NeuroMLHDF5Handler(nmlHandler) 
+    currParser = NeuroMLHDF5Parser(nmlHandler) 
     
-    curHandler.parse(file_name)
+    currParser.parse(file_name)
     
     nml_doc = nmlHandler.get_nml_doc()
 

@@ -1,11 +1,12 @@
 #
 #
-#   A class which stores the contents of a NeuroML file
+#   A class which stores the contents of a NeuroML file in libNeuroML classes
+#   Used mainly to convert HDF5 representations of NeuroML to internal libNeuroML format
 #
 #   Author: Padraig Gleeson
 #
 #   This file has been developed as part of the neuroConstruct project
-#   This work has been funded by the Medical Research Council
+#   This work has been funded by the Medical Research Council & Wellcome Trust
 #
 #
 
@@ -15,12 +16,12 @@ import logging
 
 sys.path.append("../NeuroMLUtils")
 
-from neuroml.hdf5.NetworkHandler import NetworkHandler
+from neuroml.hdf5.DefaultNetworkHandler import DefaultNetworkHandler
 
 import neuroml
 
 
-class NetworkBuilder(NetworkHandler):
+class NetworkBuilder(DefaultNetworkHandler):
     
     log = logging.getLogger("NetworkBuilder")
     
