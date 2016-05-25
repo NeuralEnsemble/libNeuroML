@@ -31,6 +31,8 @@ class NeuroMLHDF5Parser():
   currentProjectionPrePop = ""
   currentProjectionPostPop = ""
   currentSynapse = ""
+  
+  currInputList = ""
        
     
   def __init__ (self, netHandler): 
@@ -55,17 +57,25 @@ class NeuroMLHDF5Parser():
     
     # Note this ensures groups are parsed before datasets. Important for synapse props
     
+    # Ensure populations parsed first!
     for node in g:
-        self.log.debug("Sub node: "+ str(node)+ ", class: "+ node._c_classId)
       
-        if node._c_classId == 'GROUP':
-          self.parseGroup(node)
+        if node._c_classId == 'GROUP' and node._v_name.count('population_')>=1:
+            self.log.debug("Sub node: "+ str(node)+ ", class: "+ node._c_classId)
+            self.parseGroup(node)
+          
+    # Non populations!
+    for node in g:
+      
+        if node._c_classId == 'GROUP' and node._v_name.count('population_')==0:
+            self.log.debug("Sub node (ng): "+ str(node)+ ", class: "+ node._c_classId)
+            self.parseGroup(node)
           
     for node in g:
         self.log.debug("Sub node: "+ str(node)+ ", class: "+ node._c_classId)
       
         if node._c_classId == 'ARRAY':
-          self.parseDataset(node)
+            self.parseDataset(node)
           
     self.endGroup(g)
     
@@ -204,6 +214,16 @@ class NeuroMLHDF5Parser():
                                             postFractAlong,
                                             delay=0,
                                             weight=1)
+                                            
+    if self.currInputList!="":
+        self.log.debug("Using data for input list: "+ self.currInputList)
+        self.log.debug("Size is: "+str(d.shape[0])+" rows of: "+ str(d.shape[1])+ " entries")
+        
+        for i in range(0, d.shape[0]):
+
+            self.netHandler.handleSingleInput(self.currInputList,
+                                        int(d[i,0]),         
+                                        float(d[i,1]))       
     
     
   def startGroup(self, g):
@@ -249,6 +269,26 @@ class NeuroMLHDF5Parser():
           
         self.log.debug("------    Found a projection: "+ self.currentProjectionId+ ", from "+ self.currentProjectionPrePop
         +" to "+ self.currentProjectionPostPop+" through "+self.currentSynapse)
+        
+    
+    if g._v_name.count('input_list_')>=1:
+        # TODO: a better check to see if the attribute is a str or numpy.ndarray
+        self.currInputList = g._v_attrs.id
+        component = g._v_attrs.component
+        population = g._v_attrs.population
+        
+        size = -1
+        # Peek ahead for size...
+        for node in g:
+            if node._c_classId == 'ARRAY' and node.name == self.currInputList:
+              size = node.shape[0]
+              
+        if size == -1:
+            size = g._v_attrs.size
+              
+        self.log.debug("Found an inputList: "+ self.currInputList+", component: "+component+", population: "+population+", size: "+ str(size))
+        
+        self.netHandler.handleInputList(self.currInputList, population, component, size)
     
     
     
@@ -267,9 +307,8 @@ class NeuroMLHDF5Parser():
         self.currentProjectionPostPop = ""
         self.currentSynapse = ""
         
-    if g._v_name.count('input_')>=1:
-        # TODO: support inputs in HDF5
-        self.log.debug("Not implemented yet!")
+    if g._v_name.count('input_list_')>=1:
+        self.currInputList =""
     
     
 

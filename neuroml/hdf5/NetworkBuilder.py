@@ -13,7 +13,6 @@
 import sys
 import logging
 
-
 sys.path.append("../NeuroMLUtils")
 
 from neuroml.hdf5.DefaultNetworkHandler import DefaultNetworkHandler
@@ -27,13 +26,14 @@ class NetworkBuilder(DefaultNetworkHandler):
     
     populations = {}
     projections = {}
+    input_lists = {}
     
     
     def get_nml_doc(self):
         return self.nml_doc
     
     #
-    #  Overridden from NetworkHandler
+    #  Overridden from DefaultNetworkHandler
     #    
     def handleDocumentStart(self, id, notes):
         self.nml_doc = neuroml.NeuroMLDocument(id=id)
@@ -41,7 +41,7 @@ class NetworkBuilder(DefaultNetworkHandler):
             self.nml_doc.notes = notes
     
     #
-    #  Overridden from NetworkHandler
+    #  Overridden from DefaultNetworkHandler
     #    
     def handleNetwork(self, network_id, notes):
         
@@ -51,7 +51,7 @@ class NetworkBuilder(DefaultNetworkHandler):
             self.network.notes = notes
    
     #
-    #  Overridden from NetworkHandler
+    #  Overridden from DefaultNetworkHandler
     #    
     def handlePopulation(self, population_id, component, size):
       
@@ -70,7 +70,7 @@ class NetworkBuilder(DefaultNetworkHandler):
         
   
     #
-    #  Overridden from NetworkHandler
+    #  Overridden from DefaultNetworkHandler
     #    
     def handleLocation(self, id, population_id, component, x, y, z):
         self.printLocationInformation(id, population_id, component, x, y, z)
@@ -81,7 +81,7 @@ class NetworkBuilder(DefaultNetworkHandler):
         self.populations[population_id].type = 'populationList'
           
     #
-    #  Overridden from NetworkHandler
+    #  Overridden from DefaultNetworkHandler
     #
     def handleProjection(self, id, prePop, postPop, synapse):
 
@@ -94,7 +94,7 @@ class NetworkBuilder(DefaultNetworkHandler):
      
         
     #
-    #  Overridden from NetworkHandler
+    #  Overridden from DefaultNetworkHandler
     #    
     def handleConnection(self, proj_id, conn_id, prePop, postPop, synapseType, \
                                                     preCellId, \
@@ -120,4 +120,31 @@ class NetworkBuilder(DefaultNetworkHandler):
 
         self.projections[proj_id].connections.append(connection)
         
+         
+    #
+    #  Overridden from DefaultNetworkHandler
+    # 
+    def handleInputList(self, inputListId, population_id, component, size):
+
+        input_list = neuroml.InputList(id=inputListId,
+                             component=component,
+                             populations=population_id)
+                             
+        self.input_lists[inputListId]=input_list
         
+        self.network.input_lists.append(input_list)
+        
+    #
+    #  Overridden from DefaultNetworkHandler
+    # 
+    def handleSingleInput(self, inputListId, id, cellId, segId = 0, fract = 0.5):
+
+        input_list = self.input_lists[inputListId]
+        input = neuroml.Input(id=id, 
+                  target="../%s/%i/%s"%(input_list.populations, cellId, self.populations[input_list.populations].component), 
+                  destination="synapses")  
+        if segId!=0:
+            input.segment_id="%s"%(segId)
+        if fract!=0.5:
+            input.fraction_along="%s"%(fract)
+        input_list.input.append(input)

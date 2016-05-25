@@ -10,13 +10,16 @@ from neuroml import IafCell
 from neuroml import Network
 from neuroml import ExpOneSynapse
 from neuroml import Population
-from neuroml import PulseGenerator
-from neuroml import ExplicitInput
+
+from neuroml import Input
+from neuroml import InputList
 from neuroml import Connection
 from neuroml import Projection
 from neuroml import Property
 from neuroml import Instance
 from neuroml import Location
+from neuroml import PoissonFiringSynapse
+
 import neuroml.writers as writers
 from random import random
 
@@ -50,6 +53,14 @@ syn0 = ExpOneSynapse(id="syn0",
                      tau_decay="3ms")
 
 nml_doc.exp_one_synapses.append(syn0)
+
+
+pfs = PoissonFiringSynapse(id='pfs',
+                                   average_rate='50Hz',
+                                   synapse=syn0.id, 
+                                   spike_target="./%s"%syn0.id)
+
+nml_doc.poisson_firing_synapses.append(pfs)
 
 net = Network(id="IafNet")
 
@@ -98,7 +109,15 @@ projection = Projection(id="Proj", presynaptic_population=from_pop, postsynaptic
 
 net.projections.append(projection)
 
+
+input_list = InputList(id='il',
+                     component=pfs.id,
+                     populations=from_pop)
+
+net.input_lists.append(input_list)
+
 for pre_index in range(0,cell_num):
+    
     for post_index in range(0,cell_num):
         if pre_index != post_index and random() <= prob_connection:
 
@@ -116,6 +135,13 @@ for pre_index in range(0,cell_num):
 
             projection.connections.append(connection)
             proj_count += 1
+            
+    input = Input(id=pre_index, 
+              target="../%s/%i/%s"%(from_pop, pre_index, pop.component), 
+              destination="synapses")  
+    input_list.input.append(input)
+        
+    
 
 nml_file = 'tmp/testh5.nml'
 writers.NeuroMLWriter.write(nml_doc, nml_file)

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Sun May 22 17:34:04 2016 by generateDS.py version 2.22b.
+# Generated Tue May 24 16:46:16 2016 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -5193,7 +5193,26 @@ class ExplicitInput(GeneratedsSuper):
             self.destination = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
-# end class ExplicitInput
+
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+
+    def get_target_cell_id(self):
+        
+        return self._get_cell_id(self.target)
+
+    def get_segment_id(self):
+        
+        return self.segment_id if self.segment_id else 0
+
+    def get_fraction_along(self):
+        
+        return self.fraction_along if self.fraction_along else 0.5
+        
+    # end class ExplicitInput
 
 
 class Input(GeneratedsSuper):
@@ -5332,7 +5351,26 @@ class Input(GeneratedsSuper):
             self.validate_ZeroToOne(self.fraction_along)    # validate type ZeroToOne
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
-# end class Input
+
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+
+    def get_target_cell_id(self):
+        
+        return self._get_cell_id(self.target)
+
+    def get_segment_id(self):
+        
+        return self.segment_id if self.segment_id else 0
+
+    def get_fraction_along(self):
+        
+        return self.fraction_along if self.fraction_along else 0.5
+        
+    # end class Input
 
 
 class BaseWithoutId(GeneratedsSuper):
@@ -5952,7 +5990,50 @@ class InputList(Base):
             self.input.append(obj_)
             obj_.original_tagname_ = 'input'
         super(InputList, self).buildChildren(child_, node, nodeName_, True)
-# end class InputList
+
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+
+    def get_target_cell_id(self):
+        
+        return self._get_cell_id(self.target)
+
+    def get_segment_id(self):
+        
+        return self.segment_id if self.segment_id else 0
+
+    def get_fraction_along(self):
+        
+        return self.fraction_along if self.fraction_along else 0.5
+        
+    
+    def exportHdf5(self, h5file, h5Group):
+        print("Exporting InputList: "+str(self.id)+" as HDF5")
+        
+         
+        import numpy
+        
+        ilGroup = h5file.createGroup(h5Group, 'input_list_'+self.id)
+        ilGroup._f_setAttr("id", self.id)
+        ilGroup._f_setAttr("component", self.component)
+        ilGroup._f_setAttr("population", self.populations)
+        
+        colCount = 2
+        a = numpy.ones([len(self.input), colCount], numpy.float32)
+        
+        count=0
+        for input in self.input:
+            a[count,0] = input.id
+            a[count,1] = input.get_target_cell_id()
+            count+=1
+            
+        h5file.createArray(ilGroup, self.id, a, "Locations of inputs in "+ self.id)
+        
+
+    # end class InputList
 
 
 class ContinuousConnection(BaseNonNegativeIntegerId):
@@ -7938,6 +8019,9 @@ class Network(Standalone):
 
         for proj in self.projections:
             proj.exportHdf5(h5file, netGroup)
+            
+        for il in self.input_lists:
+            il.exportHdf5(h5file, netGroup)
         
 
     # end class Network
@@ -8518,7 +8602,26 @@ class TimedSynapticInput(Standalone):
             self.spikes.append(obj_)
             obj_.original_tagname_ = 'spike'
         super(TimedSynapticInput, self).buildChildren(child_, node, nodeName_, True)
-# end class TimedSynapticInput
+
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+
+    def get_target_cell_id(self):
+        
+        return self._get_cell_id(self.target)
+
+    def get_segment_id(self):
+        
+        return self.segment_id if self.segment_id else 0
+
+    def get_fraction_along(self):
+        
+        return self.fraction_along if self.fraction_along else 0.5
+        
+    # end class TimedSynapticInput
 
 
 class SpikeArray(Standalone):
@@ -8906,7 +9009,26 @@ class CompoundInputDL(Standalone):
             self.ramp_generator_dls.append(obj_)
             obj_.original_tagname_ = 'rampGeneratorDL'
         super(CompoundInputDL, self).buildChildren(child_, node, nodeName_, True)
-# end class CompoundInputDL
+
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+
+    def get_target_cell_id(self):
+        
+        return self._get_cell_id(self.target)
+
+    def get_segment_id(self):
+        
+        return self.segment_id if self.segment_id else 0
+
+    def get_fraction_along(self):
+        
+        return self.fraction_along if self.fraction_along else 0.5
+        
+    # end class CompoundInputDL
 
 
 class CompoundInput(Standalone):
@@ -9011,7 +9133,26 @@ class CompoundInput(Standalone):
             self.ramp_generators.append(obj_)
             obj_.original_tagname_ = 'rampGenerator'
         super(CompoundInput, self).buildChildren(child_, node, nodeName_, True)
-# end class CompoundInput
+
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+
+    def get_target_cell_id(self):
+        
+        return self._get_cell_id(self.target)
+
+    def get_segment_id(self):
+        
+        return self.segment_id if self.segment_id else 0
+
+    def get_fraction_along(self):
+        
+        return self.fraction_along if self.fraction_along else 0.5
+        
+    # end class CompoundInput
 
 
 class RampGeneratorDL(Standalone):

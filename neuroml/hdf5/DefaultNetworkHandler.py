@@ -46,9 +46,9 @@ class DefaultNetworkHandler:
     #
     #  Internal info method, can be reused in overriding classes for debugging
     #        
-    def printInputInformation(self, inputName, population_id, inputProps, size=-1):
+    def printInputInformation(self, inputName, population_id, component, size=-1):
         sizeInfo = " size: "+ str(size)+ " cells"
-        self.log.debug("Input Source: "+inputName+", on population: "+population_id+sizeInfo+" with props: "+ str(inputProps))
+        self.log.debug("Input Source: "+inputName+", on population: "+population_id+sizeInfo+" with component: "+ component)
         
     
 
@@ -58,7 +58,8 @@ class DefaultNetworkHandler:
     def handleDocumentStart(self, id, notes):
             
         self.log.info("Document: "+id)
-        self.log.info("  Notes: "+notes)
+        if notes:
+            self.log.info("  Notes: "+notes)
 
     #
     #  Should be overridden to create network
@@ -66,7 +67,8 @@ class DefaultNetworkHandler:
     def handleNetwork(self, network_id, notes):
             
         self.log.info("Network: "+network_id)
-        self.log.info("  Notes: "+notes)
+        if notes:
+            self.log.info("  Notes: "+notes)
 
     #
     #  Should be overridden to create population array
@@ -125,8 +127,8 @@ class DefaultNetworkHandler:
     #
     #  Should be overridden to create input source array
     #  
-    def handleInputSource(self, inputName, population_id, inputProps=[], size=-1):
-        self.printInputInformation(inputName, population_id, inputProps, size)
+    def handleInputList(self, inputListId, population_id, component, size):
+        self.printInputInformation(inputListId, population_id, component, size)
         
         if size<0:
             self.log.error("Error! Need a size attribute in sites element to create spike source!")
@@ -136,8 +138,9 @@ class DefaultNetworkHandler:
     #
     #  Should be overridden to to connect each input to the target cell
     #  
-    def handleSingleInput(self, inputName, cellId, segId = 0, fract = 0.5):
-        self.log.debug("Input : %s, cellId: %i, seg: %i, fract: %f" % (inputName,cellId,segId,fract))
+    def handleSingleInput(self, inputListId, id, cellId, segId = 0, fract = 0.5):
+        
+        self.log.debug("Input: %s[%s], cellId: %i, seg: %i, fract: %f" % (inputListId,id,cellId,segId,fract))
         
         
     #

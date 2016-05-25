@@ -177,6 +177,35 @@ connection_cell_ids = MethodSpec(name='connection_cell_ids',
     )
   
 METHOD_SPECS+=(connection_cell_ids,)
+
+
+input_cell_ids = MethodSpec(name='input_cell_ids',
+    source='''\
+
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+
+    def get_target_cell_id(self):
+        
+        return self._get_cell_id(self.target)
+
+    def get_segment_id(self):
+        
+        return self.segment_id if self.segment_id else 0
+
+    def get_fraction_along(self):
+        
+        return self.fraction_along if self.fraction_along else 0.5
+        
+    ''',
+    class_names=("Input")
+    )
+  
+METHOD_SPECS+=(input_cell_ids,)
+
     
 inserts  = {}
 
@@ -198,6 +227,9 @@ inserts['Network'] = '''
 
         for proj in self.projections:
             proj.exportHdf5(h5file, netGroup)
+            
+        for il in self.input_lists:
+            il.exportHdf5(h5file, netGroup)
         
 '''
 
@@ -274,6 +306,28 @@ inserts['Projection'] = '''
         
 '''
 
+
+inserts['InputList'] = '''
+         
+        import numpy
+        
+        ilGroup = h5file.createGroup(h5Group, 'input_list_'+self.id)
+        ilGroup._f_setAttr("id", self.id)
+        ilGroup._f_setAttr("component", self.component)
+        ilGroup._f_setAttr("population", self.populations)
+        
+        colCount = 2
+        a = numpy.ones([len(self.input), colCount], numpy.float32)
+        
+        count=0
+        for input in self.input:
+            a[count,0] = input.id
+            a[count,1] = input.get_target_cell_id()
+            count+=1
+            
+        h5file.createArray(ilGroup, self.id, a, "Locations of inputs in "+ self.id)
+        
+'''
 
 
              

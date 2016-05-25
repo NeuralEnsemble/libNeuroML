@@ -50,7 +50,9 @@ class NeuroMLXMLParser():
         for population in network.populations:
             
             if len(population.instances)>0:
-                self.netHandler.handlePopulation(population.id, population.component, len(population.instances))
+                self.netHandler.handlePopulation(population.id, 
+                                                 population.component, 
+                                                 len(population.instances))
                 for inst in population.instances:
                     
                     loc = inst.location
@@ -59,7 +61,46 @@ class NeuroMLXMLParser():
                                             population.component,    \
                                             loc.x,       \
                                             loc.y,       \
-                                            loc.z)       \
+                                            loc.z)       
+            else:
+                self.netHandler.handlePopulation(population.id, population.component, population.size)
+                                                
+        for projection in network.projections:
+            
+            self.netHandler.handleProjection(projection.id,
+                                            projection.presynaptic_population,
+                                            projection.postsynaptic_population,
+                                            projection.synapse)
+                                            
+            for connection in projection.connections:
+                
+                self.netHandler.handleConnection(projection.id, \
+                                            connection.id, \
+                                            projection.presynaptic_population,
+                                            projection.postsynaptic_population,
+                                            projection.synapse, \
+                                            preCellId=connection.get_pre_cell_id(), \
+                                            postCellId=connection.get_post_cell_id(), \
+                                            preSegId=int(connection.pre_segment_id), \
+                                            postSegId=int(connection.post_segment_id), \
+                                            preFract=float(connection.pre_fraction_along), \
+                                            postFract=float(connection.post_fraction_along), \
+                                            delay=0,
+                                            weight=1)
+                                            
+        for input_list in network.input_lists:                                   
+                
+            self.netHandler.handleInputList(input_list.id, input_list.populations, input_list.component, len(input_list.input))
+            
+            for input in input_list.input:
+                
+                self.netHandler.handleSingleInput(input_list.id, 
+                                                  input.id, 
+                                                  cellId = input.get_target_cell_id(), 
+                                                  segId = input.get_segment_id(), 
+                                                  fract = input.get_fraction_along())
+                                                  
+                                                  
     
         
         
