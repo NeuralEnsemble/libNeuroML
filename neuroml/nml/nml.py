@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue May 24 16:46:16 2016 by generateDS.py version 2.22b.
+# Generated Wed Jun  8 14:20:44 2016 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -2680,7 +2680,7 @@ class Point3DWithDiam(GeneratedsSuper):
         MemberSpec_('x', 'xs:double', 0),
         MemberSpec_('y', 'xs:double', 0),
         MemberSpec_('z', 'xs:double', 0),
-        MemberSpec_('diameter', 'xs:double', 0),
+        MemberSpec_('diameter', 'DoubleGreaterThanZero', 0),
     ]
     subclass = None
     superclass = None
@@ -2689,7 +2689,7 @@ class Point3DWithDiam(GeneratedsSuper):
         self.x = _cast(float, x)
         self.y = _cast(float, y)
         self.z = _cast(float, z)
-        self.diameter = _cast(float, diameter)
+        self.diameter = _cast(None, diameter)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -2701,6 +2701,11 @@ class Point3DWithDiam(GeneratedsSuper):
         else:
             return Point3DWithDiam(*args_, **kwargs_)
     factory = staticmethod(factory)
+    def validate_DoubleGreaterThanZero(self, value):
+        # Validate type DoubleGreaterThanZero, a restriction on xs:double.
+        if value is not None and Validate_simpletypes_:
+            if value <= 0:
+                warnings_.warn('Value "%(value)s" does not match xsd minExclusive restriction on DoubleGreaterThanZero' % {"value" : value} )
     def hasContent_(self):
         if (
 
@@ -2737,7 +2742,7 @@ class Point3DWithDiam(GeneratedsSuper):
             outfile.write(' z="%s"' % self.gds_format_double(self.z, input_name='z'))
         if self.diameter is not None and 'diameter' not in already_processed:
             already_processed.add('diameter')
-            outfile.write(' diameter="%s"' % self.gds_format_double(self.diameter, input_name='diameter'))
+            outfile.write(' diameter=%s' % (quote_attrib(self.diameter), ))
     def exportChildren(self, outfile, level, namespace_='', name_='Point3DWithDiam', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node):
@@ -2776,6 +2781,7 @@ class Point3DWithDiam(GeneratedsSuper):
                 self.diameter = float(value)
             except ValueError as exp:
                 raise ValueError('Bad float/double attribute (diameter): %s' % exp)
+            self.validate_DoubleGreaterThanZero(self.diameter)    # validate type DoubleGreaterThanZero
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
 # end class Point3DWithDiam
@@ -12697,21 +12703,24 @@ class GateFractionalSubgate(Base):
 
 class GateFractional(Base):
     member_data_items_ = [
-        MemberSpec_('fractionalConductance', 'Nml2Quantity_none', 0),
+        MemberSpec_('instances', 'PositiveInteger', 0),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0),
         MemberSpec_('q10_settings', 'Q10Settings', 0),
-        MemberSpec_('sub_gate', 'GateFractionalSubgate', 0),
+        MemberSpec_('sub_gates', 'GateFractionalSubgate', 1),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, fractional_conductance=None, notes=None, q10_settings=None, sub_gate=None):
+    def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, sub_gates=None):
         self.original_tagname_ = None
         super(GateFractional, self).__init__(neuro_lex_id, id, )
-        self.fractional_conductance = _cast(None, fractional_conductance)
+        self.instances = _cast(None, instances)
         self.notes = notes
         self.validate_Notes(self.notes)
         self.q10_settings = q10_settings
-        self.sub_gate = sub_gate
+        if sub_gates is None:
+            self.sub_gates = []
+        else:
+            self.sub_gates = sub_gates
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -12727,18 +12736,15 @@ class GateFractional(Base):
         # Validate type Notes, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             pass
-    def validate_Nml2Quantity_none(self, value):
-        # Validate type Nml2Quantity_none, a restriction on xs:string.
+    def validate_PositiveInteger(self, value):
+        # Validate type PositiveInteger, a restriction on xs:positiveInteger.
         if value is not None and Validate_simpletypes_:
-            if not self.gds_validate_simple_patterns(
-                    self.validate_Nml2Quantity_none_patterns_, value):
-                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_none_patterns_, ))
-    validate_Nml2Quantity_none_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?$']]
+            pass
     def hasContent_(self):
         if (
             self.notes is not None or
             self.q10_settings is not None or
-            self.sub_gate is not None or
+            self.sub_gates or
             super(GateFractional, self).hasContent_()
         ):
             return True
@@ -12764,9 +12770,9 @@ class GateFractional(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='GateFractional'):
         super(GateFractional, self).exportAttributes(outfile, level, already_processed, namespace_, name_='GateFractional')
-        if self.fractional_conductance is not None and 'fractional_conductance' not in already_processed:
-            already_processed.add('fractional_conductance')
-            outfile.write(' fractionalConductance=%s' % (quote_attrib(self.fractional_conductance), ))
+        if self.instances is not None and 'instances' not in already_processed:
+            already_processed.add('instances')
+            outfile.write(' instances=%s' % (quote_attrib(self.instances), ))
     def exportChildren(self, outfile, level, namespace_='', name_='GateFractional', fromsubclass_=False, pretty_print=True):
         super(GateFractional, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -12778,8 +12784,8 @@ class GateFractional(Base):
             outfile.write('<%snotes>%s</%snotes>%s' % (namespace_, self.gds_encode(self.gds_format_string(quote_xml(self.notes), input_name='notes')), namespace_, eol_))
         if self.q10_settings is not None:
             self.q10_settings.export(outfile, level, namespace_, name_='q10Settings', pretty_print=pretty_print)
-        if self.sub_gate is not None:
-            self.sub_gate.export(outfile, level, namespace_, name_='subGate', pretty_print=pretty_print)
+        for subGate_ in self.sub_gates:
+            subGate_.export(outfile, level, namespace_, name_='subGate', pretty_print=pretty_print)
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -12788,11 +12794,16 @@ class GateFractional(Base):
             self.buildChildren(child, node, nodeName_)
         return self
     def buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_('fractionalConductance', node)
-        if value is not None and 'fractionalConductance' not in already_processed:
-            already_processed.add('fractionalConductance')
-            self.fractional_conductance = value
-            self.validate_Nml2Quantity_none(self.fractional_conductance)    # validate type Nml2Quantity_none
+        value = find_attr_value_('instances', node)
+        if value is not None and 'instances' not in already_processed:
+            already_processed.add('instances')
+            try:
+                self.instances = int(value)
+            except ValueError as exp:
+                raise_parse_error(node, 'Bad integer attribute: %s' % exp)
+            if self.instances <= 0:
+                raise_parse_error(node, 'Invalid PositiveInteger')
+            self.validate_PositiveInteger(self.instances)    # validate type PositiveInteger
         super(GateFractional, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'notes':
@@ -12809,7 +12820,7 @@ class GateFractional(Base):
         elif nodeName_ == 'subGate':
             obj_ = GateFractionalSubgate.factory()
             obj_.build(child_)
-            self.sub_gate = obj_
+            self.sub_gates.append(obj_)
             obj_.original_tagname_ = 'subGate'
         super(GateFractional, self).buildChildren(child_, node, nodeName_, True)
 # end class GateFractional
@@ -13628,6 +13639,9 @@ class GateHHRates(Base):
 
 
 class GateHHUndetermined(Base):
+    """Note all sub elements for gateHHrates, gateHHratesTau,
+    gateFractional etc. allowed here. Which are valid should be
+    constrained by what type is set"""
     member_data_items_ = [
         MemberSpec_('instances', 'PositiveInteger', 0),
         MemberSpec_('type', 'gateTypes', 0),
@@ -13637,10 +13651,11 @@ class GateHHUndetermined(Base):
         MemberSpec_('reverse_rate', 'HHRate', 0),
         MemberSpec_('time_course', 'HHTime', 0),
         MemberSpec_('steady_state', 'HHVariable', 0),
+        MemberSpec_('sub_gates', 'GateFractionalSubgate', 1),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, instances=None, type=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None, steady_state=None):
+    def __init__(self, neuro_lex_id=None, id=None, instances=None, type=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None, steady_state=None, sub_gates=None):
         self.original_tagname_ = None
         super(GateHHUndetermined, self).__init__(neuro_lex_id, id, )
         self.instances = _cast(None, instances)
@@ -13652,6 +13667,10 @@ class GateHHUndetermined(Base):
         self.reverse_rate = reverse_rate
         self.time_course = time_course
         self.steady_state = steady_state
+        if sub_gates is None:
+            self.sub_gates = []
+        else:
+            self.sub_gates = sub_gates
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -13691,6 +13710,7 @@ class GateHHUndetermined(Base):
             self.reverse_rate is not None or
             self.time_course is not None or
             self.steady_state is not None or
+            self.sub_gates or
             super(GateHHUndetermined, self).hasContent_()
         ):
             return True
@@ -13741,6 +13761,8 @@ class GateHHUndetermined(Base):
             self.time_course.export(outfile, level, namespace_, name_='timeCourse', pretty_print=pretty_print)
         if self.steady_state is not None:
             self.steady_state.export(outfile, level, namespace_, name_='steadyState', pretty_print=pretty_print)
+        for subGate_ in self.sub_gates:
+            subGate_.export(outfile, level, namespace_, name_='subGate', pretty_print=pretty_print)
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -13797,6 +13819,11 @@ class GateHHUndetermined(Base):
             obj_.build(child_)
             self.steady_state = obj_
             obj_.original_tagname_ = 'steadyState'
+        elif nodeName_ == 'subGate':
+            obj_ = GateFractionalSubgate.factory()
+            obj_.build(child_)
+            self.sub_gates.append(obj_)
+            obj_.original_tagname_ = 'subGate'
         super(GateHHUndetermined, self).buildChildren(child_, node, nodeName_, True)
 # end class GateHHUndetermined
 
@@ -17685,10 +17712,11 @@ class IonChannel(IonChannelScalable):
         MemberSpec_('gate_h_hrates_infs', 'GateHHRatesInf', 1),
         MemberSpec_('gate_h_hrates_tau_infs', 'GateHHRatesTauInf', 1),
         MemberSpec_('gate_hh_instantaneouses', 'GateHHInstantaneous', 1),
+        MemberSpec_('gate_fractionals', 'GateFractional', 1),
     ]
     subclass = None
     superclass = IonChannelScalable
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, q10_conductance_scalings=None, species=None, type=None, conductance=None, gates=None, gate_hh_rates=None, gate_h_hrates_taus=None, gate_hh_tau_infs=None, gate_h_hrates_infs=None, gate_h_hrates_tau_infs=None, gate_hh_instantaneouses=None, extensiontype_=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, q10_conductance_scalings=None, species=None, type=None, conductance=None, gates=None, gate_hh_rates=None, gate_h_hrates_taus=None, gate_hh_tau_infs=None, gate_h_hrates_infs=None, gate_h_hrates_tau_infs=None, gate_hh_instantaneouses=None, gate_fractionals=None, extensiontype_=None):
         self.original_tagname_ = None
         super(IonChannel, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, q10_conductance_scalings, extensiontype_, )
         self.species = _cast(None, species)
@@ -17722,6 +17750,10 @@ class IonChannel(IonChannelScalable):
             self.gate_hh_instantaneouses = []
         else:
             self.gate_hh_instantaneouses = gate_hh_instantaneouses
+        if gate_fractionals is None:
+            self.gate_fractionals = []
+        else:
+            self.gate_fractionals = gate_fractionals
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -17769,6 +17801,7 @@ class IonChannel(IonChannelScalable):
             self.gate_h_hrates_infs or
             self.gate_h_hrates_tau_infs or
             self.gate_hh_instantaneouses or
+            self.gate_fractionals or
             super(IonChannel, self).hasContent_()
         ):
             return True
@@ -17827,6 +17860,8 @@ class IonChannel(IonChannelScalable):
             gateHHratesTauInf_.export(outfile, level, namespace_, name_='gateHHratesTauInf', pretty_print=pretty_print)
         for gateHHInstantaneous_ in self.gate_hh_instantaneouses:
             gateHHInstantaneous_.export(outfile, level, namespace_, name_='gateHHInstantaneous', pretty_print=pretty_print)
+        for gateFractional_ in self.gate_fractionals:
+            gateFractional_.export(outfile, level, namespace_, name_='gateFractional', pretty_print=pretty_print)
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -17891,6 +17926,11 @@ class IonChannel(IonChannelScalable):
             obj_.build(child_)
             self.gate_hh_instantaneouses.append(obj_)
             obj_.original_tagname_ = 'gateHHInstantaneous'
+        elif nodeName_ == 'gateFractional':
+            obj_ = GateFractional.factory()
+            obj_.build(child_)
+            self.gate_fractionals.append(obj_)
+            obj_.original_tagname_ = 'gateFractional'
         super(IonChannel, self).buildChildren(child_, node, nodeName_, True)
 # end class IonChannel
 
@@ -19417,9 +19457,9 @@ class IonChannelHH(IonChannel):
     ]
     subclass = None
     superclass = IonChannel
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, q10_conductance_scalings=None, species=None, type=None, conductance=None, gates=None, gate_hh_rates=None, gate_h_hrates_taus=None, gate_hh_tau_infs=None, gate_h_hrates_infs=None, gate_h_hrates_tau_infs=None, gate_hh_instantaneouses=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, q10_conductance_scalings=None, species=None, type=None, conductance=None, gates=None, gate_hh_rates=None, gate_h_hrates_taus=None, gate_hh_tau_infs=None, gate_h_hrates_infs=None, gate_h_hrates_tau_infs=None, gate_hh_instantaneouses=None, gate_fractionals=None):
         self.original_tagname_ = None
-        super(IonChannelHH, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, q10_conductance_scalings, species, type, conductance, gates, gate_hh_rates, gate_h_hrates_taus, gate_hh_tau_infs, gate_h_hrates_infs, gate_h_hrates_tau_infs, gate_hh_instantaneouses, )
+        super(IonChannelHH, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, q10_conductance_scalings, species, type, conductance, gates, gate_hh_rates, gate_h_hrates_taus, gate_hh_tau_infs, gate_h_hrates_infs, gate_h_hrates_tau_infs, gate_hh_instantaneouses, gate_fractionals, )
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -20565,6 +20605,7 @@ GDSClassesMapping = {
     'from': SegmentEndPoint,
     'gapJunction': GapJunction,
     'gate': GateHHUndetermined,
+    'gateFractional': GateFractional,
     'gateHHInstantaneous': GateHHInstantaneous,
     'gateHHrates': GateHHRates,
     'gateHHratesInf': GateHHRatesInf,

@@ -228,6 +228,16 @@
         </xs:restriction>
 
     </xs:simpleType>
+    
+    
+    <xs:simpleType name="DoubleGreaterThanZero">
+        <xs:annotation>
+            <xs:documentation>Double >0 only</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:double">
+            <xs:minExclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <!--NOTE: Base and Standalone definitions moved to end of file, as some XML language binding
         generators, e.g. generateDS.py, require superclasses to be defined after the subclasses... -->
@@ -635,6 +645,7 @@
                     <xs:element name="gateHHratesInf" type="GateHHRatesInf" minOccurs="0" maxOccurs="unbounded"/>
                     <xs:element name="gateHHratesTauInf" type="GateHHRatesTauInf" minOccurs="0" maxOccurs="unbounded"/>
                     <xs:element name="gateHHInstantaneous" type="GateHHInstantaneous" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="gateFractional" type="GateFractional" minOccurs="0" maxOccurs="unbounded"/>
                 </xs:choice>
 
                 <xs:attribute name="species" type="NmlId" use="optional"/>
@@ -775,16 +786,20 @@
 
 
     <xs:complexType name="GateHHUndetermined">
+        <xs:annotation>
+            <xs:documentation>Note all sub elements for gateHHrates, gateHHratesTau, gateFractional etc. allowed here. Which are valid should be constrained by what type is set</xs:documentation>
+        </xs:annotation>
         <xs:complexContent>
             <xs:extension base="Base">
-                <xs:all>
+                <xs:sequence>
                     <xs:element name="notes" type="Notes" minOccurs="0"/>
                     <xs:element name="q10Settings" type="Q10Settings" minOccurs="0"/>
                     <xs:element name="forwardRate" type="HHRate" minOccurs="0"/>
                     <xs:element name="reverseRate" type="HHRate" minOccurs="0"/>
                     <xs:element name="timeCourse" type="HHTime"  minOccurs="0"/>
                     <xs:element name="steadyState" type="HHVariable" minOccurs="0"/>
-                </xs:all>
+                    <xs:element name="subGate" type="GateFractionalSubgate" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
                 <xs:attribute name="instances" type="PositiveInteger" use="required"/>
                 <xs:attribute name="type" type="gateTypes" use="required"/>  <!-- Required, as it must specify type="gateHHratesTau" etc. -->
             </xs:extension>
@@ -888,12 +903,12 @@
     <xs:complexType name="GateFractional">
         <xs:complexContent>
             <xs:extension base="Base">
-                <xs:all>
+                <xs:sequence>
                     <xs:element name="notes" type="Notes" minOccurs="0"/>
                     <xs:element name="q10Settings" type="Q10Settings" minOccurs="0"/>
-                    <xs:element name="subGate" type="GateFractionalSubgate" minOccurs="1"/>
-                </xs:all>
-                <xs:attribute name="fractionalConductance" type="Nml2Quantity_none" use="required"/>
+                    <xs:element name="subGate" type="GateFractionalSubgate" minOccurs="1" maxOccurs="unbounded"/>
+                </xs:sequence>
+                <xs:attribute name="instances" type="PositiveInteger" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -1503,7 +1518,7 @@
         <xs:attribute name="x" type="xs:double" use="required"/>
         <xs:attribute name="y" type="xs:double" use="required"/>
         <xs:attribute name="z" type="xs:double" use="required"/>
-        <xs:attribute name="diameter" type="xs:double" use="required"/>
+        <xs:attribute name="diameter" type="DoubleGreaterThanZero" use="required"/>
     </xs:complexType>
 
 

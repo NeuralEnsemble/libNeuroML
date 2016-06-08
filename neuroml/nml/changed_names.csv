@@ -101,7 +101,7 @@ expCurrSynapse,exp_curr_synapses
 resistivity,resistivities
 ySpacing,y_spacing
 ySize,y_size
-gateFractional,gate_fractional
+gateFractional,gate_fractionals
 blockMechanism,block_mechanism
 instance,instances
 connectionWD,connection_wds
@@ -120,7 +120,7 @@ preSegmentId,pre_segment_id
 spikeThresh,spike_threshes
 spikeGeneratorPoisson,spike_generator_poissons
 ionChannelPassive,ion_channel_passive
-subGate,sub_gate
+subGate,sub_gates
 gL,g_l
 tauRise,tau_rise
 izhikevichCell,izhikevich_cells
