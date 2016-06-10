@@ -109,7 +109,7 @@ class NetworkBuilder(DefaultNetworkHandler):
                                                     delay=0,
                                                     weight=1):
         
-        self.printConnectionInformation(proj_id, conn_id, prePop, postPop, synapseType, preCellId, postCellId, weight)
+        #self.printConnectionInformation(proj_id, conn_id, prePop, postPop, synapseType, preCellId, postCellId, weight)
           
         if not self.weightDelays[proj_id] and delay==0 and weight==1:
             

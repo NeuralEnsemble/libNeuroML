@@ -20,7 +20,7 @@ class NeuroMLLoader(object):
             return None    
         return nml2_doc
 
-class NeuroMLHDF5Loader(object):
+class NeuroMLHdf5Loader(object):
 
     @classmethod
     def load(cls,src):
@@ -35,12 +35,12 @@ class NeuroMLHDF5Loader(object):
         logging.basicConfig(level=logging.INFO, format="%(name)-19s %(levelname)-5s - %(message)s")
         
         from neuroml.hdf5.NetworkBuilder import NetworkBuilder
-        from neuroml.hdf5.NeuroMLHDF5Parser import NeuroMLHDF5Parser
+        from neuroml.hdf5.NeuroMLHdf5Parser import NeuroMLHdf5Parser
         
         try:
             nmlHandler = NetworkBuilder()   
 
-            currParser = NeuroMLHDF5Parser(nmlHandler) 
+            currParser = NeuroMLHdf5Parser(nmlHandler) 
 
             currParser.parse(file_name)
 

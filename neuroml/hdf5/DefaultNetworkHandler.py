@@ -1,6 +1,6 @@
 #
 #
-#   A class to handle events from the NeuroMLHDF5Parser, etc.
+#   A class to handle events from the NeuroMLHdf5Parser, etc.
 #   This should be overridden by simulator specific implementations.
 #   Parsing classes, e.g. NetworkBuilder should call the appropriate
 #   function here when a cell location, connection, etc. is encountered.

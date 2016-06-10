@@ -159,9 +159,9 @@ print("Written H5 network file to: "+nml_h5_file)
 
 sum2 = nml_doc.summary()
 
-from neuroml.loaders import NeuroMLHDF5Loader
+from neuroml.loaders import NeuroMLHdf5Loader
 
-nml_doc2 = NeuroMLHDF5Loader.load(nml_h5_file)
+nml_doc2 = NeuroMLHdf5Loader.load(nml_h5_file)
 
 sum1 = nml_doc2.summary()
 

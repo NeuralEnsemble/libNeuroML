@@ -19,9 +19,9 @@ import logging
 
 import tables   # pytables for HDF5 support
 
-class NeuroMLHDF5Parser():
+class NeuroMLHdf5Parser():
     
-  log = logging.getLogger("NeuroMLHDF5Parser")
+  log = logging.getLogger("NeuroMLHdf5Parser")
   
   currPopulation = ""
   currentComponent = ""
@@ -128,7 +128,7 @@ class NeuroMLHDF5Parser():
         for attrName in d.attrs._v_attrnames:
             val = d.attrs.__getattr__(attrName)
             
-            self.log.debug("Val of attribute: "+ attrName + " is "+ str(val))
+            #self.log.debug("Val of attribute: "+ attrName + " is "+ str(val))
             
             if val == 'id' or val[0] == 'id':
                 indexId = int(attrName[len('column_'):])
@@ -215,7 +215,7 @@ class NeuroMLHDF5Parser():
                
             
             
-            self.log.debug("Connection %d from %f to %f" % (id, preCellId, postCellId))
+            #self.log.debug("Connection %d from %f to %f" % (id, preCellId, postCellId))
 
 
             self.netHandler.handleConnection(self.currentProjectionId, \
@@ -343,7 +343,7 @@ if __name__ == '__main__':
 
     nmlHandler = DefaultNetworkHandler()   
 
-    currParser = NeuroMLHDF5Parser(nmlHandler) # The HDF5 handler knows of the structure of NetworkML and calls appropriate functions in NetworkHandler
+    currParser = NeuroMLHdf5Parser(nmlHandler) # The HDF5 handler knows of the structure of NetworkML and calls appropriate functions in NetworkHandler
 
     currParser.parse(file_name)
     
@@ -353,7 +353,7 @@ if __name__ == '__main__':
 
     nmlHandler = NetworkBuilder()   
 
-    currParser = NeuroMLHDF5Parser(nmlHandler) 
+    currParser = NeuroMLHdf5Parser(nmlHandler) 
     
     currParser.parse(file_name)
     
