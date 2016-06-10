@@ -172,11 +172,29 @@ connection_cell_ids = MethodSpec(name='connection_cell_ids',
         
         return self._get_cell_id(self.post_cell_id)
         
+    def __str__(self):
+        
+        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())
+        
     ''',
     class_names=("Connection")
     )
   
 METHOD_SPECS+=(connection_cell_ids,)
+    
+connection_wd_cell_ids = MethodSpec(name='connection_wd_cell_ids',
+    source='''\
+        
+    def __str__(self):
+        
+        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+ \
+            ", weight: "+str(self.weight)+", delay: "+str(self.delay)
+        
+    ''',
+    class_names=("ConnectionWD")
+    )
+  
+METHOD_SPECS+=(connection_wd_cell_ids,)
 
 
 input_cell_ids = MethodSpec(name='input_cell_ids',
@@ -205,6 +223,31 @@ input_cell_ids = MethodSpec(name='input_cell_ids',
     )
   
 METHOD_SPECS+=(input_cell_ids,)
+
+
+nml_doc_summary = MethodSpec(name='summary',
+    source='''\
+
+    def summary(self):
+        print("*******************************************************")
+        print("* NeuroMLDocument: "+self.id)
+        for network in self.networks:
+            print("*  Network: "+network.id)
+            for pop in network.populations:
+                print("*   Population: "+pop.id+" with "+str(pop.size)+" components of type "+pop.component)
+            for proj in network.projections:
+                print("*   Projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population)
+                if len(proj.connections)>0:
+                    print("*     "+str(len(proj.connections))+" connections: "+str(proj.connections[0]))
+                if len(proj.connection_wds)>0:
+                    print("*     "+str(len(proj.connection_wds))+" connections (wd): "+str(proj.connection_wds[0]))
+        
+        print("*******************************************************")
+    ''',
+    class_names=("NeuroMLDocument")
+    )
+  
+METHOD_SPECS+=(nml_doc_summary,)
 
     
 inserts  = {}
@@ -276,14 +319,26 @@ inserts['Projection'] = '''
         projGroup._f_setAttr("postsynapticPopulation", self.postsynaptic_population)
         projGroup._f_setAttr("synapse", self.synapse)
         
+        print("Exporting "+str(len(self.connections))+" connections, "+str(len(self.connection_wds))+" connections with weight")
+        
+        connection_wds = len(self.connection_wds) > 0
+        
         cols = 7
+        extra_cols = {}
+        
+        if connection_wds:
+            cols = 9
+            extra_cols["column_7"] = "weight"
+            extra_cols["column_8"] = "delay"
         
         #TODO: optimise ...for conn in self.connections:
         #    if
         
-        a = numpy.ones([len(self.connections), cols], numpy.float32)
+        a = numpy.ones([len(self.connections)+len(self.connection_wds), cols], numpy.float32)
+        
         
         count=0
+        
         for connection in self.connections:
           a[count,0] = connection.id
           a[count,1] = connection.get_pre_cell_id()
@@ -293,8 +348,29 @@ inserts['Projection'] = '''
           a[count,5] = connection.pre_fraction_along 
           a[count,6] = connection.post_fraction_along          
           count=count+1
+          
+        for connection in self.connection_wds:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()  
+          a[count,3] = connection.pre_segment_id  
+          a[count,4] = connection.post_segment_id  
+          a[count,5] = connection.pre_fraction_along 
+          a[count,6] = connection.post_fraction_along        
+          a[count,7] = connection.weight  
+          if 'ms' in connection.delay:
+            delay = float(connection.delay[:-2].strip())/1000.0
+          elif 's' in connection.delay:
+            delay = float(connection.delay[:-1].strip())
+          elif 'us' in connection.delay:
+            delay = float(connection.delay[:-2].strip())/1e6
+            
+          a[count,8] = delay          
+          count=count+1
         
+            
         array = h5file.createArray(projGroup, self.id, a, "Connections of cells in "+ self.id)
+        
         array._f_setAttr("column_0", "id")
         array._f_setAttr("column_1", "pre_cell_id")
         array._f_setAttr("column_2", "post_cell_id")
@@ -302,6 +378,10 @@ inserts['Projection'] = '''
         array._f_setAttr("column_4", "post_segment_id")
         array._f_setAttr("column_5", "pre_fraction_along")
         array._f_setAttr("column_6", "post_fraction_along")
+        
+        for col in extra_cols.keys():
+            array._f_setAttr(col,extra_cols[col])
+            
         
         
 '''

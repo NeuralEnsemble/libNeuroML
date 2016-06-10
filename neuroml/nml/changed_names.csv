@@ -181,6 +181,7 @@ normalizationEnd,normalization_end
 electricalProjection,electrical_projections
 gateHHratesInf,gate_h_hrates_infs
 simpleSeriesResistance,simple_series_resistance
+channelDensityGHK2,channel_density_ghk2s
 preSegment,pre_segment
 gNmda,g_nmda
 scalingVolt,scaling_volt

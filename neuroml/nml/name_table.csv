@@ -292,6 +292,7 @@ simpleSeriesResistance,simple_series_resistance
 e_rev_Na,e_rev_Na
 IF_cond_exp,IF_cond_exp
 tau_syn,tau_syn
+channelDensityGHK2,channel_density_ghk2s
 e_rev_E,e_rev_E
 e_rev_I,e_rev_I
 e_rev_K,e_rev_K

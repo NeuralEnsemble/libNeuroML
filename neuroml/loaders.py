@@ -1,7 +1,6 @@
 
 from neuroml.nml.nml import parse as nmlparse
 import neuroml
-import neuroml
 
 class NeuroMLLoader(object):
 
@@ -11,11 +10,42 @@ class NeuroMLLoader(object):
         return doc
 
     @classmethod    
-    def __nml2_doc(cls,src):
+    def __nml2_doc(cls,file_name):
         import sys
 
         try:
-            nml2_doc = nmlparse(src)
+            nml2_doc = nmlparse(file_name)
+        except Exception:
+            print("Not a valid NeuroML 2 doc: %s" % str(sys.exc_info())) 
+            return None    
+        return nml2_doc
+
+class NeuroMLHDF5Loader(object):
+
+    @classmethod
+    def load(cls,src):
+        doc = cls.__nml2_doc(src)
+        return doc
+
+    @classmethod    
+    def __nml2_doc(cls,file_name):
+        import sys
+        
+        import logging
+        logging.basicConfig(level=logging.INFO, format="%(name)-19s %(levelname)-5s - %(message)s")
+        
+        from neuroml.hdf5.NetworkBuilder import NetworkBuilder
+        from neuroml.hdf5.NeuroMLHDF5Parser import NeuroMLHDF5Parser
+        
+        try:
+            nmlHandler = NetworkBuilder()   
+
+            currParser = NeuroMLHDF5Parser(nmlHandler) 
+
+            currParser.parse(file_name)
+
+            nml2_doc = nmlHandler.get_nml_doc()
+            
         except Exception:
             print("Not a valid NeuroML 2 doc: %s" % str(sys.exc_info())) 
             return None    

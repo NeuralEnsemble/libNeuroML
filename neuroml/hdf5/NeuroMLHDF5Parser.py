@@ -100,11 +100,6 @@ class NeuroMLHDF5Parser():
     elif self.currentProjectionId!="":
         self.log.debug("Using data for proj: "+ self.currentProjectionId)
         self.log.debug("Size is: "+str(d.shape[0])+" rows of: "+ str(d.shape[1])+ " entries")
-
-        self.netHandler.handleProjection(self.currentProjectionId,
-                                         self.currentProjectionPrePop,
-                                         self.currentProjectionPostPop,
-                                         self.currentSynapse)
         
 
         indexId = -1
@@ -114,6 +109,8 @@ class NeuroMLHDF5Parser():
         indexPostCellId = -1
         indexPostSegId = -1
         indexPostFractAlong= -1
+        indexWeight= -1
+        indexDelay= -1
         
         id = -1
         preCellId = -1
@@ -122,6 +119,8 @@ class NeuroMLHDF5Parser():
         postCellId = -1
         postSegId = 0
         postFractAlong= 0.5
+        weight = 1
+        delay = 1
         
         extraParamIndices = {}
         
@@ -145,7 +144,17 @@ class NeuroMLHDF5Parser():
                 indexPostSegId = int(attrName[len('column_'):])
             elif val == 'post_fraction_along' or val[0] == 'post_fraction_along':
                 indexPostFractAlong = int(attrName[len('column_'):])
+            elif val == 'weight' or val[0] == 'weight':
+                indexWeight = int(attrName[len('column_'):])
+            elif val == 'delay' or val[0] == 'delay':
+                indexDelay = int(attrName[len('column_'):])
             
+        self.netHandler.handleProjection(self.currentProjectionId,
+                                         self.currentProjectionPrePop,
+                                         self.currentProjectionPostPop,
+                                         self.currentSynapse,
+                                         hasWeights=indexWeight>0, 
+                                         hasDelays=indexDelay>0)
                 
         
         self.log.debug("Cols: Id: %d precell: %d, postcell: %d, pre fract: %d, post fract: %d" % (indexId, indexPreCellId, indexPostCellId, indexPreFractAlong, indexPostFractAlong))
@@ -177,7 +186,15 @@ class NeuroMLHDF5Parser():
               postSegId = int(row[indexPostSegId])
             if indexPostFractAlong >= 0:
               postFractAlong = row[indexPostFractAlong]
+              
+              
+            if indexWeight >= 0:
+              weight = row[indexWeight]
+              
+            if indexDelay >= 0:
+              delay = row[indexDelay]
 
+            '''
             if len(extraParamIndices)>0:
                 for synType in localSynapseProps:
                    for paramName in extraParamIndices.keys():
@@ -194,7 +211,7 @@ class NeuroMLHDF5Parser():
                        if paramName.count('prop_delay')>0:
                           localSynapseProps[synType].propDelay = row[extraParamIndices[paramName]]
                        if paramName.count('threshold')>0:
-                          localSynapseProps[synType].threshold = row[extraParamIndices[paramName]]
+                          localSynapseProps[synType].threshold = row[extraParamIndices[paramName]]'''
                
             
             
@@ -212,8 +229,8 @@ class NeuroMLHDF5Parser():
                                             preFractAlong, \
                                             postSegId, \
                                             postFractAlong,
-                                            delay=0,
-                                            weight=1)
+                                            delay=delay,
+                                            weight=weight)
                                             
     if self.currInputList!="":
         self.log.debug("Using data for input list: "+ self.currInputList)

@@ -28,6 +28,9 @@ class NetworkBuilder(DefaultNetworkHandler):
     projections = {}
     input_lists = {}
     
+    weightDelays = {}
+
+    
     
     def get_nml_doc(self):
         return self.nml_doc
@@ -83,14 +86,14 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     #
-    def handleProjection(self, id, prePop, postPop, synapse):
+    def handleProjection(self, id, prePop, postPop, synapse, hasWeights=False, hasDelays=False):
 
         proj = neuroml.Projection(id=id, presynaptic_population=prePop, postsynaptic_population=postPop, synapse=synapse)
         self.projections[id] = proj
         self.network.projections.append(proj)
+        self.weightDelays[id] = hasWeights or hasDelays
 
-
-        self.log.info("Projection: "+id+" from "+prePop+" to "+postPop+" with syn: "+synapse)
+        self.log.info("Projection: %s from %s to %s with syn: %s, weights: %s, delays: %s"%(id, prePop, postPop, synapse, hasWeights, hasDelays))
      
         
     #
@@ -108,17 +111,30 @@ class NetworkBuilder(DefaultNetworkHandler):
         
         self.printConnectionInformation(proj_id, conn_id, prePop, postPop, synapseType, preCellId, postCellId, weight)
           
-
-
-        connection = neuroml.Connection(id=conn_id, \
+        if not self.weightDelays[proj_id] and delay==0 and weight==1:
+            
+            connection = neuroml.Connection(id=conn_id, \
                                 pre_cell_id="../%s/%i/%s"%(prePop,preCellId,self.populations[prePop].component), \
                                 pre_segment_id=preSegId, \
                                 pre_fraction_along=preFract,
                                 post_cell_id="../%s/%i/%s"%(postPop,postCellId,self.populations[postPop].component), \
                                 post_segment_id=postSegId,
                                 post_fraction_along=postFract)
+                                
+            self.projections[proj_id].connections.append(connection)
+            
+        else:
+            connection = neuroml.ConnectionWD(id=conn_id, \
+                                pre_cell_id="../%s/%i/%s"%(prePop,preCellId,self.populations[prePop].component), \
+                                pre_segment_id=preSegId, \
+                                pre_fraction_along=preFract,
+                                post_cell_id="../%s/%i/%s"%(postPop,postCellId,self.populations[postPop].component), \
+                                post_segment_id=postSegId,
+                                post_fraction_along=postFract,
+                                weight=weight,
+                                delay='%sms'%(delay*1000.0))
 
-        self.projections[proj_id].connections.append(connection)
+            self.projections[proj_id].connection_wds.append(connection)
         
          
     #

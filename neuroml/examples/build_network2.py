@@ -13,7 +13,7 @@ from neuroml import Population
 
 from neuroml import Input
 from neuroml import InputList
-from neuroml import Connection
+from neuroml import ConnectionWD
 from neuroml import Projection
 from neuroml import Property
 from neuroml import Instance
@@ -125,15 +125,17 @@ for pre_index in range(0,cell_num):
             pre_seg_id = 0
             post_seg_id = 0
 
-            connection = Connection(id=proj_count, \
+            connection = ConnectionWD(id=proj_count, \
                                     pre_cell_id="../%s/%i/%s"%(from_pop,pre_index,IafCell0.id), \
                                     pre_segment_id=pre_seg_id, \
                                     pre_fraction_along=random(),
                                     post_cell_id="../%s/%i/%s"%(to_pop,post_index,IafCell0.id), \
                                     post_segment_id=post_seg_id,
-                                    post_fraction_along=random())
+                                    post_fraction_along=random(),
+                                    weight=random(),
+                                    delay='%sms'%(random()*10))
 
-            projection.connections.append(connection)
+            projection.connection_wds.append(connection)
             proj_count += 1
             
     input = Input(id=pre_index, 
@@ -154,6 +156,16 @@ writers.NeuroMLHdf5Writer.write(nml_doc, nml_h5_file)
 
 
 print("Written H5 network file to: "+nml_h5_file)
+
+sum2 = nml_doc.summary()
+
+from neuroml.loaders import NeuroMLHDF5Loader
+
+nml_doc2 = NeuroMLHDF5Loader.load(nml_h5_file)
+
+sum1 = nml_doc2.summary()
+
+assert(sum1==sum2)
 
 
 ###### Validate the NeuroML ######    
