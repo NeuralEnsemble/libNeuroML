@@ -1,7 +1,7 @@
 Introduction
 ============
 
-An overview of the motivation for libNeuroML, and the various scenarios in which such an API can be useful.
+This package provides Python libNeuroML, for working with neuronal models specified in `NeuroML 2  <http://neuroml.org/neuromlv2>`_.
 
 NOTE: libNeuroML targets `NeuroML v2.0`_ (described in 
 `Cannon et al, 2014 <http://journal.frontiersin.org/Journal/10.3389/fninf.2014.00079/abstract>`_) not NeuroML v1.8.1 
