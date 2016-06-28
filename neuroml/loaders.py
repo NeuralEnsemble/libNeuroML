@@ -128,7 +128,10 @@ class JSONLoader(object):
                           port=None):
         
         from pymongo import MongoClient
-        import simplejson as json
+        try:
+            import simplejson as json
+        except ImportError:
+            import json
         
         from jsonpickle import decode as json_decode
 
