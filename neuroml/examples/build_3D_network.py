@@ -83,8 +83,7 @@ def run():
 
         pop = Population(id="Pop_%i"%cell_id, component=cell.id, type="populationList")
         net.populations.append(pop)
-        pop.annotation = Annotation()
-        pop.annotation.anytypeobjs_.append(Property(tag="color", value="1 0 0"))
+        pop.properties.append(Property(tag="color", value="1 0 0"))
 
         inst = Instance(id="0")
         pop.instances.append(inst)

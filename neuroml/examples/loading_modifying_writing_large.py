@@ -24,16 +24,16 @@ for n in range(numCells):
 
     doc = loaders.NeuroMLLoader.load(fn)
     cells.append(doc.cells[0])
- #   print("Loaded morphology file from: "+fn)
+    print("Loaded morphology file from: "+fn)
 
     #get the parent segment:
-#    parent_segment = doc.cells[0].morphology.segments[0]
+    parent_segment = doc.cells[0].morphology.segments[0]
 
-    print "Cell %i has %i segments"%(n,len(doc.cells[0].morphology.segments))
-    print h.heap()
+    print("Cell %i has %i segments"%(n,len(doc.cells[0].morphology.segments)))
+    print(h.heap())
 
 
-    '''
+    
     parent = neuroml.SegmentParent(segments=parent_segment.id)
 
     #make an axon:
@@ -65,17 +65,17 @@ for n in range(numCells):
 
         axon_segments.append(axon_segment)
 
-    doc.cells[0].morphology.segments += axon_segments'''
+    doc.cells[0].morphology.segments += axon_segments
     
-'''
+
 fn = './tmp/modified_morphology2.nml'
 
 writers.NeuroMLWriter.write(doc,fn)
 
 print("Saved modified morphology file to: "+fn)
-'''
 
-print "Done"
+
+print("Done")
 
 
 

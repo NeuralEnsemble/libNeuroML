@@ -4,8 +4,6 @@ Generating a Hodgkin-Huxley Ion Channel and writing it to NeuroML
 
 import neuroml
 import neuroml.writers as writers
-from lxml import etree
-from urllib import urlopen
 
 chan = neuroml.IonChannelHH(id='na',
                           conductance='10pS',
@@ -35,15 +33,15 @@ h_gate.reverse_rate = neuroml.HHRate(type="HHExpRate",
                                      midpoint="-65mV",
                                      scale="-80mV")
 
-chan.gates.append(m_gate)
-chan.gates.append(h_gate)
+chan.gate_hh_rates.append(m_gate)
+chan.gate_hh_rates.append(h_gate)
 
 doc = neuroml.NeuroMLDocument()
 doc.ion_channel_hhs.append(chan)
 
 doc.id = "ChannelMLDemo"
 
-nml_file = './tmp/channelMLtest.xml'
+nml_file = './tmp/ionChannelTest.xml'
 writers.NeuroMLWriter.write(doc,nml_file)
 
 print("Written channel file to: "+nml_file)

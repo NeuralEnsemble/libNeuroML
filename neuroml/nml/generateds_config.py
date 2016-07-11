@@ -9,7 +9,7 @@ from config import variables
 import csv
 import sys
 
-sys.setrecursionlimit(1500)
+sys.setrecursionlimit(10000)
 
 def remove_curlies(string):
     return re.sub("{.*}","",string)
@@ -60,7 +60,7 @@ def pluralize(noun):
 def _node_to_python(node):
 
     pluralize_flag = 'maxOccurs' in node.attrib
-
+    
     for attribute in node.attrib:
         nml_attribute = node.attrib.pop(attribute)
         if nml_attribute[0].islower():
@@ -124,6 +124,8 @@ NameTable['e_rev_K'] = 'e_rev_K'
 
 NameTable['gbar_K'] = 'gbar_K'
 NameTable['gbar_Na'] = 'gbar_Na'
+
+NameTable['delta_T'] = 'delta_T'
 
 NameTable['IF_curr_alpha'] = 'IF_curr_alpha'
 NameTable['IF_curr_exp'] = 'IF_curr_exp'

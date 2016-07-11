@@ -1,3 +1,8 @@
+/neuroml/nml/regenit.sh
+/neuroml/nml/generatedsuper.py2
+/test3.sh
+/test2.sh
+/neuroml/nml/nml.py.bak
 /neuroml/test/tmpfile
 # All the python compiled
 *.pyc
@@ -33,3 +38,4 @@ neuroml/examples/tmp/*.nml
 neuroml/test/*.h5
 *tmp*
 *#*
+/neuroml/nml/generateds_config2.py

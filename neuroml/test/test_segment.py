@@ -3,6 +3,7 @@ Unit tests for the Segment class
 
 
 """
+import math
 
 from neuroml import Segment
 from neuroml import Point3DWithDiam
@@ -49,6 +50,22 @@ class TestHelperProperties(unittest.TestCase):
 
     These are not part of the neuroML schema itself
     """
+    def test_length0(self):
+        diam = 1.
+        len = 1.
+        d=Point3DWithDiam(x=0,
+                          y=0,
+                          z=0,
+                          diameter=diam)
+        p=Point3DWithDiam(x=0,
+                          y=len,
+                          z=0,
+                          diameter=diam)
+                          
+        seg = Segment(proximal=p, distal=d)
+
+        self.assertAlmostEqual(seg.length, 1, places=7)
+        
     def test_length(self):
         d=Point3DWithDiam(x=0.2,
                           y=2.4,
@@ -58,10 +75,44 @@ class TestHelperProperties(unittest.TestCase):
                           y=2.0,
                           z=1.8,
                           diameter=0.9)
+                          
         seg = Segment(proximal=p, distal=d)
 
-        self.assertAlmostEqual(seg.length, 1.7720, places=3)
+        self.assertAlmostEqual(seg.length, 1.772004514, places=7)
 
+    def test_area0(self):
+        diam = 1.
+        len = 1.
+        d=Point3DWithDiam(x=0,
+                          y=0,
+                          z=0,
+                          diameter=diam)
+        p=Point3DWithDiam(x=0,
+                          y=len,
+                          z=0,
+                          diameter=diam)
+                          
+        seg = Segment(proximal=p, distal=d)
+
+        self.assertAlmostEqual(seg.surface_area, math.pi*diam*len, places=7)
+        
+    def test_area1(self):
+        diam = 1.
+        len = 1.
+        d=Point3DWithDiam(x=0,
+                          y=0,
+                          z=0,
+                          diameter=diam)
+        p=Point3DWithDiam(x=0,
+                          y=len,
+                          z=0,
+                          diameter=diam*1.01)
+                          
+        seg = Segment(proximal=p, distal=d)
+
+        self.assertAlmostEqual(seg.surface_area, 3.15734008, places=7)
+        
+        
     def test_area(self):
         d=Point3DWithDiam(x=0.2,
                           y=2.4,
@@ -71,9 +122,44 @@ class TestHelperProperties(unittest.TestCase):
                           y=2.0,
                           z=1.8,
                           diameter=0.9)
+                          
         seg = Segment(proximal=p, distal=d)
 
-        self.assertAlmostEqual(seg.area, 8.4691, places=3)
+        self.assertAlmostEqual(seg.surface_area, 4.19011944, places=7)
+        
+
+    def test_volume0(self):
+        
+        diam = 1.
+        len = 1.
+        d=Point3DWithDiam(x=0,
+                          y=0,
+                          z=0,
+                          diameter=diam)
+        p=Point3DWithDiam(x=0,
+                          y=len,
+                          z=0,
+                          diameter=diam)
+        seg = Segment(proximal=p, distal=d)
+
+        self.assertAlmostEqual(seg.volume, math.pi*(diam/2)**2*len, places=7)
+        
+    def test_volume1(self):
+        
+        diam = 1.
+        len = 1.
+        d=Point3DWithDiam(x=0,
+                          y=0,
+                          z=0,
+                          diameter=diam)
+        p=Point3DWithDiam(x=0,
+                          y=len,
+                          z=0,
+                          diameter=diam*1.01)
+        seg = Segment(proximal=p, distal=d)
+
+        self.assertAlmostEqual(seg.volume, 0.793278324, places=7)
+
 
     def test_volume(self):
         d=Point3DWithDiam(x=0.2,
@@ -86,7 +172,27 @@ class TestHelperProperties(unittest.TestCase):
                           diameter=0.9)
         seg = Segment(proximal=p, distal=d)
 
-        self.assertAlmostEqual(seg.volume, 3.1731, places=3)
+        self.assertAlmostEqual(seg.volume, 0.7932855820702964, places=7)
+        
+        
+    def runTest(self):
+        print("Running tests in TestHelperProperties")
 
 class TestAttachedSegments(unittest.TestCase):
     pass
+
+
+if __name__ == '__main__':
+    
+    ta = TestHelperProperties()
+    
+    ta.test_length0()
+    ta.test_length()
+    
+    ta.test_area0()
+    ta.test_area1()
+    ta.test_area()
+    
+    ta.test_volume0()
+    ta.test_volume1()
+    ta.test_volume()

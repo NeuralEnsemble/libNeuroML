@@ -12,6 +12,12 @@ For the default XML serialization (saving NeuroML to XML files), only *lxml* is 
 
     sudo pip install lxml
 
+Alternatively, on Linux you can use:
+
+::
+
+    sudo apt-get install python-lxml
+
 To use the other serializations (e.g. HDF5, JSON, see `Vella et al. 2014 <http://journal.frontiersin.org/Journal/10.3389/fninf.2014.00038/abstract>`_) 
 the following will also be required:
 
@@ -35,7 +41,7 @@ Install libNeuroML via pip
 
     pip install libNeuroML
 
-This is always the latest (stable) branch corresponding to the master branch on GitHub.
+This is always the latest stable branch from GitHub.
 
 
 
@@ -103,3 +109,9 @@ If everything worked your output should look something like this:
     Ran 55 tests in 40.1s
     
     OK
+
+Alternatively install and use nosetests:
+
+::
+
+    nosetests -v

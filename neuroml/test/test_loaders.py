@@ -22,6 +22,6 @@ class TestNeuroMLLoader(unittest.TestCase):
         print('test file path is:')
         print(test_file_path)
         f = open(test_file_path,'r')
-        print(f.read())
+        #print(f.read())
         doc = loaders.NeuroMLLoader.load(test_file_path)
         self.assertEqual(doc.id,'Purk2M9s')
