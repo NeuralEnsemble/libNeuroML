@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Jun 10 12:30:15 2016 by generateDS.py version 2.22b.
+# Generated Tue Jul 12 13:55:18 2016 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -11,10 +11,10 @@
 #   ('--user-methods', 'helper_methods')
 #
 # Command line arguments:
-#   NeuroML_v2beta4.xsd
+#   NeuroML_v2beta5.xsd
 #
 # Command line:
-#   /usr/local/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2beta4.xsd
+#   /usr/local/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2beta5.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
