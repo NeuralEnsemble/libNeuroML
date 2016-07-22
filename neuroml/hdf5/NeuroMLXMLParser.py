@@ -31,6 +31,14 @@ class NeuroMLXMLParser():
     
     self.netHandler = netHandler
     
+  def _parse_delay(self, delay_string):
+      if delay_string.endswith('ms'):
+          return float(delay_string[:-2].strip())
+      elif delay_string.endswith('s'):
+          return float(delay_string[:-1].strip())*1000.0
+      else:
+          print("Can't parse string for delay: %s"%delay_string)
+          exit(1)
 
   def parse(self, filename):
     
@@ -49,12 +57,14 @@ class NeuroMLXMLParser():
         
         for population in network.populations:
             
-            if len(population.instances)>0:
+            if len(population.instances)>0 and population.type=='populationList':
+                  
                 self.netHandler.handlePopulation(population.id, 
                                                  population.component, 
                                                  len(population.instances))
+
                 for inst in population.instances:
-                    
+
                     loc = inst.location
                     self.netHandler.handleLocation(inst.id,                      \
                                             population.id,     \
@@ -64,6 +74,14 @@ class NeuroMLXMLParser():
                                             loc.z)       
             else:
                 self.netHandler.handlePopulation(population.id, population.component, population.size)
+                                                     
+                for i in range(population.size):
+                    self.netHandler.handleLocation(i,                      \
+                                            population.id,     \
+                                            population.component,    \
+                                            None,       \
+                                            None,       \
+                                            None)  
                                                 
         for projection in network.projections:
             
@@ -88,6 +106,22 @@ class NeuroMLXMLParser():
                                             delay=0,
                                             weight=1)
                                             
+            for connection in projection.connection_wds:
+                
+                self.netHandler.handleConnection(projection.id, \
+                                            connection.id, \
+                                            projection.presynaptic_population,
+                                            projection.postsynaptic_population,
+                                            projection.synapse, \
+                                            preCellId=connection.get_pre_cell_id(), \
+                                            postCellId=connection.get_post_cell_id(), \
+                                            preSegId=int(connection.pre_segment_id), \
+                                            postSegId=int(connection.post_segment_id), \
+                                            preFract=float(connection.pre_fraction_along), \
+                                            postFract=float(connection.post_fraction_along), \
+                                            delay=self._parse_delay(connection.delay),
+                                            weight=float(connection.weight))
+                                            
         for input_list in network.input_lists:                                   
                 
             self.netHandler.handleInputList(input_list.id, input_list.populations, input_list.component, len(input_list.input))
@@ -99,8 +133,17 @@ class NeuroMLXMLParser():
                                                   cellId = input.get_target_cell_id(), 
                                                   segId = input.get_segment_id(), 
                                                   fract = input.get_fraction_along())
-                                                  
-                                                  
+                                               
+        for explicitInput in network.explicit_inputs:     
+            list_name = 'INPUT_%s_%s'%(explicitInput.input,explicitInput.target.replace('[','_').replace(']','_'))
+            pop = explicitInput.target.split('[')[0]
+            self.netHandler.handleInputList(list_name, pop, explicitInput.input, 1)   
+
+            self.netHandler.handleSingleInput(list_name, 
+                                              0, 
+                                              cellId = explicitInput.get_target_cell_id(), 
+                                              segId = 0, 
+                                              fract = 0.5)
     
         
         
