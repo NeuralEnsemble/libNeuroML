@@ -73,7 +73,7 @@ class DefaultNetworkHandler:
     #
     #  Should be overridden to create population array
     #  
-    def handlePopulation(self, population_id, component, size=-1):
+    def handlePopulation(self, population_id, component, size=-1, component_obj=None):
       
         sizeInfo = " as yet unspecified size"
         if (size>=0):

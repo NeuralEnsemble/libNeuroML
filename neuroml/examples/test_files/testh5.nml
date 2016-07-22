@@ -1,0 +1,85 @@
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2"  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta5.xsd" id="IafNet">
+    <notes>Root notes</notes>
+    <expOneSynapse id="syn0" gbase="65nS" erev="0mV" tauDecay="3ms"/>
+    <iafCell id="iaf0" leakReversal="-65mV" thresh="-50mV" reset="-65mV" C="1.0 nF" leakConductance="10 nS"/>
+    <iafCell id="iaf1" leakReversal="-65mV" thresh="-50mV" reset="-65mV" C="1.0 nF" leakConductance="20 nS"/>
+    <poissonFiringSynapse id="pfs" averageRate="50Hz" synapse="syn0" spikeTarget="./syn0"/>
+    <network id="IafNet">
+        <notes>Netw notes</notes>
+        <population id="IafPop0" component="iaf0" size="10"/>
+        <population id="IafPop1" component="iaf0" size="10"/>
+        <population id="Pop_x" component="iaf0" size="8" type="populationList">
+            <property tag="color" value="1 0 0"/>
+            <instance id="0">
+                <location x="441.302803198999982" y="127.857433631999996" z="107.764997625999996"/>
+            </instance>
+            <instance id="1">
+                <location x="89.260781098600006" y="200.001185015999994" z="407.876782295999988"/>
+            </instance>
+            <instance id="2">
+                <location x="398.27433064500002" y="127.664139785000003" z="262.685981474000016"/>
+            </instance>
+            <instance id="3">
+                <location x="69.324770443099993" y="303.177696745999981" z="160.421490436999989"/>
+            </instance>
+            <instance id="4">
+                <location x="412.115674316000025" y="338.501154152000026" z="105.79103422"/>
+            </instance>
+            <instance id="5">
+                <location x="58.9520515723" y="254.530197601999987" z="449.973008305000008"/>
+            </instance>
+            <instance id="6">
+                <location x="15.1769610159" y="31.118737992900002" z="124.888077073999995"/>
+            </instance>
+            <instance id="7">
+                <location x="24.197840344900001" y="302.23722492600001" z="430.279640235999977"/>
+            </instance>
+        </population>
+        <projection id="Proj" presynapticPopulation="Pop_x" postsynapticPopulation="Pop_x" synapse="syn0">
+            <connectionWD id="0" preCellId="../Pop_x/0/iaf0" preFractionAlong="0.923897032859" postCellId="../Pop_x/2/iaf0" postFractionAlong="0.437215246739" weight="0.832212536518123" delay="2.54587611355ms"/>
+            <connectionWD id="1" preCellId="../Pop_x/0/iaf0" preFractionAlong="0.560753236645" postCellId="../Pop_x/3/iaf0" postFractionAlong="0.5324290154" weight="0.11417793188029" delay="8.455360415ms"/>
+            <connectionWD id="2" preCellId="../Pop_x/0/iaf0" preFractionAlong="0.434265731522" postCellId="../Pop_x/4/iaf0" postFractionAlong="0.834358698138" weight="0.914317122158406" delay="7.95245092236ms"/>
+            <connectionWD id="3" preCellId="../Pop_x/0/iaf0" preFractionAlong="0.764151993931" postCellId="../Pop_x/5/iaf0" postFractionAlong="0.975717779397" weight="0.450541765893383" delay="3.33329988044ms"/>
+            <connectionWD id="4" preCellId="../Pop_x/0/iaf0" preFractionAlong="0.418031897292" postCellId="../Pop_x/6/iaf0" postFractionAlong="0.747728888494" weight="0.718903683171688" delay="8.94742364775ms"/>
+            <connectionWD id="5" preCellId="../Pop_x/0/iaf0" preFractionAlong="0.78489699127" postCellId="../Pop_x/7/iaf0" postFractionAlong="0.460395026074" weight="0.410871085924621" delay="2.19802037224ms"/>
+            <connectionWD id="6" preCellId="../Pop_x/1/iaf0" preFractionAlong="0.209984451851" postCellId="../Pop_x/2/iaf0" postFractionAlong="0.0253298075881" weight="0.939526867431678" delay="4.78742205451ms"/>
+            <connectionWD id="7" preCellId="../Pop_x/1/iaf0" preFractionAlong="0.210796759616" postCellId="../Pop_x/3/iaf0" postFractionAlong="0.040180998215" weight="0.627481359227711" delay="9.98524213423ms"/>
+            <connectionWD id="8" preCellId="../Pop_x/1/iaf0" preFractionAlong="0.704699620096" postCellId="../Pop_x/4/iaf0" postFractionAlong="0.061997185996" weight="0.732118515913694" delay="1.04766052315ms"/>
+            <connectionWD id="9" preCellId="../Pop_x/1/iaf0" preFractionAlong="0.0502556335101" postCellId="../Pop_x/5/iaf0" postFractionAlong="0.692621121453" weight="0.526274873147057" delay="5.91090191414ms"/>
+            <connectionWD id="10" preCellId="../Pop_x/1/iaf0" preFractionAlong="0.642215377119" postCellId="../Pop_x/6/iaf0" postFractionAlong="0.355552521273" weight="0.089335849140411" delay="1.11591979438ms"/>
+            <connectionWD id="11" preCellId="../Pop_x/2/iaf0" preFractionAlong="0.226360419879" postCellId="../Pop_x/0/iaf0" postFractionAlong="0.07943854947" weight="0.611329238217485" delay="5.35325572127ms"/>
+            <connectionWD id="12" preCellId="../Pop_x/2/iaf0" preFractionAlong="0.342538402681" postCellId="../Pop_x/3/iaf0" postFractionAlong="0.312735625102" weight="0.689862014023217" delay="0.373056200808ms"/>
+            <connectionWD id="13" preCellId="../Pop_x/2/iaf0" preFractionAlong="0.91011079919" postCellId="../Pop_x/4/iaf0" postFractionAlong="0.708376421057" weight="0.995276867970218" delay="2.70945782175ms"/>
+            <connectionWD id="14" preCellId="../Pop_x/3/iaf0" preFractionAlong="0.809475266799" postCellId="../Pop_x/0/iaf0" postFractionAlong="0.475712437797" weight="0.965938265212717" delay="9.589061872ms"/>
+            <connectionWD id="15" preCellId="../Pop_x/3/iaf0" preFractionAlong="0.0174792423544" postCellId="../Pop_x/1/iaf0" postFractionAlong="0.973961478171" weight="0.404604199089283" delay="5.66076546801ms"/>
+            <connectionWD id="16" preCellId="../Pop_x/3/iaf0" preFractionAlong="0.0143657146048" postCellId="../Pop_x/2/iaf0" postFractionAlong="0.946846016684" weight="0.791588319498128" delay="3.30448713631ms"/>
+            <connectionWD id="17" preCellId="../Pop_x/3/iaf0" preFractionAlong="0.800766493629" postCellId="../Pop_x/4/iaf0" postFractionAlong="0.832452944557" weight="0.491483191082206" delay="7.6675049459ms"/>
+            <connectionWD id="18" preCellId="../Pop_x/3/iaf0" preFractionAlong="0.588315986079" postCellId="../Pop_x/5/iaf0" postFractionAlong="0.603725579738" weight="0.669671811275688" delay="0.704802653283ms"/>
+            <connectionWD id="19" preCellId="../Pop_x/3/iaf0" preFractionAlong="0.748691420915" postCellId="../Pop_x/6/iaf0" postFractionAlong="0.399409040206" weight="0.042151531233096" delay="3.72641225119ms"/>
+            <connectionWD id="20" preCellId="../Pop_x/3/iaf0" preFractionAlong="0.831759208969" postCellId="../Pop_x/7/iaf0" postFractionAlong="0.151842384237" weight="0.482439408505789" delay="6.02002455879ms"/>
+            <connectionWD id="21" preCellId="../Pop_x/4/iaf0" preFractionAlong="0.878750689611" postCellId="../Pop_x/2/iaf0" postFractionAlong="0.145331685525" weight="0.05013287801518" delay="1.29106604158ms"/>
+            <connectionWD id="22" preCellId="../Pop_x/4/iaf0" preFractionAlong="0.952933945706" postCellId="../Pop_x/5/iaf0" postFractionAlong="0.0595957434506" weight="0.063883895431418" delay="9.67289738839ms"/>
+            <connectionWD id="23" preCellId="../Pop_x/5/iaf0" preFractionAlong="0.495120033024" postCellId="../Pop_x/1/iaf0" postFractionAlong="0.59873806012" weight="0.93616317563961" delay="6.25163820007ms"/>
+            <connectionWD id="24" preCellId="../Pop_x/5/iaf0" preFractionAlong="0.531458409102" postCellId="../Pop_x/2/iaf0" postFractionAlong="0.403587374424" weight="0.511572728810471" delay="4.60657640289ms"/>
+            <connectionWD id="25" preCellId="../Pop_x/5/iaf0" preFractionAlong="0.409404466368" postCellId="../Pop_x/3/iaf0" postFractionAlong="0.799796596883" weight="0.738055621315407" delay="1.79910906295ms"/>
+            <connectionWD id="26" preCellId="../Pop_x/6/iaf0" preFractionAlong="0.360264372628" postCellId="../Pop_x/0/iaf0" postFractionAlong="0.42812634552" weight="0.760812031879673" delay="9.99887090377ms"/>
+            <connectionWD id="27" preCellId="../Pop_x/6/iaf0" preFractionAlong="0.881356123502" postCellId="../Pop_x/1/iaf0" postFractionAlong="0.304485052017" weight="0.313510220413273" delay="0.819647272698ms"/>
+            <connectionWD id="28" preCellId="../Pop_x/6/iaf0" preFractionAlong="0.600987198477" postCellId="../Pop_x/3/iaf0" postFractionAlong="0.455021435287" weight="0.274733769606565" delay="0.370780997353ms"/>
+            <connectionWD id="29" preCellId="../Pop_x/7/iaf0" preFractionAlong="0.949752099563" postCellId="../Pop_x/0/iaf0" postFractionAlong="0.780144887247" weight="0.290949537345366" delay="8.4537316785ms"/>
+            <connectionWD id="30" preCellId="../Pop_x/7/iaf0" preFractionAlong="0.567196869515" postCellId="../Pop_x/1/iaf0" postFractionAlong="0.279522412521" weight="0.591638204913146" delay="1.62146766846ms"/>
+            <connectionWD id="31" preCellId="../Pop_x/7/iaf0" preFractionAlong="0.170932311708" postCellId="../Pop_x/2/iaf0" postFractionAlong="0.628971044762" weight="0.158598269136359" delay="8.4953163517ms"/>
+            <connectionWD id="32" preCellId="../Pop_x/7/iaf0" preFractionAlong="0.488856351865" postCellId="../Pop_x/4/iaf0" postFractionAlong="0.441965534948" weight="0.054926819128028" delay="9.09262017906ms"/>
+            <connectionWD id="33" preCellId="../Pop_x/7/iaf0" preFractionAlong="0.711658575244" postCellId="../Pop_x/6/iaf0" postFractionAlong="0.272873790958" weight="0.004150303936741" delay="5.43258289275ms"/>
+        </projection>
+        <inputList id="il" population="Pop_x" component="pfs">
+            <input id="0" target="../Pop_x/0/iaf0" destination="synapses"/>
+            <input id="1" target="../Pop_x/1/iaf0" destination="synapses"/>
+            <input id="2" target="../Pop_x/2/iaf0" destination="synapses"/>
+            <input id="3" target="../Pop_x/3/iaf0" destination="synapses"/>
+            <input id="4" target="../Pop_x/4/iaf0" destination="synapses"/>
+            <input id="5" target="../Pop_x/5/iaf0" destination="synapses"/>
+            <input id="6" target="../Pop_x/6/iaf0" destination="synapses"/>
+            <input id="7" target="../Pop_x/7/iaf0" destination="synapses"/>
+        </inputList>
+    </network>
+</neuroml>
