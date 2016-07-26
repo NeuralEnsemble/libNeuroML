@@ -243,6 +243,20 @@ nml_doc_summary = MethodSpec(name='summary',
                     print("*     "+str(len(proj.connection_wds))+" connections (wd): "+str(proj.connection_wds[0]))
         
         print("*******************************************************")
+        
+        
+    def get_by_id(self,id):
+        all_ids = []
+        for ms in self.member_data_items_:
+            mlist = self.__getattribute__(ms.name)
+            for m in mlist:
+                if hasattr(m,"id"):
+                    if m.id == id:
+                        return m
+                    else:
+                        all_ids.append(m.id)
+        print("Id "+id+" not found. All ids: "+str(all_ids))
+        return None
     ''',
     class_names=("NeuroMLDocument")
     )

@@ -1,6 +1,57 @@
 
 from neuroml.nml.nml import parse as nmlparse
 import neuroml
+import os
+import inspect
+import sys
+
+def print_(msg, verbose=True):
+    if verbose:
+        print(msg)
+
+def read_neuroml2_file(nml2_file_name, include_includes=False, verbose=False, 
+                       already_included=[], print_method=print_):  
+    
+    print_method("Loading NeuroML2 file: %s" % nml2_file_name, verbose)
+    
+    if not os.path.isfile(nml2_file_name):
+        print_method("Unable to find file: %s!" % nml2_file_name, True)
+        sys.exit()
+        
+    if nml2_file_name.endswith('.h5') or nml2_file_name.endswith('.hdf5'):
+        nml2_doc = NeuroMLHdf5Loader.load(nml2_file_name)
+    else:
+        nml2_doc = NeuroMLLoader.load(nml2_file_name)
+    
+    base_path = os.path.dirname(os.path.realpath(nml2_file_name))
+    
+    if include_includes:
+        print_method('Including included files (included already: %s)' \
+                      % already_included, verbose)
+        
+        for include in nml2_doc.includes:
+            incl_loc = os.path.abspath(os.path.join(base_path, include.href))
+            if incl_loc not in already_included:
+                print_method("Loading included NeuroML2 file: %s (base: %s, resolved: %s)" % (include.href, base_path, incl_loc), 
+                              verbose)
+                nml2_sub_doc = read_neuroml2_file(incl_loc, True, 
+                    verbose=verbose, already_included=already_included)
+                already_included.append(incl_loc)
+                
+                membs = inspect.getmembers(nml2_sub_doc)
+
+                for memb in membs:
+                    if isinstance(memb[1], list) and len(memb[1])>0 \
+                            and not memb[0].endswith('_'):
+                        for entry in memb[1]:
+                            if memb[0] != 'includes':
+                                print_method("  Adding %s from: %s to list: %s" \
+                                    %(entry, incl_loc, memb[0]))
+                                getattr(nml2_doc, memb[0]).append(entry)
+                            
+        nml2_doc.includes = []
+            
+    return nml2_doc
 
 class NeuroMLLoader(object):
 

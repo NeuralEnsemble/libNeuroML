@@ -45,7 +45,9 @@ class NeuroMLXMLParser():
     print("Parsing: %s"%filename)
 
     import neuroml.loaders as loaders
-    self.nml_doc = loaders.NeuroMLLoader.load(filename)
+    
+    self.nml_doc = loaders.read_neuroml2_file(filename, include_includes=True)
+    
     print("Loaded: %s as NeuroMLDocument"%filename)
     
     
@@ -57,11 +59,15 @@ class NeuroMLXMLParser():
         
         for population in network.populations:
             
+            
+            component_obj = self.nml_doc.get_by_id(population.component)
+            
             if len(population.instances)>0 and population.type=='populationList':
                   
                 self.netHandler.handlePopulation(population.id, 
                                                  population.component, 
-                                                 len(population.instances))
+                                                 len(population.instances),
+                                                 component_obj)
 
                 for inst in population.instances:
 
@@ -73,7 +79,10 @@ class NeuroMLXMLParser():
                                             loc.y,       \
                                             loc.z)       
             else:
-                self.netHandler.handlePopulation(population.id, population.component, population.size)
+                self.netHandler.handlePopulation(population.id, 
+                                                 population.component, 
+                                                 population.size,
+                                                 component_obj)
                                                      
                 for i in range(population.size):
                     self.netHandler.handleLocation(i,                      \

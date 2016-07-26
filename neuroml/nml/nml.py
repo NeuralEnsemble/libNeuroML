@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Jul 12 13:55:18 2016 by generateDS.py version 2.22b.
+# Generated Tue Jul 26 19:40:28 2016 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -15154,6 +15154,20 @@ class NeuroMLDocument(Standalone):
                     print("*     "+str(len(proj.connection_wds))+" connections (wd): "+str(proj.connection_wds[0]))
         
         print("*******************************************************")
+        
+        
+    def get_by_id(self,id):
+        all_ids = []
+        for ms in self.member_data_items_:
+            mlist = self.__getattribute__(ms.name)
+            for m in mlist:
+                if hasattr(m,"id"):
+                    if m.id == id:
+                        return m
+                    else:
+                        all_ids.append(m.id)
+        print("Id "+id+" not found. All ids: "+str(all_ids))
+        return None
     # end class NeuroMLDocument
 
 

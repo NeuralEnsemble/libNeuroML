@@ -56,7 +56,7 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     #    
-    def handlePopulation(self, population_id, component, size):
+    def handlePopulation(self, population_id, component, size, component_obj=None):
       
         pop = neuroml.Population(id=population_id, component=component, size=size)
         self.populations[population_id] = pop

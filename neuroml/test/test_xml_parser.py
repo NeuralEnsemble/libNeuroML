@@ -37,6 +37,14 @@ class TestNeuroMLXMLParser(unittest.TestCase):
         currParser.parse(file_name)
 
         nml_doc = nmlHandler.get_nml_doc()
+        
+        summary = nml_doc.summary()
+        
+        print(summary)
+        
+        comp = nml_doc.get_by_id("IafNet")
+        print comp
+        comp = nml_doc.get_by_id("IafNet2")
 
         nml_file = os.path.dirname(__file__)+'/../examples/tmp/testh5_2_.nml'
         import neuroml.writers as writers
