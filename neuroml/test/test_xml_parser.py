@@ -43,7 +43,7 @@ class TestNeuroMLXMLParser(unittest.TestCase):
         print(summary)
         
         comp = nml_doc.get_by_id("IafNet")
-        print comp
+        print(comp)
         comp = nml_doc.get_by_id("IafNet2")
 
         nml_file = os.path.dirname(__file__)+'/../examples/tmp/testh5_2_.nml'
