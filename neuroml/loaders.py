@@ -46,7 +46,7 @@ def read_neuroml2_file(nml2_file_name, include_includes=False, verbose=False,
                         for entry in memb[1]:
                             if memb[0] != 'includes':
                                 print_method("  Adding %s from: %s to list: %s" \
-                                    %(entry, incl_loc, memb[0]))
+                                    %(entry.id if hasattr(entry,'id') else entry.name, incl_loc, memb[0]),verbose)
                                 getattr(nml2_doc, memb[0]).append(entry)
                             
         nml2_doc.includes = []
