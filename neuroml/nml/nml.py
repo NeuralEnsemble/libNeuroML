@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Jul 26 19:40:28 2016 by generateDS.py version 2.22b.
+# Generated Mon Aug 22 15:02:50 2016 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -2452,7 +2452,7 @@ class PlasticityMechanism(GeneratedsSuper):
             if not enumeration_respectee:
                 warnings_.warn('Value "%(value)s" does not match xsd enumeration restriction on PlasticityTypes' % {"value" : value.encode("utf-8")} )
     def validate_ZeroToOne(self, value):
-        # Validate type ZeroToOne, a restriction on xs:double.
+        # Validate type ZeroToOne, a restriction on xs:float.
         if value is not None and Validate_simpletypes_:
             if value < 0:
                 warnings_.warn('Value "%(value)s" does not match xsd minInclusive restriction on ZeroToOne' % {"value" : value} )
@@ -2567,7 +2567,7 @@ class SegmentParent(GeneratedsSuper):
         if value is not None and Validate_simpletypes_:
             pass
     def validate_ZeroToOne(self, value):
-        # Validate type ZeroToOne, a restriction on xs:double.
+        # Validate type ZeroToOne, a restriction on xs:float.
         if value is not None and Validate_simpletypes_:
             if value < 0:
                 warnings_.warn('Value "%(value)s" does not match xsd minInclusive restriction on ZeroToOne' % {"value" : value} )
@@ -5279,7 +5279,7 @@ class Input(GeneratedsSuper):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
     validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def validate_ZeroToOne(self, value):
-        # Validate type ZeroToOne, a restriction on xs:double.
+        # Validate type ZeroToOne, a restriction on xs:float.
         if value is not None and Validate_simpletypes_:
             if value < 0:
                 warnings_.warn('Value "%(value)s" does not match xsd minInclusive restriction on ZeroToOne' % {"value" : value} )
@@ -15088,7 +15088,8 @@ class NeuroMLDocument(Standalone):
             self.IF_cond_exp.append(obj_)
             obj_.original_tagname_ = 'IF_cond_exp'
         elif nodeName_ == 'EIF_cond_exp_isfa_ista':
-            obj_ = EIF_cond_exp_isfa_ista.factory()
+            class_obj_ = self.get_class_obj_(child_, EIF_cond_exp_isfa_ista)
+            obj_ = class_obj_.factory()
             obj_.build(child_)
             self.EIF_cond_exp_isfa_ista.append(obj_)
             obj_.original_tagname_ = 'EIF_cond_exp_isfa_ista'
@@ -15173,7 +15174,7 @@ class NeuroMLDocument(Standalone):
 
 class BasePynnSynapse(BaseSynapse):
     member_data_items_ = [
-        MemberSpec_('tau_syn', 'xs:double', 0),
+        MemberSpec_('tau_syn', 'xs:float', 0),
     ]
     subclass = None
     superclass = BaseSynapse
@@ -15222,7 +15223,7 @@ class BasePynnSynapse(BaseSynapse):
         super(BasePynnSynapse, self).exportAttributes(outfile, level, already_processed, namespace_, name_='BasePynnSynapse')
         if self.tau_syn is not None and 'tau_syn' not in already_processed:
             already_processed.add('tau_syn')
-            outfile.write(' tau_syn="%s"' % self.gds_format_double(self.tau_syn, input_name='tau_syn'))
+            outfile.write(' tau_syn="%s"' % self.gds_format_float(self.tau_syn, input_name='tau_syn'))
         if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -15257,11 +15258,11 @@ class BasePynnSynapse(BaseSynapse):
 
 class basePyNNCell(BaseCell):
     member_data_items_ = [
-        MemberSpec_('cm', 'xs:double', 0),
-        MemberSpec_('i_offset', 'xs:double', 0),
-        MemberSpec_('tau_syn_E', 'xs:double', 0),
-        MemberSpec_('tau_syn_I', 'xs:double', 0),
-        MemberSpec_('v_init', 'xs:double', 0),
+        MemberSpec_('cm', 'xs:float', 0),
+        MemberSpec_('i_offset', 'xs:float', 0),
+        MemberSpec_('tau_syn_E', 'xs:float', 0),
+        MemberSpec_('tau_syn_I', 'xs:float', 0),
+        MemberSpec_('v_init', 'xs:float', 0),
     ]
     subclass = None
     superclass = BaseCell
@@ -15314,19 +15315,19 @@ class basePyNNCell(BaseCell):
         super(basePyNNCell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='basePyNNCell')
         if self.cm is not None and 'cm' not in already_processed:
             already_processed.add('cm')
-            outfile.write(' cm="%s"' % self.gds_format_double(self.cm, input_name='cm'))
+            outfile.write(' cm="%s"' % self.gds_format_float(self.cm, input_name='cm'))
         if self.i_offset is not None and 'i_offset' not in already_processed:
             already_processed.add('i_offset')
-            outfile.write(' i_offset="%s"' % self.gds_format_double(self.i_offset, input_name='i_offset'))
+            outfile.write(' i_offset="%s"' % self.gds_format_float(self.i_offset, input_name='i_offset'))
         if self.tau_syn_E is not None and 'tau_syn_E' not in already_processed:
             already_processed.add('tau_syn_E')
-            outfile.write(' tau_syn_E="%s"' % self.gds_format_double(self.tau_syn_E, input_name='tau_syn_E'))
+            outfile.write(' tau_syn_E="%s"' % self.gds_format_float(self.tau_syn_E, input_name='tau_syn_E'))
         if self.tau_syn_I is not None and 'tau_syn_I' not in already_processed:
             already_processed.add('tau_syn_I')
-            outfile.write(' tau_syn_I="%s"' % self.gds_format_double(self.tau_syn_I, input_name='tau_syn_I'))
+            outfile.write(' tau_syn_I="%s"' % self.gds_format_float(self.tau_syn_I, input_name='tau_syn_I'))
         if self.v_init is not None and 'v_init' not in already_processed:
             already_processed.add('v_init')
-            outfile.write(' v_init="%s"' % self.gds_format_double(self.v_init, input_name='v_init'))
+            outfile.write(' v_init="%s"' % self.gds_format_float(self.v_init, input_name='v_init'))
         if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -15426,7 +15427,7 @@ class BaseConnectionNewFormat(BaseConnection):
         if value is not None and Validate_simpletypes_:
             pass
     def validate_ZeroToOne(self, value):
-        # Validate type ZeroToOne, a restriction on xs:double.
+        # Validate type ZeroToOne, a restriction on xs:float.
         if value is not None and Validate_simpletypes_:
             if value < 0:
                 warnings_.warn('Value "%(value)s" does not match xsd minInclusive restriction on ZeroToOne' % {"value" : value} )
@@ -15605,7 +15606,7 @@ class BaseConnectionOldFormat(BaseConnection):
         if value is not None and Validate_simpletypes_:
             pass
     def validate_ZeroToOne(self, value):
-        # Validate type ZeroToOne, a restriction on xs:double.
+        # Validate type ZeroToOne, a restriction on xs:float.
         if value is not None and Validate_simpletypes_:
             if value < 0:
                 warnings_.warn('Value "%(value)s" does not match xsd minInclusive restriction on ZeroToOne' % {"value" : value} )
@@ -17885,7 +17886,7 @@ class ExpCurrSynapse(BasePynnSynapse):
 
 class AlphaCondSynapse(BasePynnSynapse):
     member_data_items_ = [
-        MemberSpec_('e_rev', 'xs:double', 0),
+        MemberSpec_('e_rev', 'xs:float', 0),
     ]
     subclass = None
     superclass = BasePynnSynapse
@@ -17933,7 +17934,7 @@ class AlphaCondSynapse(BasePynnSynapse):
         super(AlphaCondSynapse, self).exportAttributes(outfile, level, already_processed, namespace_, name_='AlphaCondSynapse')
         if self.e_rev is not None and 'e_rev' not in already_processed:
             already_processed.add('e_rev')
-            outfile.write(' e_rev="%s"' % self.gds_format_double(self.e_rev, input_name='e_rev'))
+            outfile.write(' e_rev="%s"' % self.gds_format_float(self.e_rev, input_name='e_rev'))
     def exportChildren(self, outfile, level, namespace_='', name_='AlphaCondSynapse', fromsubclass_=False, pretty_print=True):
         super(AlphaCondSynapse, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
     def build(self, node):
@@ -17960,7 +17961,7 @@ class AlphaCondSynapse(BasePynnSynapse):
 
 class ExpCondSynapse(BasePynnSynapse):
     member_data_items_ = [
-        MemberSpec_('e_rev', 'xs:double', 0),
+        MemberSpec_('e_rev', 'xs:float', 0),
     ]
     subclass = None
     superclass = BasePynnSynapse
@@ -18008,7 +18009,7 @@ class ExpCondSynapse(BasePynnSynapse):
         super(ExpCondSynapse, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ExpCondSynapse')
         if self.e_rev is not None and 'e_rev' not in already_processed:
             already_processed.add('e_rev')
-            outfile.write(' e_rev="%s"' % self.gds_format_double(self.e_rev, input_name='e_rev'))
+            outfile.write(' e_rev="%s"' % self.gds_format_float(self.e_rev, input_name='e_rev'))
     def exportChildren(self, outfile, level, namespace_='', name_='ExpCondSynapse', fromsubclass_=False, pretty_print=True):
         super(ExpCondSynapse, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
     def build(self, node):
@@ -18035,15 +18036,15 @@ class ExpCondSynapse(BasePynnSynapse):
 
 class HH_cond_exp(basePyNNCell):
     member_data_items_ = [
-        MemberSpec_('v_offset', 'xs:double', 0),
-        MemberSpec_('e_rev_E', 'xs:double', 0),
-        MemberSpec_('e_rev_I', 'xs:double', 0),
-        MemberSpec_('e_rev_K', 'xs:double', 0),
-        MemberSpec_('e_rev_Na', 'xs:double', 0),
-        MemberSpec_('e_rev_leak', 'xs:double', 0),
-        MemberSpec_('g_leak', 'xs:double', 0),
-        MemberSpec_('gbar_K', 'xs:double', 0),
-        MemberSpec_('gbar_Na', 'xs:double', 0),
+        MemberSpec_('v_offset', 'xs:float', 0),
+        MemberSpec_('e_rev_E', 'xs:float', 0),
+        MemberSpec_('e_rev_I', 'xs:float', 0),
+        MemberSpec_('e_rev_K', 'xs:float', 0),
+        MemberSpec_('e_rev_Na', 'xs:float', 0),
+        MemberSpec_('e_rev_leak', 'xs:float', 0),
+        MemberSpec_('g_leak', 'xs:float', 0),
+        MemberSpec_('gbar_K', 'xs:float', 0),
+        MemberSpec_('gbar_Na', 'xs:float', 0),
     ]
     subclass = None
     superclass = basePyNNCell
@@ -18099,31 +18100,31 @@ class HH_cond_exp(basePyNNCell):
         super(HH_cond_exp, self).exportAttributes(outfile, level, already_processed, namespace_, name_='HH_cond_exp')
         if self.v_offset is not None and 'v_offset' not in already_processed:
             already_processed.add('v_offset')
-            outfile.write(' v_offset="%s"' % self.gds_format_double(self.v_offset, input_name='v_offset'))
+            outfile.write(' v_offset="%s"' % self.gds_format_float(self.v_offset, input_name='v_offset'))
         if self.e_rev_E is not None and 'e_rev_E' not in already_processed:
             already_processed.add('e_rev_E')
-            outfile.write(' e_rev_E="%s"' % self.gds_format_double(self.e_rev_E, input_name='e_rev_E'))
+            outfile.write(' e_rev_E="%s"' % self.gds_format_float(self.e_rev_E, input_name='e_rev_E'))
         if self.e_rev_I is not None and 'e_rev_I' not in already_processed:
             already_processed.add('e_rev_I')
-            outfile.write(' e_rev_I="%s"' % self.gds_format_double(self.e_rev_I, input_name='e_rev_I'))
+            outfile.write(' e_rev_I="%s"' % self.gds_format_float(self.e_rev_I, input_name='e_rev_I'))
         if self.e_rev_K is not None and 'e_rev_K' not in already_processed:
             already_processed.add('e_rev_K')
-            outfile.write(' e_rev_K="%s"' % self.gds_format_double(self.e_rev_K, input_name='e_rev_K'))
+            outfile.write(' e_rev_K="%s"' % self.gds_format_float(self.e_rev_K, input_name='e_rev_K'))
         if self.e_rev_Na is not None and 'e_rev_Na' not in already_processed:
             already_processed.add('e_rev_Na')
-            outfile.write(' e_rev_Na="%s"' % self.gds_format_double(self.e_rev_Na, input_name='e_rev_Na'))
+            outfile.write(' e_rev_Na="%s"' % self.gds_format_float(self.e_rev_Na, input_name='e_rev_Na'))
         if self.e_rev_leak is not None and 'e_rev_leak' not in already_processed:
             already_processed.add('e_rev_leak')
-            outfile.write(' e_rev_leak="%s"' % self.gds_format_double(self.e_rev_leak, input_name='e_rev_leak'))
+            outfile.write(' e_rev_leak="%s"' % self.gds_format_float(self.e_rev_leak, input_name='e_rev_leak'))
         if self.g_leak is not None and 'g_leak' not in already_processed:
             already_processed.add('g_leak')
-            outfile.write(' g_leak="%s"' % self.gds_format_double(self.g_leak, input_name='g_leak'))
+            outfile.write(' g_leak="%s"' % self.gds_format_float(self.g_leak, input_name='g_leak'))
         if self.gbar_K is not None and 'gbar_K' not in already_processed:
             already_processed.add('gbar_K')
-            outfile.write(' gbar_K="%s"' % self.gds_format_double(self.gbar_K, input_name='gbar_K'))
+            outfile.write(' gbar_K="%s"' % self.gds_format_float(self.gbar_K, input_name='gbar_K'))
         if self.gbar_Na is not None and 'gbar_Na' not in already_processed:
             already_processed.add('gbar_Na')
-            outfile.write(' gbar_Na="%s"' % self.gds_format_double(self.gbar_Na, input_name='gbar_Na'))
+            outfile.write(' gbar_Na="%s"' % self.gds_format_float(self.gbar_Na, input_name='gbar_Na'))
     def exportChildren(self, outfile, level, namespace_='', name_='HH_cond_exp', fromsubclass_=False, pretty_print=True):
         super(HH_cond_exp, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
     def build(self, node):
@@ -18206,11 +18207,11 @@ class HH_cond_exp(basePyNNCell):
 
 class basePyNNIaFCell(basePyNNCell):
     member_data_items_ = [
-        MemberSpec_('tau_m', 'xs:double', 0),
-        MemberSpec_('tau_refrac', 'xs:double', 0),
-        MemberSpec_('v_reset', 'xs:double', 0),
-        MemberSpec_('v_rest', 'xs:double', 0),
-        MemberSpec_('v_thresh', 'xs:double', 0),
+        MemberSpec_('tau_m', 'xs:float', 0),
+        MemberSpec_('tau_refrac', 'xs:float', 0),
+        MemberSpec_('v_reset', 'xs:float', 0),
+        MemberSpec_('v_rest', 'xs:float', 0),
+        MemberSpec_('v_thresh', 'xs:float', 0),
     ]
     subclass = None
     superclass = basePyNNCell
@@ -18263,19 +18264,19 @@ class basePyNNIaFCell(basePyNNCell):
         super(basePyNNIaFCell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='basePyNNIaFCell')
         if self.tau_m is not None and 'tau_m' not in already_processed:
             already_processed.add('tau_m')
-            outfile.write(' tau_m="%s"' % self.gds_format_double(self.tau_m, input_name='tau_m'))
+            outfile.write(' tau_m="%s"' % self.gds_format_float(self.tau_m, input_name='tau_m'))
         if self.tau_refrac is not None and 'tau_refrac' not in already_processed:
             already_processed.add('tau_refrac')
-            outfile.write(' tau_refrac="%s"' % self.gds_format_double(self.tau_refrac, input_name='tau_refrac'))
+            outfile.write(' tau_refrac="%s"' % self.gds_format_float(self.tau_refrac, input_name='tau_refrac'))
         if self.v_reset is not None and 'v_reset' not in already_processed:
             already_processed.add('v_reset')
-            outfile.write(' v_reset="%s"' % self.gds_format_double(self.v_reset, input_name='v_reset'))
+            outfile.write(' v_reset="%s"' % self.gds_format_float(self.v_reset, input_name='v_reset'))
         if self.v_rest is not None and 'v_rest' not in already_processed:
             already_processed.add('v_rest')
-            outfile.write(' v_rest="%s"' % self.gds_format_double(self.v_rest, input_name='v_rest'))
+            outfile.write(' v_rest="%s"' % self.gds_format_float(self.v_rest, input_name='v_rest'))
         if self.v_thresh is not None and 'v_thresh' not in already_processed:
             already_processed.add('v_thresh')
-            outfile.write(' v_thresh="%s"' % self.gds_format_double(self.v_thresh, input_name='v_thresh'))
+            outfile.write(' v_thresh="%s"' % self.gds_format_float(self.v_thresh, input_name='v_thresh'))
         if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -19894,8 +19895,8 @@ class IF_curr_alpha(basePyNNIaFCell):
 
 class basePyNNIaFCondCell(basePyNNIaFCell):
     member_data_items_ = [
-        MemberSpec_('e_rev_E', 'xs:double', 0),
-        MemberSpec_('e_rev_I', 'xs:double', 0),
+        MemberSpec_('e_rev_E', 'xs:float', 0),
+        MemberSpec_('e_rev_I', 'xs:float', 0),
     ]
     subclass = None
     superclass = basePyNNIaFCell
@@ -19945,10 +19946,10 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
         super(basePyNNIaFCondCell, self).exportAttributes(outfile, level, already_processed, namespace_, name_='basePyNNIaFCondCell')
         if self.e_rev_E is not None and 'e_rev_E' not in already_processed:
             already_processed.add('e_rev_E')
-            outfile.write(' e_rev_E="%s"' % self.gds_format_double(self.e_rev_E, input_name='e_rev_E'))
+            outfile.write(' e_rev_E="%s"' % self.gds_format_float(self.e_rev_E, input_name='e_rev_E'))
         if self.e_rev_I is not None and 'e_rev_I' not in already_processed:
             already_processed.add('e_rev_I')
-            outfile.write(' e_rev_I="%s"' % self.gds_format_double(self.e_rev_I, input_name='e_rev_I'))
+            outfile.write(' e_rev_I="%s"' % self.gds_format_float(self.e_rev_I, input_name='e_rev_I'))
         if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -20514,147 +20515,25 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
 # end class AlphaSynapse
 
 
-class EIF_cond_alpha_isfa_ista(basePyNNIaFCondCell):
-    member_data_items_ = [
-        MemberSpec_('a', 'xs:double', 0),
-        MemberSpec_('b', 'xs:double', 0),
-        MemberSpec_('delta_T', 'xs:double', 0),
-        MemberSpec_('tau_w', 'xs:double', 0),
-        MemberSpec_('v_spike', 'xs:double', 0),
-    ]
-    subclass = None
-    superclass = basePyNNIaFCondCell
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, e_rev_E=None, e_rev_I=None, a=None, b=None, delta_T=None, tau_w=None, v_spike=None):
-        self.original_tagname_ = None
-        super(EIF_cond_alpha_isfa_ista, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I, )
-        self.a = _cast(float, a)
-        self.b = _cast(float, b)
-        self.delta_T = _cast(float, delta_T)
-        self.tau_w = _cast(float, tau_w)
-        self.v_spike = _cast(float, v_spike)
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, EIF_cond_alpha_isfa_ista)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if EIF_cond_alpha_isfa_ista.subclass:
-            return EIF_cond_alpha_isfa_ista.subclass(*args_, **kwargs_)
-        else:
-            return EIF_cond_alpha_isfa_ista(*args_, **kwargs_)
-    factory = staticmethod(factory)
-    def hasContent_(self):
-        if (
-            super(EIF_cond_alpha_isfa_ista, self).hasContent_()
-        ):
-            return True
-        else:
-            return False
-    def export(self, outfile, level, namespace_='', name_='EIF_cond_alpha_isfa_ista', namespacedef_='', pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='EIF_cond_alpha_isfa_ista')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='EIF_cond_alpha_isfa_ista', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='EIF_cond_alpha_isfa_ista'):
-        super(EIF_cond_alpha_isfa_ista, self).exportAttributes(outfile, level, already_processed, namespace_, name_='EIF_cond_alpha_isfa_ista')
-        if self.a is not None and 'a' not in already_processed:
-            already_processed.add('a')
-            outfile.write(' a="%s"' % self.gds_format_double(self.a, input_name='a'))
-        if self.b is not None and 'b' not in already_processed:
-            already_processed.add('b')
-            outfile.write(' b="%s"' % self.gds_format_double(self.b, input_name='b'))
-        if self.delta_T is not None and 'delta_T' not in already_processed:
-            already_processed.add('delta_T')
-            outfile.write(' delta_T="%s"' % self.gds_format_double(self.delta_T, input_name='delta_T'))
-        if self.tau_w is not None and 'tau_w' not in already_processed:
-            already_processed.add('tau_w')
-            outfile.write(' tau_w="%s"' % self.gds_format_double(self.tau_w, input_name='tau_w'))
-        if self.v_spike is not None and 'v_spike' not in already_processed:
-            already_processed.add('v_spike')
-            outfile.write(' v_spike="%s"' % self.gds_format_double(self.v_spike, input_name='v_spike'))
-    def exportChildren(self, outfile, level, namespace_='', name_='EIF_cond_alpha_isfa_ista', fromsubclass_=False, pretty_print=True):
-        super(EIF_cond_alpha_isfa_ista, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
-    def build(self, node):
-        already_processed = set()
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_)
-        return self
-    def buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_('a', node)
-        if value is not None and 'a' not in already_processed:
-            already_processed.add('a')
-            try:
-                self.a = float(value)
-            except ValueError as exp:
-                raise ValueError('Bad float/double attribute (a): %s' % exp)
-        value = find_attr_value_('b', node)
-        if value is not None and 'b' not in already_processed:
-            already_processed.add('b')
-            try:
-                self.b = float(value)
-            except ValueError as exp:
-                raise ValueError('Bad float/double attribute (b): %s' % exp)
-        value = find_attr_value_('delta_T', node)
-        if value is not None and 'delta_T' not in already_processed:
-            already_processed.add('delta_T')
-            try:
-                self.delta_T = float(value)
-            except ValueError as exp:
-                raise ValueError('Bad float/double attribute (delta_T): %s' % exp)
-        value = find_attr_value_('tau_w', node)
-        if value is not None and 'tau_w' not in already_processed:
-            already_processed.add('tau_w')
-            try:
-                self.tau_w = float(value)
-            except ValueError as exp:
-                raise ValueError('Bad float/double attribute (tau_w): %s' % exp)
-        value = find_attr_value_('v_spike', node)
-        if value is not None and 'v_spike' not in already_processed:
-            already_processed.add('v_spike')
-            try:
-                self.v_spike = float(value)
-            except ValueError as exp:
-                raise ValueError('Bad float/double attribute (v_spike): %s' % exp)
-        super(EIF_cond_alpha_isfa_ista, self).buildAttributes(node, attrs, already_processed)
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        super(EIF_cond_alpha_isfa_ista, self).buildChildren(child_, node, nodeName_, True)
-        pass
-# end class EIF_cond_alpha_isfa_ista
-
-
 class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
     member_data_items_ = [
-        MemberSpec_('a', 'xs:double', 0),
-        MemberSpec_('b', 'xs:double', 0),
-        MemberSpec_('delta_T', 'xs:double', 0),
-        MemberSpec_('tau_w', 'xs:double', 0),
-        MemberSpec_('v_spike', 'xs:double', 0),
+        MemberSpec_('a', 'xs:float', 0),
+        MemberSpec_('b', 'xs:float', 0),
+        MemberSpec_('delta_T', 'xs:float', 0),
+        MemberSpec_('tau_w', 'xs:float', 0),
+        MemberSpec_('v_spike', 'xs:float', 0),
     ]
     subclass = None
     superclass = basePyNNIaFCondCell
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, e_rev_E=None, e_rev_I=None, a=None, b=None, delta_T=None, tau_w=None, v_spike=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, e_rev_E=None, e_rev_I=None, a=None, b=None, delta_T=None, tau_w=None, v_spike=None, extensiontype_=None):
         self.original_tagname_ = None
-        super(EIF_cond_exp_isfa_ista, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I, )
+        super(EIF_cond_exp_isfa_ista, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I, extensiontype_, )
         self.a = _cast(float, a)
         self.b = _cast(float, b)
         self.delta_T = _cast(float, delta_T)
         self.tau_w = _cast(float, tau_w)
         self.v_spike = _cast(float, v_spike)
+        self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -20695,19 +20574,23 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
         super(EIF_cond_exp_isfa_ista, self).exportAttributes(outfile, level, already_processed, namespace_, name_='EIF_cond_exp_isfa_ista')
         if self.a is not None and 'a' not in already_processed:
             already_processed.add('a')
-            outfile.write(' a="%s"' % self.gds_format_double(self.a, input_name='a'))
+            outfile.write(' a="%s"' % self.gds_format_float(self.a, input_name='a'))
         if self.b is not None and 'b' not in already_processed:
             already_processed.add('b')
-            outfile.write(' b="%s"' % self.gds_format_double(self.b, input_name='b'))
+            outfile.write(' b="%s"' % self.gds_format_float(self.b, input_name='b'))
         if self.delta_T is not None and 'delta_T' not in already_processed:
             already_processed.add('delta_T')
-            outfile.write(' delta_T="%s"' % self.gds_format_double(self.delta_T, input_name='delta_T'))
+            outfile.write(' delta_T="%s"' % self.gds_format_float(self.delta_T, input_name='delta_T'))
         if self.tau_w is not None and 'tau_w' not in already_processed:
             already_processed.add('tau_w')
-            outfile.write(' tau_w="%s"' % self.gds_format_double(self.tau_w, input_name='tau_w'))
+            outfile.write(' tau_w="%s"' % self.gds_format_float(self.tau_w, input_name='tau_w'))
         if self.v_spike is not None and 'v_spike' not in already_processed:
             already_processed.add('v_spike')
-            outfile.write(' v_spike="%s"' % self.gds_format_double(self.v_spike, input_name='v_spike'))
+            outfile.write(' v_spike="%s"' % self.gds_format_float(self.v_spike, input_name='v_spike'))
+        if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            outfile.write(' xsi:type="%s"' % self.extensiontype_)
     def exportChildren(self, outfile, level, namespace_='', name_='EIF_cond_exp_isfa_ista', fromsubclass_=False, pretty_print=True):
         super(EIF_cond_exp_isfa_ista, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
     def build(self, node):
@@ -20753,6 +20636,10 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
                 self.v_spike = float(value)
             except ValueError as exp:
                 raise ValueError('Bad float/double attribute (v_spike): %s' % exp)
+        value = find_attr_value_('xsi:type', node)
+        if value is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            self.extensiontype_ = value
         super(EIF_cond_exp_isfa_ista, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(EIF_cond_exp_isfa_ista, self).buildChildren(child_, node, nodeName_, True)
@@ -20970,6 +20857,69 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
             obj_.original_tagname_ = 'blockMechanism'
         super(BlockingPlasticSynapse, self).buildChildren(child_, node, nodeName_, True)
 # end class BlockingPlasticSynapse
+
+
+class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
+    member_data_items_ = [
+    ]
+    subclass = None
+    superclass = EIF_cond_exp_isfa_ista
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, e_rev_E=None, e_rev_I=None, a=None, b=None, delta_T=None, tau_w=None, v_spike=None):
+        self.original_tagname_ = None
+        super(EIF_cond_alpha_isfa_ista, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I, a, b, delta_T, tau_w, v_spike, )
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, EIF_cond_alpha_isfa_ista)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if EIF_cond_alpha_isfa_ista.subclass:
+            return EIF_cond_alpha_isfa_ista.subclass(*args_, **kwargs_)
+        else:
+            return EIF_cond_alpha_isfa_ista(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            super(EIF_cond_alpha_isfa_ista, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='EIF_cond_alpha_isfa_ista', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='EIF_cond_alpha_isfa_ista')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='EIF_cond_alpha_isfa_ista', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='EIF_cond_alpha_isfa_ista'):
+        super(EIF_cond_alpha_isfa_ista, self).exportAttributes(outfile, level, already_processed, namespace_, name_='EIF_cond_alpha_isfa_ista')
+    def exportChildren(self, outfile, level, namespace_='', name_='EIF_cond_alpha_isfa_ista', fromsubclass_=False, pretty_print=True):
+        super(EIF_cond_alpha_isfa_ista, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        super(EIF_cond_alpha_isfa_ista, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(EIF_cond_alpha_isfa_ista, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class EIF_cond_alpha_isfa_ista
 
 
 GDSClassesMapping = {
