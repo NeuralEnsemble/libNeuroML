@@ -255,13 +255,34 @@ nml_doc_summary = MethodSpec(name='summary',
                         return m
                     else:
                         all_ids.append(m.id)
-        print("Id "+id+" not found. All ids: "+str(all_ids))
+        print("Id "+id+" not found in <neuroml> element. All ids: "+str(all_ids))
         return None
     ''',
     class_names=("NeuroMLDocument")
     )
   
 METHOD_SPECS+=(nml_doc_summary,)
+
+network_get_by_id = MethodSpec(name='get_by_id',
+    source='''\
+
+    def get_by_id(self,id):
+        all_ids = []
+        for ms in self.member_data_items_:
+            mlist = self.__getattribute__(ms.name)
+            for m in mlist:
+                if hasattr(m,"id"):
+                    if m.id == id:
+                        return m
+                    else:
+                        all_ids.append(m.id)
+        print("Id "+id+" not found in <network> element. All ids: "+str(all_ids))
+        return None
+    ''',
+    class_names=("Network")
+    )
+  
+METHOD_SPECS+=(network_get_by_id,)
 
     
 inserts  = {}

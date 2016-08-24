@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Aug 22 15:02:50 2016 by generateDS.py version 2.22b.
+# Generated Wed Aug 24 11:47:02 2016 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -7479,6 +7479,19 @@ class Network(Standalone):
             obj_.original_tagname_ = 'inputList'
         super(Network, self).buildChildren(child_, node, nodeName_, True)
 
+    def get_by_id(self,id):
+        all_ids = []
+        for ms in self.member_data_items_:
+            mlist = self.__getattribute__(ms.name)
+            for m in mlist:
+                if hasattr(m,"id"):
+                    if m.id == id:
+                        return m
+                    else:
+                        all_ids.append(m.id)
+        print("Id "+id+" not found in <network> element. All ids: "+str(all_ids))
+        return None
+    
     def exportHdf5(self, h5file, h5Group):
         print("Exporting Network: "+str(self.id)+" as HDF5")
         
@@ -15167,7 +15180,7 @@ class NeuroMLDocument(Standalone):
                         return m
                     else:
                         all_ids.append(m.id)
-        print("Id "+id+" not found. All ids: "+str(all_ids))
+        print("Id "+id+" not found in <neuroml> element. All ids: "+str(all_ids))
         return None
     # end class NeuroMLDocument
 
