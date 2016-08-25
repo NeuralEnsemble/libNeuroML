@@ -9,7 +9,6 @@ for line in open('neuroml/__init__.py'):
         version = line.split("=")[1].strip()[1:-1]
 
 setup(
-    data_files=[("",['neuroml/test/Purk2M9s.nml'])],
     name = "libNeuroML",
     version = version,
     packages = ['neuroml', 'neuroml.test','neuroml.nml','neuroml.hdf5'],

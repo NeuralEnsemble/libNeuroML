@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Aug 25 13:36:40 2016 by generateDS.py version 2.22b.
+# Generated Thu Aug 25 18:19:35 2016 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -2647,6 +2647,15 @@ class SegmentParent(GeneratedsSuper):
         length = ((prox_x-dist_x)**2 + (prox_y-dist_y)**2 + (prox_z-dist_z)**2)**(0.5)
 
         return length
+        
+    def __str__(self):
+        
+        return "<Segment|"+str(self.id)+"|"+self.name+">"
+        
+    def __repr__(self):
+    
+        return str(self)
+    
     @property
     def volume(self):
         from math import pi
@@ -3330,6 +3339,15 @@ class SegmentEndPoint(GeneratedsSuper):
         length = ((prox_x-dist_x)**2 + (prox_y-dist_y)**2 + (prox_z-dist_z)**2)**(0.5)
 
         return length
+        
+    def __str__(self):
+        
+        return "<Segment|"+str(self.id)+"|"+self.name+">"
+        
+    def __repr__(self):
+    
+        return str(self)
+    
     @property
     def volume(self):
         from math import pi
@@ -6846,7 +6864,77 @@ class CellSet(Base):
         if obj_ is not None:
             self.add_anytypeobjs_(obj_)
         super(CellSet, self).buildChildren(child_, node, nodeName_, True)
-# end class CellSet
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class CellSet
 
 
 class Population(Standalone):
@@ -11495,6 +11583,15 @@ class SegmentGroup(Base):
         length = ((prox_x-dist_x)**2 + (prox_y-dist_y)**2 + (prox_z-dist_z)**2)**(0.5)
 
         return length
+        
+    def __str__(self):
+        
+        return "<Segment|"+str(self.id)+"|"+self.name+">"
+        
+    def __repr__(self):
+    
+        return str(self)
+    
     @property
     def volume(self):
         from math import pi
@@ -11637,6 +11734,15 @@ class Segment(BaseNonNegativeIntegerId):
         length = ((prox_x-dist_x)**2 + (prox_y-dist_y)**2 + (prox_z-dist_z)**2)**(0.5)
 
         return length
+        
+    def __str__(self):
+        
+        return "<Segment|"+str(self.id)+"|"+self.name+">"
+        
+    def __repr__(self):
+    
+        return str(self)
+    
     @property
     def volume(self):
         from math import pi
@@ -11830,7 +11936,77 @@ class BaseCell(Standalone):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(BaseCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class BaseCell
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class BaseCell
 
 
 class BaseSynapse(Standalone):
@@ -15398,7 +15574,77 @@ class basePyNNCell(BaseCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(basePyNNCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class basePyNNCell
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class basePyNNCell
 
 
 class BaseConnectionNewFormat(BaseConnection):
@@ -16007,7 +16253,77 @@ class Cell(BaseCell):
             self.biophysical_properties = obj_
             obj_.original_tagname_ = 'biophysicalProperties'
         super(Cell, self).buildChildren(child_, node, nodeName_, True)
-# end class Cell
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class Cell
 
 
 class PinskyRinzelCA3Cell(BaseCell):
@@ -16315,7 +16631,77 @@ class PinskyRinzelCA3Cell(BaseCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(PinskyRinzelCA3Cell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class PinskyRinzelCA3Cell
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class PinskyRinzelCA3Cell
 
 
 class FitzHughNagumo1969Cell(BaseCell):
@@ -16445,7 +16831,77 @@ class FitzHughNagumo1969Cell(BaseCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(FitzHughNagumo1969Cell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class FitzHughNagumo1969Cell
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class FitzHughNagumo1969Cell
 
 
 class FitzHughNagumoCell(BaseCell):
@@ -16525,7 +16981,77 @@ class FitzHughNagumoCell(BaseCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(FitzHughNagumoCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class FitzHughNagumoCell
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class FitzHughNagumoCell
 
 
 class BaseCellMembPotCap(BaseCell):
@@ -16616,7 +17142,77 @@ class BaseCellMembPotCap(BaseCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(BaseCellMembPotCap, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class BaseCellMembPotCap
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class BaseCellMembPotCap
 
 
 class IzhikevichCell(BaseCell):
@@ -16753,7 +17349,77 @@ class IzhikevichCell(BaseCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(IzhikevichCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class IzhikevichCell
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class IzhikevichCell
 
 
 class IafCell(BaseCell):
@@ -16896,7 +17562,77 @@ class IafCell(BaseCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(IafCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class IafCell
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class IafCell
 
 
 class IafTauCell(BaseCell):
@@ -17022,7 +17758,77 @@ class IafTauCell(BaseCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(IafTauCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class IafTauCell
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class IafTauCell
 
 
 class GradedSynapse(BaseSynapse):
@@ -18347,7 +19153,77 @@ class basePyNNIaFCell(basePyNNCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(basePyNNIaFCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class basePyNNIaFCell
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class basePyNNIaFCell
 
 
 class ContinuousConnection(BaseConnectionNewFormat):
@@ -18858,7 +19734,77 @@ class Cell2CaPools(Cell):
             self.biophysical_properties2_ca_pools = obj_
             obj_.original_tagname_ = 'biophysicalProperties2CaPools'
         super(Cell2CaPools, self).buildChildren(child_, node, nodeName_, True)
-# end class Cell2CaPools
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class Cell2CaPools
 
 
 class AdExIaFCell(BaseCellMembPotCap):
@@ -19049,7 +19995,77 @@ class AdExIaFCell(BaseCellMembPotCap):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(AdExIaFCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class AdExIaFCell
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class AdExIaFCell
 
 
 class Izhikevich2007Cell(BaseCellMembPotCap):
@@ -19237,7 +20253,77 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(Izhikevich2007Cell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class Izhikevich2007Cell
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class Izhikevich2007Cell
 
 
 class IafRefCell(IafCell):
@@ -19317,7 +20403,77 @@ class IafRefCell(IafCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(IafRefCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class IafRefCell
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class IafRefCell
 
 
 class IafTauRefCell(IafTauCell):
@@ -19397,7 +20553,77 @@ class IafTauRefCell(IafTauCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(IafTauRefCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class IafTauRefCell
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class IafTauRefCell
 
 
 class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
@@ -20005,7 +21231,77 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(basePyNNIaFCondCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class basePyNNIaFCondCell
+
+
+
+    def get_segment_ids_vs_segments(self):
+
+        segments = {}
+        for segment in self.morphology.segments:
+            segments[segment.id] = segment
+
+        return segments
+        
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
+                
+        unord_segs = {}
+        other_segs = {}
+
+        segments = self.get_segment_ids_vs_segments()
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                unord_segs[sg.id] = []
+                for member in sg.members:
+                    unord_segs[sg.id].append(segments[member.segments])
+            else:
+                other_segs[sg.id] = []
+                for member in sg.members:
+                    other_segs[sg.id].append(segments[member.segments])
+
+        for sg in self.morphology.segment_groups:
+            if sg.id in group_list:
+                for include in sg.includes:
+                    if include.segment_groups in unord_segs:
+                        for s in unord_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+                    if include.segment_groups in other_segs:
+                        for s in other_segs[include.segment_groups]:
+                            unord_segs[sg.id].append(s)
+        ord_segs = {}     
+
+        from operator import attrgetter
+        for key in unord_segs.keys():          
+            segs = unord_segs[key]
+            if len(segs)==1 or len(segs)==0:
+                ord_segs[key]=segs
+            else:
+                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
+
+        if check_parentage:
+            # check parent ordering
+
+            for key in ord_segs.keys():   
+                existing_ids = []
+                for s in ord_segs[key]:
+                    if s.id != ord_segs[key][0].id:
+                        if not s.parent or not s.parent.segments in existing_ids:
+                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
+                    existing_ids.append(s.id)
+
+        return ord_segs
+                
+    def summary(self):
+        print("*******************************************************")
+        print("* Cell: "+str(self.id))
+        print("* Notes: "+str(self.notes))
+        print("* Segments: "+str(len(self.morphology.segments)))
+        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
+        
+        
+        print("*******************************************************")
+        
+    # end class basePyNNIaFCondCell
 
 
 class ContinuousConnectionInstance(ContinuousConnection):
