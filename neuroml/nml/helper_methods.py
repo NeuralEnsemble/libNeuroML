@@ -189,6 +189,12 @@ connection_wd_cell_ids = MethodSpec(name='connection_wd_cell_ids',
         
         return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+ \
             ", weight: "+str(self.weight)+", delay: "+str(self.delay)
+            
+    def get_delay_in_ms(self):
+        if 'ms' in self.delay:
+            return float(self.delay[:-2].strip())
+        if 's' in self.delay:
+            return float(self.delay[:-1].strip())
         
     ''',
     class_names=("ConnectionWD")
