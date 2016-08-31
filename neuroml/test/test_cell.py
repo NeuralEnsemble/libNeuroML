@@ -108,7 +108,8 @@ class TestCell(unittest.TestCase):
                 print("-----------------------------")
                 a, b = get_ordered_segments_in_groups(cell,grp,check_parentage=(grp in ['basal_dends']),include_cumulative_lengths=True)
                 print("LLL %s:"%(grp))
-                for k,v in b.iteritems():
+                for k in b.keys():
+                    v = b[k]
                     print("  %s: %s"%(k,a[k]))
                     print("  %s: %s"%(k,v))
                 
