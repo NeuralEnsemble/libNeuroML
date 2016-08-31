@@ -313,8 +313,9 @@ cell_methods = MethodSpec(name='cell_methods',
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -359,6 +360,25 @@ cell_methods = MethodSpec(name='cell_methods',
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 

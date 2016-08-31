@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Aug 25 18:19:35 2016 by generateDS.py version 2.22b.
+# Generated Tue Aug 30 18:48:14 2016 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -6875,8 +6875,9 @@ class CellSet(Base):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -6921,6 +6922,25 @@ class CellSet(Base):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
@@ -11947,8 +11967,9 @@ class BaseCell(Standalone):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -11993,6 +12014,25 @@ class BaseCell(Standalone):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
@@ -15585,8 +15625,9 @@ class basePyNNCell(BaseCell):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -15631,6 +15672,25 @@ class basePyNNCell(BaseCell):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
@@ -16264,8 +16324,9 @@ class Cell(BaseCell):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -16310,6 +16371,25 @@ class Cell(BaseCell):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
@@ -16642,8 +16722,9 @@ class PinskyRinzelCA3Cell(BaseCell):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -16688,6 +16769,25 @@ class PinskyRinzelCA3Cell(BaseCell):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
@@ -16842,8 +16942,9 @@ class FitzHughNagumo1969Cell(BaseCell):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -16888,6 +16989,25 @@ class FitzHughNagumo1969Cell(BaseCell):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
@@ -16992,8 +17112,9 @@ class FitzHughNagumoCell(BaseCell):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -17038,6 +17159,25 @@ class FitzHughNagumoCell(BaseCell):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
@@ -17153,8 +17293,9 @@ class BaseCellMembPotCap(BaseCell):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -17199,6 +17340,25 @@ class BaseCellMembPotCap(BaseCell):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
@@ -17360,8 +17520,9 @@ class IzhikevichCell(BaseCell):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -17406,6 +17567,25 @@ class IzhikevichCell(BaseCell):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
@@ -17573,8 +17753,9 @@ class IafCell(BaseCell):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -17619,6 +17800,25 @@ class IafCell(BaseCell):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
@@ -17769,8 +17969,9 @@ class IafTauCell(BaseCell):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -17815,6 +18016,25 @@ class IafTauCell(BaseCell):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
@@ -19164,8 +19384,9 @@ class basePyNNIaFCell(basePyNNCell):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -19210,6 +19431,25 @@ class basePyNNIaFCell(basePyNNCell):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
@@ -19745,8 +19985,9 @@ class Cell2CaPools(Cell):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -19791,6 +20032,25 @@ class Cell2CaPools(Cell):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
@@ -20006,8 +20266,9 @@ class AdExIaFCell(BaseCellMembPotCap):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -20052,6 +20313,25 @@ class AdExIaFCell(BaseCellMembPotCap):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
@@ -20264,8 +20544,9 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -20310,6 +20591,25 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
@@ -20414,8 +20714,9 @@ class IafRefCell(IafCell):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -20460,6 +20761,25 @@ class IafRefCell(IafCell):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
@@ -20564,8 +20884,9 @@ class IafTauRefCell(IafTauCell):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -20610,6 +20931,25 @@ class IafTauRefCell(IafTauCell):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
@@ -21242,8 +21582,9 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
 
         return segments
         
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False):
-                
+
+    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+
         unord_segs = {}
         other_segs = {}
 
@@ -21288,6 +21629,25 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
                         if not s.parent or not s.parent.segments in existing_ids:
                             raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
                     existing_ids.append(s.id)
+
+
+        if include_cumulative_lengths:
+            import math
+            cumulative_lengths = {}
+            for key in ord_segs.keys():   
+                cumulative_lengths[key] = []
+                tot_len = 0
+                for seg in ord_segs[key]:       
+                    d = seg.distal
+                    p = seg.proximal
+                    if not p:
+                        parent_seg = segments[seg.parent.segments]
+                        p = parent_seg.distal
+                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    tot_len += length
+                    cumulative_lengths[key].append(tot_len)
+
+            return ord_segs, cumulative_lengths
 
         return ord_segs
                 
