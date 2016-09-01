@@ -39,3 +39,4 @@ neuroml/test/*.h5
 *tmp*
 *#*
 /neuroml/nml/generateds_config2.py
+/release
