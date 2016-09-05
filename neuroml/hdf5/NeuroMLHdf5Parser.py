@@ -28,6 +28,7 @@ class NeuroMLHdf5Parser():
   totalInstances = 0
   
   currentProjectionId = ""
+  currentProjectionType = ""
   currentProjectionPrePop = ""
   currentProjectionPostPop = ""
   currentSynapse = ""
@@ -121,6 +122,7 @@ class NeuroMLHdf5Parser():
         postFractAlong= 0.5
         weight = 1
         delay = 1
+        type="projection"
         
         extraParamIndices = {}
         
@@ -154,7 +156,8 @@ class NeuroMLHdf5Parser():
                                          self.currentProjectionPostPop,
                                          self.currentSynapse,
                                          hasWeights=indexWeight>0, 
-                                         hasDelays=indexDelay>0)
+                                         hasDelays=indexDelay>0,
+                                         type=self.currentProjectionType)
                 
         
         self.log.debug("Cols: Id: %d precell: %d, postcell: %d, pre fract: %d, post fract: %d" % (indexId, indexPreCellId, indexPostCellId, indexPreFractAlong, indexPostFractAlong))
@@ -280,6 +283,7 @@ class NeuroMLHdf5Parser():
     if g._v_name.count('projection_')>=1:
       
         self.currentProjectionId = g._v_attrs.id
+        self.currentProjectionType = g._v_attrs.type if g._v_attrs.type else "projection"
         self.currentProjectionPrePop = g._v_attrs.presynapticPopulation
         self.currentProjectionPostPop = g._v_attrs.postsynapticPopulation
         self.currentSynapse = g._v_attrs.synapse
@@ -320,6 +324,7 @@ class NeuroMLHdf5Parser():
     if g._v_name.count('projection_')>=1:
         self.netHandler.finaliseProjection(self.currentProjectionId, self.currentProjectionPrePop, self.currentProjectionPostPop)
         self.currentProjectionId = ""
+        self.currentProjectionType = ""
         self.currentProjectionPrePop = ""
         self.currentProjectionPostPop = ""
         self.currentSynapse = ""

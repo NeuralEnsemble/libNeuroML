@@ -10,11 +10,14 @@ from neuroml import IafCell
 from neuroml import Network
 from neuroml import ExpOneSynapse
 from neuroml import Population
+from neuroml import GapJunction
 
 from neuroml import Input
 from neuroml import InputList
 from neuroml import ConnectionWD
 from neuroml import Projection
+from neuroml import ElectricalProjection
+from neuroml import ElectricalConnection
 from neuroml import Property
 from neuroml import Instance
 from neuroml import Location
@@ -53,6 +56,12 @@ syn0 = ExpOneSynapse(id="syn0",
                      tau_decay="3ms")
 
 nml_doc.exp_one_synapses.append(syn0)
+
+
+gj = GapJunction(id="gj1",conductance="10pS")
+
+nml_doc.gap_junctions.append(gj)
+
 
 
 pfs = PoissonFiringSynapse(id='pfs',
@@ -106,8 +115,10 @@ proj_count = 0
 from_pop = "Pop_x"
 to_pop = "Pop_x"
 projection = Projection(id="Proj", presynaptic_population=from_pop, postsynaptic_population=to_pop, synapse=syn0.id)
+electricalProjection = ElectricalProjection(id="ElectProj", presynaptic_population=from_pop, postsynaptic_population=to_pop)
 
 net.projections.append(projection)
+net.electrical_projections.append(electricalProjection)
 
 
 input_list = InputList(id='il',
@@ -120,7 +131,6 @@ for pre_index in range(0,cell_num):
     
     for post_index in range(0,cell_num):
         if pre_index != post_index and random() <= prob_connection:
-
 
             pre_seg_id = 0
             post_seg_id = 0
@@ -136,6 +146,18 @@ for pre_index in range(0,cell_num):
                                     delay='%sms'%(random()*10))
 
             projection.connection_wds.append(connection)
+            
+            electricalConnection = ElectricalConnection(id=proj_count, \
+                                    pre_cell="../%s/%i/%s"%(from_pop,pre_index,IafCell0.id), \
+                                    pre_segment=pre_seg_id, \
+                                    pre_fraction_along=random(),
+                                    post_cell="../%s/%i/%s"%(to_pop,post_index,IafCell0.id), \
+                                    post_segment=post_seg_id,
+                                    post_fraction_along=random(), 
+                                    synapse=gj.id)
+                                    
+            electricalProjection.electrical_connections.append(electricalConnection)
+            
             proj_count += 1
             
     input = Input(id=pre_index, 
@@ -145,7 +167,7 @@ for pre_index in range(0,cell_num):
         
     
 
-nml_file = 'tmp/testh5.nml'
+nml_file = 'test_files/testh5.nml'
 writers.NeuroMLWriter.write(nml_doc, nml_file)
 
 
@@ -157,7 +179,7 @@ writers.NeuroMLHdf5Writer.write(nml_doc, nml_h5_file)
 
 print("Written H5 network file to: "+nml_h5_file)
 
-sum2 = nml_doc.summary()
+sum0 = nml_doc.summary()
 
 from neuroml.loaders import NeuroMLHdf5Loader
 
@@ -165,7 +187,12 @@ nml_doc2 = NeuroMLHdf5Loader.load(nml_h5_file)
 
 sum1 = nml_doc2.summary()
 
-assert(sum1==sum2)
+print
+print sum0
+print 
+print sum1
+
+assert(sum0==sum1)
 
 
 ###### Validate the NeuroML ######    

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Aug 30 18:48:14 2016 by generateDS.py version 2.22b.
+# Generated Mon Sep  5 13:56:30 2016 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -29,7 +29,7 @@ from lxml import etree as etree_
 
 
 Validate_simpletypes_ = True
-if sys.version_info[0] == 2:
+if sys.version_info.major == 2:
     BaseStrType_ = basestring
 else:
     BaseStrType_ = str
@@ -354,7 +354,7 @@ except ImportError as exp:
             return dict(((v, k) for k, v in mapping.iteritems()))
         @staticmethod
         def gds_encode(instring):
-            if sys.version_info[0] == 2:
+            if sys.version_info.major == 2:
                 return instring.encode(ExternalEncoding)
             else:
                 return instring
@@ -2634,53 +2634,7 @@ class SegmentParent(GeneratedsSuper):
             self.validate_ZeroToOne(self.fraction_along)    # validate type ZeroToOne
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
-    @property
-    def length(self):
-        prox_x = self.proximal.x
-        prox_y = self.proximal.y
-        prox_z = self.proximal.z
-
-        dist_x = self.distal.x
-        dist_y = self.distal.y
-        dist_z = self.distal.z
-
-        length = ((prox_x-dist_x)**2 + (prox_y-dist_y)**2 + (prox_z-dist_z)**2)**(0.5)
-
-        return length
-        
-    def __str__(self):
-        
-        return "<Segment|"+str(self.id)+"|"+self.name+">"
-        
-    def __repr__(self):
-    
-        return str(self)
-    
-    @property
-    def volume(self):
-        from math import pi
-
-        prox_rad = self.proximal.diameter/2.0
-        dist_rad = self.distal.diameter/2.0
-        length = self.length
-
-        volume = (pi/3)*length*(prox_rad**2+dist_rad**2+prox_rad*dist_rad)
-
-        return volume
-    
-    @property
-    def surface_area(self):
-        from math import pi
-        from math import sqrt
-
-        prox_rad = self.proximal.diameter/2.0
-        dist_rad = self.distal.diameter/2.0
-        length = self.length
-
-        surface_area = pi*(prox_rad+dist_rad)*sqrt((prox_rad-dist_rad)**2+length**2)
-        
-        return surface_area
-    # end class SegmentParent
+# end class SegmentParent
 
 
 class Point3DWithDiam(GeneratedsSuper):
@@ -3326,53 +3280,7 @@ class SegmentEndPoint(GeneratedsSuper):
             self.validate_NonNegativeInteger(self.segments)    # validate type NonNegativeInteger
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
-    @property
-    def length(self):
-        prox_x = self.proximal.x
-        prox_y = self.proximal.y
-        prox_z = self.proximal.z
-
-        dist_x = self.distal.x
-        dist_y = self.distal.y
-        dist_z = self.distal.z
-
-        length = ((prox_x-dist_x)**2 + (prox_y-dist_y)**2 + (prox_z-dist_z)**2)**(0.5)
-
-        return length
-        
-    def __str__(self):
-        
-        return "<Segment|"+str(self.id)+"|"+self.name+">"
-        
-    def __repr__(self):
-    
-        return str(self)
-    
-    @property
-    def volume(self):
-        from math import pi
-
-        prox_rad = self.proximal.diameter/2.0
-        dist_rad = self.distal.diameter/2.0
-        length = self.length
-
-        volume = (pi/3)*length*(prox_rad**2+dist_rad**2+prox_rad*dist_rad)
-
-        return volume
-    
-    @property
-    def surface_area(self):
-        from math import pi
-        from math import sqrt
-
-        prox_rad = self.proximal.diameter/2.0
-        dist_rad = self.distal.diameter/2.0
-        length = self.length
-
-        surface_area = pi*(prox_rad+dist_rad)*sqrt((prox_rad-dist_rad)**2+length**2)
-        
-        return surface_area
-    # end class SegmentEndPoint
+# end class SegmentEndPoint
 
 
 class MembraneProperties(GeneratedsSuper):
@@ -5127,26 +5035,7 @@ class SynapticConnection(GeneratedsSuper):
             self.validate_NmlId(self.destination)    # validate type NmlId
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
-
-    def _get_cell_id(self, id_string):
-        if '[' in id_string:
-            return int(id_string.split('[')[1].split(']')[0])
-        else:
-            return int(id_string.split('/')[2])
-
-    def get_pre_cell_id(self):
-        
-        return self._get_cell_id(self.pre_cell_id)
-        
-    def get_post_cell_id(self):
-        
-        return self._get_cell_id(self.post_cell_id)
-        
-    def __str__(self):
-        
-        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())
-        
-    # end class SynapticConnection
+# end class SynapticConnection
 
 
 class ExplicitInput(GeneratedsSuper):
@@ -5234,26 +5123,7 @@ class ExplicitInput(GeneratedsSuper):
             self.destination = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
-
-    def _get_cell_id(self, id_string):
-        if '[' in id_string:
-            return int(id_string.split('[')[1].split(']')[0])
-        else:
-            return int(id_string.split('/')[2])
-
-    def get_target_cell_id(self):
-        
-        return self._get_cell_id(self.target)
-
-    def get_segment_id(self):
-        
-        return self.segment_id if self.segment_id else 0
-
-    def get_fraction_along(self):
-        
-        return self.fraction_along if self.fraction_along else 0.5
-        
-    # end class ExplicitInput
+# end class ExplicitInput
 
 
 class Input(GeneratedsSuper):
@@ -6032,25 +5902,6 @@ class InputList(Base):
             obj_.original_tagname_ = 'input'
         super(InputList, self).buildChildren(child_, node, nodeName_, True)
 
-    def _get_cell_id(self, id_string):
-        if '[' in id_string:
-            return int(id_string.split('[')[1].split(']')[0])
-        else:
-            return int(id_string.split('/')[2])
-
-    def get_target_cell_id(self):
-        
-        return self._get_cell_id(self.target)
-
-    def get_segment_id(self):
-        
-        return self.segment_id if self.segment_id else 0
-
-    def get_fraction_along(self):
-        
-        return self.fraction_along if self.fraction_along else 0.5
-        
-    
     def exportHdf5(self, h5file, h5Group):
         print("Exporting InputList: "+str(self.id)+" as HDF5")
         
@@ -6196,86 +6047,7 @@ class ContinuousProjection(Base):
             self.continuous_connection_instances.append(obj_)
             obj_.original_tagname_ = 'continuousConnectionInstance'
         super(ContinuousProjection, self).buildChildren(child_, node, nodeName_, True)
-
-    def exportHdf5(self, h5file, h5Group):
-        print("Exporting Projection: "+str(self.id)+" as HDF5")
-        
-         
-        import numpy
-        
-        projGroup = h5file.createGroup(h5Group, 'projection_'+self.id)
-        projGroup._f_setAttr("id", self.id)
-        projGroup._f_setAttr("presynapticPopulation", self.presynaptic_population)
-        projGroup._f_setAttr("postsynapticPopulation", self.postsynaptic_population)
-        projGroup._f_setAttr("synapse", self.synapse)
-        
-        print("Exporting "+str(len(self.connections))+" connections, "+str(len(self.connection_wds))+" connections with weight")
-        
-        connection_wds = len(self.connection_wds) > 0
-        
-        cols = 7
-        extra_cols = {}
-        
-        if connection_wds:
-            cols = 9
-            extra_cols["column_7"] = "weight"
-            extra_cols["column_8"] = "delay"
-        
-        #TODO: optimise ...for conn in self.connections:
-        #    if
-        
-        a = numpy.ones([len(self.connections)+len(self.connection_wds), cols], numpy.float32)
-        
-        
-        count=0
-        
-        for connection in self.connections:
-          a[count,0] = connection.id
-          a[count,1] = connection.get_pre_cell_id()
-          a[count,2] = connection.get_post_cell_id()  
-          a[count,3] = connection.pre_segment_id  
-          a[count,4] = connection.post_segment_id  
-          a[count,5] = connection.pre_fraction_along 
-          a[count,6] = connection.post_fraction_along          
-          count=count+1
-          
-        for connection in self.connection_wds:
-          a[count,0] = connection.id
-          a[count,1] = connection.get_pre_cell_id()
-          a[count,2] = connection.get_post_cell_id()  
-          a[count,3] = connection.pre_segment_id  
-          a[count,4] = connection.post_segment_id  
-          a[count,5] = connection.pre_fraction_along 
-          a[count,6] = connection.post_fraction_along        
-          a[count,7] = connection.weight  
-          if 'ms' in connection.delay:
-            delay = float(connection.delay[:-2].strip())/1000.0
-          elif 's' in connection.delay:
-            delay = float(connection.delay[:-1].strip())
-          elif 'us' in connection.delay:
-            delay = float(connection.delay[:-2].strip())/1e6
-            
-          a[count,8] = delay          
-          count=count+1
-        
-            
-        array = h5file.createArray(projGroup, self.id, a, "Connections of cells in "+ self.id)
-        
-        array._f_setAttr("column_0", "id")
-        array._f_setAttr("column_1", "pre_cell_id")
-        array._f_setAttr("column_2", "post_cell_id")
-        array._f_setAttr("column_3", "pre_segment_id")
-        array._f_setAttr("column_4", "post_segment_id")
-        array._f_setAttr("column_5", "pre_fraction_along")
-        array._f_setAttr("column_6", "post_fraction_along")
-        
-        for col in extra_cols.keys():
-            array._f_setAttr(col,extra_cols[col])
-            
-        
-        
-
-    # end class ContinuousProjection
+# end class ContinuousProjection
 
 
 class ElectricalProjection(Base):
@@ -6399,67 +6171,40 @@ class ElectricalProjection(Base):
         super(ElectricalProjection, self).buildChildren(child_, node, nodeName_, True)
 
     def exportHdf5(self, h5file, h5Group):
-        print("Exporting Projection: "+str(self.id)+" as HDF5")
+        print("Exporting ElectricalProjection: "+str(self.id)+" as HDF5")
         
          
         import numpy
         
         projGroup = h5file.createGroup(h5Group, 'projection_'+self.id)
         projGroup._f_setAttr("id", self.id)
+        projGroup._f_setAttr("type", "electricalProjection")
         projGroup._f_setAttr("presynapticPopulation", self.presynaptic_population)
         projGroup._f_setAttr("postsynapticPopulation", self.postsynaptic_population)
-        projGroup._f_setAttr("synapse", self.synapse)
+        projGroup._f_setAttr("synapse", self.electrical_connections[0].synapse)
         
-        print("Exporting "+str(len(self.connections))+" connections, "+str(len(self.connection_wds))+" connections with weight")
+        print("Exporting "+str(len(self.electrical_connections))+" electrical connections")
         
-        connection_wds = len(self.connection_wds) > 0
         
         cols = 7
         extra_cols = {}
         
-        if connection_wds:
-            cols = 9
-            extra_cols["column_7"] = "weight"
-            extra_cols["column_8"] = "delay"
         
-        #TODO: optimise ...for conn in self.connections:
-        #    if
-        
-        a = numpy.ones([len(self.connections)+len(self.connection_wds), cols], numpy.float32)
+        a = numpy.ones([len(self.electrical_connections), cols], numpy.float32)
         
         
         count=0
         
-        for connection in self.connections:
+        for connection in self.electrical_connections:
           a[count,0] = connection.id
           a[count,1] = connection.get_pre_cell_id()
           a[count,2] = connection.get_post_cell_id()  
-          a[count,3] = connection.pre_segment_id  
-          a[count,4] = connection.post_segment_id  
+          a[count,3] = connection.pre_segment  
+          a[count,4] = connection.post_segment  
           a[count,5] = connection.pre_fraction_along 
           a[count,6] = connection.post_fraction_along          
           count=count+1
           
-        for connection in self.connection_wds:
-          a[count,0] = connection.id
-          a[count,1] = connection.get_pre_cell_id()
-          a[count,2] = connection.get_post_cell_id()  
-          a[count,3] = connection.pre_segment_id  
-          a[count,4] = connection.post_segment_id  
-          a[count,5] = connection.pre_fraction_along 
-          a[count,6] = connection.post_fraction_along        
-          a[count,7] = connection.weight  
-          if 'ms' in connection.delay:
-            delay = float(connection.delay[:-2].strip())/1000.0
-          elif 's' in connection.delay:
-            delay = float(connection.delay[:-1].strip())
-          elif 'us' in connection.delay:
-            delay = float(connection.delay[:-2].strip())/1e6
-            
-          a[count,8] = delay          
-          count=count+1
-        
-            
         array = h5file.createArray(projGroup, self.id, a, "Connections of cells in "+ self.id)
         
         array._f_setAttr("column_0", "id")
@@ -6470,10 +6215,7 @@ class ElectricalProjection(Base):
         array._f_setAttr("column_5", "pre_fraction_along")
         array._f_setAttr("column_6", "post_fraction_along")
         
-        for col in extra_cols.keys():
-            array._f_setAttr(col,extra_cols[col])
             
-        
         
 
     # end class ElectricalProjection
@@ -6550,26 +6292,7 @@ class BaseConnection(BaseNonNegativeIntegerId):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(BaseConnection, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-    def _get_cell_id(self, id_string):
-        if '[' in id_string:
-            return int(id_string.split('[')[1].split(']')[0])
-        else:
-            return int(id_string.split('/')[2])
-
-    def get_pre_cell_id(self):
-        
-        return self._get_cell_id(self.pre_cell_id)
-        
-    def get_post_cell_id(self):
-        
-        return self._get_cell_id(self.post_cell_id)
-        
-    def __str__(self):
-        
-        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())
-        
-    # end class BaseConnection
+# end class BaseConnection
 
 
 class Projection(Base):
@@ -6708,6 +6431,7 @@ class Projection(Base):
         
         projGroup = h5file.createGroup(h5Group, 'projection_'+self.id)
         projGroup._f_setAttr("id", self.id)
+        projGroup._f_setAttr("type", "projection")
         projGroup._f_setAttr("presynapticPopulation", self.presynaptic_population)
         projGroup._f_setAttr("postsynapticPopulation", self.postsynaptic_population)
         projGroup._f_setAttr("synapse", self.synapse)
@@ -6752,11 +6476,11 @@ class Projection(Base):
           a[count,6] = connection.post_fraction_along        
           a[count,7] = connection.weight  
           if 'ms' in connection.delay:
-            delay = float(connection.delay[:-2].strip())/1000.0
+            delay = float(connection.delay[:-2].strip())
           elif 's' in connection.delay:
-            delay = float(connection.delay[:-1].strip())
+            delay = float(connection.delay[:-1].strip())*1000.
           elif 'us' in connection.delay:
-            delay = float(connection.delay[:-2].strip())/1e6
+            delay = float(connection.delay[:-2].strip())/1e3
             
           a[count,8] = delay          
           count=count+1
@@ -6864,97 +6588,7 @@ class CellSet(Base):
         if obj_ is not None:
             self.add_anytypeobjs_(obj_)
         super(CellSet, self).buildChildren(child_, node, nodeName_, True)
-
-
-
-    def get_segment_ids_vs_segments(self):
-
-        segments = {}
-        for segment in self.morphology.segments:
-            segments[segment.id] = segment
-
-        return segments
-        
-
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
-
-        unord_segs = {}
-        other_segs = {}
-
-        segments = self.get_segment_ids_vs_segments()
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
-            else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-        ord_segs = {}     
-
-        from operator import attrgetter
-        for key in unord_segs.keys():          
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
-
-        if check_parentage:
-            # check parent ordering
-
-            for key in ord_segs.keys():   
-                existing_ids = []
-                for s in ord_segs[key]:
-                    if s.id != ord_segs[key][0].id:
-                        if not s.parent or not s.parent.segments in existing_ids:
-                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
-                    existing_ids.append(s.id)
-
-
-        if include_cumulative_lengths:
-            import math
-            cumulative_lengths = {}
-            for key in ord_segs.keys():   
-                cumulative_lengths[key] = []
-                tot_len = 0
-                for seg in ord_segs[key]:       
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
-                    tot_len += length
-                    cumulative_lengths[key].append(tot_len)
-
-            return ord_segs, cumulative_lengths
-
-        return ord_segs
-                
-    def summary(self):
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
-        print("* Notes: "+str(self.notes))
-        print("* Segments: "+str(len(self.morphology.segments)))
-        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
-        print("*******************************************************")
-        
-    # end class CellSet
+# end class CellSet
 
 
 class Population(Standalone):
@@ -7621,6 +7255,12 @@ class Network(Standalone):
         for proj in self.projections:
             proj.exportHdf5(h5file, netGroup)
             
+        for eproj in self.electrical_projections:
+            eproj.exportHdf5(h5file, netGroup)
+            
+        for cproj in self.continuous_projections:
+            raise Exception("Error: <continuousProjection> not yet supported!")
+            
         for il in self.input_lists:
             il.exportHdf5(h5file, netGroup)
         
@@ -8203,26 +7843,7 @@ class TimedSynapticInput(Standalone):
             self.spikes.append(obj_)
             obj_.original_tagname_ = 'spike'
         super(TimedSynapticInput, self).buildChildren(child_, node, nodeName_, True)
-
-    def _get_cell_id(self, id_string):
-        if '[' in id_string:
-            return int(id_string.split('[')[1].split(']')[0])
-        else:
-            return int(id_string.split('/')[2])
-
-    def get_target_cell_id(self):
-        
-        return self._get_cell_id(self.target)
-
-    def get_segment_id(self):
-        
-        return self.segment_id if self.segment_id else 0
-
-    def get_fraction_along(self):
-        
-        return self.fraction_along if self.fraction_along else 0.5
-        
-    # end class TimedSynapticInput
+# end class TimedSynapticInput
 
 
 class SpikeArray(Standalone):
@@ -8610,26 +8231,7 @@ class CompoundInputDL(Standalone):
             self.ramp_generator_dls.append(obj_)
             obj_.original_tagname_ = 'rampGeneratorDL'
         super(CompoundInputDL, self).buildChildren(child_, node, nodeName_, True)
-
-    def _get_cell_id(self, id_string):
-        if '[' in id_string:
-            return int(id_string.split('[')[1].split(']')[0])
-        else:
-            return int(id_string.split('/')[2])
-
-    def get_target_cell_id(self):
-        
-        return self._get_cell_id(self.target)
-
-    def get_segment_id(self):
-        
-        return self.segment_id if self.segment_id else 0
-
-    def get_fraction_along(self):
-        
-        return self.fraction_along if self.fraction_along else 0.5
-        
-    # end class CompoundInputDL
+# end class CompoundInputDL
 
 
 class CompoundInput(Standalone):
@@ -8734,26 +8336,7 @@ class CompoundInput(Standalone):
             self.ramp_generators.append(obj_)
             obj_.original_tagname_ = 'rampGenerator'
         super(CompoundInput, self).buildChildren(child_, node, nodeName_, True)
-
-    def _get_cell_id(self, id_string):
-        if '[' in id_string:
-            return int(id_string.split('[')[1].split(']')[0])
-        else:
-            return int(id_string.split('/')[2])
-
-    def get_target_cell_id(self):
-        
-        return self._get_cell_id(self.target)
-
-    def get_segment_id(self):
-        
-        return self.segment_id if self.segment_id else 0
-
-    def get_fraction_along(self):
-        
-        return self.fraction_along if self.fraction_along else 0.5
-        
-    # end class CompoundInput
+# end class CompoundInput
 
 
 class RampGeneratorDL(Standalone):
@@ -10809,42 +10392,7 @@ class ChannelPopulation(Base):
             self.variable_parameters.append(obj_)
             obj_.original_tagname_ = 'variableParameter'
         super(ChannelPopulation, self).buildChildren(child_, node, nodeName_, True)
-
-    def exportHdf5(self, h5file, h5Group):
-        print("Exporting Population: "+str(self.id)+" as HDF5")
-        
-         
-        import numpy
-        
-        popGroup = h5file.createGroup(h5Group, 'population_'+self.id)
-        popGroup._f_setAttr("id", self.id)
-        popGroup._f_setAttr("component", self.component)
-        
-        if len(self.instances)>0:
-
-            colCount = 4
-            a = numpy.ones([len(self.instances), colCount], numpy.float32)
-
-            count=0
-            for instance in self.instances:
-              a[count,0] = instance.id
-              a[count,1] = instance.location.x
-              a[count,2] = instance.location.y
-              a[count,3] = instance.location.z
-
-              count=count+1
-        
-            popGroup._f_setAttr("size", count)
-            popGroup._f_setAttr("type", "populationList")
-
-            h5file.createArray(popGroup, self.id, a, "Locations of cells in "+ self.id)
-            
-        else:
-            popGroup._f_setAttr("size", self.size)
-        
-        
-
-    # end class ChannelPopulation
+# end class ChannelPopulation
 
 
 class Resistivity(ValueAcrossSegOrSegGroup):
@@ -11590,53 +11138,7 @@ class SegmentGroup(Base):
             self.inhomogeneous_parameters.append(obj_)
             obj_.original_tagname_ = 'inhomogeneousParameter'
         super(SegmentGroup, self).buildChildren(child_, node, nodeName_, True)
-    @property
-    def length(self):
-        prox_x = self.proximal.x
-        prox_y = self.proximal.y
-        prox_z = self.proximal.z
-
-        dist_x = self.distal.x
-        dist_y = self.distal.y
-        dist_z = self.distal.z
-
-        length = ((prox_x-dist_x)**2 + (prox_y-dist_y)**2 + (prox_z-dist_z)**2)**(0.5)
-
-        return length
-        
-    def __str__(self):
-        
-        return "<Segment|"+str(self.id)+"|"+self.name+">"
-        
-    def __repr__(self):
-    
-        return str(self)
-    
-    @property
-    def volume(self):
-        from math import pi
-
-        prox_rad = self.proximal.diameter/2.0
-        dist_rad = self.distal.diameter/2.0
-        length = self.length
-
-        volume = (pi/3)*length*(prox_rad**2+dist_rad**2+prox_rad*dist_rad)
-
-        return volume
-    
-    @property
-    def surface_area(self):
-        from math import pi
-        from math import sqrt
-
-        prox_rad = self.proximal.diameter/2.0
-        dist_rad = self.distal.diameter/2.0
-        length = self.length
-
-        surface_area = pi*(prox_rad+dist_rad)*sqrt((prox_rad-dist_rad)**2+length**2)
-        
-        return surface_area
-    # end class SegmentGroup
+# end class SegmentGroup
 
 
 class Segment(BaseNonNegativeIntegerId):
@@ -11956,97 +11458,7 @@ class BaseCell(Standalone):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(BaseCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-
-
-    def get_segment_ids_vs_segments(self):
-
-        segments = {}
-        for segment in self.morphology.segments:
-            segments[segment.id] = segment
-
-        return segments
-        
-
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
-
-        unord_segs = {}
-        other_segs = {}
-
-        segments = self.get_segment_ids_vs_segments()
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
-            else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-        ord_segs = {}     
-
-        from operator import attrgetter
-        for key in unord_segs.keys():          
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
-
-        if check_parentage:
-            # check parent ordering
-
-            for key in ord_segs.keys():   
-                existing_ids = []
-                for s in ord_segs[key]:
-                    if s.id != ord_segs[key][0].id:
-                        if not s.parent or not s.parent.segments in existing_ids:
-                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
-                    existing_ids.append(s.id)
-
-
-        if include_cumulative_lengths:
-            import math
-            cumulative_lengths = {}
-            for key in ord_segs.keys():   
-                cumulative_lengths[key] = []
-                tot_len = 0
-                for seg in ord_segs[key]:       
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
-                    tot_len += length
-                    cumulative_lengths[key].append(tot_len)
-
-            return ord_segs, cumulative_lengths
-
-        return ord_segs
-                
-    def summary(self):
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
-        print("* Notes: "+str(self.notes))
-        print("* Segments: "+str(len(self.morphology.segments)))
-        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
-        print("*******************************************************")
-        
-    # end class BaseCell
+# end class BaseCell
 
 
 class BaseSynapse(Standalone):
@@ -15370,20 +14782,28 @@ class NeuroMLDocument(Standalone):
         super(NeuroMLDocument, self).buildChildren(child_, node, nodeName_, True)
 
     def summary(self):
-        print("*******************************************************")
-        print("* NeuroMLDocument: "+self.id)
+        info = "*******************************************************\n"
+        info+="* NeuroMLDocument: "+self.id+"\n"
         for network in self.networks:
-            print("*  Network: "+network.id)
+            info+="*  Network: "+network.id+"\n"
             for pop in network.populations:
-                print("*   Population: "+pop.id+" with "+str(pop.size)+" components of type "+pop.component)
+                info+="*   Population: "+pop.id+" with "+str(pop.size)+" components of type "+pop.component+"\n"
+                
             for proj in network.projections:
-                print("*   Projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population)
+                info+="*   Projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\n"
                 if len(proj.connections)>0:
-                    print("*     "+str(len(proj.connections))+" connections: "+str(proj.connections[0]))
+                    info+="*     "+str(len(proj.connections))+" connections: "+str(proj.connections[0])+"\n"
                 if len(proj.connection_wds)>0:
-                    print("*     "+str(len(proj.connection_wds))+" connections (wd): "+str(proj.connection_wds[0]))
+                    info+="*     "+str(len(proj.connection_wds))+" connections (wd): "+str(proj.connection_wds[0])+"\n"
+                    
+            for proj in network.electrical_projections:
+                info+="*   Electrical projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\n"
+                if len(proj.electrical_connections)>0:
+                    info+="*     "+str(len(proj.electrical_connections))+" connections: "+str(proj.electrical_connections[0])+"\n"
         
-        print("*******************************************************")
+        info+="*******************************************************"
+        
+        return info
         
         
     def get_by_id(self,id):
@@ -15614,97 +15034,7 @@ class basePyNNCell(BaseCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(basePyNNCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-
-
-    def get_segment_ids_vs_segments(self):
-
-        segments = {}
-        for segment in self.morphology.segments:
-            segments[segment.id] = segment
-
-        return segments
-        
-
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
-
-        unord_segs = {}
-        other_segs = {}
-
-        segments = self.get_segment_ids_vs_segments()
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
-            else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-        ord_segs = {}     
-
-        from operator import attrgetter
-        for key in unord_segs.keys():          
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
-
-        if check_parentage:
-            # check parent ordering
-
-            for key in ord_segs.keys():   
-                existing_ids = []
-                for s in ord_segs[key]:
-                    if s.id != ord_segs[key][0].id:
-                        if not s.parent or not s.parent.segments in existing_ids:
-                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
-                    existing_ids.append(s.id)
-
-
-        if include_cumulative_lengths:
-            import math
-            cumulative_lengths = {}
-            for key in ord_segs.keys():   
-                cumulative_lengths[key] = []
-                tot_len = 0
-                for seg in ord_segs[key]:       
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
-                    tot_len += length
-                    cumulative_lengths[key].append(tot_len)
-
-            return ord_segs, cumulative_lengths
-
-        return ord_segs
-                
-    def summary(self):
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
-        print("* Notes: "+str(self.notes))
-        print("* Segments: "+str(len(self.morphology.segments)))
-        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
-        print("*******************************************************")
-        
-    # end class basePyNNCell
+# end class basePyNNCell
 
 
 class BaseConnectionNewFormat(BaseConnection):
@@ -15863,26 +15193,7 @@ class BaseConnectionNewFormat(BaseConnection):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(BaseConnectionNewFormat, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-    def _get_cell_id(self, id_string):
-        if '[' in id_string:
-            return int(id_string.split('[')[1].split(']')[0])
-        else:
-            return int(id_string.split('/')[2])
-
-    def get_pre_cell_id(self):
-        
-        return self._get_cell_id(self.pre_cell_id)
-        
-    def get_post_cell_id(self):
-        
-        return self._get_cell_id(self.post_cell_id)
-        
-    def __str__(self):
-        
-        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())
-        
-    # end class BaseConnectionNewFormat
+# end class BaseConnectionNewFormat
 
 
 class BaseConnectionOldFormat(BaseConnection):
@@ -16042,26 +15353,7 @@ class BaseConnectionOldFormat(BaseConnection):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(BaseConnectionOldFormat, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-    def _get_cell_id(self, id_string):
-        if '[' in id_string:
-            return int(id_string.split('[')[1].split(']')[0])
-        else:
-            return int(id_string.split('/')[2])
-
-    def get_pre_cell_id(self):
-        
-        return self._get_cell_id(self.pre_cell_id)
-        
-    def get_post_cell_id(self):
-        
-        return self._get_cell_id(self.post_cell_id)
-        
-    def __str__(self):
-        
-        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())
-        
-    # end class BaseConnectionOldFormat
+# end class BaseConnectionOldFormat
 
 
 class ConcentrationModel_D(DecayingPoolConcentrationModel):
@@ -16711,97 +16003,7 @@ class PinskyRinzelCA3Cell(BaseCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(PinskyRinzelCA3Cell, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-
-
-    def get_segment_ids_vs_segments(self):
-
-        segments = {}
-        for segment in self.morphology.segments:
-            segments[segment.id] = segment
-
-        return segments
-        
-
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
-
-        unord_segs = {}
-        other_segs = {}
-
-        segments = self.get_segment_ids_vs_segments()
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
-            else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-        ord_segs = {}     
-
-        from operator import attrgetter
-        for key in unord_segs.keys():          
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
-
-        if check_parentage:
-            # check parent ordering
-
-            for key in ord_segs.keys():   
-                existing_ids = []
-                for s in ord_segs[key]:
-                    if s.id != ord_segs[key][0].id:
-                        if not s.parent or not s.parent.segments in existing_ids:
-                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
-                    existing_ids.append(s.id)
-
-
-        if include_cumulative_lengths:
-            import math
-            cumulative_lengths = {}
-            for key in ord_segs.keys():   
-                cumulative_lengths[key] = []
-                tot_len = 0
-                for seg in ord_segs[key]:       
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
-                    tot_len += length
-                    cumulative_lengths[key].append(tot_len)
-
-            return ord_segs, cumulative_lengths
-
-        return ord_segs
-                
-    def summary(self):
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
-        print("* Notes: "+str(self.notes))
-        print("* Segments: "+str(len(self.morphology.segments)))
-        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
-        print("*******************************************************")
-        
-    # end class PinskyRinzelCA3Cell
+# end class PinskyRinzelCA3Cell
 
 
 class FitzHughNagumo1969Cell(BaseCell):
@@ -16931,97 +16133,7 @@ class FitzHughNagumo1969Cell(BaseCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(FitzHughNagumo1969Cell, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-
-
-    def get_segment_ids_vs_segments(self):
-
-        segments = {}
-        for segment in self.morphology.segments:
-            segments[segment.id] = segment
-
-        return segments
-        
-
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
-
-        unord_segs = {}
-        other_segs = {}
-
-        segments = self.get_segment_ids_vs_segments()
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
-            else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-        ord_segs = {}     
-
-        from operator import attrgetter
-        for key in unord_segs.keys():          
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
-
-        if check_parentage:
-            # check parent ordering
-
-            for key in ord_segs.keys():   
-                existing_ids = []
-                for s in ord_segs[key]:
-                    if s.id != ord_segs[key][0].id:
-                        if not s.parent or not s.parent.segments in existing_ids:
-                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
-                    existing_ids.append(s.id)
-
-
-        if include_cumulative_lengths:
-            import math
-            cumulative_lengths = {}
-            for key in ord_segs.keys():   
-                cumulative_lengths[key] = []
-                tot_len = 0
-                for seg in ord_segs[key]:       
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
-                    tot_len += length
-                    cumulative_lengths[key].append(tot_len)
-
-            return ord_segs, cumulative_lengths
-
-        return ord_segs
-                
-    def summary(self):
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
-        print("* Notes: "+str(self.notes))
-        print("* Segments: "+str(len(self.morphology.segments)))
-        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
-        print("*******************************************************")
-        
-    # end class FitzHughNagumo1969Cell
+# end class FitzHughNagumo1969Cell
 
 
 class FitzHughNagumoCell(BaseCell):
@@ -17101,97 +16213,7 @@ class FitzHughNagumoCell(BaseCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(FitzHughNagumoCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-
-
-    def get_segment_ids_vs_segments(self):
-
-        segments = {}
-        for segment in self.morphology.segments:
-            segments[segment.id] = segment
-
-        return segments
-        
-
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
-
-        unord_segs = {}
-        other_segs = {}
-
-        segments = self.get_segment_ids_vs_segments()
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
-            else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-        ord_segs = {}     
-
-        from operator import attrgetter
-        for key in unord_segs.keys():          
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
-
-        if check_parentage:
-            # check parent ordering
-
-            for key in ord_segs.keys():   
-                existing_ids = []
-                for s in ord_segs[key]:
-                    if s.id != ord_segs[key][0].id:
-                        if not s.parent or not s.parent.segments in existing_ids:
-                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
-                    existing_ids.append(s.id)
-
-
-        if include_cumulative_lengths:
-            import math
-            cumulative_lengths = {}
-            for key in ord_segs.keys():   
-                cumulative_lengths[key] = []
-                tot_len = 0
-                for seg in ord_segs[key]:       
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
-                    tot_len += length
-                    cumulative_lengths[key].append(tot_len)
-
-            return ord_segs, cumulative_lengths
-
-        return ord_segs
-                
-    def summary(self):
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
-        print("* Notes: "+str(self.notes))
-        print("* Segments: "+str(len(self.morphology.segments)))
-        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
-        print("*******************************************************")
-        
-    # end class FitzHughNagumoCell
+# end class FitzHughNagumoCell
 
 
 class BaseCellMembPotCap(BaseCell):
@@ -17282,97 +16304,7 @@ class BaseCellMembPotCap(BaseCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(BaseCellMembPotCap, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-
-
-    def get_segment_ids_vs_segments(self):
-
-        segments = {}
-        for segment in self.morphology.segments:
-            segments[segment.id] = segment
-
-        return segments
-        
-
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
-
-        unord_segs = {}
-        other_segs = {}
-
-        segments = self.get_segment_ids_vs_segments()
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
-            else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-        ord_segs = {}     
-
-        from operator import attrgetter
-        for key in unord_segs.keys():          
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
-
-        if check_parentage:
-            # check parent ordering
-
-            for key in ord_segs.keys():   
-                existing_ids = []
-                for s in ord_segs[key]:
-                    if s.id != ord_segs[key][0].id:
-                        if not s.parent or not s.parent.segments in existing_ids:
-                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
-                    existing_ids.append(s.id)
-
-
-        if include_cumulative_lengths:
-            import math
-            cumulative_lengths = {}
-            for key in ord_segs.keys():   
-                cumulative_lengths[key] = []
-                tot_len = 0
-                for seg in ord_segs[key]:       
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
-                    tot_len += length
-                    cumulative_lengths[key].append(tot_len)
-
-            return ord_segs, cumulative_lengths
-
-        return ord_segs
-                
-    def summary(self):
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
-        print("* Notes: "+str(self.notes))
-        print("* Segments: "+str(len(self.morphology.segments)))
-        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
-        print("*******************************************************")
-        
-    # end class BaseCellMembPotCap
+# end class BaseCellMembPotCap
 
 
 class IzhikevichCell(BaseCell):
@@ -17509,97 +16441,7 @@ class IzhikevichCell(BaseCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(IzhikevichCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-
-
-    def get_segment_ids_vs_segments(self):
-
-        segments = {}
-        for segment in self.morphology.segments:
-            segments[segment.id] = segment
-
-        return segments
-        
-
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
-
-        unord_segs = {}
-        other_segs = {}
-
-        segments = self.get_segment_ids_vs_segments()
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
-            else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-        ord_segs = {}     
-
-        from operator import attrgetter
-        for key in unord_segs.keys():          
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
-
-        if check_parentage:
-            # check parent ordering
-
-            for key in ord_segs.keys():   
-                existing_ids = []
-                for s in ord_segs[key]:
-                    if s.id != ord_segs[key][0].id:
-                        if not s.parent or not s.parent.segments in existing_ids:
-                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
-                    existing_ids.append(s.id)
-
-
-        if include_cumulative_lengths:
-            import math
-            cumulative_lengths = {}
-            for key in ord_segs.keys():   
-                cumulative_lengths[key] = []
-                tot_len = 0
-                for seg in ord_segs[key]:       
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
-                    tot_len += length
-                    cumulative_lengths[key].append(tot_len)
-
-            return ord_segs, cumulative_lengths
-
-        return ord_segs
-                
-    def summary(self):
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
-        print("* Notes: "+str(self.notes))
-        print("* Segments: "+str(len(self.morphology.segments)))
-        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
-        print("*******************************************************")
-        
-    # end class IzhikevichCell
+# end class IzhikevichCell
 
 
 class IafCell(BaseCell):
@@ -17742,97 +16584,7 @@ class IafCell(BaseCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(IafCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-
-
-    def get_segment_ids_vs_segments(self):
-
-        segments = {}
-        for segment in self.morphology.segments:
-            segments[segment.id] = segment
-
-        return segments
-        
-
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
-
-        unord_segs = {}
-        other_segs = {}
-
-        segments = self.get_segment_ids_vs_segments()
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
-            else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-        ord_segs = {}     
-
-        from operator import attrgetter
-        for key in unord_segs.keys():          
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
-
-        if check_parentage:
-            # check parent ordering
-
-            for key in ord_segs.keys():   
-                existing_ids = []
-                for s in ord_segs[key]:
-                    if s.id != ord_segs[key][0].id:
-                        if not s.parent or not s.parent.segments in existing_ids:
-                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
-                    existing_ids.append(s.id)
-
-
-        if include_cumulative_lengths:
-            import math
-            cumulative_lengths = {}
-            for key in ord_segs.keys():   
-                cumulative_lengths[key] = []
-                tot_len = 0
-                for seg in ord_segs[key]:       
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
-                    tot_len += length
-                    cumulative_lengths[key].append(tot_len)
-
-            return ord_segs, cumulative_lengths
-
-        return ord_segs
-                
-    def summary(self):
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
-        print("* Notes: "+str(self.notes))
-        print("* Segments: "+str(len(self.morphology.segments)))
-        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
-        print("*******************************************************")
-        
-    # end class IafCell
+# end class IafCell
 
 
 class IafTauCell(BaseCell):
@@ -17958,97 +16710,7 @@ class IafTauCell(BaseCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(IafTauCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-
-
-    def get_segment_ids_vs_segments(self):
-
-        segments = {}
-        for segment in self.morphology.segments:
-            segments[segment.id] = segment
-
-        return segments
-        
-
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
-
-        unord_segs = {}
-        other_segs = {}
-
-        segments = self.get_segment_ids_vs_segments()
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
-            else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-        ord_segs = {}     
-
-        from operator import attrgetter
-        for key in unord_segs.keys():          
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
-
-        if check_parentage:
-            # check parent ordering
-
-            for key in ord_segs.keys():   
-                existing_ids = []
-                for s in ord_segs[key]:
-                    if s.id != ord_segs[key][0].id:
-                        if not s.parent or not s.parent.segments in existing_ids:
-                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
-                    existing_ids.append(s.id)
-
-
-        if include_cumulative_lengths:
-            import math
-            cumulative_lengths = {}
-            for key in ord_segs.keys():   
-                cumulative_lengths[key] = []
-                tot_len = 0
-                for seg in ord_segs[key]:       
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
-                    tot_len += length
-                    cumulative_lengths[key].append(tot_len)
-
-            return ord_segs, cumulative_lengths
-
-        return ord_segs
-                
-    def summary(self):
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
-        print("* Notes: "+str(self.notes))
-        print("* Segments: "+str(len(self.morphology.segments)))
-        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
-        print("*******************************************************")
-        
-    # end class IafTauCell
+# end class IafTauCell
 
 
 class GradedSynapse(BaseSynapse):
@@ -19373,97 +18035,7 @@ class basePyNNIaFCell(basePyNNCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(basePyNNIaFCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-
-
-    def get_segment_ids_vs_segments(self):
-
-        segments = {}
-        for segment in self.morphology.segments:
-            segments[segment.id] = segment
-
-        return segments
-        
-
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
-
-        unord_segs = {}
-        other_segs = {}
-
-        segments = self.get_segment_ids_vs_segments()
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
-            else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-        ord_segs = {}     
-
-        from operator import attrgetter
-        for key in unord_segs.keys():          
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
-
-        if check_parentage:
-            # check parent ordering
-
-            for key in ord_segs.keys():   
-                existing_ids = []
-                for s in ord_segs[key]:
-                    if s.id != ord_segs[key][0].id:
-                        if not s.parent or not s.parent.segments in existing_ids:
-                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
-                    existing_ids.append(s.id)
-
-
-        if include_cumulative_lengths:
-            import math
-            cumulative_lengths = {}
-            for key in ord_segs.keys():   
-                cumulative_lengths[key] = []
-                tot_len = 0
-                for seg in ord_segs[key]:       
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
-                    tot_len += length
-                    cumulative_lengths[key].append(tot_len)
-
-            return ord_segs, cumulative_lengths
-
-        return ord_segs
-                
-    def summary(self):
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
-        print("* Notes: "+str(self.notes))
-        print("* Segments: "+str(len(self.morphology.segments)))
-        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
-        print("*******************************************************")
-        
-    # end class basePyNNIaFCell
+# end class basePyNNIaFCell
 
 
 class ContinuousConnection(BaseConnectionNewFormat):
@@ -19563,26 +18135,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(ContinuousConnection, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-    def _get_cell_id(self, id_string):
-        if '[' in id_string:
-            return int(id_string.split('[')[1].split(']')[0])
-        else:
-            return int(id_string.split('/')[2])
-
-    def get_pre_cell_id(self):
-        
-        return self._get_cell_id(self.pre_cell_id)
-        
-    def get_post_cell_id(self):
-        
-        return self._get_cell_id(self.post_cell_id)
-        
-    def __str__(self):
-        
-        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())
-        
-    # end class ContinuousConnection
+# end class ContinuousConnection
 
 
 class ElectricalConnection(BaseConnectionNewFormat):
@@ -19672,24 +18225,25 @@ class ElectricalConnection(BaseConnectionNewFormat):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(ElectricalConnection, self).buildChildren(child_, node, nodeName_, True)
         pass
-
+        
     def _get_cell_id(self, id_string):
         if '[' in id_string:
             return int(id_string.split('[')[1].split(']')[0])
         else:
             return int(id_string.split('/')[2])
-
+            
     def get_pre_cell_id(self):
         
-        return self._get_cell_id(self.pre_cell_id)
+        return self._get_cell_id(self.pre_cell)
         
     def get_post_cell_id(self):
         
-        return self._get_cell_id(self.post_cell_id)
+        return self._get_cell_id(self.post_cell)
         
     def __str__(self):
         
-        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())
+        return "Electrical Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", synapse: "+str(self.synapse)
+            
         
     # end class ElectricalConnection
 
@@ -19806,13 +18360,13 @@ class ConnectionWD(BaseConnectionOldFormat):
             
     def __str__(self):
         
-        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", weight: "+str(self.weight)+", delay: "+str(self.delay)
+        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", weight: "+'{:f}'.format(float(self.weight))+", delay: "+str(self.delay)
             
     def get_delay_in_ms(self):
         if 'ms' in self.delay:
             return float(self.delay[:-2].strip())
-        if 's' in self.delay:
-            return float(self.delay[:-1].strip())
+        elif 's' in self.delay:
+            return float(self.delay[:-1].strip())*1000.0
         
     # end class ConnectionWD
 
@@ -19974,97 +18528,7 @@ class Cell2CaPools(Cell):
             self.biophysical_properties2_ca_pools = obj_
             obj_.original_tagname_ = 'biophysicalProperties2CaPools'
         super(Cell2CaPools, self).buildChildren(child_, node, nodeName_, True)
-
-
-
-    def get_segment_ids_vs_segments(self):
-
-        segments = {}
-        for segment in self.morphology.segments:
-            segments[segment.id] = segment
-
-        return segments
-        
-
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
-
-        unord_segs = {}
-        other_segs = {}
-
-        segments = self.get_segment_ids_vs_segments()
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
-            else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-        ord_segs = {}     
-
-        from operator import attrgetter
-        for key in unord_segs.keys():          
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
-
-        if check_parentage:
-            # check parent ordering
-
-            for key in ord_segs.keys():   
-                existing_ids = []
-                for s in ord_segs[key]:
-                    if s.id != ord_segs[key][0].id:
-                        if not s.parent or not s.parent.segments in existing_ids:
-                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
-                    existing_ids.append(s.id)
-
-
-        if include_cumulative_lengths:
-            import math
-            cumulative_lengths = {}
-            for key in ord_segs.keys():   
-                cumulative_lengths[key] = []
-                tot_len = 0
-                for seg in ord_segs[key]:       
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
-                    tot_len += length
-                    cumulative_lengths[key].append(tot_len)
-
-            return ord_segs, cumulative_lengths
-
-        return ord_segs
-                
-    def summary(self):
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
-        print("* Notes: "+str(self.notes))
-        print("* Segments: "+str(len(self.morphology.segments)))
-        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
-        print("*******************************************************")
-        
-    # end class Cell2CaPools
+# end class Cell2CaPools
 
 
 class AdExIaFCell(BaseCellMembPotCap):
@@ -20255,97 +18719,7 @@ class AdExIaFCell(BaseCellMembPotCap):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(AdExIaFCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-
-
-    def get_segment_ids_vs_segments(self):
-
-        segments = {}
-        for segment in self.morphology.segments:
-            segments[segment.id] = segment
-
-        return segments
-        
-
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
-
-        unord_segs = {}
-        other_segs = {}
-
-        segments = self.get_segment_ids_vs_segments()
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
-            else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-        ord_segs = {}     
-
-        from operator import attrgetter
-        for key in unord_segs.keys():          
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
-
-        if check_parentage:
-            # check parent ordering
-
-            for key in ord_segs.keys():   
-                existing_ids = []
-                for s in ord_segs[key]:
-                    if s.id != ord_segs[key][0].id:
-                        if not s.parent or not s.parent.segments in existing_ids:
-                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
-                    existing_ids.append(s.id)
-
-
-        if include_cumulative_lengths:
-            import math
-            cumulative_lengths = {}
-            for key in ord_segs.keys():   
-                cumulative_lengths[key] = []
-                tot_len = 0
-                for seg in ord_segs[key]:       
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
-                    tot_len += length
-                    cumulative_lengths[key].append(tot_len)
-
-            return ord_segs, cumulative_lengths
-
-        return ord_segs
-                
-    def summary(self):
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
-        print("* Notes: "+str(self.notes))
-        print("* Segments: "+str(len(self.morphology.segments)))
-        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
-        print("*******************************************************")
-        
-    # end class AdExIaFCell
+# end class AdExIaFCell
 
 
 class Izhikevich2007Cell(BaseCellMembPotCap):
@@ -20533,97 +18907,7 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(Izhikevich2007Cell, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-
-
-    def get_segment_ids_vs_segments(self):
-
-        segments = {}
-        for segment in self.morphology.segments:
-            segments[segment.id] = segment
-
-        return segments
-        
-
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
-
-        unord_segs = {}
-        other_segs = {}
-
-        segments = self.get_segment_ids_vs_segments()
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
-            else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-        ord_segs = {}     
-
-        from operator import attrgetter
-        for key in unord_segs.keys():          
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
-
-        if check_parentage:
-            # check parent ordering
-
-            for key in ord_segs.keys():   
-                existing_ids = []
-                for s in ord_segs[key]:
-                    if s.id != ord_segs[key][0].id:
-                        if not s.parent or not s.parent.segments in existing_ids:
-                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
-                    existing_ids.append(s.id)
-
-
-        if include_cumulative_lengths:
-            import math
-            cumulative_lengths = {}
-            for key in ord_segs.keys():   
-                cumulative_lengths[key] = []
-                tot_len = 0
-                for seg in ord_segs[key]:       
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
-                    tot_len += length
-                    cumulative_lengths[key].append(tot_len)
-
-            return ord_segs, cumulative_lengths
-
-        return ord_segs
-                
-    def summary(self):
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
-        print("* Notes: "+str(self.notes))
-        print("* Segments: "+str(len(self.morphology.segments)))
-        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
-        print("*******************************************************")
-        
-    # end class Izhikevich2007Cell
+# end class Izhikevich2007Cell
 
 
 class IafRefCell(IafCell):
@@ -20703,97 +18987,7 @@ class IafRefCell(IafCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(IafRefCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-
-
-    def get_segment_ids_vs_segments(self):
-
-        segments = {}
-        for segment in self.morphology.segments:
-            segments[segment.id] = segment
-
-        return segments
-        
-
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
-
-        unord_segs = {}
-        other_segs = {}
-
-        segments = self.get_segment_ids_vs_segments()
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
-            else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-        ord_segs = {}     
-
-        from operator import attrgetter
-        for key in unord_segs.keys():          
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
-
-        if check_parentage:
-            # check parent ordering
-
-            for key in ord_segs.keys():   
-                existing_ids = []
-                for s in ord_segs[key]:
-                    if s.id != ord_segs[key][0].id:
-                        if not s.parent or not s.parent.segments in existing_ids:
-                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
-                    existing_ids.append(s.id)
-
-
-        if include_cumulative_lengths:
-            import math
-            cumulative_lengths = {}
-            for key in ord_segs.keys():   
-                cumulative_lengths[key] = []
-                tot_len = 0
-                for seg in ord_segs[key]:       
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
-                    tot_len += length
-                    cumulative_lengths[key].append(tot_len)
-
-            return ord_segs, cumulative_lengths
-
-        return ord_segs
-                
-    def summary(self):
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
-        print("* Notes: "+str(self.notes))
-        print("* Segments: "+str(len(self.morphology.segments)))
-        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
-        print("*******************************************************")
-        
-    # end class IafRefCell
+# end class IafRefCell
 
 
 class IafTauRefCell(IafTauCell):
@@ -20873,97 +19067,7 @@ class IafTauRefCell(IafTauCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(IafTauRefCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-
-
-    def get_segment_ids_vs_segments(self):
-
-        segments = {}
-        for segment in self.morphology.segments:
-            segments[segment.id] = segment
-
-        return segments
-        
-
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
-
-        unord_segs = {}
-        other_segs = {}
-
-        segments = self.get_segment_ids_vs_segments()
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
-            else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-        ord_segs = {}     
-
-        from operator import attrgetter
-        for key in unord_segs.keys():          
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
-
-        if check_parentage:
-            # check parent ordering
-
-            for key in ord_segs.keys():   
-                existing_ids = []
-                for s in ord_segs[key]:
-                    if s.id != ord_segs[key][0].id:
-                        if not s.parent or not s.parent.segments in existing_ids:
-                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
-                    existing_ids.append(s.id)
-
-
-        if include_cumulative_lengths:
-            import math
-            cumulative_lengths = {}
-            for key in ord_segs.keys():   
-                cumulative_lengths[key] = []
-                tot_len = 0
-                for seg in ord_segs[key]:       
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
-                    tot_len += length
-                    cumulative_lengths[key].append(tot_len)
-
-            return ord_segs, cumulative_lengths
-
-        return ord_segs
-                
-    def summary(self):
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
-        print("* Notes: "+str(self.notes))
-        print("* Segments: "+str(len(self.morphology.segments)))
-        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
-        print("*******************************************************")
-        
-    # end class IafTauRefCell
+# end class IafTauRefCell
 
 
 class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
@@ -21571,97 +19675,7 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(basePyNNIaFCondCell, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-
-
-    def get_segment_ids_vs_segments(self):
-
-        segments = {}
-        for segment in self.morphology.segments:
-            segments[segment.id] = segment
-
-        return segments
-        
-
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
-
-        unord_segs = {}
-        other_segs = {}
-
-        segments = self.get_segment_ids_vs_segments()
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
-            else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
-
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-        ord_segs = {}     
-
-        from operator import attrgetter
-        for key in unord_segs.keys():          
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False) 
-
-        if check_parentage:
-            # check parent ordering
-
-            for key in ord_segs.keys():   
-                existing_ids = []
-                for s in ord_segs[key]:
-                    if s.id != ord_segs[key][0].id:
-                        if not s.parent or not s.parent.segments in existing_ids:
-                            raise Exception("Problem with finding parent of seg: "+str(s)+" in list: "+str(ord_segs))
-                    existing_ids.append(s.id)
-
-
-        if include_cumulative_lengths:
-            import math
-            cumulative_lengths = {}
-            for key in ord_segs.keys():   
-                cumulative_lengths[key] = []
-                tot_len = 0
-                for seg in ord_segs[key]:       
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
-                    tot_len += length
-                    cumulative_lengths[key].append(tot_len)
-
-            return ord_segs, cumulative_lengths
-
-        return ord_segs
-                
-    def summary(self):
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
-        print("* Notes: "+str(self.notes))
-        print("* Segments: "+str(len(self.morphology.segments)))
-        print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
-        print("*******************************************************")
-        
-    # end class basePyNNIaFCondCell
+# end class basePyNNIaFCondCell
 
 
 class ContinuousConnectionInstance(ContinuousConnection):
@@ -21725,26 +19739,7 @@ class ContinuousConnectionInstance(ContinuousConnection):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(ContinuousConnectionInstance, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-    def _get_cell_id(self, id_string):
-        if '[' in id_string:
-            return int(id_string.split('[')[1].split(']')[0])
-        else:
-            return int(id_string.split('/')[2])
-
-    def get_pre_cell_id(self):
-        
-        return self._get_cell_id(self.pre_cell_id)
-        
-    def get_post_cell_id(self):
-        
-        return self._get_cell_id(self.post_cell_id)
-        
-    def __str__(self):
-        
-        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())
-        
-    # end class ContinuousConnectionInstance
+# end class ContinuousConnectionInstance
 
 
 class ElectricalConnectionInstance(ElectricalConnection):
@@ -21809,26 +19804,7 @@ class ElectricalConnectionInstance(ElectricalConnection):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(ElectricalConnectionInstance, self).buildChildren(child_, node, nodeName_, True)
         pass
-
-    def _get_cell_id(self, id_string):
-        if '[' in id_string:
-            return int(id_string.split('[')[1].split(']')[0])
-        else:
-            return int(id_string.split('/')[2])
-
-    def get_pre_cell_id(self):
-        
-        return self._get_cell_id(self.pre_cell_id)
-        
-    def get_post_cell_id(self):
-        
-        return self._get_cell_id(self.post_cell_id)
-        
-    def __str__(self):
-        
-        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())
-        
-    # end class ElectricalConnectionInstance
+# end class ElectricalConnectionInstance
 
 
 class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):

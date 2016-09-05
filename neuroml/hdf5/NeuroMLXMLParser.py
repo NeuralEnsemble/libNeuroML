@@ -131,6 +131,40 @@ class NeuroMLXMLParser():
                                             delay=self._parse_delay(connection.delay),
                                             weight=float(connection.weight))
                                             
+                                            
+        for ep in network.electrical_projections:
+            
+            synapse = None
+            
+            for connection in ep.electrical_connections:
+                if synapse != None and synapse != connection.synapse:
+                    raise Exception("There are different synapses for connections inside: %s!"%ep)
+                synapse = connection.synapse
+                
+            self.netHandler.handleProjection(ep.id,
+                                            ep.presynaptic_population,
+                                            ep.postsynaptic_population,
+                                            synapse, 
+                                            type="electricalProjection")
+                                            
+            for connection in ep.electrical_connections:
+                
+                self.netHandler.handleConnection(ep.id, \
+                                            connection.id, \
+                                            ep.presynaptic_population,
+                                            ep.postsynaptic_population,
+                                            connection.synapse, \
+                                            preCellId=connection.get_pre_cell_id(), \
+                                            postCellId=connection.get_post_cell_id(), \
+                                            preSegId=int(connection.pre_segment), \
+                                            postSegId=int(connection.post_segment), \
+                                            preFract=float(connection.pre_fraction_along), \
+                                            postFract=float(connection.post_fraction_along))
+                                            
+        for cp in network.continuous_projections:
+            raise Exception("Error: <continuousProjection> not yet supported!")
+            
+                                            
         for input_list in network.input_lists:                                   
                 
             self.netHandler.handleInputList(input_list.id, input_list.populations, input_list.component, len(input_list.input))

@@ -5,6 +5,7 @@ Unit tests for loaders
 
 from neuroml.hdf5.NetworkBuilder import NetworkBuilder
 from neuroml.hdf5.NeuroMLXMLParser import NeuroMLXMLParser
+from neuroml import loaders
 
 import os
 
@@ -18,6 +19,10 @@ class TestNeuroMLXMLParser(unittest.TestCase):
         
 
         file_name = os.path.dirname(__file__)+'/../examples/test_files/testh5.nml'
+        
+        nml_doc0 = loaders.NeuroMLLoader.load(file_name)
+        summary0 = nml_doc0.summary()
+        print('\n'+summary0)
 
         from neuroml.hdf5.DefaultNetworkHandler import DefaultNetworkHandler
 
@@ -40,7 +45,12 @@ class TestNeuroMLXMLParser(unittest.TestCase):
         
         summary = nml_doc.summary()
         
+        
         print(summary)
+        
+        assert(summary==summary0)
+        
+        print("Same!")
         
         comp = nml_doc.get_by_id("IafNet")
         print(comp)

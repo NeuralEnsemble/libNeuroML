@@ -20,14 +20,15 @@ class MethodSpec(object):
         """
         self.name = name
         self.source = source
+        self.class_names = class_names
+        '''
         if class_names is None:
             self.class_names = ('.*', )
         else:
-            self.class_names = class_names
         if class_names_compiled is None:
             self.class_names_compiled = re.compile(self.class_names)
         else:
-            self.class_names_compiled = class_names_compiled
+            self.class_names_compiled = class_names_compiled'''
     def get_name(self):
         return self.name
     def set_name(self, name):
@@ -50,7 +51,8 @@ class MethodSpec(object):
         If this method returns True, the method will be inserted in
           the generated class.
         """
-        if self.class_names_compiled.search(class_name):
+        
+        if self.class_names == class_name or (isinstance(self.class_names,list) and class_name in self.class_names):
             return True
         else:
             return False
@@ -186,7 +188,7 @@ connection_cell_ids = MethodSpec(name='connection_cell_ids',
         return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())
         
     ''',
-    class_names=("Connection")
+    class_names=(["Connection","ConnectionWD"])
     )
   
 METHOD_SPECS+=(connection_cell_ids,)
@@ -197,19 +199,48 @@ connection_wd_cell_ids = MethodSpec(name='connection_wd_cell_ids',
     def __str__(self):
         
         return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+ \
-            ", weight: "+str(self.weight)+", delay: "+str(self.delay)
+            ", weight: "+'{:f}'.format(float(self.weight))+", delay: "+str(self.delay)
             
     def get_delay_in_ms(self):
         if 'ms' in self.delay:
             return float(self.delay[:-2].strip())
-        if 's' in self.delay:
-            return float(self.delay[:-1].strip())
+        elif 's' in self.delay:
+            return float(self.delay[:-1].strip())*1000.0
         
     ''',
     class_names=("ConnectionWD")
     )
   
 METHOD_SPECS+=(connection_wd_cell_ids,)
+
+elec_connection_cell_ids = MethodSpec(name='elec_connection_cell_ids',
+    source='''\
+        
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+            
+    def get_pre_cell_id(self):
+        
+        return self._get_cell_id(self.pre_cell)
+        
+    def get_post_cell_id(self):
+        
+        return self._get_cell_id(self.post_cell)
+        
+    def __str__(self):
+        
+        return "Electrical Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+ \
+            ", synapse: "+str(self.synapse)
+            
+        
+    ''',
+    class_names=("ElectricalConnection")
+    )
+  
+METHOD_SPECS+=(elec_connection_cell_ids,)
 
 
 input_cell_ids = MethodSpec(name='input_cell_ids',
@@ -244,20 +275,28 @@ nml_doc_summary = MethodSpec(name='summary',
     source='''\
 
     def summary(self):
-        print("*******************************************************")
-        print("* NeuroMLDocument: "+self.id)
+        info = "*******************************************************\\n"
+        info+="* NeuroMLDocument: "+self.id+"\\n"
         for network in self.networks:
-            print("*  Network: "+network.id)
+            info+="*  Network: "+network.id+"\\n"
             for pop in network.populations:
-                print("*   Population: "+pop.id+" with "+str(pop.size)+" components of type "+pop.component)
+                info+="*   Population: "+pop.id+" with "+str(pop.size)+" components of type "+pop.component+"\\n"
+                
             for proj in network.projections:
-                print("*   Projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population)
+                info+="*   Projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\\n"
                 if len(proj.connections)>0:
-                    print("*     "+str(len(proj.connections))+" connections: "+str(proj.connections[0]))
+                    info+="*     "+str(len(proj.connections))+" connections: "+str(proj.connections[0])+"\\n"
                 if len(proj.connection_wds)>0:
-                    print("*     "+str(len(proj.connection_wds))+" connections (wd): "+str(proj.connection_wds[0]))
+                    info+="*     "+str(len(proj.connection_wds))+" connections (wd): "+str(proj.connection_wds[0])+"\\n"
+                    
+            for proj in network.electrical_projections:
+                info+="*   Electrical projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\\n"
+                if len(proj.electrical_connections)>0:
+                    info+="*     "+str(len(proj.electrical_connections))+" connections: "+str(proj.electrical_connections[0])+"\\n"
         
-        print("*******************************************************")
+        info+="*******************************************************"
+        
+        return info
         
         
     def get_by_id(self,id):
@@ -420,6 +459,12 @@ inserts['Network'] = '''
         for proj in self.projections:
             proj.exportHdf5(h5file, netGroup)
             
+        for eproj in self.electrical_projections:
+            eproj.exportHdf5(h5file, netGroup)
+            
+        for cproj in self.continuous_projections:
+            raise Exception("Error: <continuousProjection> not yet supported!")
+            
         for il in self.input_lists:
             il.exportHdf5(h5file, netGroup)
         
@@ -464,6 +509,7 @@ inserts['Projection'] = '''
         
         projGroup = h5file.createGroup(h5Group, 'projection_'+self.id)
         projGroup._f_setAttr("id", self.id)
+        projGroup._f_setAttr("type", "projection")
         projGroup._f_setAttr("presynapticPopulation", self.presynaptic_population)
         projGroup._f_setAttr("postsynapticPopulation", self.postsynaptic_population)
         projGroup._f_setAttr("synapse", self.synapse)
@@ -508,11 +554,11 @@ inserts['Projection'] = '''
           a[count,6] = connection.post_fraction_along        
           a[count,7] = connection.weight  
           if 'ms' in connection.delay:
-            delay = float(connection.delay[:-2].strip())/1000.0
+            delay = float(connection.delay[:-2].strip())
           elif 's' in connection.delay:
-            delay = float(connection.delay[:-1].strip())
+            delay = float(connection.delay[:-1].strip())*1000.
           elif 'us' in connection.delay:
-            delay = float(connection.delay[:-2].strip())/1e6
+            delay = float(connection.delay[:-2].strip())/1e3
             
           a[count,8] = delay          
           count=count+1
@@ -532,6 +578,53 @@ inserts['Projection'] = '''
             array._f_setAttr(col,extra_cols[col])
             
         
+        
+'''
+
+inserts['ElectricalProjection'] = '''
+         
+        import numpy
+        
+        projGroup = h5file.createGroup(h5Group, 'projection_'+self.id)
+        projGroup._f_setAttr("id", self.id)
+        projGroup._f_setAttr("type", "electricalProjection")
+        projGroup._f_setAttr("presynapticPopulation", self.presynaptic_population)
+        projGroup._f_setAttr("postsynapticPopulation", self.postsynaptic_population)
+        projGroup._f_setAttr("synapse", self.electrical_connections[0].synapse)
+        
+        print("Exporting "+str(len(self.electrical_connections))+" electrical connections")
+        
+        
+        cols = 7
+        extra_cols = {}
+        
+        
+        a = numpy.ones([len(self.electrical_connections), cols], numpy.float32)
+        
+        
+        count=0
+        
+        for connection in self.electrical_connections:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()  
+          a[count,3] = connection.pre_segment  
+          a[count,4] = connection.post_segment  
+          a[count,5] = connection.pre_fraction_along 
+          a[count,6] = connection.post_fraction_along          
+          count=count+1
+          
+        array = h5file.createArray(projGroup, self.id, a, "Connections of cells in "+ self.id)
+        
+        array._f_setAttr("column_0", "id")
+        array._f_setAttr("column_1", "pre_cell_id")
+        array._f_setAttr("column_2", "post_cell_id")
+        array._f_setAttr("column_3", "pre_segment_id")
+        array._f_setAttr("column_4", "post_segment_id")
+        array._f_setAttr("column_5", "pre_fraction_along")
+        array._f_setAttr("column_6", "post_fraction_along")
+        
+            
         
 '''
 

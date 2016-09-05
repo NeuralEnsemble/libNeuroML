@@ -26,6 +26,7 @@ class NetworkBuilder(DefaultNetworkHandler):
     
     populations = {}
     projections = {}
+    projectionSyns = {}
     input_lists = {}
     
     weightDelays = {}
@@ -86,18 +87,28 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     #
-    def handleProjection(self, id, prePop, postPop, synapse, hasWeights=False, hasDelays=False):
+    def handleProjection(self, id, prePop, postPop, synapse, hasWeights=False, hasDelays=False, type="projection"):
 
-        proj = neuroml.Projection(id=id, presynaptic_population=prePop, postsynaptic_population=postPop, synapse=synapse)
+        proj = None
+        
+        if type=="projection":
+            proj = neuroml.Projection(id=id, presynaptic_population=prePop, postsynaptic_population=postPop, synapse=synapse)
+            self.network.projections.append(proj)
+        elif type=="electricalProjection":
+            proj = neuroml.ElectricalProjection(id=id, presynaptic_population=prePop, postsynaptic_population=postPop)
+            self.network.electrical_projections.append(proj)
+            self.projectionSyns[id] = synapse
+            
         self.projections[id] = proj
-        self.network.projections.append(proj)
         self.weightDelays[id] = hasWeights or hasDelays
 
-        self.log.info("Projection: %s from %s to %s with syn: %s, weights: %s, delays: %s"%(id, prePop, postPop, synapse, hasWeights, hasDelays))
+        self.log.info("Projection: %s (%s) from %s to %s with syn: %s, weights: %s, delays: %s"%(id, type, prePop, postPop, synapse, hasWeights, hasDelays))
      
         
     #
     #  Overridden from DefaultNetworkHandler
+    #
+    #  Assumes delay in ms
     #    
     def handleConnection(self, proj_id, conn_id, prePop, postPop, synapseType, \
                                                     preCellId, \
@@ -109,33 +120,47 @@ class NetworkBuilder(DefaultNetworkHandler):
                                                     delay=0,
                                                     weight=1):
         
-        #self.printConnectionInformation(proj_id, conn_id, prePop, postPop, synapseType, preCellId, postCellId, weight)
-          
-        if not self.weightDelays[proj_id] and delay==0 and weight==1:
-            
-            connection = neuroml.Connection(id=conn_id, \
-                                pre_cell_id="../%s/%i/%s"%(prePop,preCellId,self.populations[prePop].component), \
-                                pre_segment_id=preSegId, \
-                                pre_fraction_along=preFract,
-                                post_cell_id="../%s/%i/%s"%(postPop,postCellId,self.populations[postPop].component), \
-                                post_segment_id=postSegId,
-                                post_fraction_along=postFract)
-                                
-            self.projections[proj_id].connections.append(connection)
-            
-        else:
-            connection = neuroml.ConnectionWD(id=conn_id, \
-                                pre_cell_id="../%s/%i/%s"%(prePop,preCellId,self.populations[prePop].component), \
-                                pre_segment_id=preSegId, \
-                                pre_fraction_along=preFract,
-                                post_cell_id="../%s/%i/%s"%(postPop,postCellId,self.populations[postPop].component), \
-                                post_segment_id=postSegId,
-                                post_fraction_along=postFract,
-                                weight=weight,
-                                delay='%sms'%(delay*1000.0))
-
-            self.projections[proj_id].connection_wds.append(connection)
+        self.printConnectionInformation(proj_id, conn_id, prePop, postPop, synapseType, preCellId, postCellId, weight)
         
+        if isinstance(self.projections[proj_id], neuroml.ElectricalProjection):
+            
+                conn = neuroml.ElectricalConnection(id=conn_id, \
+                                    pre_cell="../%s/%i/%s"%(prePop,preCellId,self.populations[prePop].component), \
+                                    pre_segment=preSegId, \
+                                    pre_fraction_along=preFract,
+                                    post_cell="../%s/%i/%s"%(postPop,postCellId,self.populations[postPop].component), \
+                                    post_segment=postSegId,
+                                    post_fraction_along=postFract,
+                                    synapse=self.projectionSyns[proj_id])
+
+                self.projections[proj_id].electrical_connections.append(conn)
+        else:
+
+            if not self.weightDelays[proj_id] and delay==0 and weight==1:
+
+                connection = neuroml.Connection(id=conn_id, \
+                                    pre_cell_id="../%s/%i/%s"%(prePop,preCellId,self.populations[prePop].component), \
+                                    pre_segment_id=preSegId, \
+                                    pre_fraction_along=preFract,
+                                    post_cell_id="../%s/%i/%s"%(postPop,postCellId,self.populations[postPop].component), \
+                                    post_segment_id=postSegId,
+                                    post_fraction_along=postFract)
+
+                self.projections[proj_id].connections.append(connection)
+
+            else:
+                connection = neuroml.ConnectionWD(id=conn_id, \
+                                    pre_cell_id="../%s/%i/%s"%(prePop,preCellId,self.populations[prePop].component), \
+                                    pre_segment_id=preSegId, \
+                                    pre_fraction_along=preFract,
+                                    post_cell_id="../%s/%i/%s"%(postPop,postCellId,self.populations[postPop].component), \
+                                    post_segment_id=postSegId,
+                                    post_fraction_along=postFract,
+                                    weight=weight,
+                                    delay='%sms'%(delay))
+
+                self.projections[proj_id].connection_wds.append(connection)
+
          
     #
     #  Overridden from DefaultNetworkHandler

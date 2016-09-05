@@ -93,10 +93,10 @@ class DefaultNetworkHandler:
     #
     #  Should be overridden to create population array
     #
-    def handleProjection(self, projName, prePop, postPop, synapse, hasWeights=False, hasDelays=False):
+    def handleProjection(self, projName, prePop, postPop, synapse, hasWeights=False, hasDelays=False, type="projection"):
 
 
-        self.log.info("Projection: "+projName+" from "+prePop+" to "+postPop+" with syn: "+synapse)
+        self.log.info("Projection: "+projName+" ("+type+") from "+prePop+" to "+postPop+" with syn: "+synapse)
 
 
     #
@@ -114,7 +114,7 @@ class DefaultNetworkHandler:
         
         self.printConnectionInformation(projName, id, prePop, postPop, synapseType, preCellId, postCellId, weight)
         if preSegId != 0 or postSegId!=0 or preFract != 0.5 or postFract != 0.5:
-            self.log.debug("Src cell: %d, seg: %f, fract: %f -> Tgt cell %d, seg: %f, fract: %f" % (preCellId,preSegId,preFract,postCellId,postSegId,postFract))
+            self.log.debug("Src cell: %d, seg: %f, fract: %f -> Tgt cell %d, seg: %f, fract: %f; weight %s, delay: %s ms" % (preCellId,preSegId,preFract,postCellId,postSegId,postFract, weight, delay))
         
     #
     #  Should be overridden to handle end of network connection
