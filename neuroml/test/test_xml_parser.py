@@ -28,7 +28,7 @@ class TestNeuroMLXMLParser(unittest.TestCase):
 
         nmlHandler = DefaultNetworkHandler()     
 
-        currParser = NeuroMLXMLParser(nmlHandler) # The HDF5 handler knows of the structure of NetworkML and calls appropriate functions in NetworkHandler
+        currParser = NeuroMLXMLParser(nmlHandler) 
 
         currParser.parse(file_name)
 

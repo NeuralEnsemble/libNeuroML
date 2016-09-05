@@ -24,7 +24,9 @@ from neuroml import Location
 from neuroml import PoissonFiringSynapse
 
 import neuroml.writers as writers
-from random import random
+import random
+
+random.seed(123)
 
 scale = 2
 
@@ -106,7 +108,7 @@ for i in range(cell_num):
     inst = Instance(id=i)
     pop.instances.append(inst)
 
-    inst.location = Location(x=str(x_size*random()), y=str(y_size*random()), z=str(z_size*random()))
+    inst.location = Location(x=str(x_size*random.random()), y=str(y_size*random.random()), z=str(z_size*random.random()))
 
 prob_connection = 0.5
 proj_count = 0
@@ -130,7 +132,7 @@ net.input_lists.append(input_list)
 for pre_index in range(0,cell_num):
     
     for post_index in range(0,cell_num):
-        if pre_index != post_index and random() <= prob_connection:
+        if pre_index != post_index and random.random() <= prob_connection:
 
             pre_seg_id = 0
             post_seg_id = 0
@@ -138,22 +140,22 @@ for pre_index in range(0,cell_num):
             connection = ConnectionWD(id=proj_count, \
                                     pre_cell_id="../%s/%i/%s"%(from_pop,pre_index,IafCell0.id), \
                                     pre_segment_id=pre_seg_id, \
-                                    pre_fraction_along=random(),
+                                    pre_fraction_along=random.random(),
                                     post_cell_id="../%s/%i/%s"%(to_pop,post_index,IafCell0.id), \
                                     post_segment_id=post_seg_id,
-                                    post_fraction_along=random(),
-                                    weight=random(),
-                                    delay='%sms'%(random()*10))
+                                    post_fraction_along=random.random(),
+                                    weight=random.random(),
+                                    delay='%sms'%(random.random()*10))
 
             projection.connection_wds.append(connection)
             
             electricalConnection = ElectricalConnection(id=proj_count, \
                                     pre_cell="../%s/%i/%s"%(from_pop,pre_index,IafCell0.id), \
                                     pre_segment=pre_seg_id, \
-                                    pre_fraction_along=random(),
+                                    pre_fraction_along=random.random(),
                                     post_cell="../%s/%i/%s"%(to_pop,post_index,IafCell0.id), \
                                     post_segment=post_seg_id,
-                                    post_fraction_along=random(), 
+                                    post_fraction_along=random.random(), 
                                     synapse=gj.id)
                                     
             electricalProjection.electrical_connections.append(electricalConnection)
@@ -186,11 +188,6 @@ from neuroml.loaders import NeuroMLHdf5Loader
 nml_doc2 = NeuroMLHdf5Loader.load(nml_h5_file)
 
 sum1 = nml_doc2.summary()
-
-print
-print sum0
-print 
-print sum1
 
 assert(sum0==sum1)
 

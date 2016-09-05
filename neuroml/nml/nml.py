@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Sep  5 13:56:30 2016 by generateDS.py version 2.22b.
+# Generated Mon Sep  5 15:41:27 2016 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -29,7 +29,7 @@ from lxml import etree as etree_
 
 
 Validate_simpletypes_ = True
-if sys.version_info.major == 2:
+if sys.version_info[0] == 2:
     BaseStrType_ = basestring
 else:
     BaseStrType_ = str
@@ -354,7 +354,7 @@ except ImportError as exp:
             return dict(((v, k) for k, v in mapping.iteritems()))
         @staticmethod
         def gds_encode(instring):
-            if sys.version_info.major == 2:
+            if sys.version_info[0] == 2:
                 return instring.encode(ExternalEncoding)
             else:
                 return instring
@@ -18360,7 +18360,7 @@ class ConnectionWD(BaseConnectionOldFormat):
             
     def __str__(self):
         
-        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", weight: "+'{:f}'.format(float(self.weight))+", delay: "+str(self.delay)
+        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", weight: "+'{:f}'.format(float(self.weight))+", delay: "+'{:.5f}'.format(self.get_delay_in_ms())+" ms"
             
     def get_delay_in_ms(self):
         if 'ms' in self.delay:
