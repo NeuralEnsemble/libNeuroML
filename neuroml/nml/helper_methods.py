@@ -62,6 +62,7 @@ class MethodSpec(object):
         the generated class.
         """
         source = self.source % values_dict
+        source = source.replace('PERCENTAGE','%')
         return source
     def show(self):
         print('specification:')
@@ -199,7 +200,7 @@ connection_wd_cell_ids = MethodSpec(name='connection_wd_cell_ids',
     def __str__(self):
         
         return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+ \
-            ", weight: "+'{:f}'.format(float(self.weight))+", delay: "+'{:.5f}'.format(self.get_delay_in_ms())+" ms"
+            ", weight: "+'{:f}'.format(float(self.weight))+", delay: "+'PERCENTAGE.5f' PERCENTAGE (self.get_delay_in_ms())+" ms"
             
     def get_delay_in_ms(self):
         if 'ms' in self.delay:

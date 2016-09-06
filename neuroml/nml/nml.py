@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Sep  5 15:41:27 2016 by generateDS.py version 2.22b.
+# Generated Tue Sep  6 20:06:29 2016 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -18360,7 +18360,7 @@ class ConnectionWD(BaseConnectionOldFormat):
             
     def __str__(self):
         
-        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", weight: "+'{:f}'.format(float(self.weight))+", delay: "+'{:.5f}'.format(self.get_delay_in_ms())+" ms"
+        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", weight: "+'{:f}'.format(float(self.weight))+", delay: "+'%.5f' % (self.get_delay_in_ms())+" ms"
             
     def get_delay_in_ms(self):
         if 'ms' in self.delay:
