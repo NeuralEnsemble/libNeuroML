@@ -266,7 +266,7 @@ input_cell_ids = MethodSpec(name='input_cell_ids',
         return self.fraction_along if self.fraction_along else 0.5
         
     ''',
-    class_names=("Input")
+    class_names=(["Input","ExplicitInput"])
     )
   
 METHOD_SPECS+=(input_cell_ids,)

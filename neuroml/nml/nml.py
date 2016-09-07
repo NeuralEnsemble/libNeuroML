@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Sep  6 20:27:33 2016 by generateDS.py version 2.22b.
+# Generated Wed Sep  7 12:18:15 2016 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -5123,7 +5123,26 @@ class ExplicitInput(GeneratedsSuper):
             self.destination = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
-# end class ExplicitInput
+
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+
+    def get_target_cell_id(self):
+        
+        return self._get_cell_id(self.target)
+
+    def get_segment_id(self):
+        
+        return self.segment_id if self.segment_id else 0
+
+    def get_fraction_along(self):
+        
+        return self.fraction_along if self.fraction_along else 0.5
+        
+    # end class ExplicitInput
 
 
 class Input(GeneratedsSuper):
