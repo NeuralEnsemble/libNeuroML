@@ -214,7 +214,7 @@ connection_wd_cell_ids = MethodSpec(name='connection_wd_cell_ids',
   
 METHOD_SPECS+=(connection_wd_cell_ids,)
 
-elec_connection_cell_ids = MethodSpec(name='elec_connection_cell_ids',
+elec_connection_instance_cell_ids = MethodSpec(name='elec_connection_instance_cell_ids',
     source='''\
         
     def _get_cell_id(self, id_string):
@@ -222,6 +222,32 @@ elec_connection_cell_ids = MethodSpec(name='elec_connection_cell_ids',
             return int(id_string.split('[')[1].split(']')[0])
         else:
             return int(id_string.split('/')[2])
+            
+    def get_pre_cell_id(self):
+        
+        return self._get_cell_id(self.pre_cell)
+        
+    def get_post_cell_id(self):
+        
+        return self._get_cell_id(self.post_cell)
+        
+    def __str__(self):
+        
+        return "Electrical Connection (Instance based) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+ \
+            ", synapse: "+str(self.synapse)
+            
+        
+    ''',
+    class_names=("ElectricalConnectionInstance")
+    )
+  
+METHOD_SPECS+=(elec_connection_instance_cell_ids,)
+
+elec_connection_cell_ids = MethodSpec(name='elec_connection_cell_ids',
+    source='''\
+        
+    def _get_cell_id(self, id_string):
+            return int(float(id_string))
             
     def get_pre_cell_id(self):
         
@@ -243,6 +269,23 @@ elec_connection_cell_ids = MethodSpec(name='elec_connection_cell_ids',
   
 METHOD_SPECS+=(elec_connection_cell_ids,)
 
+
+location = MethodSpec(name='location',
+    source='''\
+
+        
+    def __str__(self):
+        
+        return "("+ 'PERCENTAGE.5f' PERCENTAGE self.x+","+ 'PERCENTAGE.5f' PERCENTAGE self.y+","+ 'PERCENTAGE.5f' PERCENTAGE self.z+")"
+        
+    def __repr__(self):
+    
+        return str(self)
+    
+''',
+    class_names=("Location")
+    )
+METHOD_SPECS+=(location,)
 
 input_cell_ids = MethodSpec(name='input_cell_ids',
     source='''\
@@ -282,18 +325,23 @@ nml_doc_summary = MethodSpec(name='summary',
             info+="*  Network: "+network.id+"\\n"
             for pop in network.populations:
                 info+="*   Population: "+pop.id+" with "+str(pop.size)+" components of type "+pop.component+"\\n"
+                if len(pop.instances)>0:
+                    loc = pop.instances[0].location
+                    info+="*     Locations: ["+str(loc)+", ...]\\n"
                 
             for proj in network.projections:
                 info+="*   Projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\\n"
                 if len(proj.connections)>0:
-                    info+="*     "+str(len(proj.connections))+" connections: "+str(proj.connections[0])+"\\n"
+                    info+="*     "+str(len(proj.connections))+" connections: [("+str(proj.connections[0])+"), ...]\\n"
                 if len(proj.connection_wds)>0:
-                    info+="*     "+str(len(proj.connection_wds))+" connections (wd): "+str(proj.connection_wds[0])+"\\n"
+                    info+="*     "+str(len(proj.connection_wds))+" connections (wd): [("+str(proj.connection_wds[0])+"), ...]\\n"
                     
             for proj in network.electrical_projections:
                 info+="*   Electrical projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\\n"
                 if len(proj.electrical_connections)>0:
-                    info+="*     "+str(len(proj.electrical_connections))+" connections: "+str(proj.electrical_connections[0])+"\\n"
+                    info+="*     "+str(len(proj.electrical_connections))+" connections: [("+str(proj.electrical_connections[0])+"), ...]\\n"
+                if len(proj.electrical_connection_instances)>0:
+                    info+="*     "+str(len(proj.electrical_connection_instances))+" connections: [("+str(proj.electrical_connection_instances[0])+"), ...]\\n"
         
         info+="*******************************************************"
         
@@ -591,21 +639,34 @@ inserts['ElectricalProjection'] = '''
         projGroup._f_setAttr("type", "electricalProjection")
         projGroup._f_setAttr("presynapticPopulation", self.presynaptic_population)
         projGroup._f_setAttr("postsynapticPopulation", self.postsynaptic_population)
-        projGroup._f_setAttr("synapse", self.electrical_connections[0].synapse)
         
-        print("Exporting "+str(len(self.electrical_connections))+" electrical connections")
+        syn = self.electrical_connections[0].synapse if len(self.electrical_connections)>0 else self.electrical_connection_instances[0].synapse
+        projGroup._f_setAttr("synapse", syn )
+        
         
         
         cols = 7
         extra_cols = {}
         
+        num_tot = len(self.electrical_connections)+len(self.electrical_connection_instances)
         
-        a = numpy.ones([len(self.electrical_connections), cols], numpy.float32)
+        print("Exporting "+str(num_tot)+" electrical connections")
+        a = numpy.ones([num_tot, cols], numpy.float32)
         
         
         count=0
         
         for connection in self.electrical_connections:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()  
+          a[count,3] = connection.pre_segment  
+          a[count,4] = connection.post_segment  
+          a[count,5] = connection.pre_fraction_along 
+          a[count,6] = connection.post_fraction_along          
+          count=count+1
+          
+        for connection in self.electrical_connection_instances:
           a[count,0] = connection.id
           a[count,1] = connection.get_pre_cell_id()
           a[count,2] = connection.get_post_cell_id()  

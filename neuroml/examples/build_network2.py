@@ -18,6 +18,7 @@ from neuroml import ConnectionWD
 from neuroml import Projection
 from neuroml import ElectricalProjection
 from neuroml import ElectricalConnection
+from neuroml import ElectricalConnectionInstance
 from neuroml import Property
 from neuroml import Instance
 from neuroml import Location
@@ -79,14 +80,14 @@ net.notes = "Netw notes"
 
 nml_doc.networks.append(net)
 
-size0 = 5*scale
+size0 = int(5*scale)
 pop0 = Population(id="IafPop0",
                   component=IafCell0.id,
                   size=size0)
 
 net.populations.append(pop0)
 
-size1 = 5*scale
+size1 = int(5*scale)
 pop1 = Population(id="IafPop1",
                   component=IafCell0.id,
                   size=size1)
@@ -94,8 +95,7 @@ pop1 = Population(id="IafPop1",
 net.populations.append(pop1)
 
 
-
-cell_num = 4*scale
+cell_num = int(4*scale)
 pop = Population(id="Pop_x", component=IafCell0.id, type="populationList",size=cell_num)
 net.populations.append(pop)
 pop.properties.append(Property(tag="color", value="1 0 0"))
@@ -149,7 +149,7 @@ for pre_index in range(0,cell_num):
 
             projection.connection_wds.append(connection)
             
-            electricalConnection = ElectricalConnection(id=proj_count, \
+            electricalConnection = ElectricalConnectionInstance(id=proj_count, \
                                     pre_cell="../%s/%i/%s"%(from_pop,pre_index,IafCell0.id), \
                                     pre_segment=pre_seg_id, \
                                     pre_fraction_along=random.random(),
@@ -158,21 +158,49 @@ for pre_index in range(0,cell_num):
                                     post_fraction_along=random.random(), 
                                     synapse=gj.id)
                                     
-            electricalProjection.electrical_connections.append(electricalConnection)
+            electricalProjection.electrical_connection_instances.append(electricalConnection)
             
             proj_count += 1
             
     input = Input(id=pre_index, 
               target="../%s/%i/%s"%(from_pop, pre_index, pop.component), 
               destination="synapses")  
-    input_list.input.append(input)
-        
+    input_list.input.append(input)  
     
+
+proj_count = 0
+
+from_pop = pop0.id
+to_pop = pop1.id
+electricalProjection = ElectricalProjection(id="ElectProj0", presynaptic_population=from_pop, postsynaptic_population=to_pop)
+net.electrical_projections.append(electricalProjection)
+
+for pre_index in range(0,size0):
+    
+    for post_index in range(0,size1):
+        if pre_index != post_index and random.random() <= prob_connection:
+
+            pre_seg_id = 0
+            post_seg_id = 0
+            
+            electricalConnection = ElectricalConnection(id=proj_count, \
+                                    pre_cell="%s"%(pre_index), \
+                                    pre_segment=pre_seg_id, \
+                                    pre_fraction_along=random.random(),
+                                    post_cell="%s"%(post_index), \
+                                    post_segment=post_seg_id,
+                                    post_fraction_along=random.random(), 
+                                    synapse=gj.id)
+                                    
+            electricalProjection.electrical_connections.append(electricalConnection)
+            
+            proj_count += 1
 
 nml_file = 'test_files/testh5.nml'
 writers.NeuroMLWriter.write(nml_doc, nml_file)
 
 
+print("Created:\n"+nml_doc.summary())
 print("Written network file to: "+nml_file)
 
 nml_h5_file = 'tmp/testh5.nml.h5'
@@ -180,16 +208,6 @@ writers.NeuroMLHdf5Writer.write(nml_doc, nml_h5_file)
 
 
 print("Written H5 network file to: "+nml_h5_file)
-
-sum0 = nml_doc.summary()
-
-from neuroml.loaders import NeuroMLHdf5Loader
-
-nml_doc2 = NeuroMLHdf5Loader.load(nml_h5_file)
-
-sum1 = nml_doc2.summary()
-
-assert(sum0==sum1)
 
 
 ###### Validate the NeuroML ######    

@@ -64,12 +64,9 @@ class NetworkBuilder(DefaultNetworkHandler):
         self.network.populations.append(pop)
         
         if (size>=0):
-            sizeInfo = ", size "+ str(size)+ " cells"
-            
+            sizeInfo = ", size "+ str(size)+ " cells" 
             self.log.info("Creating population: "+population_id+", cell type: "+component+sizeInfo)
-            
         else:
-                
             self.log.error("Population: "+population_id+", cell type: "+component+" specifies no size. May lead to errors!")
         
   
@@ -78,11 +75,13 @@ class NetworkBuilder(DefaultNetworkHandler):
     #    
     def handleLocation(self, id, population_id, component, x, y, z):
         self.printLocationInformation(id, population_id, component, x, y, z)
-        inst = neuroml.Instance(id=id)
+        
+        if x and y and z:
+            inst = neuroml.Instance(id=id)
 
-        inst.location = neuroml.Location(x=x,y=y,z=z)
-        self.populations[population_id].instances.append(inst)
-        self.populations[population_id].type = 'populationList'
+            inst.location = neuroml.Location(x=x,y=y,z=z)
+            self.populations[population_id].instances.append(inst)
+            self.populations[population_id].type = 'populationList'
           
     #
     #  Overridden from DefaultNetworkHandler
@@ -124,7 +123,24 @@ class NetworkBuilder(DefaultNetworkHandler):
         
         if isinstance(self.projections[proj_id], neuroml.ElectricalProjection):
             
+            instances = False
+            if len(self.populations[prePop].instances)>0 or len(self.populations[postPop].instances)>0:
+                instances = True
+                
+            if not instances:
                 conn = neuroml.ElectricalConnection(id=conn_id, \
+                                    pre_cell="%s"%(preCellId), \
+                                    pre_segment=preSegId, \
+                                    pre_fraction_along=preFract,
+                                    post_cell="%s"%(postCellId), \
+                                    post_segment=postSegId,
+                                    post_fraction_along=postFract,
+                                    synapse=self.projectionSyns[proj_id])
+                                    
+                self.projections[proj_id].electrical_connections.append(conn)
+                
+            else:
+                conn = neuroml.ElectricalConnectionInstance(id=conn_id, \
                                     pre_cell="../%s/%i/%s"%(prePop,preCellId,self.populations[prePop].component), \
                                     pre_segment=preSegId, \
                                     pre_fraction_along=preFract,
@@ -133,7 +149,7 @@ class NetworkBuilder(DefaultNetworkHandler):
                                     post_fraction_along=postFract,
                                     synapse=self.projectionSyns[proj_id])
 
-                self.projections[proj_id].electrical_connections.append(conn)
+                self.projections[proj_id].electrical_connection_instances.append(conn)
         else:
 
             if not self.weightDelays[proj_id] and delay==0 and weight==1:

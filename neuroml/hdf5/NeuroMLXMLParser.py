@@ -140,6 +140,10 @@ class NeuroMLXMLParser():
                 if synapse != None and synapse != connection.synapse:
                     raise Exception("There are different synapses for connections inside: %s!"%ep)
                 synapse = connection.synapse
+            for connection in ep.electrical_connection_instances:
+                if synapse != None and synapse != connection.synapse:
+                    raise Exception("There are different synapses for connections inside: %s!"%ep)
+                synapse = connection.synapse
                 
             self.netHandler.handleProjection(ep.id,
                                             ep.presynaptic_population,
@@ -148,6 +152,20 @@ class NeuroMLXMLParser():
                                             type="electricalProjection")
                                             
             for connection in ep.electrical_connections:
+                
+                self.netHandler.handleConnection(ep.id, \
+                                            connection.id, \
+                                            ep.presynaptic_population,
+                                            ep.postsynaptic_population,
+                                            connection.synapse, \
+                                            preCellId=connection.get_pre_cell_id(), \
+                                            postCellId=connection.get_post_cell_id(), \
+                                            preSegId=int(connection.pre_segment), \
+                                            postSegId=int(connection.post_segment), \
+                                            preFract=float(connection.pre_fraction_along), \
+                                            postFract=float(connection.post_fraction_along))
+                                            
+            for connection in ep.electrical_connection_instances:
                 
                 self.netHandler.handleConnection(ep.id, \
                                             connection.id, \
