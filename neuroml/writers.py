@@ -21,6 +21,8 @@ class NeuroMLWriter(object):
 
         nmldoc.export(file,0,name_="neuroml",
                       namespacedef_=namespacedef) #name_ param to ensure root element named correctly - generateDS limitation
+                      
+        file.close()
 
 
 class NeuroMLHdf5Writer(object):
@@ -103,6 +105,7 @@ class JSONWriter(object):
             raise NotImplementedError("Currently you can only serialize NeuroMLDocument type in JSON format")
 
         fileh.write(encoded)
+        fileh.close()
 
     @classmethod
     def write_to_mongodb(cls,neuroml_document,db,host=None,port=None,id=None):
