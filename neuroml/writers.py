@@ -33,7 +33,7 @@ class NeuroMLHdf5Writer(object):
         
         import tables
         
-        h5file = tables.openFile(h5_file_name, mode = "w", title = nml_doc.id)
+        h5file = tables.open_file(h5_file_name, mode = "w", title = nml_doc.id)
         
         rootGroup = h5file.createGroup("/", 'neuroml', 'Root NeuroML group')
         
@@ -108,7 +108,7 @@ class JSONWriter(object):
     def __file_handle(file):
         if isinstance(cls,file,str):
             import tables
-            fileh = tables.openFile(filepath, mode = "w")
+            fileh = tables.open_file(filepath, mode = "w")
 
             
     @classmethod    
@@ -210,7 +210,7 @@ class ArrayMorphWriter(object):
     def write(cls,data,filepath):
 
         import tables
-        fileh = tables.openFile(filepath, mode = "w")
+        fileh = tables.open_file(filepath, mode = "w")
         
         #Now instead we should go through a document/cell/morphology
         #hierarchy - this kind of tree traversal should be done recursively
