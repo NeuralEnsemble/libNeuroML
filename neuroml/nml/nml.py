@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Jan 10 20:13:57 2017 by generateDS.py version 2.22b.
+# Generated Tue Jan 10 20:58:27 2017 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -5937,7 +5937,7 @@ class InputList(Base):
          
         import numpy
         
-        ilGroup = h5file.createGroup(h5Group, 'input_list_'+self.id)
+        ilGroup = h5file.create_group(h5Group, 'input_list_'+self.id)
         ilGroup._f_setAttr("id", self.id)
         ilGroup._f_setAttr("component", self.component)
         ilGroup._f_setAttr("population", self.populations)
@@ -5951,7 +5951,7 @@ class InputList(Base):
             a[count,1] = input.get_target_cell_id()
             count+=1
             
-        h5file.createArray(ilGroup, self.id, a, "Locations of inputs in "+ self.id)
+        h5file.create_array(ilGroup, self.id, a, "Locations of inputs in "+ self.id)
         
 
     # end class InputList
@@ -6205,7 +6205,7 @@ class ElectricalProjection(Base):
          
         import numpy
         
-        projGroup = h5file.createGroup(h5Group, 'projection_'+self.id)
+        projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setAttr("id", self.id)
         projGroup._f_setAttr("type", "electricalProjection")
         projGroup._f_setAttr("presynapticPopulation", self.presynaptic_population)
@@ -6247,7 +6247,7 @@ class ElectricalProjection(Base):
           a[count,6] = connection.post_fraction_along          
           count=count+1
           
-        array = h5file.createArray(projGroup, self.id, a, "Connections of cells in "+ self.id)
+        array = h5file.create_array(projGroup, self.id, a, "Connections of cells in "+ self.id)
         
         array._f_setAttr("column_0", "id")
         array._f_setAttr("column_1", "pre_cell_id")
@@ -6471,7 +6471,7 @@ class Projection(Base):
          
         import numpy
         
-        projGroup = h5file.createGroup(h5Group, 'projection_'+self.id)
+        projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setAttr("id", self.id)
         projGroup._f_setAttr("type", "projection")
         projGroup._f_setAttr("presynapticPopulation", self.presynaptic_population)
@@ -6528,7 +6528,7 @@ class Projection(Base):
           count=count+1
         
             
-        array = h5file.createArray(projGroup, self.id, a, "Connections of cells in "+ self.id)
+        array = h5file.create_array(projGroup, self.id, a, "Connections of cells in "+ self.id)
         
         array._f_setAttr("column_0", "id")
         array._f_setAttr("column_1", "pre_cell_id")
@@ -6794,7 +6794,7 @@ class Population(Standalone):
          
         import numpy
         
-        popGroup = h5file.createGroup(h5Group, 'population_'+self.id)
+        popGroup = h5file.create_group(h5Group, 'population_'+self.id)
         popGroup._f_setAttr("id", self.id)
         popGroup._f_setAttr("component", self.component)
         
@@ -6815,7 +6815,7 @@ class Population(Standalone):
             popGroup._f_setAttr("size", count)
             popGroup._f_setAttr("type", "populationList")
 
-            h5file.createArray(popGroup, self.id, a, "Locations of cells in "+ self.id)
+            h5file.create_array(popGroup, self.id, a, "Locations of cells in "+ self.id)
             
         else:
             popGroup._f_setAttr("size", self.size)
@@ -7282,7 +7282,7 @@ class Network(Standalone):
          
         import numpy
         
-        netGroup = h5file.createGroup(h5Group, 'network')
+        netGroup = h5file.create_group(h5Group, 'network')
         netGroup._f_setAttr("id", self.id)
         netGroup._f_setAttr("notes", self.notes)
        

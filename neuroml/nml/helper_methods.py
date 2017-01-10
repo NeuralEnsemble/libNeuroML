@@ -510,7 +510,7 @@ inserts['Network'] = '''
          
         import numpy
         
-        netGroup = h5file.createGroup(h5Group, 'network')
+        netGroup = h5file.create_group(h5Group, 'network')
         netGroup._f_setAttr("id", self.id)
         netGroup._f_setAttr("notes", self.notes)
        
@@ -540,7 +540,7 @@ inserts['Population'] = '''
          
         import numpy
         
-        popGroup = h5file.createGroup(h5Group, 'population_'+self.id)
+        popGroup = h5file.create_group(h5Group, 'population_'+self.id)
         popGroup._f_setAttr("id", self.id)
         popGroup._f_setAttr("component", self.component)
         
@@ -561,7 +561,7 @@ inserts['Population'] = '''
             popGroup._f_setAttr("size", count)
             popGroup._f_setAttr("type", "populationList")
 
-            h5file.createArray(popGroup, self.id, a, "Locations of cells in "+ self.id)
+            h5file.create_array(popGroup, self.id, a, "Locations of cells in "+ self.id)
             
         else:
             popGroup._f_setAttr("size", self.size)
@@ -573,7 +573,7 @@ inserts['Projection'] = '''
          
         import numpy
         
-        projGroup = h5file.createGroup(h5Group, 'projection_'+self.id)
+        projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setAttr("id", self.id)
         projGroup._f_setAttr("type", "projection")
         projGroup._f_setAttr("presynapticPopulation", self.presynaptic_population)
@@ -630,7 +630,7 @@ inserts['Projection'] = '''
           count=count+1
         
             
-        array = h5file.createArray(projGroup, self.id, a, "Connections of cells in "+ self.id)
+        array = h5file.create_array(projGroup, self.id, a, "Connections of cells in "+ self.id)
         
         array._f_setAttr("column_0", "id")
         array._f_setAttr("column_1", "pre_cell_id")
@@ -651,7 +651,7 @@ inserts['ElectricalProjection'] = '''
          
         import numpy
         
-        projGroup = h5file.createGroup(h5Group, 'projection_'+self.id)
+        projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setAttr("id", self.id)
         projGroup._f_setAttr("type", "electricalProjection")
         projGroup._f_setAttr("presynapticPopulation", self.presynaptic_population)
@@ -693,7 +693,7 @@ inserts['ElectricalProjection'] = '''
           a[count,6] = connection.post_fraction_along          
           count=count+1
           
-        array = h5file.createArray(projGroup, self.id, a, "Connections of cells in "+ self.id)
+        array = h5file.create_array(projGroup, self.id, a, "Connections of cells in "+ self.id)
         
         array._f_setAttr("column_0", "id")
         array._f_setAttr("column_1", "pre_cell_id")
@@ -712,7 +712,7 @@ inserts['InputList'] = '''
          
         import numpy
         
-        ilGroup = h5file.createGroup(h5Group, 'input_list_'+self.id)
+        ilGroup = h5file.create_group(h5Group, 'input_list_'+self.id)
         ilGroup._f_setAttr("id", self.id)
         ilGroup._f_setAttr("component", self.component)
         ilGroup._f_setAttr("population", self.populations)
@@ -726,7 +726,7 @@ inserts['InputList'] = '''
             a[count,1] = input.get_target_cell_id()
             count+=1
             
-        h5file.createArray(ilGroup, self.id, a, "Locations of inputs in "+ self.id)
+        h5file.create_array(ilGroup, self.id, a, "Locations of inputs in "+ self.id)
         
 '''
 

@@ -35,7 +35,7 @@ class NeuroMLHdf5Writer(object):
         
         h5file = tables.open_file(h5_file_name, mode = "w", title = nml_doc.id)
         
-        rootGroup = h5file.createGroup("/", 'neuroml', 'Root NeuroML group')
+        rootGroup = h5file.create_group("/", 'neuroml', 'Root NeuroML group')
         
         rootGroup._f_setAttr("id", nml_doc.id)
         rootGroup._f_setAttr("notes", nml_doc.notes)
@@ -173,16 +173,16 @@ class ArrayMorphWriter(object):
             morphology_name = array_morph.id
 
         if cell_id == None:
-            morphology_group = fileh.createGroup(root, morphology_name)
+            morphology_group = fileh.create_group(root, morphology_name)
             hierarchy_prefix = "/" + morphology_name
         else:
-            cell_group = fileh.createGroup(root, cell_id)
-            morphology_group = fileh.createGroup(cell_group, morphology_name)
+            cell_group = fileh.create_group(root, cell_id)
+            morphology_group = fileh.create_group(cell_group, morphology_name)
             hierarchy_prefix = '/' + cell_id + '/' + morphology_name
 
-        vertices_array = fileh.createArray(hierarchy_prefix, "vertices", vertices)
-        connectivity_array = fileh.createArray(hierarchy_prefix, "connectivity", connectivity)
-        physical_mask_array = fileh.createArray(hierarchy_prefix, "physical_mask", physical_mask)
+        vertices_array = fileh.create_array(hierarchy_prefix, "vertices", vertices)
+        connectivity_array = fileh.create_array(hierarchy_prefix, "connectivity", connectivity)
+        physical_mask_array = fileh.create_array(hierarchy_prefix, "physical_mask", physical_mask)
 
     @classmethod
     def __write_neuroml_document(cls,document,fileh):
