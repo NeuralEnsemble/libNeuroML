@@ -40,3 +40,5 @@ neuroml/test/*.h5
 *#*
 /neuroml/nml/generateds_config2.py
 /release
+/private/cache/retriever/catalog.xml
+/private/cache/retriever/raw.githubusercontent.com/NeuroML/NeuroML2/master/Schemas/NeuroML2/NeuroML_v2beta.xsd
