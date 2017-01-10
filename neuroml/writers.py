@@ -26,6 +26,8 @@ class NeuroMLWriter(object):
 
 
 class NeuroMLHdf5Writer(object):
+    
+        
     @classmethod
     def write(cls,nml_doc,h5_file_name):
         
@@ -41,16 +43,34 @@ class NeuroMLHdf5Writer(object):
         for network in nml_doc.networks:
 
             network.exportHdf5(h5file, rootGroup)
-        
-        '''
-        projsGroup = h5file.createGroup(rootGroup, 'projections', 'Projections group')
-        projsGroup._f_setAttr("units", self.projUnits)
-        
-        for projection in self.projections:
-            projection.generateHDF5(h5file, projsGroup)'''
             
-        
         h5file.close()  # Close (and flush) the file
+        
+        
+    @classmethod
+    def write_xml_and_hdf5(cls,nml_doc0,xml_file_name,h5_file_name):
+        
+        nml_doc_hdf5 = neuroml.NeuroMLDocument(nml_doc0.id)
+        
+        networks = []
+        for n in nml_doc0.networks:
+            nml_doc_hdf5.networks.append(n)
+            
+        nml_doc0.networks = []
+        
+        nml_doc0.includes.append(neuroml.IncludeType(h5_file_name)) 
+        
+        NeuroMLWriter.write(nml_doc0,xml_file_name)
+        
+        NeuroMLHdf5Writer.write(nml_doc_hdf5,h5_file_name)
+        
+        # Put back into previous form...
+        for n in nml_doc_hdf5.networks:
+            nml_doc0.networks.append(n)
+        for inc in nml_doc0.includes:
+            if inc.href == h5_file_name:
+                nml_doc0.includes.remove(inc)
+        
         
         
 class JSONWriter(object):

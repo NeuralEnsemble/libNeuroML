@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Sep  7 19:59:25 2016 by generateDS.py version 2.22b.
+# Generated Tue Jan 10 20:13:57 2017 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -14823,9 +14823,21 @@ class NeuroMLDocument(Standalone):
             obj_.original_tagname_ = 'ComponentType'
         super(NeuroMLDocument, self).buildChildren(child_, node, nodeName_, True)
 
-    def summary(self):
+    
+    def summary(self, show_includes=True, show_non_network=True):
+    
+        import inspect
+        
         info = "*******************************************************\n"
         info+="* NeuroMLDocument: "+self.id+"\n"
+        membs = inspect.getmembers(self)
+        for memb in membs:
+            if isinstance(memb[1], list) and len(memb[1])>0 and not memb[0].endswith('_') and not memb[0] == 'networks':
+                if (memb[0] == 'includes' and show_includes) or (not memb[0] == 'includes' and show_non_network):
+                    info+="*   "+str(memb[1][0].__class__.__name__)+": [ "
+                    for entry in memb[1]:
+                        info+=str(entry.id if hasattr(entry,'id') else (entry.name if hasattr(entry,'name') else entry.href))+" "
+                    info+="]\n"
         for network in self.networks:
             info+="*  Network: "+network.id+"\n"
             for pop in network.populations:
@@ -14865,6 +14877,11 @@ class NeuroMLDocument(Standalone):
                         all_ids.append(m.id)
         print("Id "+id+" not found in <neuroml> element. All ids: "+str(all_ids))
         return None
+        
+    def append(self,element):
+        from neuroml.utils import append_to_element
+        append_to_element(self,element)
+        
     # end class NeuroMLDocument
 
 

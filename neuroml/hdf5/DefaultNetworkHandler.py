@@ -74,12 +74,15 @@ class DefaultNetworkHandler:
     #  Should be overridden to create population array
     #  
     def handlePopulation(self, population_id, component, size=-1, component_obj=None):
-      
         sizeInfo = " as yet unspecified size"
-        if (size>=0):
+        if size>=0:
             sizeInfo = " size: "+ str(size)+ " cells"
+        if component_obj:
+            compInfo = " (%s)"%component_obj.__class__.__name__
+        else:
+            compInfo=""
             
-        self.log.info("Population: "+population_id+", component: "+component+sizeInfo)
+        self.log.info("Population: "+population_id+", component: "+component+compInfo+sizeInfo)
         
         
     #
@@ -93,10 +96,14 @@ class DefaultNetworkHandler:
     #
     #  Should be overridden to create population array
     #
-    def handleProjection(self, projName, prePop, postPop, synapse, hasWeights=False, hasDelays=False, type="projection"):
+    def handleProjection(self, projName, prePop, postPop, synapse, hasWeights=False, hasDelays=False, type="projection", synapse_obj=None):
 
+        if synapse_obj:
+            synInfo = " (%s)"%synapse_obj.__class__.__name__
+        else:
+            synInfo=""
 
-        self.log.info("Projection: "+projName+" ("+type+") from "+prePop+" to "+postPop+" with syn: "+synapse)
+        self.log.info("Projection: "+projName+" ("+type+") from "+prePop+" to "+postPop+" with syn: "+synapse+synInfo)
 
 
     #
@@ -127,7 +134,8 @@ class DefaultNetworkHandler:
     #
     #  Should be overridden to create input source array
     #  
-    def handleInputList(self, inputListId, population_id, component, size):
+    def handleInputList(self, inputListId, population_id, component, size, input_comp_obj=None):
+            
         self.printInputInformation(inputListId, population_id, component, size)
         
         if size<0:

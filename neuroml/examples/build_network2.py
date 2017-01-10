@@ -89,7 +89,7 @@ net.populations.append(pop0)
 
 size1 = int(5*scale)
 pop1 = Population(id="IafPop1",
-                  component=IafCell0.id,
+                  component=IafCell1.id,
                   size=size1)
 
 net.populations.append(pop1)

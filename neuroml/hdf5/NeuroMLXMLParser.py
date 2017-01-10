@@ -46,10 +46,11 @@ class NeuroMLXMLParser():
 
     import neuroml.loaders as loaders
     
-    self.nml_doc = loaders.read_neuroml2_file(filename, include_includes=True)
+    self.nml_doc = loaders.read_neuroml2_file(filename, 
+                                              include_includes=True,
+                                              already_included=[])
     
     print("Loaded: %s as NeuroMLDocument"%filename)
-    
     
     self.netHandler.handleDocumentStart(self.nml_doc.id,self.nml_doc.notes)  
     
@@ -59,7 +60,6 @@ class NeuroMLXMLParser():
         
         for population in network.populations:
             
-            
             component_obj = self.nml_doc.get_by_id(population.component)
             
             if len(population.instances)>0 and population.type=='populationList':
@@ -67,7 +67,7 @@ class NeuroMLXMLParser():
                 self.netHandler.handlePopulation(population.id, 
                                                  population.component, 
                                                  len(population.instances),
-                                                 component_obj)
+                                                 component_obj=component_obj)
 
                 for inst in population.instances:
 
@@ -82,7 +82,7 @@ class NeuroMLXMLParser():
                 self.netHandler.handlePopulation(population.id, 
                                                  population.component, 
                                                  population.size,
-                                                 component_obj)
+                                                 component_obj=component_obj)
                                                      
                 for i in range(population.size):
                     self.netHandler.handleLocation(i,                      \
@@ -94,10 +94,13 @@ class NeuroMLXMLParser():
                                                 
         for projection in network.projections:
             
+            synapse_obj = self.nml_doc.get_by_id(projection.synapse)
+            
             self.netHandler.handleProjection(projection.id,
                                             projection.presynaptic_population,
                                             projection.postsynaptic_population,
-                                            projection.synapse)
+                                            projection.synapse,
+                                            synapse_obj=synapse_obj)
                                             
             for connection in projection.connections:
                 
@@ -145,11 +148,14 @@ class NeuroMLXMLParser():
                     raise Exception("There are different synapses for connections inside: %s!"%ep)
                 synapse = connection.synapse
                 
+            synapse_obj = self.nml_doc.get_by_id(synapse)
+                
             self.netHandler.handleProjection(ep.id,
                                             ep.presynaptic_population,
                                             ep.postsynaptic_population,
                                             synapse, 
-                                            type="electricalProjection")
+                                            type="electricalProjection",
+                                            synapse_obj=synapse_obj)
                                             
             for connection in ep.electrical_connections:
                 
@@ -183,9 +189,11 @@ class NeuroMLXMLParser():
             raise Exception("Error: <continuousProjection> not yet supported!")
             
                                             
-        for input_list in network.input_lists:                                   
+        for input_list in network.input_lists:   
+            
+            input_comp_obj = self.nml_doc.get_by_id(input_list.component)
                 
-            self.netHandler.handleInputList(input_list.id, input_list.populations, input_list.component, len(input_list.input))
+            self.netHandler.handleInputList(input_list.id, input_list.populations, input_list.component, len(input_list.input),input_comp_obj=input_comp_obj)
             
             for input in input_list.input:
                 
@@ -213,7 +221,7 @@ if __name__ == '__main__':
 
     file_name = '../examples/tmp/testh5.nml'
 
-    logging.basicConfig(level=logging.DEBUG, format="%(name)-19s %(levelname)-5s - %(message)s")
+    logging.basicConfig(level=logging.INFO, format="%(name)-19s %(levelname)-5s - %(message)s")
 
     from neuroml.hdf5.DefaultNetworkHandler import DefaultNetworkHandler
 
@@ -233,8 +241,9 @@ if __name__ == '__main__':
     
     currParser.parse(file_name)
     
-    
     nml_doc = nmlHandler.get_nml_doc()
+    
+    print(nml_doc.summary())
 
     nml_file = '../examples/tmp/testh5_2_.nml'
     import neuroml.writers as writers

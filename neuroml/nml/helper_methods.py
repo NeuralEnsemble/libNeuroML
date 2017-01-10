@@ -318,9 +318,21 @@ METHOD_SPECS+=(input_cell_ids,)
 nml_doc_summary = MethodSpec(name='summary',
     source='''\
 
-    def summary(self):
+    
+    def summary(self, show_includes=True, show_non_network=True):
+    
+        import inspect
+        
         info = "*******************************************************\\n"
         info+="* NeuroMLDocument: "+self.id+"\\n"
+        membs = inspect.getmembers(self)
+        for memb in membs:
+            if isinstance(memb[1], list) and len(memb[1])>0 and not memb[0].endswith('_') and not memb[0] == 'networks':
+                if (memb[0] == 'includes' and show_includes) or (not memb[0] == 'includes' and show_non_network):
+                    info+="*   "+str(memb[1][0].__class__.__name__)+": [ "
+                    for entry in memb[1]:
+                        info+=str(entry.id if hasattr(entry,'id') else (entry.name if hasattr(entry,'name') else entry.href))+" "
+                    info+="]\\n"
         for network in self.networks:
             info+="*  Network: "+network.id+"\\n"
             for pop in network.populations:
@@ -360,6 +372,11 @@ nml_doc_summary = MethodSpec(name='summary',
                         all_ids.append(m.id)
         print("Id "+id+" not found in <neuroml> element. All ids: "+str(all_ids))
         return None
+        
+    def append(self,element):
+        from neuroml.utils import append_to_element
+        append_to_element(self,element)
+        
     ''',
     class_names=("NeuroMLDocument")
     )

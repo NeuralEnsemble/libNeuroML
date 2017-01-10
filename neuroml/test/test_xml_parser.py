@@ -6,6 +6,7 @@ Unit tests for loaders
 from neuroml.hdf5.NetworkBuilder import NetworkBuilder
 from neuroml.hdf5.NeuroMLXMLParser import NeuroMLXMLParser
 from neuroml import loaders
+import logging
 
 import os
 
@@ -15,48 +16,60 @@ except ImportError:
     import unittest
 
 class TestNeuroMLXMLParser(unittest.TestCase):
+    
     def test_parse(self):
         
-
-        file_name = os.path.dirname(__file__)+'/../examples/test_files/testh5.nml'
+        base_dir = os.path.dirname(__file__)
+        #base_dir = '.'
         
-        nml_doc0 = loaders.NeuroMLLoader.load(file_name)
-        summary0 = nml_doc0.summary()
-        print('\n'+summary0)
-
-        from neuroml.hdf5.DefaultNetworkHandler import DefaultNetworkHandler
-
-        nmlHandler = DefaultNetworkHandler()     
-
-        currParser = NeuroMLXMLParser(nmlHandler) 
-
-        currParser.parse(file_name)
-
-        print('-------------------------------\n\n')
-
-
-        nmlHandler = NetworkBuilder()   
-
-        currParser = NeuroMLXMLParser(nmlHandler) 
-
-        currParser.parse(file_name)
-
-        nml_doc = nmlHandler.get_nml_doc()
+        logging.basicConfig(level=logging.INFO, format="%(name)-19s %(levelname)-5s - %(message)s")
         
-        summary = nml_doc.summary()
-        
-        
-        print(summary)
-        
-        assert(summary==summary0)
-        
-        print("Same!")
-        
-        comp = nml_doc.get_by_id("IafNet")
-        print(comp)
-        comp = nml_doc.get_by_id("IafNet2")
+        for f in ['simplenet.nml','testh5.nml','pyr_4_sym.cell.nml']: #for f in ['MediumNet.net.nml']:
+            file_name = base_dir+'/../examples/test_files/'+f
 
-        nml_file = os.path.dirname(__file__)+'/../examples/tmp/testh5_2_.nml'
-        import neuroml.writers as writers
-        writers.NeuroMLWriter.write(nml_doc, nml_file)
-        print("Written network file to: "+nml_file)
+            nml_doc0 = loaders.read_neuroml2_file(file_name,
+                                                  include_includes=True,
+                                                  verbose=True)
+                                                  
+            summary0 = nml_doc0.summary(show_includes=False,show_non_network=False)
+            print('\n'+summary0)
+
+            from neuroml.hdf5.DefaultNetworkHandler import DefaultNetworkHandler
+
+            nmlHandler = DefaultNetworkHandler()     
+
+            currParser = NeuroMLXMLParser(nmlHandler) 
+
+            currParser.parse(file_name)
+
+            print('-------------------------------\n\n')
+
+            nmlHandler = NetworkBuilder()   
+
+            currParser = NeuroMLXMLParser(nmlHandler) 
+
+            currParser.parse(file_name)
+
+            nml_doc = nmlHandler.get_nml_doc()
+
+            summary = nml_doc.summary(show_includes=False,show_non_network=False)
+
+            print(summary)
+
+            assert(summary==summary0)
+
+            print("Same!")
+
+            nml_file = base_dir+'/../examples/tmp/EXP_'+f
+            import neuroml.writers as writers
+            writers.NeuroMLWriter.write(nml_doc, nml_file)
+            print("Written network file to: "+nml_file)
+        
+        
+    def runTest(self):
+        print("Running tests in TestNeuroMLXMLParser")
+
+if __name__ == '__main__':
+    
+    tnxp = TestNeuroMLXMLParser()
+    tnxp.test_parse()

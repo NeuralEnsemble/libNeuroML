@@ -8,7 +8,7 @@
     <network id="IafNet">
         <notes>Netw notes</notes>
         <population id="IafPop0" component="iaf0" size="10"/>
-        <population id="IafPop1" component="iaf0" size="10"/>
+        <population id="IafPop1" component="iaf1" size="10"/>
         <population id="Pop_x" component="iaf0" size="8" type="populationList">
             <property tag="color" value="1 0 0"/>
             <instance id="0">

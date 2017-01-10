@@ -18,6 +18,7 @@ sys.path.append("../NeuroMLUtils")
 from neuroml.hdf5.DefaultNetworkHandler import DefaultNetworkHandler
 
 import neuroml
+from neuroml.utils import append_to_element
 
 
 class NetworkBuilder(DefaultNetworkHandler):
@@ -59,6 +60,9 @@ class NetworkBuilder(DefaultNetworkHandler):
     #    
     def handlePopulation(self, population_id, component, size, component_obj=None):
       
+        if component_obj:
+            self.nml_doc.append(component_obj)
+        
         pop = neuroml.Population(id=population_id, component=component, size=size)
         self.populations[population_id] = pop
         self.network.populations.append(pop)
@@ -86,8 +90,11 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     #
-    def handleProjection(self, id, prePop, postPop, synapse, hasWeights=False, hasDelays=False, type="projection"):
-
+    def handleProjection(self, id, prePop, postPop, synapse, hasWeights=False, hasDelays=False, type="projection", synapse_obj=None):
+        
+        if synapse_obj:
+            self.nml_doc.append(synapse_obj)
+            
         proj = None
         
         if type=="projection":
@@ -181,8 +188,11 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     # 
-    def handleInputList(self, inputListId, population_id, component, size):
+    def handleInputList(self, inputListId, population_id, component, size, input_comp_obj=None):
 
+        if input_comp_obj:
+            self.nml_doc.append(input_comp_obj)
+            
         input_list = neuroml.InputList(id=inputListId,
                              component=component,
                              populations=population_id)
