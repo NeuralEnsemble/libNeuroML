@@ -14,7 +14,7 @@ except ImportError:
     import unittest
 
 class TestNeuroMLHDF5Parser(unittest.TestCase):
-    '''
+    
     def test_write_hdf5(self):
         
         for f in ['simplenet.nml']:
@@ -25,11 +25,11 @@ class TestNeuroMLHDF5Parser(unittest.TestCase):
             nml_doc0 = loaders.NeuroMLLoader.load(file_name)
             summary0 = nml_doc0.summary()
             
-            print summary0
+            print(summary0)
 
             nml_h5_file = '%s/../examples/tmp/%s.h5'%(os.path.dirname(__file__),f)
             writers.NeuroMLHdf5Writer.write(nml_doc0, nml_h5_file)
-            print("Written to: %s"%nml_h5_file)'''
+            print("Written to: %s"%nml_h5_file)
             
             
     def test_write_xml_hdf5(self):
@@ -61,13 +61,13 @@ class TestNeuroMLHDF5Parser(unittest.TestCase):
             ##assert(summary0==summary2)
         
         
-    '''
+    
     def test_parse(self):
     
         file_name = os.path.dirname(__file__)+'/../examples/test_files/testh5.nml'
         
         nml_doc0 = loaders.NeuroMLLoader.load(file_name)
-        summary0 = nml_doc0.summary()#
+        summary0 = nml_doc0.summary(show_includes=False,show_non_network=False)
         print('\n'+summary0)
 
         print('-------------------------------\n\n')
@@ -80,7 +80,7 @@ class TestNeuroMLHDF5Parser(unittest.TestCase):
 
         nml_doc2 = loaders.NeuroMLHdf5Loader.load(nml_h5_file)
 
-        summary1 = nml_doc2.summary()
+        summary1 = nml_doc2.summary(show_includes=False,show_non_network=False)
         print('\n'+summary1)
 
         assert(summary0==summary1)
@@ -90,4 +90,4 @@ class TestNeuroMLHDF5Parser(unittest.TestCase):
         nml_file = os.path.dirname(__file__)+'/../examples/tmp/testh5_2_.nml'
         
         writers.NeuroMLWriter.write(nml_doc2, nml_file)
-        print("Written network file to: "+nml_file)'''
+        print("Written network file to: "+nml_file)

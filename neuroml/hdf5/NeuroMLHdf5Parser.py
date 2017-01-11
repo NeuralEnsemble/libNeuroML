@@ -41,7 +41,7 @@ class NeuroMLHdf5Parser():
     
     
   def parse(self, filename):
-    h5file=tables.openFile(filename)
+    h5file=tables.open_file(filename)
     
     self.log.debug("Opened HDF5 file: "+ h5file.filename)  
     

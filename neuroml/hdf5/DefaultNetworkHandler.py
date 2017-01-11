@@ -57,7 +57,7 @@ class DefaultNetworkHandler:
     #  
     def handleDocumentStart(self, id, notes):
             
-        self.log.info("Document: "+id)
+        self.log.info("Document: %s"%id)
         if notes:
             self.log.info("  Notes: "+notes)
 
@@ -66,7 +66,7 @@ class DefaultNetworkHandler:
     #  
     def handleNetwork(self, network_id, notes):
             
-        self.log.info("Network: "+network_id)
+        self.log.info("Network: %s"%network_id)
         if notes:
             self.log.info("  Notes: "+notes)
 
