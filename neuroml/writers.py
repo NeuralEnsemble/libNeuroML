@@ -37,8 +37,8 @@ class NeuroMLHdf5Writer(object):
         
         rootGroup = h5file.create_group("/", 'neuroml', 'Root NeuroML group')
         
-        rootGroup._f_setAttr("id", nml_doc.id)
-        rootGroup._f_setAttr("notes", nml_doc.notes)
+        rootGroup._f_setattr("id", nml_doc.id)
+        rootGroup._f_setattr("notes", nml_doc.notes)
         
         for network in nml_doc.networks:
 

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Jan 10 20:58:27 2017 by generateDS.py version 2.22b.
+# Generated Wed Jan 11 08:59:46 2017 by generateDS.py version 2.22b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -5938,9 +5938,9 @@ class InputList(Base):
         import numpy
         
         ilGroup = h5file.create_group(h5Group, 'input_list_'+self.id)
-        ilGroup._f_setAttr("id", self.id)
-        ilGroup._f_setAttr("component", self.component)
-        ilGroup._f_setAttr("population", self.populations)
+        ilGroup._f_setattr("id", self.id)
+        ilGroup._f_setattr("component", self.component)
+        ilGroup._f_setattr("population", self.populations)
         
         colCount = 2
         a = numpy.ones([len(self.input), colCount], numpy.float32)
@@ -6206,13 +6206,13 @@ class ElectricalProjection(Base):
         import numpy
         
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
-        projGroup._f_setAttr("id", self.id)
-        projGroup._f_setAttr("type", "electricalProjection")
-        projGroup._f_setAttr("presynapticPopulation", self.presynaptic_population)
-        projGroup._f_setAttr("postsynapticPopulation", self.postsynaptic_population)
+        projGroup._f_setattr("id", self.id)
+        projGroup._f_setattr("type", "electricalProjection")
+        projGroup._f_setattr("presynapticPopulation", self.presynaptic_population)
+        projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
         
         syn = self.electrical_connections[0].synapse if len(self.electrical_connections)>0 else self.electrical_connection_instances[0].synapse
-        projGroup._f_setAttr("synapse", syn )
+        projGroup._f_setattr("synapse", syn )
         
         
         
@@ -6249,13 +6249,13 @@ class ElectricalProjection(Base):
           
         array = h5file.create_array(projGroup, self.id, a, "Connections of cells in "+ self.id)
         
-        array._f_setAttr("column_0", "id")
-        array._f_setAttr("column_1", "pre_cell_id")
-        array._f_setAttr("column_2", "post_cell_id")
-        array._f_setAttr("column_3", "pre_segment_id")
-        array._f_setAttr("column_4", "post_segment_id")
-        array._f_setAttr("column_5", "pre_fraction_along")
-        array._f_setAttr("column_6", "post_fraction_along")
+        array._f_setattr("column_0", "id")
+        array._f_setattr("column_1", "pre_cell_id")
+        array._f_setattr("column_2", "post_cell_id")
+        array._f_setattr("column_3", "pre_segment_id")
+        array._f_setattr("column_4", "post_segment_id")
+        array._f_setattr("column_5", "pre_fraction_along")
+        array._f_setattr("column_6", "post_fraction_along")
         
             
         
@@ -6472,11 +6472,11 @@ class Projection(Base):
         import numpy
         
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
-        projGroup._f_setAttr("id", self.id)
-        projGroup._f_setAttr("type", "projection")
-        projGroup._f_setAttr("presynapticPopulation", self.presynaptic_population)
-        projGroup._f_setAttr("postsynapticPopulation", self.postsynaptic_population)
-        projGroup._f_setAttr("synapse", self.synapse)
+        projGroup._f_setattr("id", self.id)
+        projGroup._f_setattr("type", "projection")
+        projGroup._f_setattr("presynapticPopulation", self.presynaptic_population)
+        projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
+        projGroup._f_setattr("synapse", self.synapse)
         
         print("Exporting "+str(len(self.connections))+" connections, "+str(len(self.connection_wds))+" connections with weight")
         
@@ -6530,16 +6530,16 @@ class Projection(Base):
             
         array = h5file.create_array(projGroup, self.id, a, "Connections of cells in "+ self.id)
         
-        array._f_setAttr("column_0", "id")
-        array._f_setAttr("column_1", "pre_cell_id")
-        array._f_setAttr("column_2", "post_cell_id")
-        array._f_setAttr("column_3", "pre_segment_id")
-        array._f_setAttr("column_4", "post_segment_id")
-        array._f_setAttr("column_5", "pre_fraction_along")
-        array._f_setAttr("column_6", "post_fraction_along")
+        array._f_setattr("column_0", "id")
+        array._f_setattr("column_1", "pre_cell_id")
+        array._f_setattr("column_2", "post_cell_id")
+        array._f_setattr("column_3", "pre_segment_id")
+        array._f_setattr("column_4", "post_segment_id")
+        array._f_setattr("column_5", "pre_fraction_along")
+        array._f_setattr("column_6", "post_fraction_along")
         
         for col in extra_cols.keys():
-            array._f_setAttr(col,extra_cols[col])
+            array._f_setattr(col,extra_cols[col])
             
         
         
@@ -6795,8 +6795,8 @@ class Population(Standalone):
         import numpy
         
         popGroup = h5file.create_group(h5Group, 'population_'+self.id)
-        popGroup._f_setAttr("id", self.id)
-        popGroup._f_setAttr("component", self.component)
+        popGroup._f_setattr("id", self.id)
+        popGroup._f_setattr("component", self.component)
         
         if len(self.instances)>0:
 
@@ -6812,13 +6812,13 @@ class Population(Standalone):
 
               count=count+1
         
-            popGroup._f_setAttr("size", count)
-            popGroup._f_setAttr("type", "populationList")
+            popGroup._f_setattr("size", count)
+            popGroup._f_setattr("type", "populationList")
 
             h5file.create_array(popGroup, self.id, a, "Locations of cells in "+ self.id)
             
         else:
-            popGroup._f_setAttr("size", self.size)
+            popGroup._f_setattr("size", self.size)
         
         
 
@@ -7283,8 +7283,8 @@ class Network(Standalone):
         import numpy
         
         netGroup = h5file.create_group(h5Group, 'network')
-        netGroup._f_setAttr("id", self.id)
-        netGroup._f_setAttr("notes", self.notes)
+        netGroup._f_setattr("id", self.id)
+        netGroup._f_setattr("notes", self.notes)
        
         for pop in self.populations:
             pop.exportHdf5(h5file, netGroup)
