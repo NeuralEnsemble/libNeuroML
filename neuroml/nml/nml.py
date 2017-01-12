@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Jan 11 08:59:46 2017 by generateDS.py version 2.22b.
+# Generated Thu Jan 12 12:01:17 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -25,7 +25,10 @@ import re as re_
 import base64
 import datetime as datetime_
 import warnings as warnings_
-from lxml import etree as etree_
+try:
+    from lxml import etree as etree_
+except ImportError:
+    from xml.etree import ElementTree as etree_
 
 
 Validate_simpletypes_ = True
@@ -39,7 +42,11 @@ def parsexml_(infile, parser=None, **kwargs):
     if parser is None:
         # Use the lxml ElementTree compatible parser so that, e.g.,
         #   we ignore comments.
-        parser = etree_.ETCompatXMLParser()
+        try:
+            parser = etree_.ETCompatXMLParser()
+        except AttributeError:
+            # fallback to xml.etree
+            parser = etree_.XMLParser()
     doc = etree_.parse(infile, parser=parser, **kwargs)
     return doc
 
@@ -535,7 +542,8 @@ class MixedContainer:
         elif self.category == MixedContainer.CategorySimple:
             self.exportSimple(outfile, level, name)
         else:    # category == MixedContainer.CategoryComplex
-            self.value.export(outfile, level, namespace, name, pretty_print)
+            self.value.export(
+                outfile, level, namespace, name, pretty_print=pretty_print)
     def exportSimple(self, outfile, level, name):
         if self.content_type == MixedContainer.TypeString:
             outfile.write('<%s>%s</%s>' % (
@@ -1949,14 +1957,14 @@ class HHRate(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_pertime_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_pertime_patterns_, ))
-    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz)$']]
+    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s$|^per_ms$|^Hz)$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_voltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
     def hasContent_(self):
         if (
 
@@ -2068,7 +2076,7 @@ class HHVariable(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_voltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
     def hasContent_(self):
         if (
 
@@ -2184,14 +2192,14 @@ class HHTime(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_voltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
     def hasContent_(self):
         if (
 
@@ -2325,14 +2333,14 @@ class BlockMechanism(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_concentration_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_concentration_patterns_, ))
-    validate_Nml2Quantity_concentration_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM)$']]
+    validate_Nml2Quantity_concentration_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3$|^mol_per_cm3$|^M$|^mM)$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_voltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
     def hasContent_(self):
         if (
 
@@ -2464,7 +2472,7 @@ class PlasticityMechanism(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def hasContent_(self):
         if (
 
@@ -3896,7 +3904,7 @@ class Species(ValueAcrossSegOrSegGroup):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_concentration_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_concentration_patterns_, ))
-    validate_Nml2Quantity_concentration_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM)$']]
+    validate_Nml2Quantity_concentration_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3$|^mol_per_cm3$|^M$|^mM)$']]
     def hasContent_(self):
         if (
             super(Species, self).hasContent_()
@@ -5750,14 +5758,14 @@ class SpikeSourcePoisson(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def validate_Nml2Quantity_pertime(self, value):
         # Validate type Nml2Quantity_pertime, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_pertime_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_pertime_patterns_, ))
-    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz)$']]
+    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s$|^per_ms$|^Hz)$']]
     def hasContent_(self):
         if (
             super(SpikeSourcePoisson, self).hasContent_()
@@ -7345,14 +7353,14 @@ class TransientPoissonFiringSynapse(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_pertime_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_pertime_patterns_, ))
-    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz)$']]
+    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s$|^per_ms$|^Hz)$']]
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def hasContent_(self):
         if (
             super(TransientPoissonFiringSynapse, self).hasContent_()
@@ -7466,7 +7474,7 @@ class PoissonFiringSynapse(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_pertime_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_pertime_patterns_, ))
-    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz)$']]
+    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s$|^per_ms$|^Hz)$']]
     def hasContent_(self):
         if (
             super(PoissonFiringSynapse, self).hasContent_()
@@ -7560,7 +7568,7 @@ class SpikeGeneratorPoisson(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_pertime_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_pertime_patterns_, ))
-    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz)$']]
+    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s$|^per_ms$|^Hz)$']]
     def hasContent_(self):
         if (
             super(SpikeGeneratorPoisson, self).hasContent_()
@@ -7642,7 +7650,7 @@ class SpikeGeneratorRandom(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def hasContent_(self):
         if (
             super(SpikeGeneratorRandom, self).hasContent_()
@@ -7730,7 +7738,7 @@ class SpikeGenerator(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def hasContent_(self):
         if (
             super(SpikeGenerator, self).hasContent_()
@@ -7994,7 +8002,7 @@ class Spike(BaseNonNegativeIntegerId):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def hasContent_(self):
         if (
             super(Spike, self).hasContent_()
@@ -8080,21 +8088,21 @@ class VoltageClamp(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_voltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
     def validate_Nml2Quantity_resistance(self, value):
         # Validate type Nml2Quantity_resistance, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_resistance_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_resistance_patterns_, ))
-    validate_Nml2Quantity_resistance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(ohm|kohm|Mohm)$']]
+    validate_Nml2Quantity_resistance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(ohm$|^kohm$|^Mohm)$']]
     def hasContent_(self):
         if (
             super(VoltageClamp, self).hasContent_()
@@ -8416,7 +8424,7 @@ class RampGeneratorDL(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def validate_Nml2Quantity_none(self, value):
         # Validate type Nml2Quantity_none, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -8543,14 +8551,14 @@ class RampGenerator(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def validate_Nml2Quantity_current(self, value):
         # Validate type Nml2Quantity_current, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_current_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_current_patterns_, ))
-    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA)$']]
+    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A$|^uA$|^nA$|^pA)$']]
     def hasContent_(self):
         if (
             super(RampGenerator, self).hasContent_()
@@ -8670,7 +8678,7 @@ class SineGeneratorDL(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def validate_Nml2Quantity_none(self, value):
         # Validate type Nml2Quantity_none, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -8797,7 +8805,7 @@ class SineGenerator(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def validate_Nml2Quantity_none(self, value):
         # Validate type Nml2Quantity_none, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -8811,7 +8819,7 @@ class SineGenerator(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_current_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_current_patterns_, ))
-    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA)$']]
+    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A$|^uA$|^nA$|^pA)$']]
     def hasContent_(self):
         if (
             super(SineGenerator, self).hasContent_()
@@ -8929,7 +8937,7 @@ class PulseGeneratorDL(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def validate_Nml2Quantity_none(self, value):
         # Validate type Nml2Quantity_none, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -9038,14 +9046,14 @@ class PulseGenerator(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def validate_Nml2Quantity_current(self, value):
         # Validate type Nml2Quantity_current, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_current_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_current_patterns_, ))
-    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA)$']]
+    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A$|^uA$|^nA$|^pA)$']]
     def hasContent_(self):
         if (
             super(PulseGenerator, self).hasContent_()
@@ -9339,7 +9347,7 @@ class ChannelDensityGHK2(Base):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_conductanceDensity_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductanceDensity_patterns_, ))
-    validate_Nml2Quantity_conductanceDensity_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S_per_m2|mS_per_cm2|S_per_cm2)$']]
+    validate_Nml2Quantity_conductanceDensity_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S_per_m2$|^mS_per_cm2$|^S_per_cm2)$']]
     def hasContent_(self):
         if (
             super(ChannelDensityGHK2, self).hasContent_()
@@ -9475,7 +9483,7 @@ class ChannelDensityGHK(Base):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_permeability_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_permeability_patterns_, ))
-    validate_Nml2Quantity_permeability_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(m_per_s|                        um_per_ms|cm_per_s|cm_per_ms)$']]
+    validate_Nml2Quantity_permeability_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(m_per_s$|^                        um_per_ms$|^cm_per_s$|^cm_per_ms)$']]
     def hasContent_(self):
         if (
             super(ChannelDensityGHK, self).hasContent_()
@@ -9617,7 +9625,7 @@ class ChannelDensityNernst(Base):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_conductanceDensity_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductanceDensity_patterns_, ))
-    validate_Nml2Quantity_conductanceDensity_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S_per_m2|mS_per_cm2|S_per_cm2)$']]
+    validate_Nml2Quantity_conductanceDensity_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S_per_m2$|^mS_per_cm2$|^S_per_cm2)$']]
     def hasContent_(self):
         if (
             self.variable_parameters or
@@ -9779,14 +9787,14 @@ class ChannelDensity(Base):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_conductanceDensity_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductanceDensity_patterns_, ))
-    validate_Nml2Quantity_conductanceDensity_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S_per_m2|mS_per_cm2|S_per_cm2)$']]
+    validate_Nml2Quantity_conductanceDensity_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S_per_m2$|^mS_per_cm2$|^S_per_cm2)$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_voltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
     def validate_NonNegativeInteger(self, value):
         # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
         if value is not None and Validate_simpletypes_:
@@ -10181,7 +10189,7 @@ class ChannelDensityNonUniform(Base):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_voltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
     def hasContent_(self):
         if (
             self.variable_parameters or
@@ -10323,7 +10331,7 @@ class ChannelPopulation(Base):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_voltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
     def hasContent_(self):
         if (
             self.variable_parameters or
@@ -11616,21 +11624,21 @@ class FixedFactorConcentrationModel(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_concentration_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_concentration_patterns_, ))
-    validate_Nml2Quantity_concentration_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM)$']]
+    validate_Nml2Quantity_concentration_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3$|^mol_per_cm3$|^M$|^mM)$']]
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def validate_Nml2Quantity_rhoFactor(self, value):
         # Validate type Nml2Quantity_rhoFactor, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_rhoFactor_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_rhoFactor_patterns_, ))
-    validate_Nml2Quantity_rhoFactor_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m_per_A_per_s|mol_per_cm_per_uA_per_ms)$']]
+    validate_Nml2Quantity_rhoFactor_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m_per_A_per_s$|^mol_per_cm_per_uA_per_ms)$']]
     def hasContent_(self):
         if (
             super(FixedFactorConcentrationModel, self).hasContent_()
@@ -11749,21 +11757,21 @@ class DecayingPoolConcentrationModel(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_concentration_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_concentration_patterns_, ))
-    validate_Nml2Quantity_concentration_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM)$']]
+    validate_Nml2Quantity_concentration_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3$|^mol_per_cm3$|^M$|^mM)$']]
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def validate_Nml2Quantity_length(self, value):
         # Validate type Nml2Quantity_length, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_length_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_length_patterns_, ))
-    validate_Nml2Quantity_length_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(m|cm|um)$']]
+    validate_Nml2Quantity_length_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(m$|^cm$|^um)$']]
     def hasContent_(self):
         if (
             super(DecayingPoolConcentrationModel, self).hasContent_()
@@ -13771,7 +13779,7 @@ class IonChannelKS(Standalone):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_conductance_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
-    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S$|^mS$|^uS$|^nS$|^pS)$']]
     def hasContent_(self):
         if (
             self.gate_kses or
@@ -15829,21 +15837,21 @@ class PinskyRinzelCA3Cell(BaseCell):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_currentDensity_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_currentDensity_patterns_, ))
-    validate_Nml2Quantity_currentDensity_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A_per_m2|uA_per_cm2|mA_per_cm2)$']]
+    validate_Nml2Quantity_currentDensity_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A_per_m2$|^uA_per_cm2$|^mA_per_cm2)$']]
     def validate_Nml2Quantity_conductanceDensity(self, value):
         # Validate type Nml2Quantity_conductanceDensity, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_conductanceDensity_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductanceDensity_patterns_, ))
-    validate_Nml2Quantity_conductanceDensity_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S_per_m2|mS_per_cm2|S_per_cm2)$']]
+    validate_Nml2Quantity_conductanceDensity_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S_per_m2$|^mS_per_cm2$|^S_per_cm2)$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_voltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
     def validate_Nml2Quantity_none(self, value):
         # Validate type Nml2Quantity_none, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -15857,7 +15865,7 @@ class PinskyRinzelCA3Cell(BaseCell):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_specificCapacitance_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_specificCapacitance_patterns_, ))
-    validate_Nml2Quantity_specificCapacitance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(F_per_m2|uF_per_cm2)$']]
+    validate_Nml2Quantity_specificCapacitance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(F_per_m2$|^uF_per_cm2)$']]
     def hasContent_(self):
         if (
             super(PinskyRinzelCA3Cell, self).hasContent_()
@@ -16310,7 +16318,7 @@ class BaseCellMembPotCap(BaseCell):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_capacitance_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_capacitance_patterns_, ))
-    validate_Nml2Quantity_capacitance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(F|uF|nF|pF)$']]
+    validate_Nml2Quantity_capacitance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(F$|^uF$|^nF$|^pF)$']]
     def hasContent_(self):
         if (
             super(BaseCellMembPotCap, self).hasContent_()
@@ -16408,7 +16416,7 @@ class IzhikevichCell(BaseCell):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_voltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
     def validate_Nml2Quantity_none(self, value):
         # Validate type Nml2Quantity_none, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -16544,21 +16552,21 @@ class IafCell(BaseCell):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_voltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
     def validate_Nml2Quantity_capacitance(self, value):
         # Validate type Nml2Quantity_capacitance, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_capacitance_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_capacitance_patterns_, ))
-    validate_Nml2Quantity_capacitance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(F|uF|nF|pF)$']]
+    validate_Nml2Quantity_capacitance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(F$|^uF$|^nF$|^pF)$']]
     def validate_Nml2Quantity_conductance(self, value):
         # Validate type Nml2Quantity_conductance, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_conductance_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
-    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S$|^mS$|^uS$|^nS$|^pS)$']]
     def hasContent_(self):
         if (
             super(IafCell, self).hasContent_()
@@ -16685,14 +16693,14 @@ class IafTauCell(BaseCell):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_voltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def hasContent_(self):
         if (
             super(IafTauCell, self).hasContent_()
@@ -16814,21 +16822,21 @@ class GradedSynapse(BaseSynapse):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_conductance_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
-    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S$|^mS$|^uS$|^nS$|^pS)$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_voltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
     def validate_Nml2Quantity_pertime(self, value):
         # Validate type Nml2Quantity_pertime, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_pertime_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_pertime_patterns_, ))
-    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz)$']]
+    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s$|^per_ms$|^Hz)$']]
     def hasContent_(self):
         if (
             super(GradedSynapse, self).hasContent_()
@@ -16941,7 +16949,7 @@ class LinearGradedSynapse(BaseSynapse):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_conductance_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
-    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S$|^mS$|^uS$|^nS$|^pS)$']]
     def hasContent_(self):
         if (
             super(LinearGradedSynapse, self).hasContent_()
@@ -17087,7 +17095,7 @@ class GapJunction(BaseSynapse):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_conductance_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
-    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S$|^mS$|^uS$|^nS$|^pS)$']]
     def hasContent_(self):
         if (
             super(GapJunction, self).hasContent_()
@@ -17379,7 +17387,7 @@ class IonChannel(IonChannelScalable):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_conductance_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
-    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S$|^mS$|^uS$|^nS$|^pS)$']]
     def hasContent_(self):
         if (
             self.gates or
@@ -18339,7 +18347,7 @@ class ConnectionWD(BaseConnectionOldFormat):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def hasContent_(self):
         if (
             super(ConnectionWD, self).hasContent_()
@@ -18637,28 +18645,28 @@ class AdExIaFCell(BaseCellMembPotCap):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_conductance_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
-    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S$|^mS$|^uS$|^nS$|^pS)$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_voltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def validate_Nml2Quantity_current(self, value):
         # Validate type Nml2Quantity_current, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_current_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_current_patterns_, ))
-    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA)$']]
+    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A$|^uA$|^nA$|^pA)$']]
     def hasContent_(self):
         if (
             super(AdExIaFCell, self).hasContent_()
@@ -18826,35 +18834,35 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_voltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
     def validate_Nml2Quantity_conductancePerVoltage(self, value):
         # Validate type Nml2Quantity_conductancePerVoltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_conductancePerVoltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductancePerVoltage_patterns_, ))
-    validate_Nml2Quantity_conductancePerVoltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S_per_V|nS_per_mV)$']]
+    validate_Nml2Quantity_conductancePerVoltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S_per_V$|^nS_per_mV)$']]
     def validate_Nml2Quantity_pertime(self, value):
         # Validate type Nml2Quantity_pertime, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_pertime_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_pertime_patterns_, ))
-    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz)$']]
+    validate_Nml2Quantity_pertime_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s$|^per_ms$|^Hz)$']]
     def validate_Nml2Quantity_conductance(self, value):
         # Validate type Nml2Quantity_conductance, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_conductance_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
-    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S$|^mS$|^uS$|^nS$|^pS)$']]
     def validate_Nml2Quantity_current(self, value):
         # Validate type Nml2Quantity_current, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_current_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_current_patterns_, ))
-    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA)$']]
+    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A$|^uA$|^nA$|^pA)$']]
     def hasContent_(self):
         if (
             super(Izhikevich2007Cell, self).hasContent_()
@@ -18998,7 +19006,7 @@ class IafRefCell(IafCell):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def hasContent_(self):
         if (
             super(IafRefCell, self).hasContent_()
@@ -19078,7 +19086,7 @@ class IafTauRefCell(IafTauCell):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def hasContent_(self):
         if (
             super(IafTauRefCell, self).hasContent_()
@@ -19160,14 +19168,14 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def validate_Nml2Quantity_current(self, value):
         # Validate type Nml2Quantity_current, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_current_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_current_patterns_, ))
-    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA)$']]
+    validate_Nml2Quantity_current_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A$|^uA$|^nA$|^pA)$']]
     def hasContent_(self):
         if (
             super(AlphaCurrentSynapse, self).hasContent_()
@@ -19260,14 +19268,14 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_conductance_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
-    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S$|^mS$|^uS$|^nS$|^pS)$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_voltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
     def hasContent_(self):
         if (
             super(BaseConductanceBasedSynapseTwo, self).hasContent_()
@@ -19374,14 +19382,14 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_conductance_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_conductance_patterns_, ))
-    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS)$']]
+    validate_Nml2Quantity_conductance_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S$|^mS$|^uS$|^nS$|^pS)$']]
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_voltage_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
-    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
     def hasContent_(self):
         if (
             super(BaseConductanceBasedSynapse, self).hasContent_()
@@ -19919,7 +19927,7 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def hasContent_(self):
         if (
             super(ExpThreeSynapse, self).hasContent_()
@@ -20018,7 +20026,7 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def hasContent_(self):
         if (
             super(ExpTwoSynapse, self).hasContent_()
@@ -20114,7 +20122,7 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def hasContent_(self):
         if (
             super(ExpOneSynapse, self).hasContent_()
@@ -20194,7 +20202,7 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
             if not self.gds_validate_simple_patterns(
                     self.validate_Nml2Quantity_time_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
-    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms)$']]
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
     def hasContent_(self):
         if (
             super(AlphaSynapse, self).hasContent_()
@@ -20858,9 +20866,12 @@ def parseEtree(inFileName, silence=False):
 
 
 def parseString(inString, silence=False):
-    from StringIO import StringIO
+    if sys.version_info[0] == 2:
+        from StringIO import StringIO as IOBuffer
+    else:
+        from io import BytesIO as IOBuffer
     parser = None
-    doc = parsexml_(StringIO(inString), parser)
+    doc = parsexml_(IOBuffer(inString), parser)
     rootNode = doc.getroot()
     rootTag, rootClass = get_root_tag(rootNode)
     if rootClass is None:

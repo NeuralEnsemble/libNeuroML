@@ -18,9 +18,10 @@ class TestNeuroMLHDF5Parser(unittest.TestCase):
     base_dir = os.path.dirname(__file__)
     #base_dir = '.'
     
-    def test_write_hdf5(self):
+    def test_write_load_hdf5(self):
         
-        for f in ['simplenet.nml']:
+        #for f in ['simplenet.nml']:
+        for f in ['testh5.nml']:
             file_name = '%s/../examples/test_files/%s'%(self.base_dir,f)
             
             print("Loading %s"%file_name)
@@ -33,6 +34,15 @@ class TestNeuroMLHDF5Parser(unittest.TestCase):
             nml_h5_file = '%s/../examples/tmp/%s.h5'%(self.base_dir,f)
             writers.NeuroMLHdf5Writer.write(nml_doc0, nml_h5_file)
             print("Written to: %s"%nml_h5_file)
+            
+            nml_doc2 = loaders.NeuroMLHdf5Loader.load(nml_h5_file)
+
+            summary1 = nml_doc2.summary()
+            print('\n'+summary1)
+
+            assert(summary0==summary1)
+
+            print("Same!")
             
             
     def test_write_xml_hdf5(self):
@@ -97,4 +107,4 @@ class TestNeuroMLHDF5Parser(unittest.TestCase):
 if __name__ == '__main__':
     
     tnxp = TestNeuroMLHDF5Parser()
-    tnxp.test_parse()
+    tnxp.test_write_load_hdf5()

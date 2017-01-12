@@ -15,9 +15,11 @@
 #
   
 import logging
-
+import sys
 
 import tables   # pytables for HDF5 support
+
+from neuroml.nml.nml import parseString
 
 class NeuroMLHdf5Parser():
     
@@ -34,7 +36,8 @@ class NeuroMLHdf5Parser():
   currentSynapse = ""
   
   currInputList = ""
-       
+        
+  nml_doc_extra_elements = None
     
   def __init__ (self, netHandler): 
     self.netHandler = netHandler
@@ -46,8 +49,16 @@ class NeuroMLHdf5Parser():
     self.log.info("Opened HDF5 file: %s; id=%s"%(h5file.filename,h5file.root.neuroml._v_attrs.id))
     
     if hasattr(h5file.root.neuroml._v_attrs,"neuroml_top_level"):
-        nml = h5file.root.neuroml._v_attrs.neuroml_top_level
-        print(nml)
+        nml = str(h5file.root.neuroml._v_attrs.neuroml_top_level)
+        
+        if sys.version_info.major == 3:
+            nml = nml.encode()
+            
+        self.nml_doc_extra_elements = parseString(nml)
+        
+        #print(self.nml_doc_extra_elements.summary())
+        
+        self.log.info("Added NeuroML2 elements from extra string found in HDF5 file")
     
     self.parseGroup(h5file.root.neuroml)
     
