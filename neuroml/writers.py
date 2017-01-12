@@ -30,11 +30,11 @@ class NeuroMLHdf5Writer(object):
     
         
     @classmethod
-    def write(cls,nml_doc,h5_file_name,embed_xml=True):
+    def write(cls,nml_doc,h5_file_name,embed_xml=True,compress=True):
         
         import tables
-        
-        h5file = tables.open_file(h5_file_name, mode = "w", title = nml_doc.id)
+        FILTERS = tables.Filters(complib='zlib', complevel=5) if compress else tables.Filters()
+        h5file = tables.open_file(h5_file_name, mode = "w", title = nml_doc.id, filters=FILTERS)
         
         rootGroup = h5file.create_group("/", 'neuroml', 'Root NeuroML group')
         

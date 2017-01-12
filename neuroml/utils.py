@@ -4,9 +4,12 @@ Utilities for checking generated code
 
 """
 import os.path
+import sys
 
 import neuroml
 import inspect
+import warnings
+
 
 def validate_neuroml2(file_name):
 
@@ -26,7 +29,21 @@ def validate_neuroml2(file_name):
     print("It's valid!")
     
     
-def add_all_to_document(nml_doc_src, nml_doc_tgt):
+def print_summary(nml_file_name):
+    
+    print(get_summary(nml_file_name))
+    
+    
+def get_summary(nml_file_name):
+    
+    from neuroml.loaders import read_neuroml2_file
+    warnings.simplefilter("ignore")
+    nml_doc = read_neuroml2_file(nml_file_name,include_includes=True, verbose=False)
+    
+    return nml_doc.summary(show_includes=False)
+
+    
+def add_all_to_document(nml_doc_src, nml_doc_tgt, verbose=False):
     
     membs = inspect.getmembers(nml_doc_src)
 
@@ -35,7 +52,7 @@ def add_all_to_document(nml_doc_src, nml_doc_tgt):
                 and not memb[0].endswith('_'):
             for entry in memb[1]:
                 if memb[0] != 'includes':
-                    print("  Adding %s to list: %s" \
+                    if verbose: print("  Adding %s to list: %s" \
                         %(entry.id if hasattr(entry,'id') else entry.name, memb[0]))
                     getattr(nml_doc_tgt, memb[0]).append(entry)
                     
@@ -63,5 +80,13 @@ def append_to_element(parent, child):
             raise Exception("Could not add %s to %s"%(child, parent))
         
                 
+def main():
+    if len(sys.argv)!=2:
+        print("Please specify the name of the NeuroML2 file...")
+        exit(1)
+        
+    print_summary(sys.argv[1])
 
+if __name__ == '__main__':
+    main()
 

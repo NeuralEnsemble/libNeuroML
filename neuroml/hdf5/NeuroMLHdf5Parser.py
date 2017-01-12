@@ -60,16 +60,17 @@ class NeuroMLHdf5Parser():
         
         self.log.info("Added NeuroML2 elements from extra string found in HDF5 file")
     
-    self.parseGroup(h5file.root.neuroml)
+    self.parse_group(h5file.root.neuroml)
     
     h5file.close()
     
+  def _is_dataset(self,node):
+      return node._c_classid == 'ARRAY' or node._c_classid == 'CARRAY'
     
-    
-  def parseGroup(self, g):
+  def parse_group(self, g):
     self.log.debug("Parsing group: "+ str(g))
     
-    self.startGroup(g)
+    self.start_group(g)
     
     # Note this ensures groups are parsed before datasets. Important for synapse props
     
@@ -78,25 +79,25 @@ class NeuroMLHdf5Parser():
       
         if node._c_classid == 'GROUP' and node._v_name.count('population_')>=1:
             self.log.debug("Sub node: "+ str(node)+ ", class: "+ node._c_classid)
-            self.parseGroup(node)
+            self.parse_group(node)
           
     # Non populations!
     for node in g:
       
         if node._c_classid == 'GROUP' and node._v_name.count('population_')==0:
             self.log.debug("Sub node (ng): "+ str(node)+ ", class: "+ node._c_classid)
-            self.parseGroup(node)
+            self.parse_group(node)
           
     for node in g:
         self.log.debug("Sub node: "+ str(node)+ ", class: "+ node._c_classid)
       
-        if node._c_classid == 'ARRAY':
-            self.parseDataset(node)
+        if self._is_dataset(node):
+            self.parse_dataset(node)
           
-    self.endGroup(g)
+    self.end_group(g)
     
     
-  def parseDataset(self, d):
+  def parse_dataset(self, d):
     self.log.debug("Parsing dataset/array: "+ str(d))
     
     if self.currPopulation!="":
@@ -260,8 +261,20 @@ class NeuroMLHdf5Parser():
                                         int(d[i,0]),         
                                         float(d[i,1]))       
     
+  def _get_node_size(self, g, name):
+      
+        size = -1
+        # Peek ahead for size...
+        for node in g:
+            if self._is_dataset(node) and node.name == name:
+              size = node.shape[0]
+
+        if size == -1:
+            size = g._v_attrs.size
+            
+        return size
     
-  def startGroup(self, g):
+  def start_group(self, g):
     self.log.debug("Going into a group: "+ g._v_name)
     
     
@@ -282,14 +295,7 @@ class NeuroMLHdf5Parser():
         if (len(self.currentComponent)==1):
           self.currentComponent = g._v_attrs.component
         
-        size = -1
-        # Peek ahead for size...
-        for node in g:
-            if node._c_classid == 'ARRAY' and node.name == self.currPopulation:
-              size = node.shape[0]
-              
-        if size == -1:
-            size = g._v_attrs.size
+        size = self._get_node_size(g,self.currPopulation)
               
         self.log.debug("Found a population: "+ self.currPopulation+", component: "+self.currentComponent+", size: "+ str(size))
         
@@ -313,22 +319,14 @@ class NeuroMLHdf5Parser():
         component = g._v_attrs.component
         population = g._v_attrs.population
         
-        size = -1
-        # Peek ahead for size...
-        for node in g:
-            if node._c_classid == 'ARRAY' and node.name == self.currInputList:
-              size = node.shape[0]
-              
-        if size == -1:
-            size = g._v_attrs.size
+        size = self._get_node_size(g,self.currInputList)
               
         self.log.debug("Found an inputList: "+ self.currInputList+", component: "+component+", population: "+population+", size: "+ str(size))
         
         self.netHandler.handleInputList(self.currInputList, population, component, size)
     
     
-    
-  def endGroup(self, g):
+  def end_group(self, g):
     self.log.debug("Coming out of a group: "+ str(g))
   
     if g._v_name.count('population_')>=1:
@@ -349,8 +347,7 @@ class NeuroMLHdf5Parser():
     
     
 
-        
-        
+    
         
 if __name__ == '__main__':
 

@@ -331,7 +331,14 @@ nml_doc_summary = MethodSpec(name='summary',
                 if (memb[0] == 'includes' and show_includes) or (not memb[0] == 'includes' and show_non_network):
                     info+="*   "+str(memb[1][0].__class__.__name__)+": [ "
                     for entry in memb[1]:
-                        info+=str(entry.id if hasattr(entry,'id') else (entry.name if hasattr(entry,'name') else entry.href))+" "
+                        if hasattr(entry,'id'):
+                            info+=str(entry.id)+" "
+                        elif hasattr(entry,'name'):
+                            info+=str(entry.name)+" "
+                        elif hasattr(entry,'href'):
+                            info+=str(entry.href)+" "
+                        elif hasattr(entry,'tag'):
+                            info+=str(entry.tag)+" = "+str(entry.value)+"; "
                     info+="]\\n"
         for network in self.networks:
             info+="*  Network: "+network.id+"\\n"
@@ -561,7 +568,7 @@ inserts['Population'] = '''
             popGroup._f_setattr("size", count)
             popGroup._f_setattr("type", "populationList")
 
-            h5file.create_array(popGroup, self.id, a, "Locations of cells in "+ self.id)
+            h5file.create_carray(popGroup, self.id, obj=a, title="Locations of cells in "+ self.id)
             
         else:
             popGroup._f_setattr("size", self.size)
@@ -630,7 +637,7 @@ inserts['Projection'] = '''
           count=count+1
         
             
-        array = h5file.create_array(projGroup, self.id, a, "Connections of cells in "+ self.id)
+        array = h5file.create_carray(projGroup, self.id, obj=a, title="Connections of cells in "+ self.id)
         
         array._f_setattr("column_0", "id")
         array._f_setattr("column_1", "pre_cell_id")
@@ -693,7 +700,7 @@ inserts['ElectricalProjection'] = '''
           a[count,6] = connection.post_fraction_along          
           count=count+1
           
-        array = h5file.create_array(projGroup, self.id, a, "Connections of cells in "+ self.id)
+        array = h5file.create_carray(projGroup, self.id, obj=a, title="Connections of cells in "+ self.id)
         
         array._f_setattr("column_0", "id")
         array._f_setattr("column_1", "pre_cell_id")
@@ -726,7 +733,7 @@ inserts['InputList'] = '''
             a[count,1] = input.get_target_cell_id()
             count+=1
             
-        h5file.create_array(ilGroup, self.id, a, "Locations of inputs in "+ self.id)
+        h5file.create_carray(ilGroup, self.id, obj=a, title="Locations of inputs in "+ self.id)
         
 '''
 
