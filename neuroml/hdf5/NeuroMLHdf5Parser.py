@@ -21,6 +21,8 @@ import tables   # pytables for HDF5 support
 
 from neuroml.nml.nml import parseString
 
+from neuroml.loaders import read_neuroml2_string
+
 class NeuroMLHdf5Parser():
     
   log = logging.getLogger("NeuroMLHdf5Parser")
@@ -54,7 +56,7 @@ class NeuroMLHdf5Parser():
         if sys.version_info[0] == 3:
             nml = nml.encode()
             
-        self.nml_doc_extra_elements = parseString(nml)
+        self.nml_doc_extra_elements = read_neuroml2_string(nml, include_includes=True, verbose=False)
         
         #print(self.nml_doc_extra_elements.summary())
         
@@ -136,8 +138,7 @@ class NeuroMLHdf5Parser():
         postCellId = -1
         postSegId = 0
         postFractAlong= 0.5
-        weight = 1
-        delay = 1
+        
         type="projection"
         
         extraParamIndices = {}
@@ -179,16 +180,10 @@ class NeuroMLHdf5Parser():
         self.log.debug("Cols: Id: %d precell: %d, postcell: %d, pre fract: %d, post fract: %d" % (indexId, indexPreCellId, indexPostCellId, indexPreFractAlong, indexPostFractAlong))
         
         self.log.debug("Extra cols: "+str(extraParamIndices) )
-        #print d[5,:]
         
         
         for i in range(0, d.shape[0]):
             row = d[i,:]
-            '''
-            localSynapseProps = {}
-            synTypes = self.globalSynapseProps.keys()
-            for synType in synTypes:
-                localSynapseProps[synType] = self.globalSynapseProps[synType].copy()'''
             
             id =  int(row[indexId])
             
@@ -208,32 +203,15 @@ class NeuroMLHdf5Parser():
               
               
             if indexWeight >= 0:
-              weight = row[indexWeight]
+                weight = row[indexWeight]
+            else:
+                weight=1
               
             if indexDelay >= 0:
-              delay = row[indexDelay]
+                delay = row[indexDelay]
+            else:
+                delay = 0
 
-            '''
-            if len(extraParamIndices)>0:
-                for synType in localSynapseProps:
-                   for paramName in extraParamIndices.keys():
-                     if paramName.count(synType)>0:
-                       self.log.debug(paramName +"->"+synType)
-                       if paramName.count('weight')>0:
-                          localSynapseProps[synType].weight = row[extraParamIndices[paramName]]
-                       if paramName.count('internal_delay')>0:
-                          localSynapseProps[synType].internalDelay = row[extraParamIndices[paramName]]
-                       if paramName.count('pre_delay')>0:
-                          localSynapseProps[synType].preDelay = row[extraParamIndices[paramName]]
-                       if paramName.count('post_delay')>0:
-                          localSynapseProps[synType].postDelay = row[extraParamIndices[paramName]]
-                       if paramName.count('prop_delay')>0:
-                          localSynapseProps[synType].propDelay = row[extraParamIndices[paramName]]
-                       if paramName.count('threshold')>0:
-                          localSynapseProps[synType].threshold = row[extraParamIndices[paramName]]'''
-               
-            
-            
             #self.log.debug("Connection %d from %f to %f" % (id, preCellId, postCellId))
 
 

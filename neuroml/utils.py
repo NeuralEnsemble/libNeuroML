@@ -79,6 +79,18 @@ def append_to_element(parent, child):
         if not added:
             raise Exception("Could not add %s to %s"%(child, parent))
         
+def has_segment_fraction_info(connections):
+    if not connections:
+        return False
+    no_seg_fract_info = True
+    i=0
+    while no_seg_fract_info and i<len(connections):
+        conn = connections[i]
+        no_seg_fract_info = conn.pre_segment_id==0 and conn.post_segment_id == 0 and conn.pre_fraction_along == 0.5 and conn.post_fraction_along ==0.5
+        i+=1
+    print("Checked connections: [%s,...], no_seg_fract_info: %s"%(connections[0],no_seg_fract_info))
+    return not no_seg_fract_info
+
                 
 def main():
     if len(sys.argv)!=2:

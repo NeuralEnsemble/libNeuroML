@@ -1,5 +1,8 @@
 
 from neuroml.nml.nml import parse as nmlparse
+
+from neuroml.nml.nml import parseString as nmlparsestring
+
 import neuroml
 from neuroml.utils import add_all_to_document
 import os
@@ -214,12 +217,34 @@ def read_neuroml2_file(nml2_file_name, include_includes=False, verbose=False,
         print_method("Unable to find file: %s!" % nml2_file_name, True)
         sys.exit()
         
-    if nml2_file_name.endswith('.h5') or nml2_file_name.endswith('.hdf5'):
-        nml2_doc = NeuroMLHdf5Loader.load(nml2_file_name)
-    else:
-        nml2_doc = NeuroMLLoader.load(nml2_file_name)
+    return _read_neuroml2(nml2_file_name, include_includes=include_includes, verbose=verbose, 
+                       already_included=already_included, print_method=print_method)
+                       
+                       
+                       
+def read_neuroml2_string(nml2_string, include_includes=False, verbose=False, 
+                       already_included=[], print_method=print_):  
     
-    base_path = os.path.dirname(os.path.realpath(nml2_file_name))
+        
+    return _read_neuroml2(nml2_string, include_includes=include_includes, verbose=verbose, 
+                       already_included=already_included, print_method=print_method)
+    
+
+
+def _read_neuroml2(nml2_file_name_or_string, include_includes=False, verbose=False, 
+                       already_included=[], print_method=print_):  
+    
+    #print("................ Loading: %s"%nml2_file_name_or_string[:7])
+    
+    base_path = os.path.dirname(os.path.realpath(nml2_file_name_or_string))
+    
+    if not isinstance(nml2_file_name_or_string, str) or nml2_file_name_or_string.startswith('<'):
+        nml2_doc = nmlparsestring(nml2_file_name_or_string)
+        base_path = './'
+    elif nml2_file_name_or_string.endswith('.h5') or nml2_file_name_or_string.endswith('.hdf5'):
+        nml2_doc = NeuroMLHdf5Loader.load(nml2_file_name_or_string)
+    else:
+        nml2_doc = NeuroMLLoader.load(nml2_file_name_or_string)
     
     if include_includes:
         print_method('Including included files (included already: %s)' \
@@ -244,6 +269,9 @@ def read_neuroml2_file(nml2_file_name, include_includes=False, verbose=False,
                     
                 else:
                     raise Exception("Unrecognised extension on file: %s"%incl_loc)
+                
+        nml2_doc.includes = []
+        
     else:
         if len(nml2_doc.includes)>0:
             print_method('NOT including included files, even though %s are included!'%len(nml2_doc.includes), verbose)           
@@ -252,3 +280,9 @@ def read_neuroml2_file(nml2_file_name, include_includes=False, verbose=False,
         nml2_doc.includes = []
             
     return nml2_doc
+
+
+if __name__ == '__main__':
+    
+    nml_doc = read_neuroml2_file(sys.argv[1])
+    print(nml_doc.summary())

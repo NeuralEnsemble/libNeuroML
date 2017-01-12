@@ -20,13 +20,14 @@ class TestNeuroMLHDF5Parser(unittest.TestCase):
     
     def test_write_load_hdf5(self):
         
-        #for f in ['simplenet.nml']:
-        for f in ['testh5.nml']:
+        #for f in []:
+        #for f in ['MediumNet.net.nml']:
+        for f in ['simplenet.nml','testh5.nml','MediumNet.net.nml']:
             file_name = '%s/../examples/test_files/%s'%(self.base_dir,f)
             
             print("Loading %s"%file_name)
         
-            nml_doc0 = loaders.NeuroMLLoader.load(file_name)
+            nml_doc0 = loaders.read_neuroml2_file(file_name,include_includes=True)
             summary0 = nml_doc0.summary()
             
             print(summary0)

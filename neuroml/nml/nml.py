@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Jan 12 14:26:31 2017 by generateDS.py version 2.24b.
+# Generated Thu Jan 12 16:46:13 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -4942,7 +4942,7 @@ class Location(GeneratedsSuper):
         
     def __str__(self):
         
-        return "("+ '%.5f' % self.x+","+ '%.5f' % self.y+","+ '%.5f' % self.z+")"
+        return "("+ '%.4f' % self.x+","+ '%.4f' % self.y+","+ '%.4f' % self.z+")"
         
     def __repr__(self):
     
@@ -6490,16 +6490,27 @@ class Projection(Base):
         
         connection_wds = len(self.connection_wds) > 0
         
-        cols = 7
+        cols = 3
+        
         extra_cols = {}
         
-        if connection_wds:
-            cols = 9
-            extra_cols["column_7"] = "weight"
-            extra_cols["column_8"] = "delay"
+        from neuroml.utils import has_segment_fraction_info
         
-        #TODO: optimise ...for conn in self.connections:
-        #    if
+        include_segment_fraction = has_segment_fraction_info(self.connections) or has_segment_fraction_info(self.connection_wds)
+        
+        if include_segment_fraction:
+            cols +=4
+            extra_cols["column_3"] = "pre_segment_id"
+            extra_cols["column_4"] = "post_segment_id"
+            extra_cols["column_5"] = "pre_fraction_along"
+            extra_cols["column_6"] = "post_fraction_along"
+            
+        
+        if connection_wds:
+            extra_cols["column_"+str(cols)] = "weight"
+            extra_cols["column_"+str(cols+1)] = "delay"
+            cols+=2
+        
         
         a = numpy.ones([len(self.connections)+len(self.connection_wds), cols], numpy.float32)
         
@@ -6510,21 +6521,25 @@ class Projection(Base):
           a[count,0] = connection.id
           a[count,1] = connection.get_pre_cell_id()
           a[count,2] = connection.get_post_cell_id()  
-          a[count,3] = connection.pre_segment_id  
-          a[count,4] = connection.post_segment_id  
-          a[count,5] = connection.pre_fraction_along 
-          a[count,6] = connection.post_fraction_along          
+          if include_segment_fraction:
+            a[count,3] = connection.pre_segment_id  
+            a[count,4] = connection.post_segment_id  
+            a[count,5] = connection.pre_fraction_along 
+            a[count,6] = connection.post_fraction_along          
           count=count+1
           
         for connection in self.connection_wds:
           a[count,0] = connection.id
           a[count,1] = connection.get_pre_cell_id()
           a[count,2] = connection.get_post_cell_id()  
-          a[count,3] = connection.pre_segment_id  
-          a[count,4] = connection.post_segment_id  
-          a[count,5] = connection.pre_fraction_along 
-          a[count,6] = connection.post_fraction_along        
-          a[count,7] = connection.weight  
+          
+          if include_segment_fraction:
+            a[count,3] = connection.pre_segment_id  
+            a[count,4] = connection.post_segment_id  
+            a[count,5] = connection.pre_fraction_along 
+            a[count,6] = connection.post_fraction_along  
+          
+          a[count,cols-2] = connection.weight  
           if 'ms' in connection.delay:
             delay = float(connection.delay[:-2].strip())
           elif 's' in connection.delay:
@@ -6532,7 +6547,7 @@ class Projection(Base):
           elif 'us' in connection.delay:
             delay = float(connection.delay[:-2].strip())/1e3
             
-          a[count,8] = delay          
+          a[count,cols-1] = delay          
           count=count+1
         
             
@@ -6541,10 +6556,6 @@ class Projection(Base):
         array._f_setattr("column_0", "id")
         array._f_setattr("column_1", "pre_cell_id")
         array._f_setattr("column_2", "post_cell_id")
-        array._f_setattr("column_3", "pre_segment_id")
-        array._f_setattr("column_4", "post_segment_id")
-        array._f_setattr("column_5", "pre_fraction_along")
-        array._f_setattr("column_6", "post_fraction_along")
         
         for col in extra_cols.keys():
             array._f_setattr(col,extra_cols[col])
@@ -14855,25 +14866,27 @@ class NeuroMLDocument(Standalone):
                     info+="]\n"
         for network in self.networks:
             info+="*  Network: "+network.id+"\n"
-            for pop in network.populations:
+            for pop in sorted(network.populations, key=lambda x: x.id):
                 info+="*   Population: "+pop.id+" with "+str(pop.size)+" components of type "+pop.component+"\n"
                 if len(pop.instances)>0:
                     loc = pop.instances[0].location
                     info+="*     Locations: ["+str(loc)+", ...]\n"
                 
-            for proj in network.projections:
+            for proj in sorted(network.projections, key=lambda x: x.id):
                 info+="*   Projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\n"
                 if len(proj.connections)>0:
                     info+="*     "+str(len(proj.connections))+" connections: [("+str(proj.connections[0])+"), ...]\n"
                 if len(proj.connection_wds)>0:
                     info+="*     "+str(len(proj.connection_wds))+" connections (wd): [("+str(proj.connection_wds[0])+"), ...]\n"
                     
-            for proj in network.electrical_projections:
+            for proj in sorted(network.electrical_projections, key=lambda x: x.id):
                 info+="*   Electrical projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\n"
                 if len(proj.electrical_connections)>0:
                     info+="*     "+str(len(proj.electrical_connections))+" connections: [("+str(proj.electrical_connections[0])+"), ...]\n"
                 if len(proj.electrical_connection_instances)>0:
                     info+="*     "+str(len(proj.electrical_connection_instances))+" connections: [("+str(proj.electrical_connection_instances[0])+"), ...]\n"
+                    
+            #TODO: inputs!!!
         
         info+="*******************************************************"
         
@@ -18425,13 +18438,39 @@ class ConnectionWD(BaseConnectionOldFormat):
         
         return self._get_cell_id(self.pre_cell_id)
         
+
+    def get_pre_segment_id(self):
+        
+        return int(self.pre_segment_id)
+        
+    def get_post_segment_id(self):
+        
+        return int(self.post_segment_id)
+
+    def get_pre_fraction_along(self):
+        
+        return float(self.pre_fraction_along)
+        
+    def get_post_fraction_along(self):
+        
+        return float(self.post_fraction_along)
+        
+        
     def get_post_cell_id(self):
         
         return self._get_cell_id(self.post_cell_id)
         
+    def get_pre_info(self):
+        
+        return str(self.get_pre_cell_id())+('_'+str(self.get_pre_segment_id())+'('+ '%.5f'%self.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
+        
+    def get_post_info(self):
+        
+        return str(self.get_post_cell_id())+('_'+str(self.get_post_segment_id())+'('+ '%.5f'%self.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
+        
     def __str__(self):
         
-        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())
+        return "Connection "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())
         
             
     def __str__(self):
@@ -18520,13 +18559,39 @@ class Connection(BaseConnectionOldFormat):
         
         return self._get_cell_id(self.pre_cell_id)
         
+
+    def get_pre_segment_id(self):
+        
+        return int(self.pre_segment_id)
+        
+    def get_post_segment_id(self):
+        
+        return int(self.post_segment_id)
+
+    def get_pre_fraction_along(self):
+        
+        return float(self.pre_fraction_along)
+        
+    def get_post_fraction_along(self):
+        
+        return float(self.post_fraction_along)
+        
+        
     def get_post_cell_id(self):
         
         return self._get_cell_id(self.post_cell_id)
         
+    def get_pre_info(self):
+        
+        return str(self.get_pre_cell_id())+('_'+str(self.get_pre_segment_id())+'('+ '%.5f'%self.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
+        
+    def get_post_info(self):
+        
+        return str(self.get_post_cell_id())+('_'+str(self.get_post_segment_id())+'('+ '%.5f'%self.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
+        
     def __str__(self):
         
-        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())
+        return "Connection "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())
         
     # end class Connection
 
