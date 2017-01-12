@@ -15,7 +15,7 @@ before_install:
 install:
   - conda update --yes conda
   #- conda config --add channels soft-matter
-  - conda create -n testenv --yes nose setuptools cython numpy pymongo numexpr pytables python=${TRAVIS_PYTHON_VERSION}
+  - conda create -n testenv --yes nose setuptools cython numpy pymongo numexpr pytables=3.3.0 python=${TRAVIS_PYTHON_VERSION}
   - source activate testenv
   - if [[ $TRAVIS_PYTHON_VERSION == "2.6" ]]; then conda install unittest2 --yes; fi
   - if [[ $TRAVIS_PYTHON_VERSION -ne "3.5" ]]; then conda install simplejson; fi

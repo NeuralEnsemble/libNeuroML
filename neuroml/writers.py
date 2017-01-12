@@ -3,7 +3,7 @@ import neuroml
 
 class NeuroMLWriter(object):
     @classmethod
-    def write(cls,nmldoc,file):
+    def write(cls,nmldoc,file,close=True):
         """
         Writes from NeuroMLDocument to nml file
         in future can implement from other types
@@ -22,14 +22,15 @@ class NeuroMLWriter(object):
         nmldoc.export(file,0,name_="neuroml",
                       namespacedef_=namespacedef) #name_ param to ensure root element named correctly - generateDS limitation
                       
-        file.close()
+        if close:
+            file.close()
 
 
 class NeuroMLHdf5Writer(object):
     
         
     @classmethod
-    def write(cls,nml_doc,h5_file_name):
+    def write(cls,nml_doc,h5_file_name,embed_xml=True):
         
         import tables
         
@@ -44,6 +45,32 @@ class NeuroMLHdf5Writer(object):
 
             network.exportHdf5(h5file, rootGroup)
             
+        if embed_xml:
+            
+            networks = []
+            for n in nml_doc.networks:
+                networks.append(n)
+            
+            nml_doc.networks = []
+            
+            try:
+                import StringIO
+                sf = StringIO.StringIO()
+            except:
+                import io
+                sf = io.StringIO()
+            
+            NeuroMLWriter.write(nml_doc,sf,close=False)
+            
+            nml2 = sf.getvalue()
+            
+            rootGroup._f_setattr("neuroml_top_level", nml2)
+            
+
+            # Put back into previous form...
+            for n in networks:
+                nml_doc.networks.append(n)
+            
         h5file.close()  # Close (and flush) the file
         
         
@@ -52,7 +79,6 @@ class NeuroMLHdf5Writer(object):
         
         nml_doc_hdf5 = neuroml.NeuroMLDocument(nml_doc0.id)
         
-        networks = []
         for n in nml_doc0.networks:
             nml_doc_hdf5.networks.append(n)
             
@@ -62,7 +88,7 @@ class NeuroMLHdf5Writer(object):
         
         NeuroMLWriter.write(nml_doc0,xml_file_name)
         
-        NeuroMLHdf5Writer.write(nml_doc_hdf5,h5_file_name)
+        NeuroMLHdf5Writer.write(nml_doc_hdf5,h5_file_name,embed_xml=False)
         
         # Put back into previous form...
         for n in nml_doc_hdf5.networks:

@@ -43,7 +43,7 @@ def append_to_element(parent, child):
     
         import inspect
         membs = inspect.getmembers(parent)
-        print("Adding %s to element %s"%(child, parent))
+        #print("Adding %s to element %s"%(child, parent))
         mappings = {}
         for mdi in parent.member_data_items_:
             mappings[mdi.data_type] = mdi.name

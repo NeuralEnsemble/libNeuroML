@@ -24,8 +24,8 @@ class NeuroMLLoader(object):
         try:
             nml2_doc = nmlparse(file_name)
         except Exception:
-            print("Not a valid NeuroML 2 doc: %s" % str(sys.exc_info())) 
-            return None    
+            raise Exception("Not a valid NeuroML 2 doc (%s): %s" % (file_name,sys.exc_info())) 
+        
         return nml2_doc
 
 
@@ -56,8 +56,8 @@ class NeuroMLHdf5Loader(object):
             nml2_doc = nmlHandler.get_nml_doc()
             
         except Exception:
-            print("Not a valid NeuroML 2 doc: %s" % str(sys.exc_info())) 
-            return None    
+            raise Exception("Not a valid NeuroML 2 HDF5 doc (%s): %s" % (file_name,sys.exc_info()))  
+        
         return nml2_doc
 
 

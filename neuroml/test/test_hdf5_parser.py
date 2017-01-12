@@ -14,11 +14,14 @@ except ImportError:
     import unittest
 
 class TestNeuroMLHDF5Parser(unittest.TestCase):
+
+    base_dir = os.path.dirname(__file__)
+    #base_dir = '.'
     
     def test_write_hdf5(self):
         
         for f in ['simplenet.nml']:
-            file_name = '%s/../examples/test_files/%s'%(os.path.dirname(__file__),f)
+            file_name = '%s/../examples/test_files/%s'%(self.base_dir,f)
             
             print("Loading %s"%file_name)
         
@@ -27,7 +30,7 @@ class TestNeuroMLHDF5Parser(unittest.TestCase):
             
             print(summary0)
 
-            nml_h5_file = '%s/../examples/tmp/%s.h5'%(os.path.dirname(__file__),f)
+            nml_h5_file = '%s/../examples/tmp/%s.h5'%(self.base_dir,f)
             writers.NeuroMLHdf5Writer.write(nml_doc0, nml_h5_file)
             print("Written to: %s"%nml_h5_file)
             
@@ -36,7 +39,7 @@ class TestNeuroMLHDF5Parser(unittest.TestCase):
         
         #for f in ['simplenet.nml','MediumNet.net.nml']:
         for f in ['testh5.nml']:
-            file_name = '%s/../examples/test_files/%s'%(os.path.dirname(__file__),f)
+            file_name = '%s/../examples/test_files/%s'%(self.base_dir,f)
             
             print("Loading %s"%file_name)
             
@@ -47,8 +50,8 @@ class TestNeuroMLHDF5Parser(unittest.TestCase):
             summary0 = nml_doc0.summary(show_includes=False,show_non_network=show_non_network)
             print(summary0)
 
-            nml_xml_file = '%s/../examples/tmp/XH_%s.nml'%(os.path.dirname(__file__),f)
-            nml_h5_file = '%s/../examples/tmp/XH_%s.h5'%(os.path.dirname(__file__),f)
+            nml_xml_file = '%s/../examples/tmp/XH_%s.nml'%(self.base_dir,f)
+            nml_h5_file = '%s/../examples/tmp/XH_%s.h5'%(self.base_dir,f)
             writers.NeuroMLHdf5Writer.write_xml_and_hdf5(nml_doc0, nml_xml_file, nml_h5_file)
             print("Written to: %s and %s"%(nml_xml_file,nml_h5_file))
             
@@ -64,7 +67,7 @@ class TestNeuroMLHDF5Parser(unittest.TestCase):
     
     def test_parse(self):
     
-        file_name = os.path.dirname(__file__)+'/../examples/test_files/testh5.nml'
+        file_name = self.base_dir+'/../examples/test_files/testh5.nml'
         
         nml_doc0 = loaders.NeuroMLLoader.load(file_name)
         summary0 = nml_doc0.summary(show_includes=False,show_non_network=False)
@@ -72,8 +75,7 @@ class TestNeuroMLHDF5Parser(unittest.TestCase):
 
         print('-------------------------------\n\n')
 
-
-        nml_h5_file = os.path.dirname(__file__)+'/../examples/tmp/testh5a.nml.h5'
+        nml_h5_file = self.base_dir+'/../examples/tmp/testh5a.nml.h5'
         writers.NeuroMLHdf5Writer.write(nml_doc0, nml_h5_file)
 
         print("Written H5 network file to: "+nml_h5_file)
@@ -87,7 +89,12 @@ class TestNeuroMLHDF5Parser(unittest.TestCase):
         
         print("Same!")
 
-        nml_file = os.path.dirname(__file__)+'/../examples/tmp/testh5_2_.nml'
         
-        writers.NeuroMLWriter.write(nml_doc2, nml_file)
-        print("Written network file to: "+nml_file)
+    def runTest(self):
+        print("Running tests in TestNeuroMLHDF5Parser")
+
+
+if __name__ == '__main__':
+    
+    tnxp = TestNeuroMLHDF5Parser()
+    tnxp.test_parse()
