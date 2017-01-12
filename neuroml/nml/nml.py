@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Jan 12 16:46:13 2017 by generateDS.py version 2.24b.
+# Generated Thu Jan 12 17:31:50 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -14853,17 +14853,20 @@ class NeuroMLDocument(Standalone):
         for memb in membs:
             if isinstance(memb[1], list) and len(memb[1])>0 and not memb[0].endswith('_') and not memb[0] == 'networks':
                 if (memb[0] == 'includes' and show_includes) or (not memb[0] == 'includes' and show_non_network):
-                    info+="*   "+str(memb[1][0].__class__.__name__)+": [ "
+                
+                    info+="*   "+str(memb[1][0].__class__.__name__)+": "
+                    listed = []
                     for entry in memb[1]:
                         if hasattr(entry,'id'):
-                            info+=str(entry.id)+" "
+                            listed.append(str(entry.id))
                         elif hasattr(entry,'name'):
-                            info+=str(entry.name)+" "
+                            listed.append(str(entry.name))
                         elif hasattr(entry,'href'):
-                            info+=str(entry.href)+" "
+                            listed.append(str(entry.href))
                         elif hasattr(entry,'tag'):
-                            info+=str(entry.tag)+" = "+str(entry.value)+"; "
-                    info+="]\n"
+                            listed.append(str(entry.tag)+" = "+str(entry.value))
+                    info+= str(sorted(listed))+"\n"
+                    
         for network in self.networks:
             info+="*  Network: "+network.id+"\n"
             for pop in sorted(network.populations, key=lambda x: x.id):

@@ -167,6 +167,12 @@ class NeuroMLHdf5Parser():
                 indexWeight = int(attrName[len('column_'):])
             elif val == 'delay' or val[0] == 'delay':
                 indexDelay = int(attrName[len('column_'):])
+                
+        if self.nml_doc_extra_elements:
+            synapse_obj = self.nml_doc_extra_elements.get_by_id(self.currentSynapse)
+        else:
+            synapse_obj = None
+        
             
         self.netHandler.handleProjection(self.currentProjectionId,
                                          self.currentProjectionPrePop,
@@ -174,7 +180,8 @@ class NeuroMLHdf5Parser():
                                          self.currentSynapse,
                                          hasWeights=indexWeight>0, 
                                          hasDelays=indexDelay>0,
-                                         type=self.currentProjectionType)
+                                         type=self.currentProjectionType,
+                                         synapse_obj = synapse_obj)
                 
         
         self.log.debug("Cols: Id: %d precell: %d, postcell: %d, pre fract: %d, post fract: %d" % (indexId, indexPreCellId, indexPostCellId, indexPreFractAlong, indexPostFractAlong))
@@ -187,14 +194,14 @@ class NeuroMLHdf5Parser():
             
             id =  int(row[indexId])
             
-            preCellId =  row[indexPreCellId]
+            preCellId =  int(row[indexPreCellId])
             
             if indexPreSegId >= 0:
               preSegId = int(row[indexPreSegId])
             if indexPreFractAlong >= 0:
               preFractAlong = row[indexPreFractAlong]
             
-            postCellId =  row[indexPostCellId]
+            postCellId =  int(row[indexPostCellId])
             
             if indexPostSegId >= 0:
               postSegId = int(row[indexPostSegId])
@@ -237,7 +244,7 @@ class NeuroMLHdf5Parser():
 
             self.netHandler.handleSingleInput(self.currInputList,
                                         int(d[i,0]),         
-                                        float(d[i,1]))       
+                                        int(d[i,1]))       
     
   def _get_node_size(self, g, name):
       
@@ -274,10 +281,15 @@ class NeuroMLHdf5Parser():
           self.currentComponent = g._v_attrs.component
         
         size = self._get_node_size(g,self.currPopulation)
+        
+        if self.nml_doc_extra_elements:
+            component_obj = self.nml_doc_extra_elements.get_by_id(self.currentComponent)
+        else:
+            component_obj = None
               
         self.log.debug("Found a population: "+ self.currPopulation+", component: "+self.currentComponent+", size: "+ str(size))
         
-        self.netHandler.handlePopulation(self.currPopulation, self.currentComponent, size)
+        self.netHandler.handlePopulation(self.currPopulation, self.currentComponent, size, component_obj=component_obj)
         
     if g._v_name.count('projection_')>=1:
       
@@ -298,10 +310,15 @@ class NeuroMLHdf5Parser():
         population = g._v_attrs.population
         
         size = self._get_node_size(g,self.currInputList)
+        
+        if self.nml_doc_extra_elements:
+            input_comp_obj = self.nml_doc_extra_elements.get_by_id(component)
+        else:
+            input_comp_obj = None
               
         self.log.debug("Found an inputList: "+ self.currInputList+", component: "+component+", population: "+population+", size: "+ str(size))
         
-        self.netHandler.handleInputList(self.currInputList, population, component, size)
+        self.netHandler.handleInputList(self.currInputList, population, component, size, input_comp_obj=input_comp_obj)
     
     
   def end_group(self, g):

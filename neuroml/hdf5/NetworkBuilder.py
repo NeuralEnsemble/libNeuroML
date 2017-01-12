@@ -67,11 +67,13 @@ class NetworkBuilder(DefaultNetworkHandler):
         self.populations[population_id] = pop
         self.network.populations.append(pop)
         
+        comp_obj_info = ' (%s)'%type(component_obj) if component_obj else ''
+        
         if (size>=0):
             sizeInfo = ", size "+ str(size)+ " cells" 
-            self.log.info("Creating population: "+population_id+", cell type: "+component+sizeInfo)
+            self.log.info("Creating population: "+population_id+", cell type: "+component+comp_obj_info+sizeInfo)
         else:
-            self.log.error("Population: "+population_id+", cell type: "+component+" specifies no size. May lead to errors!")
+            self.log.error("Population: "+population_id+", cell type: "+component+comp_obj_info+" specifies no size. May lead to errors!")
         
   
     #

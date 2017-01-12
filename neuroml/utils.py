@@ -52,9 +52,19 @@ def add_all_to_document(nml_doc_src, nml_doc_tgt, verbose=False):
                 and not memb[0].endswith('_'):
             for entry in memb[1]:
                 if memb[0] != 'includes':
-                    if verbose: print("  Adding %s to list: %s" \
-                        %(entry.id if hasattr(entry,'id') else entry.name, memb[0]))
-                    getattr(nml_doc_tgt, memb[0]).append(entry)
+                    
+                    added = False
+                    for c in getattr(nml_doc_tgt, memb[0]):
+                        if hasattr(c,'id') and c.id == entry.id:
+                            added = True
+                    if not added:
+                        #print("  Adding %s to list: %s" \
+                        #    %(entry.id if hasattr(entry,'id') else entry.name, memb[0]))
+                        getattr(nml_doc_tgt, memb[0]).append(entry)
+                        added = True
+                        
+                    if not added:
+                        raise Exception("Could not add %s from %s to %s"%(entry, nml_doc_src, nml_doc_tgt))
                     
 def append_to_element(parent, child):
     
@@ -74,6 +84,7 @@ def append_to_element(parent, child):
                             added = True
                     if not added:
                         getattr(parent, memb[0]).append(child)
+                        #print("Adding %s to %s in %s?"%(child.__class__.__name__, memb[0], parent.__class__.__name__))
                         added = True
                     
         if not added:
