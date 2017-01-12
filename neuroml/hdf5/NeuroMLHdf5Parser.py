@@ -51,7 +51,7 @@ class NeuroMLHdf5Parser():
     if hasattr(h5file.root.neuroml._v_attrs,"neuroml_top_level"):
         nml = str(h5file.root.neuroml._v_attrs.neuroml_top_level)
         
-        if sys.version_info.major == 3:
+        if sys.version_info[0] == 3:
             nml = nml.encode()
             
         self.nml_doc_extra_elements = parseString(nml)
