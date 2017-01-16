@@ -55,18 +55,17 @@ class NeuroMLHdf5Parser():
             val = group._v_attrs[name]
             
             if isinstance(val,numpy.ndarray):
-                
                 val = str(val[0])
             else:
-                
                 val = str(val)
-                
             #print("- Found %s in %s: %s = [%s]"%(group, attrName, name,val))
             return val
     return None
+
     
   def parse(self, filename):
-    h5file=tables.open_file(filename)
+      
+    h5file=tables.open_file(filename,mode='r')
     
     self.log.info("Opened HDF5 file: %s; id=%s"%(h5file.filename,h5file.root.neuroml._v_attrs.id))
     

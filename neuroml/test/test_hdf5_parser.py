@@ -22,7 +22,7 @@ class TestNeuroMLHDF5Parser(unittest.TestCase):
         
         #for f in []:
         #for f in ['MediumNet.net.nml']:
-        for f in ['simplenet.nml','testh5.nml','MediumNet.net.nml']:
+        for f in ['simplenet.nml','testh5.nml','MediumNet.net.nml','complete.nml']:
             file_name = '%s/../examples/test_files/%s'%(self.base_dir,f)
             
             print("Loading %s"%file_name)
