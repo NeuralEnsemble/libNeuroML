@@ -16,6 +16,7 @@
   
 import logging
 import sys
+import numpy
 
 import tables   # pytables for HDF5 support
 
@@ -45,13 +46,33 @@ class NeuroMLHdf5Parser():
     self.netHandler = netHandler
     
     
+  def get_str_attribute_group(self, group, name):
+    if not hasattr(group._v_attrs,name):
+          return None
+      
+    for attrName in group._v_attrs._v_attrnames:
+        if attrName == name:
+            val = group._v_attrs[name]
+            print type(val)
+            
+            if isinstance(val,numpy.ndarray):
+                
+                val = str(val[0])
+            else:
+                
+                val = str(val)
+                
+            #print("- Found %s in %s: %s = [%s]"%(group, attrName, name,val))
+            return val
+    return None
+    
   def parse(self, filename):
     h5file=tables.open_file(filename)
     
     self.log.info("Opened HDF5 file: %s; id=%s"%(h5file.filename,h5file.root.neuroml._v_attrs.id))
     
     if hasattr(h5file.root.neuroml._v_attrs,"neuroml_top_level"):
-        nml = str(h5file.root.neuroml._v_attrs.neuroml_top_level)
+        nml = self.get_str_attribute_group(h5file.root.neuroml,"neuroml_top_level")
         
         if sys.version_info[0] == 3:
             nml = nml.encode()
@@ -265,11 +286,11 @@ class NeuroMLHdf5Parser():
     
     if g._v_name == 'neuroml':
     
-        self.netHandler.handleDocumentStart(g._v_attrs.id,g._v_attrs.notes)  
+        self.netHandler.handleDocumentStart(self.get_str_attribute_group(g,'id'),self.get_str_attribute_group(g,'notes'))  
     
     if g._v_name == 'network':
         
-        self.netHandler.handleNetwork(g._v_attrs.id,g._v_attrs.notes)
+        self.netHandler.handleNetwork(self.get_str_attribute_group(g,'id'),self.get_str_attribute_group(g,'notes'))
     
     if g._v_name.count('population_')>=1:
         # TODO: a better check to see if the attribute is a str or numpy.ndarray
