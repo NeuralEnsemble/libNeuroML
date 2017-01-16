@@ -53,7 +53,6 @@ class NeuroMLHdf5Parser():
     for attrName in group._v_attrs._v_attrnames:
         if attrName == name:
             val = group._v_attrs[name]
-            print type(val)
             
             if isinstance(val,numpy.ndarray):
                 
