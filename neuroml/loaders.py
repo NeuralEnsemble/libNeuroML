@@ -7,6 +7,7 @@ import neuroml
 from neuroml.utils import add_all_to_document
 import os
 import sys
+import warnings
 
 def print_(msg, verbose=True):
     if verbose:
@@ -48,20 +49,16 @@ class NeuroMLHdf5Loader(object):
         
         from neuroml.hdf5.NetworkBuilder import NetworkBuilder
         from neuroml.hdf5.NeuroMLHdf5Parser import NeuroMLHdf5Parser
-        
-        try:
-            nmlHandler = NetworkBuilder()   
 
-            currParser = NeuroMLHdf5Parser(nmlHandler) 
+        nmlHandler = NetworkBuilder()   
 
-            currParser.parse(file_name)
+        currParser = NeuroMLHdf5Parser(nmlHandler) 
 
-            nml2_doc = nmlHandler.get_nml_doc()
-            if currParser.nml_doc_extra_elements:
-                add_all_to_document(currParser.nml_doc_extra_elements,nml2_doc)
-            
-        except Exception as e:
-            raise Exception("Not a valid NeuroML 2 HDF5 doc (%s): %s" % (file_name,e), e)  
+        currParser.parse(file_name)
+
+        nml2_doc = nmlHandler.get_nml_doc()
+        if currParser.nml_doc_extra_elements:
+            add_all_to_document(currParser.nml_doc_extra_elements,nml2_doc)
         
         return nml2_doc
 
@@ -238,6 +235,7 @@ def _read_neuroml2(nml2_file_name_or_string, include_includes=False, verbose=Fal
     
     base_path = os.path.dirname(os.path.realpath(nml2_file_name_or_string))
     
+    warnings.simplefilter("ignore")
     if not isinstance(nml2_file_name_or_string, str) or nml2_file_name_or_string.startswith('<'):
         nml2_doc = nmlparsestring(nml2_file_name_or_string)
         base_path = './'
@@ -245,6 +243,7 @@ def _read_neuroml2(nml2_file_name_or_string, include_includes=False, verbose=Fal
         nml2_doc = NeuroMLHdf5Loader.load(nml2_file_name_or_string)
     else:
         nml2_doc = NeuroMLLoader.load(nml2_file_name_or_string)
+    warnings.resetwarnings()
     
     if include_includes:
         print_method('Including included files (included already: %s)' \

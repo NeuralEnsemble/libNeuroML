@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Jan 12 17:31:50 2017 by generateDS.py version 2.24b.
+# Generated Tue Jan 17 17:40:28 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -7304,6 +7304,9 @@ class Network(Standalone):
         netGroup = h5file.create_group(h5Group, 'network')
         netGroup._f_setattr("id", self.id)
         netGroup._f_setattr("notes", self.notes)
+        if self.temperature:
+            netGroup._f_setattr("temperature", self.temperature)
+        
        
         for pop in self.populations:
             pop.exportHdf5(h5file, netGroup)
@@ -14868,7 +14871,10 @@ class NeuroMLDocument(Standalone):
                     info+= str(sorted(listed))+"\n"
                     
         for network in self.networks:
-            info+="*  Network: "+network.id+"\n"
+            info+="*  Network: "+network.id
+            if network.temperature:
+                info+=" (temperature: "+network.temperature+")"
+            info+="\n"
             for pop in sorted(network.populations, key=lambda x: x.id):
                 info+="*   Population: "+pop.id+" with "+str(pop.size)+" components of type "+pop.component+"\n"
                 if len(pop.instances)>0:

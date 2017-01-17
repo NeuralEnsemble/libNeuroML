@@ -370,7 +370,10 @@ nml_doc_summary = MethodSpec(name='summary',
                     info+= str(sorted(listed))+"\\n"
                     
         for network in self.networks:
-            info+="*  Network: "+network.id+"\\n"
+            info+="*  Network: "+network.id
+            if network.temperature:
+                info+=" (temperature: "+network.temperature+")"
+            info+="\\n"
             for pop in sorted(network.populations, key=lambda x: x.id):
                 info+="*   Population: "+pop.id+" with "+str(pop.size)+" components of type "+pop.component+"\\n"
                 if len(pop.instances)>0:
@@ -551,6 +554,9 @@ inserts['Network'] = '''
         netGroup = h5file.create_group(h5Group, 'network')
         netGroup._f_setattr("id", self.id)
         netGroup._f_setattr("notes", self.notes)
+        if self.temperature:
+            netGroup._f_setattr("temperature", self.temperature)
+        
        
         for pop in self.populations:
             pop.exportHdf5(h5file, netGroup)

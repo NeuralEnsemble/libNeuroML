@@ -48,12 +48,15 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     #    
-    def handleNetwork(self, network_id, notes):
+    def handleNetwork(self, network_id, notes, temperature=None):
         
         self.network = neuroml.Network(id=network_id)
         self.nml_doc.networks.append(self.network)
         if notes and len(notes)>0:
             self.network.notes = notes
+        if temperature:
+            self.network.temperature = temperature
+            self.network.type = "networkWithTemperature"
    
     #
     #  Overridden from DefaultNetworkHandler

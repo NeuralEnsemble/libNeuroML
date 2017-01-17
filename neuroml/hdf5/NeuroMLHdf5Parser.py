@@ -284,11 +284,14 @@ class NeuroMLHdf5Parser():
     
     if g._v_name == 'neuroml':
     
-        self.netHandler.handleDocumentStart(self.get_str_attribute_group(g,'id'),self.get_str_attribute_group(g,'notes'))  
+        self.netHandler.handleDocumentStart(self.get_str_attribute_group(g,'id'),
+                                            self.get_str_attribute_group(g,'notes'))  
     
     if g._v_name == 'network':
         
-        self.netHandler.handleNetwork(self.get_str_attribute_group(g,'id'),self.get_str_attribute_group(g,'notes'))
+        self.netHandler.handleNetwork(self.get_str_attribute_group(g,'id'),
+                                      self.get_str_attribute_group(g,'notes'),
+                                      temperature=self.get_str_attribute_group(g,'temperature'))
     
     if g._v_name.count('population_')>=1:
         # TODO: a better check to see if the attribute is a str or numpy.ndarray
