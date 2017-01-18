@@ -64,9 +64,11 @@ class DefaultNetworkHandler:
     #
     #  Should be overridden to create network
     #  
-    def handleNetwork(self, network_id, notes):
+    def handleNetwork(self, network_id, notes, temperature=None):
             
         self.log.info("Network: %s"%network_id)
+        if temperature:
+            self.log.info("  Temperature: "+temperature)
         if notes:
             self.log.info("  Notes: "+notes)
 

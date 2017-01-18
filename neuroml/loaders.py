@@ -9,6 +9,8 @@ import os
 import sys
 import warnings
 
+supressGeneratedsWarnings = True
+
 def print_(msg, verbose=True):
     if verbose:
         print(msg)
@@ -26,7 +28,10 @@ class NeuroMLLoader(object):
         import sys
 
         try:
+            
+            if supressGeneratedsWarnings: warnings.simplefilter("ignore")
             nml2_doc = nmlparse(file_name)
+            if supressGeneratedsWarnings: warnings.resetwarnings()
         except Exception as e:
             raise Exception("Not a valid NeuroML 2 doc (%s): %s" % (file_name,e), e) 
         
@@ -235,7 +240,7 @@ def _read_neuroml2(nml2_file_name_or_string, include_includes=False, verbose=Fal
     
     base_path = os.path.dirname(os.path.realpath(nml2_file_name_or_string))
     
-    warnings.simplefilter("ignore")
+    if supressGeneratedsWarnings: warnings.simplefilter("ignore")
     if not isinstance(nml2_file_name_or_string, str) or nml2_file_name_or_string.startswith('<'):
         nml2_doc = nmlparsestring(nml2_file_name_or_string)
         base_path = './'
@@ -243,7 +248,7 @@ def _read_neuroml2(nml2_file_name_or_string, include_includes=False, verbose=Fal
         nml2_doc = NeuroMLHdf5Loader.load(nml2_file_name_or_string)
     else:
         nml2_doc = NeuroMLLoader.load(nml2_file_name_or_string)
-    warnings.resetwarnings()
+    if supressGeneratedsWarnings: warnings.resetwarnings()
     
     if include_includes:
         print_method('Including included files (included already: %s)' \

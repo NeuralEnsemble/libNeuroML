@@ -204,11 +204,11 @@ connection_cell_ids = MethodSpec(name='connection_cell_ids',
         
     def get_pre_info(self):
         
-        return str(self.get_pre_cell_id())+('_'+str(self.get_pre_segment_id())+'('+ 'PERCENTAGE.5f'PERCENTAGEself.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
+        return str(self.get_pre_cell_id())+(':'+str(self.get_pre_segment_id())+'('+ 'PERCENTAGE.5f'PERCENTAGEself.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
         
     def get_post_info(self):
         
-        return str(self.get_post_cell_id())+('_'+str(self.get_post_segment_id())+'('+ 'PERCENTAGE.5f'PERCENTAGEself.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
+        return str(self.get_post_cell_id())+(':'+str(self.get_post_segment_id())+'('+ 'PERCENTAGE.5f'PERCENTAGEself.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
         
     def __str__(self):
         
@@ -381,7 +381,7 @@ nml_doc_summary = MethodSpec(name='summary',
                     info+="*     Locations: ["+str(loc)+", ...]\\n"
                 
             for proj in sorted(network.projections, key=lambda x: x.id):
-                info+="*   Projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\\n"
+                info+="*   Projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+", synapse: "+proj.synapse+"\\n"
                 if len(proj.connections)>0:
                     info+="*     "+str(len(proj.connections))+" connections: [("+str(proj.connections[0])+"), ...]\\n"
                 if len(proj.connection_wds)>0:

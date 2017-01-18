@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Jan 17 17:40:28 2017 by generateDS.py version 2.24b.
+# Generated Wed Jan 18 14:00:02 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -14882,7 +14882,7 @@ class NeuroMLDocument(Standalone):
                     info+="*     Locations: ["+str(loc)+", ...]\n"
                 
             for proj in sorted(network.projections, key=lambda x: x.id):
-                info+="*   Projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\n"
+                info+="*   Projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+", synapse: "+proj.synapse+"\n"
                 if len(proj.connections)>0:
                     info+="*     "+str(len(proj.connections))+" connections: [("+str(proj.connections[0])+"), ...]\n"
                 if len(proj.connection_wds)>0:
@@ -18471,11 +18471,11 @@ class ConnectionWD(BaseConnectionOldFormat):
         
     def get_pre_info(self):
         
-        return str(self.get_pre_cell_id())+('_'+str(self.get_pre_segment_id())+'('+ '%.5f'%self.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
+        return str(self.get_pre_cell_id())+(':'+str(self.get_pre_segment_id())+'('+ '%.5f'%self.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
         
     def get_post_info(self):
         
-        return str(self.get_post_cell_id())+('_'+str(self.get_post_segment_id())+'('+ '%.5f'%self.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
+        return str(self.get_post_cell_id())+(':'+str(self.get_post_segment_id())+'('+ '%.5f'%self.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
         
     def __str__(self):
         
@@ -18592,11 +18592,11 @@ class Connection(BaseConnectionOldFormat):
         
     def get_pre_info(self):
         
-        return str(self.get_pre_cell_id())+('_'+str(self.get_pre_segment_id())+'('+ '%.5f'%self.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
+        return str(self.get_pre_cell_id())+(':'+str(self.get_pre_segment_id())+'('+ '%.5f'%self.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
         
     def get_post_info(self):
         
-        return str(self.get_post_cell_id())+('_'+str(self.get_post_segment_id())+'('+ '%.5f'%self.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
+        return str(self.get_post_cell_id())+(':'+str(self.get_post_segment_id())+'('+ '%.5f'%self.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
         
     def __str__(self):
         
