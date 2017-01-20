@@ -1232,7 +1232,7 @@ Network connection: SmallNet_pyr_bask contains 252 individual synaptic connectio
         </projection>
 
         <inputList id="BackgroundRandomIClamps" component="BackgroundRandomIClamps" population="pyramidals_48">
-            <input id="0" target="../pyramidals_48/37/pyr_4_sym" destination="synapses"/>
+            <input id="0" target="../pyramidals_48/37/pyr_4_sym" destination="synapses" segmentId="2" fractionAlong="0.3"/>
             <input id="1" target="../pyramidals_48/35/pyr_4_sym" destination="synapses"/>
             <input id="2" target="../pyramidals_48/28/pyr_4_sym" destination="synapses"/>
             <input id="3" target="../pyramidals_48/5/pyr_4_sym" destination="synapses"/>

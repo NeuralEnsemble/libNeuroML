@@ -259,11 +259,52 @@ class NeuroMLHdf5Parser():
         self.log.debug("Using data for input list: "+ self.currInputList)
         self.log.debug("Size is: "+str(d.shape[0])+" rows of: "+ str(d.shape[1])+ " entries")
         
+        
+        indexId = -1
+        indexTargetCellId = -1
+        indexSegId = -1
+        indexFractAlong= -1
+        
+        segId = 0
+        fractAlong= 0.5
+        
+        
+        for attrName in d.attrs._v_attrnames:
+            val = d.attrs.__getattr__(attrName)
+            
+            self.log.debug("Val of attribute: "+ attrName + " is "+ str(val))
+            
+            if val == 'id' or val[0] == 'id':
+                indexId = int(attrName[len('column_'):])
+            elif val == 'target_cell_id' or val[0] == 'target_cell_id':
+                indexTargetCellId = int(attrName[len('column_'):])
+            elif val == 'segment_id' or val[0] == 'segment_id':
+                indexSegId = int(attrName[len('column_'):])
+            elif val == 'fraction_along' or val[0] == 'fraction_along':
+                indexFractAlong = int(attrName[len('column_'):])
+        
         for i in range(0, d.shape[0]):
+            
+            if indexId >= 0:
+                id_ = int(d[i,indexId])
+            else:
+                id_ = i
+            
+            tid = int(d[i,indexTargetCellId])
+            
+            if indexSegId >= 0:
+              segId = int(d[i,indexSegId])
+            
+            if indexFractAlong >= 0:
+              fractAlong = float(d[i,indexFractAlong])
+              
+            self.log.debug("Adding %s, %s, %s"%(tid,segId,fractAlong))
 
             self.netHandler.handleSingleInput(self.currInputList,
-                                        int(d[i,0]),         
-                                        int(d[i,1]))       
+                                        id_,
+                                        tid,         
+                                        segId = segId,         
+                                        fract = fractAlong)       
     
   def _get_node_size(self, g, name):
       

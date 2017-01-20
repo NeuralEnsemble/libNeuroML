@@ -328,11 +328,15 @@ input_cell_ids = MethodSpec(name='input_cell_ids',
 
     def get_segment_id(self):
         
-        return self.segment_id if self.segment_id else 0
+        return int(self.segment_id) if self.segment_id else 0
 
     def get_fraction_along(self):
         
-        return self.fraction_along if self.fraction_along else 0.5
+        return float(self.fraction_along) if self.fraction_along else 0.5
+        
+    def __str__(self):
+        
+        return "Input "+str(self.id)+": "+str(self.get_target_cell_id())+":"+str(self.get_segment_id())+"("+'PERCENTAGE.6f'PERCENTAGEself.get_fraction_along()+")"
         
     ''',
     class_names=(["Input","ExplicitInput"])
@@ -393,6 +397,11 @@ nml_doc_summary = MethodSpec(name='summary',
                     info+="*     "+str(len(proj.electrical_connections))+" connections: [("+str(proj.electrical_connections[0])+"), ...]\\n"
                 if len(proj.electrical_connection_instances)>0:
                     info+="*     "+str(len(proj.electrical_connection_instances))+" connections: [("+str(proj.electrical_connection_instances[0])+"), ...]\\n"
+                    
+            for il in sorted(network.input_lists, key=lambda x: x.id):
+                info+="*   Input list: "+il.id+" to "+il.populations+", component "+il.component+"\\n"
+                if len(il.input)>0:
+                    info+="*     "+str(len(il.input))+" inputs: [("+str(il.input[0])+"), ...]\\n"
                     
             #TODO: inputs!!!
         
@@ -772,16 +781,23 @@ inserts['InputList'] = '''
         ilGroup._f_setattr("component", self.component)
         ilGroup._f_setattr("population", self.populations)
         
-        colCount = 2
+        colCount = 4
         a = numpy.ones([len(self.input), colCount], numpy.float32)
         
         count=0
         for input in self.input:
             a[count,0] = input.id
             a[count,1] = input.get_target_cell_id()
+            a[count,2] = input.get_segment_id()
+            a[count,3] = input.get_fraction_along()
             count+=1
             
-        h5file.create_carray(ilGroup, self.id, obj=a, title="Locations of inputs in "+ self.id)
+        array = h5file.create_carray(ilGroup, self.id, obj=a, title="Locations of inputs in "+ self.id)
+            
+        array._f_setattr("column_0", "id")
+        array._f_setattr("column_1", "target_cell_id")
+        array._f_setattr("column_2", "segment_id")
+        array._f_setattr("column_3", "fraction_along")
         
 '''
 
