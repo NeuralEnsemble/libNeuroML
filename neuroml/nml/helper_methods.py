@@ -378,14 +378,27 @@ nml_doc_summary = MethodSpec(name='summary',
             if network.temperature:
                 info+=" (temperature: "+network.temperature+")"
             info+="\\n"
+            tot_pop =0
+            tot_cells = 0 
             for pop in sorted(network.populations, key=lambda x: x.id):
                 info+="*   Population: "+pop.id+" with "+str(pop.size)+" components of type "+pop.component+"\\n"
+                tot_pop+=1
+                tot_cells+=pop.size
                 if len(pop.instances)>0:
                     loc = pop.instances[0].location
                     info+="*     Locations: ["+str(loc)+", ...]\\n"
+            
+            info+="*       "+str(tot_cells)+" cells in "+str(tot_pop)+" populations \\n*\\n"
                 
+                
+            tot_proj =0
+            tot_conns = 0 
+            
             for proj in sorted(network.projections, key=lambda x: x.id):
                 info+="*   Projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+", synapse: "+proj.synapse+"\\n"
+                tot_proj+=1
+                tot_conns+=len(proj.connections)
+                tot_conns+=len(proj.connection_wds)
                 if len(proj.connections)>0:
                     info+="*     "+str(len(proj.connections))+" connections: [("+str(proj.connections[0])+"), ...]\\n"
                 if len(proj.connection_wds)>0:
@@ -393,10 +406,15 @@ nml_doc_summary = MethodSpec(name='summary',
                     
             for proj in sorted(network.electrical_projections, key=lambda x: x.id):
                 info+="*   Electrical projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\\n"
+                tot_proj+=1
+                tot_conns+=len(proj.electrical_connections)
+                tot_conns+=len(proj.electrical_connection_instances)
                 if len(proj.electrical_connections)>0:
                     info+="*     "+str(len(proj.electrical_connections))+" connections: [("+str(proj.electrical_connections[0])+"), ...]\\n"
                 if len(proj.electrical_connection_instances)>0:
                     info+="*     "+str(len(proj.electrical_connection_instances))+" connections: [("+str(proj.electrical_connection_instances[0])+"), ...]\\n"
+                    
+            info+="*       "+str(tot_conns)+" connections in "+str(tot_proj)+" projections \\n*\\n"
                     
             for il in sorted(network.input_lists, key=lambda x: x.id):
                 info+="*   Input list: "+il.id+" to "+il.populations+", component "+il.component+"\\n"
@@ -776,7 +794,7 @@ inserts['InputList'] = '''
          
         import numpy
         
-        ilGroup = h5file.create_group(h5Group, 'input_list_'+self.id)
+        ilGroup = h5file.create_group(h5Group, 'inputList_'+self.id)
         ilGroup._f_setattr("id", self.id)
         ilGroup._f_setattr("component", self.component)
         ilGroup._f_setattr("population", self.populations)

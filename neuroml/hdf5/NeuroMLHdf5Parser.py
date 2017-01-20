@@ -366,7 +366,7 @@ class NeuroMLHdf5Parser():
         +" to "+ self.currentProjectionPostPop+" through "+self.currentSynapse)
         
     
-    if g._v_name.count('input_list_')>=1:
+    if g._v_name.count('inputList_')>=1 or g._v_name.count('input_list_')>=1: # inputList_ preferred
         # TODO: a better check to see if the attribute is a str or numpy.ndarray
         self.currInputList = g._v_attrs.id
         component = g._v_attrs.component
@@ -400,7 +400,7 @@ class NeuroMLHdf5Parser():
         self.currentProjectionPostPop = ""
         self.currentSynapse = ""
         
-    if g._v_name.count('input_list_')>=1:
+    if g._v_name.count('inputList_')>=1 or g._v_name.count('input_list_')>=1: 
         self.currInputList =""
     
     
