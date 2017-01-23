@@ -354,12 +354,13 @@ nml_doc_summary = MethodSpec(name='summary',
         import inspect
         
         info = "*******************************************************\\n"
-        info+="* NeuroMLDocument: "+self.id+"\\n"
+        info+="* NeuroMLDocument: "+self.id+"\\n*\\n"
+        post = ""
         membs = inspect.getmembers(self)
         for memb in membs:
             if isinstance(memb[1], list) and len(memb[1])>0 and not memb[0].endswith('_') and not memb[0] == 'networks':
                 if (memb[0] == 'includes' and show_includes) or (not memb[0] == 'includes' and show_non_network):
-                
+                    post = "*\\n"
                     info+="*   "+str(memb[1][0].__class__.__name__)+": "
                     listed = []
                     for entry in memb[1]:
@@ -372,56 +373,65 @@ nml_doc_summary = MethodSpec(name='summary',
                         elif hasattr(entry,'tag'):
                             listed.append(str(entry.tag)+" = "+str(entry.value))
                     info+= str(sorted(listed))+"\\n"
+        info+= post
                     
         for network in self.networks:
             info+="*  Network: "+network.id
             if network.temperature:
                 info+=" (temperature: "+network.temperature+")"
-            info+="\\n"
+            info+="\\n*\\n"
             tot_pop =0
             tot_cells = 0 
+            pop_info = ""
             for pop in sorted(network.populations, key=lambda x: x.id):
-                info+="*   Population: "+pop.id+" with "+str(pop.size)+" components of type "+pop.component+"\\n"
+                pop_info+="*     Population: "+pop.id+" with "+str(pop.size)+" components of type "+pop.component+"\\n"
                 tot_pop+=1
                 tot_cells+=pop.size
                 if len(pop.instances)>0:
                     loc = pop.instances[0].location
-                    info+="*     Locations: ["+str(loc)+", ...]\\n"
+                    pop_info+="*       Locations: ["+str(loc)+", ...]\\n"
             
-            info+="*       "+str(tot_cells)+" cells in "+str(tot_pop)+" populations \\n*\\n"
+            info+="*   "+str(tot_cells)+" cells in "+str(tot_pop)+" populations \\n"+pop_info+"*\\n"
                 
                 
             tot_proj =0
             tot_conns = 0 
             
+            proj_info = ""
             for proj in sorted(network.projections, key=lambda x: x.id):
-                info+="*   Projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+", synapse: "+proj.synapse+"\\n"
+                proj_info+="*     Projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+", synapse: "+proj.synapse+"\\n"
                 tot_proj+=1
                 tot_conns+=len(proj.connections)
                 tot_conns+=len(proj.connection_wds)
                 if len(proj.connections)>0:
-                    info+="*     "+str(len(proj.connections))+" connections: [("+str(proj.connections[0])+"), ...]\\n"
+                    proj_info+="*       "+str(len(proj.connections))+" connections: [("+str(proj.connections[0])+"), ...]\\n"
                 if len(proj.connection_wds)>0:
-                    info+="*     "+str(len(proj.connection_wds))+" connections (wd): [("+str(proj.connection_wds[0])+"), ...]\\n"
+                    proj_info+="*       "+str(len(proj.connection_wds))+" connections (wd): [("+str(proj.connection_wds[0])+"), ...]\\n"
                     
             for proj in sorted(network.electrical_projections, key=lambda x: x.id):
-                info+="*   Electrical projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\\n"
+                proj_info+="*     Electrical projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\\n"
                 tot_proj+=1
                 tot_conns+=len(proj.electrical_connections)
                 tot_conns+=len(proj.electrical_connection_instances)
                 if len(proj.electrical_connections)>0:
-                    info+="*     "+str(len(proj.electrical_connections))+" connections: [("+str(proj.electrical_connections[0])+"), ...]\\n"
+                    proj_info+="*       "+str(len(proj.electrical_connections))+" connections: [("+str(proj.electrical_connections[0])+"), ...]\\n"
                 if len(proj.electrical_connection_instances)>0:
-                    info+="*     "+str(len(proj.electrical_connection_instances))+" connections: [("+str(proj.electrical_connection_instances[0])+"), ...]\\n"
+                    proj_info+="*       "+str(len(proj.electrical_connection_instances))+" connections: [("+str(proj.electrical_connection_instances[0])+"), ...]\\n"
                     
-            info+="*       "+str(tot_conns)+" connections in "+str(tot_proj)+" projections \\n*\\n"
-                    
+            info+="*   "+str(tot_conns)+" connections in "+str(tot_proj)+" projections \\n"+proj_info+"*\\n"
+            
+            tot_input_lists = 0
+            tot_inputs = 0
+            input_info = ""
             for il in sorted(network.input_lists, key=lambda x: x.id):
-                info+="*   Input list: "+il.id+" to "+il.populations+", component "+il.component+"\\n"
+                input_info+="*     Input list: "+il.id+" to "+il.populations+", component "+il.component+"\\n"
+                tot_input_lists += 1
                 if len(il.input)>0:
-                    info+="*     "+str(len(il.input))+" inputs: [("+str(il.input[0])+"), ...]\\n"
+                    input_info+="*       "+str(len(il.input))+" inputs: [("+str(il.input[0])+"), ...]\\n"
+                    tot_inputs+=len(il.input)
                     
-            #TODO: inputs!!!
+            info+="*   "+str(tot_inputs)+" inputs in "+str(tot_input_lists)+" input lists \\n"+input_info+"*\\n"
+                    
         
         info+="*******************************************************"
         
@@ -651,7 +661,7 @@ inserts['Projection'] = '''
         projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
         projGroup._f_setattr("synapse", self.synapse)
         
-        print("Exporting "+str(len(self.connections))+" connections, "+str(len(self.connection_wds))+" connections with weight")
+        #print("Exporting "+str(len(self.connections))+" connections, "+str(len(self.connection_wds))+" connections with weight")
         
         connection_wds = len(self.connection_wds) > 0
         
@@ -749,7 +759,7 @@ inserts['ElectricalProjection'] = '''
         
         num_tot = len(self.electrical_connections)+len(self.electrical_connection_instances)
         
-        print("Exporting "+str(num_tot)+" electrical connections")
+        #print("Exporting "+str(num_tot)+" electrical connections")
         a = numpy.ones([num_tot, cols], numpy.float32)
         
         
@@ -826,7 +836,7 @@ for insert in inserts.keys():
     source='''\
 
     def exportHdf5(self, h5file, h5Group):
-        print("Exporting %s: "+str(self.id)+" as HDF5")
+        #print("Exporting %s: "+str(self.id)+" as HDF5")
         %s
     '''%(insert,inserts[insert]),
     class_names=(insert)

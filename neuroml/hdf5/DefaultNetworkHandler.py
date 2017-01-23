@@ -57,20 +57,20 @@ class DefaultNetworkHandler:
     #  
     def handleDocumentStart(self, id, notes):
             
-        self.log.info("Document: %s"%id)
+        self.log.debug("Document: %s"%id)
         if notes:
-            self.log.info("  Notes: "+notes)
+            self.log.debug("  Notes: "+notes)
 
     #
     #  Should be overridden to create network
     #  
     def handleNetwork(self, network_id, notes, temperature=None):
             
-        self.log.info("Network: %s"%network_id)
+        self.log.debug("Network: %s"%network_id)
         if temperature:
-            self.log.info("  Temperature: "+temperature)
+            self.log.debug("  Temperature: "+temperature)
         if notes:
-            self.log.info("  Notes: "+notes)
+            self.log.debug("  Notes: "+notes)
 
     #
     #  Should be overridden to create population array
@@ -84,7 +84,7 @@ class DefaultNetworkHandler:
         else:
             compInfo=""
             
-        self.log.info("Population: "+population_id+", component: "+component+compInfo+sizeInfo)
+        self.log.debug("Population: "+population_id+", component: "+component+compInfo+sizeInfo)
         
         
     #
@@ -105,7 +105,7 @@ class DefaultNetworkHandler:
         else:
             synInfo=""
 
-        self.log.info("Projection: "+projName+" ("+type+") from "+prePop+" to "+postPop+" with syn: "+synapse+synInfo)
+        self.log.debug("Projection: "+projName+" ("+type+") from "+prePop+" to "+postPop+" with syn: "+synapse+synInfo)
 
 
     #
@@ -130,7 +130,7 @@ class DefaultNetworkHandler:
     #  
     def finaliseProjection(self, projName, prePop, postPop):
    
-        self.log.info("Projection: "+projName+" from "+prePop+" to "+postPop+" completed")
+        self.log.debug("Projection: "+projName+" from "+prePop+" to "+postPop+" completed")
         
         
     #
@@ -157,7 +157,7 @@ class DefaultNetworkHandler:
     #  Should be overridden to to connect each input to the target cell
     #  
     def finaliseInputSource(self, inputName):
-        self.log.info("Input : %s completed" % inputName)
+        self.log.debug("Input : %s completed" % inputName)
         
         
 

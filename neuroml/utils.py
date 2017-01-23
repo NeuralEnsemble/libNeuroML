@@ -97,7 +97,7 @@ def has_segment_fraction_info(connections):
         conn = connections[i]
         no_seg_fract_info = conn.pre_segment_id==0 and conn.post_segment_id == 0 and conn.pre_fraction_along == 0.5 and conn.post_fraction_along ==0.5
         i+=1
-    print("Checked connections: [%s,...], no_seg_fract_info: %s"%(connections[0],no_seg_fract_info))
+    #print("Checked connections: [%s,...], no_seg_fract_info: %s"%(connections[0],no_seg_fract_info))
     return not no_seg_fract_info
 
                 

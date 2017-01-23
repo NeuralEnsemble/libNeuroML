@@ -18,7 +18,6 @@ sys.path.append("../NeuroMLUtils")
 from neuroml.hdf5.DefaultNetworkHandler import DefaultNetworkHandler
 
 import neuroml
-from neuroml.utils import append_to_element
 
 
 class NetworkBuilder(DefaultNetworkHandler):
@@ -74,7 +73,7 @@ class NetworkBuilder(DefaultNetworkHandler):
         
         if (size>=0):
             sizeInfo = ", size "+ str(size)+ " cells" 
-            self.log.info("Creating population: "+population_id+", cell type: "+component+comp_obj_info+sizeInfo)
+            self.log.debug("Creating population: "+population_id+", cell type: "+component+comp_obj_info+sizeInfo)
         else:
             self.log.error("Population: "+population_id+", cell type: "+component+comp_obj_info+" specifies no size. May lead to errors!")
         
@@ -113,7 +112,7 @@ class NetworkBuilder(DefaultNetworkHandler):
         self.projections[id] = proj
         self.weightDelays[id] = hasWeights or hasDelays
 
-        self.log.info("Projection: %s (%s) from %s to %s with syn: %s, weights: %s, delays: %s"%(id, type, prePop, postPop, synapse, hasWeights, hasDelays))
+        self.log.debug("Projection: %s (%s) from %s to %s with syn: %s, weights: %s, delays: %s"%(id, type, prePop, postPop, synapse, hasWeights, hasDelays))
      
         
     #
@@ -131,7 +130,7 @@ class NetworkBuilder(DefaultNetworkHandler):
                                                     delay=0,
                                                     weight=1):
         
-        self.printConnectionInformation(proj_id, conn_id, prePop, postPop, synapseType, preCellId, postCellId, weight)
+        #self.printConnectionInformation(proj_id, conn_id, prePop, postPop, synapseType, preCellId, postCellId, weight)
         
         if isinstance(self.projections[proj_id], neuroml.ElectricalProjection):
             
