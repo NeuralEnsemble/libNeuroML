@@ -1,6 +1,6 @@
 from .nml.nml import *  # allows importation of all neuroml classes
 
-__version__ = '0.2.24'
+__version__ = '0.2.25'
 
 
 current_neuroml_version = "v2beta5"

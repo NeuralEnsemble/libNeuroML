@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Jan 23 10:32:53 2017 by generateDS.py version 2.24b.
+# Generated Mon Jan 23 16:15:29 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
+#   ('-f', '')
 #   ('--use-getter-setter', 'none')
 #   ('--silence', '')
 #   ('--user-methods', 'helper_methods')
@@ -14,7 +15,7 @@
 #   NeuroML_v2beta5.xsd
 #
 # Command line:
-#   /usr/local/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2beta5.xsd
+#   /usr/local/bin/generateDS.py -o "nml.py" -f --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2beta5.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -14940,11 +14941,10 @@ class NeuroMLDocument(Standalone):
                 tot_input_lists += 1
                 if len(il.input)>0:
                     input_info+="*       "+str(len(il.input))+" inputs: [("+str(il.input[0])+"), ...]\n"
-                    tot_inputs+=1
+                    tot_inputs+=len(il.input)
                     
             info+="*   "+str(tot_inputs)+" inputs in "+str(tot_input_lists)+" input lists \n"+input_info+"*\n"
                     
-            #TODO: inputs!!!
         
         info+="*******************************************************"
         
