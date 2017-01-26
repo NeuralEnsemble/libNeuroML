@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Jan 26 11:07:14 2017 by generateDS.py version 2.24b.
+# Generated Thu Jan 26 15:13:01 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -4950,10 +4950,16 @@ class Location(GeneratedsSuper):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
 
+    def _format(self,value):
+    
+        if int(value)==value:
+            return str(int(value))
+        else:
+            return '%.4f' % value
         
     def __str__(self):
         
-        return "("+ '%.4f' % self.x+","+ '%.4f' % self.y+","+ '%.4f' % self.z+")"
+        return "("+ self._format(self.x) +", "+ self._format(self.y) +", "+ self._format(self.z) +")"
         
     def __repr__(self):
     
@@ -6872,7 +6878,7 @@ class Population(Standalone):
         
     def __str__(self):
         
-        return "Population "+str(self.id)+" with "+str( self.get_size() )+" components of type "+(self.component if self.component else "???")
+        return "Population: "+str(self.id)+" with "+str( self.get_size() )+" components of type "+(self.component if self.component else "???")
         
 
     # end class Population

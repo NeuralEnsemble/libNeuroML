@@ -91,9 +91,7 @@ class NeuroMLHdf5Parser():
         if self.nml_doc_extra_elements:
             add_all_to_document(self.nml_doc_extra_elements,nml_doc)
         nml_doc.networks.append(self.optimizedNetwork)
-        print 666
-        print nml_doc.id
-        print nml_doc.networks[0]
+        
         return nml_doc
         
     

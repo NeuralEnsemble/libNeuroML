@@ -101,8 +101,6 @@ class PopulationContainer(neuroml.Population):
         
         print("PopulationContainer created")
         
-    def info(self):
-        return "%s: id=%s"%(self.__class__(),self.id)
     
     
     def __str__(self):

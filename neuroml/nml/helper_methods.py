@@ -317,10 +317,16 @@ METHOD_SPECS+=(instance,)
 location = MethodSpec(name='location',
     source='''\
 
+    def _format(self,value):
+    
+        if int(value)==value:
+            return str(int(value))
+        else:
+            return 'PERCENTAGE.4f' PERCENTAGE value
         
     def __str__(self):
         
-        return "("+ 'PERCENTAGE.4f' PERCENTAGE self.x+","+ 'PERCENTAGE.4f' PERCENTAGE self.y+","+ 'PERCENTAGE.4f' PERCENTAGE self.z+")"
+        return "("+ self._format(self.x) +", "+ self._format(self.y) +", "+ self._format(self.z) +")"
         
     def __repr__(self):
     
@@ -681,7 +687,7 @@ inserts['Population'] = '''
         
     def __str__(self):
         
-        return "Population "+str(self.id)+" with "+str( self.get_size() )+" components of type "+(self.component if self.component else "???")
+        return "Population: "+str(self.id)+" with "+str( self.get_size() )+" components of type "+(self.component if self.component else "???")
         
 '''
 
