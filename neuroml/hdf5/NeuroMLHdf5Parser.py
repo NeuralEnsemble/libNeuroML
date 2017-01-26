@@ -16,13 +16,20 @@
   
 import logging
 import sys
-import numpy
 
 import tables   # pytables for HDF5 support
+import numpy as np   # pytables for HDF5 support
 
-from neuroml.nml.nml import parseString
+import neuroml
+
+from neuroml.hdf5 import get_str_attribute_group
+from neuroml.hdf5.NetworkContainer import NetworkContainer
+from neuroml.hdf5.NetworkContainer import PopulationContainer
+from neuroml.hdf5.NetworkContainer import InstanceList
 
 from neuroml.loaders import read_neuroml2_string
+from neuroml.utils import add_all_to_document
+
 
 class NeuroMLHdf5Parser():
     
@@ -41,27 +48,13 @@ class NeuroMLHdf5Parser():
   currInputList = ""
         
   nml_doc_extra_elements = None
+  
+  optimized=False
     
-  def __init__ (self, netHandler): 
+  def __init__ (self, netHandler, optimized=False): 
     self.netHandler = netHandler
+    self.optimized = optimized
     
-    
-  def get_str_attribute_group(self, group, name):
-    if not hasattr(group._v_attrs,name):
-          return None
-      
-    for attrName in group._v_attrs._v_attrnames:
-        if attrName == name:
-            val = group._v_attrs[name]
-            
-            if isinstance(val,numpy.ndarray):
-                val = str(val[0])
-            else:
-                val = str(val)
-            #print("- Found %s in %s: %s = [%s]"%(group, attrName, name,val))
-            return val
-    return None
-
     
   def parse(self, filename):
       
@@ -70,7 +63,7 @@ class NeuroMLHdf5Parser():
     self.log.info("Opened HDF5 file: %s; id=%s"%(h5file.filename,h5file.root.neuroml._v_attrs.id))
     
     if hasattr(h5file.root.neuroml._v_attrs,"neuroml_top_level"):
-        nml = self.get_str_attribute_group(h5file.root.neuroml,"neuroml_top_level")
+        nml = get_str_attribute_group(h5file.root.neuroml,"neuroml_top_level")
         
         if sys.version_info[0] == 3:
             nml = nml.encode()
@@ -79,11 +72,31 @@ class NeuroMLHdf5Parser():
         
         #print(self.nml_doc_extra_elements.summary())
         
-        self.log.info("Added NeuroML2 elements from extra string found in HDF5 file")
+        self.log.info("Extracted NeuroML2 elements from extra string found in HDF5 file")
     
     self.parse_group(h5file.root.neuroml)
     
     h5file.close()
+    
+  def get_nml_doc(self):
+      
+    if not self.optimized:
+        nml2_doc = nmlHandler.get_nml_doc()
+        if self.nml_doc_extra_elements:
+            add_all_to_document(self.nml_doc_extra_elements,nml2_doc)
+        return nml2_doc
+    else:
+            
+        nml_doc = neuroml.NeuroMLDocument(id=self.doc_id, notes=self.doc_notes)
+        if self.nml_doc_extra_elements:
+            add_all_to_document(self.nml_doc_extra_elements,nml_doc)
+        nml_doc.networks.append(self.optimizedNetwork)
+        print 666
+        print nml_doc.id
+        print nml_doc.networks[0]
+        return nml_doc
+        
+    
     
   def _is_dataset(self,node):
       return node._c_classid == 'ARRAY' or node._c_classid == 'CARRAY'
@@ -125,186 +138,198 @@ class NeuroMLHdf5Parser():
         self.log.debug("Using data for population: "+ self.currPopulation)
         self.log.debug("Size is: "+str(d.shape[0])+" rows of: "+ str(d.shape[1])+ " entries")
         
-        for i in range(0, d.shape[0]):
+        if not self.optimized:
+            for i in range(0, d.shape[0]):
+
+                    self.netHandler.handleLocation( int(d[i,0]),                      \
+                                                self.currPopulation,     \
+                                                self.currentComponent,    \
+                                                float(d[i,1]),       \
+                                                float(d[i,2]),       \
+                                                float(d[i,3]))       
+        else:
             
-                self.netHandler.handleLocation( int(d[i,0]),                      \
-                                            self.currPopulation,     \
-                                            self.currentComponent,    \
-                                            float(d[i,1]),       \
-                                            float(d[i,2]),       \
-                                            float(d[i,3]))       \
-            
+            #TODO: a better way to convert???
+            a = np.array(d)
+            self.currOptPopulation.instances = InstanceList(pos_array=a)
+
       
     elif self.currentProjectionId!="":
         self.log.debug("Using data for proj: "+ self.currentProjectionId)
         self.log.debug("Size is: "+str(d.shape[0])+" rows of: "+ str(d.shape[1])+ " entries")
         
+        if not self.optimized:
+            
+            indexId = -1
+            indexPreCellId = -1
+            indexPreSegId = -1
+            indexPreFractAlong= -1
+            indexPostCellId = -1
+            indexPostSegId = -1
+            indexPostFractAlong= -1
+            indexWeight= -1
+            indexDelay= -1
 
-        indexId = -1
-        indexPreCellId = -1
-        indexPreSegId = -1
-        indexPreFractAlong= -1
-        indexPostCellId = -1
-        indexPostSegId = -1
-        indexPostFractAlong= -1
-        indexWeight= -1
-        indexDelay= -1
-        
-        id = -1
-        preCellId = -1
-        preSegId = 0
-        preFractAlong= 0.5
-        postCellId = -1
-        postSegId = 0
-        postFractAlong= 0.5
-        
-        type="projection"
-        
-        extraParamIndices = {}
-        
-        
-        for attrName in d.attrs._v_attrnames:
-            val = d.attrs.__getattr__(attrName)
-            
-            #self.log.debug("Val of attribute: "+ attrName + " is "+ str(val))
-            
-            if val == 'id' or val[0] == 'id':
-                indexId = int(attrName[len('column_'):])
-            elif val == 'pre_cell_id' or val[0] == 'pre_cell_id':
-                indexPreCellId = int(attrName[len('column_'):])
-            elif val == 'pre_segment_id' or val[0] == 'pre_segment_id':
-                indexPreSegId = int(attrName[len('column_'):])
-            elif val == 'pre_fraction_along' or val[0] == 'pre_fraction_along':
-                indexPreFractAlong = int(attrName[len('column_'):])
-            elif val == 'post_cell_id' or val[0] == 'post_cell_id':
-                indexPostCellId = int(attrName[len('column_'):])
-            elif val == 'post_segment_id' or val[0] == 'post_segment_id':
-                indexPostSegId = int(attrName[len('column_'):])
-            elif val == 'post_fraction_along' or val[0] == 'post_fraction_along':
-                indexPostFractAlong = int(attrName[len('column_'):])
-            elif val == 'weight' or val[0] == 'weight':
-                indexWeight = int(attrName[len('column_'):])
-            elif val == 'delay' or val[0] == 'delay':
-                indexDelay = int(attrName[len('column_'):])
-                
-        if self.nml_doc_extra_elements:
-            synapse_obj = self.nml_doc_extra_elements.get_by_id(self.currentSynapse)
+            id = -1
+            preCellId = -1
+            preSegId = 0
+            preFractAlong= 0.5
+            postCellId = -1
+            postSegId = 0
+            postFractAlong= 0.5
+
+            type="projection"
+
+            extraParamIndices = {}
+
+
+            for attrName in d.attrs._v_attrnames:
+                val = d.attrs.__getattr__(attrName)
+
+                #self.log.debug("Val of attribute: "+ attrName + " is "+ str(val))
+
+                if val == 'id' or val[0] == 'id':
+                    indexId = int(attrName[len('column_'):])
+                elif val == 'pre_cell_id' or val[0] == 'pre_cell_id':
+                    indexPreCellId = int(attrName[len('column_'):])
+                elif val == 'pre_segment_id' or val[0] == 'pre_segment_id':
+                    indexPreSegId = int(attrName[len('column_'):])
+                elif val == 'pre_fraction_along' or val[0] == 'pre_fraction_along':
+                    indexPreFractAlong = int(attrName[len('column_'):])
+                elif val == 'post_cell_id' or val[0] == 'post_cell_id':
+                    indexPostCellId = int(attrName[len('column_'):])
+                elif val == 'post_segment_id' or val[0] == 'post_segment_id':
+                    indexPostSegId = int(attrName[len('column_'):])
+                elif val == 'post_fraction_along' or val[0] == 'post_fraction_along':
+                    indexPostFractAlong = int(attrName[len('column_'):])
+                elif val == 'weight' or val[0] == 'weight':
+                    indexWeight = int(attrName[len('column_'):])
+                elif val == 'delay' or val[0] == 'delay':
+                    indexDelay = int(attrName[len('column_'):])
+
+            if self.nml_doc_extra_elements:
+                synapse_obj = self.nml_doc_extra_elements.get_by_id(self.currentSynapse)
+            else:
+                synapse_obj = None
+
+
+            self.netHandler.handleProjection(self.currentProjectionId,
+                                             self.currentProjectionPrePop,
+                                             self.currentProjectionPostPop,
+                                             self.currentSynapse,
+                                             hasWeights=indexWeight>0, 
+                                             hasDelays=indexDelay>0,
+                                             type=self.currentProjectionType,
+                                             synapse_obj = synapse_obj)
+
+
+            self.log.debug("Cols: Id: %d precell: %d, postcell: %d, pre fract: %d, post fract: %d" % (indexId, indexPreCellId, indexPostCellId, indexPreFractAlong, indexPostFractAlong))
+
+            self.log.debug("Extra cols: "+str(extraParamIndices) )
+
+
+            for i in range(0, d.shape[0]):
+                row = d[i,:]
+
+                id =  int(row[indexId])
+
+                preCellId =  int(row[indexPreCellId])
+
+                if indexPreSegId >= 0:
+                  preSegId = int(row[indexPreSegId])
+                if indexPreFractAlong >= 0:
+                  preFractAlong = row[indexPreFractAlong]
+
+                postCellId =  int(row[indexPostCellId])
+
+                if indexPostSegId >= 0:
+                  postSegId = int(row[indexPostSegId])
+                if indexPostFractAlong >= 0:
+                  postFractAlong = row[indexPostFractAlong]
+
+
+                if indexWeight >= 0:
+                    weight = row[indexWeight]
+                else:
+                    weight=1
+
+                if indexDelay >= 0:
+                    delay = row[indexDelay]
+                else:
+                    delay = 0
+
+                #self.log.debug("Connection %d from %f to %f" % (id, preCellId, postCellId))
+
+
+                self.netHandler.handleConnection(self.currentProjectionId, \
+                                                id, \
+                                                self.currentProjectionPrePop, \
+                                                self.currentProjectionPostPop, \
+                                                self.currentSynapse, \
+                                                preCellId, \
+                                                postCellId, \
+                                                preSegId, \
+                                                preFractAlong, \
+                                                postSegId, \
+                                                postFractAlong,
+                                                delay=delay,
+                                                weight=weight)
         else:
-            synapse_obj = None
-        
-            
-        self.netHandler.handleProjection(self.currentProjectionId,
-                                         self.currentProjectionPrePop,
-                                         self.currentProjectionPostPop,
-                                         self.currentSynapse,
-                                         hasWeights=indexWeight>0, 
-                                         hasDelays=indexDelay>0,
-                                         type=self.currentProjectionType,
-                                         synapse_obj = synapse_obj)
-                
-        
-        self.log.debug("Cols: Id: %d precell: %d, postcell: %d, pre fract: %d, post fract: %d" % (indexId, indexPreCellId, indexPostCellId, indexPreFractAlong, indexPostFractAlong))
-        
-        self.log.debug("Extra cols: "+str(extraParamIndices) )
-        
-        
-        for i in range(0, d.shape[0]):
-            row = d[i,:]
-            
-            id =  int(row[indexId])
-            
-            preCellId =  int(row[indexPreCellId])
-            
-            if indexPreSegId >= 0:
-              preSegId = int(row[indexPreSegId])
-            if indexPreFractAlong >= 0:
-              preFractAlong = row[indexPreFractAlong]
-            
-            postCellId =  int(row[indexPostCellId])
-            
-            if indexPostSegId >= 0:
-              postSegId = int(row[indexPostSegId])
-            if indexPostFractAlong >= 0:
-              postFractAlong = row[indexPostFractAlong]
-              
-              
-            if indexWeight >= 0:
-                weight = row[indexWeight]
-            else:
-                weight=1
-              
-            if indexDelay >= 0:
-                delay = row[indexDelay]
-            else:
-                delay = 0
-
-            #self.log.debug("Connection %d from %f to %f" % (id, preCellId, postCellId))
-
-
-            self.netHandler.handleConnection(self.currentProjectionId, \
-                                            id, \
-                                            self.currentProjectionPrePop, \
-                                            self.currentProjectionPostPop, \
-                                            self.currentSynapse, \
-                                            preCellId, \
-                                            postCellId, \
-                                            preSegId, \
-                                            preFractAlong, \
-                                            postSegId, \
-                                            postFractAlong,
-                                            delay=delay,
-                                            weight=weight)
+            pass
                                             
     if self.currInputList!="":
         self.log.debug("Using data for input list: "+ self.currInputList)
         self.log.debug("Size is: "+str(d.shape[0])+" rows of: "+ str(d.shape[1])+ " entries")
         
-        
-        indexId = -1
-        indexTargetCellId = -1
-        indexSegId = -1
-        indexFractAlong= -1
-        
-        segId = 0
-        fractAlong= 0.5
-        
-        
-        for attrName in d.attrs._v_attrnames:
-            val = d.attrs.__getattr__(attrName)
-            
-            self.log.debug("Val of attribute: "+ attrName + " is "+ str(val))
-            
-            if val == 'id' or val[0] == 'id':
-                indexId = int(attrName[len('column_'):])
-            elif val == 'target_cell_id' or val[0] == 'target_cell_id':
-                indexTargetCellId = int(attrName[len('column_'):])
-            elif val == 'segment_id' or val[0] == 'segment_id':
-                indexSegId = int(attrName[len('column_'):])
-            elif val == 'fraction_along' or val[0] == 'fraction_along':
-                indexFractAlong = int(attrName[len('column_'):])
-        
-        for i in range(0, d.shape[0]):
-            
-            if indexId >= 0:
-                id_ = int(d[i,indexId])
-            else:
-                id_ = i
-            
-            tid = int(d[i,indexTargetCellId])
-            
-            if indexSegId >= 0:
-              segId = int(d[i,indexSegId])
-            
-            if indexFractAlong >= 0:
-              fractAlong = float(d[i,indexFractAlong])
-              
-            self.log.debug("Adding %s, %s, %s"%(tid,segId,fractAlong))
+        if not self.optimized:
 
-            self.netHandler.handleSingleInput(self.currInputList,
-                                        id_,
-                                        tid,         
-                                        segId = segId,         
-                                        fract = fractAlong)       
+            indexId = -1
+            indexTargetCellId = -1
+            indexSegId = -1
+            indexFractAlong= -1
+
+            segId = 0
+            fractAlong= 0.5
+
+
+            for attrName in d.attrs._v_attrnames:
+                val = d.attrs.__getattr__(attrName)
+
+                self.log.debug("Val of attribute: "+ attrName + " is "+ str(val))
+
+                if val == 'id' or val[0] == 'id':
+                    indexId = int(attrName[len('column_'):])
+                elif val == 'target_cell_id' or val[0] == 'target_cell_id':
+                    indexTargetCellId = int(attrName[len('column_'):])
+                elif val == 'segment_id' or val[0] == 'segment_id':
+                    indexSegId = int(attrName[len('column_'):])
+                elif val == 'fraction_along' or val[0] == 'fraction_along':
+                    indexFractAlong = int(attrName[len('column_'):])
+
+            for i in range(0, d.shape[0]):
+
+                if indexId >= 0:
+                    id_ = int(d[i,indexId])
+                else:
+                    id_ = i
+
+                tid = int(d[i,indexTargetCellId])
+
+                if indexSegId >= 0:
+                  segId = int(d[i,indexSegId])
+
+                if indexFractAlong >= 0:
+                  fractAlong = float(d[i,indexFractAlong])
+
+                self.log.debug("Adding %s, %s, %s"%(tid,segId,fractAlong))
+
+                self.netHandler.handleSingleInput(self.currInputList,
+                                            id_,
+                                            tid,         
+                                            segId = segId,         
+                                            fract = fractAlong) 
+        else:
+            pass
     
   def _get_node_size(self, g, name):
       
@@ -319,20 +344,30 @@ class NeuroMLHdf5Parser():
             
         return size
     
+    
   def start_group(self, g):
     self.log.debug("Going into a group: "+ g._v_name)
     
     
     if g._v_name == 'neuroml':
     
-        self.netHandler.handleDocumentStart(self.get_str_attribute_group(g,'id'),
-                                            self.get_str_attribute_group(g,'notes'))  
+        if not self.optimized:
+            self.netHandler.handleDocumentStart(get_str_attribute_group(g,'id'),
+                                                get_str_attribute_group(g,'notes'))
+        else:
+            self.doc_id = get_str_attribute_group(g,'id')
+            self.doc_notes = get_str_attribute_group(g,'notes')
     
     if g._v_name == 'network':
         
-        self.netHandler.handleNetwork(self.get_str_attribute_group(g,'id'),
-                                      self.get_str_attribute_group(g,'notes'),
-                                      temperature=self.get_str_attribute_group(g,'temperature'))
+        if not self.optimized:
+            self.netHandler.handleNetwork(get_str_attribute_group(g,'id'),
+                                      get_str_attribute_group(g,'notes'),
+                                      temperature=get_str_attribute_group(g,'temperature'))
+        else:
+            self.optimizedNetwork = NetworkContainer(id=get_str_attribute_group(g,'id'),
+                                      notes=get_str_attribute_group(g,'notes'),
+                                      temperature=get_str_attribute_group(g,'temperature'))
     
     if g._v_name.count('population_')>=1:
         # TODO: a better check to see if the attribute is a str or numpy.ndarray
@@ -345,14 +380,18 @@ class NeuroMLHdf5Parser():
         
         size = self._get_node_size(g,self.currPopulation)
         
-        if self.nml_doc_extra_elements:
-            component_obj = self.nml_doc_extra_elements.get_by_id(self.currentComponent)
-        else:
-            component_obj = None
-              
         self.log.debug("Found a population: "+ self.currPopulation+", component: "+self.currentComponent+", size: "+ str(size))
         
-        self.netHandler.handlePopulation(self.currPopulation, self.currentComponent, size, component_obj=component_obj)
+        if not self.optimized:
+            if self.nml_doc_extra_elements:
+                component_obj = self.nml_doc_extra_elements.get_by_id(self.currentComponent)
+            else:
+                component_obj = None
+
+            self.netHandler.handlePopulation(self.currPopulation, self.currentComponent, size, component_obj=component_obj)
+        else:
+            self.currOptPopulation = PopulationContainer(id=self.currPopulation, component=self.currentComponent, size=size)
+            self.optimizedNetwork.populations.append(self.currOptPopulation)
         
     if g._v_name.count('projection_')>=1:
       
@@ -362,8 +401,12 @@ class NeuroMLHdf5Parser():
         self.currentProjectionPostPop = g._v_attrs.postsynapticPopulation
         self.currentSynapse = g._v_attrs.synapse
           
-        self.log.debug("------    Found a projection: "+ self.currentProjectionId+ ", from "+ self.currentProjectionPrePop
-        +" to "+ self.currentProjectionPostPop+" through "+self.currentSynapse)
+        
+        if not self.optimized:
+            self.log.debug("------    Found a projection: "+ self.currentProjectionId+ ", from "+ self.currentProjectionPrePop
+            +" to "+ self.currentProjectionPostPop+" through "+self.currentSynapse)
+        else:
+            pass
         
     
     if g._v_name.count('inputList_')>=1 or g._v_name.count('input_list_')>=1: # inputList_ preferred
@@ -374,14 +417,18 @@ class NeuroMLHdf5Parser():
         
         size = self._get_node_size(g,self.currInputList)
         
-        if self.nml_doc_extra_elements:
-            input_comp_obj = self.nml_doc_extra_elements.get_by_id(component)
-        else:
-            input_comp_obj = None
-              
-        self.log.debug("Found an inputList: "+ self.currInputList+", component: "+component+", population: "+population+", size: "+ str(size))
         
-        self.netHandler.handleInputList(self.currInputList, population, component, size, input_comp_obj=input_comp_obj)
+        if not self.optimized:
+            if self.nml_doc_extra_elements:
+                input_comp_obj = self.nml_doc_extra_elements.get_by_id(component)
+            else:
+                input_comp_obj = None
+
+            self.log.debug("Found an inputList: "+ self.currInputList+", component: "+component+", population: "+population+", size: "+ str(size))
+
+            self.netHandler.handleInputList(self.currInputList, population, component, size, input_comp_obj=input_comp_obj)
+        else:
+            pass
     
     
   def end_group(self, g):
@@ -393,7 +440,9 @@ class NeuroMLHdf5Parser():
         self.currentComponent = ""
     
     if g._v_name.count('projection_')>=1:
-        self.netHandler.finaliseProjection(self.currentProjectionId, self.currentProjectionPrePop, self.currentProjectionPostPop)
+        
+        if not self.optimized:
+            self.netHandler.finaliseProjection(self.currentProjectionId, self.currentProjectionPrePop, self.currentProjectionPostPop)
         self.currentProjectionId = ""
         self.currentProjectionType = ""
         self.currentProjectionPrePop = ""
@@ -405,7 +454,6 @@ class NeuroMLHdf5Parser():
     
     
 
-    
         
 if __name__ == '__main__':
 
@@ -432,12 +480,19 @@ if __name__ == '__main__':
     
     currParser.parse(file_name)
     
-    nml_doc = nmlHandler.get_nml_doc()
+    nml_doc = currParser.get_nml_doc()
 
-    nml_file = '../examples/tmp/testh5__.nml'
-    import neuroml.writers as writers
-    writers.NeuroMLWriter.write(nml_doc, nml_file)
-    print("Written network file to: "+nml_file)
+    print(nml_doc.summary())
+    
+    print('-------------------------------\n\n')
+    
+    currParser = NeuroMLHdf5Parser(None,optimized=True) 
+    
+    currParser.parse(file_name)
+    
+    nml_doc = currParser.get_nml_doc()
+
+    print(nml_doc.summary())
 
         
         

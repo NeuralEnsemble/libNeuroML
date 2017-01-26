@@ -7,6 +7,7 @@ import neuroml
 import numpy as np
 
 
+
 class NetworkContainer(neuroml.Network):
     
     def __getattr__(self,name):
@@ -19,8 +20,9 @@ class InstanceList(object):
     pos_array = None
     cursor = 0
     
-    def __init__(self):
-        print("InstanceList created")
+    def __init__(self, pos_array=None):
+        self.pos_array = pos_array
+        #print("InstanceList created with %s "% self.pos_array)
     
     def __iter__(self):
         self.cursor = 0
@@ -56,11 +58,13 @@ class InstanceList(object):
     def __getitem__(self,instance_index):
 
         print('Getting instance %s'%instance_index)
-
+        
+        assert(self.pos_array[instance_index][0]==instance_index)
+        
         instance = neuroml.Instance(id=instance_index)
-        instance.location = neuroml.Location(self.pos_array[instance_index][0],
-                                             self.pos_array[instance_index][1],
-                                             self.pos_array[instance_index][2])
+        instance.location = neuroml.Location(self.pos_array[instance_index][1],
+                                             self.pos_array[instance_index][2],
+                                             self.pos_array[instance_index][3])
         
         return instance
 
@@ -73,7 +77,7 @@ class InstanceList(object):
         
         print('Adding instance: %s'%instance)
         l = instance.location
-        i = np.array([[l.x,l.y,l.z]], np.float32)
+        i = np.array([[instance.id,l.x,l.y,l.z]], np.float32)
         if len(self)==0:
             self.pos_array = i
         else:
@@ -103,7 +107,7 @@ class PopulationContainer(neuroml.Population):
     
     def __str__(self):
         
-        return "Population (HDF5 based) "+str(self.id)+" with "+str( self.get_size() )+" components of type "+(self.component if self.component else "???")
+        return "Population (HDF5 based): "+str(self.id)+" with "+str( len(self.instances) )+" components of type "+(self.component if self.component else "???")
         
         
 
@@ -114,7 +118,7 @@ if __name__ == '__main__':
     
     file_name = '../examples/test_files/MediumNet.net.nml'
     
-    nml_doc = read_neuroml2_file(file_name)
+    nml_doc = read_neuroml2_file(file_name,include_includes=True)
     
     print(nml_doc.summary())
     
@@ -155,4 +159,10 @@ if __name__ == '__main__':
     nml_doc_c.networks.append(nc)
     print(nml_doc_c.summary())
         
-    print('\n')
+    print('\n++++++++++')
+    
+    file_name = '../examples/tmp/MediumNet.net.nml.h5'
+    
+    nml_doc = read_neuroml2_file(file_name,optimized=True,include_includes=True)
+    
+    print(nml_doc.summary())

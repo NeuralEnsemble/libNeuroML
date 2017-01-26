@@ -5,6 +5,7 @@ from neuroml.nml.nml import parseString as nmlparsestring
 
 import neuroml
 from neuroml.utils import add_all_to_document
+
 import os
 import sys
 import warnings
@@ -41,31 +42,41 @@ class NeuroMLLoader(object):
 class NeuroMLHdf5Loader(object):
 
     @classmethod
-    def load(cls,src):
-        doc = cls.__nml2_doc(src)
+    def load(cls,src,optimized=False):
+        doc = cls.__nml2_doc(src,optimized)
         return doc
 
     @classmethod    
-    def __nml2_doc(cls,file_name):
+    def __nml2_doc(cls,file_name,optimized=False):
         import sys
         
         import logging
         logging.basicConfig(level=logging.INFO, format="%(name)-19s %(levelname)-5s - %(message)s")
         
-        from neuroml.hdf5.NetworkBuilder import NetworkBuilder
         from neuroml.hdf5.NeuroMLHdf5Parser import NeuroMLHdf5Parser
-
-        nmlHandler = NetworkBuilder()   
-
-        currParser = NeuroMLHdf5Parser(nmlHandler) 
-
-        currParser.parse(file_name)
-
-        nml2_doc = nmlHandler.get_nml_doc()
-        if currParser.nml_doc_extra_elements:
-            add_all_to_document(currParser.nml_doc_extra_elements,nml2_doc)
+            
+        if optimized:
+            
+            currParser = NeuroMLHdf5Parser(None,optimized=True) 
+            
+            currParser.parse(file_name)
+            
+            return currParser.get_nml_doc()
+        else:
         
-        return nml2_doc
+            from neuroml.hdf5.NetworkBuilder import NetworkBuilder
+
+            nmlHandler = NetworkBuilder()   
+
+            currParser = NeuroMLHdf5Parser(nmlHandler) 
+
+            currParser.parse(file_name)
+
+            nml2_doc = nmlHandler.get_nml_doc()
+            if currParser.nml_doc_extra_elements:
+                add_all_to_document(currParser.nml_doc_extra_elements,nml2_doc)
+
+            return nml2_doc
 
 
 class SWCLoader(object):
@@ -211,7 +222,7 @@ class ArrayMorphLoader(object):
     
 
 def read_neuroml2_file(nml2_file_name, include_includes=False, verbose=False, 
-                       already_included=[], print_method=print_):  
+                       already_included=[], print_method=print_, optimized=False):  
     
     print_method("Loading NeuroML2 file: %s" % nml2_file_name, verbose)
     
@@ -220,34 +231,36 @@ def read_neuroml2_file(nml2_file_name, include_includes=False, verbose=False,
         sys.exit()
         
     return _read_neuroml2(nml2_file_name, include_includes=include_includes, verbose=verbose, 
-                       already_included=already_included, print_method=print_method)
+                       already_included=already_included, print_method=print_method, optimized=optimized)
                        
                        
                        
 def read_neuroml2_string(nml2_string, include_includes=False, verbose=False, 
-                       already_included=[], print_method=print_):  
+                       already_included=[], print_method=print_, optimized=False):  
     
         
     return _read_neuroml2(nml2_string, include_includes=include_includes, verbose=verbose, 
-                       already_included=already_included, print_method=print_method)
+                       already_included=already_included, print_method=print_method, optimized=optimized)
     
 
 
 def _read_neuroml2(nml2_file_name_or_string, include_includes=False, verbose=False, 
-                       already_included=[], print_method=print_):  
+                       already_included=[], print_method=print_, optimized=False):  
     
     #print("................ Loading: %s"%nml2_file_name_or_string[:7])
     
     base_path = os.path.dirname(os.path.realpath(nml2_file_name_or_string))
     
     if supressGeneratedsWarnings: warnings.simplefilter("ignore")
+    
     if not isinstance(nml2_file_name_or_string, str) or nml2_file_name_or_string.startswith('<'):
         nml2_doc = nmlparsestring(nml2_file_name_or_string)
         base_path = './'
     elif nml2_file_name_or_string.endswith('.h5') or nml2_file_name_or_string.endswith('.hdf5'):
-        nml2_doc = NeuroMLHdf5Loader.load(nml2_file_name_or_string)
+        nml2_doc = NeuroMLHdf5Loader.load(nml2_file_name_or_string,optimized=optimized)
     else:
         nml2_doc = NeuroMLLoader.load(nml2_file_name_or_string)
+        
     if supressGeneratedsWarnings: warnings.resetwarnings()
     
     if include_includes:
