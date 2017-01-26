@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Jan 26 16:25:07 2017 by generateDS.py version 2.24b.
+# Generated Thu Jan 26 18:16:29 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -6595,6 +6595,10 @@ class Projection(Base):
         
         for col in extra_cols.keys():
             array._f_setattr(col,extra_cols[col])
+           
+            
+    def __str__(self):
+        return "Projection: "+self.id+" from "+self.presynaptic_population+" to "+self.postsynaptic_population+", synapse: "+self.synapse
             
         
         
@@ -14944,7 +14948,7 @@ class NeuroMLDocument(Standalone):
             
             proj_info = ""
             for proj in sorted(network.projections, key=lambda x: x.id):
-                proj_info+="*     Projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+", synapse: "+proj.synapse+"\n"
+                proj_info+="*     "+str(proj)+"\n"
                 tot_proj+=1
                 tot_conns+=len(proj.connections)
                 tot_conns+=len(proj.connection_wds)

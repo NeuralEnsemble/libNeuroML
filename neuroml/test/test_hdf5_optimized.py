@@ -25,8 +25,8 @@ class TestNeuroMLHDF5Optimized(unittest.TestCase):
     def test_write_load(self):
         
         #for f in []:
-        #for f in ['MediumNet.net.nml']:
-        for f in ['complete.nml']:
+        #for f in ['complete.nml']:
+        for f in ['MediumNet.net.nml']:
             file_name = '%s/../examples/test_files/%s'%(self.base_dir,f)
             
             print("Loading %s"%file_name)
@@ -57,6 +57,7 @@ class TestNeuroMLHDF5Optimized(unittest.TestCase):
             nml_doc2 = loaders.read_neuroml2_file(nml_h5_file_2,include_includes=True)
 
             summary2 = nml_doc2.summary()
+            print("Reloaded: %s"%nml_h5_file_2)
             print('\n'+summary2)
             
             
@@ -67,6 +68,7 @@ class TestNeuroMLHDF5Optimized(unittest.TestCase):
             nml_doc3 = loaders.read_neuroml2_file(nml_h5_file_3,include_includes=True)
 
             summary3 = nml_doc3.summary()
+            print("Reloaded: %s"%nml_h5_file_3)
             print('\n'+summary3)
             
             

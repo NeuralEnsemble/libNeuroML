@@ -26,6 +26,8 @@ from neuroml.hdf5 import get_str_attribute_group
 from neuroml.hdf5.NetworkContainer import NetworkContainer
 from neuroml.hdf5.NetworkContainer import PopulationContainer
 from neuroml.hdf5.NetworkContainer import InstanceList
+from neuroml.hdf5.NetworkContainer import ProjectionContainer
+from neuroml.hdf5.NetworkContainer import ConnectionList
 from neuroml.hdf5.NetworkContainer import InputListContainer
 from neuroml.hdf5.NetworkContainer import InputsList
 
@@ -275,7 +277,9 @@ class NeuroMLHdf5Parser():
                                                 delay=delay,
                                                 weight=weight)
         else:
-            pass
+            #TODO: a better way to convert???
+            a = np.array(d)
+            self.currOptProjection.connections = ConnectionList(array=a)
                                             
     if self.currInputList!="":
         self.log.debug("Using data for input list: "+ self.currInputList)
@@ -409,7 +413,12 @@ class NeuroMLHdf5Parser():
             self.log.debug("------    Found a projection: "+ self.currentProjectionId+ ", from "+ self.currentProjectionPrePop
             +" to "+ self.currentProjectionPostPop+" through "+self.currentSynapse)
         else:
-            pass
+            self.currOptProjection = ProjectionContainer(id=self.currentProjectionId, 
+                                           presynaptic_population=self.currentProjectionPrePop, 
+                                           postsynaptic_population=self.currentProjectionPostPop, 
+                                           synapse=self.currentSynapse)
+                                           
+            self.optimizedNetwork.projections.append(self.currOptProjection)
         
     
     if g._v_name.count('inputList_')>=1 or g._v_name.count('input_list_')>=1: # inputList_ preferred

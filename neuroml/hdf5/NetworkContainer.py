@@ -58,7 +58,7 @@ class OptimizedList(object):
     
     def __str__(self):
         
-        return "%s (HDF5 based) with %s entries"%(self.__class__.__name__,len(self))
+        return "%s (optimized) with %s entries"%(self.__class__.__name__,len(self))
         
     
 class InstanceList(OptimizedList):
@@ -111,7 +111,7 @@ class PopulationContainer(neuroml.Population):
     
     def __str__(self):
         
-        return "Population (HDF5 based): "+str(self.id)+" with "+str( len(self.instances) )+" components of type "+(self.component if self.component else "???")
+        return "Population (optimized): "+str(self.id)+" with "+str( len(self.instances) )+" components of type "+(self.component if self.component else "???")
         
     def exportHdf5(self, h5file, h5Group):
         print("Exporting %s as HDF5"%self)
@@ -129,10 +129,92 @@ class PopulationContainer(neuroml.Population):
             
         else:
             popGroup._f_setattr("size", self.size)
+            
+            
+class ProjectionContainer(neuroml.Projection):
+    
+    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, synapse=None, connections=None, connection_wds=None):
+        
+        super(self.__class__, self).__init__(neuro_lex_id=neuro_lex_id, id=id, presynaptic_population=presynaptic_population,postsynaptic_population=postsynaptic_population,synapse=synapse,connections=connections,connection_wds=connection_wds)
+    
+        assert(connections==None)
+        assert(connection_wds==None)
+        self.connections = ConnectionList()
+        self.connection_wds = ConnectionList()
+        self.connections.presynaptic_population = presynaptic_population
+        self.connections.postsynaptic_population = postsynaptic_population
+        
+        print("ProjectionContainer %s created"%self.id)
+        
+        
+    def __str__(self):
+        return "Projection (optimized): "+self.id+" from "+self.presynaptic_population+" to "+self.postsynaptic_population+", synapse: "+self.synapse
+            
+        
+    
+    def exportHdf5(self, h5file, h5Group):
+        print("Exporting %s as HDF5"%self)
+        
+        import numpy
+        
+        projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
+        projGroup._f_setattr("id", self.id)
+        projGroup._f_setattr("type", "projection")
+        projGroup._f_setattr("presynapticPopulation", self.presynaptic_population)
+        projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
+        projGroup._f_setattr("synapse", self.synapse)
+        
+        
+            
+        array = h5file.create_carray(projGroup, self.id, obj=self.connections.array, title="Connections of cells in "+ self.id)
+        '''
+        array._f_setattr("column_0", "id")
+        array._f_setattr("column_1", "pre_cell_id")
+        array._f_setattr("column_2", "post_cell_id")
+        
+        for col in extra_cols.keys():
+            array._f_setattr(col,extra_cols[col])'''
+        
+        
+class ConnectionList(OptimizedList):
+
+    presynaptic_population = None
+    postsynaptic_population = None
+    
+    def __getitem__(self,index):
+
+        #print('    Getting conn instance %s'%(index))
+        #print self.array
+        
+        
+        id = int(self.array[index][0])
+        assert(self.array[index][0]==index)
+        
+        pre_cell_id = int(self.array[index][1])
+        post_cell_id = int(self.array[index][2])
+        
+        input = neuroml.Connection(id=id,
+                  pre_cell_id="../%s/%i/%s"%(self.presynaptic_population,pre_cell_id,"???"),
+                  post_cell_id="../%s/%i/%s"%(self.postsynaptic_population,post_cell_id,"???"))  
+        
+        return input
+        
+        
+    def append(self,conn):
+        
+        #print('Adding conn: %s'%conn)
+        
+        i = np.array([[conn.id,
+                       conn.get_pre_cell_id(),
+                       conn.get_post_cell_id()]], np.float32)
+                       
+        if len(self)==0:
+            self.array = i
+        else:
+            self.array = np.concatenate((self.array, i))
         
         
 class InputListContainer(neuroml.InputList):
-
     
     def __init__(self, neuro_lex_id=None, id=None, populations=None, component=None, input=None):
         super(self.__class__, self).__init__(neuro_lex_id=neuro_lex_id, id=id, populations=populations, component=component, input=input)
@@ -145,7 +227,7 @@ class InputListContainer(neuroml.InputList):
         
     def __str__(self):
         
-        return "Input list (HDF5 based): "+self.id+" to "+self.populations+", component "+self.component
+        return "Input list (optimized): "+self.id+" to "+self.populations+", component "+self.component
     
     def exportHdf5(self, h5file, h5Group):
         print("Exporting %s as HDF5"%self)
@@ -162,6 +244,8 @@ class InputListContainer(neuroml.InputList):
         array._f_setattr("column_1", "target_cell_id")
         array._f_setattr("column_2", "segment_id")
         array._f_setattr("column_3", "fraction_along")
+        
+        
         
         
     
@@ -202,15 +286,6 @@ class InputsList(OptimizedList):
             self.array = i
         else:
             self.array = np.concatenate((self.array, i))
-            
-    '''
-    def add_instance(self,id,x,y,z):
-        
-        i = np.array([[id,x,y,z]], np.float32)
-        if len(self)==0:
-            self.array = i
-        else:
-            self.array = np.concatenate((self.array, i))'''
         
 
 if __name__ == '__main__':
@@ -227,6 +302,8 @@ if __name__ == '__main__':
     net0 = nml_doc.networks[0]
     
     nc = NetworkContainer(id="testnet")
+    pc0 = PopulationContainer(id="pre", component="iffy",size=4)
+    nc.populations.append(pc0)
     pc = PopulationContainer(id="fake", component="izzy")
     nc.populations.append(pc)
     instance = neuroml.Instance(0)
@@ -235,6 +312,16 @@ if __name__ == '__main__':
     instance = neuroml.Instance(1)
     instance.location = neuroml.Location(200,200,66.66)
     pc.instances.append(instance)
+    
+    prc = ProjectionContainer(id="proj", presynaptic_population=pc0.id, postsynaptic_population=pc.id,synapse="ampa")
+    
+    conn = neuroml.Connection(id=0,
+                                    pre_cell_id="../%s/%i/%s"%(pc0.id,0,pc0.component), \
+                                    pre_segment_id=2, \
+                                    pre_fraction_along=0.1,
+                                    post_cell_id="../%s/%i/%s"%(pc.id,2,pc.id))
+    prc.connections.append(conn)    
+    nc.projections.append(prc)
     
     ilc = InputListContainer(id="iii",component="BackgroundRandomIClamps",populations=pc.id)
     nc.input_lists.append(ilc)
@@ -259,6 +346,11 @@ if __name__ == '__main__':
             print("  > %s"%(p.instances))
             for i in p.instances:
                 print("    > %s"%i)
+        for pr in n.projections:
+            print("  %s"%pr)
+            print("  > %s"%(pr.connections))
+            for c in pr.connections:
+                print("    > %s"%c)
         for il in n.input_lists:
             print("  %s"%il)
             for i in il.input:
