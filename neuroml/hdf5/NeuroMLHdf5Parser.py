@@ -26,6 +26,8 @@ from neuroml.hdf5 import get_str_attribute_group
 from neuroml.hdf5.NetworkContainer import NetworkContainer
 from neuroml.hdf5.NetworkContainer import PopulationContainer
 from neuroml.hdf5.NetworkContainer import InstanceList
+from neuroml.hdf5.NetworkContainer import InputListContainer
+from neuroml.hdf5.NetworkContainer import InputsList
 
 from neuroml.loaders import read_neuroml2_string
 from neuroml.utils import add_all_to_document
@@ -149,7 +151,7 @@ class NeuroMLHdf5Parser():
             
             #TODO: a better way to convert???
             a = np.array(d)
-            self.currOptPopulation.instances = InstanceList(pos_array=a)
+            self.currOptPopulation.instances = InstanceList(array=a)
 
       
     elif self.currentProjectionId!="":
@@ -327,7 +329,10 @@ class NeuroMLHdf5Parser():
                                             segId = segId,         
                                             fract = fractAlong) 
         else:
-            pass
+            
+            #TODO: a better way to convert???
+            a = np.array(d)
+            self.currOptInputList.input = InputsList(array=a)
     
   def _get_node_size(self, g, name):
       
@@ -426,7 +431,8 @@ class NeuroMLHdf5Parser():
 
             self.netHandler.handleInputList(self.currInputList, population, component, size, input_comp_obj=input_comp_obj)
         else:
-            pass
+            self.currOptInputList = InputListContainer(id=self.currInputList, component=self.currentComponent, populations=population)
+            self.optimizedNetwork.input_lists.append(self.currOptInputList)
     
     
   def end_group(self, g):

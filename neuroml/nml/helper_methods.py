@@ -451,7 +451,7 @@ nml_doc_summary = MethodSpec(name='summary',
             tot_inputs = 0
             input_info = ""
             for il in sorted(network.input_lists, key=lambda x: x.id):
-                input_info+="*     Input list: "+il.id+" to "+il.populations+", component "+il.component+"\\n"
+                input_info+="*     "+str(il)+"\\n"
                 tot_input_lists += 1
                 if len(il.input)>0:
                     input_info+="*       "+str(len(il.input))+" inputs: [("+str(il.input[0])+"), ...]\\n"
@@ -683,8 +683,6 @@ inserts['Population'] = '''
     def get_size(self):
         return len(self.instances) if len(self.instances)>0 else (self.size if self.size else 0)
     
-        
-        
     def __str__(self):
         
         return "Population: "+str(self.id)+" with "+str( self.get_size() )+" components of type "+(self.component if self.component else "???")
@@ -867,6 +865,10 @@ inserts['InputList'] = '''
         array._f_setattr("column_1", "target_cell_id")
         array._f_setattr("column_2", "segment_id")
         array._f_setattr("column_3", "fraction_along")
+        
+    def __str__(self):
+        
+        return "Input list: "+self.id+" to "+self.populations+", component "+self.component
         
 '''
 
