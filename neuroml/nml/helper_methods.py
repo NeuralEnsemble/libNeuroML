@@ -296,6 +296,24 @@ elec_connection_cell_ids = MethodSpec(name='elec_connection_cell_ids',
 METHOD_SPECS+=(elec_connection_cell_ids,)
 
 
+instance = MethodSpec(name='instance',
+    source='''\
+
+        
+    def __str__(self):
+        
+        return "Instance "+str(self.id)+ (" at location: "+str(self.location) if self.location else "")
+        
+    def __repr__(self):
+    
+        return str(self)
+    
+''',
+    class_names=("Instance")
+    )
+METHOD_SPECS+=(instance,)
+
+
 location = MethodSpec(name='location',
     source='''\
 
@@ -312,6 +330,9 @@ location = MethodSpec(name='location',
     class_names=("Location")
     )
 METHOD_SPECS+=(location,)
+
+
+
 
 input_cell_ids = MethodSpec(name='input_cell_ids',
     source='''\
@@ -384,9 +405,9 @@ nml_doc_summary = MethodSpec(name='summary',
             tot_cells = 0 
             pop_info = ""
             for pop in sorted(network.populations, key=lambda x: x.id):
-                pop_info+="*     Population: "+pop.id+" with "+str(pop.size)+" components of type "+pop.component+"\\n"
+                pop_info+="*     "+str(pop)+"\\n"
                 tot_pop+=1
-                tot_cells+=pop.size
+                tot_cells+=pop.get_size()
                 if len(pop.instances)>0:
                     loc = pop.instances[0].location
                     pop_info+="*       Locations: ["+str(loc)+", ...]\\n"
@@ -476,6 +497,12 @@ network_get_by_id = MethodSpec(name='get_by_id',
                         all_ids.append(m.id)
         print("Id "+id+" not found in <network> element. All ids: "+str(all_ids))
         return None
+        
+        
+    def __str__(self):
+        
+        return "Network "+str(self.id)+" with "+str(len(self.populations))+" population(s)"
+        
     ''',
     class_names=("Network")
     )
@@ -647,6 +674,14 @@ inserts['Population'] = '''
         else:
             popGroup._f_setattr("size", self.size)
         
+    def get_size(self):
+        return len(self.instances) if len(self.instances)>0 else (self.size if self.size else 0)
+    
+        
+        
+    def __str__(self):
+        
+        return "Population "+str(self.id)+" with "+str( self.get_size() )+" components of type "+(self.component if self.component else "???")
         
 '''
 

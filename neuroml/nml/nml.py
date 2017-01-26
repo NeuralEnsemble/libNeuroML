@@ -2,20 +2,20 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Jan 23 16:15:29 2017 by generateDS.py version 2.24b.
+# Generated Thu Jan 26 11:07:14 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
-#   ('-f', '')
 #   ('--use-getter-setter', 'none')
 #   ('--silence', '')
 #   ('--user-methods', 'helper_methods')
+#   ('-f', '')
 #
 # Command line arguments:
 #   NeuroML_v2beta5.xsd
 #
 # Command line:
-#   /usr/local/bin/generateDS.py -o "nml.py" -f --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2beta5.xsd
+#   /usr/local/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" -f NeuroML_v2beta5.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -4845,6 +4845,16 @@ class Instance(GeneratedsSuper):
             obj_.build(child_)
             self.location = obj_
             obj_.original_tagname_ = 'location'
+
+        
+    def __str__(self):
+        
+        return "Instance "+str(self.id)+ (" at location: "+str(self.location) if self.location else "")
+        
+    def __repr__(self):
+    
+        return str(self)
+    
 # end class Instance
 
 
@@ -6855,6 +6865,14 @@ class Population(Standalone):
         else:
             popGroup._f_setattr("size", self.size)
         
+    def get_size(self):
+        return len(self.instances) if len(self.instances)>0 else (self.size if self.size else 0)
+    
+        
+        
+    def __str__(self):
+        
+        return "Population "+str(self.id)+" with "+str( self.get_size() )+" components of type "+(self.component if self.component else "???")
         
 
     # end class Population
@@ -7310,6 +7328,12 @@ class Network(Standalone):
                         all_ids.append(m.id)
         print("Id "+id+" not found in <network> element. All ids: "+str(all_ids))
         return None
+        
+        
+    def __str__(self):
+        
+        return "Network "+str(self.id)+" with "+str(len(self.populations))+" population(s)"
+        
     
     def exportHdf5(self, h5file, h5Group):
         #print("Exporting Network: "+str(self.id)+" as HDF5")
@@ -14897,9 +14921,9 @@ class NeuroMLDocument(Standalone):
             tot_cells = 0 
             pop_info = ""
             for pop in sorted(network.populations, key=lambda x: x.id):
-                pop_info+="*     Population: "+pop.id+" with "+str(pop.size)+" components of type "+pop.component+"\n"
+                pop_info+="*     "+str(pop)+"\n"
                 tot_pop+=1
-                tot_cells+=pop.size
+                tot_cells+=pop.get_size()
                 if len(pop.instances)>0:
                     loc = pop.instances[0].location
                     pop_info+="*       Locations: ["+str(loc)+", ...]\n"
