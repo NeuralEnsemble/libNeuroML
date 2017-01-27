@@ -474,7 +474,12 @@ class NeuroMLHdf5Parser():
     if g._v_name.count('projection_')>=1:
         
         if not self.optimized:
-            self.netHandler.finaliseProjection(self.currentProjectionId, self.currentProjectionPrePop, self.currentProjectionPostPop)
+            self.netHandler.finaliseProjection(self.currentProjectionId, 
+                                               self.currentProjectionPrePop, 
+                                               self.currentProjectionPostPop,
+                                               synapse=self.currentSynapse,
+                                               type=self.currentProjectionType)
+            
         self.currentProjectionId = ""
         self.currentProjectionType = ""
         self.currentProjectionPrePop = ""
@@ -490,9 +495,9 @@ class NeuroMLHdf5Parser():
 if __name__ == '__main__':
 
 
-    file_name = '../examples/tmp/testh5.nml.h5'
+    file_name = '../examples/test_files/complete.nml.h5'
 
-    logging.basicConfig(level=logging.INFO, format="%(name)-19s %(levelname)-5s - %(message)s")
+    logging.basicConfig(level=logging.DEBUG, format="%(name)-19s %(levelname)-5s - %(message)s")
 
     from neuroml.hdf5.DefaultNetworkHandler import DefaultNetworkHandler
 
@@ -513,9 +518,9 @@ if __name__ == '__main__':
     currParser.parse(file_name)
     
     nml_doc = currParser.get_nml_doc()
-
-    print(nml_doc.summary())
-    
+    summary0 = nml_doc.summary()
+    print(summary0)
+    exit()
     print('-------------------------------\n\n')
     
     currParser = NeuroMLHdf5Parser(None,optimized=True) 

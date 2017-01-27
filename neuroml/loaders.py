@@ -273,7 +273,7 @@ def _read_neuroml2(nml2_file_name_or_string, include_includes=False, verbose=Fal
                 print_method("Loading included NeuroML2 file: %s (base: %s, resolved: %s)" % (include.href, base_path, incl_loc), 
                               verbose)
                               
-                if incl_loc.endswith('.nml'):
+                if incl_loc.endswith('.nml') or incl_loc.endswith('.xml'):
                     nml2_sub_doc = read_neuroml2_file(incl_loc, True, 
                         verbose=verbose, already_included=already_included)
                     already_included.append(incl_loc)

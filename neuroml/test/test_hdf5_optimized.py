@@ -8,7 +8,7 @@ import neuroml.writers as writers
 
 import os
 
-from test_xml_parser import compare
+from neuroml.test.test_xml_parser import compare
 
 try:
     import unittest2 as unittest
@@ -51,7 +51,6 @@ class TestNeuroMLHDF5Optimized(unittest.TestCase):
             
             compare(summary0,summary1)
 
-            
             
             nml_h5_file_2 = '%s/../examples/tmp/%s__2.h5'%(self.base_dir,f)
             writers.NeuroMLHdf5Writer.write(nml_doc1, nml_h5_file_2)

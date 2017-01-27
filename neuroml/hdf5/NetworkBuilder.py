@@ -114,6 +114,28 @@ class NetworkBuilder(DefaultNetworkHandler):
 
         self.log.debug("Projection: %s (%s) from %s to %s with syn: %s, weights: %s, delays: %s"%(id, type, prePop, postPop, synapse, hasWeights, hasDelays))
      
+    #
+    #  Overridden from DefaultNetworkHandler
+    #
+    def finaliseProjection(self, id, prePop, postPop, synapse=None, type="projection"):
+        '''
+            Check whether handleProjection was not called, e.g. due to no connections present
+        '''
+        self.log.info("Projection: %s from %s to %s completed"%(id,prePop,postPop))
+        if type=="projection":
+            present = False
+            for p in self.network.projections:
+                if p.id==id: present=True
+            if not present:
+                proj = neuroml.Projection(id=id, presynaptic_population=prePop, postsynaptic_population=postPop, synapse=synapse)
+                self.network.projections.append(proj)
+        elif type=="electricalProjection":
+            present = False
+            for p in self.network.electrical_projections:
+                if p.id==id: present=True
+            if not present:
+                proj = neuroml.ElectricalProjection(id=id, presynaptic_population=prePop, postsynaptic_population=postPop)
+                self.network.electrical_projections.append(proj)
         
     #
     #  Overridden from DefaultNetworkHandler

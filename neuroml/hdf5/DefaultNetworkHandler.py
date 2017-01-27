@@ -128,7 +128,7 @@ class DefaultNetworkHandler:
     #
     #  Should be overridden to handle end of network connection
     #  
-    def finaliseProjection(self, projName, prePop, postPop):
+    def finaliseProjection(self, projName, prePop, postPop, synapse=None, type="projection"):
    
         self.log.debug("Projection: "+projName+" from "+prePop+" to "+postPop+" completed")
         

@@ -36,7 +36,7 @@ def print_summary(nml_file_name):
 def get_summary(nml_file_name):
     
     from neuroml.loaders import read_neuroml2_file
-    nml_doc = read_neuroml2_file(nml_file_name,include_includes=True, verbose=False)
+    nml_doc = read_neuroml2_file(nml_file_name,include_includes=True, verbose=False, optimized=True)
     
     return nml_doc.summary(show_includes=False)
 

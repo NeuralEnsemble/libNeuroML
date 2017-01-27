@@ -24,7 +24,8 @@ class TestNeuroMLXMLParser(unittest.TestCase):
         
         logging.basicConfig(level=logging.INFO, format="%(name)-19s %(levelname)-5s - %(message)s")
         
-        for f in ['simplenet.nml','testh5.nml','pyr_4_sym.cell.nml']: #for f in ['MediumNet.net.nml']:
+        for f in ['simplenet.nml','testh5.nml','pyr_4_sym.cell.nml','MediumNet.net.nml']: #for f in []:
+        
             file_name = base_dir+'/../examples/test_files/'+f
 
             nml_doc0 = loaders.read_neuroml2_file(file_name,
@@ -80,7 +81,7 @@ def compare(s1,s2):
     
     for i in range(min(len(l1),len(l2))):
         if not l1[i]==l2[i]:
-            print("Mismatch at line %i:\n%s\n%s"%(i,l1[i],l2[i]))
+            print("Mismatch at line %i:\n>>>  %s\n<<<  %s"%(i,l1[i],l2[i]))
     if len(l1)!=len(l2):
         print("Different number of lines!")
         

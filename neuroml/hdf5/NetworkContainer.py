@@ -129,7 +129,7 @@ class PopulationContainer(neuroml.Population):
     
         self.instances = InstanceList()
         
-        print("PopulationContainer created")
+        #print("PopulationContainer created")
     
     def __str__(self):
         
@@ -168,7 +168,7 @@ class ProjectionContainer(neuroml.Projection):
         self.connections.presynaptic_population = presynaptic_population
         self.connections.postsynaptic_population = postsynaptic_population
         
-        print("ProjectionContainer %s created"%self.id)
+        #print("ProjectionContainer %s created"%self.id)
         
         
     def __str__(self):
@@ -241,7 +241,7 @@ class InputListContainer(neuroml.InputList):
         self.input = InputsList()
         self.input.target_population = populations
         
-        print("InputListContainer %s created"%self.id)
+        #print("InputListContainer %s created"%self.id)
         
     def __str__(self):
         

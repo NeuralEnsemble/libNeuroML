@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Jan 26 18:16:29 2017 by generateDS.py version 2.24b.
+# Generated Fri Jan 27 13:24:05 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -6586,15 +6586,15 @@ class Projection(Base):
           a[count,cols-1] = delay          
           count=count+1
         
-            
-        array = h5file.create_carray(projGroup, self.id, obj=a, title="Connections of cells in "+ self.id)
-        
-        array._f_setattr("column_0", "id")
-        array._f_setattr("column_1", "pre_cell_id")
-        array._f_setattr("column_2", "post_cell_id")
-        
-        for col in extra_cols.keys():
-            array._f_setattr(col,extra_cols[col])
+        if len(a)>0:
+            array = h5file.create_carray(projGroup, self.id, obj=a, title="Connections of cells in "+ self.id)
+
+            array._f_setattr("column_0", "id")
+            array._f_setattr("column_1", "pre_cell_id")
+            array._f_setattr("column_2", "post_cell_id")
+
+            for col in extra_cols.keys():
+                array._f_setattr(col,extra_cols[col])
            
             
     def __str__(self):

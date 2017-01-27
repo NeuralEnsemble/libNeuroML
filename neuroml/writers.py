@@ -27,8 +27,7 @@ class NeuroMLWriter(object):
 
 
 class NeuroMLHdf5Writer(object):
-    
-        
+     
     @classmethod
     def write(cls,nml_doc,h5_file_name,embed_xml=True,compress=True):
         
@@ -73,7 +72,7 @@ class NeuroMLHdf5Writer(object):
             
         h5file.close()  # Close (and flush) the file
         
-        
+    '''
     @classmethod
     def write_xml_and_hdf5(cls,nml_doc0,xml_file_name,h5_file_name):
         
@@ -95,7 +94,7 @@ class NeuroMLHdf5Writer(object):
             nml_doc0.networks.append(n)
         for inc in nml_doc0.includes:
             if inc.href == h5_file_name:
-                nml_doc0.includes.remove(inc)
+                nml_doc0.includes.remove(inc)'''
         
         
         

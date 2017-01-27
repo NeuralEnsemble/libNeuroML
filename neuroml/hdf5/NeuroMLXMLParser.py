@@ -56,7 +56,7 @@ class NeuroMLXMLParser():
     
     for network in self.nml_doc.networks:
         
-        self.netHandler.handleNetwork(network.id,network.notes)
+        self.netHandler.handleNetwork(network.id,network.notes, temperature=network.temperature)
         
         for population in network.populations:
             

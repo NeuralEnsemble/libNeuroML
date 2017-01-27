@@ -214,6 +214,10 @@ for pre_index in range(0,size0):
             electricalProjection.electrical_connections.append(electricalConnection)
             
             proj_count += 1
+            
+projection0 = Projection(id="ProjEmpty", presynaptic_population=from_pop, postsynaptic_population=to_pop, synapse=syn0.id)
+
+net.projections.append(projection0)
 
 nml_file = 'test_files/complete.nml'
 writers.NeuroMLWriter.write(nml_doc, nml_file)

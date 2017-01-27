@@ -764,15 +764,15 @@ inserts['Projection'] = '''
           a[count,cols-1] = delay          
           count=count+1
         
-            
-        array = h5file.create_carray(projGroup, self.id, obj=a, title="Connections of cells in "+ self.id)
-        
-        array._f_setattr("column_0", "id")
-        array._f_setattr("column_1", "pre_cell_id")
-        array._f_setattr("column_2", "post_cell_id")
-        
-        for col in extra_cols.keys():
-            array._f_setattr(col,extra_cols[col])
+        if len(a)>0:
+            array = h5file.create_carray(projGroup, self.id, obj=a, title="Connections of cells in "+ self.id)
+
+            array._f_setattr("column_0", "id")
+            array._f_setattr("column_1", "pre_cell_id")
+            array._f_setattr("column_2", "post_cell_id")
+
+            for col in extra_cols.keys():
+                array._f_setattr(col,extra_cols[col])
            
             
     def __str__(self):
