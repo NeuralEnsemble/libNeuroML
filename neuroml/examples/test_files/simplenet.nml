@@ -31,16 +31,16 @@
             <input destination="synapses" id="0" target="../Pop0[0]"/>
         </inputList>
         <inputList id="il1" component="input1" population="Pop0">
-            <input destination="synapses" id="1" target="../Pop0[1]"/>
+            <input destination="synapses" id="0" target="../Pop0[1]"/>
         </inputList>
         <inputList id="il2" component="input2" population="Pop0">
-            <input destination="synapses" id="2" target="../Pop0[2]"/>
+            <input destination="synapses" id="0" target="../Pop0[2]"/>
         </inputList>
         <inputList id="il3" component="input3" population="Pop0">
-            <input destination="synapses" id="3" target="../Pop0[3]"/>
+            <input destination="synapses" id="0" target="../Pop0[3]"/>
         </inputList>
         <inputList id="il4" component="input4" population="Pop0">
-            <input destination="synapses" id="4" target="../Pop0[4]"/>
+            <input destination="synapses" id="0" target="../Pop0[4]"/>
         </inputList>
     </network>
 </neuroml>

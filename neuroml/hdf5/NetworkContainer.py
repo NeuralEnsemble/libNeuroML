@@ -19,9 +19,31 @@ class OptimizedList(object):
     array = None
     cursor = 0
     
-    def __init__(self, array=None):
+    def __init__(self, array=None,indices={}):
         self.array = array
-        print("Created %s "% self)
+        self.indices = indices
+        #print("Created %s with %s"% (self,indices))
+        
+        
+    def _get_index_or_add(self,name,default_index):
+        if not name in self.indices:
+            self.indices[name] = default_index
+            return default_index
+        else:
+            return self.indices[name]
+        
+    def _get_value(self,i,name,default_value):
+        if not name in self.indices:
+            return default_value
+        else:
+            return self.array[i][self.indices[name]]
+        
+    def _add_index_information(self,hdf5_array):
+        for name in self.indices.keys():
+            
+            n="column_%i"%self.indices[name]
+            #print("Adding attribute to H5 array: %s = %s"%(n,name))
+            hdf5_array._f_setattr(n, name)
         
     def __len__(self):
         length = self.array.shape[0] if isinstance(self.array,np.ndarray) else 0
@@ -67,13 +89,13 @@ class InstanceList(OptimizedList):
     def __getitem__(self,index):
 
         #print('    Getting instance %s in %s'%(index,self))
+        id = self.array[index][self._get_index_or_add('id',0)]
+        assert(id==index)
         
-        assert(self.array[index][0]==index)
-        
-        instance = neuroml.Instance(id=index)
-        instance.location = neuroml.Location(self.array[index][1],
-                                             self.array[index][2],
-                                             self.array[index][3])
+        instance = neuroml.Instance(id=id)
+        instance.location = neuroml.Location(self.array[index][self._get_index_or_add('x',1)],
+                                             self.array[index][self._get_index_or_add('y',2)],
+                                             self.array[index][self._get_index_or_add('z',3)])
         
         return instance
         
@@ -111,10 +133,10 @@ class PopulationContainer(neuroml.Population):
     
     def __str__(self):
         
-        return "Population (optimized): "+str(self.id)+" with "+str( len(self.instances) )+" components of type "+(self.component if self.component else "???")
+        return "Population (optimized): "+str(self.id)+" with "+str( self.get_size() )+" components of type "+(self.component if self.component else "???")
         
     def exportHdf5(self, h5file, h5Group):
-        print("Exporting %s as HDF5"%self)
+        print("Exporting %s as HDF5..."%self)
         
         popGroup = h5file.create_group(h5Group, 'population_'+self.id)
         popGroup._f_setattr("id", self.id)
@@ -125,7 +147,9 @@ class PopulationContainer(neuroml.Population):
             popGroup._f_setattr("size", len(self.instances))
             popGroup._f_setattr("type", "populationList")
 
-            h5file.create_carray(popGroup, self.id, obj=self.instances.array, title="Locations of cells in "+ self.id)
+            h5array = h5file.create_carray(popGroup, self.id, obj=self.instances.array, title="Locations of cells in "+ self.id)
+            
+            self.instances._add_index_information(h5array)
             
         else:
             popGroup._f_setattr("size", self.size)
@@ -150,12 +174,9 @@ class ProjectionContainer(neuroml.Projection):
     def __str__(self):
         return "Projection (optimized): "+self.id+" from "+self.presynaptic_population+" to "+self.postsynaptic_population+", synapse: "+self.synapse
             
-        
     
     def exportHdf5(self, h5file, h5Group):
         print("Exporting %s as HDF5"%self)
-        
-        import numpy
         
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
@@ -163,17 +184,10 @@ class ProjectionContainer(neuroml.Projection):
         projGroup._f_setattr("presynapticPopulation", self.presynaptic_population)
         projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
         projGroup._f_setattr("synapse", self.synapse)
-        
-        
             
-        array = h5file.create_carray(projGroup, self.id, obj=self.connections.array, title="Connections of cells in "+ self.id)
-        '''
-        array._f_setattr("column_0", "id")
-        array._f_setattr("column_1", "pre_cell_id")
-        array._f_setattr("column_2", "post_cell_id")
+        h5array = h5file.create_carray(projGroup, self.id, obj=self.connections.array, title="Connections of cells in "+ self.id)
         
-        for col in extra_cols.keys():
-            array._f_setattr(col,extra_cols[col])'''
+        self.connections._add_index_information(h5array)
         
         
 class ConnectionList(OptimizedList):
@@ -183,19 +197,23 @@ class ConnectionList(OptimizedList):
     
     def __getitem__(self,index):
 
-        #print('    Getting conn instance %s'%(index))
-        #print self.array
-        
-        
-        id = int(self.array[index][0])
+        id = int(self.array[index][self._get_index_or_add('id',0)])
         assert(self.array[index][0]==index)
         
-        pre_cell_id = int(self.array[index][1])
-        post_cell_id = int(self.array[index][2])
+        pre_cell_id =  int(self.array[index][self._get_index_or_add('pre_cell_id',1)])
+        post_cell_id = int(self.array[index][self._get_index_or_add('post_cell_id',2)])
+        pre_segment_id = int(self._get_value(index,'pre_segment_id',0))
+        post_segment_id = int(self._get_value(index,'post_segment_id',0))
+        pre_fraction_along = float(self._get_value(index,'pre_fraction_along',0.5))
+        post_fraction_along = float(self._get_value(index,'post_fraction_along',0.5))
         
         input = neuroml.Connection(id=id,
                   pre_cell_id="../%s/%i/%s"%(self.presynaptic_population,pre_cell_id,"???"),
-                  post_cell_id="../%s/%i/%s"%(self.postsynaptic_population,post_cell_id,"???"))  
+                  post_cell_id="../%s/%i/%s"%(self.postsynaptic_population,post_cell_id,"???"),
+                  pre_segment_id=pre_segment_id,
+                  post_segment_id=post_segment_id,
+                  pre_fraction_along=pre_fraction_along,
+                  post_fraction_along=post_fraction_along)  
         
         return input
         
@@ -238,12 +256,9 @@ class InputListContainer(neuroml.InputList):
         ilGroup._f_setattr("population", self.populations)
         
             
-        array = h5file.create_carray(ilGroup, self.id, obj=self.input.array , title="Locations of inputs in "+ self.id)
+        h5array = h5file.create_carray(ilGroup, self.id, obj=self.input.array , title="Locations of inputs in "+ self.id)
             
-        array._f_setattr("column_0", "id")
-        array._f_setattr("column_1", "target_cell_id")
-        array._f_setattr("column_2", "segment_id")
-        array._f_setattr("column_3", "fraction_along")
+        self.input._add_index_information(h5array)
         
         
         
@@ -258,14 +273,15 @@ class InputsList(OptimizedList):
         #print('    Getting instance %s'%(index))
         #print self.array
         
-        assert(self.array[index][0]==index)
+        id = self.array[index][self._get_index_or_add('id',0)]
+        assert(id==index)
         
-        cell_id = int(self.array[index][1])
-        segment_id = int(self.array[index][2])
-        fraction_along = float(self.array[index][3])
+        target_cell_id = int(self.array[index][self._get_index_or_add('target_cell_id',1)])
+        segment_id = int(self.array[index][self._get_index_or_add('segment_id',1)])
+        fraction_along = float(self.array[index][self._get_index_or_add('fraction_along',1)])
         
         input = neuroml.Input(id=index,
-                  target="../%s/%i/%s"%(self.target_population, cell_id, "???"), 
+                  target="../%s/%i/%s"%(self.target_population, target_cell_id, "???"), 
                   destination="synapses",
                   segment_id=segment_id,
                   fraction_along=fraction_along)  
@@ -323,7 +339,7 @@ if __name__ == '__main__':
     prc.connections.append(conn)    
     nc.projections.append(prc)
     
-    ilc = InputListContainer(id="iii",component="BackgroundRandomIClamps",populations=pc.id)
+    ilc = InputListContainer(id="iii",component="CCC",populations=pc.id)
     nc.input_lists.append(ilc)
     ilc.input.append(neuroml.Input(id=0,target="../pyramidals_48/37/pyr_4_sym", destination="synapses", segment_id="2", fraction_along="0.3"))
     

@@ -56,9 +56,7 @@ class TestNeuroMLXMLParser(unittest.TestCase):
 
             print(summary)
 
-            assert(summary==summary0)
-
-            print("Same!")
+            compare(summary,summary0)
 
             nml_file = base_dir+'/../examples/tmp/EXP_'+f
             import neuroml.writers as writers
@@ -68,6 +66,26 @@ class TestNeuroMLXMLParser(unittest.TestCase):
         
     def runTest(self):
         print("Running tests in TestNeuroMLXMLParser")
+        
+        
+        
+def compare(s1,s2):
+    
+    if s1==s2:
+        print("Same!")
+        return
+    
+    l1 = s1.split('\n')
+    l2 = s2.split('\n')
+    
+    for i in range(min(len(l1),len(l2))):
+        if not l1[i]==l2[i]:
+            print("Mismatch at line %i:\n%s\n%s"%(i,l1[i],l2[i]))
+    if len(l1)!=len(l2):
+        print("Different number of lines!")
+        
+    assert(s1==s2)
+    
 
 if __name__ == '__main__':
     

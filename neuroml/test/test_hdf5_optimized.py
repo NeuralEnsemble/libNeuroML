@@ -8,6 +8,8 @@ import neuroml.writers as writers
 
 import os
 
+from test_xml_parser import compare
+
 try:
     import unittest2 as unittest
 except ImportError:
@@ -26,6 +28,8 @@ class TestNeuroMLHDF5Optimized(unittest.TestCase):
         
         #for f in []:
         #for f in ['complete.nml']:
+        #for f in ['simplenet.nml','testh5.nml','MediumNet.net.nml','complete.nml']:
+            
         for f in ['MediumNet.net.nml']:
             file_name = '%s/../examples/test_files/%s'%(self.base_dir,f)
             
@@ -42,24 +46,24 @@ class TestNeuroMLHDF5Optimized(unittest.TestCase):
             
             nml_doc1 = loaders.read_neuroml2_file(nml_h5_file,include_includes=True,optimized=True)
 
-            summary1 = nml_doc1.summary()
+            summary1 = nml_doc1.summary().replace(' (optimized)','')
             print('\n'+summary1)
             
-            #assert(summary0==summary1)
+            compare(summary0,summary1)
 
-            #print("Same!")
             
             
             nml_h5_file_2 = '%s/../examples/tmp/%s__2.h5'%(self.base_dir,f)
             writers.NeuroMLHdf5Writer.write(nml_doc1, nml_h5_file_2)
             print("Written to: %s"%nml_h5_file_2)
-            
+            #exit()
             nml_doc2 = loaders.read_neuroml2_file(nml_h5_file_2,include_includes=True)
 
             summary2 = nml_doc2.summary()
             print("Reloaded: %s"%nml_h5_file_2)
             print('\n'+summary2)
             
+            compare(summary0,summary2)
             
             nml_h5_file_3 = '%s/../examples/tmp/%s__3.nml'%(self.base_dir,f)
             writers.NeuroMLWriter.write(nml_doc1, nml_h5_file_3)
@@ -71,6 +75,7 @@ class TestNeuroMLHDF5Optimized(unittest.TestCase):
             print("Reloaded: %s"%nml_h5_file_3)
             print('\n'+summary3)
             
+            compare(summary0,summary3)
             
 
 if __name__ == '__main__':

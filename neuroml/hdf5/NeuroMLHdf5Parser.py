@@ -132,6 +132,25 @@ class NeuroMLHdf5Parser():
           
     self.end_group(g)
     
+  def _extract_named_indices(self,d):
+
+    named_indices = {}
+    
+    for attrName in d.attrs._v_attrnames:
+        
+        if 'column_' in attrName:
+            val = d.attrs.__getattr__(attrName)
+            if isinstance(val,str): 
+                name = val
+            else:
+                name = val[0]
+                
+            index = int(attrName[len('column_'):])
+        
+            named_indices[name] = index
+            
+    return named_indices
+            
     
   def parse_dataset(self, d):
     self.log.debug("Parsing dataset/array: "+ str(d))
@@ -153,7 +172,7 @@ class NeuroMLHdf5Parser():
             
             #TODO: a better way to convert???
             a = np.array(d)
-            self.currOptPopulation.instances = InstanceList(array=a)
+            self.currOptPopulation.instances = InstanceList(array=a,indices=self._extract_named_indices(d))
 
       
     elif self.currentProjectionId!="":
@@ -279,7 +298,7 @@ class NeuroMLHdf5Parser():
         else:
             #TODO: a better way to convert???
             a = np.array(d)
-            self.currOptProjection.connections = ConnectionList(array=a)
+            self.currOptProjection.connections = ConnectionList(array=a,indices=self._extract_named_indices(d))
                                             
     if self.currInputList!="":
         self.log.debug("Using data for input list: "+ self.currInputList)
@@ -336,7 +355,7 @@ class NeuroMLHdf5Parser():
             
             #TODO: a better way to convert???
             a = np.array(d)
-            self.currOptInputList.input = InputsList(array=a)
+            self.currOptInputList.input = InputsList(array=a,indices=self._extract_named_indices(d))
     
   def _get_node_size(self, g, name):
       
@@ -440,7 +459,7 @@ class NeuroMLHdf5Parser():
 
             self.netHandler.handleInputList(self.currInputList, population, component, size, input_comp_obj=input_comp_obj)
         else:
-            self.currOptInputList = InputListContainer(id=self.currInputList, component=self.currentComponent, populations=population)
+            self.currOptInputList = InputListContainer(id=self.currInputList, component=component, populations=population)
             self.optimizedNetwork.input_lists.append(self.currOptInputList)
     
     
