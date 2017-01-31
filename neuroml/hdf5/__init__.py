@@ -2,7 +2,6 @@
 import neuroml
 import numpy
 import sys
-import tables   # pytables for HDF5 support
 
 
 def get_str_attribute_group(group, name):
