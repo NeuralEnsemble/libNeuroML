@@ -98,12 +98,14 @@ class DefaultNetworkHandler:
     #
     #  Should be overridden to create population array
     #
-    def handleProjection(self, projName, prePop, postPop, synapse, hasWeights=False, hasDelays=False, type="projection", synapse_obj=None):
+    def handleProjection(self, projName, prePop, postPop, synapse, hasWeights=False, hasDelays=False, type="projection", synapse_obj=None, pre_synapse_obj=None):
 
+        synInfo=""
         if synapse_obj:
-            synInfo = " (%s)"%synapse_obj.__class__.__name__
-        else:
-            synInfo=""
+            synInfo += " (syn: %s)"%synapse_obj.__class__.__name__
+            
+        if pre_synapse_obj:
+            synInfo += " (pre comp: %s)"%pre_synapse_obj.__class__.__name__
 
         self.log.debug("Projection: "+projName+" ("+type+") from "+prePop+" to "+postPop+" with syn: "+synapse+synInfo)
 

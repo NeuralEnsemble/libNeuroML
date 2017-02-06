@@ -48,6 +48,7 @@ class NeuroMLHdf5Parser():
   currentProjectionPrePop = ""
   currentProjectionPostPop = ""
   currentSynapse = ""
+  currentPreSynapse = ""
   
   currInputList = ""
         
@@ -230,11 +231,11 @@ class NeuroMLHdf5Parser():
 
             if self.nml_doc_extra_elements:
                 synapse_obj = self.nml_doc_extra_elements.get_by_id(self.currentSynapse)
+                pre_synapse_obj = self.nml_doc_extra_elements.get_by_id(self.currentPreSynapse)
+                
             else:
                 synapse_obj = None
-
-            if 'continuous' in self.currentProjectionType:
-                raise Exception("Loading of ContinuousConnections not yet implemented!")
+                pre_synapse_obj = None
 
             self.netHandler.handleProjection(self.currentProjectionId,
                                              self.currentProjectionPrePop,
@@ -243,7 +244,8 @@ class NeuroMLHdf5Parser():
                                              hasWeights=indexWeight>0, 
                                              hasDelays=indexDelay>0,
                                              type=self.currentProjectionType,
-                                             synapse_obj = synapse_obj)
+                                             synapse_obj = synapse_obj,
+                                             pre_synapse_obj = pre_synapse_obj)
 
 
             self.log.debug("Cols: Id: %d precell: %d, postcell: %d, pre fract: %d, post fract: %d" % (indexId, indexPreCellId, indexPostCellId, indexPreFractAlong, indexPostFractAlong))
@@ -427,7 +429,13 @@ class NeuroMLHdf5Parser():
         self.currentProjectionType = g._v_attrs.type if g._v_attrs.type else "projection"
         self.currentProjectionPrePop = g._v_attrs.presynapticPopulation
         self.currentProjectionPostPop = g._v_attrs.postsynapticPopulation
-        self.currentSynapse = g._v_attrs.synapse
+        if "synapse" in g._v_attrs:
+            self.currentSynapse = g._v_attrs.synapse
+        elif "postComponent" in g._v_attrs:
+            self.currentSynapse = g._v_attrs.postComponent
+            
+        if "preComponent" in g._v_attrs:
+            self.currentPreSynapse = g._v_attrs.preComponent
           
         
         if not self.optimized:
@@ -487,6 +495,7 @@ class NeuroMLHdf5Parser():
         self.currentProjectionPrePop = ""
         self.currentProjectionPostPop = ""
         self.currentSynapse = ""
+        self.currentPreSynapse = ""
         
     if g._v_name.count('inputList_')>=1 or g._v_name.count('input_list_')>=1: 
         self.currInputList =""

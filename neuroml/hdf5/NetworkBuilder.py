@@ -26,7 +26,8 @@ class NetworkBuilder(DefaultNetworkHandler):
     
     populations = {}
     projections = {}
-    projectionSyns = {}
+    projection_syns = {}
+    projection_syns_pre = {}
     input_lists = {}
     
     weightDelays = {}
@@ -94,10 +95,12 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     #
-    def handleProjection(self, id, prePop, postPop, synapse, hasWeights=False, hasDelays=False, type="projection", synapse_obj=None):
+    def handleProjection(self, id, prePop, postPop, synapse, hasWeights=False, hasDelays=False, type="projection", synapse_obj=None, pre_synapse_obj=None):
         
         if synapse_obj:
             self.nml_doc.append(synapse_obj)
+        if pre_synapse_obj:
+            self.nml_doc.append(pre_synapse_obj)
             
         proj = None
         
@@ -107,7 +110,12 @@ class NetworkBuilder(DefaultNetworkHandler):
         elif type=="electricalProjection":
             proj = neuroml.ElectricalProjection(id=id, presynaptic_population=prePop, postsynaptic_population=postPop)
             self.network.electrical_projections.append(proj)
-            self.projectionSyns[id] = synapse
+            self.projection_syns[id] = synapse
+        elif type=="continuousProjection":
+            proj = neuroml.ContinuousProjection(id=id, presynaptic_population=prePop, postsynaptic_population=postPop)
+            self.network.continuous_projections.append(proj)
+            self.projection_syns[id] = synapse_obj.id
+            self.projection_syns_pre[id] = pre_synapse_obj.id
             
         self.projections[id] = proj
         self.weightDelays[id] = hasWeights or hasDelays
@@ -168,7 +176,7 @@ class NetworkBuilder(DefaultNetworkHandler):
                                     post_cell="%s"%(postCellId), \
                                     post_segment=postSegId,
                                     post_fraction_along=postFract,
-                                    synapse=self.projectionSyns[proj_id])
+                                    synapse=self.projection_syns[proj_id])
                                     
                 self.projections[proj_id].electrical_connections.append(conn)
                 
@@ -180,9 +188,41 @@ class NetworkBuilder(DefaultNetworkHandler):
                                     post_cell="../%s/%i/%s"%(postPop,postCellId,self.populations[postPop].component), \
                                     post_segment=postSegId,
                                     post_fraction_along=postFract,
-                                    synapse=self.projectionSyns[proj_id])
+                                    synapse=self.projection_syns[proj_id])
 
                 self.projections[proj_id].electrical_connection_instances.append(conn)
+                
+        elif isinstance(self.projections[proj_id], neuroml.ContinuousProjection):
+            
+            instances = False
+            if len(self.populations[prePop].instances)>0 or len(self.populations[postPop].instances)>0:
+                instances = True
+                
+            if not instances:
+                conn = neuroml.ContinuousConnection(id=conn_id, \
+                                    pre_cell="%s"%(preCellId), \
+                                    pre_segment=preSegId, \
+                                    pre_fraction_along=preFract,
+                                    post_cell="%s"%(postCellId), \
+                                    post_segment=postSegId,
+                                    post_fraction_along=postFract,
+                                    pre_component=self.projection_syns_pre[proj_id],
+                                    post_component=self.projection_syns[proj_id])
+                                    
+                self.projections[proj_id].continuous_connections.append(conn)
+                
+            else:
+                conn = neuroml.ContinuousConnectionInstance(id=conn_id, \
+                                    pre_cell="../%s/%i/%s"%(prePop,preCellId,self.populations[prePop].component), \
+                                    pre_segment=preSegId, \
+                                    pre_fraction_along=preFract,
+                                    post_cell="../%s/%i/%s"%(postPop,postCellId,self.populations[postPop].component), \
+                                    post_segment=postSegId,
+                                    post_fraction_along=postFract,
+                                    pre_component=self.projection_syns_pre[proj_id],
+                                    post_component=self.projection_syns[proj_id])
+
+                self.projections[proj_id].continuous_connection_instances.append(conn)
         else:
 
             if not self.weightDelays[proj_id] and delay==0 and weight==1:

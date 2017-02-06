@@ -186,7 +186,64 @@ class NeuroMLXMLParser():
                                             postFract=float(connection.post_fraction_along))
                                             
         for cp in network.continuous_projections:
-            raise Exception("Error: <continuousProjection> not yet supported!")
+            
+            pre_comp = None
+            post_comp = None
+            
+            for connection in cp.continuous_connections:
+                if pre_comp != None and pre_comp != connection.pre_component:
+                    raise Exception("There are different pre components for connections inside: %s!"%cp)
+                pre_comp = connection.pre_component
+                if post_comp != None and post_comp != connection.post_component:
+                    raise Exception("There are different post components for connections inside: %s!"%cp)
+                post_comp = connection.post_component
+                
+            for connection in cp.continuous_connection_instances:
+                if pre_comp != None and pre_comp != connection.pre_component:
+                    raise Exception("There are different pre components for connections inside: %s!"%cp)
+                pre_comp = connection.pre_component
+                if post_comp != None and post_comp != connection.post_component:
+                    raise Exception("There are different post components for connections inside: %s!"%cp)
+                post_comp = connection.post_component
+                
+            pre_obj = self.nml_doc.get_by_id(pre_comp)
+            post_obj = self.nml_doc.get_by_id(post_comp)
+            
+            self.netHandler.handleProjection(cp.id,
+                                            cp.presynaptic_population,
+                                            cp.postsynaptic_population,
+                                            synapse, 
+                                            type="continuousProjection",
+                                            pre_synapse_obj=pre_obj,
+                                            synapse_obj=post_obj)
+            
+            for connection in cp.continuous_connections:
+                
+                self.netHandler.handleConnection(cp.id, \
+                                            connection.id, \
+                                            cp.presynaptic_population,
+                                            cp.postsynaptic_population,
+                                            synapseType=None, \
+                                            preCellId=connection.get_pre_cell_id(), \
+                                            postCellId=connection.get_post_cell_id(), \
+                                            preSegId=int(connection.pre_segment), \
+                                            postSegId=int(connection.post_segment), \
+                                            preFract=float(connection.pre_fraction_along), \
+                                            postFract=float(connection.post_fraction_along))
+            
+            for connection in cp.continuous_connection_instances:
+                
+                self.netHandler.handleConnection(cp.id, \
+                                            connection.id, \
+                                            cp.presynaptic_population,
+                                            cp.postsynaptic_population,
+                                            synapseType=None, \
+                                            preCellId=connection.get_pre_cell_id(), \
+                                            postCellId=connection.get_post_cell_id(), \
+                                            preSegId=int(connection.pre_segment), \
+                                            postSegId=int(connection.post_segment), \
+                                            preFract=float(connection.pre_fraction_along), \
+                                            postFract=float(connection.post_fraction_along))
             
                                             
         for input_list in network.input_lists:   

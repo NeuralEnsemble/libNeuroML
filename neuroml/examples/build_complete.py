@@ -18,6 +18,13 @@ from neuroml import InputList
 from neuroml import ConnectionWD
 from neuroml import Connection
 from neuroml import Projection
+from neuroml import ContinuousConnection
+from neuroml import ContinuousConnectionInstance
+from neuroml import ContinuousProjection
+from neuroml import SilentSynapse
+
+from neuroml import GradedSynapse
+
 from neuroml import ElectricalProjection
 from neuroml import ElectricalConnection
 from neuroml import ElectricalConnectionInstance
@@ -79,6 +86,14 @@ gj = GapJunction(id="gj1",conductance="10pS")
 
 nml_doc.gap_junctions.append(gj)
 
+
+sil_syn = SilentSynapse(id="silent1")
+nml_doc.silent_synapses.append(sil_syn)
+
+
+grad_syn = GradedSynapse(id="gs1",conductance="5pS",delta="5mV",Vth="-55mV",k="0.025per_ms",erev="0mV")
+nml_doc.graded_synapses.append(grad_syn)
+
 pfs = PoissonFiringSynapse(id='pfs',
                                    average_rate='50Hz',
                                    synapse=syn0.id, 
@@ -134,8 +149,8 @@ prob_connection = 0.5
 proj_count = 0
 
 
-from_pop = "Pop_x"
-to_pop = "Pop_x"
+from_pop = pop.id
+to_pop = pop.id
 projection = Projection(id="Proj", presynaptic_population=from_pop, postsynaptic_population=to_pop, synapse=syn0.id)
 electricalProjection = ElectricalProjection(id="ElectProj", presynaptic_population=from_pop, postsynaptic_population=to_pop)
 
@@ -221,7 +236,7 @@ projection0 = Projection(id="ProjEmpty", presynaptic_population=from_pop, postsy
 net.projections.append(projection0)
 
 
-projection = Projection(id="ProjA", presynaptic_population=from_pop, postsynaptic_population=to_pop, synapse=syn1.id)
+projection = Projection(id="ProjConnection", presynaptic_population=from_pop, postsynaptic_population=to_pop, synapse=syn1.id)
 net.projections.append(projection)
 
 connection = Connection(id=0, \
@@ -233,6 +248,34 @@ connection = Connection(id=0, \
                         post_fraction_along=random.random())
 
 projection.connections.append(connection)
+
+
+continuous_projection = ContinuousProjection(id="ProjCC", presynaptic_population=from_pop, postsynaptic_population=to_pop)
+net.continuous_projections.append(continuous_projection)
+
+continuous_connection = ContinuousConnection(id=0, \
+                        pre_cell="0", \
+                        post_cell="0", \
+                        pre_component=sil_syn.id, \
+                        post_component=grad_syn.id)
+
+continuous_projection.continuous_connections.append(continuous_connection)
+
+continuous_projection_i = ContinuousProjection(id="ProjCCI", presynaptic_population=pop.id, postsynaptic_population=pop.id)
+net.continuous_projections.append(continuous_projection_i)
+
+continuous_connection_i = ContinuousConnectionInstance(id=0, \
+                                    pre_cell="../%s/%i/%s"%(from_pop,0,pop.id), \
+                                    pre_segment=pre_seg_id, \
+                                    pre_fraction_along=random.random(),
+                                    post_cell="../%s/%i/%s"%(to_pop,0,pop.id), \
+                                    post_segment=post_seg_id,
+                                    post_fraction_along=random.random(), 
+                                    pre_component=sil_syn.id, \
+                                    post_component=grad_syn.id)
+
+continuous_projection_i.continuous_connection_instances.append(continuous_connection_i)
+
 
 nml_file = 'test_files/complete.nml'
 writers.NeuroMLWriter.write(nml_doc, nml_file)
