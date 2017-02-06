@@ -233,6 +233,8 @@ class NeuroMLHdf5Parser():
             else:
                 synapse_obj = None
 
+            if 'continuous' in self.currentProjectionType:
+                raise Exception("Loading of ContinuousConnections not yet implemented!")
 
             self.netHandler.handleProjection(self.currentProjectionId,
                                              self.currentProjectionPrePop,

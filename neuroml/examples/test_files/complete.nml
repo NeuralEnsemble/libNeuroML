@@ -68,6 +68,9 @@
             <connectionWD id="25" preCellId="../Pop_x/7/iaf0" preFractionAlong="0.660204660121" postCellId="../Pop_x/5/iaf0" postFractionAlong="0.733762518554" weight="0.477321755402577" delay="0.427600701921ms"/>
         </projection>
         <projection id="ProjEmpty" presynapticPopulation="IafPop0" postsynapticPopulation="IafPop1" synapse="syn0"/>
+        <projection id="ProjA" presynapticPopulation="IafPop0" postsynapticPopulation="IafPop1" synapse="syn1">
+            <connection id="0" preCellId="../IafPop0/9/iaf0" preFractionAlong="0.55371661383" postCellId="../IafPop1/9/iaf0" postFractionAlong="0.119378012912"/>
+        </projection>
         <electricalProjection id="ElectProj" presynapticPopulation="Pop_x" postsynapticPopulation="Pop_x">
             <electricalConnectionInstance id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.76879474748" postCell="../Pop_x/1/iaf0" postFractionAlong="0.343462158156" synapse="gj1"/>
             <electricalConnectionInstance id="1" preCell="../Pop_x/0/iaf0" preFractionAlong="0.398238151468" postCell="../Pop_x/3/iaf0" postFractionAlong="0.769279089914" synapse="gj1"/>

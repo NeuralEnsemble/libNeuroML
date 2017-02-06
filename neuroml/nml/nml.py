@@ -2,20 +2,19 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Jan 27 13:24:05 2017 by generateDS.py version 2.24b.
+# Generated Wed Feb  1 10:10:59 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
 #   ('--use-getter-setter', 'none')
 #   ('--silence', '')
 #   ('--user-methods', 'helper_methods')
-#   ('-f', '')
 #
 # Command line arguments:
 #   NeuroML_v2beta5.xsd
 #
 # Command line:
-#   /usr/local/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" -f NeuroML_v2beta5.xsd
+#   /usr/local/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2beta5.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -6120,7 +6119,67 @@ class ContinuousProjection(Base):
             self.continuous_connection_instances.append(obj_)
             obj_.original_tagname_ = 'continuousConnectionInstance'
         super(ContinuousProjection, self).buildChildren(child_, node, nodeName_, True)
-# end class ContinuousProjection
+
+    def exportHdf5(self, h5file, h5Group):
+        #print("Exporting ContinuousProjection: "+str(self.id)+" as HDF5")
+        
+         
+        import numpy
+        
+        projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
+        projGroup._f_setattr("id", self.id)
+        projGroup._f_setattr("type", "continuousProjection")
+        projGroup._f_setattr("presynapticPopulation", self.presynaptic_population)
+        projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
+        
+        pre_comp = self.continuous_connections[0].pre_component if len(self.continuous_connections)>0 else self.continuous_connection_instances[0].pre_component
+        projGroup._f_setattr("preComponent", pre_comp )
+        post_comp = self.continuous_connections[0].post_component if len(self.continuous_connections)>0 else self.continuous_connection_instances[0].post_component
+        projGroup._f_setattr("postComponent", post_comp )
+                
+        cols = 7
+        extra_cols = {}
+        
+        num_tot = len(self.continuous_connections)+len(self.continuous_connection_instances)
+        
+        #print("Exporting "+str(num_tot)+" continuous connections")
+        a = numpy.ones([num_tot, cols], numpy.float32)
+        
+        count=0
+        
+        # TODO: optimise for single compartment cells, i.e. where no pre_segment/post_fraction_along etc.
+        for connection in self.continuous_connections:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()  
+          a[count,3] = connection.pre_segment  
+          a[count,4] = connection.post_segment  
+          a[count,5] = connection.pre_fraction_along 
+          a[count,6] = connection.post_fraction_along          
+          count=count+1
+          
+        for connection in self.continuous_connection_instances:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()  
+          a[count,3] = connection.pre_segment  
+          a[count,4] = connection.post_segment  
+          a[count,5] = connection.pre_fraction_along 
+          a[count,6] = connection.post_fraction_along          
+          count=count+1
+          
+        array = h5file.create_carray(projGroup, self.id, obj=a, title="Connections of cells in "+ self.id)
+        
+        array._f_setattr("column_0", "id")
+        array._f_setattr("column_1", "pre_cell_id")
+        array._f_setattr("column_2", "post_cell_id")
+        array._f_setattr("column_3", "pre_segment_id")
+        array._f_setattr("column_4", "post_segment_id")
+        array._f_setattr("column_5", "pre_fraction_along")
+        array._f_setattr("column_6", "post_fraction_along")
+        
+
+    # end class ContinuousProjection
 
 
 class ElectricalProjection(Base):
@@ -6257,9 +6316,7 @@ class ElectricalProjection(Base):
         
         syn = self.electrical_connections[0].synapse if len(self.electrical_connections)>0 else self.electrical_connection_instances[0].synapse
         projGroup._f_setattr("synapse", syn )
-        
-        
-        
+                
         cols = 7
         extra_cols = {}
         
@@ -6268,9 +6325,9 @@ class ElectricalProjection(Base):
         #print("Exporting "+str(num_tot)+" electrical connections")
         a = numpy.ones([num_tot, cols], numpy.float32)
         
-        
         count=0
         
+        # TODO: optimise for single compartment cells, i.e. where no pre_segment/post_fraction_along etc.
         for connection in self.electrical_connections:
           a[count,0] = connection.id
           a[count,1] = connection.get_pre_cell_id()
@@ -6300,8 +6357,6 @@ class ElectricalProjection(Base):
         array._f_setattr("column_4", "post_segment_id")
         array._f_setattr("column_5", "pre_fraction_along")
         array._f_setattr("column_6", "post_fraction_along")
-        
-            
         
 
     # end class ElectricalProjection
@@ -7375,7 +7430,7 @@ class Network(Standalone):
             eproj.exportHdf5(h5file, netGroup)
             
         for cproj in self.continuous_projections:
-            raise Exception("Error: <continuousProjection> not yet supported!")
+            cproj.exportHdf5(h5file, netGroup)
             
         for il in self.input_lists:
             il.exportHdf5(h5file, netGroup)
@@ -14967,6 +15022,16 @@ class NeuroMLDocument(Standalone):
                 if len(proj.electrical_connection_instances)>0:
                     proj_info+="*       "+str(len(proj.electrical_connection_instances))+" connections: [("+str(proj.electrical_connection_instances[0])+"), ...]\n"
                     
+            for proj in sorted(network.continuous_projections, key=lambda x: x.id):
+                proj_info+="*     Continuous projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\n"
+                tot_proj+=1
+                tot_conns+=len(proj.continuous_connections)
+                tot_conns+=len(proj.continuous_connection_instances)
+                if len(proj.continuous_connections)>0:
+                    proj_info+="*       "+str(len(proj.continuous_connections))+" connections: [("+str(proj.continuous_connections[0])+"), ...]\n"
+                if len(proj.continuous_connection_instances)>0:
+                    proj_info+="*       "+str(len(proj.continuous_connection_instances))+" connections: [("+str(proj.continuous_connection_instances[0])+"), ...]\n"
+                    
             info+="*   "+str(tot_conns)+" connections in "+str(tot_proj)+" projections \n"+proj_info+"*\n"
             
             tot_input_lists = 0
@@ -18321,7 +18386,24 @@ class ContinuousConnection(BaseConnectionNewFormat):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(ContinuousConnection, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class ContinuousConnection
+        
+    def _get_cell_id(self, id_string):
+            return int(float(id_string))
+            
+    def get_pre_cell_id(self):
+        
+        return self._get_cell_id(self.pre_cell)
+        
+    def get_post_cell_id(self):
+        
+        return self._get_cell_id(self.post_cell)
+        
+    def __str__(self):
+        
+        return "Continuous Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", pre comp: "+str(self.pre_component)+", post comp: "+str(self.post_component)
+            
+        
+    # end class ContinuousConnection
 
 
 class ElectricalConnection(BaseConnectionNewFormat):
@@ -19974,7 +20056,27 @@ class ContinuousConnectionInstance(ContinuousConnection):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(ContinuousConnectionInstance, self).buildChildren(child_, node, nodeName_, True)
         pass
-# end class ContinuousConnectionInstance
+        
+    def _get_cell_id(self, id_string):
+        if '[' in id_string:
+            return int(id_string.split('[')[1].split(']')[0])
+        else:
+            return int(id_string.split('/')[2])
+            
+    def get_pre_cell_id(self):
+        
+        return self._get_cell_id(self.pre_cell)
+        
+    def get_post_cell_id(self):
+        
+        return self._get_cell_id(self.post_cell)
+        
+    def __str__(self):
+        
+        return "Continuous Connection (Instance based) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", pre comp: "+str(self.pre_component)+", post comp: "+str(self.post_component)
+            
+        
+    # end class ContinuousConnectionInstance
 
 
 class ElectricalConnectionInstance(ElectricalConnection):

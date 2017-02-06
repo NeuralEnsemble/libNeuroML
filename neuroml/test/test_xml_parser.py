@@ -24,7 +24,7 @@ class TestNeuroMLXMLParser(unittest.TestCase):
         
         logging.basicConfig(level=logging.INFO, format="%(name)-19s %(levelname)-5s - %(message)s")
         
-        for f in ['simplenet.nml','testh5.nml','pyr_4_sym.cell.nml','MediumNet.net.nml']: #for f in []:
+        for f in ['simplenet.nml','testh5.nml','pyr_4_sym.cell.nml','MediumNet.net.nml','complete.nml']: 
         
             file_name = base_dir+'/../examples/test_files/'+f
 

@@ -16,6 +16,7 @@ from neuroml import GapJunction
 from neuroml import Input
 from neuroml import InputList
 from neuroml import ConnectionWD
+from neuroml import Connection
 from neuroml import Projection
 from neuroml import ElectricalProjection
 from neuroml import ElectricalConnection
@@ -218,6 +219,20 @@ for pre_index in range(0,size0):
 projection0 = Projection(id="ProjEmpty", presynaptic_population=from_pop, postsynaptic_population=to_pop, synapse=syn0.id)
 
 net.projections.append(projection0)
+
+
+projection = Projection(id="ProjA", presynaptic_population=from_pop, postsynaptic_population=to_pop, synapse=syn1.id)
+net.projections.append(projection)
+
+connection = Connection(id=0, \
+                        pre_cell_id="../%s/%i/%s"%(from_pop,size0-1,IafCell0.id), \
+                        pre_segment_id=pre_seg_id, \
+                        pre_fraction_along=random.random(),
+                        post_cell_id="../%s/%i/%s"%(to_pop,size0-1,IafCell0.id), \
+                        post_segment_id=post_seg_id,
+                        post_fraction_along=random.random())
+
+projection.connections.append(connection)
 
 nml_file = 'test_files/complete.nml'
 writers.NeuroMLWriter.write(nml_doc, nml_file)
