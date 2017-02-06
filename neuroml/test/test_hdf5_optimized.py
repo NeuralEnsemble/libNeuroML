@@ -30,7 +30,7 @@ class TestNeuroMLHDF5Optimized(unittest.TestCase):
         #for f in ['complete.nml']:
         #for f in ['simplenet.nml','testh5.nml','MediumNet.net.nml','complete.nml']:
             
-        for f in ['MediumNet.net.nml']:
+        for f in ['simplenet.nml','MediumNet.net.nml']:
             file_name = '%s/../examples/test_files/%s'%(self.base_dir,f)
             
             print("Loading %s"%file_name)

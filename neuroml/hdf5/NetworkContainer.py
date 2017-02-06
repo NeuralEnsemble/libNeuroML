@@ -168,13 +168,47 @@ class ProjectionContainer(neuroml.Projection):
         self.connections.presynaptic_population = presynaptic_population
         self.connections.postsynaptic_population = postsynaptic_population
         
-        #print("ProjectionContainer %s created"%self.id)
-        
         
     def __str__(self):
         return "Projection (optimized): "+self.id+" from "+self.presynaptic_population+" to "+self.postsynaptic_population+", synapse: "+self.synapse
+        
             
+    def exportHdf5(self, h5file, h5Group):
+        print("Exporting %s as HDF5"%self)
+        
+        projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
+        projGroup._f_setattr("id", self.id)
+        projGroup._f_setattr("type", "projection")
+        projGroup._f_setattr("presynapticPopulation", self.presynaptic_population)
+        projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
+        projGroup._f_setattr("synapse", self.synapse)
+            
+        h5array = h5file.create_carray(projGroup, self.id, obj=self.connections.array, title="Connections of cells in "+ self.id)
+        
+        self.connections._add_index_information(h5array)
+         
+            
+##
+##      TODO: update this to act like ElectricalProjection
+##
+class ElectricalProjectionContainer(neuroml.ElectricalProjection):
     
+    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, electrical_connections=None, electrical_connection_instances=None):
+        
+        super(self.__class__, self).__init__(neuro_lex_id=neuro_lex_id, id=id, presynaptic_population=presynaptic_population,postsynaptic_population=postsynaptic_population,electrical_connections=electrical_connections,electrical_connection_instances=electrical_connection_instances)
+    
+        assert(electrical_connections==None)
+        assert(electrical_connection_instances==None)
+        self.connections = ConnectionList()
+        self.connection_wds = ConnectionList()
+        self.connections.presynaptic_population = presynaptic_population
+        self.connections.postsynaptic_population = postsynaptic_population
+        
+        
+    def __str__(self):
+        return "Electrical projection (optimized): "+self.id+" from "+self.presynaptic_population+" to "+self.postsynaptic_population+", synapse: "+self.synapse
+        
+            
     def exportHdf5(self, h5file, h5Group):
         print("Exporting %s as HDF5"%self)
         
@@ -219,8 +253,6 @@ class ConnectionList(OptimizedList):
         
         
     def append(self,conn):
-        
-        #print('Adding conn: %s'%conn)
         
         i = np.array([[conn.id,
                        conn.get_pre_cell_id(),

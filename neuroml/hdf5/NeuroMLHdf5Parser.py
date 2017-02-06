@@ -27,6 +27,7 @@ from neuroml.hdf5.NetworkContainer import NetworkContainer
 from neuroml.hdf5.NetworkContainer import PopulationContainer
 from neuroml.hdf5.NetworkContainer import InstanceList
 from neuroml.hdf5.NetworkContainer import ProjectionContainer
+from neuroml.hdf5.NetworkContainer import ElectricalProjectionContainer
 from neuroml.hdf5.NetworkContainer import ConnectionList
 from neuroml.hdf5.NetworkContainer import InputListContainer
 from neuroml.hdf5.NetworkContainer import InputsList
@@ -442,12 +443,28 @@ class NeuroMLHdf5Parser():
             self.log.debug("------    Found a projection: "+ self.currentProjectionId+ ", from "+ self.currentProjectionPrePop
             +" to "+ self.currentProjectionPostPop+" through "+self.currentSynapse)
         else:
-            self.currOptProjection = ProjectionContainer(id=self.currentProjectionId, 
+            
+            if self.currentProjectionType=='electricalProjection':           
+                raise Exception("Cannot yet export electricalProjections to optimized HDF5 format")
+                self.currOptProjection = ElectricalProjectionContainer(id=self.currentProjectionId, 
+                                           presynaptic_population=self.currentProjectionPrePop, 
+                                           postsynaptic_population=self.currentProjectionPostPop)
+                                           
+                self.optimizedNetwork.electrical_projections.append(self.currOptProjection)
+                                           
+            elif self.currentProjectionType=='continuousProjection':           
+                
+                raise Exception("Cannot yet export continuousProjections to optimized HDF5 format")
+            
+                self.optimizedNetwork.continuous_projections.append(self.currOptProjection)
+                
+            else:
+                self.currOptProjection = ProjectionContainer(id=self.currentProjectionId, 
                                            presynaptic_population=self.currentProjectionPrePop, 
                                            postsynaptic_population=self.currentProjectionPostPop, 
                                            synapse=self.currentSynapse)
                                            
-            self.optimizedNetwork.projections.append(self.currOptProjection)
+                self.optimizedNetwork.projections.append(self.currOptProjection)
         
     
     if g._v_name.count('inputList_')>=1 or g._v_name.count('input_list_')>=1: # inputList_ preferred
