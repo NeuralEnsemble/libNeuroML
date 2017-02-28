@@ -269,6 +269,22 @@ elec_connection_instance_cell_ids = MethodSpec(name='elec_connection_instance_ce
   
 METHOD_SPECS+=(elec_connection_instance_cell_ids,)
 
+elec_connection_instance_w = MethodSpec(name='elec_connection_instance_w',
+    source='''\
+        
+        
+    def __str__(self):
+        
+        return "Electrical Connection (Instance based & weight) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+ \
+            ", synapse: "+str(self.synapse) + ", weight: "+str(self.weight)
+            
+        
+    ''',
+    class_names=("ElectricalConnectionInstanceW")
+    )
+  
+METHOD_SPECS+=(elec_connection_instance_w,)
+
 elec_connection_cell_ids = MethodSpec(name='elec_connection_cell_ids',
     source='''\
         
@@ -323,6 +339,22 @@ cont_connection_instance_cell_ids = MethodSpec(name='cont_connection_instance_ce
     )
   
 METHOD_SPECS+=(cont_connection_instance_cell_ids,)
+
+cont_connection_instance_w = MethodSpec(name='cont_connection_instance_w',
+    source='''\
+        
+        
+    def __str__(self):
+        
+        return "Continuous Connection (Instance based & weight) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+ \
+            ", pre comp: "+str(self.pre_component)+", post comp: "+str(self.post_component)+", weight: "+str(self.weight)
+            
+        
+    ''',
+    class_names=("ContinuousConnectionInstanceW")
+    )
+  
+METHOD_SPECS+=(cont_connection_instance_w,)
 
 cont_connection_cell_ids = MethodSpec(name='cont_connection_cell_ids',
     source='''\
@@ -427,6 +459,24 @@ input_cell_ids = MethodSpec(name='input_cell_ids',
 METHOD_SPECS+=(input_cell_ids,)
 
 
+input_w = MethodSpec(name='input_w',
+    source='''\
+    
+    def get_weight(self):
+        
+        return float(self.weight) if self.weight else 1
+
+    def __str__(self):
+        
+        return "Input (weight) "+str(self.id)+": "+str(self.get_target_cell_id())+":"+str(self.get_segment_id())+"("+'PERCENTAGE.6f'PERCENTAGEself.get_fraction_along()+"), weight: "+str(self.get_weight())
+        
+    ''',
+    class_names=(["InputW"])
+    )
+  
+METHOD_SPECS+=(input_w,)
+
+
 nml_doc_summary = MethodSpec(name='summary',
     source='''\
 
@@ -495,20 +545,26 @@ nml_doc_summary = MethodSpec(name='summary',
                 tot_proj+=1
                 tot_conns+=len(proj.electrical_connections)
                 tot_conns+=len(proj.electrical_connection_instances)
+                tot_conns+=len(proj.electricalConnectionInstanceW)
                 if len(proj.electrical_connections)>0:
                     proj_info+="*       "+str(len(proj.electrical_connections))+" connections: [("+str(proj.electrical_connections[0])+"), ...]\\n"
                 if len(proj.electrical_connection_instances)>0:
                     proj_info+="*       "+str(len(proj.electrical_connection_instances))+" connections: [("+str(proj.electrical_connection_instances[0])+"), ...]\\n"
+                if len(proj.electricalConnectionInstanceW)>0:
+                    proj_info+="*       "+str(len(proj.electricalConnectionInstanceW))+" connections: [("+str(proj.electricalConnectionInstanceW[0])+"), ...]\\n"
                     
             for proj in sorted(network.continuous_projections, key=lambda x: x.id):
                 proj_info+="*     Continuous projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\\n"
                 tot_proj+=1
                 tot_conns+=len(proj.continuous_connections)
                 tot_conns+=len(proj.continuous_connection_instances)
+                tot_conns+=len(proj.continuousConnectionInstanceW)
                 if len(proj.continuous_connections)>0:
                     proj_info+="*       "+str(len(proj.continuous_connections))+" connections: [("+str(proj.continuous_connections[0])+"), ...]\\n"
                 if len(proj.continuous_connection_instances)>0:
                     proj_info+="*       "+str(len(proj.continuous_connection_instances))+" connections: [("+str(proj.continuous_connection_instances[0])+"), ...]\\n"
+                if len(proj.continuousConnectionInstanceW)>0:
+                    proj_info+="*       "+str(len(proj.continuousConnectionInstanceW))+" connections (w): [("+str(proj.continuousConnectionInstanceW[0])+"), ...]\\n"
                     
             info+="*   "+str(tot_conns)+" connections in "+str(tot_proj)+" projections \\n"+proj_info+"*\\n"
             
@@ -521,6 +577,9 @@ nml_doc_summary = MethodSpec(name='summary',
                 if len(il.input)>0:
                     input_info+="*       "+str(len(il.input))+" inputs: [("+str(il.input[0])+"), ...]\\n"
                     tot_inputs+=len(il.input)
+                if len(il.inputW)>0:
+                    input_info+="*       "+str(len(il.inputW))+" inputs: [("+str(il.inputW[0])+"), ...]\\n"
+                    tot_inputs+=len(il.inputW)
                     
             info+="*   "+str(tot_inputs)+" inputs in "+str(tot_input_lists)+" input lists \\n"+input_info+"*\\n"
                     

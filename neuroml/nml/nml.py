@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Feb  1 10:10:59 2017 by generateDS.py version 2.24b.
+# Generated Tue Feb 28 11:14:08 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -5184,7 +5184,7 @@ class ExplicitInput(GeneratedsSuper):
 
 
 class Input(GeneratedsSuper):
-    """Subject to change as it gets tested with LEMS"""
+    """Individual input to the cell specified by target"""
     member_data_items_ = [
         MemberSpec_('id', 'NonNegativeInteger', 0),
         MemberSpec_('target', 'xs:string', 0),
@@ -5194,13 +5194,14 @@ class Input(GeneratedsSuper):
     ]
     subclass = None
     superclass = None
-    def __init__(self, id=None, target=None, destination=None, segment_id=None, fraction_along=None):
+    def __init__(self, id=None, target=None, destination=None, segment_id=None, fraction_along=None, extensiontype_=None):
         self.original_tagname_ = None
         self.id = _cast(None, id)
         self.target = _cast(None, target)
         self.destination = _cast(None, destination)
         self.segment_id = _cast(None, segment_id)
         self.fraction_along = _cast(None, fraction_along)
+        self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -5270,6 +5271,10 @@ class Input(GeneratedsSuper):
         if self.fraction_along is not None and 'fraction_along' not in already_processed:
             already_processed.add('fraction_along')
             outfile.write(' fractionAlong=%s' % (quote_attrib(self.fraction_along), ))
+        if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            outfile.write(' xsi:type="%s"' % self.extensiontype_)
     def exportChildren(self, outfile, level, namespace_='', name_='Input', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node):
@@ -5317,6 +5322,10 @@ class Input(GeneratedsSuper):
             except ValueError as exp:
                 raise ValueError('Bad float/double attribute (fractionAlong): %s' % exp)
             self.validate_ZeroToOne(self.fraction_along)    # validate type ZeroToOne
+        value = find_attr_value_('xsi:type', node)
+        if value is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            self.extensiontype_ = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
 
@@ -5343,6 +5352,92 @@ class Input(GeneratedsSuper):
         return "Input "+str(self.id)+": "+str(self.get_target_cell_id())+":"+str(self.get_segment_id())+"("+'%.6f'%self.get_fraction_along()+")"
         
     # end class Input
+
+
+class InputW(Input):
+    """Individual input to the cell specified by target. Includes setting
+    of _weight for the connection"""
+    member_data_items_ = [
+        MemberSpec_('weight', 'xs:float', 0),
+    ]
+    subclass = None
+    superclass = Input
+    def __init__(self, id=None, target=None, destination=None, segment_id=None, fraction_along=None, weight=None):
+        self.original_tagname_ = None
+        super(InputW, self).__init__(id, target, destination, segment_id, fraction_along, )
+        self.weight = _cast(float, weight)
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, InputW)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if InputW.subclass:
+            return InputW.subclass(*args_, **kwargs_)
+        else:
+            return InputW(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            super(InputW, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='InputW', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='InputW')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='InputW', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='InputW'):
+        super(InputW, self).exportAttributes(outfile, level, already_processed, namespace_, name_='InputW')
+        if self.weight is not None and 'weight' not in already_processed:
+            already_processed.add('weight')
+            outfile.write(' weight="%s"' % self.gds_format_float(self.weight, input_name='weight'))
+    def exportChildren(self, outfile, level, namespace_='', name_='InputW', fromsubclass_=False, pretty_print=True):
+        super(InputW, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('weight', node)
+        if value is not None and 'weight' not in already_processed:
+            already_processed.add('weight')
+            try:
+                self.weight = float(value)
+            except ValueError as exp:
+                raise ValueError('Bad float/double attribute (weight): %s' % exp)
+        super(InputW, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(InputW, self).buildChildren(child_, node, nodeName_, True)
+        pass
+    
+    def get_weight(self):
+        
+        return float(self.weight) if self.weight else 1
+
+    def __str__(self):
+        
+        return "Input (weight) "+str(self.id)+": "+str(self.get_target_cell_id())+":"+str(self.get_segment_id())+"("+'%.6f'%self.get_fraction_along()+"), weight: "+str(self.get_weight())
+        
+    # end class InputW
 
 
 class BaseWithoutId(GeneratedsSuper):
@@ -5859,15 +5954,17 @@ class SpikeSourcePoisson(Standalone):
 
 
 class InputList(Base):
-    """Subject to change as it gets tested with LEMS"""
+    """List of inputs to a population. Currents will be provided by the
+    specified component."""
     member_data_items_ = [
         MemberSpec_('population', 'NmlId', 0),
         MemberSpec_('component', 'NmlId', 0),
         MemberSpec_('input', 'Input', 1),
+        MemberSpec_('inputW', 'InputW', 1),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, populations=None, component=None, input=None):
+    def __init__(self, neuro_lex_id=None, id=None, populations=None, component=None, input=None, inputW=None):
         self.original_tagname_ = None
         super(InputList, self).__init__(neuro_lex_id, id, )
         self.populations = _cast(None, populations)
@@ -5876,6 +5973,10 @@ class InputList(Base):
             self.input = []
         else:
             self.input = input
+        if inputW is None:
+            self.inputW = []
+        else:
+            self.inputW = inputW
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -5897,6 +5998,7 @@ class InputList(Base):
     def hasContent_(self):
         if (
             self.input or
+            self.inputW or
             super(InputList, self).hasContent_()
         ):
             return True
@@ -5936,6 +6038,8 @@ class InputList(Base):
             eol_ = ''
         for input_ in self.input:
             input_.export(outfile, level, namespace_, name_='input', pretty_print=pretty_print)
+        for inputW_ in self.inputW:
+            inputW_.export(outfile, level, namespace_, name_='inputW', pretty_print=pretty_print)
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -5957,10 +6061,16 @@ class InputList(Base):
         super(InputList, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'input':
-            obj_ = Input.factory()
+            class_obj_ = self.get_class_obj_(child_, Input)
+            obj_ = class_obj_.factory()
             obj_.build(child_)
             self.input.append(obj_)
             obj_.original_tagname_ = 'input'
+        elif nodeName_ == 'inputW':
+            obj_ = InputW.factory()
+            obj_.build(child_)
+            self.inputW.append(obj_)
+            obj_.original_tagname_ = 'inputW'
         super(InputList, self).buildChildren(child_, node, nodeName_, True)
 
     def exportHdf5(self, h5file, h5Group):
@@ -6008,10 +6118,11 @@ class ContinuousProjection(Base):
         MemberSpec_('postsynapticPopulation', 'NmlId', 0),
         MemberSpec_('continuous_connections', 'ContinuousConnection', 1),
         MemberSpec_('continuous_connection_instances', 'ContinuousConnectionInstance', 1),
+        MemberSpec_('continuousConnectionInstanceW', 'ContinuousConnectionInstanceW', 1),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, continuous_connections=None, continuous_connection_instances=None):
+    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, continuous_connections=None, continuous_connection_instances=None, continuousConnectionInstanceW=None):
         self.original_tagname_ = None
         super(ContinuousProjection, self).__init__(neuro_lex_id, id, )
         self.presynaptic_population = _cast(None, presynaptic_population)
@@ -6024,6 +6135,10 @@ class ContinuousProjection(Base):
             self.continuous_connection_instances = []
         else:
             self.continuous_connection_instances = continuous_connection_instances
+        if continuousConnectionInstanceW is None:
+            self.continuousConnectionInstanceW = []
+        else:
+            self.continuousConnectionInstanceW = continuousConnectionInstanceW
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -6046,6 +6161,7 @@ class ContinuousProjection(Base):
         if (
             self.continuous_connections or
             self.continuous_connection_instances or
+            self.continuousConnectionInstanceW or
             super(ContinuousProjection, self).hasContent_()
         ):
             return True
@@ -6087,6 +6203,8 @@ class ContinuousProjection(Base):
             continuousConnection_.export(outfile, level, namespace_, name_='continuousConnection', pretty_print=pretty_print)
         for continuousConnectionInstance_ in self.continuous_connection_instances:
             continuousConnectionInstance_.export(outfile, level, namespace_, name_='continuousConnectionInstance', pretty_print=pretty_print)
+        for continuousConnectionInstanceW_ in self.continuousConnectionInstanceW:
+            continuousConnectionInstanceW_.export(outfile, level, namespace_, name_='continuousConnectionInstanceW', pretty_print=pretty_print)
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -6114,10 +6232,16 @@ class ContinuousProjection(Base):
             self.continuous_connections.append(obj_)
             obj_.original_tagname_ = 'continuousConnection'
         elif nodeName_ == 'continuousConnectionInstance':
-            obj_ = ContinuousConnectionInstance.factory()
+            class_obj_ = self.get_class_obj_(child_, ContinuousConnectionInstance)
+            obj_ = class_obj_.factory()
             obj_.build(child_)
             self.continuous_connection_instances.append(obj_)
             obj_.original_tagname_ = 'continuousConnectionInstance'
+        elif nodeName_ == 'continuousConnectionInstanceW':
+            obj_ = ContinuousConnectionInstanceW.factory()
+            obj_.build(child_)
+            self.continuousConnectionInstanceW.append(obj_)
+            obj_.original_tagname_ = 'continuousConnectionInstanceW'
         super(ContinuousProjection, self).buildChildren(child_, node, nodeName_, True)
 
     def exportHdf5(self, h5file, h5Group):
@@ -6132,15 +6256,19 @@ class ContinuousProjection(Base):
         projGroup._f_setattr("presynapticPopulation", self.presynaptic_population)
         projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
         
-        pre_comp = self.continuous_connections[0].pre_component if len(self.continuous_connections)>0 else self.continuous_connection_instances[0].pre_component
+        pre_comp = self.continuous_connections[0].pre_component if len(self.continuous_connections)>0 else                             self.continuous_connection_instances[0].pre_component if len(self.continuous_connection_instances)>0 else self.continuousConnectionInstanceW[0].pre_component
         projGroup._f_setattr("preComponent", pre_comp )
-        post_comp = self.continuous_connections[0].post_component if len(self.continuous_connections)>0 else self.continuous_connection_instances[0].post_component
+        post_comp = self.continuous_connections[0].post_component if len(self.continuous_connections)>0 else                             self.continuous_connection_instances[0].post_component if len(self.continuous_connection_instances)>0 else self.continuousConnectionInstanceW[0].post_component
         projGroup._f_setattr("postComponent", post_comp )
                 
         cols = 7
         extra_cols = {}
         
-        num_tot = len(self.continuous_connections)+len(self.continuous_connection_instances)
+        num_tot = len(self.continuous_connections)+len(self.continuous_connection_instances)+len(self.continuousConnectionInstanceW)
+        
+        if len(self.continuousConnectionInstanceW)>0:
+            extra_cols["column_6"] = 'weight'
+            cols+=1
         
         #print("Exporting "+str(num_tot)+" continuous connections")
         a = numpy.ones([num_tot, cols], numpy.float32)
@@ -6168,6 +6296,19 @@ class ContinuousProjection(Base):
           a[count,6] = connection.post_fraction_along          
           count=count+1
           
+          
+        for connection in self.continuousConnectionInstanceW:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()  
+          a[count,3] = connection.pre_segment  
+          a[count,4] = connection.post_segment  
+          a[count,5] = connection.pre_fraction_along 
+          a[count,6] = connection.post_fraction_along  
+          a[count,7] = connection.weight          
+          count=count+1
+          
+          
         array = h5file.create_carray(projGroup, self.id, obj=a, title="Connections of cells in "+ self.id)
         
         array._f_setattr("column_0", "id")
@@ -6177,6 +6318,9 @@ class ContinuousProjection(Base):
         array._f_setattr("column_4", "post_segment_id")
         array._f_setattr("column_5", "pre_fraction_along")
         array._f_setattr("column_6", "post_fraction_along")
+        for k in extra_cols:
+            array._f_setattr(k, extra_cols[k])
+            
         
 
     # end class ContinuousProjection
@@ -6190,10 +6334,11 @@ class ElectricalProjection(Base):
         MemberSpec_('postsynapticPopulation', 'NmlId', 0),
         MemberSpec_('electrical_connections', 'ElectricalConnection', 1),
         MemberSpec_('electrical_connection_instances', 'ElectricalConnectionInstance', 1),
+        MemberSpec_('electricalConnectionInstanceW', 'ElectricalConnectionInstanceW', 1),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, electrical_connections=None, electrical_connection_instances=None):
+    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, electrical_connections=None, electrical_connection_instances=None, electricalConnectionInstanceW=None):
         self.original_tagname_ = None
         super(ElectricalProjection, self).__init__(neuro_lex_id, id, )
         self.presynaptic_population = _cast(None, presynaptic_population)
@@ -6206,6 +6351,10 @@ class ElectricalProjection(Base):
             self.electrical_connection_instances = []
         else:
             self.electrical_connection_instances = electrical_connection_instances
+        if electricalConnectionInstanceW is None:
+            self.electricalConnectionInstanceW = []
+        else:
+            self.electricalConnectionInstanceW = electricalConnectionInstanceW
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -6228,6 +6377,7 @@ class ElectricalProjection(Base):
         if (
             self.electrical_connections or
             self.electrical_connection_instances or
+            self.electricalConnectionInstanceW or
             super(ElectricalProjection, self).hasContent_()
         ):
             return True
@@ -6269,6 +6419,8 @@ class ElectricalProjection(Base):
             electricalConnection_.export(outfile, level, namespace_, name_='electricalConnection', pretty_print=pretty_print)
         for electricalConnectionInstance_ in self.electrical_connection_instances:
             electricalConnectionInstance_.export(outfile, level, namespace_, name_='electricalConnectionInstance', pretty_print=pretty_print)
+        for electricalConnectionInstanceW_ in self.electricalConnectionInstanceW:
+            electricalConnectionInstanceW_.export(outfile, level, namespace_, name_='electricalConnectionInstanceW', pretty_print=pretty_print)
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -6296,10 +6448,16 @@ class ElectricalProjection(Base):
             self.electrical_connections.append(obj_)
             obj_.original_tagname_ = 'electricalConnection'
         elif nodeName_ == 'electricalConnectionInstance':
-            obj_ = ElectricalConnectionInstance.factory()
+            class_obj_ = self.get_class_obj_(child_, ElectricalConnectionInstance)
+            obj_ = class_obj_.factory()
             obj_.build(child_)
             self.electrical_connection_instances.append(obj_)
             obj_.original_tagname_ = 'electricalConnectionInstance'
+        elif nodeName_ == 'electricalConnectionInstanceW':
+            obj_ = ElectricalConnectionInstanceW.factory()
+            obj_.build(child_)
+            self.electricalConnectionInstanceW.append(obj_)
+            obj_.original_tagname_ = 'electricalConnectionInstanceW'
         super(ElectricalProjection, self).buildChildren(child_, node, nodeName_, True)
 
     def exportHdf5(self, h5file, h5Group):
@@ -15017,20 +15175,26 @@ class NeuroMLDocument(Standalone):
                 tot_proj+=1
                 tot_conns+=len(proj.electrical_connections)
                 tot_conns+=len(proj.electrical_connection_instances)
+                tot_conns+=len(proj.electricalConnectionInstanceW)
                 if len(proj.electrical_connections)>0:
                     proj_info+="*       "+str(len(proj.electrical_connections))+" connections: [("+str(proj.electrical_connections[0])+"), ...]\n"
                 if len(proj.electrical_connection_instances)>0:
                     proj_info+="*       "+str(len(proj.electrical_connection_instances))+" connections: [("+str(proj.electrical_connection_instances[0])+"), ...]\n"
+                if len(proj.electricalConnectionInstanceW)>0:
+                    proj_info+="*       "+str(len(proj.electricalConnectionInstanceW))+" connections: [("+str(proj.electricalConnectionInstanceW[0])+"), ...]\n"
                     
             for proj in sorted(network.continuous_projections, key=lambda x: x.id):
                 proj_info+="*     Continuous projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\n"
                 tot_proj+=1
                 tot_conns+=len(proj.continuous_connections)
                 tot_conns+=len(proj.continuous_connection_instances)
+                tot_conns+=len(proj.continuousConnectionInstanceW)
                 if len(proj.continuous_connections)>0:
                     proj_info+="*       "+str(len(proj.continuous_connections))+" connections: [("+str(proj.continuous_connections[0])+"), ...]\n"
                 if len(proj.continuous_connection_instances)>0:
                     proj_info+="*       "+str(len(proj.continuous_connection_instances))+" connections: [("+str(proj.continuous_connection_instances[0])+"), ...]\n"
+                if len(proj.continuousConnectionInstanceW)>0:
+                    proj_info+="*       "+str(len(proj.continuousConnectionInstanceW))+" connections (w): [("+str(proj.continuousConnectionInstanceW[0])+"), ...]\n"
                     
             info+="*   "+str(tot_conns)+" connections in "+str(tot_proj)+" projections \n"+proj_info+"*\n"
             
@@ -15043,6 +15207,9 @@ class NeuroMLDocument(Standalone):
                 if len(il.input)>0:
                     input_info+="*       "+str(len(il.input))+" inputs: [("+str(il.input[0])+"), ...]\n"
                     tot_inputs+=len(il.input)
+                if len(il.inputW)>0:
+                    input_info+="*       "+str(len(il.inputW))+" inputs: [("+str(il.inputW[0])+"), ...]\n"
+                    tot_inputs+=len(il.inputW)
                     
             info+="*   "+str(tot_inputs)+" inputs in "+str(tot_input_lists)+" input lists \n"+input_info+"*\n"
                     
@@ -20001,9 +20168,10 @@ class ContinuousConnectionInstance(ContinuousConnection):
     ]
     subclass = None
     superclass = ContinuousConnection
-    def __init__(self, neuro_lex_id=None, id=None, pre_cell=None, pre_segment='0', pre_fraction_along='0.5', post_cell=None, post_segment='0', post_fraction_along='0.5', pre_component=None, post_component=None):
+    def __init__(self, neuro_lex_id=None, id=None, pre_cell=None, pre_segment='0', pre_fraction_along='0.5', post_cell=None, post_segment='0', post_fraction_along='0.5', pre_component=None, post_component=None, extensiontype_=None):
         self.original_tagname_ = None
-        super(ContinuousConnectionInstance, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, pre_component, post_component, )
+        super(ContinuousConnectionInstance, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, pre_component, post_component, extensiontype_, )
+        self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -20041,6 +20209,10 @@ class ContinuousConnectionInstance(ContinuousConnection):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ContinuousConnectionInstance'):
         super(ContinuousConnectionInstance, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ContinuousConnectionInstance')
+        if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            outfile.write(' xsi:type="%s"' % self.extensiontype_)
     def exportChildren(self, outfile, level, namespace_='', name_='ContinuousConnectionInstance', fromsubclass_=False, pretty_print=True):
         super(ContinuousConnectionInstance, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         pass
@@ -20052,6 +20224,10 @@ class ContinuousConnectionInstance(ContinuousConnection):
             self.buildChildren(child, node, nodeName_)
         return self
     def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('xsi:type', node)
+        if value is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            self.extensiontype_ = value
         super(ContinuousConnectionInstance, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(ContinuousConnectionInstance, self).buildChildren(child_, node, nodeName_, True)
@@ -20086,9 +20262,10 @@ class ElectricalConnectionInstance(ElectricalConnection):
     ]
     subclass = None
     superclass = ElectricalConnection
-    def __init__(self, neuro_lex_id=None, id=None, pre_cell=None, pre_segment='0', pre_fraction_along='0.5', post_cell=None, post_segment='0', post_fraction_along='0.5', synapse=None):
+    def __init__(self, neuro_lex_id=None, id=None, pre_cell=None, pre_segment='0', pre_fraction_along='0.5', post_cell=None, post_segment='0', post_fraction_along='0.5', synapse=None, extensiontype_=None):
         self.original_tagname_ = None
-        super(ElectricalConnectionInstance, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, synapse, )
+        super(ElectricalConnectionInstance, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, synapse, extensiontype_, )
+        self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -20126,6 +20303,10 @@ class ElectricalConnectionInstance(ElectricalConnection):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ElectricalConnectionInstance'):
         super(ElectricalConnectionInstance, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ElectricalConnectionInstance')
+        if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            outfile.write(' xsi:type="%s"' % self.extensiontype_)
     def exportChildren(self, outfile, level, namespace_='', name_='ElectricalConnectionInstance', fromsubclass_=False, pretty_print=True):
         super(ElectricalConnectionInstance, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         pass
@@ -20137,6 +20318,10 @@ class ElectricalConnectionInstance(ElectricalConnection):
             self.buildChildren(child, node, nodeName_)
         return self
     def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('xsi:type', node)
+        if value is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            self.extensiontype_ = value
         super(ElectricalConnectionInstance, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(ElectricalConnectionInstance, self).buildChildren(child_, node, nodeName_, True)
@@ -20781,6 +20966,175 @@ class IF_cond_alpha(basePyNNIaFCondCell):
 # end class IF_cond_alpha
 
 
+class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
+    """Individual continuous/analog synaptic connection - instance based.
+    Includes setting of _weight for the connection"""
+    member_data_items_ = [
+        MemberSpec_('weight', 'xs:float', 0),
+    ]
+    subclass = None
+    superclass = ContinuousConnectionInstance
+    def __init__(self, neuro_lex_id=None, id=None, pre_cell=None, pre_segment='0', pre_fraction_along='0.5', post_cell=None, post_segment='0', post_fraction_along='0.5', pre_component=None, post_component=None, weight=None):
+        self.original_tagname_ = None
+        super(ContinuousConnectionInstanceW, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, pre_component, post_component, )
+        self.weight = _cast(float, weight)
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, ContinuousConnectionInstanceW)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if ContinuousConnectionInstanceW.subclass:
+            return ContinuousConnectionInstanceW.subclass(*args_, **kwargs_)
+        else:
+            return ContinuousConnectionInstanceW(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            super(ContinuousConnectionInstanceW, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='ContinuousConnectionInstanceW', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ContinuousConnectionInstanceW')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ContinuousConnectionInstanceW', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ContinuousConnectionInstanceW'):
+        super(ContinuousConnectionInstanceW, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ContinuousConnectionInstanceW')
+        if self.weight is not None and 'weight' not in already_processed:
+            already_processed.add('weight')
+            outfile.write(' weight="%s"' % self.gds_format_float(self.weight, input_name='weight'))
+    def exportChildren(self, outfile, level, namespace_='', name_='ContinuousConnectionInstanceW', fromsubclass_=False, pretty_print=True):
+        super(ContinuousConnectionInstanceW, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('weight', node)
+        if value is not None and 'weight' not in already_processed:
+            already_processed.add('weight')
+            try:
+                self.weight = float(value)
+            except ValueError as exp:
+                raise ValueError('Bad float/double attribute (weight): %s' % exp)
+        super(ContinuousConnectionInstanceW, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(ContinuousConnectionInstanceW, self).buildChildren(child_, node, nodeName_, True)
+        pass
+        
+        
+    def __str__(self):
+        
+        return "Continuous Connection (Instance based & weight) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", pre comp: "+str(self.pre_component)+", post comp: "+str(self.post_component)+", weight: "+str(self.weight)
+            
+        
+    # end class ContinuousConnectionInstanceW
+
+
+class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
+    """Projection between two populations consisting of analog connections
+    (e.g. graded synapses). Includes setting of weight for the
+    connection"""
+    member_data_items_ = [
+        MemberSpec_('weight', 'xs:float', 0),
+    ]
+    subclass = None
+    superclass = ElectricalConnectionInstance
+    def __init__(self, neuro_lex_id=None, id=None, pre_cell=None, pre_segment='0', pre_fraction_along='0.5', post_cell=None, post_segment='0', post_fraction_along='0.5', synapse=None, weight=None):
+        self.original_tagname_ = None
+        super(ElectricalConnectionInstanceW, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, synapse, )
+        self.weight = _cast(float, weight)
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, ElectricalConnectionInstanceW)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if ElectricalConnectionInstanceW.subclass:
+            return ElectricalConnectionInstanceW.subclass(*args_, **kwargs_)
+        else:
+            return ElectricalConnectionInstanceW(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            super(ElectricalConnectionInstanceW, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='ElectricalConnectionInstanceW', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ElectricalConnectionInstanceW')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ElectricalConnectionInstanceW', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ElectricalConnectionInstanceW'):
+        super(ElectricalConnectionInstanceW, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ElectricalConnectionInstanceW')
+        if self.weight is not None and 'weight' not in already_processed:
+            already_processed.add('weight')
+            outfile.write(' weight="%s"' % self.gds_format_float(self.weight, input_name='weight'))
+    def exportChildren(self, outfile, level, namespace_='', name_='ElectricalConnectionInstanceW', fromsubclass_=False, pretty_print=True):
+        super(ElectricalConnectionInstanceW, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('weight', node)
+        if value is not None and 'weight' not in already_processed:
+            already_processed.add('weight')
+            try:
+                self.weight = float(value)
+            except ValueError as exp:
+                raise ValueError('Bad float/double attribute (weight): %s' % exp)
+        super(ElectricalConnectionInstanceW, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(ElectricalConnectionInstanceW, self).buildChildren(child_, node, nodeName_, True)
+        pass
+        
+        
+    def __str__(self):
+        
+        return "Electrical Connection (Instance based & weight) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", synapse: "+str(self.synapse) + ", weight: "+str(self.weight)
+            
+        
+    # end class ElectricalConnectionInstanceW
+
+
 class BlockingPlasticSynapse(ExpTwoSynapse):
     member_data_items_ = [
         MemberSpec_('plasticity_mechanism', 'PlasticityMechanism', 0),
@@ -20961,11 +21315,13 @@ GDSClassesMapping = {
     'connectionWD': ConnectionWD,
     'continuousConnection': ContinuousConnection,
     'continuousConnectionInstance': ContinuousConnectionInstance,
+    'continuousConnectionInstanceW': ContinuousConnectionInstanceW,
     'continuousProjection': ContinuousProjection,
     'decayingPoolConcentrationModel': DecayingPoolConcentrationModel,
     'distal': DistalDetails,
     'electricalConnection': ElectricalConnection,
     'electricalConnectionInstance': ElectricalConnectionInstance,
+    'electricalConnectionInstanceW': ElectricalConnectionInstanceW,
     'electricalProjection': ElectricalProjection,
     'expCondSynapse': ExpCondSynapse,
     'expCurrSynapse': ExpCurrSynapse,
@@ -21002,6 +21358,7 @@ GDSClassesMapping = {
     'initMembPotential': InitMembPotential,
     'input': Input,
     'inputList': InputList,
+    'inputW': InputW,
     'instance': Instance,
     'intracellularProperties': IntracellularProperties,
     'intracellularProperties2CaPools': IntracellularProperties2CaPools,
@@ -21240,6 +21597,7 @@ __all__ = [
     "Constant",
     "ContinuousConnection",
     "ContinuousConnectionInstance",
+    "ContinuousConnectionInstanceW",
     "ContinuousProjection",
     "DecayingPoolConcentrationModel",
     "DerivedVariable",
@@ -21249,6 +21607,7 @@ __all__ = [
     "EIF_cond_exp_isfa_ista",
     "ElectricalConnection",
     "ElectricalConnectionInstance",
+    "ElectricalConnectionInstanceW",
     "ElectricalProjection",
     "ExpCondSynapse",
     "ExpCurrSynapse",
@@ -21294,6 +21653,7 @@ __all__ = [
     "InitMembPotential",
     "Input",
     "InputList",
+    "InputW",
     "Instance",
     "IntracellularProperties",
     "IntracellularProperties2CaPools",

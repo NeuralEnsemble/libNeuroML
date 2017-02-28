@@ -1,6 +1,7 @@
 """
 
-Example to build an NML2 file with many different elements
+Example to build an NML2 file with many (all?) NeuroML elements, particularly for 
+different network options
 
 """
 
@@ -14,6 +15,7 @@ from neuroml import Population
 from neuroml import GapJunction
 
 from neuroml import Input
+from neuroml import InputW
 from neuroml import InputList
 from neuroml import ConnectionWD
 from neuroml import Connection
@@ -155,9 +157,11 @@ from_pop = pop.id
 to_pop = pop.id
 projection = Projection(id="Proj", presynaptic_population=from_pop, postsynaptic_population=to_pop, synapse=syn0.id)
 electricalProjection = ElectricalProjection(id="ElectProj", presynaptic_population=from_pop, postsynaptic_population=to_pop)
+electricalProjectionW = ElectricalProjection(id="ElectProjW", presynaptic_population=from_pop, postsynaptic_population=to_pop)
 
 net.projections.append(projection)
 net.electrical_projections.append(electricalProjection)
+#net.electrical_projections.append(electricalProjectionW)
 
 
 input_list = InputList(id='il',
@@ -165,6 +169,12 @@ input_list = InputList(id='il',
                      populations=from_pop)
 
 net.input_lists.append(input_list)
+
+input_list_w = InputList(id='ilw',
+                     component=pfs.id,
+                     populations=from_pop)
+
+#net.input_lists.append(input_list_w)
 
 for pre_index in range(0,cell_num):
     
@@ -197,12 +207,31 @@ for pre_index in range(0,cell_num):
                                     
             electricalProjection.electrical_connection_instances.append(electricalConnection)
             
+            electricalConnectionW = ElectricalConnectionInstanceW(id=proj_count, \
+                                    pre_cell="../%s/%i/%s"%(from_pop,pre_index,IafCell0.id), \
+                                    pre_segment=pre_seg_id, \
+                                    pre_fraction_along=random.random(),
+                                    post_cell="../%s/%i/%s"%(to_pop,post_index,IafCell0.id), \
+                                    post_segment=post_seg_id,
+                                    post_fraction_along=random.random(), 
+                                    synapse=gj.id, 
+                                    weight=random.random())
+                                    
+            electricalProjectionW.electricalConnectionInstanceW.append(electricalConnectionW)
+            
             proj_count += 1
             
     input = Input(id=pre_index, 
               target="../%s/%i/%s"%(from_pop, pre_index, pop.component), 
               destination="synapses")  
     input_list.input.append(input)  
+            
+    input_w = InputW(id=pre_index, 
+              target="../%s/%i/%s"%(from_pop, pre_index, pop.component), 
+              destination="synapses",
+              weight=10)  
+              
+    input_list_w.inputW.append(input_w)  
     
 
 proj_count = 0
@@ -279,7 +308,7 @@ continuous_connection_i = ContinuousConnectionInstance(id=0, \
 continuous_projection_i.continuous_connection_instances.append(continuous_connection_i)
 
 continuous_projection_iw = ContinuousProjection(id="ProjCCIW", presynaptic_population=pop.id, postsynaptic_population=pop.id)
-net.continuous_projections.append(continuous_projection_iw)
+#net.continuous_projections.append(continuous_projection_iw)
 
 continuous_connection_iw = ContinuousConnectionInstanceW(id=0, \
                                     pre_cell="../%s/%i/%s"%(from_pop,0,pop.id), \
@@ -302,17 +331,13 @@ summary0 = nml_doc.summary()
 print("Created:\n"+summary0)
 print("Written network file to: "+nml_file)
 
-
-nml_h5_file = 'test_files/complete.nml.h5'
-writers.NeuroMLHdf5Writer.write(nml_doc, nml_h5_file)
-
-
-print("Written H5 network file to: "+nml_h5_file)
-
-
 ###### Validate the NeuroML ######    
 
 from neuroml.utils import validate_neuroml2
 
 validate_neuroml2(nml_file)
 
+nml_h5_file = 'test_files/complete.nml.h5'
+writers.NeuroMLHdf5Writer.write(nml_doc, nml_h5_file)
+
+print("Written H5 network file to: "+nml_h5_file)
