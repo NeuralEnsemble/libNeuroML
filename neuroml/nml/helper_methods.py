@@ -915,15 +915,21 @@ inserts['ContinuousProjection'] = '''
         projGroup._f_setattr("presynapticPopulation", self.presynaptic_population)
         projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
         
-        pre_comp = self.continuous_connections[0].pre_component if len(self.continuous_connections)>0 else self.continuous_connection_instances[0].pre_component
+        pre_comp = self.continuous_connections[0].pre_component if len(self.continuous_connections)>0 else \
+                            self.continuous_connection_instances[0].pre_component if len(self.continuous_connection_instances)>0 else self.continuousConnectionInstanceW[0].pre_component
         projGroup._f_setattr("preComponent", pre_comp )
-        post_comp = self.continuous_connections[0].post_component if len(self.continuous_connections)>0 else self.continuous_connection_instances[0].post_component
+        post_comp = self.continuous_connections[0].post_component if len(self.continuous_connections)>0 else \
+                            self.continuous_connection_instances[0].post_component if len(self.continuous_connection_instances)>0 else self.continuousConnectionInstanceW[0].post_component
         projGroup._f_setattr("postComponent", post_comp )
                 
         cols = 7
         extra_cols = {}
         
-        num_tot = len(self.continuous_connections)+len(self.continuous_connection_instances)
+        num_tot = len(self.continuous_connections)+len(self.continuous_connection_instances)+len(self.continuousConnectionInstanceW)
+        
+        if len(self.continuousConnectionInstanceW)>0:
+            extra_cols["column_6"] = 'weight'
+            cols+=1
         
         #print("Exporting "+str(num_tot)+" continuous connections")
         a = numpy.ones([num_tot, cols], numpy.float32)
@@ -951,6 +957,19 @@ inserts['ContinuousProjection'] = '''
           a[count,6] = connection.post_fraction_along          
           count=count+1
           
+          
+        for connection in self.continuousConnectionInstanceW:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()  
+          a[count,3] = connection.pre_segment  
+          a[count,4] = connection.post_segment  
+          a[count,5] = connection.pre_fraction_along 
+          a[count,6] = connection.post_fraction_along  
+          a[count,7] = connection.weight          
+          count=count+1
+          
+          
         array = h5file.create_carray(projGroup, self.id, obj=a, title="Connections of cells in "+ self.id)
         
         array._f_setattr("column_0", "id")
@@ -960,6 +979,9 @@ inserts['ContinuousProjection'] = '''
         array._f_setattr("column_4", "post_segment_id")
         array._f_setattr("column_5", "pre_fraction_along")
         array._f_setattr("column_6", "post_fraction_along")
+        for k in extra_cols:
+            array._f_setattr(k, extra_cols[k])
+            
         
 '''
 

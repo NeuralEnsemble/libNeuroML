@@ -20,6 +20,7 @@ from neuroml import Connection
 from neuroml import Projection
 from neuroml import ContinuousConnection
 from neuroml import ContinuousConnectionInstance
+from neuroml import ContinuousConnectionInstanceW
 from neuroml import ContinuousProjection
 from neuroml import SilentSynapse
 
@@ -28,6 +29,7 @@ from neuroml import GradedSynapse
 from neuroml import ElectricalProjection
 from neuroml import ElectricalConnection
 from neuroml import ElectricalConnectionInstance
+from neuroml import ElectricalConnectionInstanceW
 from neuroml import Property
 from neuroml import Instance
 from neuroml import Location
@@ -275,6 +277,22 @@ continuous_connection_i = ContinuousConnectionInstance(id=0, \
                                     post_component=grad_syn.id)
 
 continuous_projection_i.continuous_connection_instances.append(continuous_connection_i)
+
+continuous_projection_iw = ContinuousProjection(id="ProjCCIW", presynaptic_population=pop.id, postsynaptic_population=pop.id)
+net.continuous_projections.append(continuous_projection_iw)
+
+continuous_connection_iw = ContinuousConnectionInstanceW(id=0, \
+                                    pre_cell="../%s/%i/%s"%(from_pop,0,pop.id), \
+                                    pre_segment=pre_seg_id, \
+                                    pre_fraction_along=random.random(),
+                                    post_cell="../%s/%i/%s"%(to_pop,0,pop.id), \
+                                    post_segment=post_seg_id,
+                                    post_fraction_along=random.random(), 
+                                    pre_component=sil_syn.id, \
+                                    post_component=grad_syn.id, \
+                                    weight=5)
+
+continuous_projection_iw.continuousConnectionInstanceW.append(continuous_connection_iw)
 
 
 nml_file = 'test_files/complete.nml'
