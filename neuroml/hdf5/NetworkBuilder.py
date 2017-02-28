@@ -181,16 +181,30 @@ class NetworkBuilder(DefaultNetworkHandler):
                 self.projections[proj_id].electrical_connections.append(conn)
                 
             else:
-                conn = neuroml.ElectricalConnectionInstance(id=conn_id, \
-                                    pre_cell="../%s/%i/%s"%(prePop,preCellId,self.populations[prePop].component), \
-                                    pre_segment=preSegId, \
-                                    pre_fraction_along=preFract,
-                                    post_cell="../%s/%i/%s"%(postPop,postCellId,self.populations[postPop].component), \
-                                    post_segment=postSegId,
-                                    post_fraction_along=postFract,
-                                    synapse=self.projection_syns[proj_id])
+                if weight==1:
+                    conn = neuroml.ElectricalConnectionInstance(id=conn_id, \
+                                        pre_cell="../%s/%i/%s"%(prePop,preCellId,self.populations[prePop].component), \
+                                        pre_segment=preSegId, \
+                                        pre_fraction_along=preFract,
+                                        post_cell="../%s/%i/%s"%(postPop,postCellId,self.populations[postPop].component), \
+                                        post_segment=postSegId,
+                                        post_fraction_along=postFract,
+                                        synapse=self.projection_syns[proj_id])
 
-                self.projections[proj_id].electrical_connection_instances.append(conn)
+                    self.projections[proj_id].electrical_connection_instances.append(conn)
+                else:
+                    conn = neuroml.ElectricalConnectionInstanceW(id=conn_id, \
+                                        pre_cell="../%s/%i/%s"%(prePop,preCellId,self.populations[prePop].component), \
+                                        pre_segment=preSegId, \
+                                        pre_fraction_along=preFract,
+                                        post_cell="../%s/%i/%s"%(postPop,postCellId,self.populations[postPop].component), \
+                                        post_segment=postSegId,
+                                        post_fraction_along=postFract,
+                                        synapse=self.projection_syns[proj_id],
+                                        weight=weight)
+
+                    self.projections[proj_id].electricalConnectionInstanceW.append(conn)
+                    
                 
         elif isinstance(self.projections[proj_id], neuroml.ContinuousProjection):
             
@@ -212,17 +226,32 @@ class NetworkBuilder(DefaultNetworkHandler):
                 self.projections[proj_id].continuous_connections.append(conn)
                 
             else:
-                conn = neuroml.ContinuousConnectionInstance(id=conn_id, \
-                                    pre_cell="../%s/%i/%s"%(prePop,preCellId,self.populations[prePop].component), \
-                                    pre_segment=preSegId, \
-                                    pre_fraction_along=preFract,
-                                    post_cell="../%s/%i/%s"%(postPop,postCellId,self.populations[postPop].component), \
-                                    post_segment=postSegId,
-                                    post_fraction_along=postFract,
-                                    pre_component=self.projection_syns_pre[proj_id],
-                                    post_component=self.projection_syns[proj_id])
+                if weight==1:
+                    conn = neuroml.ContinuousConnectionInstance(id=conn_id, \
+                                        pre_cell="../%s/%i/%s"%(prePop,preCellId,self.populations[prePop].component), \
+                                        pre_segment=preSegId, \
+                                        pre_fraction_along=preFract,
+                                        post_cell="../%s/%i/%s"%(postPop,postCellId,self.populations[postPop].component), \
+                                        post_segment=postSegId,
+                                        post_fraction_along=postFract,
+                                        pre_component=self.projection_syns_pre[proj_id],
+                                        post_component=self.projection_syns[proj_id])
 
-                self.projections[proj_id].continuous_connection_instances.append(conn)
+                    self.projections[proj_id].continuous_connection_instances.append(conn)
+                else:
+                    conn = neuroml.ContinuousConnectionInstanceW(id=conn_id, \
+                                        pre_cell="../%s/%i/%s"%(prePop,preCellId,self.populations[prePop].component), \
+                                        pre_segment=preSegId, \
+                                        pre_fraction_along=preFract,
+                                        post_cell="../%s/%i/%s"%(postPop,postCellId,self.populations[postPop].component), \
+                                        post_segment=postSegId,
+                                        post_fraction_along=postFract,
+                                        pre_component=self.projection_syns_pre[proj_id],
+                                        post_component=self.projection_syns[proj_id],
+                                        weight=weight)
+
+                    self.projections[proj_id].continuousConnectionInstanceW.append(conn)
+                    
         else:
 
             if not self.weightDelays[proj_id] and delay==0 and weight==1:
@@ -270,14 +299,26 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     # 
-    def handleSingleInput(self, inputListId, id, cellId, segId = 0, fract = 0.5):
+    def handleSingleInput(self, inputListId, id, cellId, segId = 0, fract = 0.5, weight = 1.0):
 
         input_list = self.input_lists[inputListId]
-        input = neuroml.Input(id=id, 
-                  target="../%s/%i/%s"%(input_list.populations, cellId, self.populations[input_list.populations].component), 
-                  destination="synapses")  
-        if segId!=0:
-            input.segment_id="%s"%(segId)
-        if fract!=0.5:
-            input.fraction_along="%s"%(fract)
-        input_list.input.append(input)
+        
+        if weight==1:
+            input = neuroml.Input(id=id, 
+                      target="../%s/%i/%s"%(input_list.populations, cellId, self.populations[input_list.populations].component), 
+                      destination="synapses")  
+            if segId!=0:
+                input.segment_id="%s"%(segId)
+            if fract!=0.5:
+                input.fraction_along="%s"%(fract)
+            input_list.input.append(input)
+        else:
+            inputW = neuroml.InputW(id=id, 
+                      target="../%s/%i/%s"%(input_list.populations, cellId, self.populations[input_list.populations].component), 
+                      destination="synapses")  
+            if segId!=0:
+                inputW.segment_id="%s"%(segId)
+            if fract!=0.5:
+                inputW.fraction_along="%s"%(fract)
+            inputW.weight=weight
+            input_list.inputW.append(inputW)

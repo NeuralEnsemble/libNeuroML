@@ -315,9 +315,11 @@ class NeuroMLHdf5Parser():
             indexTargetCellId = -1
             indexSegId = -1
             indexFractAlong= -1
+            indexWeight= -1
 
             segId = 0
             fractAlong= 0.5
+            weight=1
 
 
             for attrName in d.attrs._v_attrnames:
@@ -333,6 +335,8 @@ class NeuroMLHdf5Parser():
                     indexSegId = int(attrName[len('column_'):])
                 elif val == 'fraction_along' or val[0] == 'fraction_along':
                     indexFractAlong = int(attrName[len('column_'):])
+                elif val == 'weight' or val[0] == 'weight':
+                    indexWeight = int(attrName[len('column_'):])
 
             for i in range(0, d.shape[0]):
 
@@ -348,6 +352,9 @@ class NeuroMLHdf5Parser():
 
                 if indexFractAlong >= 0:
                   fractAlong = float(d[i,indexFractAlong])
+                  
+                if indexWeight >= 0:
+                  weight = float(d[i,indexWeight])
 
                 self.log.debug("Adding %s, %s, %s"%(tid,segId,fractAlong))
 
@@ -355,7 +362,8 @@ class NeuroMLHdf5Parser():
                                             id_,
                                             tid,         
                                             segId = segId,         
-                                            fract = fractAlong) 
+                                            fract = fractAlong,
+                                            weight = weight) 
         else:
             
             #TODO: a better way to convert???

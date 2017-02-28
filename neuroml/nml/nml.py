@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Feb 28 11:14:08 2017 by generateDS.py version 2.24b.
+# Generated Tue Feb 28 12:25:37 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -5431,11 +5431,11 @@ class InputW(Input):
     
     def get_weight(self):
         
-        return float(self.weight) if self.weight else 1
+        return float(self.weight) if self.weight else 1.0
 
     def __str__(self):
         
-        return "Input (weight) "+str(self.id)+": "+str(self.get_target_cell_id())+":"+str(self.get_segment_id())+"("+'%.6f'%self.get_fraction_along()+"), weight: "+str(self.get_weight())
+        return "Input (weight) "+str(self.id)+": "+str(self.get_target_cell_id())+":"+str(self.get_segment_id())+"("+'%.6f'%self.get_fraction_along()+"), weight: "+'%.6f'%self.get_weight()
         
     # end class InputW
 
@@ -6084,15 +6084,34 @@ class InputList(Base):
         ilGroup._f_setattr("component", self.component)
         ilGroup._f_setattr("population", self.populations)
         
-        colCount = 4
-        a = numpy.ones([len(self.input), colCount], numpy.float32)
+        cols = 4
+        
+        extra_cols = {}
+        
+        num_tot = len(self.input)+len(self.inputW)
+        
+        if len(self.inputW)>0:
+            extra_cols["column_"+str(cols)] = 'weight'
+            cols+=1
+        
+        #print("Exporting "+str(num_tot)+" inputs")
+        a = numpy.ones([num_tot, cols], numpy.float32)
         
         count=0
+        
         for input in self.input:
             a[count,0] = input.id
             a[count,1] = input.get_target_cell_id()
             a[count,2] = input.get_segment_id()
             a[count,3] = input.get_fraction_along()
+            count+=1
+        
+        for input in self.inputW:
+            a[count,0] = input.id
+            a[count,1] = input.get_target_cell_id()
+            a[count,2] = input.get_segment_id()
+            a[count,3] = input.get_fraction_along()
+            a[count,4] = input.get_weight()
             count+=1
             
         array = h5file.create_carray(ilGroup, self.id, obj=a, title="Locations of inputs in "+ self.id)
@@ -6101,6 +6120,8 @@ class InputList(Base):
         array._f_setattr("column_1", "target_cell_id")
         array._f_setattr("column_2", "segment_id")
         array._f_setattr("column_3", "fraction_along")
+        for k in extra_cols:
+            array._f_setattr(k, extra_cols[k])
         
     def __str__(self):
         
@@ -6267,7 +6288,7 @@ class ContinuousProjection(Base):
         num_tot = len(self.continuous_connections)+len(self.continuous_connection_instances)+len(self.continuousConnectionInstanceW)
         
         if len(self.continuousConnectionInstanceW)>0:
-            extra_cols["column_6"] = 'weight'
+            extra_cols["column_"+str(cols)] = 'weight'
             cols+=1
         
         #print("Exporting "+str(num_tot)+" continuous connections")
@@ -6472,13 +6493,16 @@ class ElectricalProjection(Base):
         projGroup._f_setattr("presynapticPopulation", self.presynaptic_population)
         projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
         
-        syn = self.electrical_connections[0].synapse if len(self.electrical_connections)>0 else self.electrical_connection_instances[0].synapse
+        syn = self.electrical_connections[0].synapse if len(self.electrical_connections)>0 else                     self.electrical_connection_instances[0].synapse if len(self.electrical_connection_instances)>0 else self.electricalConnectionInstanceW[0].synapse
         projGroup._f_setattr("synapse", syn )
                 
         cols = 7
         extra_cols = {}
         
-        num_tot = len(self.electrical_connections)+len(self.electrical_connection_instances)
+        num_tot = len(self.electrical_connections)+len(self.electrical_connection_instances)+len(self.electricalConnectionInstanceW)
+        if len(self.electricalConnectionInstanceW)>0:
+            extra_cols["column_"+str(cols)] = "weight"
+            cols+=1
         
         #print("Exporting "+str(num_tot)+" electrical connections")
         a = numpy.ones([num_tot, cols], numpy.float32)
@@ -6506,6 +6530,17 @@ class ElectricalProjection(Base):
           a[count,6] = connection.post_fraction_along          
           count=count+1
           
+        for connection in self.electricalConnectionInstanceW:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()  
+          a[count,3] = connection.pre_segment  
+          a[count,4] = connection.post_segment  
+          a[count,5] = connection.pre_fraction_along 
+          a[count,6] = connection.post_fraction_along    
+          a[count,7] = connection.get_weight()          
+          count=count+1
+          
         array = h5file.create_carray(projGroup, self.id, obj=a, title="Connections of cells in "+ self.id)
         
         array._f_setattr("column_0", "id")
@@ -6515,6 +6550,9 @@ class ElectricalProjection(Base):
         array._f_setattr("column_4", "post_segment_id")
         array._f_setattr("column_5", "pre_fraction_along")
         array._f_setattr("column_6", "post_fraction_along")
+
+        for col in extra_cols.keys():
+            array._f_setattr(col,extra_cols[col])
         
 
     # end class ElectricalProjection
@@ -21041,10 +21079,13 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
         super(ContinuousConnectionInstanceW, self).buildChildren(child_, node, nodeName_, True)
         pass
         
+    def get_weight(self):
+        
+        return float(self.weight) if self.weight else 1.0
         
     def __str__(self):
         
-        return "Continuous Connection (Instance based & weight) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", pre comp: "+str(self.pre_component)+", post comp: "+str(self.post_component)+", weight: "+str(self.weight)
+        return "Continuous Connection (Instance based & weight) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", pre comp: "+str(self.pre_component)+", post comp: "+str(self.post_component)+", weight: "+'%.6f'%self.get_weight()
             
         
     # end class ContinuousConnectionInstanceW
@@ -21126,12 +21167,14 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
         super(ElectricalConnectionInstanceW, self).buildChildren(child_, node, nodeName_, True)
         pass
         
+    def get_weight(self):
+        
+        return float(self.weight) if self.weight else 1.0
         
     def __str__(self):
         
-        return "Electrical Connection (Instance based & weight) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", synapse: "+str(self.synapse) + ", weight: "+str(self.weight)
+        return "Electrical Connection (Instance based & weight) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", synapse: "+str(self.synapse) + ", weight: "+'%.6f'%self.get_weight()
             
-        
     # end class ElectricalConnectionInstanceW
 
 

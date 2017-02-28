@@ -150,9 +150,9 @@ class DefaultNetworkHandler:
     #
     #  Should be overridden to to connect each input to the target cell
     #  
-    def handleSingleInput(self, inputListId, id, cellId, segId = 0, fract = 0.5):
+    def handleSingleInput(self, inputListId, id, cellId, segId = 0, fract = 0.5, weight=1):
         
-        self.log.debug("Input: %s[%s], cellId: %i, seg: %i, fract: %f" % (inputListId,id,cellId,segId,fract))
+        self.log.debug("Input: %s[%s], cellId: %i, seg: %i, fract: %f, weight: %f" % (inputListId,id,cellId,segId,fract,weight))
         
         
     #

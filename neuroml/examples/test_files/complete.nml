@@ -107,6 +107,37 @@
             <electricalConnectionInstance id="27" preCell="../Pop_x/7/iaf0" preFractionAlong="0.52087226028" postCell="../Pop_x/2/iaf0" postFractionAlong="0.288756581864" synapse="gj1"/>
             <electricalConnectionInstance id="28" preCell="../Pop_x/7/iaf0" preFractionAlong="0.126146971258" postCell="../Pop_x/6/iaf0" postFractionAlong="0.47516416118" synapse="gj1"/>
         </electricalProjection>
+        <electricalProjection id="ElectProjW" presynapticPopulation="Pop_x" postsynapticPopulation="Pop_x">
+            <electricalConnectionInstanceW id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.801496591292" postCell="../Pop_x/1/iaf0" postFractionAlong="0.206862470666" synapse="gj1" weight="0.608902526190553"/>
+            <electricalConnectionInstanceW id="1" preCell="../Pop_x/0/iaf0" preFractionAlong="0.890098570537" postCell="../Pop_x/4/iaf0" postFractionAlong="0.486136470144" synapse="gj1" weight="0.668470221903147"/>
+            <electricalConnectionInstanceW id="2" preCell="../Pop_x/0/iaf0" preFractionAlong="0.170126887671" postCell="../Pop_x/5/iaf0" postFractionAlong="0.336916152792" synapse="gj1" weight="0.391193307071303"/>
+            <electricalConnectionInstanceW id="3" preCell="../Pop_x/0/iaf0" preFractionAlong="0.0128291092526" postCell="../Pop_x/6/iaf0" postFractionAlong="0.351913683098" synapse="gj1" weight="0.229129764480284"/>
+            <electricalConnectionInstanceW id="4" preCell="../Pop_x/1/iaf0" preFractionAlong="0.134727600637" postCell="../Pop_x/7/iaf0" postFractionAlong="0.193176970042" synapse="gj1" weight="0.256362347296543"/>
+            <electricalConnectionInstanceW id="5" preCell="../Pop_x/2/iaf0" preFractionAlong="0.0887889048674" postCell="../Pop_x/0/iaf0" postFractionAlong="0.433200313877" synapse="gj1" weight="0.008561214772869"/>
+            <electricalConnectionInstanceW id="6" preCell="../Pop_x/2/iaf0" preFractionAlong="0.334830540523" postCell="../Pop_x/3/iaf0" postFractionAlong="0.348367020665" synapse="gj1" weight="0.639127937228113"/>
+            <electricalConnectionInstanceW id="7" preCell="../Pop_x/2/iaf0" preFractionAlong="0.0571592134093" postCell="../Pop_x/6/iaf0" postFractionAlong="0.518696124756" synapse="gj1" weight="0.537536377505688"/>
+            <electricalConnectionInstanceW id="8" preCell="../Pop_x/2/iaf0" preFractionAlong="0.517103486654" postCell="../Pop_x/7/iaf0" postFractionAlong="0.629617625228" synapse="gj1" weight="0.802276645521038"/>
+            <electricalConnectionInstanceW id="9" preCell="../Pop_x/3/iaf0" preFractionAlong="0.98043914669" postCell="../Pop_x/0/iaf0" postFractionAlong="0.668834354364" synapse="gj1" weight="0.303805779136783"/>
+            <electricalConnectionInstanceW id="10" preCell="../Pop_x/3/iaf0" preFractionAlong="0.36900054831" postCell="../Pop_x/2/iaf0" postFractionAlong="0.893433560209" synapse="gj1" weight="0.340080850518174"/>
+            <electricalConnectionInstanceW id="11" preCell="../Pop_x/3/iaf0" preFractionAlong="0.197094868907" postCell="../Pop_x/4/iaf0" postFractionAlong="0.199499344514" synapse="gj1" weight="0.995265013658"/>
+            <electricalConnectionInstanceW id="12" preCell="../Pop_x/3/iaf0" preFractionAlong="0.809019430991" postCell="../Pop_x/6/iaf0" postFractionAlong="0.534183413799" synapse="gj1" weight="0.786080054207838"/>
+            <electricalConnectionInstanceW id="13" preCell="../Pop_x/3/iaf0" preFractionAlong="0.39581331547" postCell="../Pop_x/7/iaf0" postFractionAlong="0.224149807098" synapse="gj1" weight="0.501257553137533"/>
+            <electricalConnectionInstanceW id="14" preCell="../Pop_x/4/iaf0" preFractionAlong="0.122316320921" postCell="../Pop_x/0/iaf0" postFractionAlong="0.0524353709865" synapse="gj1" weight="0.861647072887134"/>
+            <electricalConnectionInstanceW id="15" preCell="../Pop_x/4/iaf0" preFractionAlong="0.820478126385" postCell="../Pop_x/1/iaf0" postFractionAlong="0.180676053333" synapse="gj1" weight="0.97723044310576"/>
+            <electricalConnectionInstanceW id="16" preCell="../Pop_x/4/iaf0" preFractionAlong="0.92168284428" postCell="../Pop_x/2/iaf0" postFractionAlong="0.122326790603" synapse="gj1" weight="0.265416067114693"/>
+            <electricalConnectionInstanceW id="17" preCell="../Pop_x/4/iaf0" preFractionAlong="0.324695134481" postCell="../Pop_x/5/iaf0" postFractionAlong="0.646835837107" synapse="gj1" weight="0.265914319759977"/>
+            <electricalConnectionInstanceW id="18" preCell="../Pop_x/4/iaf0" preFractionAlong="0.954854630297" postCell="../Pop_x/6/iaf0" postFractionAlong="0.182205834414" synapse="gj1" weight="0.019912223727405"/>
+            <electricalConnectionInstanceW id="19" preCell="../Pop_x/5/iaf0" preFractionAlong="0.863939017297" postCell="../Pop_x/1/iaf0" postFractionAlong="0.463406320692" synapse="gj1" weight="0.899582526901429"/>
+            <electricalConnectionInstanceW id="20" preCell="../Pop_x/5/iaf0" preFractionAlong="0.253361949959" postCell="../Pop_x/4/iaf0" postFractionAlong="0.168020375039" synapse="gj1" weight="0.41605671016593"/>
+            <electricalConnectionInstanceW id="21" preCell="../Pop_x/5/iaf0" preFractionAlong="0.926893901313" postCell="../Pop_x/6/iaf0" postFractionAlong="0.839638324038" synapse="gj1" weight="0.302752804009905"/>
+            <electricalConnectionInstanceW id="22" preCell="../Pop_x/6/iaf0" preFractionAlong="0.940890468077" postCell="../Pop_x/0/iaf0" postFractionAlong="0.0677749189398" synapse="gj1" weight="0.939392256680005"/>
+            <electricalConnectionInstanceW id="23" preCell="../Pop_x/6/iaf0" preFractionAlong="0.493218810369" postCell="../Pop_x/1/iaf0" postFractionAlong="0.194459914637" synapse="gj1" weight="0.211630053646445"/>
+            <electricalConnectionInstanceW id="24" preCell="../Pop_x/6/iaf0" preFractionAlong="0.546927631124" postCell="../Pop_x/2/iaf0" postFractionAlong="0.0418417001119" synapse="gj1" weight="0.941466772902992"/>
+            <electricalConnectionInstanceW id="25" preCell="../Pop_x/6/iaf0" preFractionAlong="0.0259662922372" postCell="../Pop_x/5/iaf0" postFractionAlong="0.361532813207" synapse="gj1" weight="0.152874674393948"/>
+            <electricalConnectionInstanceW id="26" preCell="../Pop_x/6/iaf0" preFractionAlong="0.496933377299" postCell="../Pop_x/7/iaf0" postFractionAlong="0.0425946063309" synapse="gj1" weight="0.139222655263883"/>
+            <electricalConnectionInstanceW id="27" preCell="../Pop_x/7/iaf0" preFractionAlong="0.213373447885" postCell="../Pop_x/2/iaf0" postFractionAlong="0.936617665345" synapse="gj1" weight="0.105726946208775"/>
+            <electricalConnectionInstanceW id="28" preCell="../Pop_x/7/iaf0" preFractionAlong="0.851357228032" postCell="../Pop_x/6/iaf0" postFractionAlong="0.00531529756312" synapse="gj1" weight="0.788833698585788"/>
+        </electricalProjection>
         <electricalProjection id="ElectProj0" presynapticPopulation="IafPop0" postsynapticPopulation="IafPop1">
             <electricalConnection id="0" preCell="0" preFractionAlong="0.0322911001609" postCell="1" postFractionAlong="0.146409185373" synapse="gj1"/>
             <electricalConnection id="1" preCell="0" preFractionAlong="0.936960035569" postCell="2" postFractionAlong="0.661305631732" synapse="gj1"/>
@@ -163,6 +194,9 @@
         <continuousProjection id="ProjCCI" presynapticPopulation="Pop_x" postsynapticPopulation="Pop_x">
             <continuousConnectionInstance id="0" preCell="../IafPop0/0/Pop_x" preFractionAlong="0.925038673001" postCell="../IafPop1/0/Pop_x" postFractionAlong="0.890281011018" preComponent="silent1" postComponent="gs1"/>
         </continuousProjection>
+        <continuousProjection id="ProjCCIW" presynapticPopulation="Pop_x" postsynapticPopulation="Pop_x">
+            <continuousConnectionInstanceW id="0" preCell="../IafPop0/0/Pop_x" preFractionAlong="0.603907240251" postCell="../IafPop1/0/Pop_x" postFractionAlong="0.144025903342" preComponent="silent1" postComponent="gs1" weight="5."/>
+        </continuousProjection>
         <inputList id="il" population="Pop_x" component="pfs">
             <input id="0" target="../Pop_x/0/iaf0" destination="synapses"/>
             <input id="1" target="../Pop_x/1/iaf0" destination="synapses"/>
@@ -172,6 +206,16 @@
             <input id="5" target="../Pop_x/5/iaf0" destination="synapses"/>
             <input id="6" target="../Pop_x/6/iaf0" destination="synapses"/>
             <input id="7" target="../Pop_x/7/iaf0" destination="synapses"/>
+        </inputList>
+        <inputList id="ilw" population="Pop_x" component="pfs">
+            <inputW id="0" target="../Pop_x/0/iaf0" destination="synapses" weight="10."/>
+            <inputW id="1" target="../Pop_x/1/iaf0" destination="synapses" weight="10."/>
+            <inputW id="2" target="../Pop_x/2/iaf0" destination="synapses" weight="10."/>
+            <inputW id="3" target="../Pop_x/3/iaf0" destination="synapses" weight="10."/>
+            <inputW id="4" target="../Pop_x/4/iaf0" destination="synapses" weight="10."/>
+            <inputW id="5" target="../Pop_x/5/iaf0" destination="synapses" weight="10."/>
+            <inputW id="6" target="../Pop_x/6/iaf0" destination="synapses" weight="10."/>
+            <inputW id="7" target="../Pop_x/7/iaf0" destination="synapses" weight="10."/>
         </inputList>
     </network>
 </neuroml>

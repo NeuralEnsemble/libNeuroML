@@ -161,7 +161,7 @@ electricalProjectionW = ElectricalProjection(id="ElectProjW", presynaptic_popula
 
 net.projections.append(projection)
 net.electrical_projections.append(electricalProjection)
-#net.electrical_projections.append(electricalProjectionW)
+net.electrical_projections.append(electricalProjectionW)
 
 
 input_list = InputList(id='il',
@@ -174,7 +174,7 @@ input_list_w = InputList(id='ilw',
                      component=pfs.id,
                      populations=from_pop)
 
-#net.input_lists.append(input_list_w)
+net.input_lists.append(input_list_w)
 
 for pre_index in range(0,cell_num):
     
@@ -308,7 +308,7 @@ continuous_connection_i = ContinuousConnectionInstance(id=0, \
 continuous_projection_i.continuous_connection_instances.append(continuous_connection_i)
 
 continuous_projection_iw = ContinuousProjection(id="ProjCCIW", presynaptic_population=pop.id, postsynaptic_population=pop.id)
-#net.continuous_projections.append(continuous_projection_iw)
+net.continuous_projections.append(continuous_projection_iw)
 
 continuous_connection_iw = ContinuousConnectionInstanceW(id=0, \
                                     pre_cell="../%s/%i/%s"%(from_pop,0,pop.id), \
