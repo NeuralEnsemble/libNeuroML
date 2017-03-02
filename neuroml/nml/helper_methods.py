@@ -180,6 +180,9 @@ connection_cell_ids = MethodSpec(name='connection_cell_ids',
         
         return self._get_cell_id(self.pre_cell_id)
         
+    def get_post_cell_id(self):
+        
+        return self._get_cell_id(self.post_cell_id)
 
     def get_pre_segment_id(self):
         
@@ -197,10 +200,6 @@ connection_cell_ids = MethodSpec(name='connection_cell_ids',
         
         return float(self.post_fraction_along)
         
-        
-    def get_post_cell_id(self):
-        
-        return self._get_cell_id(self.post_cell_id)
         
     def get_pre_info(self):
         
@@ -248,18 +247,10 @@ elec_connection_instance_cell_ids = MethodSpec(name='elec_connection_instance_ce
             return int(id_string.split('[')[1].split(']')[0])
         else:
             return int(id_string.split('/')[2])
-            
-    def get_pre_cell_id(self):
-        
-        return self._get_cell_id(self.pre_cell)
-        
-    def get_post_cell_id(self):
-        
-        return self._get_cell_id(self.post_cell)
         
     def __str__(self):
         
-        return "Electrical Connection (Instance based) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+ \
+        return "Electrical Connection (Instance based) "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())+ \
             ", synapse: "+str(self.synapse)
             
         
@@ -278,7 +269,7 @@ elec_connection_instance_w = MethodSpec(name='elec_connection_instance_w',
         
     def __str__(self):
         
-        return "Electrical Connection (Instance based & weight) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+ \
+        return "Electrical Connection (Instance based & weight) "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())+ \
             ", synapse: "+str(self.synapse) + ", weight: "+'PERCENTAGE.6f'PERCENTAGEself.get_weight()
             
     ''',
@@ -301,9 +292,35 @@ elec_connection_cell_ids = MethodSpec(name='elec_connection_cell_ids',
         
         return self._get_cell_id(self.post_cell)
         
+    def get_pre_segment_id(self):
+        
+        return int(self.pre_segment)
+        
+    def get_post_segment_id(self):
+        
+        return int(self.post_segment)
+
+    def get_pre_fraction_along(self):
+        
+        return float(self.pre_fraction_along)
+        
+    def get_post_fraction_along(self):
+        
+        return float(self.post_fraction_along)
+        
+        
+    def get_pre_info(self):
+        
+        return str(self.get_pre_cell_id())+(':'+str(self.get_pre_segment_id())+'('+ 'PERCENTAGE.5f'PERCENTAGEself.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
+        
+    def get_post_info(self):
+        
+        return str(self.get_post_cell_id())+(':'+str(self.get_post_segment_id())+'('+ 'PERCENTAGE.5f'PERCENTAGEself.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
+        
+        
     def __str__(self):
         
-        return "Electrical Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+ \
+        return "Electrical Connection "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())+ \
             ", synapse: "+str(self.synapse)
             
         
@@ -321,18 +338,11 @@ cont_connection_instance_cell_ids = MethodSpec(name='cont_connection_instance_ce
             return int(id_string.split('[')[1].split(']')[0])
         else:
             return int(id_string.split('/')[2])
-            
-    def get_pre_cell_id(self):
-        
-        return self._get_cell_id(self.pre_cell)
-        
-    def get_post_cell_id(self):
-        
-        return self._get_cell_id(self.post_cell)
+           
         
     def __str__(self):
         
-        return "Continuous Connection (Instance based) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+ \
+        return "Continuous Connection (Instance based) "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())+ \
             ", pre comp: "+str(self.pre_component)+", post comp: "+str(self.post_component)
             
         
@@ -351,7 +361,7 @@ cont_connection_instance_w = MethodSpec(name='cont_connection_instance_w',
         
     def __str__(self):
         
-        return "Continuous Connection (Instance based & weight) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+ \
+        return "Continuous Connection (Instance based & weight) "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())+ \
             ", pre comp: "+str(self.pre_component)+", post comp: "+str(self.post_component)+", weight: "+'PERCENTAGE.6f'PERCENTAGEself.get_weight()
             
         
@@ -367,6 +377,7 @@ cont_connection_cell_ids = MethodSpec(name='cont_connection_cell_ids',
     def _get_cell_id(self, id_string):
             return int(float(id_string))
             
+ 
     def get_pre_cell_id(self):
         
         return self._get_cell_id(self.pre_cell)
@@ -375,9 +386,35 @@ cont_connection_cell_ids = MethodSpec(name='cont_connection_cell_ids',
         
         return self._get_cell_id(self.post_cell)
         
+    def get_pre_segment_id(self):
+        
+        return int(self.pre_segment)
+        
+    def get_post_segment_id(self):
+        
+        return int(self.post_segment)
+
+    def get_pre_fraction_along(self):
+        
+        return float(self.pre_fraction_along)
+        
+    def get_post_fraction_along(self):
+        
+        return float(self.post_fraction_along)
+        
+        
+    def get_pre_info(self):
+        
+        return str(self.get_pre_cell_id())+(':'+str(self.get_pre_segment_id())+'('+ 'PERCENTAGE.5f'PERCENTAGEself.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
+        
+    def get_post_info(self):
+        
+        return str(self.get_post_cell_id())+(':'+str(self.get_post_segment_id())+'('+ 'PERCENTAGE.5f'PERCENTAGEself.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
+        
+        
     def __str__(self):
         
-        return "Continuous Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+ \
+        return "Continuous Connection "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())+ \
             ", pre comp: "+str(self.pre_component)+", post comp: "+str(self.post_component)
             
         

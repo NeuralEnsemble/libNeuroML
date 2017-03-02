@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Feb 28 12:25:37 2017 by generateDS.py version 2.24b.
+# Generated Tue Feb 28 19:28:57 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -18595,6 +18595,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
     def _get_cell_id(self, id_string):
             return int(float(id_string))
             
+ 
     def get_pre_cell_id(self):
         
         return self._get_cell_id(self.pre_cell)
@@ -18603,9 +18604,35 @@ class ContinuousConnection(BaseConnectionNewFormat):
         
         return self._get_cell_id(self.post_cell)
         
+    def get_pre_segment_id(self):
+        
+        return int(self.pre_segment)
+        
+    def get_post_segment_id(self):
+        
+        return int(self.post_segment)
+
+    def get_pre_fraction_along(self):
+        
+        return float(self.pre_fraction_along)
+        
+    def get_post_fraction_along(self):
+        
+        return float(self.post_fraction_along)
+        
+        
+    def get_pre_info(self):
+        
+        return str(self.get_pre_cell_id())+(':'+str(self.get_pre_segment_id())+'('+ '%.5f'%self.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
+        
+    def get_post_info(self):
+        
+        return str(self.get_post_cell_id())+(':'+str(self.get_post_segment_id())+'('+ '%.5f'%self.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
+        
+        
     def __str__(self):
         
-        return "Continuous Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", pre comp: "+str(self.pre_component)+", post comp: "+str(self.post_component)
+        return "Continuous Connection "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())+             ", pre comp: "+str(self.pre_component)+", post comp: "+str(self.post_component)
             
         
     # end class ContinuousConnection
@@ -18710,9 +18737,35 @@ class ElectricalConnection(BaseConnectionNewFormat):
         
         return self._get_cell_id(self.post_cell)
         
+    def get_pre_segment_id(self):
+        
+        return int(self.pre_segment)
+        
+    def get_post_segment_id(self):
+        
+        return int(self.post_segment)
+
+    def get_pre_fraction_along(self):
+        
+        return float(self.pre_fraction_along)
+        
+    def get_post_fraction_along(self):
+        
+        return float(self.post_fraction_along)
+        
+        
+    def get_pre_info(self):
+        
+        return str(self.get_pre_cell_id())+(':'+str(self.get_pre_segment_id())+'('+ '%.5f'%self.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
+        
+    def get_post_info(self):
+        
+        return str(self.get_post_cell_id())+(':'+str(self.get_post_segment_id())+'('+ '%.5f'%self.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
+        
+        
     def __str__(self):
         
-        return "Electrical Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", synapse: "+str(self.synapse)
+        return "Electrical Connection "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())+             ", synapse: "+str(self.synapse)
             
         
     # end class ElectricalConnection
@@ -18819,6 +18872,9 @@ class ConnectionWD(BaseConnectionOldFormat):
         
         return self._get_cell_id(self.pre_cell_id)
         
+    def get_post_cell_id(self):
+        
+        return self._get_cell_id(self.post_cell_id)
 
     def get_pre_segment_id(self):
         
@@ -18836,10 +18892,6 @@ class ConnectionWD(BaseConnectionOldFormat):
         
         return float(self.post_fraction_along)
         
-        
-    def get_post_cell_id(self):
-        
-        return self._get_cell_id(self.post_cell_id)
         
     def get_pre_info(self):
         
@@ -18940,6 +18992,9 @@ class Connection(BaseConnectionOldFormat):
         
         return self._get_cell_id(self.pre_cell_id)
         
+    def get_post_cell_id(self):
+        
+        return self._get_cell_id(self.post_cell_id)
 
     def get_pre_segment_id(self):
         
@@ -18957,10 +19012,6 @@ class Connection(BaseConnectionOldFormat):
         
         return float(self.post_fraction_along)
         
-        
-    def get_post_cell_id(self):
-        
-        return self._get_cell_id(self.post_cell_id)
         
     def get_pre_info(self):
         
@@ -20276,18 +20327,11 @@ class ContinuousConnectionInstance(ContinuousConnection):
             return int(id_string.split('[')[1].split(']')[0])
         else:
             return int(id_string.split('/')[2])
-            
-    def get_pre_cell_id(self):
-        
-        return self._get_cell_id(self.pre_cell)
-        
-    def get_post_cell_id(self):
-        
-        return self._get_cell_id(self.post_cell)
+           
         
     def __str__(self):
         
-        return "Continuous Connection (Instance based) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", pre comp: "+str(self.pre_component)+", post comp: "+str(self.post_component)
+        return "Continuous Connection (Instance based) "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())+             ", pre comp: "+str(self.pre_component)+", post comp: "+str(self.post_component)
             
         
     # end class ContinuousConnectionInstance
@@ -20370,18 +20414,10 @@ class ElectricalConnectionInstance(ElectricalConnection):
             return int(id_string.split('[')[1].split(']')[0])
         else:
             return int(id_string.split('/')[2])
-            
-    def get_pre_cell_id(self):
-        
-        return self._get_cell_id(self.pre_cell)
-        
-    def get_post_cell_id(self):
-        
-        return self._get_cell_id(self.post_cell)
         
     def __str__(self):
         
-        return "Electrical Connection (Instance based) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", synapse: "+str(self.synapse)
+        return "Electrical Connection (Instance based) "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())+             ", synapse: "+str(self.synapse)
             
         
     # end class ElectricalConnectionInstance
@@ -21085,7 +21121,7 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
         
     def __str__(self):
         
-        return "Continuous Connection (Instance based & weight) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", pre comp: "+str(self.pre_component)+", post comp: "+str(self.post_component)+", weight: "+'%.6f'%self.get_weight()
+        return "Continuous Connection (Instance based & weight) "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())+             ", pre comp: "+str(self.pre_component)+", post comp: "+str(self.post_component)+", weight: "+'%.6f'%self.get_weight()
             
         
     # end class ContinuousConnectionInstanceW
@@ -21173,7 +21209,7 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
         
     def __str__(self):
         
-        return "Electrical Connection (Instance based & weight) "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", synapse: "+str(self.synapse) + ", weight: "+'%.6f'%self.get_weight()
+        return "Electrical Connection (Instance based & weight) "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())+             ", synapse: "+str(self.synapse) + ", weight: "+'%.6f'%self.get_weight()
             
     # end class ElectricalConnectionInstanceW
 
