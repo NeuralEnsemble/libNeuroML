@@ -1,12 +1,18 @@
-v2 Package
-==========
+NeuroML core classes
+====================
 
 
-:mod:`NeuroMLDocument` Module
+
+:mod:`nml` Module
 -----------------------------
 
-.. automodule:: neuroml.nml.NeuroMLDocument
+Note: This module is included in the top level of the `neuroml` package, so you can use these classes by importing neuroml:
+
+::
+
+    from neuroml import AdExIaFCell
+
+.. automodule:: neuroml.nml.nml
     :members:
-    :undoc-members:
     :show-inheritance:
 

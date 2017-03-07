@@ -20,21 +20,20 @@ Developer documentation
    how_to_contribute
    implementation_of_bindings
 
+.. Source documentation
+   ==================
 
-..        .. Source documentation
-..           ==================
-..          
-..          .. toctree::
-..             :maxdepth: 3
-..              
-..        modules
+  .. toctree::
+     :maxdepth: 3
 
-..        Indices and tables
-..        ==================
+modules
 
-..        * :ref:`genindex`
-..        * :ref:`modindex`
-..        * :ref:`search`
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
 
 
 
