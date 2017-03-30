@@ -217,7 +217,7 @@ for pre_index in range(0,cell_num):
                                     synapse=gj.id, 
                                     weight=random.random())
                                     
-            electricalProjectionW.electricalConnectionInstanceW.append(electricalConnectionW)
+            electricalProjectionW.electrical_connection_instance_ws.append(electricalConnectionW)
             
             proj_count += 1
             
@@ -231,7 +231,7 @@ for pre_index in range(0,cell_num):
               destination="synapses",
               weight=10)  
               
-    input_list_w.inputW.append(input_w)  
+    input_list_w.input_ws.append(input_w)  
     
 
 proj_count = 0
@@ -321,7 +321,7 @@ continuous_connection_iw = ContinuousConnectionInstanceW(id=0, \
                                     post_component=grad_syn.id, \
                                     weight=5)
 
-continuous_projection_iw.continuousConnectionInstanceW.append(continuous_connection_iw)
+continuous_projection_iw.continuous_connection_instance_ws.append(continuous_connection_iw)
 
 
 nml_file = 'test_files/complete.nml'

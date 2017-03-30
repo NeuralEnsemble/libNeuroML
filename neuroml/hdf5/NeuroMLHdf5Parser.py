@@ -18,7 +18,7 @@ import logging
 import sys
 
 import tables   # pytables for HDF5 support
-import numpy as np   # pytables for HDF5 support
+import numpy as np  
 
 import neuroml
 

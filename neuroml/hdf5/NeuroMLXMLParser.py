@@ -147,7 +147,7 @@ class NeuroMLXMLParser():
                 if synapse != None and synapse != connection.synapse:
                     raise Exception("There are different synapses for connections inside: %s!"%ep)
                 synapse = connection.synapse
-            for connection in ep.electricalConnectionInstanceW:
+            for connection in ep.electrical_connection_instance_ws:
                 if synapse != None and synapse != connection.synapse:
                     raise Exception("There are different synapses for connections inside: %s!"%ep)
                 synapse = connection.synapse
@@ -189,7 +189,7 @@ class NeuroMLXMLParser():
                                             preFract=float(connection.pre_fraction_along), \
                                             postFract=float(connection.post_fraction_along))
                                             
-            for connection in ep.electricalConnectionInstanceW:
+            for connection in ep.electrical_connection_instance_ws:
                 
                 self.netHandler.handleConnection(ep.id, \
                                             connection.id, \
@@ -225,7 +225,7 @@ class NeuroMLXMLParser():
                     raise Exception("There are different post components for connections inside: %s!"%cp)
                 post_comp = connection.post_component
                 
-            for connection in cp.continuousConnectionInstanceW:
+            for connection in cp.continuous_connection_instance_ws:
                 if pre_comp != None and pre_comp != connection.pre_component:
                     raise Exception("There are different pre components for connections inside: %s!"%cp)
                 pre_comp = connection.pre_component
@@ -272,7 +272,7 @@ class NeuroMLXMLParser():
                                             preFract=float(connection.pre_fraction_along), \
                                             postFract=float(connection.post_fraction_along))
             
-            for connection in cp.continuousConnectionInstanceW:
+            for connection in cp.continuous_connection_instance_ws:
                 
                 self.netHandler.handleConnection(cp.id, \
                                             connection.id, \
@@ -301,14 +301,14 @@ class NeuroMLXMLParser():
                                                   cellId = input.get_target_cell_id(), 
                                                   segId = input.get_segment_id(), 
                                                   fract = input.get_fraction_along())
-            for inputW in input_list.inputW:
+            for input_w in input_list.input_ws:
                 
                 self.netHandler.handleSingleInput(input_list.id, 
-                                                  inputW.id, 
-                                                  cellId = inputW.get_target_cell_id(), 
-                                                  segId = inputW.get_segment_id(), 
-                                                  fract = inputW.get_fraction_along(),
-                                                  weight = inputW.get_weight())
+                                                  input_w.id, 
+                                                  cellId = input_w.get_target_cell_id(), 
+                                                  segId = input_w.get_segment_id(), 
+                                                  fract = input_w.get_fraction_along(),
+                                                  weight = input_w.get_weight())
                                                
         for explicitInput in network.explicit_inputs:     
             list_name = 'INPUT_%s_%s'%(explicitInput.input,explicitInput.target.replace('[','_').replace(']','_'))

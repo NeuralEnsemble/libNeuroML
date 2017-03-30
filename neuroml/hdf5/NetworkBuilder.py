@@ -203,7 +203,7 @@ class NetworkBuilder(DefaultNetworkHandler):
                                         synapse=self.projection_syns[proj_id],
                                         weight=weight)
 
-                    self.projections[proj_id].electricalConnectionInstanceW.append(conn)
+                    self.projections[proj_id].electrical_connection_instance_ws.append(conn)
                     
                 
         elif isinstance(self.projections[proj_id], neuroml.ContinuousProjection):
@@ -250,7 +250,7 @@ class NetworkBuilder(DefaultNetworkHandler):
                                         post_component=self.projection_syns[proj_id],
                                         weight=weight)
 
-                    self.projections[proj_id].continuousConnectionInstanceW.append(conn)
+                    self.projections[proj_id].continuous_connection_instance_ws.append(conn)
                     
         else:
 
@@ -313,12 +313,12 @@ class NetworkBuilder(DefaultNetworkHandler):
                 input.fraction_along="%s"%(fract)
             input_list.input.append(input)
         else:
-            inputW = neuroml.InputW(id=id, 
+            input_w = neuroml.InputW(id=id, 
                       target="../%s/%i/%s"%(input_list.populations, cellId, self.populations[input_list.populations].component), 
                       destination="synapses")  
             if segId!=0:
-                inputW.segment_id="%s"%(segId)
+                input_w.segment_id="%s"%(segId)
             if fract!=0.5:
-                inputW.fraction_along="%s"%(fract)
-            inputW.weight=weight
-            input_list.inputW.append(inputW)
+                input_w.fraction_along="%s"%(fract)
+            input_w.weight=weight
+            input_list.input_ws.append(input_w)

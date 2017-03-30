@@ -85,6 +85,7 @@ parameter,parameter
 description,description
 e_rev_leak,e_rev_leak
 expCondSynapse,exp_cond_synapses
+continuousConnectionInstanceW,continuous_connection_instance_ws
 expTwoSynapse,exp_two_synapses
 annotation,annotation
 a,a
@@ -213,6 +214,7 @@ period,period
 gNa,g_na
 gKahp,g_kahp
 pp,pp
+electricalConnectionInstanceW,electrical_connection_instance_ws
 spikeTarget,spike_target
 optional,optional
 yStart,y_start
@@ -308,6 +310,7 @@ unbounded,unboundeds
 compoundInputDL,compound_input_dls
 xs:positiveInteger,xs:positive_integer
 membraneProperties2CaPools,membrane_properties2_ca_pools
+inputW,input_ws
 continuousConnectionInstance,continuous_connection_instances
 start,start
 tauDecay1,tau_decay1

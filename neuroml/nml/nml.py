@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Feb 28 19:28:57 2017 by generateDS.py version 2.24b.
+# Generated Thu Mar 30 17:00:36 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -5960,11 +5960,11 @@ class InputList(Base):
         MemberSpec_('population', 'NmlId', 0),
         MemberSpec_('component', 'NmlId', 0),
         MemberSpec_('input', 'Input', 1),
-        MemberSpec_('inputW', 'InputW', 1),
+        MemberSpec_('input_ws', 'InputW', 1),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, populations=None, component=None, input=None, inputW=None):
+    def __init__(self, neuro_lex_id=None, id=None, populations=None, component=None, input=None, input_ws=None):
         self.original_tagname_ = None
         super(InputList, self).__init__(neuro_lex_id, id, )
         self.populations = _cast(None, populations)
@@ -5973,10 +5973,10 @@ class InputList(Base):
             self.input = []
         else:
             self.input = input
-        if inputW is None:
-            self.inputW = []
+        if input_ws is None:
+            self.input_ws = []
         else:
-            self.inputW = inputW
+            self.input_ws = input_ws
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -5998,7 +5998,7 @@ class InputList(Base):
     def hasContent_(self):
         if (
             self.input or
-            self.inputW or
+            self.input_ws or
             super(InputList, self).hasContent_()
         ):
             return True
@@ -6038,7 +6038,7 @@ class InputList(Base):
             eol_ = ''
         for input_ in self.input:
             input_.export(outfile, level, namespace_, name_='input', pretty_print=pretty_print)
-        for inputW_ in self.inputW:
+        for inputW_ in self.input_ws:
             inputW_.export(outfile, level, namespace_, name_='inputW', pretty_print=pretty_print)
     def build(self, node):
         already_processed = set()
@@ -6069,7 +6069,7 @@ class InputList(Base):
         elif nodeName_ == 'inputW':
             obj_ = InputW.factory()
             obj_.build(child_)
-            self.inputW.append(obj_)
+            self.input_ws.append(obj_)
             obj_.original_tagname_ = 'inputW'
         super(InputList, self).buildChildren(child_, node, nodeName_, True)
 
@@ -6088,9 +6088,9 @@ class InputList(Base):
         
         extra_cols = {}
         
-        num_tot = len(self.input)+len(self.inputW)
+        num_tot = len(self.input)+len(self.input_ws)
         
-        if len(self.inputW)>0:
+        if len(self.input_ws)>0:
             extra_cols["column_"+str(cols)] = 'weight'
             cols+=1
         
@@ -6106,7 +6106,7 @@ class InputList(Base):
             a[count,3] = input.get_fraction_along()
             count+=1
         
-        for input in self.inputW:
+        for input in self.input_ws:
             a[count,0] = input.id
             a[count,1] = input.get_target_cell_id()
             a[count,2] = input.get_segment_id()
@@ -6139,11 +6139,11 @@ class ContinuousProjection(Base):
         MemberSpec_('postsynapticPopulation', 'NmlId', 0),
         MemberSpec_('continuous_connections', 'ContinuousConnection', 1),
         MemberSpec_('continuous_connection_instances', 'ContinuousConnectionInstance', 1),
-        MemberSpec_('continuousConnectionInstanceW', 'ContinuousConnectionInstanceW', 1),
+        MemberSpec_('continuous_connection_instance_ws', 'ContinuousConnectionInstanceW', 1),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, continuous_connections=None, continuous_connection_instances=None, continuousConnectionInstanceW=None):
+    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, continuous_connections=None, continuous_connection_instances=None, continuous_connection_instance_ws=None):
         self.original_tagname_ = None
         super(ContinuousProjection, self).__init__(neuro_lex_id, id, )
         self.presynaptic_population = _cast(None, presynaptic_population)
@@ -6156,10 +6156,10 @@ class ContinuousProjection(Base):
             self.continuous_connection_instances = []
         else:
             self.continuous_connection_instances = continuous_connection_instances
-        if continuousConnectionInstanceW is None:
-            self.continuousConnectionInstanceW = []
+        if continuous_connection_instance_ws is None:
+            self.continuous_connection_instance_ws = []
         else:
-            self.continuousConnectionInstanceW = continuousConnectionInstanceW
+            self.continuous_connection_instance_ws = continuous_connection_instance_ws
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -6182,7 +6182,7 @@ class ContinuousProjection(Base):
         if (
             self.continuous_connections or
             self.continuous_connection_instances or
-            self.continuousConnectionInstanceW or
+            self.continuous_connection_instance_ws or
             super(ContinuousProjection, self).hasContent_()
         ):
             return True
@@ -6224,7 +6224,7 @@ class ContinuousProjection(Base):
             continuousConnection_.export(outfile, level, namespace_, name_='continuousConnection', pretty_print=pretty_print)
         for continuousConnectionInstance_ in self.continuous_connection_instances:
             continuousConnectionInstance_.export(outfile, level, namespace_, name_='continuousConnectionInstance', pretty_print=pretty_print)
-        for continuousConnectionInstanceW_ in self.continuousConnectionInstanceW:
+        for continuousConnectionInstanceW_ in self.continuous_connection_instance_ws:
             continuousConnectionInstanceW_.export(outfile, level, namespace_, name_='continuousConnectionInstanceW', pretty_print=pretty_print)
     def build(self, node):
         already_processed = set()
@@ -6261,7 +6261,7 @@ class ContinuousProjection(Base):
         elif nodeName_ == 'continuousConnectionInstanceW':
             obj_ = ContinuousConnectionInstanceW.factory()
             obj_.build(child_)
-            self.continuousConnectionInstanceW.append(obj_)
+            self.continuous_connection_instance_ws.append(obj_)
             obj_.original_tagname_ = 'continuousConnectionInstanceW'
         super(ContinuousProjection, self).buildChildren(child_, node, nodeName_, True)
 
@@ -6277,17 +6277,17 @@ class ContinuousProjection(Base):
         projGroup._f_setattr("presynapticPopulation", self.presynaptic_population)
         projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
         
-        pre_comp = self.continuous_connections[0].pre_component if len(self.continuous_connections)>0 else                             self.continuous_connection_instances[0].pre_component if len(self.continuous_connection_instances)>0 else self.continuousConnectionInstanceW[0].pre_component
+        pre_comp = self.continuous_connections[0].pre_component if len(self.continuous_connections)>0 else                             self.continuous_connection_instances[0].pre_component if len(self.continuous_connection_instances)>0 else self.continuous_connection_instance_ws[0].pre_component
         projGroup._f_setattr("preComponent", pre_comp )
-        post_comp = self.continuous_connections[0].post_component if len(self.continuous_connections)>0 else                             self.continuous_connection_instances[0].post_component if len(self.continuous_connection_instances)>0 else self.continuousConnectionInstanceW[0].post_component
+        post_comp = self.continuous_connections[0].post_component if len(self.continuous_connections)>0 else                             self.continuous_connection_instances[0].post_component if len(self.continuous_connection_instances)>0 else self.continuous_connection_instance_ws[0].post_component
         projGroup._f_setattr("postComponent", post_comp )
                 
         cols = 7
         extra_cols = {}
         
-        num_tot = len(self.continuous_connections)+len(self.continuous_connection_instances)+len(self.continuousConnectionInstanceW)
+        num_tot = len(self.continuous_connections)+len(self.continuous_connection_instances)+len(self.continuous_connection_instance_ws)
         
-        if len(self.continuousConnectionInstanceW)>0:
+        if len(self.continuous_connection_instance_ws)>0:
             extra_cols["column_"+str(cols)] = 'weight'
             cols+=1
         
@@ -6318,7 +6318,7 @@ class ContinuousProjection(Base):
           count=count+1
           
           
-        for connection in self.continuousConnectionInstanceW:
+        for connection in self.continuous_connection_instance_ws:
           a[count,0] = connection.id
           a[count,1] = connection.get_pre_cell_id()
           a[count,2] = connection.get_post_cell_id()  
@@ -6355,11 +6355,11 @@ class ElectricalProjection(Base):
         MemberSpec_('postsynapticPopulation', 'NmlId', 0),
         MemberSpec_('electrical_connections', 'ElectricalConnection', 1),
         MemberSpec_('electrical_connection_instances', 'ElectricalConnectionInstance', 1),
-        MemberSpec_('electricalConnectionInstanceW', 'ElectricalConnectionInstanceW', 1),
+        MemberSpec_('electrical_connection_instance_ws', 'ElectricalConnectionInstanceW', 1),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, electrical_connections=None, electrical_connection_instances=None, electricalConnectionInstanceW=None):
+    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, electrical_connections=None, electrical_connection_instances=None, electrical_connection_instance_ws=None):
         self.original_tagname_ = None
         super(ElectricalProjection, self).__init__(neuro_lex_id, id, )
         self.presynaptic_population = _cast(None, presynaptic_population)
@@ -6372,10 +6372,10 @@ class ElectricalProjection(Base):
             self.electrical_connection_instances = []
         else:
             self.electrical_connection_instances = electrical_connection_instances
-        if electricalConnectionInstanceW is None:
-            self.electricalConnectionInstanceW = []
+        if electrical_connection_instance_ws is None:
+            self.electrical_connection_instance_ws = []
         else:
-            self.electricalConnectionInstanceW = electricalConnectionInstanceW
+            self.electrical_connection_instance_ws = electrical_connection_instance_ws
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -6398,7 +6398,7 @@ class ElectricalProjection(Base):
         if (
             self.electrical_connections or
             self.electrical_connection_instances or
-            self.electricalConnectionInstanceW or
+            self.electrical_connection_instance_ws or
             super(ElectricalProjection, self).hasContent_()
         ):
             return True
@@ -6440,7 +6440,7 @@ class ElectricalProjection(Base):
             electricalConnection_.export(outfile, level, namespace_, name_='electricalConnection', pretty_print=pretty_print)
         for electricalConnectionInstance_ in self.electrical_connection_instances:
             electricalConnectionInstance_.export(outfile, level, namespace_, name_='electricalConnectionInstance', pretty_print=pretty_print)
-        for electricalConnectionInstanceW_ in self.electricalConnectionInstanceW:
+        for electricalConnectionInstanceW_ in self.electrical_connection_instance_ws:
             electricalConnectionInstanceW_.export(outfile, level, namespace_, name_='electricalConnectionInstanceW', pretty_print=pretty_print)
     def build(self, node):
         already_processed = set()
@@ -6477,7 +6477,7 @@ class ElectricalProjection(Base):
         elif nodeName_ == 'electricalConnectionInstanceW':
             obj_ = ElectricalConnectionInstanceW.factory()
             obj_.build(child_)
-            self.electricalConnectionInstanceW.append(obj_)
+            self.electrical_connection_instance_ws.append(obj_)
             obj_.original_tagname_ = 'electricalConnectionInstanceW'
         super(ElectricalProjection, self).buildChildren(child_, node, nodeName_, True)
 
@@ -6493,14 +6493,14 @@ class ElectricalProjection(Base):
         projGroup._f_setattr("presynapticPopulation", self.presynaptic_population)
         projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
         
-        syn = self.electrical_connections[0].synapse if len(self.electrical_connections)>0 else                     self.electrical_connection_instances[0].synapse if len(self.electrical_connection_instances)>0 else self.electricalConnectionInstanceW[0].synapse
+        syn = self.electrical_connections[0].synapse if len(self.electrical_connections)>0 else                     self.electrical_connection_instances[0].synapse if len(self.electrical_connection_instances)>0 else self.electrical_connection_instance_ws[0].synapse
         projGroup._f_setattr("synapse", syn )
                 
         cols = 7
         extra_cols = {}
         
-        num_tot = len(self.electrical_connections)+len(self.electrical_connection_instances)+len(self.electricalConnectionInstanceW)
-        if len(self.electricalConnectionInstanceW)>0:
+        num_tot = len(self.electrical_connections)+len(self.electrical_connection_instances)+len(self.electrical_connection_instance_ws)
+        if len(self.electrical_connection_instance_ws)>0:
             extra_cols["column_"+str(cols)] = "weight"
             cols+=1
         
@@ -6530,7 +6530,7 @@ class ElectricalProjection(Base):
           a[count,6] = connection.post_fraction_along          
           count=count+1
           
-        for connection in self.electricalConnectionInstanceW:
+        for connection in self.electrical_connection_instance_ws:
           a[count,0] = connection.id
           a[count,1] = connection.get_pre_cell_id()
           a[count,2] = connection.get_post_cell_id()  
@@ -15213,26 +15213,26 @@ class NeuroMLDocument(Standalone):
                 tot_proj+=1
                 tot_conns+=len(proj.electrical_connections)
                 tot_conns+=len(proj.electrical_connection_instances)
-                tot_conns+=len(proj.electricalConnectionInstanceW)
+                tot_conns+=len(proj.electrical_connection_instance_ws)
                 if len(proj.electrical_connections)>0:
                     proj_info+="*       "+str(len(proj.electrical_connections))+" connections: [("+str(proj.electrical_connections[0])+"), ...]\n"
                 if len(proj.electrical_connection_instances)>0:
                     proj_info+="*       "+str(len(proj.electrical_connection_instances))+" connections: [("+str(proj.electrical_connection_instances[0])+"), ...]\n"
-                if len(proj.electricalConnectionInstanceW)>0:
-                    proj_info+="*       "+str(len(proj.electricalConnectionInstanceW))+" connections: [("+str(proj.electricalConnectionInstanceW[0])+"), ...]\n"
+                if len(proj.electrical_connection_instance_ws)>0:
+                    proj_info+="*       "+str(len(proj.electrical_connection_instance_ws))+" connections: [("+str(proj.electrical_connection_instance_ws[0])+"), ...]\n"
                     
             for proj in sorted(network.continuous_projections, key=lambda x: x.id):
                 proj_info+="*     Continuous projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\n"
                 tot_proj+=1
                 tot_conns+=len(proj.continuous_connections)
                 tot_conns+=len(proj.continuous_connection_instances)
-                tot_conns+=len(proj.continuousConnectionInstanceW)
+                tot_conns+=len(proj.continuous_connection_instance_ws)
                 if len(proj.continuous_connections)>0:
                     proj_info+="*       "+str(len(proj.continuous_connections))+" connections: [("+str(proj.continuous_connections[0])+"), ...]\n"
                 if len(proj.continuous_connection_instances)>0:
                     proj_info+="*       "+str(len(proj.continuous_connection_instances))+" connections: [("+str(proj.continuous_connection_instances[0])+"), ...]\n"
-                if len(proj.continuousConnectionInstanceW)>0:
-                    proj_info+="*       "+str(len(proj.continuousConnectionInstanceW))+" connections (w): [("+str(proj.continuousConnectionInstanceW[0])+"), ...]\n"
+                if len(proj.continuous_connection_instance_ws)>0:
+                    proj_info+="*       "+str(len(proj.continuous_connection_instance_ws))+" connections (w): [("+str(proj.continuous_connection_instance_ws[0])+"), ...]\n"
                     
             info+="*   "+str(tot_conns)+" connections in "+str(tot_proj)+" projections \n"+proj_info+"*\n"
             
@@ -15245,9 +15245,9 @@ class NeuroMLDocument(Standalone):
                 if len(il.input)>0:
                     input_info+="*       "+str(len(il.input))+" inputs: [("+str(il.input[0])+"), ...]\n"
                     tot_inputs+=len(il.input)
-                if len(il.inputW)>0:
-                    input_info+="*       "+str(len(il.inputW))+" inputs: [("+str(il.inputW[0])+"), ...]\n"
-                    tot_inputs+=len(il.inputW)
+                if len(il.input_ws)>0:
+                    input_info+="*       "+str(len(il.input_ws))+" inputs: [("+str(il.input_ws[0])+"), ...]\n"
+                    tot_inputs+=len(il.input_ws)
                     
             info+="*   "+str(tot_inputs)+" inputs in "+str(tot_input_lists)+" input lists \n"+input_info+"*\n"
                     

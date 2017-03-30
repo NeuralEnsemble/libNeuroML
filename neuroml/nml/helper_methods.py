@@ -587,26 +587,26 @@ nml_doc_summary = MethodSpec(name='summary',
                 tot_proj+=1
                 tot_conns+=len(proj.electrical_connections)
                 tot_conns+=len(proj.electrical_connection_instances)
-                tot_conns+=len(proj.electricalConnectionInstanceW)
+                tot_conns+=len(proj.electrical_connection_instance_ws)
                 if len(proj.electrical_connections)>0:
                     proj_info+="*       "+str(len(proj.electrical_connections))+" connections: [("+str(proj.electrical_connections[0])+"), ...]\\n"
                 if len(proj.electrical_connection_instances)>0:
                     proj_info+="*       "+str(len(proj.electrical_connection_instances))+" connections: [("+str(proj.electrical_connection_instances[0])+"), ...]\\n"
-                if len(proj.electricalConnectionInstanceW)>0:
-                    proj_info+="*       "+str(len(proj.electricalConnectionInstanceW))+" connections: [("+str(proj.electricalConnectionInstanceW[0])+"), ...]\\n"
+                if len(proj.electrical_connection_instance_ws)>0:
+                    proj_info+="*       "+str(len(proj.electrical_connection_instance_ws))+" connections: [("+str(proj.electrical_connection_instance_ws[0])+"), ...]\\n"
                     
             for proj in sorted(network.continuous_projections, key=lambda x: x.id):
                 proj_info+="*     Continuous projection: "+proj.id+" from "+proj.presynaptic_population+" to "+proj.postsynaptic_population+"\\n"
                 tot_proj+=1
                 tot_conns+=len(proj.continuous_connections)
                 tot_conns+=len(proj.continuous_connection_instances)
-                tot_conns+=len(proj.continuousConnectionInstanceW)
+                tot_conns+=len(proj.continuous_connection_instance_ws)
                 if len(proj.continuous_connections)>0:
                     proj_info+="*       "+str(len(proj.continuous_connections))+" connections: [("+str(proj.continuous_connections[0])+"), ...]\\n"
                 if len(proj.continuous_connection_instances)>0:
                     proj_info+="*       "+str(len(proj.continuous_connection_instances))+" connections: [("+str(proj.continuous_connection_instances[0])+"), ...]\\n"
-                if len(proj.continuousConnectionInstanceW)>0:
-                    proj_info+="*       "+str(len(proj.continuousConnectionInstanceW))+" connections (w): [("+str(proj.continuousConnectionInstanceW[0])+"), ...]\\n"
+                if len(proj.continuous_connection_instance_ws)>0:
+                    proj_info+="*       "+str(len(proj.continuous_connection_instance_ws))+" connections (w): [("+str(proj.continuous_connection_instance_ws[0])+"), ...]\\n"
                     
             info+="*   "+str(tot_conns)+" connections in "+str(tot_proj)+" projections \\n"+proj_info+"*\\n"
             
@@ -619,9 +619,9 @@ nml_doc_summary = MethodSpec(name='summary',
                 if len(il.input)>0:
                     input_info+="*       "+str(len(il.input))+" inputs: [("+str(il.input[0])+"), ...]\\n"
                     tot_inputs+=len(il.input)
-                if len(il.inputW)>0:
-                    input_info+="*       "+str(len(il.inputW))+" inputs: [("+str(il.inputW[0])+"), ...]\\n"
-                    tot_inputs+=len(il.inputW)
+                if len(il.input_ws)>0:
+                    input_info+="*       "+str(len(il.input_ws))+" inputs: [("+str(il.input_ws[0])+"), ...]\\n"
+                    tot_inputs+=len(il.input_ws)
                     
             info+="*   "+str(tot_inputs)+" inputs in "+str(tot_input_lists)+" input lists \\n"+input_info+"*\\n"
                     
@@ -959,14 +959,14 @@ inserts['ElectricalProjection'] = '''
         projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
         
         syn = self.electrical_connections[0].synapse if len(self.electrical_connections)>0 else \
-                    self.electrical_connection_instances[0].synapse if len(self.electrical_connection_instances)>0 else self.electricalConnectionInstanceW[0].synapse
+                    self.electrical_connection_instances[0].synapse if len(self.electrical_connection_instances)>0 else self.electrical_connection_instance_ws[0].synapse
         projGroup._f_setattr("synapse", syn )
                 
         cols = 7
         extra_cols = {}
         
-        num_tot = len(self.electrical_connections)+len(self.electrical_connection_instances)+len(self.electricalConnectionInstanceW)
-        if len(self.electricalConnectionInstanceW)>0:
+        num_tot = len(self.electrical_connections)+len(self.electrical_connection_instances)+len(self.electrical_connection_instance_ws)
+        if len(self.electrical_connection_instance_ws)>0:
             extra_cols["column_"+str(cols)] = "weight"
             cols+=1
         
@@ -996,7 +996,7 @@ inserts['ElectricalProjection'] = '''
           a[count,6] = connection.post_fraction_along          
           count=count+1
           
-        for connection in self.electricalConnectionInstanceW:
+        for connection in self.electrical_connection_instance_ws:
           a[count,0] = connection.id
           a[count,1] = connection.get_pre_cell_id()
           a[count,2] = connection.get_post_cell_id()  
@@ -1035,18 +1035,18 @@ inserts['ContinuousProjection'] = '''
         projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
         
         pre_comp = self.continuous_connections[0].pre_component if len(self.continuous_connections)>0 else \
-                            self.continuous_connection_instances[0].pre_component if len(self.continuous_connection_instances)>0 else self.continuousConnectionInstanceW[0].pre_component
+                            self.continuous_connection_instances[0].pre_component if len(self.continuous_connection_instances)>0 else self.continuous_connection_instance_ws[0].pre_component
         projGroup._f_setattr("preComponent", pre_comp )
         post_comp = self.continuous_connections[0].post_component if len(self.continuous_connections)>0 else \
-                            self.continuous_connection_instances[0].post_component if len(self.continuous_connection_instances)>0 else self.continuousConnectionInstanceW[0].post_component
+                            self.continuous_connection_instances[0].post_component if len(self.continuous_connection_instances)>0 else self.continuous_connection_instance_ws[0].post_component
         projGroup._f_setattr("postComponent", post_comp )
                 
         cols = 7
         extra_cols = {}
         
-        num_tot = len(self.continuous_connections)+len(self.continuous_connection_instances)+len(self.continuousConnectionInstanceW)
+        num_tot = len(self.continuous_connections)+len(self.continuous_connection_instances)+len(self.continuous_connection_instance_ws)
         
-        if len(self.continuousConnectionInstanceW)>0:
+        if len(self.continuous_connection_instance_ws)>0:
             extra_cols["column_"+str(cols)] = 'weight'
             cols+=1
         
@@ -1077,7 +1077,7 @@ inserts['ContinuousProjection'] = '''
           count=count+1
           
           
-        for connection in self.continuousConnectionInstanceW:
+        for connection in self.continuous_connection_instance_ws:
           a[count,0] = connection.id
           a[count,1] = connection.get_pre_cell_id()
           a[count,2] = connection.get_post_cell_id()  
@@ -1118,9 +1118,9 @@ inserts['InputList'] = '''
         
         extra_cols = {}
         
-        num_tot = len(self.input)+len(self.inputW)
+        num_tot = len(self.input)+len(self.input_ws)
         
-        if len(self.inputW)>0:
+        if len(self.input_ws)>0:
             extra_cols["column_"+str(cols)] = 'weight'
             cols+=1
         
@@ -1136,7 +1136,7 @@ inserts['InputList'] = '''
             a[count,3] = input.get_fraction_along()
             count+=1
         
-        for input in self.inputW:
+        for input in self.input_ws:
             a[count,0] = input.id
             a[count,1] = input.get_target_cell_id()
             a[count,2] = input.get_segment_id()

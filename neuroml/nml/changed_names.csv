@@ -54,6 +54,7 @@ spikeGeneratorRandom,spike_generator_randoms
 gate,gates
 steadyState,steady_state
 expCondSynapse,exp_cond_synapses
+continuousConnectionInstanceW,continuous_connection_instance_ws
 expTwoSynapse,exp_two_synapses
 gateKS,gate_kses
 izhikevich2007Cell,izhikevich2007_cells
@@ -138,6 +139,7 @@ translationStart,translation_start
 closedState,closed_states
 gNa,g_na
 gKahp,g_kahp
+electricalConnectionInstanceW,electrical_connection_instance_ws
 spikeTarget,spike_target
 yStart,y_start
 tauFac,tau_fac
@@ -192,6 +194,7 @@ unbounded,unboundeds
 compoundInputDL,compound_input_dls
 xs:positiveInteger,xs:positive_integer
 membraneProperties2CaPools,membrane_properties2_ca_pools
+inputW,input_ws
 continuousConnectionInstance,continuous_connection_instances
 tauDecay1,tau_decay1
 leakConductance,leak_conductance
