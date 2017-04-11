@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Mar 30 17:00:36 2017 by generateDS.py version 2.24b.
+# Generated Tue Apr 11 11:51:11 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -6131,433 +6131,6 @@ class InputList(Base):
     # end class InputList
 
 
-class ContinuousProjection(Base):
-    """Projection between two populations consisting of analog connections
-    (e.g. graded synapses)"""
-    member_data_items_ = [
-        MemberSpec_('presynapticPopulation', 'NmlId', 0),
-        MemberSpec_('postsynapticPopulation', 'NmlId', 0),
-        MemberSpec_('continuous_connections', 'ContinuousConnection', 1),
-        MemberSpec_('continuous_connection_instances', 'ContinuousConnectionInstance', 1),
-        MemberSpec_('continuous_connection_instance_ws', 'ContinuousConnectionInstanceW', 1),
-    ]
-    subclass = None
-    superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, continuous_connections=None, continuous_connection_instances=None, continuous_connection_instance_ws=None):
-        self.original_tagname_ = None
-        super(ContinuousProjection, self).__init__(neuro_lex_id, id, )
-        self.presynaptic_population = _cast(None, presynaptic_population)
-        self.postsynaptic_population = _cast(None, postsynaptic_population)
-        if continuous_connections is None:
-            self.continuous_connections = []
-        else:
-            self.continuous_connections = continuous_connections
-        if continuous_connection_instances is None:
-            self.continuous_connection_instances = []
-        else:
-            self.continuous_connection_instances = continuous_connection_instances
-        if continuous_connection_instance_ws is None:
-            self.continuous_connection_instance_ws = []
-        else:
-            self.continuous_connection_instance_ws = continuous_connection_instance_ws
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, ContinuousProjection)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if ContinuousProjection.subclass:
-            return ContinuousProjection.subclass(*args_, **kwargs_)
-        else:
-            return ContinuousProjection(*args_, **kwargs_)
-    factory = staticmethod(factory)
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if value is not None and Validate_simpletypes_:
-            if not self.gds_validate_simple_patterns(
-                    self.validate_NmlId_patterns_, value):
-                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
-    def hasContent_(self):
-        if (
-            self.continuous_connections or
-            self.continuous_connection_instances or
-            self.continuous_connection_instance_ws or
-            super(ContinuousProjection, self).hasContent_()
-        ):
-            return True
-        else:
-            return False
-    def export(self, outfile, level, namespace_='', name_='ContinuousProjection', namespacedef_='', pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ContinuousProjection')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ContinuousProjection', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ContinuousProjection'):
-        super(ContinuousProjection, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ContinuousProjection')
-        if self.presynaptic_population is not None and 'presynaptic_population' not in already_processed:
-            already_processed.add('presynaptic_population')
-            outfile.write(' presynapticPopulation=%s' % (quote_attrib(self.presynaptic_population), ))
-        if self.postsynaptic_population is not None and 'postsynaptic_population' not in already_processed:
-            already_processed.add('postsynaptic_population')
-            outfile.write(' postsynapticPopulation=%s' % (quote_attrib(self.postsynaptic_population), ))
-    def exportChildren(self, outfile, level, namespace_='', name_='ContinuousProjection', fromsubclass_=False, pretty_print=True):
-        super(ContinuousProjection, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        for continuousConnection_ in self.continuous_connections:
-            continuousConnection_.export(outfile, level, namespace_, name_='continuousConnection', pretty_print=pretty_print)
-        for continuousConnectionInstance_ in self.continuous_connection_instances:
-            continuousConnectionInstance_.export(outfile, level, namespace_, name_='continuousConnectionInstance', pretty_print=pretty_print)
-        for continuousConnectionInstanceW_ in self.continuous_connection_instance_ws:
-            continuousConnectionInstanceW_.export(outfile, level, namespace_, name_='continuousConnectionInstanceW', pretty_print=pretty_print)
-    def build(self, node):
-        already_processed = set()
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_)
-        return self
-    def buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_('presynapticPopulation', node)
-        if value is not None and 'presynapticPopulation' not in already_processed:
-            already_processed.add('presynapticPopulation')
-            self.presynaptic_population = value
-            self.validate_NmlId(self.presynaptic_population)    # validate type NmlId
-        value = find_attr_value_('postsynapticPopulation', node)
-        if value is not None and 'postsynapticPopulation' not in already_processed:
-            already_processed.add('postsynapticPopulation')
-            self.postsynaptic_population = value
-            self.validate_NmlId(self.postsynaptic_population)    # validate type NmlId
-        super(ContinuousProjection, self).buildAttributes(node, attrs, already_processed)
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        if nodeName_ == 'continuousConnection':
-            class_obj_ = self.get_class_obj_(child_, ContinuousConnection)
-            obj_ = class_obj_.factory()
-            obj_.build(child_)
-            self.continuous_connections.append(obj_)
-            obj_.original_tagname_ = 'continuousConnection'
-        elif nodeName_ == 'continuousConnectionInstance':
-            class_obj_ = self.get_class_obj_(child_, ContinuousConnectionInstance)
-            obj_ = class_obj_.factory()
-            obj_.build(child_)
-            self.continuous_connection_instances.append(obj_)
-            obj_.original_tagname_ = 'continuousConnectionInstance'
-        elif nodeName_ == 'continuousConnectionInstanceW':
-            obj_ = ContinuousConnectionInstanceW.factory()
-            obj_.build(child_)
-            self.continuous_connection_instance_ws.append(obj_)
-            obj_.original_tagname_ = 'continuousConnectionInstanceW'
-        super(ContinuousProjection, self).buildChildren(child_, node, nodeName_, True)
-
-    def exportHdf5(self, h5file, h5Group):
-        #print("Exporting ContinuousProjection: "+str(self.id)+" as HDF5")
-        
-         
-        import numpy
-        
-        projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
-        projGroup._f_setattr("id", self.id)
-        projGroup._f_setattr("type", "continuousProjection")
-        projGroup._f_setattr("presynapticPopulation", self.presynaptic_population)
-        projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
-        
-        pre_comp = self.continuous_connections[0].pre_component if len(self.continuous_connections)>0 else                             self.continuous_connection_instances[0].pre_component if len(self.continuous_connection_instances)>0 else self.continuous_connection_instance_ws[0].pre_component
-        projGroup._f_setattr("preComponent", pre_comp )
-        post_comp = self.continuous_connections[0].post_component if len(self.continuous_connections)>0 else                             self.continuous_connection_instances[0].post_component if len(self.continuous_connection_instances)>0 else self.continuous_connection_instance_ws[0].post_component
-        projGroup._f_setattr("postComponent", post_comp )
-                
-        cols = 7
-        extra_cols = {}
-        
-        num_tot = len(self.continuous_connections)+len(self.continuous_connection_instances)+len(self.continuous_connection_instance_ws)
-        
-        if len(self.continuous_connection_instance_ws)>0:
-            extra_cols["column_"+str(cols)] = 'weight'
-            cols+=1
-        
-        #print("Exporting "+str(num_tot)+" continuous connections")
-        a = numpy.ones([num_tot, cols], numpy.float32)
-        
-        count=0
-        
-        # TODO: optimise for single compartment cells, i.e. where no pre_segment/post_fraction_along etc.
-        for connection in self.continuous_connections:
-          a[count,0] = connection.id
-          a[count,1] = connection.get_pre_cell_id()
-          a[count,2] = connection.get_post_cell_id()  
-          a[count,3] = connection.pre_segment  
-          a[count,4] = connection.post_segment  
-          a[count,5] = connection.pre_fraction_along 
-          a[count,6] = connection.post_fraction_along          
-          count=count+1
-          
-        for connection in self.continuous_connection_instances:
-          a[count,0] = connection.id
-          a[count,1] = connection.get_pre_cell_id()
-          a[count,2] = connection.get_post_cell_id()  
-          a[count,3] = connection.pre_segment  
-          a[count,4] = connection.post_segment  
-          a[count,5] = connection.pre_fraction_along 
-          a[count,6] = connection.post_fraction_along          
-          count=count+1
-          
-          
-        for connection in self.continuous_connection_instance_ws:
-          a[count,0] = connection.id
-          a[count,1] = connection.get_pre_cell_id()
-          a[count,2] = connection.get_post_cell_id()  
-          a[count,3] = connection.pre_segment  
-          a[count,4] = connection.post_segment  
-          a[count,5] = connection.pre_fraction_along 
-          a[count,6] = connection.post_fraction_along  
-          a[count,7] = connection.weight          
-          count=count+1
-          
-          
-        array = h5file.create_carray(projGroup, self.id, obj=a, title="Connections of cells in "+ self.id)
-        
-        array._f_setattr("column_0", "id")
-        array._f_setattr("column_1", "pre_cell_id")
-        array._f_setattr("column_2", "post_cell_id")
-        array._f_setattr("column_3", "pre_segment_id")
-        array._f_setattr("column_4", "post_segment_id")
-        array._f_setattr("column_5", "pre_fraction_along")
-        array._f_setattr("column_6", "post_fraction_along")
-        for k in extra_cols:
-            array._f_setattr(k, extra_cols[k])
-            
-        
-
-    # end class ContinuousProjection
-
-
-class ElectricalProjection(Base):
-    """Projection between two populations consisting of electrical
-    connections (gap junctions)"""
-    member_data_items_ = [
-        MemberSpec_('presynapticPopulation', 'NmlId', 0),
-        MemberSpec_('postsynapticPopulation', 'NmlId', 0),
-        MemberSpec_('electrical_connections', 'ElectricalConnection', 1),
-        MemberSpec_('electrical_connection_instances', 'ElectricalConnectionInstance', 1),
-        MemberSpec_('electrical_connection_instance_ws', 'ElectricalConnectionInstanceW', 1),
-    ]
-    subclass = None
-    superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, electrical_connections=None, electrical_connection_instances=None, electrical_connection_instance_ws=None):
-        self.original_tagname_ = None
-        super(ElectricalProjection, self).__init__(neuro_lex_id, id, )
-        self.presynaptic_population = _cast(None, presynaptic_population)
-        self.postsynaptic_population = _cast(None, postsynaptic_population)
-        if electrical_connections is None:
-            self.electrical_connections = []
-        else:
-            self.electrical_connections = electrical_connections
-        if electrical_connection_instances is None:
-            self.electrical_connection_instances = []
-        else:
-            self.electrical_connection_instances = electrical_connection_instances
-        if electrical_connection_instance_ws is None:
-            self.electrical_connection_instance_ws = []
-        else:
-            self.electrical_connection_instance_ws = electrical_connection_instance_ws
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, ElectricalProjection)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if ElectricalProjection.subclass:
-            return ElectricalProjection.subclass(*args_, **kwargs_)
-        else:
-            return ElectricalProjection(*args_, **kwargs_)
-    factory = staticmethod(factory)
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if value is not None and Validate_simpletypes_:
-            if not self.gds_validate_simple_patterns(
-                    self.validate_NmlId_patterns_, value):
-                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
-    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
-    def hasContent_(self):
-        if (
-            self.electrical_connections or
-            self.electrical_connection_instances or
-            self.electrical_connection_instance_ws or
-            super(ElectricalProjection, self).hasContent_()
-        ):
-            return True
-        else:
-            return False
-    def export(self, outfile, level, namespace_='', name_='ElectricalProjection', namespacedef_='', pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ElectricalProjection')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='ElectricalProjection', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ElectricalProjection'):
-        super(ElectricalProjection, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ElectricalProjection')
-        if self.presynaptic_population is not None and 'presynaptic_population' not in already_processed:
-            already_processed.add('presynaptic_population')
-            outfile.write(' presynapticPopulation=%s' % (quote_attrib(self.presynaptic_population), ))
-        if self.postsynaptic_population is not None and 'postsynaptic_population' not in already_processed:
-            already_processed.add('postsynaptic_population')
-            outfile.write(' postsynapticPopulation=%s' % (quote_attrib(self.postsynaptic_population), ))
-    def exportChildren(self, outfile, level, namespace_='', name_='ElectricalProjection', fromsubclass_=False, pretty_print=True):
-        super(ElectricalProjection, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        for electricalConnection_ in self.electrical_connections:
-            electricalConnection_.export(outfile, level, namespace_, name_='electricalConnection', pretty_print=pretty_print)
-        for electricalConnectionInstance_ in self.electrical_connection_instances:
-            electricalConnectionInstance_.export(outfile, level, namespace_, name_='electricalConnectionInstance', pretty_print=pretty_print)
-        for electricalConnectionInstanceW_ in self.electrical_connection_instance_ws:
-            electricalConnectionInstanceW_.export(outfile, level, namespace_, name_='electricalConnectionInstanceW', pretty_print=pretty_print)
-    def build(self, node):
-        already_processed = set()
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_)
-        return self
-    def buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_('presynapticPopulation', node)
-        if value is not None and 'presynapticPopulation' not in already_processed:
-            already_processed.add('presynapticPopulation')
-            self.presynaptic_population = value
-            self.validate_NmlId(self.presynaptic_population)    # validate type NmlId
-        value = find_attr_value_('postsynapticPopulation', node)
-        if value is not None and 'postsynapticPopulation' not in already_processed:
-            already_processed.add('postsynapticPopulation')
-            self.postsynaptic_population = value
-            self.validate_NmlId(self.postsynaptic_population)    # validate type NmlId
-        super(ElectricalProjection, self).buildAttributes(node, attrs, already_processed)
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        if nodeName_ == 'electricalConnection':
-            class_obj_ = self.get_class_obj_(child_, ElectricalConnection)
-            obj_ = class_obj_.factory()
-            obj_.build(child_)
-            self.electrical_connections.append(obj_)
-            obj_.original_tagname_ = 'electricalConnection'
-        elif nodeName_ == 'electricalConnectionInstance':
-            class_obj_ = self.get_class_obj_(child_, ElectricalConnectionInstance)
-            obj_ = class_obj_.factory()
-            obj_.build(child_)
-            self.electrical_connection_instances.append(obj_)
-            obj_.original_tagname_ = 'electricalConnectionInstance'
-        elif nodeName_ == 'electricalConnectionInstanceW':
-            obj_ = ElectricalConnectionInstanceW.factory()
-            obj_.build(child_)
-            self.electrical_connection_instance_ws.append(obj_)
-            obj_.original_tagname_ = 'electricalConnectionInstanceW'
-        super(ElectricalProjection, self).buildChildren(child_, node, nodeName_, True)
-
-    def exportHdf5(self, h5file, h5Group):
-        #print("Exporting ElectricalProjection: "+str(self.id)+" as HDF5")
-        
-         
-        import numpy
-        
-        projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
-        projGroup._f_setattr("id", self.id)
-        projGroup._f_setattr("type", "electricalProjection")
-        projGroup._f_setattr("presynapticPopulation", self.presynaptic_population)
-        projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
-        
-        syn = self.electrical_connections[0].synapse if len(self.electrical_connections)>0 else                     self.electrical_connection_instances[0].synapse if len(self.electrical_connection_instances)>0 else self.electrical_connection_instance_ws[0].synapse
-        projGroup._f_setattr("synapse", syn )
-                
-        cols = 7
-        extra_cols = {}
-        
-        num_tot = len(self.electrical_connections)+len(self.electrical_connection_instances)+len(self.electrical_connection_instance_ws)
-        if len(self.electrical_connection_instance_ws)>0:
-            extra_cols["column_"+str(cols)] = "weight"
-            cols+=1
-        
-        #print("Exporting "+str(num_tot)+" electrical connections")
-        a = numpy.ones([num_tot, cols], numpy.float32)
-        
-        count=0
-        
-        # TODO: optimise for single compartment cells, i.e. where no pre_segment/post_fraction_along etc.
-        for connection in self.electrical_connections:
-          a[count,0] = connection.id
-          a[count,1] = connection.get_pre_cell_id()
-          a[count,2] = connection.get_post_cell_id()  
-          a[count,3] = connection.pre_segment  
-          a[count,4] = connection.post_segment  
-          a[count,5] = connection.pre_fraction_along 
-          a[count,6] = connection.post_fraction_along          
-          count=count+1
-          
-        for connection in self.electrical_connection_instances:
-          a[count,0] = connection.id
-          a[count,1] = connection.get_pre_cell_id()
-          a[count,2] = connection.get_post_cell_id()  
-          a[count,3] = connection.pre_segment  
-          a[count,4] = connection.post_segment  
-          a[count,5] = connection.pre_fraction_along 
-          a[count,6] = connection.post_fraction_along          
-          count=count+1
-          
-        for connection in self.electrical_connection_instance_ws:
-          a[count,0] = connection.id
-          a[count,1] = connection.get_pre_cell_id()
-          a[count,2] = connection.get_post_cell_id()  
-          a[count,3] = connection.pre_segment  
-          a[count,4] = connection.post_segment  
-          a[count,5] = connection.pre_fraction_along 
-          a[count,6] = connection.post_fraction_along    
-          a[count,7] = connection.get_weight()          
-          count=count+1
-          
-        array = h5file.create_carray(projGroup, self.id, obj=a, title="Connections of cells in "+ self.id)
-        
-        array._f_setattr("column_0", "id")
-        array._f_setattr("column_1", "pre_cell_id")
-        array._f_setattr("column_2", "post_cell_id")
-        array._f_setattr("column_3", "pre_segment_id")
-        array._f_setattr("column_4", "post_segment_id")
-        array._f_setattr("column_5", "pre_fraction_along")
-        array._f_setattr("column_6", "post_fraction_along")
-
-        for col in extra_cols.keys():
-            array._f_setattr(col,extra_cols[col])
-        
-
-    # end class ElectricalProjection
-
-
 class BaseConnection(BaseNonNegativeIntegerId):
     """Base of all synaptic connections (chemical/electrical/analog, etc.)
     inside projections"""
@@ -6632,41 +6205,31 @@ class BaseConnection(BaseNonNegativeIntegerId):
 # end class BaseConnection
 
 
-class Projection(Base):
-    """Projection (set of synaptic connections) between two populations"""
+class BaseProjection(Base):
+    """Base for projection (set of synaptic connections) between two
+    populations"""
     member_data_items_ = [
         MemberSpec_('presynapticPopulation', 'NmlId', 0),
         MemberSpec_('postsynapticPopulation', 'NmlId', 0),
-        MemberSpec_('synapse', 'NmlId', 0),
-        MemberSpec_('connections', 'Connection', 1),
-        MemberSpec_('connection_wds', 'ConnectionWD', 1),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, synapse=None, connections=None, connection_wds=None):
+    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, extensiontype_=None):
         self.original_tagname_ = None
-        super(Projection, self).__init__(neuro_lex_id, id, )
+        super(BaseProjection, self).__init__(neuro_lex_id, id, extensiontype_, )
         self.presynaptic_population = _cast(None, presynaptic_population)
         self.postsynaptic_population = _cast(None, postsynaptic_population)
-        self.synapse = _cast(None, synapse)
-        if connections is None:
-            self.connections = []
-        else:
-            self.connections = connections
-        if connection_wds is None:
-            self.connection_wds = []
-        else:
-            self.connection_wds = connection_wds
+        self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, Projection)
+                CurrentSubclassModule_, BaseProjection)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if Projection.subclass:
-            return Projection.subclass(*args_, **kwargs_)
+        if BaseProjection.subclass:
+            return BaseProjection.subclass(*args_, **kwargs_)
         else:
-            return Projection(*args_, **kwargs_)
+            return BaseProjection(*args_, **kwargs_)
     factory = staticmethod(factory)
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
@@ -6677,14 +6240,12 @@ class Projection(Base):
     validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
     def hasContent_(self):
         if (
-            self.connections or
-            self.connection_wds or
-            super(Projection, self).hasContent_()
+            super(BaseProjection, self).hasContent_()
         ):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='Projection', namespacedef_='', pretty_print=True):
+    def export(self, outfile, level, namespace_='', name_='BaseProjection', namespacedef_='', pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
@@ -6694,35 +6255,28 @@ class Projection(Base):
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='Projection')
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='BaseProjection')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='Projection', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
+            self.exportChildren(outfile, level + 1, namespace_='', name_='BaseProjection', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Projection'):
-        super(Projection, self).exportAttributes(outfile, level, already_processed, namespace_, name_='Projection')
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='BaseProjection'):
+        super(BaseProjection, self).exportAttributes(outfile, level, already_processed, namespace_, name_='BaseProjection')
         if self.presynaptic_population is not None and 'presynaptic_population' not in already_processed:
             already_processed.add('presynaptic_population')
             outfile.write(' presynapticPopulation=%s' % (quote_attrib(self.presynaptic_population), ))
         if self.postsynaptic_population is not None and 'postsynaptic_population' not in already_processed:
             already_processed.add('postsynaptic_population')
             outfile.write(' postsynapticPopulation=%s' % (quote_attrib(self.postsynaptic_population), ))
-        if self.synapse is not None and 'synapse' not in already_processed:
-            already_processed.add('synapse')
-            outfile.write(' synapse=%s' % (quote_attrib(self.synapse), ))
-    def exportChildren(self, outfile, level, namespace_='', name_='Projection', fromsubclass_=False, pretty_print=True):
-        super(Projection, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        for connection_ in self.connections:
-            connection_.export(outfile, level, namespace_, name_='connection', pretty_print=pretty_print)
-        for connectionWD_ in self.connection_wds:
-            connectionWD_.export(outfile, level, namespace_, name_='connectionWD', pretty_print=pretty_print)
+        if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            outfile.write(' xsi:type="%s"' % self.extensiontype_)
+    def exportChildren(self, outfile, level, namespace_='', name_='BaseProjection', fromsubclass_=False, pretty_print=True):
+        super(BaseProjection, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -6741,120 +6295,15 @@ class Projection(Base):
             already_processed.add('postsynapticPopulation')
             self.postsynaptic_population = value
             self.validate_NmlId(self.postsynaptic_population)    # validate type NmlId
-        value = find_attr_value_('synapse', node)
-        if value is not None and 'synapse' not in already_processed:
-            already_processed.add('synapse')
-            self.synapse = value
-            self.validate_NmlId(self.synapse)    # validate type NmlId
-        super(Projection, self).buildAttributes(node, attrs, already_processed)
+        value = find_attr_value_('xsi:type', node)
+        if value is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            self.extensiontype_ = value
+        super(BaseProjection, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        if nodeName_ == 'connection':
-            obj_ = Connection.factory()
-            obj_.build(child_)
-            self.connections.append(obj_)
-            obj_.original_tagname_ = 'connection'
-        elif nodeName_ == 'connectionWD':
-            obj_ = ConnectionWD.factory()
-            obj_.build(child_)
-            self.connection_wds.append(obj_)
-            obj_.original_tagname_ = 'connectionWD'
-        super(Projection, self).buildChildren(child_, node, nodeName_, True)
-
-    def exportHdf5(self, h5file, h5Group):
-        #print("Exporting Projection: "+str(self.id)+" as HDF5")
-        
-         
-        import numpy
-        
-        projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
-        projGroup._f_setattr("id", self.id)
-        projGroup._f_setattr("type", "projection")
-        projGroup._f_setattr("presynapticPopulation", self.presynaptic_population)
-        projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
-        projGroup._f_setattr("synapse", self.synapse)
-        
-        #print("Exporting "+str(len(self.connections))+" connections, "+str(len(self.connection_wds))+" connections with weight")
-        
-        connection_wds = len(self.connection_wds) > 0
-        
-        cols = 3
-        
-        extra_cols = {}
-        
-        from neuroml.utils import has_segment_fraction_info
-        
-        include_segment_fraction = has_segment_fraction_info(self.connections) or has_segment_fraction_info(self.connection_wds)
-        
-        if include_segment_fraction:
-            cols +=4
-            extra_cols["column_3"] = "pre_segment_id"
-            extra_cols["column_4"] = "post_segment_id"
-            extra_cols["column_5"] = "pre_fraction_along"
-            extra_cols["column_6"] = "post_fraction_along"
-            
-        
-        if connection_wds:
-            extra_cols["column_"+str(cols)] = "weight"
-            extra_cols["column_"+str(cols+1)] = "delay"
-            cols+=2
-        
-        
-        a = numpy.ones([len(self.connections)+len(self.connection_wds), cols], numpy.float32)
-        
-        
-        count=0
-        
-        for connection in self.connections:
-          a[count,0] = connection.id
-          a[count,1] = connection.get_pre_cell_id()
-          a[count,2] = connection.get_post_cell_id()  
-          if include_segment_fraction:
-            a[count,3] = connection.pre_segment_id  
-            a[count,4] = connection.post_segment_id  
-            a[count,5] = connection.pre_fraction_along 
-            a[count,6] = connection.post_fraction_along          
-          count=count+1
-          
-        for connection in self.connection_wds:
-          a[count,0] = connection.id
-          a[count,1] = connection.get_pre_cell_id()
-          a[count,2] = connection.get_post_cell_id()  
-          
-          if include_segment_fraction:
-            a[count,3] = connection.pre_segment_id  
-            a[count,4] = connection.post_segment_id  
-            a[count,5] = connection.pre_fraction_along 
-            a[count,6] = connection.post_fraction_along  
-          
-          a[count,cols-2] = connection.weight  
-          if 'ms' in connection.delay:
-            delay = float(connection.delay[:-2].strip())
-          elif 's' in connection.delay:
-            delay = float(connection.delay[:-1].strip())*1000.
-          elif 'us' in connection.delay:
-            delay = float(connection.delay[:-2].strip())/1e3
-            
-          a[count,cols-1] = delay          
-          count=count+1
-        
-        if len(a)>0:
-            array = h5file.create_carray(projGroup, self.id, obj=a, title="Connections of cells in "+ self.id)
-
-            array._f_setattr("column_0", "id")
-            array._f_setattr("column_1", "pre_cell_id")
-            array._f_setattr("column_2", "post_cell_id")
-
-            for col in extra_cols.keys():
-                array._f_setattr(col,extra_cols[col])
-           
-            
-    def __str__(self):
-        return "Projection: "+self.id+" from "+self.presynaptic_population+" to "+self.postsynaptic_population+", synapse: "+self.synapse
-            
-        
-        
-
-    # end class Projection
+        super(BaseProjection, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class BaseProjection
 
 
 class CellSet(Base):
@@ -15493,6 +14942,379 @@ class basePyNNCell(BaseCell):
 # end class basePyNNCell
 
 
+class ContinuousProjection(BaseProjection):
+    """Projection between two populations consisting of analog connections
+    (e.g. graded synapses)"""
+    member_data_items_ = [
+        MemberSpec_('continuous_connections', 'ContinuousConnection', 1),
+        MemberSpec_('continuous_connection_instances', 'ContinuousConnectionInstance', 1),
+        MemberSpec_('continuous_connection_instance_ws', 'ContinuousConnectionInstanceW', 1),
+    ]
+    subclass = None
+    superclass = BaseProjection
+    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, continuous_connections=None, continuous_connection_instances=None, continuous_connection_instance_ws=None):
+        self.original_tagname_ = None
+        super(ContinuousProjection, self).__init__(neuro_lex_id, id, presynaptic_population, postsynaptic_population, )
+        if continuous_connections is None:
+            self.continuous_connections = []
+        else:
+            self.continuous_connections = continuous_connections
+        if continuous_connection_instances is None:
+            self.continuous_connection_instances = []
+        else:
+            self.continuous_connection_instances = continuous_connection_instances
+        if continuous_connection_instance_ws is None:
+            self.continuous_connection_instance_ws = []
+        else:
+            self.continuous_connection_instance_ws = continuous_connection_instance_ws
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, ContinuousProjection)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if ContinuousProjection.subclass:
+            return ContinuousProjection.subclass(*args_, **kwargs_)
+        else:
+            return ContinuousProjection(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            self.continuous_connections or
+            self.continuous_connection_instances or
+            self.continuous_connection_instance_ws or
+            super(ContinuousProjection, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='ContinuousProjection', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ContinuousProjection')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ContinuousProjection', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ContinuousProjection'):
+        super(ContinuousProjection, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ContinuousProjection')
+    def exportChildren(self, outfile, level, namespace_='', name_='ContinuousProjection', fromsubclass_=False, pretty_print=True):
+        super(ContinuousProjection, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        for continuousConnection_ in self.continuous_connections:
+            continuousConnection_.export(outfile, level, namespace_, name_='continuousConnection', pretty_print=pretty_print)
+        for continuousConnectionInstance_ in self.continuous_connection_instances:
+            continuousConnectionInstance_.export(outfile, level, namespace_, name_='continuousConnectionInstance', pretty_print=pretty_print)
+        for continuousConnectionInstanceW_ in self.continuous_connection_instance_ws:
+            continuousConnectionInstanceW_.export(outfile, level, namespace_, name_='continuousConnectionInstanceW', pretty_print=pretty_print)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        super(ContinuousProjection, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        if nodeName_ == 'continuousConnection':
+            class_obj_ = self.get_class_obj_(child_, ContinuousConnection)
+            obj_ = class_obj_.factory()
+            obj_.build(child_)
+            self.continuous_connections.append(obj_)
+            obj_.original_tagname_ = 'continuousConnection'
+        elif nodeName_ == 'continuousConnectionInstance':
+            class_obj_ = self.get_class_obj_(child_, ContinuousConnectionInstance)
+            obj_ = class_obj_.factory()
+            obj_.build(child_)
+            self.continuous_connection_instances.append(obj_)
+            obj_.original_tagname_ = 'continuousConnectionInstance'
+        elif nodeName_ == 'continuousConnectionInstanceW':
+            obj_ = ContinuousConnectionInstanceW.factory()
+            obj_.build(child_)
+            self.continuous_connection_instance_ws.append(obj_)
+            obj_.original_tagname_ = 'continuousConnectionInstanceW'
+        super(ContinuousProjection, self).buildChildren(child_, node, nodeName_, True)
+
+    def exportHdf5(self, h5file, h5Group):
+        #print("Exporting ContinuousProjection: "+str(self.id)+" as HDF5")
+        
+         
+        import numpy
+        
+        projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
+        projGroup._f_setattr("id", self.id)
+        projGroup._f_setattr("type", "continuousProjection")
+        projGroup._f_setattr("presynapticPopulation", self.presynaptic_population)
+        projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
+        
+        pre_comp = self.continuous_connections[0].pre_component if len(self.continuous_connections)>0 else                             self.continuous_connection_instances[0].pre_component if len(self.continuous_connection_instances)>0 else self.continuous_connection_instance_ws[0].pre_component
+        projGroup._f_setattr("preComponent", pre_comp )
+        post_comp = self.continuous_connections[0].post_component if len(self.continuous_connections)>0 else                             self.continuous_connection_instances[0].post_component if len(self.continuous_connection_instances)>0 else self.continuous_connection_instance_ws[0].post_component
+        projGroup._f_setattr("postComponent", post_comp )
+                
+        cols = 7
+        extra_cols = {}
+        
+        num_tot = len(self.continuous_connections)+len(self.continuous_connection_instances)+len(self.continuous_connection_instance_ws)
+        
+        if len(self.continuous_connection_instance_ws)>0:
+            extra_cols["column_"+str(cols)] = 'weight'
+            cols+=1
+        
+        #print("Exporting "+str(num_tot)+" continuous connections")
+        a = numpy.ones([num_tot, cols], numpy.float32)
+        
+        count=0
+        
+        # TODO: optimise for single compartment cells, i.e. where no pre_segment/post_fraction_along etc.
+        for connection in self.continuous_connections:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()  
+          a[count,3] = connection.pre_segment  
+          a[count,4] = connection.post_segment  
+          a[count,5] = connection.pre_fraction_along 
+          a[count,6] = connection.post_fraction_along          
+          count=count+1
+          
+        for connection in self.continuous_connection_instances:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()  
+          a[count,3] = connection.pre_segment  
+          a[count,4] = connection.post_segment  
+          a[count,5] = connection.pre_fraction_along 
+          a[count,6] = connection.post_fraction_along          
+          count=count+1
+          
+          
+        for connection in self.continuous_connection_instance_ws:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()  
+          a[count,3] = connection.pre_segment  
+          a[count,4] = connection.post_segment  
+          a[count,5] = connection.pre_fraction_along 
+          a[count,6] = connection.post_fraction_along  
+          a[count,7] = connection.weight          
+          count=count+1
+          
+          
+        array = h5file.create_carray(projGroup, self.id, obj=a, title="Connections of cells in "+ self.id)
+        
+        array._f_setattr("column_0", "id")
+        array._f_setattr("column_1", "pre_cell_id")
+        array._f_setattr("column_2", "post_cell_id")
+        array._f_setattr("column_3", "pre_segment_id")
+        array._f_setattr("column_4", "post_segment_id")
+        array._f_setattr("column_5", "pre_fraction_along")
+        array._f_setattr("column_6", "post_fraction_along")
+        for k in extra_cols:
+            array._f_setattr(k, extra_cols[k])
+            
+        
+
+    # end class ContinuousProjection
+
+
+class ElectricalProjection(BaseProjection):
+    """Projection between two populations consisting of electrical
+    connections (gap junctions)"""
+    member_data_items_ = [
+        MemberSpec_('electrical_connections', 'ElectricalConnection', 1),
+        MemberSpec_('electrical_connection_instances', 'ElectricalConnectionInstance', 1),
+        MemberSpec_('electrical_connection_instance_ws', 'ElectricalConnectionInstanceW', 1),
+    ]
+    subclass = None
+    superclass = BaseProjection
+    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, electrical_connections=None, electrical_connection_instances=None, electrical_connection_instance_ws=None):
+        self.original_tagname_ = None
+        super(ElectricalProjection, self).__init__(neuro_lex_id, id, presynaptic_population, postsynaptic_population, )
+        if electrical_connections is None:
+            self.electrical_connections = []
+        else:
+            self.electrical_connections = electrical_connections
+        if electrical_connection_instances is None:
+            self.electrical_connection_instances = []
+        else:
+            self.electrical_connection_instances = electrical_connection_instances
+        if electrical_connection_instance_ws is None:
+            self.electrical_connection_instance_ws = []
+        else:
+            self.electrical_connection_instance_ws = electrical_connection_instance_ws
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, ElectricalProjection)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if ElectricalProjection.subclass:
+            return ElectricalProjection.subclass(*args_, **kwargs_)
+        else:
+            return ElectricalProjection(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            self.electrical_connections or
+            self.electrical_connection_instances or
+            self.electrical_connection_instance_ws or
+            super(ElectricalProjection, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='ElectricalProjection', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ElectricalProjection')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ElectricalProjection', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ElectricalProjection'):
+        super(ElectricalProjection, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ElectricalProjection')
+    def exportChildren(self, outfile, level, namespace_='', name_='ElectricalProjection', fromsubclass_=False, pretty_print=True):
+        super(ElectricalProjection, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        for electricalConnection_ in self.electrical_connections:
+            electricalConnection_.export(outfile, level, namespace_, name_='electricalConnection', pretty_print=pretty_print)
+        for electricalConnectionInstance_ in self.electrical_connection_instances:
+            electricalConnectionInstance_.export(outfile, level, namespace_, name_='electricalConnectionInstance', pretty_print=pretty_print)
+        for electricalConnectionInstanceW_ in self.electrical_connection_instance_ws:
+            electricalConnectionInstanceW_.export(outfile, level, namespace_, name_='electricalConnectionInstanceW', pretty_print=pretty_print)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        super(ElectricalProjection, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        if nodeName_ == 'electricalConnection':
+            class_obj_ = self.get_class_obj_(child_, ElectricalConnection)
+            obj_ = class_obj_.factory()
+            obj_.build(child_)
+            self.electrical_connections.append(obj_)
+            obj_.original_tagname_ = 'electricalConnection'
+        elif nodeName_ == 'electricalConnectionInstance':
+            class_obj_ = self.get_class_obj_(child_, ElectricalConnectionInstance)
+            obj_ = class_obj_.factory()
+            obj_.build(child_)
+            self.electrical_connection_instances.append(obj_)
+            obj_.original_tagname_ = 'electricalConnectionInstance'
+        elif nodeName_ == 'electricalConnectionInstanceW':
+            obj_ = ElectricalConnectionInstanceW.factory()
+            obj_.build(child_)
+            self.electrical_connection_instance_ws.append(obj_)
+            obj_.original_tagname_ = 'electricalConnectionInstanceW'
+        super(ElectricalProjection, self).buildChildren(child_, node, nodeName_, True)
+
+    def exportHdf5(self, h5file, h5Group):
+        #print("Exporting ElectricalProjection: "+str(self.id)+" as HDF5")
+        
+         
+        import numpy
+        
+        projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
+        projGroup._f_setattr("id", self.id)
+        projGroup._f_setattr("type", "electricalProjection")
+        projGroup._f_setattr("presynapticPopulation", self.presynaptic_population)
+        projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
+        
+        syn = self.electrical_connections[0].synapse if len(self.electrical_connections)>0 else                     self.electrical_connection_instances[0].synapse if len(self.electrical_connection_instances)>0 else self.electrical_connection_instance_ws[0].synapse
+        projGroup._f_setattr("synapse", syn )
+                
+        cols = 7
+        extra_cols = {}
+        
+        num_tot = len(self.electrical_connections)+len(self.electrical_connection_instances)+len(self.electrical_connection_instance_ws)
+        if len(self.electrical_connection_instance_ws)>0:
+            extra_cols["column_"+str(cols)] = "weight"
+            cols+=1
+        
+        #print("Exporting "+str(num_tot)+" electrical connections")
+        a = numpy.ones([num_tot, cols], numpy.float32)
+        
+        count=0
+        
+        # TODO: optimise for single compartment cells, i.e. where no pre_segment/post_fraction_along etc.
+        for connection in self.electrical_connections:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()  
+          a[count,3] = connection.pre_segment  
+          a[count,4] = connection.post_segment  
+          a[count,5] = connection.pre_fraction_along 
+          a[count,6] = connection.post_fraction_along          
+          count=count+1
+          
+        for connection in self.electrical_connection_instances:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()  
+          a[count,3] = connection.pre_segment  
+          a[count,4] = connection.post_segment  
+          a[count,5] = connection.pre_fraction_along 
+          a[count,6] = connection.post_fraction_along          
+          count=count+1
+          
+        for connection in self.electrical_connection_instance_ws:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()  
+          a[count,3] = connection.pre_segment  
+          a[count,4] = connection.post_segment  
+          a[count,5] = connection.pre_fraction_along 
+          a[count,6] = connection.post_fraction_along    
+          a[count,7] = connection.get_weight()          
+          count=count+1
+          
+        array = h5file.create_carray(projGroup, self.id, obj=a, title="Connections of cells in "+ self.id)
+        
+        array._f_setattr("column_0", "id")
+        array._f_setattr("column_1", "pre_cell_id")
+        array._f_setattr("column_2", "post_cell_id")
+        array._f_setattr("column_3", "pre_segment_id")
+        array._f_setattr("column_4", "post_segment_id")
+        array._f_setattr("column_5", "pre_fraction_along")
+        array._f_setattr("column_6", "post_fraction_along")
+
+        for col in extra_cols.keys():
+            array._f_setattr(col,extra_cols[col])
+        
+
+    # end class ElectricalProjection
+
+
 class BaseConnectionNewFormat(BaseConnection):
     """Base of all synaptic connections with preCell, postSegment, etc. See
     BaseConnectionOldFormat"""
@@ -15810,6 +15632,212 @@ class BaseConnectionOldFormat(BaseConnection):
         super(BaseConnectionOldFormat, self).buildChildren(child_, node, nodeName_, True)
         pass
 # end class BaseConnectionOldFormat
+
+
+class Projection(BaseProjection):
+    """Projection (set of synaptic connections) between two populations.
+    Chemical/event based synaptic transmission"""
+    member_data_items_ = [
+        MemberSpec_('synapse', 'NmlId', 0),
+        MemberSpec_('connections', 'Connection', 1),
+        MemberSpec_('connection_wds', 'ConnectionWD', 1),
+    ]
+    subclass = None
+    superclass = BaseProjection
+    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, synapse=None, connections=None, connection_wds=None):
+        self.original_tagname_ = None
+        super(Projection, self).__init__(neuro_lex_id, id, presynaptic_population, postsynaptic_population, )
+        self.synapse = _cast(None, synapse)
+        if connections is None:
+            self.connections = []
+        else:
+            self.connections = connections
+        if connection_wds is None:
+            self.connection_wds = []
+        else:
+            self.connection_wds = connection_wds
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, Projection)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Projection.subclass:
+            return Projection.subclass(*args_, **kwargs_)
+        else:
+            return Projection(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [['^[a-zA-Z_][a-zA-Z0-9_]*$']]
+    def hasContent_(self):
+        if (
+            self.connections or
+            self.connection_wds or
+            super(Projection, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='Projection', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='Projection')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Projection', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Projection'):
+        super(Projection, self).exportAttributes(outfile, level, already_processed, namespace_, name_='Projection')
+        if self.synapse is not None and 'synapse' not in already_processed:
+            already_processed.add('synapse')
+            outfile.write(' synapse=%s' % (quote_attrib(self.synapse), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='Projection', fromsubclass_=False, pretty_print=True):
+        super(Projection, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        for connection_ in self.connections:
+            connection_.export(outfile, level, namespace_, name_='connection', pretty_print=pretty_print)
+        for connectionWD_ in self.connection_wds:
+            connectionWD_.export(outfile, level, namespace_, name_='connectionWD', pretty_print=pretty_print)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('synapse', node)
+        if value is not None and 'synapse' not in already_processed:
+            already_processed.add('synapse')
+            self.synapse = value
+            self.validate_NmlId(self.synapse)    # validate type NmlId
+        super(Projection, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        if nodeName_ == 'connection':
+            obj_ = Connection.factory()
+            obj_.build(child_)
+            self.connections.append(obj_)
+            obj_.original_tagname_ = 'connection'
+        elif nodeName_ == 'connectionWD':
+            obj_ = ConnectionWD.factory()
+            obj_.build(child_)
+            self.connection_wds.append(obj_)
+            obj_.original_tagname_ = 'connectionWD'
+        super(Projection, self).buildChildren(child_, node, nodeName_, True)
+
+    def exportHdf5(self, h5file, h5Group):
+        #print("Exporting Projection: "+str(self.id)+" as HDF5")
+        
+         
+        import numpy
+        
+        projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
+        projGroup._f_setattr("id", self.id)
+        projGroup._f_setattr("type", "projection")
+        projGroup._f_setattr("presynapticPopulation", self.presynaptic_population)
+        projGroup._f_setattr("postsynapticPopulation", self.postsynaptic_population)
+        projGroup._f_setattr("synapse", self.synapse)
+        
+        #print("Exporting "+str(len(self.connections))+" connections, "+str(len(self.connection_wds))+" connections with weight")
+        
+        connection_wds = len(self.connection_wds) > 0
+        
+        cols = 3
+        
+        extra_cols = {}
+        
+        from neuroml.utils import has_segment_fraction_info
+        
+        include_segment_fraction = has_segment_fraction_info(self.connections) or has_segment_fraction_info(self.connection_wds)
+        
+        if include_segment_fraction:
+            cols +=4
+            extra_cols["column_3"] = "pre_segment_id"
+            extra_cols["column_4"] = "post_segment_id"
+            extra_cols["column_5"] = "pre_fraction_along"
+            extra_cols["column_6"] = "post_fraction_along"
+            
+        
+        if connection_wds:
+            extra_cols["column_"+str(cols)] = "weight"
+            extra_cols["column_"+str(cols+1)] = "delay"
+            cols+=2
+        
+        
+        a = numpy.ones([len(self.connections)+len(self.connection_wds), cols], numpy.float32)
+        
+        
+        count=0
+        
+        for connection in self.connections:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()  
+          if include_segment_fraction:
+            a[count,3] = connection.pre_segment_id  
+            a[count,4] = connection.post_segment_id  
+            a[count,5] = connection.pre_fraction_along 
+            a[count,6] = connection.post_fraction_along          
+          count=count+1
+          
+        for connection in self.connection_wds:
+          a[count,0] = connection.id
+          a[count,1] = connection.get_pre_cell_id()
+          a[count,2] = connection.get_post_cell_id()  
+          
+          if include_segment_fraction:
+            a[count,3] = connection.pre_segment_id  
+            a[count,4] = connection.post_segment_id  
+            a[count,5] = connection.pre_fraction_along 
+            a[count,6] = connection.post_fraction_along  
+          
+          a[count,cols-2] = connection.weight  
+          if 'ms' in connection.delay:
+            delay = float(connection.delay[:-2].strip())
+          elif 's' in connection.delay:
+            delay = float(connection.delay[:-1].strip())*1000.
+          elif 'us' in connection.delay:
+            delay = float(connection.delay[:-2].strip())/1e3
+            
+          a[count,cols-1] = delay          
+          count=count+1
+        
+        if len(a)>0:
+            array = h5file.create_carray(projGroup, self.id, obj=a, title="Connections of cells in "+ self.id)
+
+            array._f_setattr("column_0", "id")
+            array._f_setattr("column_1", "pre_cell_id")
+            array._f_setattr("column_2", "post_cell_id")
+
+            for col in extra_cols.keys():
+                array._f_setattr(col,extra_cols[col])
+           
+            
+    def __str__(self):
+        return "Projection: "+self.id+" from "+self.presynaptic_population+" to "+self.postsynaptic_population+", synapse: "+self.synapse
+            
+        
+        
+
+    # end class Projection
 
 
 class ConcentrationModel_D(DecayingPoolConcentrationModel):
@@ -18908,7 +18936,7 @@ class ConnectionWD(BaseConnectionOldFormat):
             
     def __str__(self):
         
-        return "Connection "+str(self.id)+": "+str(self.get_pre_cell_id())+" -> "+str(self.get_post_cell_id())+             ", weight: "+'%f' % (float(self.weight))+", delay: "+'%.5f' % (self.get_delay_in_ms())+" ms"
+        return "Connection "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())+             ", weight: "+'%f' % (float(self.weight))+", delay: "+'%.5f' % (self.get_delay_in_ms())+" ms"
             
     def get_delay_in_ms(self):
         if 'ms' in self.delay:
@@ -21644,6 +21672,7 @@ __all__ = [
     "BaseConnectionOldFormat",
     "BaseCurrentBasedSynapse",
     "BaseNonNegativeIntegerId",
+    "BaseProjection",
     "BasePynnSynapse",
     "BaseSynapse",
     "BaseVoltageDepSynapse",
