@@ -15,6 +15,8 @@ plasticityMechanism,plasticity_mechanism
 unstructured,unstructured
 alphaCondSynapse,alpha_cond_synapses
 channelDensityNonUniform,channel_density_non_uniforms
+synapse2,synapse2
+synapse1,synapse1
 condition,condition
 notes,notes
 zStart,z_start
@@ -36,6 +38,7 @@ cell,cells
 gbase,gbase
 v_reset,v_reset
 component,component
+active,active
 path,paths
 alphaCurrSynapse,alpha_curr_synapses
 postsynapticPopulation,postsynaptic_population
@@ -82,8 +85,9 @@ spikeGeneratorRandom,spike_generator_randoms
 gate,gates
 steadyState,steady_state
 parameter,parameter
-description,description
+y,y
 e_rev_leak,e_rev_leak
+channelDensity,channel_densities
 expCondSynapse,exp_cond_synapses
 continuousConnectionInstanceW,continuous_connection_instance_ws
 expTwoSynapse,exp_two_synapses
@@ -98,6 +102,7 @@ expOneSynapse,exp_one_synapses
 baseCell,base_cells
 tauDecay,tau_decay
 iDend,i_dend
+phi,phi
 tsodyksMarkramDepFacMechanism,tsodyks_markram_dep_fac_mechanism
 delay,delay
 reverseRate,reverse_rate
@@ -119,6 +124,7 @@ weight,weight
 networkTypes,network_types
 inhomogeneousValue,inhomogeneous_value
 conductance,conductance
+description,description
 eL,e_l
 network,networks
 eK,e_k
@@ -132,7 +138,7 @@ rampGeneratorDL,ramp_generator_dls
 vpeak,vpeak
 alphac,alphac
 neuroLexId,neuro_lex_id
-channelDensity,channel_densities
+returnVoltage,return_voltage
 intracellularProperties,intracellular_properties
 q10Settings,q10_settings
 distal,distal
@@ -143,6 +149,7 @@ xs:string,xs:string
 size,size
 temperature,temperature
 decayingPoolConcentrationModel,decaying_pool_concentration_models
+voltageClampTriple,voltage_clamp_triples
 alphaSynapse,alpha_synapses
 preCellId,pre_cell_id
 pulseGeneratorDL,pulse_generator_dls
@@ -176,10 +183,11 @@ xStart,x_start
 xs:float,xs:float
 tau_m,tau_m
 layout,layout
-pulseGenerator,pulse_generators
+true,true
 basePyNNIaFCell,basePyNNIaFCell
 voltageClamp,voltage_clamps
 tau_w,tau_w
+testingVoltage,testing_voltage
 adExIaFCell,ad_ex_ia_f_cells
 ionChannelKS,ion_channel_kses
 preSegmentId,pre_segment_id
@@ -222,6 +230,7 @@ tauFac,tau_fac
 q10Factor,q10_factor
 populationList,population_list
 zSpacing,z_spacing
+synapse2Path,synapse2_path
 betac,betac
 experimentalTemp,experimental_temp
 value,value
@@ -244,8 +253,7 @@ tauInfTransition,tau_inf_transition
 member,members
 gateHHInstantaneous,gate_hh_instantaneouses
 populationTypes,population_types
-phi,phi
-y,y
+conditioningVoltage,conditioning_voltage
 ibase,ibase
 v0,v0
 ion,ion
@@ -272,6 +280,7 @@ voltageConcDepBlockMechanism,voltage_conc_dep_block_mechanism
 postComponent,post_component
 initReleaseProb,init_release_prob
 maxISI,max_isi
+doubleSynapse,double_synapses
 grid,grid
 IF_cond_alpha,IF_cond_alpha
 d,d
@@ -287,6 +296,7 @@ metaid,metaid
 networkWithTemperature,network_with_temperature
 fractionAlong,fraction_along
 normalizationEnd,normalization_end
+synapse1Path,synapse1_path
 electricalProjection,electrical_projections
 IF_curr_exp,IF_curr_exp
 gateHHratesInf,gate_h_hrates_infs
@@ -310,18 +320,19 @@ unbounded,unboundeds
 compoundInputDL,compound_input_dls
 xs:positiveInteger,xs:positive_integer
 membraneProperties2CaPools,membrane_properties2_ca_pools
+defaultValue,default_value
 inputW,input_ws
 continuousConnectionInstance,continuous_connection_instances
 start,start
 tauDecay1,tau_decay1
 leakConductance,leak_conductance
 tauDecay2,tau_decay2
-spikeArray,spike_arrays
+exposure,exposure
 subTree,sub_trees
 javax.xml.bind.DatatypeConverter.parseInt,javax.xml.bind._datatype_converter.parse_int
 delta,delta
 iafTauCell,iaf_tau_cells
-true,true
+pulseGenerator,pulse_generators
 iafRefCell,iaf_ref_cells
 reset,reset
 j,j
@@ -345,7 +356,7 @@ initMembPotential,init_memb_potentials
 postCell,post_cell
 variable,variable
 structure,structure
-exposure,exposure
+spikeArray,spike_arrays
 blockingPlasticSynapse,blocking_plastic_synapses
 required,required
 time,time

@@ -53,6 +53,7 @@ silentSynapse,silent_synapses
 spikeGeneratorRandom,spike_generator_randoms
 gate,gates
 steadyState,steady_state
+channelDensity,channel_densities
 expCondSynapse,exp_cond_synapses
 continuousConnectionInstanceW,continuous_connection_instance_ws
 expTwoSynapse,exp_two_synapses
@@ -86,11 +87,12 @@ forwardRate,forward_rate
 gKC,g_kc
 rampGeneratorDL,ramp_generator_dls
 neuroLexId,neuro_lex_id
-channelDensity,channel_densities
+returnVoltage,return_voltage
 intracellularProperties,intracellular_properties
 q10Settings,q10_settings
 initialConcentration,initial_concentration
 decayingPoolConcentrationModel,decaying_pool_concentration_models
+voltageClampTriple,voltage_clamp_triples
 alphaSynapse,alpha_synapses
 preCellId,pre_cell_id
 pulseGeneratorDL,pulse_generator_dls
@@ -113,8 +115,8 @@ segment,segments
 postFractionAlong,post_fraction_along
 channelTypes,channel_types
 xStart,x_start
-pulseGenerator,pulse_generators
 voltageClamp,voltage_clamps
+testingVoltage,testing_voltage
 adExIaFCell,ad_ex_ia_f_cells
 ionChannelKS,ion_channel_kses
 preSegmentId,pre_segment_id
@@ -146,6 +148,7 @@ tauFac,tau_fac
 q10Factor,q10_factor
 populationList,population_list
 zSpacing,z_spacing
+synapse2Path,synapse2_path
 experimentalTemp,experimental_temp
 openState,open_states
 property,properties
@@ -159,6 +162,7 @@ tauInfTransition,tau_inf_transition
 member,members
 gateHHInstantaneous,gate_hh_instantaneouses
 populationTypes,population_types
+conditioningVoltage,conditioning_voltage
 variableParameter,variable_parameters
 iSoma,i_soma
 biophysicalProperties2CaPools,biophysical_properties2_ca_pools
@@ -172,6 +176,7 @@ voltageConcDepBlockMechanism,voltage_conc_dep_block_mechanism
 postComponent,post_component
 initReleaseProb,init_release_prob
 maxISI,max_isi
+doubleSynapse,double_synapses
 timeCourse,time_course
 spikeGenerator,spike_generators
 timedSynapticInput,timed_synaptic_inputs
@@ -180,6 +185,7 @@ continuousConnection,continuous_connections
 networkWithTemperature,network_with_temperature
 fractionAlong,fraction_along
 normalizationEnd,normalization_end
+synapse1Path,synapse1_path
 electricalProjection,electrical_projections
 gateHHratesInf,gate_h_hrates_infs
 simpleSeriesResistance,simple_series_resistance
@@ -194,15 +200,16 @@ unbounded,unboundeds
 compoundInputDL,compound_input_dls
 xs:positiveInteger,xs:positive_integer
 membraneProperties2CaPools,membrane_properties2_ca_pools
+defaultValue,default_value
 inputW,input_ws
 continuousConnectionInstance,continuous_connection_instances
 tauDecay1,tau_decay1
 leakConductance,leak_conductance
 tauDecay2,tau_decay2
-spikeArray,spike_arrays
 subTree,sub_trees
 javax.xml.bind.DatatypeConverter.parseInt,javax.xml.bind._datatype_converter.parse_int
 iafTauCell,iaf_tau_cells
+pulseGenerator,pulse_generators
 iafRefCell,iaf_ref_cells
 postSegment,post_segment
 javax.xml.bind.DatatypeConverter.printInt,javax.xml.bind._datatype_converter.print_int
@@ -217,4 +224,5 @@ leakReversal,leak_reversal
 channelDensityNonUniformGHK,channel_density_non_uniform_ghks
 initMembPotential,init_memb_potentials
 postCell,post_cell
+spikeArray,spike_arrays
 blockingPlasticSynapse,blocking_plastic_synapses

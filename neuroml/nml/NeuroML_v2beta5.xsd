@@ -238,6 +238,16 @@
             <xs:minExclusive value="0"/>
         </xs:restriction>
     </xs:simpleType>
+    
+    <xs:simpleType name="ZeroOrOne">
+        <xs:annotation>
+            <xs:documentation>Value which is either 0 or 1</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:double">
+            <xs:enumeration value="0"/>
+            <xs:enumeration value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <!--NOTE: Base and Standalone definitions moved to end of file, as some XML language binding
         generators, e.g. generateDS.py, require superclasses to be defined after the subclasses... -->
@@ -281,6 +291,7 @@
             <xs:documentation>Contains an extension to NeuroML by creating custom LEMS ComponentType.</xs:documentation>
         </xs:annotation>
         <xs:sequence>
+            <xs:element name="Property" type="LEMS_Property" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="Parameter" type="Parameter" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="Constant" type="Constant" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="Requirement" type="Requirement" minOccurs="0" maxOccurs="unbounded"/>
@@ -317,6 +328,14 @@
     <xs:complexType name="Parameter"> <!-- For language binding generators, so there will be a class of this name... -->
         <xs:complexContent>
             <xs:extension base="NamedDimensionalType"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="LEMS_Property"> 
+        <xs:complexContent>
+            <xs:extension base="NamedDimensionalType">
+                <xs:attribute name="defaultValue" type="xs:double" use="optional"/>
+            </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 
@@ -511,6 +530,7 @@
             <xs:element name="expTwoSynapse" type="ExpTwoSynapse" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="expThreeSynapse" type="ExpThreeSynapse" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="blockingPlasticSynapse" type="BlockingPlasticSynapse" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="doubleSynapse" type="DoubleSynapse" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="gapJunction" type="GapJunction" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="silentSynapse" type="SilentSynapse" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="linearGradedSynapse" type="LinearGradedSynapse" minOccurs="0" maxOccurs="unbounded"/>
@@ -553,6 +573,8 @@
             <xs:element name="compoundInputDL" type="CompoundInputDL"
                     minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="voltageClamp" type="VoltageClamp"
+                    minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="voltageClampTriple" type="VoltageClampTriple"
                     minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="spikeArray" type="SpikeArray" minOccurs="0"
                     maxOccurs="unbounded"/>
@@ -1186,6 +1208,21 @@
                 <xs:attribute name="tauDecay1" type="Nml2Quantity_time" use="required"/>
                 <xs:attribute name="tauDecay2" type="Nml2Quantity_time" use="required"/>
                 <xs:attribute name="tauRise" type="Nml2Quantity_time" use="required"/>
+
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    
+   <xs:complexType name="DoubleSynapse">
+
+        <xs:complexContent>
+            <xs:extension base="BaseVoltageDepSynapse">
+
+                <xs:attribute name="synapse1" type="NmlId" use="required"/>
+                <xs:attribute name="synapse2" type="NmlId" use="required"/>
+                <xs:attribute name="synapse1Path" type="xs:string" use="required"/>
+                <xs:attribute name="synapse2Path" type="xs:string" use="required"/>
 
             </xs:extension>
         </xs:complexContent>
@@ -2293,6 +2330,32 @@
                 <xs:attribute name="duration" type="Nml2Quantity_time"
                               use="required"/>
                 <xs:attribute name="targetVoltage"
+                              type="Nml2Quantity_voltage"
+                              use="required"/>
+                <xs:attribute name="simpleSeriesResistance"
+                              type="Nml2Quantity_resistance"
+                              use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="VoltageClampTriple">
+        <xs:complexContent>
+            <xs:extension base="Standalone">
+                <xs:attribute name="active" type="ZeroOrOne"
+                              use="required"/>
+                <xs:attribute name="delay" type="Nml2Quantity_time"
+                              use="required"/>
+                <xs:attribute name="duration" type="Nml2Quantity_time"
+                              use="required"/>
+                <xs:attribute name="conditioningVoltage"
+                              type="Nml2Quantity_voltage"
+                              use="required"/>
+                <xs:attribute name="testingVoltage"
+                              type="Nml2Quantity_voltage"
+                              use="required"/>
+                <xs:attribute name="returnVoltage"
                               type="Nml2Quantity_voltage"
                               use="required"/>
                 <xs:attribute name="simpleSeriesResistance"
