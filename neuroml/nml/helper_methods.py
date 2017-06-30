@@ -696,10 +696,18 @@ cell_methods = MethodSpec(name='cell_methods',
         return segments
         
 
-    def get_ordered_segments_in_groups(self, group_list, check_parentage=False, include_cumulative_lengths=False):
+    def get_ordered_segments_in_groups(self, 
+                                       group_list, 
+                                       check_parentage=False, 
+                                       include_cumulative_lengths=False, 
+                                       include_path_lengths=False, 
+                                       path_length_metric="Path Length from root"): # Only option supported
 
         unord_segs = {}
         other_segs = {}
+        
+        if isinstance(group_list, str):
+            group_list = [group_list]
 
         segments = self.get_segment_ids_vs_segments()
 
@@ -734,7 +742,7 @@ cell_methods = MethodSpec(name='cell_methods',
 
         if check_parentage:
             # check parent ordering
-
+            
             for key in ord_segs.keys():   
                 existing_ids = []
                 for s in ord_segs[key]:
@@ -744,25 +752,79 @@ cell_methods = MethodSpec(name='cell_methods',
                     existing_ids.append(s.id)
 
 
-        if include_cumulative_lengths:
+        if include_cumulative_lengths or include_path_lengths:
             import math
+            
             cumulative_lengths = {}
+            path_lengths_to_proximal = {}
+            path_lengths_to_distal = {}
+            
             for key in ord_segs.keys():   
                 cumulative_lengths[key] = []
+                path_lengths_to_proximal[key] = {}
+                path_lengths_to_distal[key] = {}
+                
                 tot_len = 0
-                for seg in ord_segs[key]:       
+                for seg in ord_segs[key]:     
                     d = seg.distal
                     p = seg.proximal
                     if not p:
                         parent_seg = segments[seg.parent.segments]
                         p = parent_seg.distal
                     length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    
+                    if not seg.parent or not seg.parent.segments in path_lengths_to_distal[key]:
+                    
+                        path_lengths_to_proximal[key][seg.id] = 0
+                        last_seg = seg
+                        par_seg_element = seg.parent
+                        while par_seg_element!=None:
+                        
+                            par_seg = segments[par_seg_element.segments]
+                            d = par_seg.distal
+                            p = par_seg.proximal
+                            
+                            if not p:
+                                par_seg_parent_seg = segments[par_seg.parent.segments]
+                                p = par_seg_parent_seg.distal
+                                
+                            par_length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                            
+                            fract = float(last_seg.parent.fraction_along)
+                            path_lengths_to_proximal[key][seg.id] += par_length*fract
+                            
+                            last_seg = par_seg
+                            par_seg_element = par_seg.parent
+                            
+                        
+                    else:
+                        pd = path_lengths_to_distal[key][seg.parent.segments]
+                        pp = path_lengths_to_proximal[key][seg.parent.segments]
+                        fract = float(seg.parent.fraction_along)
+                        
+                        path_lengths_to_proximal[key][seg.id] = pp + (pd - pp)*fract
+                        
+                    path_lengths_to_distal[key][seg.id] = path_lengths_to_proximal[key][seg.id] + length
+                    
                     tot_len += length
                     cumulative_lengths[key].append(tot_len)
+                    
+                    
+        if include_path_lengths and not include_cumulative_lengths:
+        
+            return ord_segs, path_lengths_to_proximal, path_lengths_to_distal
 
+        if include_cumulative_lengths and not include_path_lengths:
+        
             return ord_segs, cumulative_lengths
 
+        if include_cumulative_lengths and include_path_lengths:
+        
+            return ord_segs, cumulative_lengths, path_lengths_to_proximal, path_lengths_to_distal
+
         return ord_segs
+        
+        
                 
     def summary(self):
         print("*******************************************************")
