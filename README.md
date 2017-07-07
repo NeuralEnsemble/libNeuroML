@@ -23,26 +23,26 @@ libNeuroML is integrated with the the [Travis Continuous Integration service](ht
 
 [![Build Status](https://api.travis-ci.org/NeuralEnsemble/libNeuroML.png)](https://travis-ci.org/NeuralEnsemble/libNeuroML)
 
-##Changelog
+## Changelog
 
-###version 0.2.18
+### version 0.2.18
  - Updated to use the final stable Schema for NeuroML v2beta4
  - Tested with Python 3
 
-###version 0.2.4
+### version 0.2.4
  - Updated to use the Schema for NeuroML v2beta4
 
-###version 0.2.2
+### version 0.2.2
  - Updated to use the Schema for NeuroML v2beta3
  - Ensures numpy & pytables are only required when using non-XML loaders/writers 
 
-###version 0.2.0
+### version 0.2.0
  - Updated to use the Schema for NeuroML v2beta2
 
-###version 0.1.9
+### version 0.1.9
  - Minor release: Update to latest schema
 
-###version 0.1.8
+### version 0.1.8
 
  - Several Bug fixes and small enhamcements
  - Support for latest NeuroML schema (see change outline)
