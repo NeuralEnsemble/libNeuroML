@@ -29,19 +29,19 @@ class NeuroMLHdf5Writer(object):
         
         import tables
         
-        h5file = tables.openFile(h5_file_name, mode = "w", title = nml_doc.id)
+        h5file = tables.open_file(h5_file_name, mode = "w", title = nml_doc.id)
         
-        rootGroup = h5file.createGroup("/", 'neuroml', 'Root NeuroML group')
+        rootGroup = h5file.create_group("/", 'neuroml', 'Root NeuroML group')
         
-        rootGroup._f_setAttr("id", nml_doc.id)
-        rootGroup._f_setAttr("notes", nml_doc.notes)
+        rootGroup._f_setattr("id", nml_doc.id)
+        rootGroup._f_setattr("notes", nml_doc.notes)
         
         for network in nml_doc.networks:
 
             network.exportHdf5(h5file, rootGroup)
         
         '''
-        projsGroup = h5file.createGroup(rootGroup, 'projections', 'Projections group')
+        projsGroup = h5file.create_group(rootGroup, 'projections', 'Projections group')
         projsGroup._f_setAttr("units", self.projUnits)
         
         for projection in self.projections:
@@ -86,7 +86,7 @@ class JSONWriter(object):
     def __file_handle(file):
         if isinstance(cls,file,str):
             import tables
-            fileh = tables.openFile(filepath, mode = "w")
+            fileh = tables.open_file(filepath, mode = "w")
 
             
     @classmethod    
@@ -150,16 +150,16 @@ class ArrayMorphWriter(object):
             morphology_name = array_morph.id
 
         if cell_id == None:
-            morphology_group = fileh.createGroup(root, morphology_name)
+            morphology_group = fileh.create_group(root, morphology_name)
             hierarchy_prefix = "/" + morphology_name
         else:
-            cell_group = fileh.createGroup(root, cell_id)
-            morphology_group = fileh.createGroup(cell_group, morphology_name)
+            cell_group = fileh.create_group(root, cell_id)
+            morphology_group = fileh.create_group(cell_group, morphology_name)
             hierarchy_prefix = '/' + cell_id + '/' + morphology_name
 
-        vertices_array = fileh.createArray(hierarchy_prefix, "vertices", vertices)
-        connectivity_array = fileh.createArray(hierarchy_prefix, "connectivity", connectivity)
-        physical_mask_array = fileh.createArray(hierarchy_prefix, "physical_mask", physical_mask)
+        vertices_array = fileh.create_array(hierarchy_prefix, "vertices", vertices)
+        connectivity_array = fileh.create_array(hierarchy_prefix, "connectivity", connectivity)
+        physical_mask_array = fileh.create_array(hierarchy_prefix, "physical_mask", physical_mask)
 
     @classmethod
     def __write_neuroml_document(cls,document,fileh):
@@ -187,7 +187,7 @@ class ArrayMorphWriter(object):
     def write(cls,data,filepath):
 
         import tables
-        fileh = tables.openFile(filepath, mode = "w")
+        fileh = tables.open_file(filepath, mode = "w")
         
         #Now instead we should go through a document/cell/morphology
         #hierarchy - this kind of tree traversal should be done recursively
