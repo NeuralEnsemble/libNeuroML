@@ -40,7 +40,7 @@ class NeuroMLHdf5Parser():
     
     
   def parse(self, filename):
-    h5file=tables.openFile(filename)
+    h5file=tables.open_file(filename)
     
     self.log.debug("Opened HDF5 file: "+ h5file.filename)  
     
@@ -60,21 +60,21 @@ class NeuroMLHdf5Parser():
     # Ensure populations parsed first!
     for node in g:
       
-        if node._c_classId == 'GROUP' and node._v_name.count('population_')>=1:
-            self.log.debug("Sub node: "+ str(node)+ ", class: "+ node._c_classId)
+        if node._c_classid == 'GROUP' and node._v_name.count('population_')>=1:
+            self.log.debug("Sub node: "+ str(node)+ ", class: "+ node._c_classid)
             self.parseGroup(node)
           
     # Non populations!
     for node in g:
       
-        if node._c_classId == 'GROUP' and node._v_name.count('population_')==0:
-            self.log.debug("Sub node (ng): "+ str(node)+ ", class: "+ node._c_classId)
+        if node._c_classid == 'GROUP' and node._v_name.count('population_')==0:
+            self.log.debug("Sub node (ng): "+ str(node)+ ", class: "+ node._c_classid)
             self.parseGroup(node)
           
     for node in g:
-        self.log.debug("Sub node: "+ str(node)+ ", class: "+ node._c_classId)
+        self.log.debug("Sub node: "+ str(node)+ ", class: "+ node._c_classid)
       
-        if node._c_classId == 'ARRAY':
+        if node._c_classid == 'ARRAY':
             self.parseDataset(node)
           
     self.endGroup(g)
@@ -267,7 +267,7 @@ class NeuroMLHdf5Parser():
         size = -1
         # Peek ahead for size...
         for node in g:
-            if node._c_classId == 'ARRAY' and node.name == self.currPopulation:
+            if node._c_classid == 'ARRAY' and node.name == self.currPopulation:
               size = node.shape[0]
               
         if size == -1:
@@ -297,7 +297,7 @@ class NeuroMLHdf5Parser():
         size = -1
         # Peek ahead for size...
         for node in g:
-            if node._c_classId == 'ARRAY' and node.name == self.currInputList:
+            if node._c_classid == 'ARRAY' and node.name == self.currInputList:
               size = node.shape[0]
               
         if size == -1:
