@@ -15,7 +15,13 @@ Documentation is available at http://readthedocs.org/docs/libneuroml/en/latest/
 
 For installation instructions, see http://readthedocs.org/docs/libneuroml/en/latest/install.html
 
-For details on how to contribute, see http://readthedocs.org/docs/libneuroml/en/latest/how_to_contribute.html
+
+## Process
+
+Most of the work happens in the [development branch](https://github.com/NeuralEnsemble/libNeuroML/tree/development). That branch is kept up to date with the development branches for [NeuroML 2](https://github.com/NeuroML/NeuroML2/tree/development) and related libraries. See https://neuroml.org/getneuroml for an overview of the various NeuroML libraries.
+
+**Note that [pyNeuroML](https://github.com/NeuroML/pyNeuroML) is also in active development** with other NeuroML2 utilities besides parsing/modifying/writing which this package concentrates on.
+
 
 ## Travis integration
 
@@ -23,26 +29,26 @@ libNeuroML is integrated with the the [Travis Continuous Integration service](ht
 
 [![Build Status](https://api.travis-ci.org/NeuralEnsemble/libNeuroML.png)](https://travis-ci.org/NeuralEnsemble/libNeuroML)
 
-##Changelog
+## Changelog
 
-###version 0.2.18
+### version 0.2.18
  - Updated to use the final stable Schema for NeuroML v2beta4
  - Tested with Python 3
 
-###version 0.2.4
+### version 0.2.4
  - Updated to use the Schema for NeuroML v2beta4
 
-###version 0.2.2
+### version 0.2.2
  - Updated to use the Schema for NeuroML v2beta3
  - Ensures numpy & pytables are only required when using non-XML loaders/writers 
 
-###version 0.2.0
+### version 0.2.0
  - Updated to use the Schema for NeuroML v2beta2
 
-###version 0.1.9
+### version 0.1.9
  - Minor release: Update to latest schema
 
-###version 0.1.8
+### version 0.1.8
 
  - Several Bug fixes and small enhamcements
  - Support for latest NeuroML schema (see change outline)
@@ -54,5 +60,6 @@ libNeuroML is integrated with the the [Travis Continuous Integration service](ht
  - Schema validation utility
  - Improved documentation and documentation new look
 
-:copyright: Copyright 2016 by the libNeuroML team, see AUTHORS.
+
+:copyright: Copyright 2017 by the libNeuroML team, see AUTHORS.
 :license: Modified BSD License, see LICENSE for details.
