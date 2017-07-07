@@ -177,7 +177,7 @@ class ArrayMorphLoader(object):
         TODO: Complete refactoring.
         """
         import tables
-        file = tables.openFile(filepath,mode='r')
+        file = tables.open_file(filepath,mode='r')
 
         document = neuroml.NeuroMLDocument()
 
