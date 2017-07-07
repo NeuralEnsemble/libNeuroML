@@ -54,5 +54,5 @@ libNeuroML is integrated with the the [Travis Continuous Integration service](ht
  - Schema validation utility
  - Improved documentation and documentation new look
 
-:copyright: Copyright 2012 by the libNeuroML team, see AUTHORS.
+:copyright: Copyright 2017 by the libNeuroML team, see AUTHORS.
 :license: Modified BSD License, see LICENSE for details.
