@@ -46,18 +46,18 @@ class ArrayMorphology(neuroml.Morphology):
         
         self.id = id
 
-        if physical_mask != None:
+        if np.any(physical_mask):
             self.physical_mask=np.array(physical_mask)
         else:
             self.physical_mask=np.zeros(len(connectivity),dtype='bool')
 
-        if node_types != None:
+        if np.any(node_types):
             self.node_types=np.array(node_types)
         else:
             self.node_types=np.zeros(len(connectivity),
                                         dtype='int32')
 
-        if fractions_along != None:
+        if np.any(fractions_along):
             self.fractions_along = np.array(fractions_along)
         else:
             self.fractions_along=np.zeros(len(connectivity),
