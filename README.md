@@ -15,7 +15,13 @@ Documentation is available at http://readthedocs.org/docs/libneuroml/en/latest/
 
 For installation instructions, see http://readthedocs.org/docs/libneuroml/en/latest/install.html
 
-For details on how to contribute, see http://readthedocs.org/docs/libneuroml/en/latest/how_to_contribute.html
+
+## Process
+
+Most of the work happens in the [development branch](https://github.com/NeuralEnsemble/libNeuroML/tree/development). That branch is kept up to date with the development branches for [NeuroML 2](https://github.com/NeuroML/NeuroML2/tree/development) and related libraries. See https://neuroml.org/getneuroml for an overview of the various NeuroML libraries.
+
+**Note that [pyNeuroML](https://github.com/NeuroML/pyNeuroML) is also in active development** with other NeuroML2 utilities besides parsing/modifying/writing which this package concentrates on.
+
 
 ## Travis integration
 
