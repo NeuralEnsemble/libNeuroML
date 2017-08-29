@@ -2,20 +2,19 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Jun 29 13:38:38 2017 by generateDS.py version 2.24b.
+# Generated Tue Aug 29 18:16:17 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
 #   ('--use-getter-setter', 'none')
 #   ('--silence', '')
-#   ('-f', '')
 #   ('--user-methods', 'helper_methods')
 #
 # Command line arguments:
 #   NeuroML_v2beta5.xsd
 #
 # Command line:
-#   /usr/local/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence -f --user-methods="helper_methods" NeuroML_v2beta5.xsd
+#   /usr/local/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2beta5.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -3384,6 +3383,7 @@ class MembraneProperties(GeneratedsSuper):
     member_data_items_ = [
         MemberSpec_('channel_populations', 'ChannelPopulation', 1),
         MemberSpec_('channel_densities', 'ChannelDensity', 1),
+        MemberSpec_('channel_density_v_shifts', 'ChannelDensityVShift', 1),
         MemberSpec_('channel_density_nernsts', 'ChannelDensityNernst', 1),
         MemberSpec_('channel_density_ghks', 'ChannelDensityGHK', 1),
         MemberSpec_('channel_density_ghk2s', 'ChannelDensityGHK2', 1),
@@ -3396,7 +3396,7 @@ class MembraneProperties(GeneratedsSuper):
     ]
     subclass = None
     superclass = None
-    def __init__(self, channel_populations=None, channel_densities=None, channel_density_nernsts=None, channel_density_ghks=None, channel_density_ghk2s=None, channel_density_non_uniforms=None, channel_density_non_uniform_nernsts=None, channel_density_non_uniform_ghks=None, spike_threshes=None, specific_capacitances=None, init_memb_potentials=None, extensiontype_=None):
+    def __init__(self, channel_populations=None, channel_densities=None, channel_density_v_shifts=None, channel_density_nernsts=None, channel_density_ghks=None, channel_density_ghk2s=None, channel_density_non_uniforms=None, channel_density_non_uniform_nernsts=None, channel_density_non_uniform_ghks=None, spike_threshes=None, specific_capacitances=None, init_memb_potentials=None, extensiontype_=None):
         self.original_tagname_ = None
         if channel_populations is None:
             self.channel_populations = []
@@ -3406,6 +3406,10 @@ class MembraneProperties(GeneratedsSuper):
             self.channel_densities = []
         else:
             self.channel_densities = channel_densities
+        if channel_density_v_shifts is None:
+            self.channel_density_v_shifts = []
+        else:
+            self.channel_density_v_shifts = channel_density_v_shifts
         if channel_density_nernsts is None:
             self.channel_density_nernsts = []
         else:
@@ -3458,6 +3462,7 @@ class MembraneProperties(GeneratedsSuper):
         if (
             self.channel_populations or
             self.channel_densities or
+            self.channel_density_v_shifts or
             self.channel_density_nernsts or
             self.channel_density_ghks or
             self.channel_density_ghk2s or
@@ -3504,6 +3509,8 @@ class MembraneProperties(GeneratedsSuper):
             channelPopulation_.export(outfile, level, namespace_, name_='channelPopulation', pretty_print=pretty_print)
         for channelDensity_ in self.channel_densities:
             channelDensity_.export(outfile, level, namespace_, name_='channelDensity', pretty_print=pretty_print)
+        for channelDensityVShift_ in self.channel_density_v_shifts:
+            channelDensityVShift_.export(outfile, level, namespace_, name_='channelDensityVShift', pretty_print=pretty_print)
         for channelDensityNernst_ in self.channel_density_nernsts:
             channelDensityNernst_.export(outfile, level, namespace_, name_='channelDensityNernst', pretty_print=pretty_print)
         for channelDensityGHK_ in self.channel_density_ghks:
@@ -3541,10 +3548,16 @@ class MembraneProperties(GeneratedsSuper):
             self.channel_populations.append(obj_)
             obj_.original_tagname_ = 'channelPopulation'
         elif nodeName_ == 'channelDensity':
-            obj_ = ChannelDensity.factory()
+            class_obj_ = self.get_class_obj_(child_, ChannelDensity)
+            obj_ = class_obj_.factory()
             obj_.build(child_)
             self.channel_densities.append(obj_)
             obj_.original_tagname_ = 'channelDensity'
+        elif nodeName_ == 'channelDensityVShift':
+            obj_ = ChannelDensityVShift.factory()
+            obj_.build(child_)
+            self.channel_density_v_shifts.append(obj_)
+            obj_.original_tagname_ = 'channelDensityVShift'
         elif nodeName_ == 'channelDensityNernst':
             class_obj_ = self.get_class_obj_(child_, ChannelDensityNernst)
             obj_ = class_obj_.factory()
@@ -3600,9 +3613,9 @@ class MembraneProperties2CaPools(MembraneProperties):
     ]
     subclass = None
     superclass = MembraneProperties
-    def __init__(self, channel_populations=None, channel_densities=None, channel_density_nernsts=None, channel_density_ghks=None, channel_density_ghk2s=None, channel_density_non_uniforms=None, channel_density_non_uniform_nernsts=None, channel_density_non_uniform_ghks=None, spike_threshes=None, specific_capacitances=None, init_memb_potentials=None, channel_density_nernst_ca2s=None):
+    def __init__(self, channel_populations=None, channel_densities=None, channel_density_v_shifts=None, channel_density_nernsts=None, channel_density_ghks=None, channel_density_ghk2s=None, channel_density_non_uniforms=None, channel_density_non_uniform_nernsts=None, channel_density_non_uniform_ghks=None, spike_threshes=None, specific_capacitances=None, init_memb_potentials=None, channel_density_nernst_ca2s=None):
         self.original_tagname_ = None
-        super(MembraneProperties2CaPools, self).__init__(channel_populations, channel_densities, channel_density_nernsts, channel_density_ghks, channel_density_ghk2s, channel_density_non_uniforms, channel_density_non_uniform_nernsts, channel_density_non_uniform_ghks, spike_threshes, specific_capacitances, init_memb_potentials, )
+        super(MembraneProperties2CaPools, self).__init__(channel_populations, channel_densities, channel_density_v_shifts, channel_density_nernsts, channel_density_ghks, channel_density_ghk2s, channel_density_non_uniforms, channel_density_non_uniform_nernsts, channel_density_non_uniform_ghks, spike_threshes, specific_capacitances, init_memb_potentials, )
         if channel_density_nernst_ca2s is None:
             self.channel_density_nernst_ca2s = []
         else:
@@ -9774,9 +9787,9 @@ class ChannelDensity(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, cond_density=None, erev=None, segment_groups='all', segments=None, ion=None, variable_parameters=None):
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, cond_density=None, erev=None, segment_groups='all', segments=None, ion=None, variable_parameters=None, extensiontype_=None):
         self.original_tagname_ = None
-        super(ChannelDensity, self).__init__(neuro_lex_id, id, )
+        super(ChannelDensity, self).__init__(neuro_lex_id, id, extensiontype_, )
         self.ion_channel = _cast(None, ion_channel)
         self.cond_density = _cast(None, cond_density)
         self.erev = _cast(None, erev)
@@ -9787,6 +9800,7 @@ class ChannelDensity(Base):
             self.variable_parameters = []
         else:
             self.variable_parameters = variable_parameters
+        self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -9869,6 +9883,10 @@ class ChannelDensity(Base):
         if self.ion is not None and 'ion' not in already_processed:
             already_processed.add('ion')
             outfile.write(' ion=%s' % (quote_attrib(self.ion), ))
+        if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            outfile.write(' xsi:type="%s"' % self.extensiontype_)
     def exportChildren(self, outfile, level, namespace_='', name_='ChannelDensity', fromsubclass_=False, pretty_print=True):
         super(ChannelDensity, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -9920,6 +9938,10 @@ class ChannelDensity(Base):
             already_processed.add('ion')
             self.ion = value
             self.validate_NmlId(self.ion)    # validate type NmlId
+        value = find_attr_value_('xsi:type', node)
+        if value is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            self.extensiontype_ = value
         super(ChannelDensity, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'variableParameter':
@@ -13971,6 +13993,7 @@ class NeuroMLDocument(Standalone):
         MemberSpec_('morphology', 'Morphology', 1),
         MemberSpec_('ion_channel', 'IonChannel', 1),
         MemberSpec_('ion_channel_hhs', 'IonChannelHH', 1),
+        MemberSpec_('ion_channel_v_shifts', 'IonChannelVShift', 1),
         MemberSpec_('ion_channel_kses', 'IonChannelKS', 1),
         MemberSpec_('decaying_pool_concentration_models', 'DecayingPoolConcentrationModel', 1),
         MemberSpec_('fixed_factor_concentration_models', 'FixedFactorConcentrationModel', 1),
@@ -14033,7 +14056,7 @@ class NeuroMLDocument(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, ion_channel_hhs=None, ion_channel_kses=None, decaying_pool_concentration_models=None, fixed_factor_concentration_models=None, alpha_current_synapses=None, alpha_synapses=None, exp_one_synapses=None, exp_two_synapses=None, exp_three_synapses=None, blocking_plastic_synapses=None, double_synapses=None, gap_junctions=None, silent_synapses=None, linear_graded_synapses=None, graded_synapses=None, biophysical_properties=None, cells=None, cell2_ca_poolses=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, izhikevich2007_cells=None, ad_ex_ia_f_cells=None, fitz_hugh_nagumo_cells=None, fitz_hugh_nagumo1969_cells=None, pinsky_rinzel_ca3_cells=None, pulse_generators=None, pulse_generator_dls=None, sine_generators=None, sine_generator_dls=None, ramp_generators=None, ramp_generator_dls=None, compound_inputs=None, compound_input_dls=None, voltage_clamps=None, voltage_clamp_triples=None, spike_arrays=None, timed_synaptic_inputs=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, poisson_firing_synapses=None, transient_poisson_firing_synapses=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, ion_channel_hhs=None, ion_channel_v_shifts=None, ion_channel_kses=None, decaying_pool_concentration_models=None, fixed_factor_concentration_models=None, alpha_current_synapses=None, alpha_synapses=None, exp_one_synapses=None, exp_two_synapses=None, exp_three_synapses=None, blocking_plastic_synapses=None, double_synapses=None, gap_junctions=None, silent_synapses=None, linear_graded_synapses=None, graded_synapses=None, biophysical_properties=None, cells=None, cell2_ca_poolses=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, izhikevich2007_cells=None, ad_ex_ia_f_cells=None, fitz_hugh_nagumo_cells=None, fitz_hugh_nagumo1969_cells=None, pinsky_rinzel_ca3_cells=None, pulse_generators=None, pulse_generator_dls=None, sine_generators=None, sine_generator_dls=None, ramp_generators=None, ramp_generator_dls=None, compound_inputs=None, compound_input_dls=None, voltage_clamps=None, voltage_clamp_triples=None, spike_arrays=None, timed_synaptic_inputs=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, poisson_firing_synapses=None, transient_poisson_firing_synapses=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
         self.original_tagname_ = None
         super(NeuroMLDocument, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
         if includes is None:
@@ -14060,6 +14083,10 @@ class NeuroMLDocument(Standalone):
             self.ion_channel_hhs = []
         else:
             self.ion_channel_hhs = ion_channel_hhs
+        if ion_channel_v_shifts is None:
+            self.ion_channel_v_shifts = []
+        else:
+            self.ion_channel_v_shifts = ion_channel_v_shifts
         if ion_channel_kses is None:
             self.ion_channel_kses = []
         else:
@@ -14315,6 +14342,7 @@ class NeuroMLDocument(Standalone):
             self.morphology or
             self.ion_channel or
             self.ion_channel_hhs or
+            self.ion_channel_v_shifts or
             self.ion_channel_kses or
             self.decaying_pool_concentration_models or
             self.fixed_factor_concentration_models or
@@ -14417,6 +14445,8 @@ class NeuroMLDocument(Standalone):
             ionChannel_.export(outfile, level, namespace_, name_='ionChannel', pretty_print=pretty_print)
         for ionChannelHH_ in self.ion_channel_hhs:
             ionChannelHH_.export(outfile, level, namespace_, name_='ionChannelHH', pretty_print=pretty_print)
+        for ionChannelVShift_ in self.ion_channel_v_shifts:
+            ionChannelVShift_.export(outfile, level, namespace_, name_='ionChannelVShift', pretty_print=pretty_print)
         for ionChannelKS_ in self.ion_channel_kses:
             ionChannelKS_.export(outfile, level, namespace_, name_='ionChannelKS', pretty_print=pretty_print)
         for decayingPoolConcentrationModel_ in self.decaying_pool_concentration_models:
@@ -14577,6 +14607,11 @@ class NeuroMLDocument(Standalone):
             obj_.build(child_)
             self.ion_channel_hhs.append(obj_)
             obj_.original_tagname_ = 'ionChannelHH'
+        elif nodeName_ == 'ionChannelVShift':
+            obj_ = IonChannelVShift.factory()
+            obj_.build(child_)
+            self.ion_channel_v_shifts.append(obj_)
+            obj_.original_tagname_ = 'ionChannelVShift'
         elif nodeName_ == 'ionChannelKS':
             obj_ = IonChannelKS.factory()
             obj_.build(child_)
@@ -16257,6 +16292,86 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
         super(ChannelDensityNernstCa2, self).buildChildren(child_, node, nodeName_, True)
         pass
 # end class ChannelDensityNernstCa2
+
+
+class ChannelDensityVShift(ChannelDensity):
+    member_data_items_ = [
+        MemberSpec_('vShift', 'Nml2Quantity_voltage', 0),
+    ]
+    subclass = None
+    superclass = ChannelDensity
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, cond_density=None, erev=None, segment_groups='all', segments=None, ion=None, variable_parameters=None, v_shift=None):
+        self.original_tagname_ = None
+        super(ChannelDensityVShift, self).__init__(neuro_lex_id, id, ion_channel, cond_density, erev, segment_groups, segments, ion, variable_parameters, )
+        self.v_shift = _cast(None, v_shift)
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, ChannelDensityVShift)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if ChannelDensityVShift.subclass:
+            return ChannelDensityVShift.subclass(*args_, **kwargs_)
+        else:
+            return ChannelDensityVShift(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
+    def hasContent_(self):
+        if (
+            super(ChannelDensityVShift, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='ChannelDensityVShift', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensityVShift')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='ChannelDensityVShift', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ChannelDensityVShift'):
+        super(ChannelDensityVShift, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ChannelDensityVShift')
+        if self.v_shift is not None and 'v_shift' not in already_processed:
+            already_processed.add('v_shift')
+            outfile.write(' vShift=%s' % (quote_attrib(self.v_shift), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='ChannelDensityVShift', fromsubclass_=False, pretty_print=True):
+        super(ChannelDensityVShift, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('vShift', node)
+        if value is not None and 'vShift' not in already_processed:
+            already_processed.add('vShift')
+            self.v_shift = value
+            self.validate_Nml2Quantity_voltage(self.v_shift)    # validate type Nml2Quantity_voltage
+        super(ChannelDensityVShift, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(ChannelDensityVShift, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class ChannelDensityVShift
 
 
 class Cell(BaseCell):
@@ -20444,6 +20559,89 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
 # end class BaseConductanceBasedSynapse
 
 
+class IonChannelVShift(IonChannel):
+    """Same as ionChannel, but with a vShift parameter to change voltage
+    activation of gates. The exact usage of vShift in expressions
+    for rates is determined by the individual gates."""
+    member_data_items_ = [
+        MemberSpec_('vShift', 'Nml2Quantity_voltage', 0),
+    ]
+    subclass = None
+    superclass = IonChannel
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, q10_conductance_scalings=None, species=None, type=None, conductance=None, gates=None, gate_hh_rates=None, gate_h_hrates_taus=None, gate_hh_tau_infs=None, gate_h_hrates_infs=None, gate_h_hrates_tau_infs=None, gate_hh_instantaneouses=None, gate_fractionals=None, v_shift=None):
+        self.original_tagname_ = None
+        super(IonChannelVShift, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, q10_conductance_scalings, species, type, conductance, gates, gate_hh_rates, gate_h_hrates_taus, gate_hh_tau_infs, gate_h_hrates_infs, gate_h_hrates_tau_infs, gate_hh_instantaneouses, gate_fractionals, )
+        self.v_shift = _cast(None, v_shift)
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, IonChannelVShift)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if IonChannelVShift.subclass:
+            return IonChannelVShift.subclass(*args_, **kwargs_)
+        else:
+            return IonChannelVShift(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V$|^mV)$']]
+    def hasContent_(self):
+        if (
+            super(IonChannelVShift, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='IonChannelVShift', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='IonChannelVShift')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='IonChannelVShift', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='IonChannelVShift'):
+        super(IonChannelVShift, self).exportAttributes(outfile, level, already_processed, namespace_, name_='IonChannelVShift')
+        if self.v_shift is not None and 'v_shift' not in already_processed:
+            already_processed.add('v_shift')
+            outfile.write(' vShift=%s' % (quote_attrib(self.v_shift), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='IonChannelVShift', fromsubclass_=False, pretty_print=True):
+        super(IonChannelVShift, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('vShift', node)
+        if value is not None and 'vShift' not in already_processed:
+            already_processed.add('vShift')
+            self.v_shift = value
+            self.validate_Nml2Quantity_voltage(self.v_shift)    # validate type Nml2Quantity_voltage
+        super(IonChannelVShift, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(IonChannelVShift, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class IonChannelVShift
+
+
 class IonChannelHH(IonChannel):
     """Note ionChannel and ionChannelHH are currently functionally
     identical. This is needed since many existing examples use
@@ -21869,6 +22067,7 @@ GDSClassesMapping = {
     'channelDensityNonUniform': ChannelDensityNonUniform,
     'channelDensityNonUniformGHK': ChannelDensityNonUniformGHK,
     'channelDensityNonUniformNernst': ChannelDensityNonUniformNernst,
+    'channelDensityVShift': ChannelDensityVShift,
     'channelPopulation': ChannelPopulation,
     'closedState': ClosedState,
     'compoundInput': CompoundInput,
@@ -21928,6 +22127,7 @@ GDSClassesMapping = {
     'ionChannel': IonChannel,
     'ionChannelHH': IonChannelHH,
     'ionChannelKS': IonChannelKS,
+    'ionChannelVShift': IonChannelVShift,
     'izhikevich2007Cell': Izhikevich2007Cell,
     'izhikevichCell': IzhikevichCell,
     'layout': Layout,
@@ -22150,6 +22350,7 @@ __all__ = [
     "ChannelDensityNonUniform",
     "ChannelDensityNonUniformGHK",
     "ChannelDensityNonUniformNernst",
+    "ChannelDensityVShift",
     "ChannelPopulation",
     "ClosedState",
     "ComponentType",
@@ -22227,6 +22428,7 @@ __all__ = [
     "IonChannelHH",
     "IonChannelKS",
     "IonChannelScalable",
+    "IonChannelVShift",
     "Izhikevich2007Cell",
     "IzhikevichCell",
     "LEMS_Property",

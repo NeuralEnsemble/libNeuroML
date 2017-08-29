@@ -177,6 +177,7 @@ phase,phase
 segment,segments
 refract,refract
 postFractionAlong,post_fraction_along
+ionChannelVShift,ion_channel_v_shifts
 random,random
 channelTypes,channel_types
 xStart,x_start
@@ -194,6 +195,7 @@ preSegmentId,pre_segment_id
 spikeThresh,spike_threshes
 synapse,synapse
 spikeGeneratorPoisson,spike_generator_poissons
+vShift,v_shift
 x,x
 e_rev,e_rev
 v_offset,v_offset
@@ -262,6 +264,7 @@ unqualified,unqualified
 iSoma,i_soma
 g_leak,g_leak
 i,i
+channelDensityVShift,channel_density_v_shifts
 biophysicalProperties2CaPools,biophysical_properties2_ca_pools
 fractionalConductance,fractional_conductance
 dimension,dimension

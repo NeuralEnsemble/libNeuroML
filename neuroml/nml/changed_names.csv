@@ -113,6 +113,7 @@ gapJunction,gap_junctions
 baselineAmplitude,baseline_amplitude
 segment,segments
 postFractionAlong,post_fraction_along
+ionChannelVShift,ion_channel_v_shifts
 channelTypes,channel_types
 xStart,x_start
 voltageClamp,voltage_clamps
@@ -122,6 +123,7 @@ ionChannelKS,ion_channel_kses
 preSegmentId,pre_segment_id
 spikeThresh,spike_threshes
 spikeGeneratorPoisson,spike_generator_poissons
+vShift,v_shift
 ionChannelPassive,ion_channel_passive
 subGate,sub_gates
 gL,g_l
@@ -165,6 +167,7 @@ populationTypes,population_types
 conditioningVoltage,conditioning_voltage
 variableParameter,variable_parameters
 iSoma,i_soma
+channelDensityVShift,channel_density_v_shifts
 biophysicalProperties2CaPools,biophysical_properties2_ca_pools
 fractionalConductance,fractional_conductance
 tsodyksMarkramDepMechanism,tsodyks_markram_dep_mechanism
