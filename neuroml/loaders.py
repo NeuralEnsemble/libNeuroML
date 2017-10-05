@@ -12,9 +12,13 @@ import warnings
 
 supressGeneratedsWarnings = True
 
-def print_(msg, verbose=True):
+def print_(text, verbose=True):
     if verbose:
-        print(msg)
+        prefix = "libNeuroML >>> "
+        #if not isinstance(text, str): text = text.decode('ascii')
+        if verbose:
+
+            print("%s%s"%(prefix, text.replace("\n", "\n"+prefix)))
 
 
 class NeuroMLLoader(object):
