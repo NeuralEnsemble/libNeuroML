@@ -39,6 +39,7 @@ class NeuroMLHdf5Writer(object):
         
         rootGroup._f_setattr("id", nml_doc.id)
         rootGroup._f_setattr("notes", nml_doc.notes)
+        rootGroup._f_setattr("GENERATED_BY", "libNeuroML v%s"%(neuroml.__version__))
         
         for network in nml_doc.networks:
 

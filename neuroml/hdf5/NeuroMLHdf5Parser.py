@@ -162,14 +162,44 @@ class NeuroMLHdf5Parser():
         self.log.debug("Size is: "+str(d.shape[0])+" rows of: "+ str(d.shape[1])+ " entries")
         
         if not self.optimized:
+            
+            indexId = -1
+            indexX = -1
+            indexY = -1
+            indexZ = -1
+            
+            for attrName in d.attrs._v_attrnames:
+                val = d.attrs.__getattr__(attrName)
+
+                if val == 'id' or val[0] == 'id':
+                    indexId = int(attrName[len('column_'):])
+                if val == 'x' or val[0] == 'x':
+                    indexX = int(attrName[len('column_'):])
+                if val == 'y' or val[0] == 'y':
+                    indexY = int(attrName[len('column_'):])
+                if val == 'z' or val[0] == 'z':
+                    indexZ = int(attrName[len('column_'):])
+            
+            if indexId<0:
+                if len(d[0])==4: indexId=0
+            if indexX<0:
+                if len(d[0])==3: indexX=0
+                if len(d[0])==4: indexX=1
+            if indexY<0:
+                if len(d[0])==3: indexY=1
+                if len(d[0])==4: indexY=2
+            if indexZ<0:
+                if len(d[0])==3: indexZ=2
+                if len(d[0])==4: indexY=3
+                
             for i in range(0, d.shape[0]):
 
-                    self.netHandler.handleLocation( int(d[i,0]),                      \
+                    self.netHandler.handle_location( int(d[i,indexId]) if indexId>=0 else i, \
                                                 self.currPopulation,     \
                                                 self.currentComponent,    \
-                                                float(d[i,1]),       \
-                                                float(d[i,2]),       \
-                                                float(d[i,3]))       
+                                                float(d[i,indexX]),       \
+                                                float(d[i,indexY]),       \
+                                                float(d[i,indexZ]))       
         else:
             
             #TODO: a better way to convert???
@@ -238,7 +268,7 @@ class NeuroMLHdf5Parser():
                 synapse_obj = None
                 pre_synapse_obj = None
 
-            self.netHandler.handleProjection(self.currentProjectionId,
+            self.netHandler.handle_projection(self.currentProjectionId,
                                              self.currentProjectionPrePop,
                                              self.currentProjectionPostPop,
                                              self.currentSynapse,
@@ -257,7 +287,7 @@ class NeuroMLHdf5Parser():
             for i in range(0, d.shape[0]):
                 row = d[i,:]
 
-                id =  int(row[indexId])
+                id =  int(row[indexId]) if indexId>0 else i
 
                 preCellId =  int(row[indexPreCellId])
 
@@ -287,7 +317,7 @@ class NeuroMLHdf5Parser():
                 #self.log.debug("Connection %d from %f to %f" % (id, preCellId, postCellId))
 
 
-                self.netHandler.handleConnection(self.currentProjectionId, \
+                self.netHandler.handle_connection(self.currentProjectionId, \
                                                 id, \
                                                 self.currentProjectionPrePop, \
                                                 self.currentProjectionPostPop, \
@@ -358,7 +388,7 @@ class NeuroMLHdf5Parser():
 
                 self.log.debug("Adding %s, %s, %s"%(tid,segId,fractAlong))
 
-                self.netHandler.handleSingleInput(self.currInputList,
+                self.netHandler.handle_single_input(self.currInputList,
                                             id_,
                                             tid,         
                                             segId = segId,         
@@ -391,7 +421,7 @@ class NeuroMLHdf5Parser():
     if g._v_name == 'neuroml':
     
         if not self.optimized:
-            self.netHandler.handleDocumentStart(get_str_attribute_group(g,'id'),
+            self.netHandler.handle_document_start(get_str_attribute_group(g,'id'),
                                                 get_str_attribute_group(g,'notes'))
         else:
             self.doc_id = get_str_attribute_group(g,'id')
@@ -400,7 +430,7 @@ class NeuroMLHdf5Parser():
     if g._v_name == 'network':
         
         if not self.optimized:
-            self.netHandler.handleNetwork(get_str_attribute_group(g,'id'),
+            self.netHandler.handle_network(get_str_attribute_group(g,'id'),
                                       get_str_attribute_group(g,'notes'),
                                       temperature=get_str_attribute_group(g,'temperature'))
         else:
@@ -419,7 +449,13 @@ class NeuroMLHdf5Parser():
         
         size = self._get_node_size(g,self.currPopulation)
         
-        self.log.debug("Found a population: "+ self.currPopulation+", component: "+self.currentComponent+", size: "+ str(size))
+        properties = {}
+        for fname in g._v_attrs._v_attrnames:
+            if fname.startswith('property:'):
+                name = str(fname).split(':')[1]
+                properties[name] = get_str_attribute_group(g,fname)
+        
+        self.log.debug("Found a population: "+ self.currPopulation+", component: "+self.currentComponent+", size: "+ str(size)+", properties: %s"%properties)
         
         if not self.optimized:
             if self.nml_doc_extra_elements:
@@ -427,9 +463,13 @@ class NeuroMLHdf5Parser():
             else:
                 component_obj = None
 
-            self.netHandler.handlePopulation(self.currPopulation, self.currentComponent, size, component_obj=component_obj)
+            self.netHandler.handle_population(self.currPopulation, self.currentComponent, size, component_obj=component_obj, properties=properties)
         else:
             self.currOptPopulation = PopulationContainer(id=self.currPopulation, component=self.currentComponent, size=size)
+            
+            for p in properties:
+                self.currOptPopulation.properties.append(neuroml.Property(p,properties[p]))
+                
             self.optimizedNetwork.populations.append(self.currOptPopulation)
         
     if g._v_name.count('projection_')>=1:
@@ -492,7 +532,7 @@ class NeuroMLHdf5Parser():
 
             self.log.debug("Found an inputList: "+ self.currInputList+", component: "+component+", population: "+population+", size: "+ str(size))
 
-            self.netHandler.handleInputList(self.currInputList, population, component, size, input_comp_obj=input_comp_obj)
+            self.netHandler.handle_input_list(self.currInputList, population, component, size, input_comp_obj=input_comp_obj)
         else:
             self.currOptInputList = InputListContainer(id=self.currInputList, component=component, populations=population)
             self.optimizedNetwork.input_lists.append(self.currOptInputList)
@@ -509,7 +549,7 @@ class NeuroMLHdf5Parser():
     if g._v_name.count('projection_')>=1:
         
         if not self.optimized:
-            self.netHandler.finaliseProjection(self.currentProjectionId, 
+            self.netHandler.finalise_projection(self.currentProjectionId, 
                                                self.currentProjectionPrePop, 
                                                self.currentProjectionPostPop,
                                                synapse=self.currentSynapse,

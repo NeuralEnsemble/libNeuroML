@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Aug 29 18:16:17 2017 by generateDS.py version 2.24b.
+# Generated Tue Dec 12 14:06:13 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -6197,7 +6197,7 @@ class InputList(Base):
             cols+=1
         
         #print("Exporting "+str(num_tot)+" inputs")
-        a = numpy.ones([num_tot, cols], numpy.float32)
+        a = numpy.zeros([num_tot, cols], numpy.float32)
         
         count=0
         
@@ -6658,25 +6658,30 @@ class Population(Standalone):
         popGroup = h5file.create_group(h5Group, 'population_'+self.id)
         popGroup._f_setattr("id", self.id)
         popGroup._f_setattr("component", self.component)
+        for p in self.properties:
+            popGroup._f_setattr("property:"+p.tag, p.value)
+            
         
         if len(self.instances)>0:
 
-            colCount = 4
-            a = numpy.ones([len(self.instances), colCount], numpy.float32)
+            colCount = 3
+            a = numpy.zeros([len(self.instances), colCount], numpy.float32)
 
             count=0
             for instance in self.instances:
-              a[count,0] = instance.id
-              a[count,1] = instance.location.x
-              a[count,2] = instance.location.y
-              a[count,3] = instance.location.z
+              a[count,0] = instance.location.x
+              a[count,1] = instance.location.y
+              a[count,2] = instance.location.z
 
               count=count+1
-        
+              
             popGroup._f_setattr("size", count)
             popGroup._f_setattr("type", "populationList")
 
-            h5file.create_carray(popGroup, self.id, obj=a, title="Locations of cells in "+ self.id)
+            array = h5file.create_carray(popGroup, self.id, obj=a, title="Locations of cells in "+ self.id)
+            array._f_setattr("column_0", "x")
+            array._f_setattr("column_1", "y")
+            array._f_setattr("column_2", "z")
             
         else:
             popGroup._f_setattr("size", self.size)
@@ -14958,6 +14963,11 @@ class NeuroMLDocument(Standalone):
                 if len(pop.instances)>0:
                     loc = pop.instances[0].location
                     pop_info+="*       Locations: ["+str(loc)+", ...]\n"
+                if len(pop.properties)>0:
+                    pop_info+="*       Properties: "
+                    for p in pop.properties: 
+                        pop_info+=(str(p.tag)+'='+str(p.value)+'; ')
+                    pop_info+="\n"
             
             info+="*   "+str(tot_cells)+" cells in "+str(tot_pop)+" populations \n"+pop_info+"*\n"
                 
@@ -15395,7 +15405,7 @@ class ContinuousProjection(BaseProjection):
             cols+=1
         
         #print("Exporting "+str(num_tot)+" continuous connections")
-        a = numpy.ones([num_tot, cols], numpy.float32)
+        a = numpy.zeros([num_tot, cols], numpy.float32)
         
         count=0
         
@@ -15581,7 +15591,7 @@ class ElectricalProjection(BaseProjection):
             cols+=1
         
         #print("Exporting "+str(num_tot)+" electrical connections")
-        a = numpy.ones([num_tot, cols], numpy.float32)
+        a = numpy.zeros([num_tot, cols], numpy.float32)
         
         count=0
         
@@ -16079,7 +16089,7 @@ class Projection(BaseProjection):
         
         connection_wds = len(self.connection_wds) > 0
         
-        cols = 3
+        cols = 2
         
         extra_cols = {}
         
@@ -16088,11 +16098,11 @@ class Projection(BaseProjection):
         include_segment_fraction = has_segment_fraction_info(self.connections) or has_segment_fraction_info(self.connection_wds)
         
         if include_segment_fraction:
+            extra_cols["column_"+str(cols)] = "pre_segment_id"
+            extra_cols["column_"+str(cols+1)] = "post_segment_id"
+            extra_cols["column_"+str(cols+2)] = "pre_fraction_along"
+            extra_cols["column_"+str(cols+3)] = "post_fraction_along"
             cols +=4
-            extra_cols["column_3"] = "pre_segment_id"
-            extra_cols["column_4"] = "post_segment_id"
-            extra_cols["column_5"] = "pre_fraction_along"
-            extra_cols["column_6"] = "post_fraction_along"
             
         
         if connection_wds:
@@ -16100,33 +16110,31 @@ class Projection(BaseProjection):
             extra_cols["column_"+str(cols+1)] = "delay"
             cols+=2
         
-        
-        a = numpy.ones([len(self.connections)+len(self.connection_wds), cols], numpy.float32)
-        
+        a = numpy.zeros([len(self.connections)+len(self.connection_wds), cols], numpy.float32)
         
         count=0
         
         for connection in self.connections:
-          a[count,0] = connection.id
-          a[count,1] = connection.get_pre_cell_id()
-          a[count,2] = connection.get_post_cell_id()  
+          ####a[count,0] = connection.id
+          a[count,0] = connection.get_pre_cell_id()
+          a[count,1] = connection.get_post_cell_id()  
           if include_segment_fraction:
-            a[count,3] = connection.pre_segment_id  
-            a[count,4] = connection.post_segment_id  
-            a[count,5] = connection.pre_fraction_along 
-            a[count,6] = connection.post_fraction_along          
+            a[count,2] = connection.pre_segment_id  
+            a[count,3] = connection.post_segment_id  
+            a[count,4] = connection.pre_fraction_along 
+            a[count,5] = connection.post_fraction_along          
           count=count+1
           
         for connection in self.connection_wds:
-          a[count,0] = connection.id
-          a[count,1] = connection.get_pre_cell_id()
-          a[count,2] = connection.get_post_cell_id()  
+          ###a[count,0] = connection.id
+          a[count,0] = connection.get_pre_cell_id()
+          a[count,1] = connection.get_post_cell_id()  
           
           if include_segment_fraction:
-            a[count,3] = connection.pre_segment_id  
-            a[count,4] = connection.post_segment_id  
-            a[count,5] = connection.pre_fraction_along 
-            a[count,6] = connection.post_fraction_along  
+            a[count,2] = connection.pre_segment_id  
+            a[count,3] = connection.post_segment_id  
+            a[count,4] = connection.pre_fraction_along 
+            a[count,5] = connection.post_fraction_along  
           
           a[count,cols-2] = connection.weight  
           if 'ms' in connection.delay:
@@ -16142,9 +16150,9 @@ class Projection(BaseProjection):
         if len(a)>0:
             array = h5file.create_carray(projGroup, self.id, obj=a, title="Connections of cells in "+ self.id)
 
-            array._f_setattr("column_0", "id")
-            array._f_setattr("column_1", "pre_cell_id")
-            array._f_setattr("column_2", "post_cell_id")
+            ###array._f_setattr("column_0", "id")
+            array._f_setattr("column_0", "pre_cell_id")
+            array._f_setattr("column_1", "post_cell_id")
 
             for col in extra_cols.keys():
                 array._f_setattr(col,extra_cols[col])

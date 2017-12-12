@@ -88,9 +88,12 @@ class InstanceList(OptimizedList):
 
     def __getitem__(self,index):
 
-        #print('    Getting instance %s in %s'%(index,self))
-        id = self.array[index][self._get_index_or_add('id',0)]
-        assert(id==index)
+        if len(self.array[index])==4:
+            id = self.array[index][self._get_index_or_add('id',0)]
+            #print('    Getting instance %s in %s (%s)'%(index,self,id))
+            assert(id==index)
+        else:
+            id = index
         
         instance = neuroml.Instance(id=id)
         instance.location = neuroml.Location(self.array[index][self._get_index_or_add('x',1)],
@@ -142,6 +145,9 @@ class PopulationContainer(neuroml.Population):
         popGroup._f_setattr("id", self.id)
         popGroup._f_setattr("component", self.component)
         
+        for p in self.properties:
+            popGroup._f_setattr("property:%s"%p, self.properties[p])
+            
         if len(self.instances)>0:
 
             popGroup._f_setattr("size", len(self.instances))
@@ -231,8 +237,12 @@ class ConnectionList(OptimizedList):
     
     def __getitem__(self,index):
 
-        id = int(self.array[index][self._get_index_or_add('id',0)])
-        assert(self.array[index][0]==index)
+        id_index = self._get_index_or_add('id',-1)
+        if id_index>0:
+            id = int(self.array[index][id_index])
+            assert(self.array[index][0]==index)
+        else:
+            id = index
         
         pre_cell_id =  int(self.array[index][self._get_index_or_add('pre_cell_id',1)])
         post_cell_id = int(self.array[index][self._get_index_or_add('post_cell_id',2)])

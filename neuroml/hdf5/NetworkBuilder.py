@@ -40,7 +40,7 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     #    
-    def handleDocumentStart(self, id, notes):
+    def handle_document_start(self, id, notes):
         self.nml_doc = neuroml.NeuroMLDocument(id=id)
         if notes and len(notes)>0:
             self.nml_doc.notes = notes
@@ -48,7 +48,7 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     #    
-    def handleNetwork(self, network_id, notes, temperature=None):
+    def handle_network(self, network_id, notes, temperature=None):
         
         self.network = neuroml.Network(id=network_id)
         self.nml_doc.networks.append(self.network)
@@ -61,7 +61,7 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     #    
-    def handlePopulation(self, population_id, component, size, component_obj=None):
+    def handle_population(self, population_id, component, size, component_obj=None, properties={}):
       
         if component_obj:
             self.nml_doc.append(component_obj)
@@ -69,6 +69,8 @@ class NetworkBuilder(DefaultNetworkHandler):
         pop = neuroml.Population(id=population_id, component=component, size=size)
         self.populations[population_id] = pop
         self.network.populations.append(pop)
+        for p in properties:
+            pop.properties.append(neuroml.Property(p,properties[p]))
         
         comp_obj_info = ' (%s)'%type(component_obj) if component_obj else ''
         
@@ -82,8 +84,8 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     #    
-    def handleLocation(self, id, population_id, component, x, y, z):
-        self.printLocationInformation(id, population_id, component, x, y, z)
+    def handle_location(self, id, population_id, component, x, y, z):
+        self.print_location_information(id, population_id, component, x, y, z)
         
         if x and y and z:
             inst = neuroml.Instance(id=id)
@@ -95,7 +97,7 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     #
-    def handleProjection(self, id, prePop, postPop, synapse, hasWeights=False, hasDelays=False, type="projection", synapse_obj=None, pre_synapse_obj=None):
+    def handle_projection(self, id, prePop, postPop, synapse, hasWeights=False, hasDelays=False, type="projection", synapse_obj=None, pre_synapse_obj=None):
         
         if synapse_obj:
             self.nml_doc.append(synapse_obj)
@@ -125,11 +127,11 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     #
-    def finaliseProjection(self, id, prePop, postPop, synapse=None, type="projection"):
+    def finalise_projection(self, id, prePop, postPop, synapse=None, type="projection"):
         '''
-            Check whether handleProjection was not called, e.g. due to no connections present
+            Check whether handle_projection was not called, e.g. due to no connections present
         '''
-        self.log.info("Projection: %s from %s to %s completed"%(id,prePop,postPop))
+        self.log.debug("Projection: %s from %s to %s completed"%(id,prePop,postPop))
         if type=="projection":
             present = False
             for p in self.network.projections:
@@ -150,7 +152,7 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Assumes delay in ms
     #    
-    def handleConnection(self, proj_id, conn_id, prePop, postPop, synapseType, \
+    def handle_connection(self, proj_id, conn_id, prePop, postPop, synapseType, \
                                                     preCellId, \
                                                     postCellId, \
                                                     preSegId = 0, \
@@ -283,7 +285,7 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     # 
-    def handleInputList(self, inputListId, population_id, component, size, input_comp_obj=None):
+    def handle_input_list(self, inputListId, population_id, component, size, input_comp_obj=None):
 
         if input_comp_obj:
             self.nml_doc.append(input_comp_obj)
@@ -299,7 +301,7 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     # 
-    def handleSingleInput(self, inputListId, id, cellId, segId = 0, fract = 0.5, weight = 1.0):
+    def handle_single_input(self, inputListId, id, cellId, segId = 0, fract = 0.5, weight = 1.0):
 
         input_list = self.input_lists[inputListId]
         

@@ -52,40 +52,44 @@ class NeuroMLXMLParser():
     
     print("Loaded: %s as NeuroMLDocument"%filename)
     
-    self.netHandler.handleDocumentStart(self.nml_doc.id,self.nml_doc.notes)  
+    self.netHandler.handle_document_start(self.nml_doc.id,self.nml_doc.notes)  
     
     for network in self.nml_doc.networks:
         
-        self.netHandler.handleNetwork(network.id,network.notes, temperature=network.temperature)
+        self.netHandler.handle_network(network.id,network.notes, temperature=network.temperature)
         
         for population in network.populations:
             
             component_obj = self.nml_doc.get_by_id(population.component)
+            properties = {}
+            for p in population.properties:
+                properties[p.tag]=p.value
             
             if len(population.instances)>0 and population.type=='populationList':
                   
-                self.netHandler.handlePopulation(population.id, 
+                self.netHandler.handle_population(population.id, 
                                                  population.component, 
                                                  len(population.instances),
-                                                 component_obj=component_obj)
+                                                 component_obj=component_obj,
+                                                 properties=properties)
 
                 for inst in population.instances:
 
                     loc = inst.location
-                    self.netHandler.handleLocation(inst.id,                      \
+                    self.netHandler.handle_location(inst.id,                      \
                                             population.id,     \
                                             population.component,    \
                                             loc.x,       \
                                             loc.y,       \
                                             loc.z)       
             else:
-                self.netHandler.handlePopulation(population.id, 
+                self.netHandler.handle_population(population.id, 
                                                  population.component, 
                                                  population.size,
                                                  component_obj=component_obj)
                                                      
                 for i in range(population.size):
-                    self.netHandler.handleLocation(i,                      \
+                    self.netHandler.handle_location(i,                      \
                                             population.id,     \
                                             population.component,    \
                                             None,       \
@@ -96,7 +100,7 @@ class NeuroMLXMLParser():
             
             synapse_obj = self.nml_doc.get_by_id(projection.synapse)
             
-            self.netHandler.handleProjection(projection.id,
+            self.netHandler.handle_projection(projection.id,
                                             projection.presynaptic_population,
                                             projection.postsynaptic_population,
                                             projection.synapse,
@@ -104,7 +108,7 @@ class NeuroMLXMLParser():
                                             
             for connection in projection.connections:
                 
-                self.netHandler.handleConnection(projection.id, \
+                self.netHandler.handle_connection(projection.id, \
                                             connection.id, \
                                             projection.presynaptic_population,
                                             projection.postsynaptic_population,
@@ -120,7 +124,7 @@ class NeuroMLXMLParser():
                                             
             for connection in projection.connection_wds:
                 
-                self.netHandler.handleConnection(projection.id, \
+                self.netHandler.handle_connection(projection.id, \
                                             connection.id, \
                                             projection.presynaptic_population,
                                             projection.postsynaptic_population,
@@ -154,7 +158,7 @@ class NeuroMLXMLParser():
                 
             synapse_obj = self.nml_doc.get_by_id(synapse)
                 
-            self.netHandler.handleProjection(ep.id,
+            self.netHandler.handle_projection(ep.id,
                                             ep.presynaptic_population,
                                             ep.postsynaptic_population,
                                             synapse, 
@@ -163,7 +167,7 @@ class NeuroMLXMLParser():
                                             
             for connection in ep.electrical_connections:
                 
-                self.netHandler.handleConnection(ep.id, \
+                self.netHandler.handle_connection(ep.id, \
                                             connection.id, \
                                             ep.presynaptic_population,
                                             ep.postsynaptic_population,
@@ -177,7 +181,7 @@ class NeuroMLXMLParser():
                                             
             for connection in ep.electrical_connection_instances:
                 
-                self.netHandler.handleConnection(ep.id, \
+                self.netHandler.handle_connection(ep.id, \
                                             connection.id, \
                                             ep.presynaptic_population,
                                             ep.postsynaptic_population,
@@ -191,7 +195,7 @@ class NeuroMLXMLParser():
                                             
             for connection in ep.electrical_connection_instance_ws:
                 
-                self.netHandler.handleConnection(ep.id, \
+                self.netHandler.handle_connection(ep.id, \
                                             connection.id, \
                                             ep.presynaptic_population,
                                             ep.postsynaptic_population,
@@ -236,7 +240,7 @@ class NeuroMLXMLParser():
             pre_obj = self.nml_doc.get_by_id(pre_comp)
             post_obj = self.nml_doc.get_by_id(post_comp)
             
-            self.netHandler.handleProjection(cp.id,
+            self.netHandler.handle_projection(cp.id,
                                             cp.presynaptic_population,
                                             cp.postsynaptic_population,
                                             synapse, 
@@ -246,7 +250,7 @@ class NeuroMLXMLParser():
             
             for connection in cp.continuous_connections:
                 
-                self.netHandler.handleConnection(cp.id, \
+                self.netHandler.handle_connection(cp.id, \
                                             connection.id, \
                                             cp.presynaptic_population,
                                             cp.postsynaptic_population,
@@ -260,7 +264,7 @@ class NeuroMLXMLParser():
             
             for connection in cp.continuous_connection_instances:
                 
-                self.netHandler.handleConnection(cp.id, \
+                self.netHandler.handle_connection(cp.id, \
                                             connection.id, \
                                             cp.presynaptic_population,
                                             cp.postsynaptic_population,
@@ -274,7 +278,7 @@ class NeuroMLXMLParser():
             
             for connection in cp.continuous_connection_instance_ws:
                 
-                self.netHandler.handleConnection(cp.id, \
+                self.netHandler.handle_connection(cp.id, \
                                             connection.id, \
                                             cp.presynaptic_population,
                                             cp.postsynaptic_population,
@@ -292,18 +296,18 @@ class NeuroMLXMLParser():
             
             input_comp_obj = self.nml_doc.get_by_id(input_list.component)
                 
-            self.netHandler.handleInputList(input_list.id, input_list.populations, input_list.component, len(input_list.input),input_comp_obj=input_comp_obj)
+            self.netHandler.handle_input_list(input_list.id, input_list.populations, input_list.component, len(input_list.input),input_comp_obj=input_comp_obj)
             
             for input in input_list.input:
                 
-                self.netHandler.handleSingleInput(input_list.id, 
+                self.netHandler.handle_single_input(input_list.id, 
                                                   input.id, 
                                                   cellId = input.get_target_cell_id(), 
                                                   segId = input.get_segment_id(), 
                                                   fract = input.get_fraction_along())
             for input_w in input_list.input_ws:
                 
-                self.netHandler.handleSingleInput(input_list.id, 
+                self.netHandler.handle_single_input(input_list.id, 
                                                   input_w.id, 
                                                   cellId = input_w.get_target_cell_id(), 
                                                   segId = input_w.get_segment_id(), 
@@ -313,9 +317,9 @@ class NeuroMLXMLParser():
         for explicitInput in network.explicit_inputs:     
             list_name = 'INPUT_%s_%s'%(explicitInput.input,explicitInput.target.replace('[','_').replace(']','_'))
             pop = explicitInput.target.split('[')[0]
-            self.netHandler.handleInputList(list_name, pop, explicitInput.input, 1)   
+            self.netHandler.handle_input_list(list_name, pop, explicitInput.input, 1)   
 
-            self.netHandler.handleSingleInput(list_name, 
+            self.netHandler.handle_single_input(list_name, 
                                               0, 
                                               cellId = explicitInput.get_target_cell_id(), 
                                               segId = 0, 
