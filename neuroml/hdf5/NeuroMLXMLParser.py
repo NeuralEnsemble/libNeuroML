@@ -12,6 +12,7 @@
 #
   
 import logging
+import inspect
 
 class NeuroMLXMLParser():
     
@@ -31,6 +32,33 @@ class NeuroMLXMLParser():
     
     self.netHandler = netHandler
     
+    # For continued use with old API
+    if not hasattr(self.netHandler,'handle_network') or hasattr(self.netHandler,'handleNetwork'):
+        self.netHandler.handle_network = self.netHandler.handleNetwork
+    if not hasattr(self.netHandler,'handle_document_start') or hasattr(self.netHandler,'handleDocumentStart'):
+        self.netHandler.handle_document_start = self.netHandler.handleDocumentStart
+    if not hasattr(self.netHandler,'handle_population') or hasattr(self.netHandler,'handlePopulation'):
+        self.netHandler.handle_population = self.netHandler.handlePopulation
+    if not hasattr(self.netHandler,'handle_location') or hasattr(self.netHandler,'handleLocation'):
+        self.netHandler.handle_location = self.netHandler.handleLocation
+        
+    if not hasattr(self.netHandler,'handle_projection') or hasattr(self.netHandler,'handleProjection'):
+        self.netHandler.handle_projection = self.netHandler.handleProjection
+    if not hasattr(self.netHandler,'finalise_projection') or hasattr(self.netHandler,'finaliseProjection'):
+        self.netHandler.finalise_projection = self.netHandler.finaliseProjection
+        
+    if not hasattr(self.netHandler,'handle_connection') or hasattr(self.netHandler,'handleConnection'):
+        self.netHandler.handle_connection = self.netHandler.handleConnection
+    if not hasattr(self.netHandler,'handle_input_list') or hasattr(self.netHandler,'handleInputList'):
+        self.netHandler.handle_input_list = self.netHandler.handleInputList
+    if not hasattr(self.netHandler,'handle_single_input') or hasattr(self.netHandler,'handleSingleInput'):
+        self.netHandler.handle_single_input = self.netHandler.handleSingleInput
+    if not hasattr(self.netHandler,'finalise_input_source') or hasattr(self.netHandler,'finaliseInputSource'):
+        self.netHandler.finalise_input_source = self.netHandler.finaliseInputSource
+        
+    
+        
+        
   def _parse_delay(self, delay_string):
       if delay_string.endswith('ms'):
           return float(delay_string[:-2].strip())
@@ -67,11 +95,17 @@ class NeuroMLXMLParser():
             
             if len(population.instances)>0 and population.type=='populationList':
                   
-                self.netHandler.handle_population(population.id, 
-                                                 population.component, 
-                                                 len(population.instances),
-                                                 component_obj=component_obj,
-                                                 properties=properties)
+                if 'properties' in inspect.getargspec(self.netHandler.handle_population)[0]:
+                    self.netHandler.handle_population(population.id, 
+                                                     population.component, 
+                                                     len(population.instances),
+                                                     component_obj=component_obj,
+                                                     properties=properties)
+                else:
+                    self.netHandler.handle_population(population.id, 
+                                                     population.component, 
+                                                     len(population.instances),
+                                                     component_obj=component_obj)
 
                 for inst in population.instances:
 
@@ -83,10 +117,18 @@ class NeuroMLXMLParser():
                                             loc.y,       \
                                             loc.z)       
             else:
-                self.netHandler.handle_population(population.id, 
-                                                 population.component, 
-                                                 population.size,
-                                                 component_obj=component_obj)
+                
+                if 'properties' in inspect.getargspec(self.netHandler.handle_population)[0]:
+                    self.netHandler.handle_population(population.id, 
+                                                     population.component, 
+                                                     population.size,
+                                                     component_obj=component_obj,
+                                                     properties=properties)
+                else:
+                    self.netHandler.handle_population(population.id, 
+                                                     population.component, 
+                                                     population.size,
+                                                     component_obj=component_obj)
                                                      
                 for i in range(population.size):
                     self.netHandler.handle_location(i,                      \

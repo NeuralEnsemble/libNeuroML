@@ -34,7 +34,7 @@ class DefaultNetworkHandler:
         position = "(%s, %s, %s)" % (x, y, z)
         self.log.debug("Location "+str(id)+" of population: "+population_id+", component: "+component+": "+position)
         
-
+    
     #
     #  Internal info method, can be reused in overriding classes for debugging
     #        
@@ -50,7 +50,13 @@ class DefaultNetworkHandler:
         sizeInfo = " size: "+ str(size)+ " cells"
         self.log.debug("Input Source: "+inputName+", on population: "+population_id+sizeInfo+" with component: "+ component)
         
-    
+    # Temp for older API version
+    def printLocationInformation(self, id, population_id, component, x, y, z):
+        return self.print_location_information(id, population_id, component, x, y, z)
+    def printConnectionInformation(self,  projName, id, prePop, postPop, synapseType, preCellId, postCellId, weight):
+        return self.print_connection_information(projName, id, prePop, postPop, synapseType, preCellId, postCellId, weight)
+    def printInputInformation(self, inputName, population_id, component, size=-1):
+        return self.print_input_information(inputName, population_id, component, size)
 
     #
     #  Should be overridden

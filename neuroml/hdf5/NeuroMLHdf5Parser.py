@@ -16,6 +16,7 @@
   
 import logging
 import sys
+import inspect
 
 import tables   # pytables for HDF5 support
 import numpy as np  
@@ -60,6 +61,32 @@ class NeuroMLHdf5Parser():
   def __init__ (self, netHandler, optimized=False): 
     self.netHandler = netHandler
     self.optimized = optimized
+    
+    if not self.optimized:
+        # For continued use with old API
+        if not hasattr(self.netHandler,'handle_network') or hasattr(self.netHandler,'handleNetwork'):
+            self.netHandler.handle_network = self.netHandler.handleNetwork
+        if not hasattr(self.netHandler,'handle_document_start') or hasattr(self.netHandler,'handleDocumentStart'):
+            self.netHandler.handle_document_start = self.netHandler.handleDocumentStart
+        if not hasattr(self.netHandler,'handle_population') or hasattr(self.netHandler,'handlePopulation'):
+            self.netHandler.handle_population = self.netHandler.handlePopulation
+        if not hasattr(self.netHandler,'handle_location') or hasattr(self.netHandler,'handleLocation'):
+            self.netHandler.handle_location = self.netHandler.handleLocation
+
+        if not hasattr(self.netHandler,'handle_projection') or hasattr(self.netHandler,'handleProjection'):
+            self.netHandler.handle_projection = self.netHandler.handleProjection
+        if not hasattr(self.netHandler,'finalise_projection') or hasattr(self.netHandler,'finaliseProjection'):
+            self.netHandler.finalise_projection = self.netHandler.finaliseProjection
+
+        if not hasattr(self.netHandler,'handle_connection') or hasattr(self.netHandler,'handleConnection'):
+            self.netHandler.handle_connection = self.netHandler.handleConnection
+        if not hasattr(self.netHandler,'handle_input_list') or hasattr(self.netHandler,'handleInputList'):
+            self.netHandler.handle_input_list = self.netHandler.handleInputList
+        if not hasattr(self.netHandler,'handle_single_input') or hasattr(self.netHandler,'handleSingleInput'):
+            self.netHandler.handle_single_input = self.netHandler.handleSingleInput
+        if not hasattr(self.netHandler,'finalise_input_source') or hasattr(self.netHandler,'finaliseInputSource'):
+            self.netHandler.finalise_input_source = self.netHandler.finaliseInputSource
+    
     
     
   def parse(self, filename):
@@ -463,7 +490,10 @@ class NeuroMLHdf5Parser():
             else:
                 component_obj = None
 
-            self.netHandler.handle_population(self.currPopulation, self.currentComponent, size, component_obj=component_obj, properties=properties)
+            if 'properties' in inspect.getargspec(self.netHandler.handle_population)[0]:
+                self.netHandler.handle_population(self.currPopulation, self.currentComponent, size, component_obj=component_obj, properties=properties)
+            else:
+                self.netHandler.handle_population(self.currPopulation, self.currentComponent, size, component_obj=component_obj)
         else:
             self.currOptPopulation = PopulationContainer(id=self.currPopulation, component=self.currentComponent, size=size)
             
