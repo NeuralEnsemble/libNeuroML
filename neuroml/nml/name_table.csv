@@ -178,6 +178,7 @@ segment,segments
 refract,refract
 postFractionAlong,post_fraction_along
 ionChannelVShift,ion_channel_v_shifts
+spikeGeneratorRefPoisson,spike_generator_ref_poissons
 random,random
 channelTypes,channel_types
 xStart,x_start
@@ -343,6 +344,7 @@ postSegment,post_segment
 javax.xml.bind.DatatypeConverter.printInt,javax.xml.bind._datatype_converter.print_int
 z,z
 xs:double,xs:double
+required,required
 int,int
 gAmpa,g_ampa
 electricalConnection,electrical_connections
@@ -361,5 +363,5 @@ variable,variable
 structure,structure
 spikeArray,spike_arrays
 blockingPlasticSynapse,blocking_plastic_synapses
-required,required
+minimumISI,minimum_isi
 time,time

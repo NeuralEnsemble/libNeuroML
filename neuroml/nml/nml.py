@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Dec 12 14:06:13 2017 by generateDS.py version 2.24b.
+# Generated Wed Dec 13 20:42:51 2017 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -7420,10 +7420,11 @@ class SpikeGeneratorPoisson(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, average_rate=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, average_rate=None, extensiontype_=None):
         self.original_tagname_ = None
-        super(SpikeGeneratorPoisson, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
+        super(SpikeGeneratorPoisson, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_, )
         self.average_rate = _cast(None, average_rate)
+        self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -7472,6 +7473,10 @@ class SpikeGeneratorPoisson(Standalone):
         if self.average_rate is not None and 'average_rate' not in already_processed:
             already_processed.add('average_rate')
             outfile.write(' averageRate=%s' % (quote_attrib(self.average_rate), ))
+        if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            outfile.write(' xsi:type="%s"' % self.extensiontype_)
     def exportChildren(self, outfile, level, namespace_='', name_='SpikeGeneratorPoisson', fromsubclass_=False, pretty_print=True):
         super(SpikeGeneratorPoisson, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
     def build(self, node):
@@ -7487,6 +7492,10 @@ class SpikeGeneratorPoisson(Standalone):
             already_processed.add('averageRate')
             self.average_rate = value
             self.validate_Nml2Quantity_pertime(self.average_rate)    # validate type Nml2Quantity_pertime
+        value = find_attr_value_('xsi:type', node)
+        if value is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            self.extensiontype_ = value
         super(SpikeGeneratorPoisson, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         super(SpikeGeneratorPoisson, self).buildChildren(child_, node, nodeName_, True)
@@ -14042,6 +14051,7 @@ class NeuroMLDocument(Standalone):
         MemberSpec_('spike_generators', 'SpikeGenerator', 1),
         MemberSpec_('spike_generator_randoms', 'SpikeGeneratorRandom', 1),
         MemberSpec_('spike_generator_poissons', 'SpikeGeneratorPoisson', 1),
+        MemberSpec_('spike_generator_ref_poissons', 'SpikeGeneratorRefPoisson', 1),
         MemberSpec_('poisson_firing_synapses', 'PoissonFiringSynapse', 1),
         MemberSpec_('transient_poisson_firing_synapses', 'TransientPoissonFiringSynapse', 1),
         MemberSpec_('IF_curr_alpha', 'IF_curr_alpha', 1),
@@ -14061,7 +14071,7 @@ class NeuroMLDocument(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, ion_channel_hhs=None, ion_channel_v_shifts=None, ion_channel_kses=None, decaying_pool_concentration_models=None, fixed_factor_concentration_models=None, alpha_current_synapses=None, alpha_synapses=None, exp_one_synapses=None, exp_two_synapses=None, exp_three_synapses=None, blocking_plastic_synapses=None, double_synapses=None, gap_junctions=None, silent_synapses=None, linear_graded_synapses=None, graded_synapses=None, biophysical_properties=None, cells=None, cell2_ca_poolses=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, izhikevich2007_cells=None, ad_ex_ia_f_cells=None, fitz_hugh_nagumo_cells=None, fitz_hugh_nagumo1969_cells=None, pinsky_rinzel_ca3_cells=None, pulse_generators=None, pulse_generator_dls=None, sine_generators=None, sine_generator_dls=None, ramp_generators=None, ramp_generator_dls=None, compound_inputs=None, compound_input_dls=None, voltage_clamps=None, voltage_clamp_triples=None, spike_arrays=None, timed_synaptic_inputs=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, poisson_firing_synapses=None, transient_poisson_firing_synapses=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, ion_channel_hhs=None, ion_channel_v_shifts=None, ion_channel_kses=None, decaying_pool_concentration_models=None, fixed_factor_concentration_models=None, alpha_current_synapses=None, alpha_synapses=None, exp_one_synapses=None, exp_two_synapses=None, exp_three_synapses=None, blocking_plastic_synapses=None, double_synapses=None, gap_junctions=None, silent_synapses=None, linear_graded_synapses=None, graded_synapses=None, biophysical_properties=None, cells=None, cell2_ca_poolses=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, izhikevich2007_cells=None, ad_ex_ia_f_cells=None, fitz_hugh_nagumo_cells=None, fitz_hugh_nagumo1969_cells=None, pinsky_rinzel_ca3_cells=None, pulse_generators=None, pulse_generator_dls=None, sine_generators=None, sine_generator_dls=None, ramp_generators=None, ramp_generator_dls=None, compound_inputs=None, compound_input_dls=None, voltage_clamps=None, voltage_clamp_triples=None, spike_arrays=None, timed_synaptic_inputs=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, spike_generator_ref_poissons=None, poisson_firing_synapses=None, transient_poisson_firing_synapses=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None):
         self.original_tagname_ = None
         super(NeuroMLDocument, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, )
         if includes is None:
@@ -14264,6 +14274,10 @@ class NeuroMLDocument(Standalone):
             self.spike_generator_poissons = []
         else:
             self.spike_generator_poissons = spike_generator_poissons
+        if spike_generator_ref_poissons is None:
+            self.spike_generator_ref_poissons = []
+        else:
+            self.spike_generator_ref_poissons = spike_generator_ref_poissons
         if poisson_firing_synapses is None:
             self.poisson_firing_synapses = []
         else:
@@ -14391,6 +14405,7 @@ class NeuroMLDocument(Standalone):
             self.spike_generators or
             self.spike_generator_randoms or
             self.spike_generator_poissons or
+            self.spike_generator_ref_poissons or
             self.poisson_firing_synapses or
             self.transient_poisson_firing_synapses or
             self.IF_curr_alpha or
@@ -14538,6 +14553,8 @@ class NeuroMLDocument(Standalone):
             spikeGeneratorRandom_.export(outfile, level, namespace_, name_='spikeGeneratorRandom', pretty_print=pretty_print)
         for spikeGeneratorPoisson_ in self.spike_generator_poissons:
             spikeGeneratorPoisson_.export(outfile, level, namespace_, name_='spikeGeneratorPoisson', pretty_print=pretty_print)
+        for spikeGeneratorRefPoisson_ in self.spike_generator_ref_poissons:
+            spikeGeneratorRefPoisson_.export(outfile, level, namespace_, name_='spikeGeneratorRefPoisson', pretty_print=pretty_print)
         for poissonFiringSynapse_ in self.poisson_firing_synapses:
             poissonFiringSynapse_.export(outfile, level, namespace_, name_='poissonFiringSynapse', pretty_print=pretty_print)
         for transientPoissonFiringSynapse_ in self.transient_poisson_firing_synapses:
@@ -14834,10 +14851,16 @@ class NeuroMLDocument(Standalone):
             self.spike_generator_randoms.append(obj_)
             obj_.original_tagname_ = 'spikeGeneratorRandom'
         elif nodeName_ == 'spikeGeneratorPoisson':
-            obj_ = SpikeGeneratorPoisson.factory()
+            class_obj_ = self.get_class_obj_(child_, SpikeGeneratorPoisson)
+            obj_ = class_obj_.factory()
             obj_.build(child_)
             self.spike_generator_poissons.append(obj_)
             obj_.original_tagname_ = 'spikeGeneratorPoisson'
+        elif nodeName_ == 'spikeGeneratorRefPoisson':
+            obj_ = SpikeGeneratorRefPoisson.factory()
+            obj_.build(child_)
+            self.spike_generator_ref_poissons.append(obj_)
+            obj_.original_tagname_ = 'spikeGeneratorRefPoisson'
         elif nodeName_ == 'poissonFiringSynapse':
             obj_ = PoissonFiringSynapse.factory()
             obj_.build(child_)
@@ -16165,6 +16188,86 @@ class Projection(BaseProjection):
         
 
     # end class Projection
+
+
+class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
+    member_data_items_ = [
+        MemberSpec_('minimumISI', 'Nml2Quantity_time', 0),
+    ]
+    subclass = None
+    superclass = SpikeGeneratorPoisson
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, average_rate=None, minimum_isi=None):
+        self.original_tagname_ = None
+        super(SpikeGeneratorRefPoisson, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, average_rate, )
+        self.minimum_isi = _cast(None, minimum_isi)
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, SpikeGeneratorRefPoisson)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if SpikeGeneratorRefPoisson.subclass:
+            return SpikeGeneratorRefPoisson.subclass(*args_, **kwargs_)
+        else:
+            return SpikeGeneratorRefPoisson(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_time_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_time_patterns_, ))
+    validate_Nml2Quantity_time_patterns_ = [['^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s$|^ms)$']]
+    def hasContent_(self):
+        if (
+            super(SpikeGeneratorRefPoisson, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='SpikeGeneratorRefPoisson', namespacedef_='', pretty_print=True):
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='SpikeGeneratorRefPoisson')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='SpikeGeneratorRefPoisson', pretty_print=pretty_print)
+            showIndent(outfile, level, pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='SpikeGeneratorRefPoisson'):
+        super(SpikeGeneratorRefPoisson, self).exportAttributes(outfile, level, already_processed, namespace_, name_='SpikeGeneratorRefPoisson')
+        if self.minimum_isi is not None and 'minimum_isi' not in already_processed:
+            already_processed.add('minimum_isi')
+            outfile.write(' minimumISI=%s' % (quote_attrib(self.minimum_isi), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='SpikeGeneratorRefPoisson', fromsubclass_=False, pretty_print=True):
+        super(SpikeGeneratorRefPoisson, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('minimumISI', node)
+        if value is not None and 'minimumISI' not in already_processed:
+            already_processed.add('minimumISI')
+            self.minimum_isi = value
+            self.validate_Nml2Quantity_time(self.minimum_isi)    # validate type Nml2Quantity_time
+        super(SpikeGeneratorRefPoisson, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(SpikeGeneratorRefPoisson, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class SpikeGeneratorRefPoisson
 
 
 class ConcentrationModel_D(DecayingPoolConcentrationModel):
@@ -22181,6 +22284,7 @@ GDSClassesMapping = {
     'spikeGenerator': SpikeGenerator,
     'spikeGeneratorPoisson': SpikeGeneratorPoisson,
     'spikeGeneratorRandom': SpikeGeneratorRandom,
+    'spikeGeneratorRefPoisson': SpikeGeneratorRefPoisson,
     'spikeThresh': SpikeThresh,
     'steadyState': HHVariable,
     'structure': SpaceStructure,
@@ -22489,6 +22593,195 @@ __all__ = [
     "SpikeGenerator",
     "SpikeGeneratorPoisson",
     "SpikeGeneratorRandom",
+    "SpikeGeneratorRefPoisson",
+    "SpikeSourcePoisson",
+    "SpikeThresh",
+    "Standalone",
+    "SubTree",
+    "SynapticConnection",
+    "TauInfTransition",
+    "TimedSynapticInput",
+    "TransientPoissonFiringSynapse",
+    "UnstructuredLayout",
+    "ValueAcrossSegOrSegGroup",
+    "VariableParameter",
+    "VoltageClamp",
+    "VoltageClampTriple",
+    "basePyNNCell",
+    "basePyNNIaFCell",
+    "basePyNNIaFCondCell"
+]
+
+__all__ = [
+    "AdExIaFCell",
+    "AlphaCondSynapse",
+    "AlphaCurrSynapse",
+    "AlphaCurrentSynapse",
+    "AlphaSynapse",
+    "Annotation",
+    "Base",
+    "BaseCell",
+    "BaseCellMembPotCap",
+    "BaseConductanceBasedSynapse",
+    "BaseConductanceBasedSynapseTwo",
+    "BaseConnection",
+    "BaseConnectionNewFormat",
+    "BaseConnectionOldFormat",
+    "BaseCurrentBasedSynapse",
+    "BaseNonNegativeIntegerId",
+    "BaseProjection",
+    "BasePynnSynapse",
+    "BaseSynapse",
+    "BaseVoltageDepSynapse",
+    "BaseWithoutId",
+    "BiophysicalProperties",
+    "BiophysicalProperties2CaPools",
+    "BlockMechanism",
+    "BlockingPlasticSynapse",
+    "Case",
+    "Cell",
+    "Cell2CaPools",
+    "CellSet",
+    "ChannelDensity",
+    "ChannelDensityGHK",
+    "ChannelDensityGHK2",
+    "ChannelDensityNernst",
+    "ChannelDensityNernstCa2",
+    "ChannelDensityNonUniform",
+    "ChannelDensityNonUniformGHK",
+    "ChannelDensityNonUniformNernst",
+    "ChannelDensityVShift",
+    "ChannelPopulation",
+    "ClosedState",
+    "ComponentType",
+    "CompoundInput",
+    "CompoundInputDL",
+    "ConcentrationModel_D",
+    "ConditionalDerivedVariable",
+    "Connection",
+    "ConnectionWD",
+    "Constant",
+    "ContinuousConnection",
+    "ContinuousConnectionInstance",
+    "ContinuousConnectionInstanceW",
+    "ContinuousProjection",
+    "DecayingPoolConcentrationModel",
+    "DerivedVariable",
+    "DistalDetails",
+    "DoubleSynapse",
+    "Dynamics",
+    "EIF_cond_alpha_isfa_ista",
+    "EIF_cond_exp_isfa_ista",
+    "ElectricalConnection",
+    "ElectricalConnectionInstance",
+    "ElectricalConnectionInstanceW",
+    "ElectricalProjection",
+    "ExpCondSynapse",
+    "ExpCurrSynapse",
+    "ExpOneSynapse",
+    "ExpThreeSynapse",
+    "ExpTwoSynapse",
+    "ExplicitInput",
+    "ExtracellularProperties",
+    "ExtracellularPropertiesLocal",
+    "FitzHughNagumo1969Cell",
+    "FitzHughNagumoCell",
+    "FixedFactorConcentrationModel",
+    "ForwardTransition",
+    "GapJunction",
+    "GateFractional",
+    "GateFractionalSubgate",
+    "GateHHInstantaneous",
+    "GateHHRates",
+    "GateHHRatesInf",
+    "GateHHRatesTau",
+    "GateHHRatesTauInf",
+    "GateHHTauInf",
+    "GateHHUndetermined",
+    "GateKS",
+    "GradedSynapse",
+    "GridLayout",
+    "HHRate",
+    "HHTime",
+    "HHVariable",
+    "HH_cond_exp",
+    "IF_cond_alpha",
+    "IF_cond_exp",
+    "IF_curr_alpha",
+    "IF_curr_exp",
+    "IafCell",
+    "IafRefCell",
+    "IafTauCell",
+    "IafTauRefCell",
+    "Include",
+    "IncludeType",
+    "InhomogeneousParameter",
+    "InhomogeneousValue",
+    "InitMembPotential",
+    "Input",
+    "InputList",
+    "InputW",
+    "Instance",
+    "IntracellularProperties",
+    "IntracellularProperties2CaPools",
+    "IonChannel",
+    "IonChannelHH",
+    "IonChannelKS",
+    "IonChannelScalable",
+    "IonChannelVShift",
+    "Izhikevich2007Cell",
+    "IzhikevichCell",
+    "LEMS_Property",
+    "Layout",
+    "LinearGradedSynapse",
+    "Location",
+    "Member",
+    "MembraneProperties",
+    "MembraneProperties2CaPools",
+    "Morphology",
+    "NamedDimensionalType",
+    "Network",
+    "NeuroMLDocument",
+    "OpenState",
+    "Parameter",
+    "Path",
+    "PinskyRinzelCA3Cell",
+    "PlasticityMechanism",
+    "Point3DWithDiam",
+    "PoissonFiringSynapse",
+    "Population",
+    "Projection",
+    "Property",
+    "ProximalDetails",
+    "PulseGenerator",
+    "PulseGeneratorDL",
+    "Q10ConductanceScaling",
+    "Q10Settings",
+    "RampGenerator",
+    "RampGeneratorDL",
+    "RandomLayout",
+    "ReactionScheme",
+    "Region",
+    "Requirement",
+    "Resistivity",
+    "ReverseTransition",
+    "Segment",
+    "SegmentEndPoint",
+    "SegmentGroup",
+    "SegmentParent",
+    "SilentSynapse",
+    "SineGenerator",
+    "SineGeneratorDL",
+    "Space",
+    "SpaceStructure",
+    "Species",
+    "SpecificCapacitance",
+    "Spike",
+    "SpikeArray",
+    "SpikeGenerator",
+    "SpikeGeneratorPoisson",
+    "SpikeGeneratorRandom",
+    "SpikeGeneratorRefPoisson",
     "SpikeSourcePoisson",
     "SpikeThresh",
     "Standalone",
