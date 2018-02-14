@@ -240,26 +240,29 @@ def read_neuroml2_file(nml2_file_name, include_includes=False, verbose=False,
                        
                        
 def read_neuroml2_string(nml2_string, include_includes=False, verbose=False, 
-                       already_included=[], print_method=print_, optimized=False):  
+                       already_included=[], print_method=print_, optimized=False, base_path=None):  
     
+    print_method("Loading NeuroML2 string, base_path: %s" % base_path, verbose)
         
     return _read_neuroml2(nml2_string, include_includes=include_includes, verbose=verbose, 
-                       already_included=already_included, print_method=print_method, optimized=optimized)
+                       already_included=already_included, print_method=print_method, 
+                       optimized=optimized, base_path=base_path)
     
 
 
 def _read_neuroml2(nml2_file_name_or_string, include_includes=False, verbose=False, 
-                       already_included=[], print_method=print_, optimized=False):  
+                       already_included=[], print_method=print_, optimized=False, base_path=None):  
     
     #print("................ Loading: %s"%nml2_file_name_or_string[:7])
     
-    base_path = os.path.dirname(os.path.realpath(nml2_file_name_or_string))
+    base_path_to_use = os.path.dirname(os.path.realpath(nml2_file_name_or_string)) if base_path == None else base_path
+        
     
     if supressGeneratedsWarnings: warnings.simplefilter("ignore")
     
     if not isinstance(nml2_file_name_or_string, str) or nml2_file_name_or_string.startswith('<'):
         nml2_doc = nmlparsestring(nml2_file_name_or_string)
-        base_path = './'
+        base_path_to_use = './' if base_path == None else base_path
     elif nml2_file_name_or_string.endswith('.h5') or nml2_file_name_or_string.endswith('.hdf5'):
         nml2_doc = NeuroMLHdf5Loader.load(nml2_file_name_or_string,optimized=optimized)
     else:
@@ -272,9 +275,9 @@ def _read_neuroml2(nml2_file_name_or_string, include_includes=False, verbose=Fal
                       % already_included, verbose)
         
         for include in nml2_doc.includes:
-            incl_loc = os.path.abspath(os.path.join(base_path, include.href))
+            incl_loc = os.path.abspath(os.path.join(base_path_to_use, include.href))
             if incl_loc not in already_included:
-                print_method("Loading included NeuroML2 file: %s (base: %s, resolved: %s)" % (include.href, base_path, incl_loc), 
+                print_method("Loading included NeuroML2 file: %s (base: %s, resolved: %s)" % (include.href, base_path_to_use, incl_loc), 
                               verbose)
                               
                 if incl_loc.endswith('.nml') or incl_loc.endswith('.xml'):

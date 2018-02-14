@@ -35,6 +35,7 @@ from neuroml.hdf5.NetworkContainer import InputsList
 
 from neuroml.loaders import read_neuroml2_string
 from neuroml.utils import add_all_to_document
+import os.path
 
 
 class NeuroMLHdf5Parser():
@@ -101,7 +102,10 @@ class NeuroMLHdf5Parser():
         if sys.version_info[0] == 3:
             nml = nml.encode()
             
-        self.nml_doc_extra_elements = read_neuroml2_string(nml, include_includes=True, verbose=False)
+        self.nml_doc_extra_elements = read_neuroml2_string(nml, 
+                                                           include_includes=True, 
+                                                           verbose=True,
+                                                           base_path=os.path.dirname(os.path.abspath(filename)))
         
         #print(self.nml_doc_extra_elements.summary())
         
