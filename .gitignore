@@ -42,3 +42,5 @@ neuroml/test/*.h5
 /release
 /private/cache
 /nb-configuration.xml
+/neuroml/examples/report.txt
+/neuroml/examples/test_files/report.txt

@@ -1,14 +1,14 @@
 <neuroml xmlns="http://www.neuroml.org/schema/neuroml2"  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta5.xsd" id="Complete">
     <notes>Lots of notes....</notes>
-    <expOneSynapse id="syn0" gbase="65nS" erev="0mV" tauDecay="3ms"/>
-    <expTwoSynapse id="syn1" gbase="65nS" erev="0mV" tauDecay="3ms" tauRise="1ms"/>
+    <expOneSynapse id="syn0" gbase="14nS" erev="0mV" tauDecay="3ms"/>
+    <expTwoSynapse id="syn1" gbase="2nS" erev="0mV" tauDecay="3ms" tauRise="1ms"/>
     <gapJunction id="gj1" conductance="10pS"/>
     <silentSynapse id="silent1"/>
-    <gradedSynapse id="gs1" conductance="5pS" delta="5mV" Vth="-55mV" k="0.025per_ms" erev="0mV"/>
+    <gradedSynapse id="gs1" conductance="0.5pS" delta="5mV" Vth="-55mV" k="0.025per_ms" erev="0mV"/>
     <iafCell id="iaf0" leakReversal="-65mV" thresh="-50mV" reset="-65mV" C="1.0 nF" leakConductance="10 nS"/>
     <iafCell id="iaf1" leakReversal="-65mV" thresh="-50mV" reset="-65mV" C="1.0 nF" leakConductance="20 nS"/>
     <izhikevichCell id="iz0" v0="-70mV" thresh="30mV" a="0.02" b="0.2" c="-65.0" d="6"/>
-    <poissonFiringSynapse id="pfs" averageRate="50Hz" synapse="syn0" spikeTarget="./syn0"/>
+    <poissonFiringSynapse id="pfs" averageRate="150Hz" synapse="syn0" spikeTarget="./syn0"/>
     <network id="CompleteNet" type="networkWithTemperature" temperature="6.3 degC">
         <notes>Network notes...</notes>
         <population id="IafPop0" component="iaf0" size="10"/>
@@ -74,7 +74,7 @@
         </projection>
         <projection id="ProjEmpty" presynapticPopulation="IafPop0" postsynapticPopulation="IafPop1" synapse="syn0"/>
         <projection id="ProjConnection" presynapticPopulation="IafPop0" postsynapticPopulation="IafPop1" synapse="syn1">
-            <connection id="0" preCellId="../IafPop0/9/iaf0" preFractionAlong="0.549742848364" postCellId="../IafPop1/9/iaf0" postFractionAlong="0.991327292136"/>
+            <connection id="0" preCellId="../IafPop0[9]" preFractionAlong="0.549742848364" postCellId="../IafPop1[9]" postFractionAlong="0.991327292136"/>
         </projection>
         <electricalProjection id="ElectProj" presynapticPopulation="Pop_x" postsynapticPopulation="Pop_x">
             <electricalConnectionInstance id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.76879474748" postCell="../Pop_x/1/iaf0" postFractionAlong="0.343462158156" synapse="gj1"/>
@@ -191,11 +191,11 @@
         <continuousProjection id="ProjCC" presynapticPopulation="IafPop0" postsynapticPopulation="IafPop1">
             <continuousConnection id="0" preCell="0" preSegment="0" preFractionAlong="0.5" postCell="0" postSegment="0" postFractionAlong="0.5" preComponent="silent1" postComponent="gs1"/>
         </continuousProjection>
-        <continuousProjection id="ProjCCI" presynapticPopulation="Pop_x" postsynapticPopulation="Pop_x">
-            <continuousConnectionInstance id="0" preCell="../IafPop0/0/Pop_x" preFractionAlong="0.925038673001" postCell="../IafPop1/0/Pop_x" postFractionAlong="0.890281011018" preComponent="silent1" postComponent="gs1"/>
+        <continuousProjection id="ProjCCI" presynapticPopulation="Pop_x" postsynapticPopulation="IafPop1">
+            <continuousConnectionInstance id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.925038673001" postCell="../IafPop1[0]" postFractionAlong="0.890281011018" preComponent="silent1" postComponent="gs1"/>
         </continuousProjection>
-        <continuousProjection id="ProjCCIW" presynapticPopulation="Pop_x" postsynapticPopulation="Pop_x">
-            <continuousConnectionInstanceW id="0" preCell="../IafPop0/0/Pop_x" preFractionAlong="0.603907240251" postCell="../IafPop1/0/Pop_x" postFractionAlong="0.144025903342" preComponent="silent1" postComponent="gs1" weight="5."/>
+        <continuousProjection id="ProjCCIW" presynapticPopulation="Pop_x" postsynapticPopulation="IafPop1">
+            <continuousConnectionInstanceW id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.603907240251" postCell="../IafPop1[0]" postFractionAlong="0.144025903342" preComponent="silent1" postComponent="gs1" weight="5."/>
         </continuousProjection>
         <inputList id="il" population="Pop_x" component="pfs">
             <input id="0" target="../Pop_x/0/iaf0" destination="synapses"/>

@@ -637,6 +637,12 @@ nml_doc_summary = MethodSpec(name='summary',
         
         
     def get_by_id(self,id):
+        if len(id)==0:
+            import inspect
+            callframe = inspect.getouterframes(inspect.currentframe(), 2)
+            print('Method: '+ callframe[1][3] + ' is asking for an element with no id...')
+            
+            return None
         all_ids = []
         for ms in self.member_data_items_:
             mlist = self.__getattribute__(ms.name)

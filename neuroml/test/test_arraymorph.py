@@ -159,12 +159,6 @@ class TestArrayMorphology(unittest.TestCase):
         """
         There is no segments[1] for a one-segment morphology
         """
-        
-#        print self.small_morphology.vertices
-#        print self.small_morphology.segments[0].id
-#        print self.small_morphology.segments[1].id
-#        print 'instnatiated segments:'
-#        print self.small_morphology.segments.instantiated_segments
 
         self.assertRaises(IndexError,self.small_morphology.segments.__getitem__,1)
         

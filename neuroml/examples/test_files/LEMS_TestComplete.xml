@@ -1,0 +1,45 @@
+
+<Lems>
+
+    <!-- Example with Simple Integrate and Fire cell -->
+
+    <!-- This is a file which can be read and executed by the LEMS Interpreter.
+    It imports the LEMS definitions of the core NeuroML 2 Components, creates
+    a model in "pure" NeuroML 2 and contains some LEMS elements for running a
+    simulation -->
+
+    <!-- Specify which component to run -->
+    <Target component="sim1" reportFile="report.txt"/>
+
+    <!-- Include core NeuroML2 ComponentType definitions -->
+
+    <Include file="Cells.xml" />
+    <!-- The above file includes NeuroMLCoreDimensions.xml, Channels.xml,
+    Synapses.xml and Inputs.xml -->
+    <Include file="Networks.xml" />
+    <Include file="Simulation.xml" />
+
+
+    <Include file="complete.nml" />
+
+    <!-- End of NeuroML2 content -->
+
+
+    <Simulation id="sim1" length="300ms" step="0.005ms" target="CompleteNet">
+
+        <Display id="d0" title="D1" timeScale="1ms" xmin="0"
+                 xmax="300" ymin="-75" ymax="-50">
+            <Line id="l0" quantity="IafPop0[0]/v" scale="1mV" color="#FF0000" timeScale="1ms" />
+            <Line id="l1" quantity="IafPop0[1]/v" scale="1mV" color="#FF0220" timeScale="1ms" />
+            <Line id="l10" quantity="IafPop1[0]/v" scale="1mV" color="#220220" timeScale="1ms" />
+            <Line id="l11" quantity="IafPop1[1]/v" scale="1mV" color="#eee220" timeScale="1ms" />
+            <Line id="lx0" quantity="Pop_x/0/iaf0/v" scale="1mV" color="#22aaa0" timeScale="1ms" />
+            <Line id="lx1" quantity="Pop_x/1/iaf0/v" scale="1mV" color="#aaaa20" timeScale="1ms" />
+        </Display>
+
+
+    </Simulation>
+
+
+</Lems>
+

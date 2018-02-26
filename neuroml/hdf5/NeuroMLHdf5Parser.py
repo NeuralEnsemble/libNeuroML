@@ -104,7 +104,7 @@ class NeuroMLHdf5Parser():
             
         self.nml_doc_extra_elements = read_neuroml2_string(nml, 
                                                            include_includes=True, 
-                                                           verbose=True,
+                                                           verbose=False,
                                                            base_path=os.path.dirname(os.path.abspath(filename)))
         
         #print(self.nml_doc_extra_elements.summary())
@@ -293,7 +293,8 @@ class NeuroMLHdf5Parser():
 
             if self.nml_doc_extra_elements:
                 synapse_obj = self.nml_doc_extra_elements.get_by_id(self.currentSynapse)
-                pre_synapse_obj = self.nml_doc_extra_elements.get_by_id(self.currentPreSynapse)
+                
+                pre_synapse_obj = self.nml_doc_extra_elements.get_by_id(self.currentPreSynapse) if len(self.currentPreSynapse)>0 else None
                 
             else:
                 synapse_obj = None

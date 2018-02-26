@@ -71,14 +71,14 @@ iz0 = IzhikevichCell(id="iz0", v0="-70mV", thresh="30mV", a="0.02", b="0.2", c="
 nml_doc.izhikevich_cells.append(iz0)
 
 syn0 = ExpOneSynapse(id="syn0",
-                     gbase="65nS",
+                     gbase="14nS",
                      erev="0mV",
                      tau_decay="3ms")
 
 nml_doc.exp_one_synapses.append(syn0)
 
 syn1 = ExpTwoSynapse(id="syn1",
-                     gbase="65nS",
+                     gbase="2nS",
                      erev="0mV",
                      tau_rise="1ms",
                      tau_decay="3ms")
@@ -95,11 +95,11 @@ sil_syn = SilentSynapse(id="silent1")
 nml_doc.silent_synapses.append(sil_syn)
 
 
-grad_syn = GradedSynapse(id="gs1",conductance="5pS",delta="5mV",Vth="-55mV",k="0.025per_ms",erev="0mV")
+grad_syn = GradedSynapse(id="gs1",conductance="0.5pS",delta="5mV",Vth="-55mV",k="0.025per_ms",erev="0mV")
 nml_doc.graded_synapses.append(grad_syn)
 
 pfs = PoissonFiringSynapse(id='pfs',
-                                   average_rate='50Hz',
+                                   average_rate='150Hz',
                                    synapse=syn0.id, 
                                    spike_target="./%s"%syn0.id)
 
@@ -261,25 +261,31 @@ for pre_index in range(0,size0):
             electricalProjection.electrical_connections.append(electricalConnection)
             
             proj_count += 1
-            
+
 projection0 = Projection(id="ProjEmpty", presynaptic_population=from_pop, postsynaptic_population=to_pop, synapse=syn0.id)
 
 net.projections.append(projection0)
 
 
+from_pop = pop0.id
+to_pop = pop1.id
+
 projection = Projection(id="ProjConnection", presynaptic_population=from_pop, postsynaptic_population=to_pop, synapse=syn1.id)
 net.projections.append(projection)
 
 connection = Connection(id=0, \
-                        pre_cell_id="../%s/%i/%s"%(from_pop,size0-1,IafCell0.id), \
+                        pre_cell_id="../%s[%i]"%(from_pop,size0-1), \
                         pre_segment_id=pre_seg_id, \
                         pre_fraction_along=random.random(),
-                        post_cell_id="../%s/%i/%s"%(to_pop,size0-1,IafCell0.id), \
+                        post_cell_id="../%s[%i]"%(to_pop,size0-1), \
                         post_segment_id=post_seg_id,
                         post_fraction_along=random.random())
 
 projection.connections.append(connection)
 
+
+from_pop = pop0.id
+to_pop = pop1.id
 
 continuous_projection = ContinuousProjection(id="ProjCC", presynaptic_population=from_pop, postsynaptic_population=to_pop)
 net.continuous_projections.append(continuous_projection)
@@ -292,14 +298,17 @@ continuous_connection = ContinuousConnection(id=0, \
 
 continuous_projection.continuous_connections.append(continuous_connection)
 
-continuous_projection_i = ContinuousProjection(id="ProjCCI", presynaptic_population=pop.id, postsynaptic_population=pop.id)
+from_pop = pop.id
+to_pop = pop1.id
+
+continuous_projection_i = ContinuousProjection(id="ProjCCI", presynaptic_population=from_pop, postsynaptic_population=to_pop)
 net.continuous_projections.append(continuous_projection_i)
 
 continuous_connection_i = ContinuousConnectionInstance(id=0, \
-                                    pre_cell="../%s/%i/%s"%(from_pop,0,pop.id), \
+                                    pre_cell="../%s/%i/%s"%(from_pop,0,pop.component), \
                                     pre_segment=pre_seg_id, \
                                     pre_fraction_along=random.random(),
-                                    post_cell="../%s/%i/%s"%(to_pop,0,pop.id), \
+                                    post_cell="../%s[%i]"%(to_pop,0), \
                                     post_segment=post_seg_id,
                                     post_fraction_along=random.random(), 
                                     pre_component=sil_syn.id, \
@@ -307,14 +316,14 @@ continuous_connection_i = ContinuousConnectionInstance(id=0, \
 
 continuous_projection_i.continuous_connection_instances.append(continuous_connection_i)
 
-continuous_projection_iw = ContinuousProjection(id="ProjCCIW", presynaptic_population=pop.id, postsynaptic_population=pop.id)
+continuous_projection_iw = ContinuousProjection(id="ProjCCIW", presynaptic_population=from_pop, postsynaptic_population=to_pop)
 net.continuous_projections.append(continuous_projection_iw)
 
 continuous_connection_iw = ContinuousConnectionInstanceW(id=0, \
-                                    pre_cell="../%s/%i/%s"%(from_pop,0,pop.id), \
+                                    pre_cell="../%s/%i/%s"%(from_pop,0,pop.component), \
                                     pre_segment=pre_seg_id, \
                                     pre_fraction_along=random.random(),
-                                    post_cell="../%s/%i/%s"%(to_pop,0,pop.id), \
+                                    post_cell="../%s[%i]"%(to_pop,0), \
                                     post_segment=post_seg_id,
                                     post_fraction_along=random.random(), 
                                     pre_component=sil_syn.id, \
