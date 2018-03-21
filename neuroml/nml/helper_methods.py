@@ -726,11 +726,10 @@ cell_methods = MethodSpec(name='cell_methods',
         return segments
         
     def get_all_segments_in_group(self,
-                                  segment_group,
-                                  cell):
+                                  segment_group):
                                   
         if isinstance(segment_group, str):
-            for sg in cell.morphology.segment_groups:
+            for sg in self.morphology.segment_groups:
                 if sg.id == segment_group:
                     segment_group = sg
                 
@@ -742,7 +741,7 @@ cell_methods = MethodSpec(name='cell_methods',
         
         
         for include in segment_group.includes:
-            segs_here = self.get_all_segments_in_group(include.segment_groups, cell)
+            segs_here = self.get_all_segments_in_group(include.segment_groups)
             for s in segs_here:
                 if not s in all_segs:
                     all_segs.append(s)
@@ -766,7 +765,7 @@ cell_methods = MethodSpec(name='cell_methods',
         segments = self.get_segment_ids_vs_segments()
 
         for sg in self.morphology.segment_groups:
-            all_segs_here = self.get_all_segments_in_group(sg,self)
+            all_segs_here = self.get_all_segments_in_group(sg)
             
             if sg.id in group_list:
                 unord_segs[sg.id] = [segments[s] for s in all_segs_here]
