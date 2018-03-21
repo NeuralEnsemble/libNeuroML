@@ -2,19 +2,21 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Feb 26 09:26:56 2018 by generateDS.py version 2.24b.
+# Generated Wed Mar 21 13:19:16 2018 by generateDS.py version 2.24b.
 #
 # Command line options:
 #   ('-o', 'nml.py')
 #   ('--use-getter-setter', 'none')
 #   ('--silence', '')
 #   ('--user-methods', 'helper_methods')
+#   ('-q', '')
+#   ('-f', '')
 #
 # Command line arguments:
 #   NeuroML_v2beta5.xsd
 #
 # Command line:
-#   /usr/local/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2beta5.xsd
+#   /usr/local/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" -q -f NeuroML_v2beta5.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -11248,6 +11250,16 @@ class SegmentGroup(Base):
             self.inhomogeneous_parameters.append(obj_)
             obj_.original_tagname_ = 'inhomogeneousParameter'
         super(SegmentGroup, self).buildChildren(child_, node, nodeName_, True)
+
+        
+    def __str__(self):
+        
+        return "SegmentGroup: "+str(self.id)+", "+str(len(self.members))+" member(s), "+str(len(self.includes))+" included group(s)"
+        
+    def __repr__(self):
+    
+        return str(self)
+    
 # end class SegmentGroup
 
 
@@ -16616,6 +16628,30 @@ class Cell(BaseCell):
 
         return segments
         
+    def get_all_segments_in_group(self,
+                                  segment_group,
+                                  cell):
+                                  
+        if isinstance(segment_group, str):
+            for sg in cell.morphology.segment_groups:
+                if sg.id == segment_group:
+                    segment_group = sg
+                
+        all_segs = []
+        
+        for member in segment_group.members:
+            if not member.segments in all_segs:
+                all_segs.append(member.segments)
+        
+        
+        for include in segment_group.includes:
+            segs_here = self.get_all_segments_in_group(include.segment_groups, cell)
+            for s in segs_here:
+                if not s in all_segs:
+                    all_segs.append(s)
+        
+        return all_segs
+        
 
     def get_ordered_segments_in_groups(self, 
                                        group_list, 
@@ -16633,24 +16669,13 @@ class Cell(BaseCell):
         segments = self.get_segment_ids_vs_segments()
 
         for sg in self.morphology.segment_groups:
+            all_segs_here = self.get_all_segments_in_group(sg,self)
+            
             if sg.id in group_list:
-                unord_segs[sg.id] = []
-                for member in sg.members:
-                    unord_segs[sg.id].append(segments[member.segments])
+                unord_segs[sg.id] = [segments[s] for s in all_segs_here]
             else:
-                other_segs[sg.id] = []
-                for member in sg.members:
-                    other_segs[sg.id].append(segments[member.segments])
+                other_segs[sg.id] = [segments[s] for s in all_segs_here]
 
-        for sg in self.morphology.segment_groups:
-            if sg.id in group_list:
-                for include in sg.includes:
-                    if include.segment_groups in unord_segs:
-                        for s in unord_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
-                    if include.segment_groups in other_segs:
-                        for s in other_segs[include.segment_groups]:
-                            unord_segs[sg.id].append(s)
         ord_segs = {}     
 
         from operator import attrgetter

@@ -105,7 +105,7 @@ class InstanceList(OptimizedList):
         
     def append(self,instance):
         
-        print('Adding instance: %s'%instance)
+        #print('Adding instance: %s'%instance)
         l = instance.location
         i = np.array([[instance.id,l.x,l.y,l.z]], np.float32)
         if len(self)==0:
@@ -139,14 +139,14 @@ class PopulationContainer(neuroml.Population):
         return "Population (optimized): "+str(self.id)+" with "+str( self.get_size() )+" components of type "+(self.component if self.component else "???")
         
     def exportHdf5(self, h5file, h5Group):
-        print("Exporting %s as HDF5..."%self)
+        #print("Exporting %s as HDF5..."%self)
         
         popGroup = h5file.create_group(h5Group, 'population_'+self.id)
         popGroup._f_setattr("id", self.id)
         popGroup._f_setattr("component", self.component)
         
         for p in self.properties:
-            popGroup._f_setattr("property:%s"%p, self.properties[p])
+            popGroup._f_setattr("property:%s"%p.tag, p)
             
         if len(self.instances)>0:
 
@@ -180,7 +180,7 @@ class ProjectionContainer(neuroml.Projection):
         
             
     def exportHdf5(self, h5file, h5Group):
-        print("Exporting %s as HDF5"%self)
+        #print("Exporting %s as HDF5"%self)
         
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
@@ -216,7 +216,7 @@ class ElectricalProjectionContainer(neuroml.ElectricalProjection):
         
             
     def exportHdf5(self, h5file, h5Group):
-        print("Exporting %s as HDF5"%self)
+        #print("Exporting %s as HDF5"%self)
         
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
@@ -290,7 +290,7 @@ class InputListContainer(neuroml.InputList):
         return "Input list (optimized): "+self.id+" to "+self.populations+", component "+self.component
     
     def exportHdf5(self, h5file, h5Group):
-        print("Exporting %s as HDF5"%self)
+        #print("Exporting %s as HDF5"%self)
         
         ilGroup = h5file.create_group(h5Group, 'inputList_'+self.id)
         ilGroup._f_setattr("id", self.id)
@@ -333,7 +333,7 @@ class InputsList(OptimizedList):
         
     def append(self,input):
         
-        print('Adding input: %s'%input)
+        #print('Adding input: %s'%input)
         
         i = np.array([[input.id,
                        input.get_target_cell_id(),
