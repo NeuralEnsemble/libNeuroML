@@ -189,7 +189,7 @@
             <electricalConnection id="47" preCell="9" preFractionAlong="0.184028607112" postCell="7" postFractionAlong="0.52913985286" synapse="gj1"/>
         </electricalProjection>
         <continuousProjection id="ProjCC" presynapticPopulation="IafPop0" postsynapticPopulation="IafPop1">
-            <continuousConnection id="0" preCell="0" preSegment="0" preFractionAlong="0.5" postCell="0" postSegment="0" postFractionAlong="0.5" preComponent="silent1" postComponent="gs1"/>
+            <continuousConnection id="0" preCell="0" postCell="0" preComponent="silent1" postComponent="gs1"/>
         </continuousProjection>
         <continuousProjection id="ProjCCI" presynapticPopulation="Pop_x" postsynapticPopulation="IafPop1">
             <continuousConnectionInstance id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.925038673001" postCell="../IafPop1[0]" postFractionAlong="0.890281011018" preComponent="silent1" postComponent="gs1"/>
