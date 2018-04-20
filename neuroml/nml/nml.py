@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Apr 18 13:23:01 2018 by generateDS.py version 2.29.10.
+# Generated Wed Apr 18 14:36:50 2018 by generateDS.py version 2.29.10.
 # Python 2.7.12 (default, Dec  4 2017, 14:50:18)  [GCC 5.4.0 20160609]
 #
 # Command line options:
@@ -1141,12 +1141,12 @@ class Constant(GeneratedsSuper):
 class NamedDimensionalType(GeneratedsSuper):
     member_data_items_ = [
         MemberSpec_('name', 'xs:string', 0, 0, {'use': u'required'}),
-        MemberSpec_('dimension', 'xs:string', 0, 1, {'use': u'optional'}),
+        MemberSpec_('dimension', 'xs:string', 0, 0, {'use': u'required'}),
         MemberSpec_('description', 'xs:string', 0, 1, {'use': u'optional'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, name=None, dimension='none', description=None, extensiontype_=None):
+    def __init__(self, name=None, dimension=None, description=None, extensiontype_=None):
         self.original_tagname_ = None
         self.name = _cast(None, name)
         self.dimension = _cast(None, dimension)
@@ -1194,7 +1194,7 @@ class NamedDimensionalType(GeneratedsSuper):
         if self.name is not None and 'name' not in already_processed:
             already_processed.add('name')
             outfile.write(' name=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.name), input_name='name')), ))
-        if self.dimension != "none" and 'dimension' not in already_processed:
+        if self.dimension is not None and 'dimension' not in already_processed:
             already_processed.add('dimension')
             outfile.write(' dimension=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.dimension), input_name='dimension')), ))
         if self.description is not None and 'description' not in already_processed:
@@ -1240,7 +1240,7 @@ class Parameter(NamedDimensionalType):
     ]
     subclass = None
     superclass = NamedDimensionalType
-    def __init__(self, name=None, dimension='none', description=None):
+    def __init__(self, name=None, dimension=None, description=None):
         self.original_tagname_ = None
         super(Parameter, self).__init__(name, dimension, description, )
     def factory(*args_, **kwargs_):
@@ -1307,7 +1307,7 @@ class LEMS_Property(NamedDimensionalType):
     ]
     subclass = None
     superclass = NamedDimensionalType
-    def __init__(self, name=None, dimension='none', description=None, default_value=None):
+    def __init__(self, name=None, dimension=None, description=None, default_value=None):
         self.original_tagname_ = None
         super(LEMS_Property, self).__init__(name, dimension, description, )
         self.default_value = _cast(float, default_value)
@@ -1384,7 +1384,7 @@ class Requirement(NamedDimensionalType):
     ]
     subclass = None
     superclass = NamedDimensionalType
-    def __init__(self, name=None, dimension='none', description=None):
+    def __init__(self, name=None, dimension=None, description=None):
         self.original_tagname_ = None
         super(Requirement, self).__init__(name, dimension, description, )
     def factory(*args_, **kwargs_):
@@ -1820,24 +1820,13 @@ class Case(GeneratedsSuper):
 
 class IncludeType(GeneratedsSuper):
     member_data_items_ = [
-        MemberSpec_('href', 'xs:anyURI', 0, 1, {'use': u'optional'}),
-        MemberSpec_('valueOf_', [], 0),
+        MemberSpec_('href', 'xs:anyURI', 0, 0, {'use': u'required'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, href=None, valueOf_=None, mixedclass_=None, content_=None):
+    def __init__(self, href=None):
         self.original_tagname_ = None
         self.href = _cast(None, href)
-        self.valueOf_ = valueOf_
-        if mixedclass_ is None:
-            self.mixedclass_ = MixedContainer
-        else:
-            self.mixedclass_ = mixedclass_
-        if content_ is None:
-            self.content_ = []
-        else:
-            self.content_ = content_
-        self.valueOf_ = valueOf_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -1851,7 +1840,7 @@ class IncludeType(GeneratedsSuper):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            (1 if type(self.valueOf_) in [int,float] else self.valueOf_)
+
         ):
             return True
         else:
@@ -1870,10 +1859,12 @@ class IncludeType(GeneratedsSuper):
         outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
         already_processed = set()
         self.exportAttributes(outfile, level, already_processed, namespace_, name_='IncludeType')
-        outfile.write('>')
-        self.exportChildren(outfile, level + 1, namespace_, name_, pretty_print=pretty_print)
-        outfile.write(self.convert_unicode(self.valueOf_))
-        outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='IncludeType', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='IncludeType'):
         if self.href is not None and 'href' not in already_processed:
             already_processed.add('href')
@@ -1883,11 +1874,6 @@ class IncludeType(GeneratedsSuper):
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
-        self.valueOf_ = get_all_text_(node)
-        if node.text is not None:
-            obj_ = self.mixedclass_(MixedContainer.CategoryText,
-                MixedContainer.TypeNone, '', node.text)
-            self.content_.append(obj_)
         for child in node:
             nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
             self.buildChildren(child, node, nodeName_)
@@ -1898,10 +1884,6 @@ class IncludeType(GeneratedsSuper):
             already_processed.add('href')
             self.href = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        if not fromsubclass_ and child_.tail is not None:
-            obj_ = self.mixedclass_(MixedContainer.CategoryText,
-                MixedContainer.TypeNone, '', child_.tail)
-            self.content_.append(obj_)
         pass
 # end class IncludeType
 

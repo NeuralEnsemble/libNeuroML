@@ -59,7 +59,6 @@ type,type
 fitzHughNagumoCell,fitz_hugh_nagumo_cells
 channelPopulation,channel_populations
 continuousProjection,continuous_projections
-none,none
 include,includes
 i_offset,i_offset
 specificCapacitance,specific_capacitances
@@ -185,7 +184,6 @@ xStart,x_start
 xs:float,xs:float
 tau_m,tau_m
 layout,layout
-true,true
 basePyNNIaFCell,basePyNNIaFCell
 voltageClamp,voltage_clamps
 tau_w,tau_w
