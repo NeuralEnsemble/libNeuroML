@@ -357,9 +357,15 @@ class NeuroMLXMLParser():
                                                   weight = input_w.get_weight())
                                                
         for explicitInput in network.explicit_inputs:     
+            
             list_name = 'INPUT_%s_%s'%(explicitInput.input,explicitInput.target.replace('[','_').replace(']','_'))
+            if list_name.endswith('_'): list_name=list_name[:-1]
+            
             pop = explicitInput.target.split('[')[0]
-            self.netHandler.handle_input_list(list_name, pop, explicitInput.input, 1)   
+            
+            input_comp_obj = self.nml_doc.get_by_id(explicitInput.input)
+            
+            self.netHandler.handle_input_list(list_name, pop, explicitInput.input, 1,input_comp_obj=input_comp_obj)   
 
             self.netHandler.handle_single_input(list_name, 
                                               0, 
