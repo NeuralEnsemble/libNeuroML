@@ -355,6 +355,8 @@ class NeuroMLXMLParser():
                                                   segId = input_w.get_segment_id(), 
                                                   fract = input_w.get_fraction_along(),
                                                   weight = input_w.get_weight())
+                                                  
+            self.netHandler.finalise_input_source(input_list.id)
                                                
         for explicitInput in network.explicit_inputs:     
             
@@ -372,6 +374,8 @@ class NeuroMLXMLParser():
                                               cellId = explicitInput.get_target_cell_id(), 
                                               segId = 0, 
                                               fract = 0.5)
+                                              
+            self.netHandler.finalise_input_source(list_name)
     
         
         

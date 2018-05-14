@@ -426,6 +426,9 @@ class NeuroMLHdf5Parser():
                                             segId = segId,         
                                             fract = fractAlong,
                                             weight = weight) 
+                                        
+            self.netHandler.finalise_input_source(self.currInputList)
+            
         else:
             
             #TODO: a better way to convert???
