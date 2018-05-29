@@ -20,14 +20,30 @@ def validate_neuroml2(file_name):
         
     xsd_file = os.path.join(os.path.dirname(__file__), 'nml/NeuroML_%s.xsd'%neuroml.current_neuroml_version)
    
-    schema_file = open(xsd_file)
-    xmlschema = etree.XMLSchema(etree.parse(schema_file))
-    
-    print("Validating %s against %s" %(file_name, xsd_file))
-    xmlschema.assertValid(etree.parse(file_name))
-    print("It's valid!")
-    
-    
+    with open(xsd_file) as schema_file:
+        xmlschema = etree.XMLSchema(etree.parse(schema_file))
+        print("Validating %s against %s" %(file_name, xsd_file))
+        if not xmlschema.validate(etree.parse(file_name)):
+            xmlschema.assertValid(etree.parse(file_name)) # print reason if file is invalid
+            return
+        print("It's valid!")
+
+# Return True if .nml file is valid else false
+def is_valid_neuroml2(file_name):
+    from lxml import etree
+    try:
+        from urllib2 import urlopen  # Python 2
+    except:
+        from urllib.request import urlopen  # Python 3
+
+    xsd_file = os.path.join(os.path.dirname(__file__), 'nml/NeuroML_%s.xsd' % neuroml.current_neuroml_version)
+
+    with open(xsd_file) as schema_file:
+        xmlschema = etree.XMLSchema(etree.parse(schema_file))
+        return (xmlschema.validate(etree.parse(file_name)))
+    return False
+
+
 def print_summary(nml_file_name):
     
     print(get_summary(nml_file_name))
