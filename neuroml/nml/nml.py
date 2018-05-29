@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Apr 18 14:36:50 2018 by generateDS.py version 2.29.10.
+# Generated Fri May 25 15:34:49 2018 by generateDS.py version 2.29.10.
 # Python 2.7.12 (default, Dec  4 2017, 14:50:18)  [GCC 5.4.0 20160609]
 #
 # Command line options:
@@ -885,12 +885,14 @@ class ComponentType(GeneratedsSuper):
         MemberSpec_('Property', 'Property', 1, 1, {u'maxOccurs': u'unbounded', u'type': u'LEMS_Property', u'name': u'Property', u'minOccurs': u'0'}, None),
         MemberSpec_('Parameter', 'Parameter', 1, 1, {u'maxOccurs': u'unbounded', u'type': u'Parameter', u'name': u'Parameter', u'minOccurs': u'0'}, None),
         MemberSpec_('Constant', 'Constant', 1, 1, {u'maxOccurs': u'unbounded', u'type': u'Constant', u'name': u'Constant', u'minOccurs': u'0'}, None),
+        MemberSpec_('Exposure', 'Exposure', 1, 1, {u'maxOccurs': u'unbounded', u'type': u'Exposure', u'name': u'Exposure', u'minOccurs': u'0'}, None),
         MemberSpec_('Requirement', 'Requirement', 1, 1, {u'maxOccurs': u'unbounded', u'type': u'Requirement', u'name': u'Requirement', u'minOccurs': u'0'}, None),
+        MemberSpec_('InstanceRequirement', 'InstanceRequirement', 1, 1, {u'maxOccurs': u'unbounded', u'type': u'InstanceRequirement', u'name': u'InstanceRequirement', u'minOccurs': u'0'}, None),
         MemberSpec_('Dynamics', 'Dynamics', 1, 1, {u'maxOccurs': u'unbounded', u'type': u'Dynamics', u'name': u'Dynamics', u'minOccurs': u'0'}, None),
     ]
     subclass = None
     superclass = None
-    def __init__(self, name=None, extends=None, description=None, Property=None, Parameter=None, Constant=None, Requirement=None, Dynamics=None):
+    def __init__(self, name=None, extends=None, description=None, Property=None, Parameter=None, Constant=None, Exposure=None, Requirement=None, InstanceRequirement=None, Dynamics=None):
         self.original_tagname_ = None
         self.name = _cast(None, name)
         self.extends = _cast(None, extends)
@@ -907,10 +909,18 @@ class ComponentType(GeneratedsSuper):
             self.Constant = []
         else:
             self.Constant = Constant
+        if Exposure is None:
+            self.Exposure = []
+        else:
+            self.Exposure = Exposure
         if Requirement is None:
             self.Requirement = []
         else:
             self.Requirement = Requirement
+        if InstanceRequirement is None:
+            self.InstanceRequirement = []
+        else:
+            self.InstanceRequirement = InstanceRequirement
         if Dynamics is None:
             self.Dynamics = []
         else:
@@ -931,7 +941,9 @@ class ComponentType(GeneratedsSuper):
             self.Property or
             self.Parameter or
             self.Constant or
+            self.Exposure or
             self.Requirement or
+            self.InstanceRequirement or
             self.Dynamics
         ):
             return True
@@ -979,8 +991,12 @@ class ComponentType(GeneratedsSuper):
             Parameter_.export(outfile, level, namespace_, name_='Parameter', pretty_print=pretty_print)
         for Constant_ in self.Constant:
             Constant_.export(outfile, level, namespace_, name_='Constant', pretty_print=pretty_print)
+        for Exposure_ in self.Exposure:
+            Exposure_.export(outfile, level, namespace_, name_='Exposure', pretty_print=pretty_print)
         for Requirement_ in self.Requirement:
             Requirement_.export(outfile, level, namespace_, name_='Requirement', pretty_print=pretty_print)
+        for InstanceRequirement_ in self.InstanceRequirement:
+            InstanceRequirement_.export(outfile, level, namespace_, name_='InstanceRequirement', pretty_print=pretty_print)
         for Dynamics_ in self.Dynamics:
             Dynamics_.export(outfile, level, namespace_, name_='Dynamics', pretty_print=pretty_print)
     def build(self, node):
@@ -1019,11 +1035,21 @@ class ComponentType(GeneratedsSuper):
             obj_.build(child_)
             self.Constant.append(obj_)
             obj_.original_tagname_ = 'Constant'
+        elif nodeName_ == 'Exposure':
+            obj_ = Exposure.factory()
+            obj_.build(child_)
+            self.Exposure.append(obj_)
+            obj_.original_tagname_ = 'Exposure'
         elif nodeName_ == 'Requirement':
             obj_ = Requirement.factory()
             obj_.build(child_)
             self.Requirement.append(obj_)
             obj_.original_tagname_ = 'Requirement'
+        elif nodeName_ == 'InstanceRequirement':
+            obj_ = InstanceRequirement.factory()
+            obj_.build(child_)
+            self.InstanceRequirement.append(obj_)
+            obj_.original_tagname_ = 'InstanceRequirement'
         elif nodeName_ == 'Dynamics':
             obj_ = Dynamics.factory()
             obj_.build(child_)
@@ -1138,6 +1164,95 @@ class Constant(GeneratedsSuper):
 # end class Constant
 
 
+class Exposure(GeneratedsSuper):
+    """LEMS Exposure (ComponentType property)"""
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': u'required'}),
+        MemberSpec_('dimension', 'xs:string', 0, 0, {'use': u'required'}),
+        MemberSpec_('description', 'xs:string', 0, 1, {'use': u'optional'}),
+    ]
+    subclass = None
+    superclass = None
+    def __init__(self, name=None, dimension=None, description=None):
+        self.original_tagname_ = None
+        self.name = _cast(None, name)
+        self.dimension = _cast(None, dimension)
+        self.description = _cast(None, description)
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, Exposure)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Exposure.subclass:
+            return Exposure.subclass(*args_, **kwargs_)
+        else:
+            return Exposure(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='Exposure', namespacedef_='', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('Exposure')
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='Exposure')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='Exposure', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='Exposure'):
+        if self.name is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            outfile.write(' name=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.name), input_name='name')), ))
+        if self.dimension is not None and 'dimension' not in already_processed:
+            already_processed.add('dimension')
+            outfile.write(' dimension=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.dimension), input_name='dimension')), ))
+        if self.description is not None and 'description' not in already_processed:
+            already_processed.add('description')
+            outfile.write(' description=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.description), input_name='description')), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='Exposure', fromsubclass_=False, pretty_print=True):
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('name', node)
+        if value is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            self.name = value
+        value = find_attr_value_('dimension', node)
+        if value is not None and 'dimension' not in already_processed:
+            already_processed.add('dimension')
+            self.dimension = value
+        value = find_attr_value_('description', node)
+        if value is not None and 'description' not in already_processed:
+            already_processed.add('description')
+            self.description = value
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        pass
+# end class Exposure
+
+
 class NamedDimensionalType(GeneratedsSuper):
     member_data_items_ = [
         MemberSpec_('name', 'xs:string', 0, 0, {'use': u'required'}),
@@ -1233,6 +1348,112 @@ class NamedDimensionalType(GeneratedsSuper):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
 # end class NamedDimensionalType
+
+
+class NamedDimensionalVariable(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': u'required'}),
+        MemberSpec_('dimension', 'xs:string', 0, 0, {'use': u'required'}),
+        MemberSpec_('description', 'xs:string', 0, 1, {'use': u'optional'}),
+        MemberSpec_('exposure', 'xs:string', 0, 1, {'use': u'optional'}),
+    ]
+    subclass = None
+    superclass = None
+    def __init__(self, name=None, dimension=None, description=None, exposure=None, extensiontype_=None):
+        self.original_tagname_ = None
+        self.name = _cast(None, name)
+        self.dimension = _cast(None, dimension)
+        self.description = _cast(None, description)
+        self.exposure = _cast(None, exposure)
+        self.extensiontype_ = extensiontype_
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, NamedDimensionalVariable)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if NamedDimensionalVariable.subclass:
+            return NamedDimensionalVariable.subclass(*args_, **kwargs_)
+        else:
+            return NamedDimensionalVariable(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='NamedDimensionalVariable', namespacedef_='', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('NamedDimensionalVariable')
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='NamedDimensionalVariable')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='NamedDimensionalVariable', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='NamedDimensionalVariable'):
+        if self.name is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            outfile.write(' name=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.name), input_name='name')), ))
+        if self.dimension is not None and 'dimension' not in already_processed:
+            already_processed.add('dimension')
+            outfile.write(' dimension=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.dimension), input_name='dimension')), ))
+        if self.description is not None and 'description' not in already_processed:
+            already_processed.add('description')
+            outfile.write(' description=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.description), input_name='description')), ))
+        if self.exposure is not None and 'exposure' not in already_processed:
+            already_processed.add('exposure')
+            outfile.write(' exposure=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.exposure), input_name='exposure')), ))
+        if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            outfile.write(' xsi:type="%s"' % self.extensiontype_)
+    def exportChildren(self, outfile, level, namespace_='', name_='NamedDimensionalVariable', fromsubclass_=False, pretty_print=True):
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('name', node)
+        if value is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            self.name = value
+        value = find_attr_value_('dimension', node)
+        if value is not None and 'dimension' not in already_processed:
+            already_processed.add('dimension')
+            self.dimension = value
+        value = find_attr_value_('description', node)
+        if value is not None and 'description' not in already_processed:
+            already_processed.add('description')
+            self.description = value
+        value = find_attr_value_('exposure', node)
+        if value is not None and 'exposure' not in already_processed:
+            already_processed.add('exposure')
+            self.exposure = value
+        value = find_attr_value_('xsi:type', node)
+        if value is not None and 'xsi:type' not in already_processed:
+            already_processed.add('xsi:type')
+            self.extensiontype_ = value
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        pass
+# end class NamedDimensionalVariable
 
 
 class Parameter(NamedDimensionalType):
@@ -1445,16 +1666,101 @@ class Requirement(NamedDimensionalType):
 # end class Requirement
 
 
-class Dynamics(GeneratedsSuper):
-    """LEMS ComponentType for Dynamics"""
+class InstanceRequirement(GeneratedsSuper):
     member_data_items_ = [
-        MemberSpec_('DerivedVariable', 'DerivedVariable', 1, 1, {u'maxOccurs': u'unbounded', u'type': u'DerivedVariable', u'name': u'DerivedVariable', u'minOccurs': u'0'}, None),
-        MemberSpec_('ConditionalDerivedVariable', 'ConditionalDerivedVariable', 1, 1, {u'maxOccurs': u'unbounded', u'type': u'ConditionalDerivedVariable', u'name': u'ConditionalDerivedVariable', u'minOccurs': u'0'}, None),
+        MemberSpec_('name', 'xs:string', 0, 0, {'use': u'required'}),
+        MemberSpec_('type', 'xs:string', 0, 0, {'use': u'required'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, DerivedVariable=None, ConditionalDerivedVariable=None):
+    def __init__(self, name=None, type=None):
         self.original_tagname_ = None
+        self.name = _cast(None, name)
+        self.type = _cast(None, type)
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, InstanceRequirement)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if InstanceRequirement.subclass:
+            return InstanceRequirement.subclass(*args_, **kwargs_)
+        else:
+            return InstanceRequirement(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='InstanceRequirement', namespacedef_='', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('InstanceRequirement')
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='InstanceRequirement')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='InstanceRequirement', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='InstanceRequirement'):
+        if self.name is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            outfile.write(' name=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.name), input_name='name')), ))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type), input_name='type')), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='InstanceRequirement', fromsubclass_=False, pretty_print=True):
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('name', node)
+        if value is not None and 'name' not in already_processed:
+            already_processed.add('name')
+            self.name = value
+        value = find_attr_value_('type', node)
+        if value is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            self.type = value
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        pass
+# end class InstanceRequirement
+
+
+class Dynamics(GeneratedsSuper):
+    """LEMS ComponentType for Dynamics"""
+    member_data_items_ = [
+        MemberSpec_('StateVariable', 'StateVariable', 1, 1, {u'maxOccurs': u'unbounded', u'type': u'StateVariable', u'name': u'StateVariable', u'minOccurs': u'0'}, None),
+        MemberSpec_('DerivedVariable', 'DerivedVariable', 1, 1, {u'maxOccurs': u'unbounded', u'type': u'DerivedVariable', u'name': u'DerivedVariable', u'minOccurs': u'0'}, None),
+        MemberSpec_('ConditionalDerivedVariable', 'ConditionalDerivedVariable', 1, 1, {u'maxOccurs': u'unbounded', u'type': u'ConditionalDerivedVariable', u'name': u'ConditionalDerivedVariable', u'minOccurs': u'0'}, None),
+        MemberSpec_('TimeDerivative', 'TimeDerivative', 1, 1, {u'maxOccurs': u'unbounded', u'type': u'TimeDerivative', u'name': u'TimeDerivative', u'minOccurs': u'0'}, None),
+    ]
+    subclass = None
+    superclass = None
+    def __init__(self, StateVariable=None, DerivedVariable=None, ConditionalDerivedVariable=None, TimeDerivative=None):
+        self.original_tagname_ = None
+        if StateVariable is None:
+            self.StateVariable = []
+        else:
+            self.StateVariable = StateVariable
         if DerivedVariable is None:
             self.DerivedVariable = []
         else:
@@ -1463,6 +1769,10 @@ class Dynamics(GeneratedsSuper):
             self.ConditionalDerivedVariable = []
         else:
             self.ConditionalDerivedVariable = ConditionalDerivedVariable
+        if TimeDerivative is None:
+            self.TimeDerivative = []
+        else:
+            self.TimeDerivative = TimeDerivative
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -1476,8 +1786,10 @@ class Dynamics(GeneratedsSuper):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
+            self.StateVariable or
             self.DerivedVariable or
-            self.ConditionalDerivedVariable
+            self.ConditionalDerivedVariable or
+            self.TimeDerivative
         ):
             return True
         else:
@@ -1510,10 +1822,14 @@ class Dynamics(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
+        for StateVariable_ in self.StateVariable:
+            StateVariable_.export(outfile, level, namespace_, name_='StateVariable', pretty_print=pretty_print)
         for DerivedVariable_ in self.DerivedVariable:
             DerivedVariable_.export(outfile, level, namespace_, name_='DerivedVariable', pretty_print=pretty_print)
         for ConditionalDerivedVariable_ in self.ConditionalDerivedVariable:
             ConditionalDerivedVariable_.export(outfile, level, namespace_, name_='ConditionalDerivedVariable', pretty_print=pretty_print)
+        for TimeDerivative_ in self.TimeDerivative:
+            TimeDerivative_.export(outfile, level, namespace_, name_='TimeDerivative', pretty_print=pretty_print)
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -1524,7 +1840,12 @@ class Dynamics(GeneratedsSuper):
     def buildAttributes(self, node, attrs, already_processed):
         pass
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        if nodeName_ == 'DerivedVariable':
+        if nodeName_ == 'StateVariable':
+            obj_ = StateVariable.factory()
+            obj_.build(child_)
+            self.StateVariable.append(obj_)
+            obj_.original_tagname_ = 'StateVariable'
+        elif nodeName_ == 'DerivedVariable':
             obj_ = DerivedVariable.factory()
             obj_.build(child_)
             self.DerivedVariable.append(obj_)
@@ -1534,25 +1855,27 @@ class Dynamics(GeneratedsSuper):
             obj_.build(child_)
             self.ConditionalDerivedVariable.append(obj_)
             obj_.original_tagname_ = 'ConditionalDerivedVariable'
+        elif nodeName_ == 'TimeDerivative':
+            obj_ = TimeDerivative.factory()
+            obj_.build(child_)
+            self.TimeDerivative.append(obj_)
+            obj_.original_tagname_ = 'TimeDerivative'
 # end class Dynamics
 
 
-class DerivedVariable(GeneratedsSuper):
+class DerivedVariable(NamedDimensionalVariable):
     """LEMS ComponentType for DerivedVariable"""
     member_data_items_ = [
-        MemberSpec_('name', 'xs:string', 0, 0, {'use': u'required'}),
-        MemberSpec_('dimension', 'xs:string', 0, 0, {'use': u'required'}),
-        MemberSpec_('value', 'xs:string', 0, 0, {'use': u'required'}),
-        MemberSpec_('exposure', 'xs:string', 0, 1, {'use': u'optional'}),
+        MemberSpec_('value', 'xs:string', 0, 1, {'use': u'optional'}),
+        MemberSpec_('select', 'xs:string', 0, 1, {'use': u'optional'}),
     ]
     subclass = None
-    superclass = None
-    def __init__(self, name=None, dimension=None, value=None, exposure=None):
+    superclass = NamedDimensionalVariable
+    def __init__(self, name=None, dimension=None, description=None, exposure=None, value=None, select=None):
         self.original_tagname_ = None
-        self.name = _cast(None, name)
-        self.dimension = _cast(None, dimension)
+        super(DerivedVariable, self).__init__(name, dimension, description, exposure, )
         self.value = _cast(None, value)
-        self.exposure = _cast(None, exposure)
+        self.select = _cast(None, select)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -1566,7 +1889,7 @@ class DerivedVariable(GeneratedsSuper):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-
+            super(DerivedVariable, self).hasContent_()
         ):
             return True
         else:
@@ -1592,19 +1915,15 @@ class DerivedVariable(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='DerivedVariable'):
-        if self.name is not None and 'name' not in already_processed:
-            already_processed.add('name')
-            outfile.write(' name=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.name), input_name='name')), ))
-        if self.dimension is not None and 'dimension' not in already_processed:
-            already_processed.add('dimension')
-            outfile.write(' dimension=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.dimension), input_name='dimension')), ))
+        super(DerivedVariable, self).exportAttributes(outfile, level, already_processed, namespace_, name_='DerivedVariable')
         if self.value is not None and 'value' not in already_processed:
             already_processed.add('value')
             outfile.write(' value=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.value), input_name='value')), ))
-        if self.exposure is not None and 'exposure' not in already_processed:
-            already_processed.add('exposure')
-            outfile.write(' exposure=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.exposure), input_name='exposure')), ))
+        if self.select is not None and 'select' not in already_processed:
+            already_processed.add('select')
+            outfile.write(' select=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.select), input_name='select')), ))
     def exportChildren(self, outfile, level, namespace_='', name_='DerivedVariable', fromsubclass_=False, pretty_print=True):
+        super(DerivedVariable, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         pass
     def build(self, node):
         already_processed = set()
@@ -1614,42 +1933,97 @@ class DerivedVariable(GeneratedsSuper):
             self.buildChildren(child, node, nodeName_)
         return self
     def buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_('name', node)
-        if value is not None and 'name' not in already_processed:
-            already_processed.add('name')
-            self.name = value
-        value = find_attr_value_('dimension', node)
-        if value is not None and 'dimension' not in already_processed:
-            already_processed.add('dimension')
-            self.dimension = value
         value = find_attr_value_('value', node)
         if value is not None and 'value' not in already_processed:
             already_processed.add('value')
             self.value = value
-        value = find_attr_value_('exposure', node)
-        if value is not None and 'exposure' not in already_processed:
-            already_processed.add('exposure')
-            self.exposure = value
+        value = find_attr_value_('select', node)
+        if value is not None and 'select' not in already_processed:
+            already_processed.add('select')
+            self.select = value
+        super(DerivedVariable, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(DerivedVariable, self).buildChildren(child_, node, nodeName_, True)
         pass
 # end class DerivedVariable
 
 
-class ConditionalDerivedVariable(GeneratedsSuper):
+class StateVariable(NamedDimensionalVariable):
+    member_data_items_ = [
+    ]
+    subclass = None
+    superclass = NamedDimensionalVariable
+    def __init__(self, name=None, dimension=None, description=None, exposure=None):
+        self.original_tagname_ = None
+        super(StateVariable, self).__init__(name, dimension, description, exposure, )
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, StateVariable)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if StateVariable.subclass:
+            return StateVariable.subclass(*args_, **kwargs_)
+        else:
+            return StateVariable(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+            super(StateVariable, self).hasContent_()
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='StateVariable', namespacedef_='', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('StateVariable')
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='StateVariable')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='StateVariable', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='StateVariable'):
+        super(StateVariable, self).exportAttributes(outfile, level, already_processed, namespace_, name_='StateVariable')
+    def exportChildren(self, outfile, level, namespace_='', name_='StateVariable', fromsubclass_=False, pretty_print=True):
+        super(StateVariable, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        super(StateVariable, self).buildAttributes(node, attrs, already_processed)
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        super(StateVariable, self).buildChildren(child_, node, nodeName_, True)
+        pass
+# end class StateVariable
+
+
+class ConditionalDerivedVariable(NamedDimensionalVariable):
     """LEMS ComponentType for ConditionalDerivedVariable"""
     member_data_items_ = [
-        MemberSpec_('name', 'xs:string', 0, 0, {'use': u'required'}),
-        MemberSpec_('dimension', 'xs:string', 0, 0, {'use': u'required'}),
-        MemberSpec_('exposure', 'xs:string', 0, 1, {'use': u'optional'}),
         MemberSpec_('Case', 'Case', 1, 0, {u'maxOccurs': u'unbounded', u'type': u'Case', u'name': u'Case', u'minOccurs': u'1'}, None),
     ]
     subclass = None
-    superclass = None
-    def __init__(self, name=None, dimension=None, exposure=None, Case=None):
+    superclass = NamedDimensionalVariable
+    def __init__(self, name=None, dimension=None, description=None, exposure=None, Case=None):
         self.original_tagname_ = None
-        self.name = _cast(None, name)
-        self.dimension = _cast(None, dimension)
-        self.exposure = _cast(None, exposure)
+        super(ConditionalDerivedVariable, self).__init__(name, dimension, description, exposure, )
         if Case is None:
             self.Case = []
         else:
@@ -1667,7 +2041,8 @@ class ConditionalDerivedVariable(GeneratedsSuper):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.Case
+            self.Case or
+            super(ConditionalDerivedVariable, self).hasContent_()
         ):
             return True
         else:
@@ -1694,16 +2069,9 @@ class ConditionalDerivedVariable(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='ConditionalDerivedVariable'):
-        if self.name is not None and 'name' not in already_processed:
-            already_processed.add('name')
-            outfile.write(' name=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.name), input_name='name')), ))
-        if self.dimension is not None and 'dimension' not in already_processed:
-            already_processed.add('dimension')
-            outfile.write(' dimension=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.dimension), input_name='dimension')), ))
-        if self.exposure is not None and 'exposure' not in already_processed:
-            already_processed.add('exposure')
-            outfile.write(' exposure=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.exposure), input_name='exposure')), ))
+        super(ConditionalDerivedVariable, self).exportAttributes(outfile, level, already_processed, namespace_, name_='ConditionalDerivedVariable')
     def exportChildren(self, outfile, level, namespace_='', name_='ConditionalDerivedVariable', fromsubclass_=False, pretty_print=True):
+        super(ConditionalDerivedVariable, self).exportChildren(outfile, level, namespace_, name_, True, pretty_print=pretty_print)
         if pretty_print:
             eol_ = '\n'
         else:
@@ -1718,24 +2086,14 @@ class ConditionalDerivedVariable(GeneratedsSuper):
             self.buildChildren(child, node, nodeName_)
         return self
     def buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_('name', node)
-        if value is not None and 'name' not in already_processed:
-            already_processed.add('name')
-            self.name = value
-        value = find_attr_value_('dimension', node)
-        if value is not None and 'dimension' not in already_processed:
-            already_processed.add('dimension')
-            self.dimension = value
-        value = find_attr_value_('exposure', node)
-        if value is not None and 'exposure' not in already_processed:
-            already_processed.add('exposure')
-            self.exposure = value
+        super(ConditionalDerivedVariable, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'Case':
             obj_ = Case.factory()
             obj_.build(child_)
             self.Case.append(obj_)
             obj_.original_tagname_ = 'Case'
+        super(ConditionalDerivedVariable, self).buildChildren(child_, node, nodeName_, True)
 # end class ConditionalDerivedVariable
 
 
@@ -1816,6 +2174,85 @@ class Case(GeneratedsSuper):
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
 # end class Case
+
+
+class TimeDerivative(GeneratedsSuper):
+    member_data_items_ = [
+        MemberSpec_('variable', 'xs:string', 0, 0, {'use': u'required'}),
+        MemberSpec_('value', 'xs:string', 0, 0, {'use': u'required'}),
+    ]
+    subclass = None
+    superclass = None
+    def __init__(self, variable=None, value=None):
+        self.original_tagname_ = None
+        self.variable = _cast(None, variable)
+        self.value = _cast(None, value)
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, TimeDerivative)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if TimeDerivative.subclass:
+            return TimeDerivative.subclass(*args_, **kwargs_)
+        else:
+            return TimeDerivative(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def hasContent_(self):
+        if (
+
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespace_='', name_='TimeDerivative', namespacedef_='', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('TimeDerivative')
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespace_, name_='TimeDerivative')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespace_='', name_='TimeDerivative', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='TimeDerivative'):
+        if self.variable is not None and 'variable' not in already_processed:
+            already_processed.add('variable')
+            outfile.write(' variable=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.variable), input_name='variable')), ))
+        if self.value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            outfile.write(' value=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.value), input_name='value')), ))
+    def exportChildren(self, outfile, level, namespace_='', name_='TimeDerivative', fromsubclass_=False, pretty_print=True):
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('variable', node)
+        if value is not None and 'variable' not in already_processed:
+            already_processed.add('variable')
+            self.variable = value
+        value = find_attr_value_('value', node)
+        if value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            self.value = value
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        pass
+# end class TimeDerivative
 
 
 class IncludeType(GeneratedsSuper):
@@ -12674,7 +13111,7 @@ class GateHHRatesInf(Base):
         MemberSpec_('notes', ['Notes', 'xs:string'], 0, 1, {u'type': u'xs:string', u'name': u'notes', u'minOccurs': u'0'}, None),
         MemberSpec_('q10_settings', 'Q10Settings', 0, 1, {u'type': u'Q10Settings', u'name': u'q10Settings', u'minOccurs': u'0'}, None),
         MemberSpec_('forward_rate', 'HHRate', 0, 0, {u'type': u'HHRate', u'name': u'forwardRate', u'minOccurs': u'1'}, None),
-        MemberSpec_('reverse_rate', 'HHRate', 0, 0, {u'type': u'HHRate', u'name': u'reverseRate', u'minOccurs': u'1'}, None),
+        MemberSpec_('reie_rate', 'HHRate', 0, 0, {u'type': u'HHRate', u'name': u'reverseRate', u'minOccurs': u'1'}, None),
         MemberSpec_('steady_state', 'HHVariable', 0, 0, {u'type': u'HHVariable', u'name': u'steadyState', u'minOccurs': u'1'}, None),
     ]
     subclass = None
@@ -22989,6 +23426,7 @@ __all__ = [
     "ExpThreeSynapse",
     "ExpTwoSynapse",
     "ExplicitInput",
+    "Exposure",
     "ExtracellularProperties",
     "ExtracellularPropertiesLocal",
     "FitzHughNagumo1969Cell",
@@ -23029,6 +23467,7 @@ __all__ = [
     "InputList",
     "InputW",
     "Instance",
+    "InstanceRequirement",
     "IntracellularProperties",
     "IntracellularProperties2CaPools",
     "IonChannel",
@@ -23047,6 +23486,7 @@ __all__ = [
     "MembraneProperties2CaPools",
     "Morphology",
     "NamedDimensionalType",
+    "NamedDimensionalVariable",
     "Network",
     "NeuroMLDocument",
     "OpenState",
@@ -23092,9 +23532,11 @@ __all__ = [
     "SpikeSourcePoisson",
     "SpikeThresh",
     "Standalone",
+    "StateVariable",
     "SubTree",
     "SynapticConnection",
     "TauInfTransition",
+    "TimeDerivative",
     "TimedSynapticInput",
     "TransientPoissonFiringSynapse",
     "UnstructuredLayout",
