@@ -255,6 +255,7 @@ class NeuroMLXMLParser():
             pre_comp = None
             post_comp = None
             
+            
             for connection in cp.continuous_connections:
                 if pre_comp != None and pre_comp != connection.pre_component:
                     raise Exception("There are different pre components for connections inside: %s!"%cp)
@@ -281,6 +282,8 @@ class NeuroMLXMLParser():
                 
             pre_obj = self.nml_doc.get_by_id(pre_comp)
             post_obj = self.nml_doc.get_by_id(post_comp)
+            
+            synapse = pre_comp
             
             self.netHandler.handle_projection(cp.id,
                                             cp.presynaptic_population,

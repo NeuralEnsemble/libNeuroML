@@ -116,7 +116,16 @@ class NetworkBuilder(DefaultNetworkHandler):
         elif type=="continuousProjection":
             proj = neuroml.ContinuousProjection(id=id, presynaptic_population=prePop, postsynaptic_population=postPop)
             self.network.continuous_projections.append(proj)
-            self.projection_syns[id] = synapse_obj.id
+            
+            if synapse_obj!=None:
+                self.projection_syns[id] = synapse_obj.id
+            else:
+                self.projection_syns[id] = synapse
+            
+            if pre_synapse_obj == None:
+                pre_synapse_obj = neuroml.SilentSynapse(id="silentSyn_%s"%id)
+                self.nml_doc.silent_synapses.append(pre_synapse_obj)
+                
             self.projection_syns_pre[id] = pre_synapse_obj.id
             
         self.projections[id] = proj

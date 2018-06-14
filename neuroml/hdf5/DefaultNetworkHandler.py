@@ -116,7 +116,7 @@ class DefaultNetworkHandler:
         if pre_synapse_obj:
             synInfo += " (pre comp: %s)"%pre_synapse_obj.__class__.__name__
 
-        self.log.debug("Projection: "+projName+" ("+type+") from "+prePop+" to "+postPop+" with syn: "+synapse+synInfo)
+        self.log.debug("Projection: "+projName+" ("+type+") from "+prePop+" to "+postPop+" with syn: %s%s"%(synapse,synInfo))
 
 
     #
