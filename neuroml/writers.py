@@ -110,6 +110,12 @@ class JSONWriter(object):
     def __encode_as_json(cls,neuroml_document):
         neuroml_document = cls.__sanitize_doc(neuroml_document)
         from jsonpickle import encode as json_encode
+        try:
+            # Enable encoding of numpy arrays with recent jsonpickle versions
+            import jsonpickle.ext.numpy as jsonpickle_numpy
+            jsonpickle_numpy.register_handlers()
+        except ImportError:
+            pass  # older version of jsonpickle
         encoded = json_encode(neuroml_document)
         return encoded
     
