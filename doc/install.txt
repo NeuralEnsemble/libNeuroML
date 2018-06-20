@@ -24,7 +24,6 @@ the following will also be required:
 ::
 
     sudo apt-get install libhdf5-serial-dev
-    sudo pip install cython
     sudo pip install numpy
     sudo pip install numexpr
     sudo pip install jsonpickle
