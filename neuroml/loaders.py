@@ -133,8 +133,10 @@ class SWCLoader(object):
 
         #This needs to become an "Optimized Morphology" of some kind
         return arraymorph.ArrayMorphology(vertices=vertices, 
-                       connectivity=connection_indices, 
+                       connectivity=connection_indices,
+                       node_types=section_types,
                        name=name )
+
 
 class JSONLoader(object):
 
