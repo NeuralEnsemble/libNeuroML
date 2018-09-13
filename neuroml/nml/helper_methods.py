@@ -284,7 +284,7 @@ elec_connection_instance_w = MethodSpec(name='elec_connection_instance_w',
         
     def get_weight(self):
         
-        return float(self.weight) if self.weight else 1.0
+        return float(self.weight) if self.weight!=None else 1.0
         
     def __str__(self):
         
@@ -376,7 +376,7 @@ cont_connection_instance_w = MethodSpec(name='cont_connection_instance_w',
         
     def get_weight(self):
         
-        return float(self.weight) if self.weight else 1.0
+        return float(self.weight) if self.weight!=None else 1.0
         
     def __str__(self):
         
@@ -525,7 +525,7 @@ input_w = MethodSpec(name='input_w',
     
     def get_weight(self):
         
-        return float(self.weight) if self.weight else 1.0
+        return float(self.weight) if self.weight!=None else 1.0
 
     def __str__(self):
         

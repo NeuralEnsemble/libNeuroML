@@ -232,6 +232,9 @@ class NetworkBuilder(DefaultNetworkHandler):
                 instances = True
                 
             if not instances:
+                if weight!=1:
+                    raise Exception("Case not (yet) supported: weight!=1 when not an instance based population...")
+                
                 conn = neuroml.ContinuousConnection(id=conn_id, \
                                     pre_cell="%s"%(preCellId), \
                                     pre_segment=preSegId, \

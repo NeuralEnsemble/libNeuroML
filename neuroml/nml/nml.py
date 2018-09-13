@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri May 25 15:34:49 2018 by generateDS.py version 2.29.10.
-# Python 2.7.12 (default, Dec  4 2017, 14:50:18)  [GCC 5.4.0 20160609]
+# Generated Thu Sep 13 15:47:00 2018 by generateDS.py version 2.29.10.
+# Python 2.7.15rc1 (default, Apr 15 2018, 21:51:34)  [GCC 7.3.0]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -6171,7 +6171,7 @@ class InputW(Input):
     
     def get_weight(self):
         
-        return float(self.weight) if self.weight else 1.0
+        return float(self.weight) if self.weight!=None else 1.0
 
     def __str__(self):
         
@@ -13111,7 +13111,7 @@ class GateHHRatesInf(Base):
         MemberSpec_('notes', ['Notes', 'xs:string'], 0, 1, {u'type': u'xs:string', u'name': u'notes', u'minOccurs': u'0'}, None),
         MemberSpec_('q10_settings', 'Q10Settings', 0, 1, {u'type': u'Q10Settings', u'name': u'q10Settings', u'minOccurs': u'0'}, None),
         MemberSpec_('forward_rate', 'HHRate', 0, 0, {u'type': u'HHRate', u'name': u'forwardRate', u'minOccurs': u'1'}, None),
-        MemberSpec_('reie_rate', 'HHRate', 0, 0, {u'type': u'HHRate', u'name': u'reverseRate', u'minOccurs': u'1'}, None),
+        MemberSpec_('reverse_rate', 'HHRate', 0, 0, {u'type': u'HHRate', u'name': u'reverseRate', u'minOccurs': u'1'}, None),
         MemberSpec_('steady_state', 'HHVariable', 0, 0, {u'type': u'HHVariable', u'name': u'steadyState', u'minOccurs': u'1'}, None),
     ]
     subclass = None
@@ -22973,7 +22973,7 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
         
     def get_weight(self):
         
-        return float(self.weight) if self.weight else 1.0
+        return float(self.weight) if self.weight!=None else 1.0
         
     def __str__(self):
         
@@ -23064,7 +23064,7 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
         
     def get_weight(self):
         
-        return float(self.weight) if self.weight else 1.0
+        return float(self.weight) if self.weight!=None else 1.0
         
     def __str__(self):
         
