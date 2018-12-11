@@ -27,6 +27,7 @@ class NetworkBuilder(DefaultNetworkHandler):
     populations = {}
     projections = {}
     projection_syns = {}
+    projection_types = {}
     projection_syns_pre = {}
     input_lists = {}
     
@@ -61,12 +62,16 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     #    
-    def handle_population(self, population_id, component, size, component_obj=None, properties={}):
+    def handle_population(self, population_id, component, size, component_obj=None, properties={}, notes=None):
       
         if component_obj:
             self.nml_doc.append(component_obj)
         
         pop = neuroml.Population(id=population_id, component=component, size=size)
+        
+        if notes and len(notes)>0:
+            pop.notes = notes
+        
         self.populations[population_id] = pop
         self.network.populations.append(pop)
         for p in properties:
@@ -129,6 +134,7 @@ class NetworkBuilder(DefaultNetworkHandler):
             self.projection_syns_pre[id] = pre_synapse_obj.id
             
         self.projections[id] = proj
+        self.projection_types[id] = type
         self.weightDelays[id] = hasWeights or hasDelays
 
         self.log.debug("Projection: %s (%s) from %s to %s with syn: %s, weights: %s, delays: %s"%(id, type, prePop, postPop, synapse, hasWeights, hasDelays))
@@ -136,11 +142,15 @@ class NetworkBuilder(DefaultNetworkHandler):
     #
     #  Overridden from DefaultNetworkHandler
     #
-    def finalise_projection(self, id, prePop, postPop, synapse=None, type="projection"):
+    def finalise_projection(self, id, prePop, postPop, synapse=None, type=None):
         '''
             Check whether handle_projection was not called, e.g. due to no connections present
         '''
-        self.log.debug("Projection: %s from %s to %s completed"%(id,prePop,postPop))
+        if type==None:
+            type=self.projection_types[id]
+            
+        self.log.debug("Projection: %s (%s) from %s to %s completed"%(id,type,prePop,postPop))
+        
         if type=="projection":
             present = False
             for p in self.network.projections:
