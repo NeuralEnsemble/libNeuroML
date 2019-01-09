@@ -45,6 +45,11 @@ def parsexml_(infile, parser=None, **kwargs):
         except AttributeError:
             # fallback to xml.etree
             parser = etree_.XMLParser()
+
+    if not isinstance(infile, string_types):
+        # handle e.g. pathlib.Path
+        infile = str(infile)
+
     doc = etree_.parse(infile, parser=parser, **kwargs)
     return doc
 
