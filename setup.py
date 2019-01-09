@@ -18,6 +18,16 @@ setup(
     description = "A Python library for working with NeuroML descriptions of neuronal models",
     long_description = long_description,
     install_requires=['lxml', 'six'],
+    tests_require=["nose"],
+    extras_require={"full": [
+        "cython",
+        "numpy",
+        "pymongo",
+        "numexpr",
+        "simplejson; python_version < '3.5'",
+        "tables>=3.3.0",
+        "jsonpickle==0.9.6"
+    ]},
     license = "BSD",
     url="http://libneuroml.readthedocs.org/en/latest/",
     classifiers = [
