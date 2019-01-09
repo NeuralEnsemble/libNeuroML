@@ -31,12 +31,9 @@ try:
 except ImportError:
     from xml.etree import ElementTree as etree_
 
+from six import string_types
 
 Validate_simpletypes_ = True
-if sys.version_info[0] == 2:
-    BaseStrType_ = basestring
-else:
-    BaseStrType_ = str
 
 
 def parsexml_(infile, parser=None, **kwargs):
@@ -473,7 +470,7 @@ def quote_xml(inStr):
     "Escape markup chars, but do not modify CDATA sections."
     if not inStr:
         return ''
-    s1 = (isinstance(inStr, BaseStrType_) and inStr or '%s' % inStr)
+    s1 = (isinstance(inStr, string_types) and inStr or '%s' % inStr)
     s2 = ''
     pos = 0
     matchobjects = CDATA_pattern_.finditer(s1)
@@ -495,7 +492,7 @@ def quote_xml_aux(inStr):
 
 
 def quote_attrib(inStr):
-    s1 = (isinstance(inStr, BaseStrType_) and inStr or '%s' % inStr)
+    s1 = (isinstance(inStr, string_types) and inStr or '%s' % inStr)
     s1 = s1.replace('&', '&amp;')
     s1 = s1.replace('<', '&lt;')
     s1 = s1.replace('>', '&gt;')
