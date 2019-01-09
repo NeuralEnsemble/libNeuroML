@@ -17,7 +17,7 @@ setup(
     author_email = "vellamike@gmail.com, p.gleeson@gmail.com",
     description = "A Python library for working with NeuroML descriptions of neuronal models",
     long_description = long_description,
-    install_requires=['lxml'],
+    install_requires=['lxml', 'six'],
     license = "BSD",
     url="http://libneuroml.readthedocs.org/en/latest/",
     classifiers = [
