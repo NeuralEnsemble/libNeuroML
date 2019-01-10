@@ -26,7 +26,7 @@ setup(
         "numexpr",
         "simplejson; python_version < '3.5'",
         "tables>=3.3.0",
-        "jsonpickle==0.9.6"
+        "jsonpickle>=0.9.6"
     ]},
     license = "BSD",
     url="http://libneuroml.readthedocs.org/en/latest/",
