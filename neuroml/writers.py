@@ -1,4 +1,5 @@
 import neuroml
+from six import string_types
 
 
 class NeuroMLWriter(object):
@@ -10,7 +11,7 @@ class NeuroMLWriter(object):
         via chain of responsibility pattern.
         """
 
-        if isinstance(file,str) or isinstance(file,unicode):
+        if isinstance(file, string_types):
             file = open(file,'w')
 
         #TODO: this should be extracted from the schema:
@@ -137,15 +138,15 @@ class JSONWriter(object):
         return neuroml_document
 
     @classmethod
-    def __file_handle(file):
-        if isinstance(cls,file,str) or isinstance(cls,file,unicode):
+    def __file_handle(cls, filepath):
+        if isinstance(filepath, string_types):
             import tables
             fileh = tables.open_file(filepath, mode = "w")
 
             
     @classmethod    
     def write(cls,neuroml_document,file):
-        if isinstance(file,str) or isinstance(file,unicode):
+        if isinstance(file,string_types):
             fileh = open(file, mode = 'w')
         else:
             fileh = file

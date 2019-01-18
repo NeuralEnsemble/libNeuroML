@@ -40,7 +40,16 @@ Install libNeuroML via pip
 
     pip install libNeuroML
 
-This is always the latest stable branch from GitHub.
+This is always the latest stable branch from GitHub, and installs the minimal requirements (``lxml``).
+
+To install all of requirements to include the other serialisations, use
+
+::
+
+    sudo apt-get install libhdf5-dev
+    pip install libNeuroML[full]
+
+The ``apt`` line is required at time of writing because PyTables' wheels for python 3.7 depend on the system libhdf5.
 
 
 
