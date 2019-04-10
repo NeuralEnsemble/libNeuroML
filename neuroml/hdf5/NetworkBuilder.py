@@ -55,7 +55,7 @@ class NetworkBuilder(DefaultNetworkHandler):
         self.nml_doc.networks.append(self.network)
         if notes and len(notes)>0:
             self.network.notes = notes
-        if temperature:
+        if temperature is not None:
             self.network.temperature = temperature
             self.network.type = "networkWithTemperature"
    
@@ -90,9 +90,10 @@ class NetworkBuilder(DefaultNetworkHandler):
     #  Overridden from DefaultNetworkHandler
     #    
     def handle_location(self, id, population_id, component, x, y, z):
+        ##print('Loc: %s %s (%s,%s,%s)'%(id, population_id, x, y, z))
         self.print_location_information(id, population_id, component, x, y, z)
         
-        if x and y and z:
+        if x is not None and y is not None and z is not None:
             inst = neuroml.Instance(id=id)
 
             inst.location = neuroml.Location(x=x,y=y,z=z)

@@ -8,7 +8,6 @@ from neuroml import NeuroMLDocument
 from neuroml import Network
 from neuroml import ExpOneSynapse
 from neuroml import Population
-from neuroml import Annotation
 from neuroml import Property
 from neuroml import Cell
 from neuroml import Location
