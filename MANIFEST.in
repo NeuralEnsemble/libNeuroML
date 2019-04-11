@@ -4,6 +4,8 @@ include examples *.py
 include AUTHORS
 include LICENSE
 include doc/*.txt
+include doc/Makefile
+include doc/*.png
 include neuroml/nml/README
 include neuroml/test/*
 recursive-include *.nml
