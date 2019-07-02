@@ -99,6 +99,8 @@ class NetworkBuilder(DefaultNetworkHandler):
             inst.location = neuroml.Location(x=x,y=y,z=z)
             self.populations[population_id].instances.append(inst)
             self.populations[population_id].type = 'populationList'
+        else:
+            self.log.warning('Ignoring location: %s %s (%s,%s,%s)'%(id, population_id, x, y, z))
           
     #
     #  Overridden from DefaultNetworkHandler

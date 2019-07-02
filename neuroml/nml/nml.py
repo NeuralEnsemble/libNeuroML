@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Jan 18 15:07:44 2019 by generateDS.py version 2.30.12.
-# Python 2.7.15 |Anaconda, Inc.| (default, May  1 2018, 23:32:55)  [GCC 7.2.0]
+# Generated Tue Jul  2 13:54:28 2019 by generateDS.py version 2.30.12.
+# Python 2.7.15 |Anaconda, Inc.| (default, Dec 14 2018, 19:04:19)  [GCC 7.3.0]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -7939,6 +7939,7 @@ class Network(Standalone):
             obj_.original_tagname_ = 'inputList'
         super(Network, self).buildChildren(child_, node, nodeName_, True)
 
+    warn_count = 0
     def get_by_id(self,id):
         all_ids = []
         for ms in self.member_data_items_:
@@ -7949,7 +7950,12 @@ class Network(Standalone):
                         return m
                     else:
                         all_ids.append(m.id)
-        print("Id "+id+" not found in <network> element. All ids: "+str(all_ids))
+        from neuroml.loaders import print_
+        if self.warn_count<10:
+            print_("Id "+id+" not found in <network> element. All ids: "+str(sorted(all_ids)))
+            self.warn_count+=1
+        elif self.warn_count==10:
+            print_(" - Suppressing further warnings about id not found...")
         return None
         
         
@@ -16111,6 +16117,7 @@ class NeuroMLDocument(Standalone):
         
         return info
         
+    warn_count = 0
         
     def get_by_id(self,id):
         if len(id)==0:
@@ -16128,7 +16135,12 @@ class NeuroMLDocument(Standalone):
                         return m
                     else:
                         all_ids.append(m.id)
-        print("Id "+id+" not found in <neuroml> element. All ids: "+str(all_ids))
+        from neuroml.loaders import print_
+        if self.warn_count<10:
+            print_("Id "+id+" not found in <neuroml> element. All ids: "+str(sorted(all_ids)))
+            self.warn_count+=1
+        elif self.warn_count==10:
+            print_(" - Suppressing further warnings about id not found...")
         return None
         
     def append(self,element):

@@ -654,6 +654,7 @@ nml_doc_summary = MethodSpec(name='summary',
         
         return info
         
+    warn_count = 0
         
     def get_by_id(self,id):
         if len(id)==0:
@@ -671,7 +672,12 @@ nml_doc_summary = MethodSpec(name='summary',
                         return m
                     else:
                         all_ids.append(m.id)
-        print("Id "+id+" not found in <neuroml> element. All ids: "+str(all_ids))
+        from neuroml.loaders import print_
+        if self.warn_count<10:
+            print_("Id "+id+" not found in <neuroml> element. All ids: "+str(sorted(all_ids)))
+            self.warn_count+=1
+        elif self.warn_count==10:
+            print_(" - Suppressing further warnings about id not found...")
         return None
         
     def append(self,element):
@@ -687,6 +693,7 @@ METHOD_SPECS+=(nml_doc_summary,)
 network_get_by_id = MethodSpec(name='get_by_id',
     source='''\
 
+    warn_count = 0
     def get_by_id(self,id):
         all_ids = []
         for ms in self.member_data_items_:
@@ -697,7 +704,12 @@ network_get_by_id = MethodSpec(name='get_by_id',
                         return m
                     else:
                         all_ids.append(m.id)
-        print("Id "+id+" not found in <network> element. All ids: "+str(all_ids))
+        from neuroml.loaders import print_
+        if self.warn_count<10:
+            print_("Id "+id+" not found in <network> element. All ids: "+str(sorted(all_ids)))
+            self.warn_count+=1
+        elif self.warn_count==10:
+            print_(" - Suppressing further warnings about id not found...")
         return None
         
         
