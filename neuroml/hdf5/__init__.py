@@ -13,10 +13,13 @@ def get_str_attribute_group(group, name):
           val = group._v_attrs[name]
 
           if isinstance(val,numpy.ndarray):
-              val = str(val[0])
+              val = val[0]
+          elif isinstance(val, numpy.bytes_):
+               val = val.decode('UTF-8')
           else:
-              val = str(val)
-          #print("- Found %s in %s: %s = [%s]"%(group, attrName, name,val))
+               val = str(val)
+              
+          #print("-    Found [%s] in [%s]: %s = [%s] %s"%(attrName, group, name,val,type(val)))
           return val
   return None
 

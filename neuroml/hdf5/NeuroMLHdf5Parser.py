@@ -99,15 +99,16 @@ class NeuroMLHdf5Parser():
     if hasattr(h5file.root.neuroml._v_attrs,"neuroml_top_level"):
         nml = get_str_attribute_group(h5file.root.neuroml,"neuroml_top_level")
         
-        if sys.version_info[0] == 3:
-            nml = nml.encode()
-            
-        self.nml_doc_extra_elements = read_neuroml2_string(nml, 
-                                                           include_includes=True, 
-                                                           verbose=False,
-                                                           base_path=os.path.dirname(os.path.abspath(filename)))
-        
-        #print(self.nml_doc_extra_elements.summary())
+        try:
+            self.nml_doc_extra_elements = read_neuroml2_string(nml, 
+                                                               include_includes=True, 
+                                                               verbose=False,
+                                                               base_path=os.path.dirname(os.path.abspath(filename)))
+        except Exception as e:
+            print('Unable to read XML string extracted from HDF5 file!')
+            print(e)
+            print(nml)
+            raise e
         
         self.log.info("Extracted NeuroML2 elements from extra string found in HDF5 file")
     
@@ -442,10 +443,10 @@ class NeuroMLHdf5Parser():
         for node in g:
             if self._is_dataset(node) and node.name == name:
               size = node.shape[0]
-
+              
         if size == -1:
             size = g._v_attrs.size
-            
+              
         return size
     
     
@@ -475,12 +476,8 @@ class NeuroMLHdf5Parser():
     
     if g._v_name.count('population_')>=1:
         # TODO: a better check to see if the attribute is a str or numpy.ndarray
-        self.currPopulation = g._v_attrs.id[0]
-        if (len(self.currPopulation)==1):          # i.e. it was a str and just took the first letter...
-          self.currPopulation = g._v_attrs.id
-        self.currentComponent = g._v_attrs.component[0]
-        if (len(self.currentComponent)==1):
-          self.currentComponent = g._v_attrs.component
+        self.currPopulation = get_str_attribute_group(g,'id')
+        self.currentComponent = get_str_attribute_group(g,'component')
         
         size = self._get_node_size(g,self.currPopulation)
         
@@ -490,7 +487,8 @@ class NeuroMLHdf5Parser():
                 name = str(fname).split(':')[1]
                 properties[name] = get_str_attribute_group(g,fname)
         
-        self.log.debug("Found a population: "+ self.currPopulation+", component: "+self.currentComponent+", size: "+ str(size)+", properties: %s"%properties)
+        self.log.debug("Found a population: %s, component: %s, size: %s, properties: %s" % \
+                       (self.currPopulation,self.currentComponent,size,properties))
         
         if not self.optimized:
             if self.nml_doc_extra_elements:
@@ -512,22 +510,23 @@ class NeuroMLHdf5Parser():
         
     if g._v_name.count('projection_')>=1:
       
-        self.currentProjectionId = g._v_attrs.id
-        self.currentProjectionType = g._v_attrs.type if g._v_attrs.type else "projection"
-        self.currentProjectionPrePop = g._v_attrs.presynapticPopulation
-        self.currentProjectionPostPop = g._v_attrs.postsynapticPopulation
+        self.currentProjectionId = get_str_attribute_group(g,'id')
+        pt = get_str_attribute_group(g,'type')
+        self.currentProjectionType = pt if pt else "projection"
+        self.currentProjectionPrePop = get_str_attribute_group(g,'presynapticPopulation')
+        self.currentProjectionPostPop = get_str_attribute_group(g,'postsynapticPopulation')
+        
         if "synapse" in g._v_attrs:
-            self.currentSynapse = g._v_attrs.synapse
+            self.currentSynapse = get_str_attribute_group(g,'synapse')
         elif "postComponent" in g._v_attrs:
-            self.currentSynapse = g._v_attrs.postComponent
+            self.currentSynapse = get_str_attribute_group(g,'postComponent')
             
         if "preComponent" in g._v_attrs:
-            self.currentPreSynapse = g._v_attrs.preComponent
+            self.currentPreSynapse = get_str_attribute_group(g,'preComponent')
           
         
         if not self.optimized:
-            self.log.debug("------    Found a projection: "+ self.currentProjectionId+ ", from "+ self.currentProjectionPrePop
-            +" to "+ self.currentProjectionPostPop+" through "+self.currentSynapse)
+            self.log.debug("------    Found a projection: %s, from %s to %s through %s" %(self.currentProjectionId,self.currentProjectionPrePop,self.currentProjectionPostPop,self.currentSynapse))
         else:
             
             if self.currentProjectionType=='electricalProjection':           
@@ -555,9 +554,9 @@ class NeuroMLHdf5Parser():
     
     if g._v_name.count('inputList_')>=1 or g._v_name.count('input_list_')>=1: # inputList_ preferred
         # TODO: a better check to see if the attribute is a str or numpy.ndarray
-        self.currInputList = g._v_attrs.id
-        component = g._v_attrs.component
-        population = g._v_attrs.population
+        self.currInputList = get_str_attribute_group(g,'id')
+        component = get_str_attribute_group(g,'component')
+        population = get_str_attribute_group(g,'population')
         
         size = self._get_node_size(g,self.currInputList)
         
