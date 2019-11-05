@@ -22,13 +22,6 @@ Most of the work happens in the [development branch](https://github.com/NeuralEn
 
 **Note that [pyNeuroML](https://github.com/NeuroML/pyNeuroML) is also in active development** with other NeuroML2 utilities besides parsing/modifying/writing which this package concentrates on.
 
-
-## Travis integration
-
-libNeuroML is integrated with the the [Travis Continuous Integration service](http://travis-ci.org/).
-
-[![Build Status](https://api.travis-ci.org/NeuralEnsemble/libNeuroML.png)](https://travis-ci.org/NeuralEnsemble/libNeuroML)
-
 ## Changelog
 
 ### version 0.2.47
@@ -64,5 +57,8 @@ libNeuroML is integrated with the the [Travis Continuous Integration service](ht
  - Improved documentation and documentation new look
 
 
-:copyright: Copyright 2017 by the libNeuroML team, see AUTHORS.
-:license: Modified BSD License, see LICENSE for details.
+:copyright: Copyright 2019 by the libNeuroML team, see [AUTHORS](AUTHORS). Modified BSD License, see [LICENSE](LICENSE) for details.
+
+
+[![Build Status](https://api.travis-ci.org/NeuralEnsemble/libNeuroML.png)](https://travis-ci.org/NeuralEnsemble/libNeuroML)
+
