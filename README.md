@@ -1,6 +1,6 @@
 ## Introduction
 
-This package provides Python libNeuroML, for working with neuronal models specified in NeuroML 2 (http://neuroml.org/neuromlv2).
+This package provides Python libNeuroML, for working with neuronal models specified in [NeuroML 2](http://neuroml.org/neuromlv2).
 
 For more about libNeuroML see:
 
@@ -10,19 +10,27 @@ Michael Vella, Robert C. Cannon, Sharon Crook, Andrew P. Davison, Gautham Ganapa
 
 _**PLEASE CITE THE PAPER ABOVE IF YOU USE libNeuroML!**_
 
-
 Documentation is available at http://readthedocs.org/docs/libneuroml/en/latest/
 
 For installation instructions, see http://readthedocs.org/docs/libneuroml/en/latest/install.html
 
+For an overview of all NeuroML related libraries/documentation/publications see https://neuroml.org/getneuroml.
 
-## Process
+## pyNeuroML
+
+A related package, **[pyNeuroML](https://github.com/NeuroML/pyNeuroML)** builds on this and provides functionality, scripts and modules for reading, writing, **simulating** and analysing NeuroML2/LEMS models.
+
+pyNeuroML builds on: [libNeuroML](https://github.com/NeuralEnsemble/libNeuroML) & [PyLEMS](https://github.com/LEMS/pylems) and wraps functionality from [jNeuroML](https://github.com/NeuroML/jNeuroML).
+
+
+## Development process for libNeuroML
 
 Most of the work happens in the [development branch](https://github.com/NeuralEnsemble/libNeuroML/tree/development). That branch is kept up to date with the development branches for [NeuroML 2](https://github.com/NeuroML/NeuroML2/tree/development) and related libraries. See https://neuroml.org/getneuroml for an overview of the various NeuroML libraries.
 
-**Note that [pyNeuroML](https://github.com/NeuroML/pyNeuroML) is also in active development** with other NeuroML2 utilities besides parsing/modifying/writing which this package concentrates on.
-
 ## Changelog
+
+### version 0.2.50
+ - Updated to use the final stable Schema for NeuroML v2.0
 
 ### version 0.2.47
  - Updated to use the final stable Schema for NeuroML v2beta5
@@ -57,7 +65,7 @@ Most of the work happens in the [development branch](https://github.com/NeuralEn
  - Improved documentation and documentation new look
 
 
-:copyright: Copyright 2019 by the libNeuroML team, see [AUTHORS](AUTHORS). Modified BSD License, see [LICENSE](LICENSE) for details.
+:copyright: Copyright 2020 by the libNeuroML team, see [AUTHORS](AUTHORS). Modified BSD License, see [LICENSE](LICENSE) for details.
 
 
 [![Build Status](https://api.travis-ci.org/NeuralEnsemble/libNeuroML.png)](https://travis-ci.org/NeuralEnsemble/libNeuroML)

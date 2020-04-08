@@ -45,3 +45,4 @@ neuroml/test/*.h5
 /nb-configuration.xml
 /neuroml/examples/report.txt
 /neuroml/examples/test_files/report.txt
+/tests.log
