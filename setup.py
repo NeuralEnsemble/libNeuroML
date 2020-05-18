@@ -17,6 +17,7 @@ setup(
     author_email = "vellamike@gmail.com, p.gleeson@gmail.com",
     description = "A Python library for working with NeuroML descriptions of neuronal models",
     long_description = long_description,
+    long_description_content_type="text/markdown",
     install_requires=['lxml', 'six'],
     tests_require=["nose"],
     extras_require={"full": [

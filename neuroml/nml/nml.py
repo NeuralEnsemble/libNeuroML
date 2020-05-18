@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Jul  2 13:54:28 2019 by generateDS.py version 2.30.12.
-# Python 2.7.15 |Anaconda, Inc.| (default, Dec 14 2018, 19:04:19)  [GCC 7.3.0]
+# Generated Mon May 18 11:32:26 2020 by generateDS.py version 2.30.12.
+# Python 2.7.16 |Anaconda, Inc.| (default, Mar 14 2019, 21:00:58)  [GCC 7.3.0]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -12,10 +12,10 @@
 #   ('--user-methods', 'helper_methods')
 #
 # Command line arguments:
-#   NeuroML_v2beta5.xsd
+#   NeuroML_v2.1.xsd
 #
 # Command line:
-#   /home/padraig/anaconda2/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2beta5.xsd
+#   /home/padraig/anaconda2/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2.1.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
