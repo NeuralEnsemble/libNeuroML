@@ -143,29 +143,29 @@ class TestCell(unittest.TestCase):
             sg4.includes.append(Include(sg.id))
         cell.morphology.segment_groups.append(sg4)
         
-        expected = {sg1:4,sg2:1,sg3:3,sg4:4}
+        expected = {sg1.id:4,sg2.id:1,sg3.id:3,sg4.id:4}
         
         for sg in [sg1,sg2,sg3,sg4]:
             segs = cell.get_all_segments_in_group(sg.id)
             print('\nSeg group %s has segments: %s'%(sg,segs))
-            self.assertEqual(expected[sg],len(segs))
+            self.assertEqual(expected[sg.id],len(segs))
             
             osegs = cell.get_ordered_segments_in_groups(sg.id)
             print('Seg group %s has ordered segments: %s'%(sg.id,osegs))
-            self.assertEqual(expected[sg],len(osegs[sg.id]))
+            self.assertEqual(expected[sg.id],len(osegs[sg.id]))
             
             ord_segs, cumulative_lengths, path_lengths_to_proximal, path_lengths_to_distal = cell.get_ordered_segments_in_groups(sg.id, 
                                                         include_cumulative_lengths=True, 
                                                         include_path_lengths=True)
                                                         
             print('Seg group %s has cumulative_lengths: %s'%(sg.id,cumulative_lengths))
-            self.assertEqual(expected[sg],len(cumulative_lengths[sg.id]))
+            self.assertEqual(expected[sg.id],len(cumulative_lengths[sg.id]))
                                                         
             print('Seg group %s has path_lengths_to_proximal: %s'%(sg.id,path_lengths_to_proximal))
-            self.assertEqual(expected[sg],len(path_lengths_to_proximal[sg.id]))
+            self.assertEqual(expected[sg.id],len(path_lengths_to_proximal[sg.id]))
                                                         
             print('Seg group %s has path_lengths_to_distal: %s'%(sg.id,path_lengths_to_distal))
-            self.assertEqual(expected[sg],len(path_lengths_to_distal[sg.id]))
+            self.assertEqual(expected[sg.id],len(path_lengths_to_distal[sg.id]))
             
         
         
