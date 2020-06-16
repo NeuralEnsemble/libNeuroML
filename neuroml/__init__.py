@@ -1,6 +1,6 @@
 from .nml.nml import *  # allows importation of all neuroml classes
 
-__version__ = '0.2.51'
+__version__ = '0.2.52'
 __version_info__ = tuple(int(i) for i in __version__.split('.'))
 
 

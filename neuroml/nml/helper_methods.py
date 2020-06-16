@@ -95,10 +95,14 @@ length = MethodSpec(name='length',
     source='''\
     @property
     def length(self):
+    
+        if self.proximal==None:
+            raise Exception('Cannot get length of segment '+str(self.id)+' using the length property, since no proximal point is set on it (the proximal point comes from the parent segment). Use the method get_segment_length(segment_id) on the cell instead.')
+            
         prox_x = self.proximal.x
         prox_y = self.proximal.y
         prox_z = self.proximal.z
-
+        
         dist_x = self.distal.x
         dist_y = self.distal.y
         dist_z = self.distal.z
@@ -109,7 +113,7 @@ length = MethodSpec(name='length',
         
     def __str__(self):
         
-        return "<Segment|"+str(self.id)+"|"+self.name+">"
+        return "<Segment|"+str(self.id)+("|"+self.name if self.name is not None else '') + ">"
         
     def __repr__(self):
     
@@ -123,10 +127,23 @@ volume = MethodSpec(name='volume',
     source='''\
     @property
     def volume(self):
+    
         from math import pi
-
+        if self.proximal==None:
+            raise Exception('Cannot get volume of segment '+str(self.id)+' using the volume property, since no proximal point is set on it (the proximal point comes from the parent segment). Use the method get_segment_volume(segment_id) on the cell instead.')
+            
         prox_rad = self.proximal.diameter/2.0
         dist_rad = self.distal.diameter/2.0
+        
+        if self.proximal.x == self.distal.x and \
+           self.proximal.y == self.distal.y and \
+           self.proximal.z == self.distal.z:
+           
+           if prox_rad!=dist_rad:
+                raise Exception('Cannot get volume of segment '+str(self.id)+'. The (x,y,z) coordinates of the proximal and distal points match (i.e. it is a sphere), but the diameters of these points are different, making the volume calculation ambiguous.')
+            
+           return 4.0/3 * pi * prox_rad**3
+        
         length = self.length
 
         volume = (pi/3)*length*(prox_rad**2+dist_rad**2+prox_rad*dist_rad)
@@ -144,9 +161,22 @@ surface_area = MethodSpec(name='surface_area',
     def surface_area(self):
         from math import pi
         from math import sqrt
-
+        
+        if self.proximal==None:
+            raise Exception('Cannot get surface area of segment '+str(self.id)+' using the surface_area property, since no proximal point is set on it (the proximal point comes from the parent segment). Use the method get_segment_surface_area(segment_id) on the cell instead.')
+            
         prox_rad = self.proximal.diameter/2.0
         dist_rad = self.distal.diameter/2.0
+        
+        if self.proximal.x == self.distal.x and \
+           self.proximal.y == self.distal.y and \
+           self.proximal.z == self.distal.z:
+           
+           if prox_rad!=dist_rad:
+                raise Exception('Cannot get surface area of segment '+str(self.id)+'. The (x,y,z) coordinates of the proximal and distal points match (i.e. it is a sphere), but the diameters of these points are different, making the surface area calculation ambiguous.')
+            
+           return 4.0 * pi * prox_rad**2
+        
         length = self.length
 
         surface_area = pi*(prox_rad+dist_rad)*sqrt((prox_rad-dist_rad)**2+length**2)
@@ -183,8 +213,38 @@ seg_grp = MethodSpec(name='SegmentGroup',
 ''',
     class_names=("SegmentGroup")
     )
+    
+METHOD_SPECS+=(seg_grp,)
+    
+seg_grp = MethodSpec(name='Point3DWithDiam',
+    source='''\
+
+    def __str__(self):
+        
+        return "("+str(self.x)+", "+str(self.y)+", "+str(self.z)+"), diam "+str(self.diameter)+"um"
+        
+    def __repr__(self):
+    
+        return str(self)
+        
+    def distance_to(self, other_3d_point):
+        a_x = self.x
+        a_y = self.y
+        a_z = self.z
+
+        b_x = other_3d_point.x
+        b_y = other_3d_point.y
+        b_z = other_3d_point.z
+
+        distance = ((a_x-b_x)**2 + (a_y-b_y)**2 + (a_z-b_z)**2)**(0.5)
+        return distance
+    
+''',
+    class_names=("Point3DWithDiam")
+    )
 
 METHOD_SPECS+=(seg_grp,)
+
 
 connection_cell_ids = MethodSpec(name='connection_cell_ids',
     source='''\
@@ -728,6 +788,72 @@ cell_methods = MethodSpec(name='cell_methods',
     source='''\
 
 
+    # Get segment object by its id
+    def get_segment(self, segment_id):
+        
+        for segment in self.morphology.segments:
+            if segment.id == segment_id:
+                return segment
+            
+        raise Exception("Segment with id "+str(segment_id)+" not found in cell "+str(self.id))
+        
+    # Get the proximal point of a segment, even the proximal field is None and 
+    # so the proximal point is on the parent (at a point set by fraction_along) 
+    def get_actual_proximal(self, segment_id):
+    
+        segment = self.get_segment(segment_id)
+        if segment.proximal:
+            return segment.proximal
+            
+        parent = self.get_segment(segment.parent.segments)
+        fract = float(segment.parent.fraction_along)
+        if fract==1:
+            return parent.distal
+        elif fract==0:
+            return self.get_actual_proximal(segment.parent.segments)
+        else:
+            pd = parent.distal
+            pp = self.get_actual_proximal(segment.parent.segments)
+            p = Point3DWithDiam((1-fract)*pp.x+fract*pd.x, (1-fract)*pp.y+fract*pd.y, (1-fract)*pp.z+fract*pd.z)
+            p.diameter = (1-fract)*pp.diameter+fract*pd.diameter
+            
+            return p
+        
+    def get_segment_length(self, segment_id):
+    
+        segment = self.get_segment(segment_id)
+        if segment.proximal:
+            return segment.length
+        else:
+            prox = self.get_actual_proximal(segment_id)
+            
+            length = segment.distal.distance_to(prox)
+            
+            return length
+        
+    def get_segment_surface_area(self, segment_id):
+    
+        segment = self.get_segment(segment_id)
+        if segment.proximal:
+            return segment.surface_area
+        else:
+            prox = self.get_actual_proximal(segment_id)
+            
+            temp_seg = Segment(distal=segment.distal, proximal=prox)
+            
+            return temp_seg.surface_area
+        
+    def get_segment_volume(self, segment_id):
+    
+        segment = self.get_segment(segment_id)
+        if segment.proximal:
+            return segment.volume
+        else:
+            prox = self.get_actual_proximal(segment_id)
+            
+            temp_seg = Segment(distal=segment.distal, proximal=prox)
+            
+            return temp_seg.volume
 
     def get_segment_ids_vs_segments(self):
 
@@ -744,7 +870,9 @@ cell_methods = MethodSpec(name='cell_methods',
             for sg in self.morphology.segment_groups:
                 if sg.id == segment_group:
                     segment_group = sg
-                
+            if isinstance(segment_group, str):  # 
+                raise Exception('No segment group '+segment_group+ ' found in cell '+self.id)
+    
         all_segs = []
         
         for member in segment_group.members:
@@ -820,12 +948,8 @@ cell_methods = MethodSpec(name='cell_methods',
                 
                 tot_len = 0
                 for seg in ord_segs[key]:     
-                    d = seg.distal
-                    p = seg.proximal
-                    if not p:
-                        parent_seg = segments[seg.parent.segments]
-                        p = parent_seg.distal
-                    length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                    
+                    length = self.get_segment_length(seg.id)
                     
                     if not seg.parent or not seg.parent.segments in path_lengths_to_distal[key]:
                     
@@ -886,8 +1010,6 @@ cell_methods = MethodSpec(name='cell_methods',
         print("* Notes: "+str(self.notes))
         print("* Segments: "+str(len(self.morphology.segments)))
         print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        
-        
         print("*******************************************************")
         
     ''',

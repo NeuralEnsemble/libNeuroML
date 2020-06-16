@@ -163,8 +163,14 @@
 
             <segmentGroup id="dendrite_group" neuroLexId="GO:0030425">    <!--Dendrite group-->
 
-                <include segmentGroup="apical_dends"/>
-                <include segmentGroup="basal_dends"/>
+                <include segmentGroup="apical0"/>
+                <include segmentGroup="apical2"/>
+                <include segmentGroup="apical3"/>
+                <include segmentGroup="apical4"/>
+                <include segmentGroup="apical1"/>
+                <include segmentGroup="basal0"/>
+                <include segmentGroup="basal1"/>
+                <include segmentGroup="basal2"/>
             </segmentGroup>
 
             <segmentGroup id="apical_dends">
