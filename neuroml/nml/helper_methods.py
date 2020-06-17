@@ -864,13 +864,18 @@ cell_methods = MethodSpec(name='cell_methods',
         return segments
         
     def get_all_segments_in_group(self,
-                                  segment_group):
+                                  segment_group,
+                                  assume_all_means_all=True):
                                   
         if isinstance(segment_group, str):
             for sg in self.morphology.segment_groups:
                 if sg.id == segment_group:
                     segment_group = sg
-            if isinstance(segment_group, str):  # 
+            if isinstance(segment_group, str):  
+            
+                if assume_all_means_all and segment_group=='all': # i.e. wasn't explicitly defined, but assume it means all segments
+                    return [seg.id for seg in self.morphology.segments]
+                    
                 raise Exception('No segment group '+segment_group+ ' found in cell '+self.id)
     
         all_segs = []

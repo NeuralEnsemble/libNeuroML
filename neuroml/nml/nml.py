@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Jun 16 15:29:34 2020 by generateDS.py version 2.30.11.
+# Generated Wed Jun 17 09:57:07 2020 by generateDS.py version 2.30.11.
 # Python 2.7.15 |Anaconda, Inc.| (default, Oct 23 2018, 13:35:16)  [GCC 4.2.1 Compatible Clang 4.0.1 (tags/RELEASE_401/final)]
 #
 # Command line options:
@@ -17843,13 +17843,18 @@ class Cell(BaseCell):
         return segments
         
     def get_all_segments_in_group(self,
-                                  segment_group):
+                                  segment_group,
+                                  assume_all_means_all=True):
                                   
         if isinstance(segment_group, str):
             for sg in self.morphology.segment_groups:
                 if sg.id == segment_group:
                     segment_group = sg
-            if isinstance(segment_group, str):  # 
+            if isinstance(segment_group, str):  
+            
+                if assume_all_means_all and segment_group=='all': # i.e. wasn't explicitly defined, but assume it means all segments
+                    return [seg.id for seg in self.morphology.segments]
+                    
                 raise Exception('No segment group '+segment_group+ ' found in cell '+self.id)
     
         all_segs = []
