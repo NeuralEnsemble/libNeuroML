@@ -614,7 +614,7 @@ nml_doc_summary = MethodSpec(name='summary',
             if isinstance(memb[1], list) and len(memb[1])>0 and not memb[0].endswith('_') and not memb[0] == 'networks':
                 if (memb[0] == 'includes' and show_includes) or (not memb[0] == 'includes' and show_non_network):
                     post = "*\\n"
-                    info+="*   "+str(memb[1][0].__class__.__name__)+": "
+                    info+="*  "+str(memb[1][0].__class__.__name__)+": "
                     listed = []
                     for entry in memb[1]:
                         if hasattr(entry,'id'):
