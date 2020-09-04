@@ -46,3 +46,4 @@ neuroml/test/*.h5
 /neuroml/examples/report.txt
 /neuroml/examples/test_files/report.txt
 /tests.log
+/notebooks/.ipynb_checkpoints
