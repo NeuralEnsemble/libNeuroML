@@ -1,8 +1,8 @@
 ## Autogeneration of API, using generateds_config.py to ensure correct naming conventions.
 
-NOTE: this requires the latest version of generateDS.py from https://bitbucket.org/dkuhlman/generateds
+This requires [generateDS.py](http://www.davekuhlman.org/generateDS.html), version >= 2.20a.
 
-**For Python 3 compatibility, make sure this is >= version 2.20a**
+You can get it from [PyPi](http://pypi.python.org/pypi/generateDS/) or [Source Forge](https://sourceforge.net/projects/generateds/).
 
 All that is needed is the Schema - as long as generateds_config.py and helper_methods are present, nml.py should be generated correctly.
 
