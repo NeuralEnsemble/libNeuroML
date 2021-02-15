@@ -694,6 +694,12 @@ nml_doc_summary = MethodSpec(name='summary',
 
             info+="*   "+str(tot_conns)+" connections in "+str(tot_proj)+" projections \\n"+proj_info+"*\\n"
 
+            if len(network.synaptic_connections)>0:
+                info+="*   "+str(len(network.synaptic_connections))+" explicit synaptic connections (outside of projections)\\n"
+                for sc in network.synaptic_connections:
+                    info+="*     "+str(sc)+"\\n"
+                info+="*\\n"
+
             tot_input_lists = 0
             tot_inputs = 0
             input_info = ""
@@ -709,8 +715,11 @@ nml_doc_summary = MethodSpec(name='summary',
 
             info+="*   "+str(tot_inputs)+" inputs in "+str(tot_input_lists)+" input lists \\n"+input_info+"*\\n"
 
-            for el in network.explicit_inputs:
-                info+="*   Explicit input to "+el.target+" of type "+el.input+"\\n*\\n"
+            if len(network.explicit_inputs)>0:
+                info+="*   "+str(len(network.explicit_inputs))+" explicit inputs (outside of input lists)\\n"
+                for el in network.explicit_inputs:
+                    info+="*     "+str(el)+"\\n"
+                info+="*\\n"
 
 
         info+="*******************************************************"
@@ -1422,6 +1431,62 @@ for insert in inserts.keys():
     )
     METHOD_SPECS+=(ms,)
 
+
+synaptic_connections = MethodSpec(name='synaptic_connections',
+    source='''\
+
+    def _get_cell_id(self,ref):
+        if '[' in ref:
+            return int(ref.split('[')[1].split(']')[0])
+        else:
+            return int(ref.split('/')[2])
+
+    def _get_population(self,ref):
+        if '[' in ref:
+            return ref.split('[')[0]
+        else:
+            return ref.split('/')[0]
+
+    def __str__(self):
+
+        dest = self.destination if self.destination else 'unspecified'
+        return "Synaptic connection from "+str(self._get_population(self.from_))+"(cell "+str(self._get_cell_id(self.from_))+ \
+            ") -> "+str(self._get_population(self.to))+"(cell "+str(self._get_cell_id(self.to))+"), syn: "+self.synapse+", destination: "+dest
+
+
+    ''',
+    class_names=("SynapticConnection")
+    )
+
+METHOD_SPECS+=(synaptic_connections,)
+
+explicit_inputs = MethodSpec(name='explicit_inputs',
+    source='''\
+
+    def get_target_cell_id(self,):
+        if '[' in self.target:
+            return int(self.target.split('[')[1].split(']')[0])
+        else:
+            return int(self.target.split('/')[2])
+
+    def get_target_population(self,):
+        if '[' in self.target:
+            return self.target.split('[')[0]
+        else:
+            return self.target.split('/')[0]
+
+    def __str__(self):
+
+        dest = self.destination if self.destination else 'unspecified'
+        return "Explicit Input of type "+str(self.input)+" to "+self.get_target_population()+"(cell "+str(self.get_target_cell_id())+ \
+            "), destination: "+dest
+
+
+    ''',
+    class_names=("ExplicitInput")
+    )
+
+METHOD_SPECS+=(explicit_inputs,)
 
 def test():
     for spec in METHOD_SPECS:
