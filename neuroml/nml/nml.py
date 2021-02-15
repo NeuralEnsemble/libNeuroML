@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Jun 17 09:57:07 2020 by generateDS.py version 2.30.11.
-# Python 2.7.15 |Anaconda, Inc.| (default, Oct 23 2018, 13:35:16)  [GCC 4.2.1 Compatible Clang 4.0.1 (tags/RELEASE_401/final)]
+# Generated Mon Feb 15 12:34:31 2021 by generateDS.py version 2.30.11.
+# Python 2.7.16 |Anaconda, Inc.| (default, Mar 14 2019, 21:00:58)  [GCC 7.3.0]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -15,7 +15,7 @@
 #   NeuroML_v2.1.xsd
 #
 # Command line:
-#   /Users/padraig/anaconda/envs/py27/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2.1.xsd
+#   /home/padraig/anaconda2/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2.1.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -16063,7 +16063,7 @@ class NeuroMLDocument(Standalone):
             if isinstance(memb[1], list) and len(memb[1])>0 and not memb[0].endswith('_') and not memb[0] == 'networks':
                 if (memb[0] == 'includes' and show_includes) or (not memb[0] == 'includes' and show_non_network):
                     post = "*\n"
-                    info+="*   "+str(memb[1][0].__class__.__name__)+": "
+                    info+="*  "+str(memb[1][0].__class__.__name__)+": "
                     listed = []
                     for entry in memb[1]:
                         if hasattr(entry,'id'):
