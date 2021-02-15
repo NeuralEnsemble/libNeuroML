@@ -16,3 +16,4 @@ You may have to add the current folder to your PYTHONPATH, i.e.
 
     export PYTHONPATH=$PYTHONPATH:.
 
+Note from PG Feb 2021: retested & regenerated using Python 2.7 with generateDS.py v2.30.11- currently fails when generated with Python 3...
