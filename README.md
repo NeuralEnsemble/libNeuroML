@@ -29,8 +29,11 @@ Most of the work happens in the [development branch](https://github.com/NeuralEn
 
 ## Changelog
 
-### version 0.2.50
- - Updated to use the final stable Schema for NeuroML v2.0
+### version 0.2.54
+ - Using Schema for NeuroML v2.1. Better compatibility with Python 3
+
+ ### version 0.2.50
+  - Updated to use the final stable Schema for NeuroML v2.0
 
 ### version 0.2.47
  - Updated to use the final stable Schema for NeuroML v2beta5
@@ -44,7 +47,7 @@ Most of the work happens in the [development branch](https://github.com/NeuralEn
 
 ### version 0.2.2
  - Updated to use the Schema for NeuroML v2beta3
- - Ensures numpy & pytables are only required when using non-XML loaders/writers 
+ - Ensures numpy & pytables are only required when using non-XML loaders/writers
 
 ### version 0.2.0
  - Updated to use the Schema for NeuroML v2beta2
@@ -69,4 +72,3 @@ Most of the work happens in the [development branch](https://github.com/NeuralEn
 
 
 [![Build Status](https://api.travis-ci.org/NeuralEnsemble/libNeuroML.png)](https://travis-ci.org/NeuralEnsemble/libNeuroML)
-
