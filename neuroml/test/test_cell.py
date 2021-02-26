@@ -40,19 +40,14 @@ class TestCell(unittest.TestCase):
                 root_dir = os.path.dirname(neuroml.__file__)
                 test_file_path = os.path.join(root_dir,'examples/test_files/%s.cell.nml'%cell_name)
             print('test file path is: '+test_file_path)
-            f = open(test_file_path,'r')
 
             doc = loaders.NeuroMLLoader.load(test_file_path)
-
             cell = doc.cells[0]
             self.assertEqual(cell.id,cell_name.split('.')[0])
 
             exp_num_segs = 9
             self.assertEqual(cell.morphology.num_segments,exp_num_segs)
             self.assertEqual(len(cell.get_segment_ids_vs_segments()),exp_num_segs)
-
-            seg0 = cell.get_segment(0)
-
             self.assertRaises(Exception, lambda: cell.get_segment(-1)) # Seg -1 doesn't exist...
 
             cell.summary()
