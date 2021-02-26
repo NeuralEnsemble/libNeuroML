@@ -20,8 +20,12 @@ class NeuroMLWriter(object):
         namespacedef += ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'
         namespacedef += ' xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_%s.xsd"'%neuroml.current_neuroml_version
 
-        nmldoc.export(file,0,name_="neuroml",
-                      namespacedef_=namespacedef) #name_ param to ensure root element named correctly - generateDS limitation
+        try:
+            nmldoc.export(file,0,name_="neuroml",
+                          namespacedef_=namespacedef) #name_ param to ensure root element named correctly - generateDS limitation
+        except AttributeError as ae:
+            file.close()
+            raise(ae)
                       
         if close:
             file.close()
