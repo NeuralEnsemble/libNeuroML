@@ -118,8 +118,15 @@ If everything worked your output should look something like this:
     
     OK
 
-Alternatively install and use nosetests:
+Alternatively install and use pytest:
 
 ::
 
-    nosetests -v
+    pytest -v --strict -W all
+
+
+To ignore some tests, like the mongodb test which requres a mongodb setup, run:
+
+::
+
+    pytest -v -k "not mongodb" --strict -W all

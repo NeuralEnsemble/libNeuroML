@@ -19,7 +19,7 @@ setup(
     long_description = long_description,
     long_description_content_type="text/markdown",
     install_requires=['lxml', 'six'],
-    tests_require=["nose"],
+    tests_require=["pytest"],
     extras_require={"full": [
         "cython",
         "numpy",
