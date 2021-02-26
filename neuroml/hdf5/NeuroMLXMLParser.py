@@ -95,17 +95,24 @@ class NeuroMLXMLParser():
             
             if len(population.instances)>0 and population.type=='populationList':
                   
-                if 'properties' in inspect.getfullargspec(self.netHandler.handle_population)[0]:
-                    self.netHandler.handle_population(population.id, 
-                                                     population.component, 
-                                                     len(population.instances),
-                                                     component_obj=component_obj,
-                                                     properties=properties)
+                # Try for Python3
+                try:
+                    args = inspect.getfullargspec(self.netHandler.handle_population)[0]
+                except AttributeError:
+                    # Fall back for Python 2
+                    args = inspect.getargspec(self.netHandler.handle_population)[0]
+
+                if 'properties' in args:
+                    self.netHandler.handle_population(population.id,
+                                                      population.component,
+                                                      len(population.instances),
+                                                      component_obj=component_obj,
+                                                      properties=properties)
                 else:
-                    self.netHandler.handle_population(population.id, 
-                                                     population.component, 
-                                                     len(population.instances),
-                                                     component_obj=component_obj)
+                    self.netHandler.handle_population(population.id,
+                                                      population.component,
+                                                      len(population.instances),
+                                                      component_obj=component_obj)
 
                 for inst in population.instances:
 
@@ -117,19 +124,25 @@ class NeuroMLXMLParser():
                                             loc.y,       \
                                             loc.z)       
             else:
-                
-                if 'properties' in inspect.getfullargspec(self.netHandler.handle_population)[0]:
-                    self.netHandler.handle_population(population.id, 
-                                                     population.component, 
-                                                     population.size,
-                                                     component_obj=component_obj,
-                                                     properties=properties)
+                # Try for Python3
+                try:
+                    args = inspect.getfullargspec(self.netHandler.handle_population)[0]
+                except AttributeError:
+                    # Fall back for Python 2
+                    args = inspect.getargspec(self.netHandler.handle_population)[0]
+
+                if 'properties' in args:
+                    self.netHandler.handle_population(population.id,
+                                                      population.component,
+                                                      population.size,
+                                                      component_obj=component_obj,
+                                                      properties=properties)
                 else:
-                    self.netHandler.handle_population(population.id, 
-                                                     population.component, 
-                                                     population.size,
-                                                     component_obj=component_obj)
-                                                     
+                    self.netHandler.handle_population(population.id,
+                                                      population.component,
+                                                      population.size,
+                                                      component_obj=component_obj)
+
                 for i in range(population.size):
                     self.netHandler.handle_location(i,                      \
                                             population.id,     \
