@@ -95,7 +95,7 @@ class NeuroMLXMLParser():
             
             if len(population.instances)>0 and population.type=='populationList':
                   
-                if 'properties' in inspect.getargspec(self.netHandler.handle_population)[0]:
+                if 'properties' in inspect.getfullargspec(self.netHandler.handle_population)[0]:
                     self.netHandler.handle_population(population.id, 
                                                      population.component, 
                                                      len(population.instances),
@@ -118,7 +118,7 @@ class NeuroMLXMLParser():
                                             loc.z)       
             else:
                 
-                if 'properties' in inspect.getargspec(self.netHandler.handle_population)[0]:
+                if 'properties' in inspect.getfullargspec(self.netHandler.handle_population)[0]:
                     self.netHandler.handle_population(population.id, 
                                                      population.component, 
                                                      population.size,

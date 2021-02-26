@@ -500,7 +500,7 @@ class NeuroMLHdf5Parser():
             else:
                 component_obj = None
 
-            if 'properties' in inspect.getargspec(self.netHandler.handle_population)[0]:
+            if 'properties' in inspect.getfullargspec(self.netHandler.handle_population)[0]:
                 self.netHandler.handle_population(self.currPopulation, self.currentComponent, size, component_obj=component_obj, properties=properties)
             else:
                 self.netHandler.handle_population(self.currPopulation, self.currentComponent, size, component_obj=component_obj)
