@@ -2,9 +2,7 @@ r"""
 Prototype for object model backend for the libNeuroML project
 """
 
-import math
 import numpy as np
-import numpy.ma as ma
 import neuroml
 
 
