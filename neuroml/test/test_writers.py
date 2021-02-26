@@ -4,9 +4,6 @@ Unit tests for writers
 """
 
 import neuroml
-from neuroml import writers
-from neuroml import loaders
-import os
 import numpy as np
 from neuroml import arraymorph as am
 import tempfile
