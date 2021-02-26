@@ -20,7 +20,7 @@ install:
 
 # command to run tests and examples, e.g. python setup.py test
 script:
-  - cd ./neuroml/test && nosetests -vs
+  - cd ./neuroml/test && pytest -v --strict -W all
   - cd ../examples && python run_all.py
 
 services: mongodb
