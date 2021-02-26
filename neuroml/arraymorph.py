@@ -10,7 +10,7 @@ class ArrayMorphology(neuroml.Morphology):
     """Core of the array-based object model backend.
 
     Provides the core arrays - vertices,connectivity etc.
-    node_types.        
+    node_types.
 
     The connectivity array is a list of indices pointing to which
     other element an element is attached. So for instance,
@@ -19,7 +19,7 @@ class ArrayMorphology(neuroml.Morphology):
 
     - EXAMPLE:
 
-        Vertices[3] and connectivity[3] refer to the vertex 
+        Vertices[3] and connectivity[3] refer to the vertex
         and connectivity of the same node.
 
     .. note::
@@ -41,7 +41,7 @@ class ArrayMorphology(neuroml.Morphology):
 
         self.connectivity = np.array(connectivity)
         self.vertices = np.array(vertices)
-        
+
         self.id = id
 
         if np.any(physical_mask):
@@ -92,8 +92,8 @@ class ArrayMorphology(neuroml.Morphology):
             valid_flag = (internal_id == external_id) * valid_flag
 
         return valid_flag
-            
-        
+
+
     @property
     def __all_nodes_satisfied(self):
         m = self.vertices.shape[0]
@@ -102,14 +102,14 @@ class ArrayMorphology(neuroml.Morphology):
 
         all_nodes_satisfied = (m == n == p)
         return all_nodes_satisfied
-        
+
     @property
     def root_index(self):
-        return np.where(self.connectivity == -1)[0][0]    
+        return np.where(self.connectivity == -1)[0][0]
 
     @property
     def root_vertex(self):
-        return self.vertices[self.root_index]    
+        return self.vertices[self.root_index]
 
     @property
     def num_vertices(self):
@@ -120,7 +120,7 @@ class ArrayMorphology(neuroml.Morphology):
         """returns indices of vertices which are physical"""
         physical_indices = np.where(self.physical_mask == 0)[0]
         return physical_indices
-        
+
     def children(self,index):
         """Returns an array with indexes of children"""
         return np.where(self.connectivity == index)
@@ -132,7 +132,7 @@ class ArrayMorphology(neuroml.Morphology):
         """
 
         old_root_index = self.root_index
-        new_root_index = index        
+        new_root_index = index
         #do a tree traversal:
         parent_index = self.connectivity[index]
         grandparent_index=self.connectivity[parent_index]
@@ -153,13 +153,13 @@ class ArrayMorphology(neuroml.Morphology):
 
     def __len__(self):
         return len(self.connectivity)
-        
+
     def pop(self,index):
         """
         TODO:This is failing tests (understandably) - need to fix!
         Deletes a node from the morphology, its children become
         children of the deleted node's parent.
-        """    
+        """
 
         self.vertices = np.delete(self.vertices,index)
         self.node_types = np.delete(self.node_types,index)
@@ -186,16 +186,16 @@ class ArrayMorphology(neuroml.Morphology):
 
     def segment_from_vertex_index(self,index):
         parent_index = self.connectivity[index]
-        
+
         node_x = self.vertices[index][0]
         node_y = self.vertices[index][1]
         node_z = self.vertices[index][2]
         node_d = self.vertices[index][3]
-        
+
         parent_x = self.vertices[parent_index][0]
         parent_y = self.vertices[parent_index][1]
         parent_z = self.vertices[parent_index][2]
-        parent_d = self.vertices[parent_index][3]                
+        parent_d = self.vertices[parent_index][3]
 
         p = neuroml.Point3DWithDiam(x=node_x,
                                     y=node_y,
@@ -207,7 +207,7 @@ class ArrayMorphology(neuroml.Morphology):
                                     z=parent_z,
                                     diameter=parent_d)
 
-        
+
         seg = neuroml.Segment(proximal=p,
                               distal=d,
                               id=index)
@@ -216,7 +216,7 @@ class ArrayMorphology(neuroml.Morphology):
             seg.parent = parent
 
         return seg
-        
+
 class SegmentList(object):
     """
     This class is a proxy, it returns a segment either
@@ -247,7 +247,7 @@ class SegmentList(object):
         segments which is number of vertices - 1 and minus all
         floating segments.
         """
-        
+
         num_vertices = self.arraymorph.num_vertices
         num_floating = np.sum(self.arraymorph.physical_mask)
         num_segments = num_vertices - num_floating -1
@@ -283,7 +283,7 @@ class SegmentList(object):
         """
         dist_vertex_index = len(self.arraymorph.vertices)
         prox_vertex_index = dist_vertex_index + 1
-        
+
         prox_x = segment.proximal.x
         prox_y = segment.proximal.y
         prox_z = segment.proximal.z
@@ -293,7 +293,7 @@ class SegmentList(object):
         dist_y = segment.distal.y
         dist_z = segment.distal.z
         distal_diam = segment.distal.diameter
-        
+
         prox_vertex = [prox_x,prox_y,prox_z,prox_diam]
         dist_vertex = [dist_x,dist_y,dist_z,distal_diam]
 
@@ -303,11 +303,11 @@ class SegmentList(object):
             self.arraymorph.vertices = np.array([dist_vertex,prox_vertex])
 
         self.arraymorph.connectivity = np.append(self.arraymorph.connectivity,[-1,dist_vertex_index])
-        
+
         if len(self.arraymorph.physical_mask) == 0:
             self.arraymorph.physical_mask = np.array([0,0])
         else:
             self.arraymorph.physical_mask = np.append(self.arraymorph.physical_mask,[1,0])
-            
+
         segment_index = len(self) - 1
         self.instantiated_segments[segment_index] = segment
