@@ -1,3 +1,4 @@
+import warnings
 import neuroml.arraymorph as am
 import neuroml
 import numpy as np
@@ -275,9 +276,14 @@ class TestArrayMorphology(unittest.TestCase):
         Should return false if morphology is invalid
         """
 
-        vertices=[[0,0,0],[1,1]]
-        connectivity=[-1,0]
-        self.assertRaises(AssertionError,am.ArrayMorphology,vertices,connectivity)
+        # We're using vertices with inconsistent dimensions here, which Numpy
+        # does not like.
+        # Ignore the VisibleDeprecationWarning that numpy throws.
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", "Creating an ndarray from ragged nested sequences")
+            vertices=[[0,0,0],[1,1]]
+            connectivity=[-1,0]
+            self.assertRaises(AssertionError,am.ArrayMorphology,vertices,connectivity)
 
         vertices=[[0,0,0],[1,1,1]]
         connectivity=[-1,0,0]
