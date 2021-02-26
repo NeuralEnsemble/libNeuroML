@@ -25,7 +25,7 @@ setup(
         "numpy",
         "pymongo",
         "numexpr",
-        "simplejson",
+        "simplejson; python_version < '3.5'",
         "tables>=3.3.0",
         "jsonpickle>=0.9.6"
     ]},
