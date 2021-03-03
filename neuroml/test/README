@@ -4,4 +4,4 @@ python -m unittest discover
 
 or:
 
-nosetests
+pytest

@@ -500,7 +500,14 @@ class NeuroMLHdf5Parser():
             else:
                 component_obj = None
 
-            if 'properties' in inspect.getargspec(self.netHandler.handle_population)[0]:
+            # Try for Python3
+            try:
+                args = inspect.getfullargspec(self.netHandler.handle_population)[0]
+            except AttributeError:
+                # Fall back for Python 2
+                args = inspect.getargspec(self.netHandler.handle_population)[0]
+
+            if 'properties' in args:
                 self.netHandler.handle_population(self.currPopulation, self.currentComponent, size, component_obj=component_obj, properties=properties)
             else:
                 self.netHandler.handle_population(self.currPopulation, self.currentComponent, size, component_obj=component_obj)
