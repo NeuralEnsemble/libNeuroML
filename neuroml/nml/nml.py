@@ -35,7 +35,7 @@ except ImportError:
 
 Validate_simpletypes_ = True
 if sys.version_info.major == 2:
-    BaseStrType_ = basestring
+    BaseStrType_ = basestring  # noqa: F821
 else:
     BaseStrType_ = str
 
@@ -415,7 +415,7 @@ except ImportError as exp:
         def convert_unicode(instring):
             if isinstance(instring, str):
                 result = quote_xml(instring)
-            elif sys.version_info.major == 2 and isinstance(instring, unicode):
+            elif sys.version_info.major == 2 and isinstance(instring, unicode): # noqa: F821
                 result = quote_xml(instring).encode('utf8')
             else:
                 result = GeneratedsSuper.gds_encode(str(instring))

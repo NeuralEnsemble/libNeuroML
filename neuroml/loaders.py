@@ -114,7 +114,8 @@ class SWCLoader(object):
         if len(id_to_index_dict) != len(index_to_id):
             s =  "Internal Error Loading SWC: Index and ID map are different lengths."
             s += " [ID:%d, Index:%d]"%( len(index_to_id), len(id_to_index_dict) )
-            raise MorphologyImportError(s)
+            # TODO: this is undefined!!
+            raise MorphologyImportError(s)  # noqa: F821
         
         # Vertices and section types are easy:
         vertices =  d[ ['x','y','z','r'] ]
