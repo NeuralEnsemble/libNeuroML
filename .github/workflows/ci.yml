@@ -41,7 +41,7 @@ jobs:
 
     - name: Run examples
       run: |
-        cd examples && python run_all.py
+        cd ./neuroml/examples && python run_all.py
 
     - name: Lint with flake8
       run: |
