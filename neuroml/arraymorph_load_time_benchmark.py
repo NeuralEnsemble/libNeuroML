@@ -1,5 +1,10 @@
+import numpy as np
+import neuroml
+import neuroml.arraymorph as am
+
+
 class Benchmark:
-    def __init__(num_segments):
+    def __init__(self, num_segments):
         self.num_segments = num_segments
         
     def set_up(self):
