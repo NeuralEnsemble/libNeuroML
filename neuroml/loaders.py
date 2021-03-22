@@ -114,7 +114,8 @@ class SWCLoader(object):
         if len(id_to_index_dict) != len(index_to_id):
             s =  "Internal Error Loading SWC: Index and ID map are different lengths."
             s += " [ID:%d, Index:%d]"%( len(index_to_id), len(id_to_index_dict) )
-            raise MorphologyImportError(s)
+            # TODO: this is undefined!!
+            raise MorphologyImportError(s)  # noqa: F821
         
         # Vertices and section types are easy:
         vertices =  d[ ['x','y','z','r'] ]
@@ -151,6 +152,7 @@ class JSONLoader(object):
 
         json_string = fileh.read()
         unpickled = json_decode(json_string)
+        fileh.close()
         return unpickled
         
     @classmethod
@@ -210,22 +212,21 @@ class ArrayMorphLoader(object):
         TODO: Complete refactoring.
         """
         import tables
-        file = tables.open_file(filepath,mode='r')
+        with tables.open_file(filepath,mode='r') as file:
 
-        document = neuroml.NeuroMLDocument()
+            document = neuroml.NeuroMLDocument()
 
-        for node in file.root:
-            if hasattr(node,'vertices'):
-                loaded_morphology = cls.__extract_morphology(node)
-                document.morphology.append(loaded_morphology)
-            else:
-                for morphology in node:
-                    loaded_morphology = cls.__extract_morphology(morphology)
+            for node in file.root:
+                if hasattr(node,'vertices'):
+                    loaded_morphology = cls.__extract_morphology(node)
                     document.morphology.append(loaded_morphology)
-                
+                else:
+                    for morphology in node:
+                        loaded_morphology = cls.__extract_morphology(morphology)
+                        document.morphology.append(loaded_morphology)
+
         return document
-            
-    
+
 
 def read_neuroml2_file(nml2_file_name, include_includes=False, verbose=False, 
                        already_included=[], print_method=print_, optimized=False):  

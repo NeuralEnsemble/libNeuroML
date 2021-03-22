@@ -270,6 +270,8 @@ class NeuroMLHdf5Parser():
 
             for attrName in d.attrs._v_attrnames:
                 val = d.attrs.__getattr__(attrName)
+                if not isinstance(val, str):
+                    val = val.decode()
 
                 #self.log.debug("Val of attribute: "+ attrName + " is "+ str(val))
 
@@ -321,7 +323,7 @@ class NeuroMLHdf5Parser():
                 row = d[i,:]
 
                 id =  int(row[indexId]) if indexId>0 else i
-
+                
                 preCellId =  int(row[indexPreCellId])
 
                 if indexPreSegId >= 0:
@@ -387,6 +389,8 @@ class NeuroMLHdf5Parser():
 
             for attrName in d.attrs._v_attrnames:
                 val = d.attrs.__getattr__(attrName)
+                if not isinstance(val, str):
+                    val = val.decode()
 
                 self.log.debug("Val of attribute: "+ attrName + " is "+ str(val))
 
@@ -496,7 +500,14 @@ class NeuroMLHdf5Parser():
             else:
                 component_obj = None
 
-            if 'properties' in inspect.getargspec(self.netHandler.handle_population)[0]:
+            # Try for Python3
+            try:
+                args = inspect.getfullargspec(self.netHandler.handle_population)[0]
+            except AttributeError:
+                # Fall back for Python 2
+                args = inspect.getargspec(self.netHandler.handle_population)[0]
+
+            if 'properties' in args:
                 self.netHandler.handle_population(self.currPopulation, self.currentComponent, size, component_obj=component_obj, properties=properties)
             else:
                 self.netHandler.handle_population(self.currPopulation, self.currentComponent, size, component_obj=component_obj)
@@ -609,6 +620,7 @@ if __name__ == '__main__':
 
 
     file_name = '../examples/test_files/complete.nml.h5'
+    #file_name = '../../../neuroConstruct/osb/showcase/NetPyNEShowcase/NeuroML2/scaling/Balanced.net.nml.h5'
 
     logging.basicConfig(level=logging.DEBUG, format="%(name)-19s %(levelname)-5s - %(message)s")
 

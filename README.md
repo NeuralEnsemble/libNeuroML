@@ -1,5 +1,14 @@
 ## Introduction
 
+[![Travis CI](https://travis-ci.org/NeuralEnsemble/libNeuroML.svg?branch=master)](https://travis-ci.org/NeuralEnsemble/libNeuroML)
+[![PyPI](https://img.shields.io/pypi/v/libNeuroML)](https://pypi.org/project/libNeuroML/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/libNeuroML)](https://pypi.org/project/libNeuroML/)
+[![GitHub](https://img.shields.io/github/license/NeuralEnsemble/libNeuroML)](https://github.com/NeuralEnsemble/libNeuroML/blob/master/LICENSE)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/NeuralEnsemble/libNeuroML)](https://github.com/NeuralEnsemble/libNeuroML/pulls)
+[![GitHub issues](https://img.shields.io/github/issues/NeuralEnsemble/libNeuroML)](https://github.com/NeuralEnsemble/libNeuroML/issues)
+[![GitHub Org's stars](https://img.shields.io/github/stars/NeuralEnsemble?style=social)](https://github.com/NeuralEnsemble)
+[![Twitter Follow](https://img.shields.io/twitter/follow/NeuroML?style=social)](https://twitter.com/NeuroML)
+
 This package provides Python libNeuroML, for working with neuronal models specified in [NeuroML 2](http://neuroml.org/neuromlv2).
 
 For more about libNeuroML see:
@@ -29,8 +38,11 @@ Most of the work happens in the [development branch](https://github.com/NeuralEn
 
 ## Changelog
 
-### version 0.2.50
- - Updated to use the final stable Schema for NeuroML v2.0
+### version 0.2.54
+ - Using Schema for NeuroML v2.1. Better compatibility with Python 3
+
+ ### version 0.2.50
+  - Updated to use the final stable Schema for NeuroML v2.0
 
 ### version 0.2.47
  - Updated to use the final stable Schema for NeuroML v2beta5
@@ -44,7 +56,7 @@ Most of the work happens in the [development branch](https://github.com/NeuralEn
 
 ### version 0.2.2
  - Updated to use the Schema for NeuroML v2beta3
- - Ensures numpy & pytables are only required when using non-XML loaders/writers 
+ - Ensures numpy & pytables are only required when using non-XML loaders/writers
 
 ### version 0.2.0
  - Updated to use the Schema for NeuroML v2beta2
@@ -69,4 +81,3 @@ Most of the work happens in the [development branch](https://github.com/NeuralEn
 
 
 [![Build Status](https://api.travis-ci.org/NeuralEnsemble/libNeuroML.png)](https://travis-ci.org/NeuralEnsemble/libNeuroML)
-
