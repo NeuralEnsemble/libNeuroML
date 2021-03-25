@@ -1,6 +1,8 @@
 ## Introduction
 
 [![Travis CI](https://travis-ci.org/NeuralEnsemble/libNeuroML.svg?branch=master)](https://travis-ci.org/NeuralEnsemble/libNeuroML)
+[![GH Build](https://github.com/NeuralEnsemble/libNeuroML/actions/workflows/ci.yml/badge.svg)](https://github.com/NeuralEnsemble/libNeuroML/actions/workflows/ci.yml)
+[![Documentation Status](https://readthedocs.org/projects/libneuroml/badge/?version=latest)](https://libneuroml.readthedocs.io/en/latest/?badge=latest)
 [![PyPI](https://img.shields.io/pypi/v/libNeuroML)](https://pypi.org/project/libNeuroML/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/libNeuroML)](https://pypi.org/project/libNeuroML/)
 [![GitHub](https://img.shields.io/github/license/NeuralEnsemble/libNeuroML)](https://github.com/NeuralEnsemble/libNeuroML/blob/master/LICENSE)
