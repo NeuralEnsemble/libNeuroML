@@ -138,16 +138,15 @@ started. Don’t be scare to open one.
 Release process
 ---------------
 libNeuroML is part of the official NeuroML release cycle. As of
-1/09/13 we are still ironing out the proecure. When a new libNueroML
+1/09/13 we are still ironing out the procedure. When a new libNueroML
 release is ready the following needs to happen:
-  - Update version number in setup.py
-  - update version number in doc/conf.py
-  - update release number in doc/conf.py (same as version number)
-  - update changelog in README.md
-  - merge development branch with master (This should happen via pull
-    request - do not do the merge yourself even if you are an owner
-    of the repository.
-  - push latest release to PyPi
+
+- Update version number in setup.py
+- update version number in doc/conf.py
+- update release number in doc/conf.py (same as version number)
+- update changelog in README.md
+- merge development branch with master (This should happen via pull request - do not do the merge yourself even if you are an owner of the repository.
+- push latest release to PyPi
 
 Miscellaneous
 -------------
