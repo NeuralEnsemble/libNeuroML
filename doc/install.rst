@@ -1,63 +1,44 @@
 Installation
 ============
 
+Using Pip
+----------
 
-Requirements
-----------------------------------------
-
-
-For the default XML serialization (saving NeuroML to XML files), only *lxml* is required:
-
-::
-
-    sudo pip install lxml
-
-Alternatively, on Linux you can use:
-
-::
-
-    sudo apt-get install python-lxml
-
-To use the other serializations (e.g. HDF5, JSON, see `Vella et al. 2014 <http://journal.frontiersin.org/Journal/10.3389/fninf.2014.00038/abstract>`_) 
-the following will also be required:
-
-::
-
-    sudo apt-get install libhdf5-serial-dev
-    sudo pip install numpy
-    sudo pip install numexpr
-    sudo pip install jsonpickle
-    sudo pip install pymongo
-    sudo pip install simplejson
-    sudo pip install tables
-
-See `.travis.yml <https://github.com/NeuralEnsemble/libNeuroML/blob/master/.travis.yml>`_ for the latest requirements on libraries etc.
-
-Install libNeuroML via pip
-----------------------------------------
+On most systems with a Python installation, libNeuroML can be installed using the default Python package manager, Pip:
 
 ::
 
     pip install libNeuroML
 
-This is always the latest stable branch from GitHub, and installs the minimal requirements (``lxml``).
+It is recommended to use a `virtual environment <https://docs.python.org/3/tutorial/venv.html>`_ when installing Python packages using `pip` to prevent these from conflicting with other system libraries.
 
+This will support the default XML serialization.
 To install all of requirements to include the other serialisations, use
 
 ::
 
+    # On Ubuntu based systems
     sudo apt-get install libhdf5-dev
     pip install libNeuroML[full]
 
 The ``apt`` line is required at time of writing because PyTables' wheels for python 3.7 depend on the system libhdf5.
 
 
+On Fedora based systems
+------------------------
+
+On `Fedora <https://getfedora.org>`_ Linux systems, the `NeuroFedora <https://neuro.fedoraproject.org>`_ community provides libNeuroML in the `standard Fedora repos <https://src.fedoraproject.org/rpms/python-libNeuroML>`_ and can be installed using the following commands:
+
+::
+
+    sudo dnf install python3-libNeuroML
 
 
-Install using a local copy of libNeuroML source
------------------------------------------------
+Install from source
+--------------------
 
-Install `git`_ and type:
+You can clone the `GitHub repository <https://github.com/NeuralEnsemble/libNeuroML/>`_ and also build libNeuroML from the sources.
+For this, you will need `git`_:
 
 ::
 
@@ -66,20 +47,13 @@ Install `git`_ and type:
 
 
 More details about the git repository and making your own branch/fork are `here <how_to_contribute.html>`_.
-
-
-.. _Git: http://rogerdudler.github.com/git-guide/
-
-
-Use the standard install method for Python packages:
-
+To build and install libNeuroML, you can use the standard install method for Python packages (preferably in a virtual environment):
 
 ::
 
-    sudo python setup.py install
+    python setup.py install
 
 To use the **latest development version of libNeuroML**, switch to the development branch:
-
 
 ::
 
@@ -94,21 +68,22 @@ Some sample scripts are included in `neuroml/examples`, e.g. :
 
 ::
 
-     cd neuroml/examples
-     python build_network.py
+    cd neuroml/examples
+    python build_network.py
 
 The standard examples can also be found :doc:`examples`.
 
 Unit tests
 ----------
 
-To run unit tests cd to the directory '/neuoroml/test' and use the python unittest module discover method:
+To run unit tests cd to the directory `neuroml/test` and use the Python unittest module discover method:
 
 ::
 
+    cd neuroml/test/
     python -m unittest discover
 
-If everything worked your output should look something like this:
+If all tests passed correctly, your output should look something like this:
 
 ::
 
@@ -118,15 +93,19 @@ If everything worked your output should look something like this:
     
     OK
 
-Alternatively install and use pytest:
+You can also use PyTest to run tests.
 
 ::
 
+    pip install pytest
     pytest -v --strict -W all
 
 
-To ignore some tests, like the mongodb test which requres a mongodb setup, run:
+To ignore some tests, like the MongoDB test which requires a MongoDB setup, run:
 
 ::
 
     pytest -v -k "not mongodb" --strict -W all
+
+
+.. _Git: https://git-scm.com
