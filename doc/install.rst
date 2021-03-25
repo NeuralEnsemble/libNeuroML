@@ -97,7 +97,7 @@ Some sample scripts are included in `neuroml/examples`, e.g. :
      cd neuroml/examples
      python build_network.py
 
-The standard examples can also be found `here <examples.html>`_
+The standard examples can also be found :doc:`examples`.
 
 Unit tests
 ----------
