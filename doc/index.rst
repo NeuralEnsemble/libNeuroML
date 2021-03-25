@@ -9,7 +9,6 @@ libNeuroML: documentation
    install
    api
    examples
-   tools 
 
 
 =======================
