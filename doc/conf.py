@@ -51,9 +51,12 @@ copyright = u'2021, libNeuroML authors and contributors'
 # built documents.
 #
 # The short X.Y version.
-for l in open('../neuroml/__init__.py'):
-    if '__version__' in l:
-        version = l.split("'")[1]
+version = ""
+for aline in open('../neuroml/__init__.py'):
+    # space here is important since __version__ is used in generation of
+    # version_info also
+    if '__version__ =' in aline:
+        version = aline.split("'")[1]
 # The full version, including alpha/beta/rc tags.
 release = version
 
