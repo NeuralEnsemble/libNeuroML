@@ -7,8 +7,10 @@ libNeuroML: documentation
 
    introduction
    install
+   api
    examples
    tools 
+
 
 =======================
 Developer documentation
@@ -20,13 +22,22 @@ Developer documentation
    how_to_contribute
    implementation_of_bindings
 
-.. Source documentation
-   ==================
+Events and meetings
+====================
 
-  .. toctree::
-     :maxdepth: 3
+.. toctree::
+   :maxdepth: 1
 
-modules
+   meeting_june_2012
+
+Miscellaneous
+==============
+
+.. toctree::
+   :maxdepth: 1
+
+   nodes_segments_sections
+
 
 Indices and tables
 ==================

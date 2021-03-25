@@ -1,13 +1,14 @@
-neuroml Package
-===============
+API documentation
+=================
 
-:mod:`neuroml` Package
-----------------------
+Core classes
+--------------
 
-.. automodule:: neuroml.__init__
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. toctree::
+
+    neuroml.nml
+
+
 
 :mod:`loaders` Module
 ---------------------
@@ -40,11 +41,3 @@ neuroml Package
     :members:
     :undoc-members:
     :show-inheritance:
-
-Subpackages
------------
-
-.. toctree::
-
-    neuroml.nml
-
