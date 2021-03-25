@@ -16,6 +16,7 @@ User documentation
    install
    api
    examples
+   bibliography
 
 
 Developer documentation
@@ -45,9 +46,8 @@ Miscellaneous
 
 
 Indices and tables
-************************
+*******************
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

@@ -1,19 +1,15 @@
 Introduction
 ============
 
-This package provides Python libNeuroML, for working with neuronal models specified in `NeuroML 2  <http://neuroml.org/neuromlv2>`_.
+This package provides Python libNeuroML, for working with neuronal models specified in `NeuroML 2  <http://docs.neuroml.org>`_.
 
-NOTE: libNeuroML targets `NeuroML v2.0`_ (described in 
-`Cannon et al, 2014 <http://journal.frontiersin.org/Journal/10.3389/fninf.2014.00079/abstract>`_) not NeuroML v1.8.1 
-(`Gleeson et al. 2010 <http://www.ploscompbiol.org/article/info:doi/10.1371/journal.pcbi.1000815>`_).
+.. warning:: **libNeuroML targets NeuroML v2.0**
 
-For a detailed description of libNeuroML see:
+   libNeuroML targets `NeuroML v2.0`_, which is described in `Cannon et al, 2014 <http://journal.frontiersin.org/Journal/10.3389/fninf.2014.00079/abstract>`_).
+   NeuroML v1.8.1 (`Gleeson et al. 2010 <http://www.ploscompbiol.org/article/info:doi/10.1371/journal.pcbi.1000815>`_) is now deprecated and not supported by libNeuroML.
 
-|  Michael Vella, Robert C. Cannon, Sharon Crook, Andrew P. Davison, Gautham Ganapathy, Hugh P. C. Robinson, R. Angus Silver and Padraig Gleeson
-|  **libNeuroML and PyLEMS: using Python to combine procedural and declarative modeling approaches in computational neuroscience**
-|  `Frontiers in Neuroinformatics 2014 <http://journal.frontiersin.org/Journal/10.3389/fninf.2014.00038/abstract.>`_, doi: 10.3389/fninf.2014.00038
-
-**PLEASE CITE THE PAPER ABOVE IF YOU USE libNeuroML!**
+For a detailed description of libNeuroML see :cite:t:`Vella2014`.
+*Please cite the paper if you use libNeuroML.*
 
 NeuroML
 -------
@@ -41,7 +37,7 @@ Other serialisations have been developed (HDF5, JSON, SWC). See
 
 
 
-.. _NeuroML v2.0: http://www.neuroml.org/neuromlv2
+.. _NeuroML v2.0: http://docs.neuroml.org
 .. _LEMS: http://lems.github.io/LEMS/
 .. _NeuroHDF: http://neurohdf.readthedocs.org/en/latest/
 
