@@ -1,13 +1,18 @@
 API documentation
 =================
 
-Core classes
---------------
+:mod:`nml` Module (NeuroML Core classes)
+-----------------------------------------
 
-.. toctree::
+Note: This module is included in the top level of the `neuroml` package, so you can use these classes by importing neuroml:
 
-    neuroml.nml
+::
 
+    from neuroml import AdExIaFCell
+
+.. automodule:: neuroml.nml.nml
+    :members:
+    :show-inheritance:
 
 
 :mod:`loaders` Module
