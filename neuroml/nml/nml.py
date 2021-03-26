@@ -2,20 +2,19 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Mar 26 09:44:40 2021 by generateDS.py version 2.35.5.
+# Generated Fri Mar 26 11:39:57 2021 by generateDS.py version 2.35.5.
 # Python 3.9.2 (default, Feb 20 2021, 00:00:00)  [GCC 11.0.0 20210210 (Red Hat 11.0.0-0)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
 #   ('--use-getter-setter', 'none')
-#   ('--silence', '')
 #   ('--user-methods', 'helper_methods.py')
 #
 # Command line arguments:
-#   NeuroML_v2.1.xsd
+#   ./NeuroML_v2.1.xsd
 #
 # Command line:
-#   /home/asinha/.virtualenvs/generateds/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods.py" NeuroML_v2.1.xsd
+#   /home/asinha/.virtualenvs/generateds/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" ./NeuroML_v2.1.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -1941,19 +1940,19 @@ class Parameter(NamedDimensionalType):
 class LEMS_Property(NamedDimensionalType):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('defaultValue', 'xs:double', 0, 1, {'use': 'optional'}),
+        MemberSpec_('default_value', 'xs:double', 0, 1, {'use': 'optional'}),
     ]
     subclass = None
     superclass = NamedDimensionalType
-    def __init__(self, name=None, dimension=None, description=None, defaultValue=None, gds_collector_=None, **kwargs_):
+    def __init__(self, name=None, dimension=None, description=None, default_value=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
         super(LEMS_Property, self).__init__(name, dimension, description,  **kwargs_)
-        self.defaultValue = _cast(float, defaultValue)
-        self.defaultValue_nsprefix_ = None
+        self.default_value = _cast(float, default_value)
+        self.default_value_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -1996,9 +1995,9 @@ class LEMS_Property(NamedDimensionalType):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='LEMS_Property'):
         super(LEMS_Property, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='LEMS_Property')
-        if self.defaultValue is not None and 'defaultValue' not in already_processed:
-            already_processed.add('defaultValue')
-            outfile.write(' defaultValue="%s"' % self.gds_format_double(self.defaultValue, input_name='defaultValue'))
+        if self.default_value is not None and 'default_value' not in already_processed:
+            already_processed.add('default_value')
+            outfile.write(' defaultValue="%s"' % self.gds_format_double(self.default_value, input_name='defaultValue'))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='LEMS_Property', fromsubclass_=False, pretty_print=True):
         super(LEMS_Property, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
         pass
@@ -2107,11 +2106,11 @@ class InstanceRequirement(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('name', 'xs:string', 0, 0, {'use': 'required'}),
-        MemberSpec_('type_', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('type', 'xs:string', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, name=None, type_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, name=None, type=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -2119,8 +2118,8 @@ class InstanceRequirement(GeneratedsSuper):
         self.ns_prefix_ = None
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
-        self.type_ = _cast(None, type_)
-        self.type__nsprefix_ = None
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -2165,9 +2164,9 @@ class InstanceRequirement(GeneratedsSuper):
         if self.name is not None and 'name' not in already_processed:
             already_processed.add('name')
             outfile.write(' name=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.name), input_name='name')), ))
-        if self.type_ is not None and 'type_' not in already_processed:
-            already_processed.add('type_')
-            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type_), input_name='type')), ))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type), input_name='type')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='InstanceRequirement', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node, gds_collector_=None):
@@ -2189,7 +2188,7 @@ class InstanceRequirement(GeneratedsSuper):
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
             already_processed.add('type')
-            self.type_ = value
+            self.type = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
 # end class InstanceRequirement
@@ -2872,21 +2871,21 @@ class IncludeType(GeneratedsSuper):
 class Q10ConductanceScaling(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('q10Factor', 'Nml2Quantity_none', 0, 0, {'use': 'required'}),
-        MemberSpec_('experimentalTemp', 'Nml2Quantity_temperature', 0, 0, {'use': 'required'}),
+        MemberSpec_('q10_factor', 'Nml2Quantity_none', 0, 0, {'use': 'required'}),
+        MemberSpec_('experimental_temp', 'Nml2Quantity_temperature', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, q10Factor=None, experimentalTemp=None, gds_collector_=None, **kwargs_):
+    def __init__(self, q10_factor=None, experimental_temp=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.q10Factor = _cast(None, q10Factor)
-        self.q10Factor_nsprefix_ = None
-        self.experimentalTemp = _cast(None, experimentalTemp)
-        self.experimentalTemp_nsprefix_ = None
+        self.q10_factor = _cast(None, q10_factor)
+        self.q10_factor_nsprefix_ = None
+        self.experimental_temp = _cast(None, experimental_temp)
+        self.experimental_temp_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -2950,12 +2949,12 @@ class Q10ConductanceScaling(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='Q10ConductanceScaling'):
-        if self.q10Factor is not None and 'q10Factor' not in already_processed:
-            already_processed.add('q10Factor')
-            outfile.write(' q10Factor=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.q10Factor), input_name='q10Factor')), ))
-        if self.experimentalTemp is not None and 'experimentalTemp' not in already_processed:
-            already_processed.add('experimentalTemp')
-            outfile.write(' experimentalTemp=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.experimentalTemp), input_name='experimentalTemp')), ))
+        if self.q10_factor is not None and 'q10_factor' not in already_processed:
+            already_processed.add('q10_factor')
+            outfile.write(' q10Factor=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.q10_factor), input_name='q10Factor')), ))
+        if self.experimental_temp is not None and 'experimental_temp' not in already_processed:
+            already_processed.add('experimental_temp')
+            outfile.write(' experimentalTemp=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.experimental_temp), input_name='experimentalTemp')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='Q10ConductanceScaling', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node, gds_collector_=None):
@@ -2973,13 +2972,13 @@ class Q10ConductanceScaling(GeneratedsSuper):
         value = find_attr_value_('q10Factor', node)
         if value is not None and 'q10Factor' not in already_processed:
             already_processed.add('q10Factor')
-            self.q10Factor = value
-            self.validate_Nml2Quantity_none(self.q10Factor)    # validate type Nml2Quantity_none
+            self.q10_factor = value
+            self.validate_Nml2Quantity_none(self.q10_factor)    # validate type Nml2Quantity_none
         value = find_attr_value_('experimentalTemp', node)
         if value is not None and 'experimentalTemp' not in already_processed:
             already_processed.add('experimentalTemp')
-            self.experimentalTemp = value
-            self.validate_Nml2Quantity_temperature(self.experimentalTemp)    # validate type Nml2Quantity_temperature
+            self.experimental_temp = value
+            self.validate_Nml2Quantity_temperature(self.experimental_temp)    # validate type Nml2Quantity_temperature
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
 # end class Q10ConductanceScaling
@@ -2988,27 +2987,27 @@ class Q10ConductanceScaling(GeneratedsSuper):
 class Q10Settings(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('type_', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('fixedQ10', 'Nml2Quantity_none', 0, 1, {'use': 'optional'}),
-        MemberSpec_('q10Factor', 'Nml2Quantity_none', 0, 1, {'use': 'optional'}),
-        MemberSpec_('experimentalTemp', 'Nml2Quantity_temperature', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('fixed_q10', 'Nml2Quantity_none', 0, 1, {'use': 'optional'}),
+        MemberSpec_('q10_factor', 'Nml2Quantity_none', 0, 1, {'use': 'optional'}),
+        MemberSpec_('experimental_temp', 'Nml2Quantity_temperature', 0, 1, {'use': 'optional'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, type_=None, fixedQ10=None, q10Factor=None, experimentalTemp=None, gds_collector_=None, **kwargs_):
+    def __init__(self, type=None, fixed_q10=None, q10_factor=None, experimental_temp=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.type_ = _cast(None, type_)
-        self.type__nsprefix_ = None
-        self.fixedQ10 = _cast(None, fixedQ10)
-        self.fixedQ10_nsprefix_ = None
-        self.q10Factor = _cast(None, q10Factor)
-        self.q10Factor_nsprefix_ = None
-        self.experimentalTemp = _cast(None, experimentalTemp)
-        self.experimentalTemp_nsprefix_ = None
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
+        self.fixed_q10 = _cast(None, fixed_q10)
+        self.fixed_q10_nsprefix_ = None
+        self.q10_factor = _cast(None, q10_factor)
+        self.q10_factor_nsprefix_ = None
+        self.experimental_temp = _cast(None, experimental_temp)
+        self.experimental_temp_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -3083,18 +3082,18 @@ class Q10Settings(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='Q10Settings'):
-        if self.type_ is not None and 'type_' not in already_processed:
-            already_processed.add('type_')
-            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type_), input_name='type')), ))
-        if self.fixedQ10 is not None and 'fixedQ10' not in already_processed:
-            already_processed.add('fixedQ10')
-            outfile.write(' fixedQ10=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.fixedQ10), input_name='fixedQ10')), ))
-        if self.q10Factor is not None and 'q10Factor' not in already_processed:
-            already_processed.add('q10Factor')
-            outfile.write(' q10Factor=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.q10Factor), input_name='q10Factor')), ))
-        if self.experimentalTemp is not None and 'experimentalTemp' not in already_processed:
-            already_processed.add('experimentalTemp')
-            outfile.write(' experimentalTemp=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.experimentalTemp), input_name='experimentalTemp')), ))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type), input_name='type')), ))
+        if self.fixed_q10 is not None and 'fixed_q10' not in already_processed:
+            already_processed.add('fixed_q10')
+            outfile.write(' fixedQ10=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.fixed_q10), input_name='fixedQ10')), ))
+        if self.q10_factor is not None and 'q10_factor' not in already_processed:
+            already_processed.add('q10_factor')
+            outfile.write(' q10Factor=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.q10_factor), input_name='q10Factor')), ))
+        if self.experimental_temp is not None and 'experimental_temp' not in already_processed:
+            already_processed.add('experimental_temp')
+            outfile.write(' experimentalTemp=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.experimental_temp), input_name='experimentalTemp')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='Q10Settings', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node, gds_collector_=None):
@@ -3112,23 +3111,23 @@ class Q10Settings(GeneratedsSuper):
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
             already_processed.add('type')
-            self.type_ = value
-            self.validate_NmlId(self.type_)    # validate type NmlId
+            self.type = value
+            self.validate_NmlId(self.type)    # validate type NmlId
         value = find_attr_value_('fixedQ10', node)
         if value is not None and 'fixedQ10' not in already_processed:
             already_processed.add('fixedQ10')
-            self.fixedQ10 = value
-            self.validate_Nml2Quantity_none(self.fixedQ10)    # validate type Nml2Quantity_none
+            self.fixed_q10 = value
+            self.validate_Nml2Quantity_none(self.fixed_q10)    # validate type Nml2Quantity_none
         value = find_attr_value_('q10Factor', node)
         if value is not None and 'q10Factor' not in already_processed:
             already_processed.add('q10Factor')
-            self.q10Factor = value
-            self.validate_Nml2Quantity_none(self.q10Factor)    # validate type Nml2Quantity_none
+            self.q10_factor = value
+            self.validate_Nml2Quantity_none(self.q10_factor)    # validate type Nml2Quantity_none
         value = find_attr_value_('experimentalTemp', node)
         if value is not None and 'experimentalTemp' not in already_processed:
             already_processed.add('experimentalTemp')
-            self.experimentalTemp = value
-            self.validate_Nml2Quantity_temperature(self.experimentalTemp)    # validate type Nml2Quantity_temperature
+            self.experimental_temp = value
+            self.validate_Nml2Quantity_temperature(self.experimental_temp)    # validate type Nml2Quantity_temperature
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
 # end class Q10Settings
@@ -3137,21 +3136,21 @@ class Q10Settings(GeneratedsSuper):
 class HHRate(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('type_', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('type', 'NmlId', 0, 0, {'use': 'required'}),
         MemberSpec_('rate', 'Nml2Quantity_pertime', 0, 1, {'use': 'optional'}),
         MemberSpec_('midpoint', 'Nml2Quantity_voltage', 0, 1, {'use': 'optional'}),
         MemberSpec_('scale', 'Nml2Quantity_voltage', 0, 1, {'use': 'optional'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, type_=None, rate=None, midpoint=None, scale=None, gds_collector_=None, **kwargs_):
+    def __init__(self, type=None, rate=None, midpoint=None, scale=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.type_ = _cast(None, type_)
-        self.type__nsprefix_ = None
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
         self.rate = _cast(None, rate)
         self.rate_nsprefix_ = None
         self.midpoint = _cast(None, midpoint)
@@ -3232,9 +3231,9 @@ class HHRate(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='HHRate'):
-        if self.type_ is not None and 'type_' not in already_processed:
-            already_processed.add('type_')
-            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type_), input_name='type')), ))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type), input_name='type')), ))
         if self.rate is not None and 'rate' not in already_processed:
             already_processed.add('rate')
             outfile.write(' rate=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.rate), input_name='rate')), ))
@@ -3261,8 +3260,8 @@ class HHRate(GeneratedsSuper):
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
             already_processed.add('type')
-            self.type_ = value
-            self.validate_NmlId(self.type_)    # validate type NmlId
+            self.type = value
+            self.validate_NmlId(self.type)    # validate type NmlId
         value = find_attr_value_('rate', node)
         if value is not None and 'rate' not in already_processed:
             already_processed.add('rate')
@@ -3286,21 +3285,21 @@ class HHRate(GeneratedsSuper):
 class HHVariable(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('type_', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('type', 'NmlId', 0, 0, {'use': 'required'}),
         MemberSpec_('rate', 'xs:float', 0, 1, {'use': 'optional'}),
         MemberSpec_('midpoint', 'Nml2Quantity_voltage', 0, 1, {'use': 'optional'}),
         MemberSpec_('scale', 'Nml2Quantity_voltage', 0, 1, {'use': 'optional'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, type_=None, rate=None, midpoint=None, scale=None, gds_collector_=None, **kwargs_):
+    def __init__(self, type=None, rate=None, midpoint=None, scale=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.type_ = _cast(None, type_)
-        self.type__nsprefix_ = None
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
         self.rate = _cast(float, rate)
         self.rate_nsprefix_ = None
         self.midpoint = _cast(None, midpoint)
@@ -3370,9 +3369,9 @@ class HHVariable(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='HHVariable'):
-        if self.type_ is not None and 'type_' not in already_processed:
-            already_processed.add('type_')
-            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type_), input_name='type')), ))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type), input_name='type')), ))
         if self.rate is not None and 'rate' not in already_processed:
             already_processed.add('rate')
             outfile.write(' rate="%s"' % self.gds_format_float(self.rate, input_name='rate'))
@@ -3399,8 +3398,8 @@ class HHVariable(GeneratedsSuper):
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
             already_processed.add('type')
-            self.type_ = value
-            self.validate_NmlId(self.type_)    # validate type NmlId
+            self.type = value
+            self.validate_NmlId(self.type)    # validate type NmlId
         value = find_attr_value_('rate', node)
         if value is not None and 'rate' not in already_processed:
             already_processed.add('rate')
@@ -3424,7 +3423,7 @@ class HHVariable(GeneratedsSuper):
 class HHTime(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('type_', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('type', 'NmlId', 0, 0, {'use': 'required'}),
         MemberSpec_('rate', 'Nml2Quantity_time', 0, 1, {'use': 'optional'}),
         MemberSpec_('midpoint', 'Nml2Quantity_voltage', 0, 1, {'use': 'optional'}),
         MemberSpec_('scale', 'Nml2Quantity_voltage', 0, 1, {'use': 'optional'}),
@@ -3432,14 +3431,14 @@ class HHTime(GeneratedsSuper):
     ]
     subclass = None
     superclass = None
-    def __init__(self, type_=None, rate=None, midpoint=None, scale=None, tau=None, gds_collector_=None, **kwargs_):
+    def __init__(self, type=None, rate=None, midpoint=None, scale=None, tau=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.type_ = _cast(None, type_)
-        self.type__nsprefix_ = None
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
         self.rate = _cast(None, rate)
         self.rate_nsprefix_ = None
         self.midpoint = _cast(None, midpoint)
@@ -3522,9 +3521,9 @@ class HHTime(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='HHTime'):
-        if self.type_ is not None and 'type_' not in already_processed:
-            already_processed.add('type_')
-            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type_), input_name='type')), ))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type), input_name='type')), ))
         if self.rate is not None and 'rate' not in already_processed:
             already_processed.add('rate')
             outfile.write(' rate=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.rate), input_name='rate')), ))
@@ -3554,8 +3553,8 @@ class HHTime(GeneratedsSuper):
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
             already_processed.add('type')
-            self.type_ = value
-            self.validate_NmlId(self.type_)    # validate type NmlId
+            self.type = value
+            self.validate_NmlId(self.type)    # validate type NmlId
         value = find_attr_value_('rate', node)
         if value is not None and 'rate' not in already_processed:
             already_processed.add('rate')
@@ -3584,30 +3583,30 @@ class HHTime(GeneratedsSuper):
 class BlockMechanism(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('type_', 'BlockTypes', 0, 0, {'use': 'required'}),
+        MemberSpec_('type', 'BlockTypes', 0, 0, {'use': 'required'}),
         MemberSpec_('species', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('blockConcentration', 'Nml2Quantity_concentration', 0, 0, {'use': 'required'}),
-        MemberSpec_('scalingConc', 'Nml2Quantity_concentration', 0, 0, {'use': 'required'}),
-        MemberSpec_('scalingVolt', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
+        MemberSpec_('block_concentration', 'Nml2Quantity_concentration', 0, 0, {'use': 'required'}),
+        MemberSpec_('scaling_conc', 'Nml2Quantity_concentration', 0, 0, {'use': 'required'}),
+        MemberSpec_('scaling_volt', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, type_=None, species=None, blockConcentration=None, scalingConc=None, scalingVolt=None, gds_collector_=None, **kwargs_):
+    def __init__(self, type=None, species=None, block_concentration=None, scaling_conc=None, scaling_volt=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.type_ = _cast(None, type_)
-        self.type__nsprefix_ = None
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
         self.species = _cast(None, species)
         self.species_nsprefix_ = None
-        self.blockConcentration = _cast(None, blockConcentration)
-        self.blockConcentration_nsprefix_ = None
-        self.scalingConc = _cast(None, scalingConc)
-        self.scalingConc_nsprefix_ = None
-        self.scalingVolt = _cast(None, scalingVolt)
-        self.scalingVolt_nsprefix_ = None
+        self.block_concentration = _cast(None, block_concentration)
+        self.block_concentration_nsprefix_ = None
+        self.scaling_conc = _cast(None, scaling_conc)
+        self.scaling_conc_nsprefix_ = None
+        self.scaling_volt = _cast(None, scaling_volt)
+        self.scaling_volt_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -3695,21 +3694,21 @@ class BlockMechanism(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='BlockMechanism'):
-        if self.type_ is not None and 'type_' not in already_processed:
-            already_processed.add('type_')
-            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type_), input_name='type')), ))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type), input_name='type')), ))
         if self.species is not None and 'species' not in already_processed:
             already_processed.add('species')
             outfile.write(' species=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.species), input_name='species')), ))
-        if self.blockConcentration is not None and 'blockConcentration' not in already_processed:
-            already_processed.add('blockConcentration')
-            outfile.write(' blockConcentration=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.blockConcentration), input_name='blockConcentration')), ))
-        if self.scalingConc is not None and 'scalingConc' not in already_processed:
-            already_processed.add('scalingConc')
-            outfile.write(' scalingConc=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.scalingConc), input_name='scalingConc')), ))
-        if self.scalingVolt is not None and 'scalingVolt' not in already_processed:
-            already_processed.add('scalingVolt')
-            outfile.write(' scalingVolt=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.scalingVolt), input_name='scalingVolt')), ))
+        if self.block_concentration is not None and 'block_concentration' not in already_processed:
+            already_processed.add('block_concentration')
+            outfile.write(' blockConcentration=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.block_concentration), input_name='blockConcentration')), ))
+        if self.scaling_conc is not None and 'scaling_conc' not in already_processed:
+            already_processed.add('scaling_conc')
+            outfile.write(' scalingConc=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.scaling_conc), input_name='scalingConc')), ))
+        if self.scaling_volt is not None and 'scaling_volt' not in already_processed:
+            already_processed.add('scaling_volt')
+            outfile.write(' scalingVolt=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.scaling_volt), input_name='scalingVolt')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='BlockMechanism', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node, gds_collector_=None):
@@ -3727,8 +3726,8 @@ class BlockMechanism(GeneratedsSuper):
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
             already_processed.add('type')
-            self.type_ = value
-            self.validate_BlockTypes(self.type_)    # validate type BlockTypes
+            self.type = value
+            self.validate_BlockTypes(self.type)    # validate type BlockTypes
         value = find_attr_value_('species', node)
         if value is not None and 'species' not in already_processed:
             already_processed.add('species')
@@ -3737,18 +3736,18 @@ class BlockMechanism(GeneratedsSuper):
         value = find_attr_value_('blockConcentration', node)
         if value is not None and 'blockConcentration' not in already_processed:
             already_processed.add('blockConcentration')
-            self.blockConcentration = value
-            self.validate_Nml2Quantity_concentration(self.blockConcentration)    # validate type Nml2Quantity_concentration
+            self.block_concentration = value
+            self.validate_Nml2Quantity_concentration(self.block_concentration)    # validate type Nml2Quantity_concentration
         value = find_attr_value_('scalingConc', node)
         if value is not None and 'scalingConc' not in already_processed:
             already_processed.add('scalingConc')
-            self.scalingConc = value
-            self.validate_Nml2Quantity_concentration(self.scalingConc)    # validate type Nml2Quantity_concentration
+            self.scaling_conc = value
+            self.validate_Nml2Quantity_concentration(self.scaling_conc)    # validate type Nml2Quantity_concentration
         value = find_attr_value_('scalingVolt', node)
         if value is not None and 'scalingVolt' not in already_processed:
             already_processed.add('scalingVolt')
-            self.scalingVolt = value
-            self.validate_Nml2Quantity_voltage(self.scalingVolt)    # validate type Nml2Quantity_voltage
+            self.scaling_volt = value
+            self.validate_Nml2Quantity_voltage(self.scaling_volt)    # validate type Nml2Quantity_voltage
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
 # end class BlockMechanism
@@ -3757,27 +3756,27 @@ class BlockMechanism(GeneratedsSuper):
 class PlasticityMechanism(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('type_', 'PlasticityTypes', 0, 0, {'use': 'required'}),
-        MemberSpec_('initReleaseProb', 'ZeroToOne', 0, 0, {'use': 'required'}),
-        MemberSpec_('tauRec', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
-        MemberSpec_('tauFac', 'Nml2Quantity_time', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type', 'PlasticityTypes', 0, 0, {'use': 'required'}),
+        MemberSpec_('init_release_prob', 'ZeroToOne', 0, 0, {'use': 'required'}),
+        MemberSpec_('tau_rec', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
+        MemberSpec_('tau_fac', 'Nml2Quantity_time', 0, 1, {'use': 'optional'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, type_=None, initReleaseProb=None, tauRec=None, tauFac=None, gds_collector_=None, **kwargs_):
+    def __init__(self, type=None, init_release_prob=None, tau_rec=None, tau_fac=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.type_ = _cast(None, type_)
-        self.type__nsprefix_ = None
-        self.initReleaseProb = _cast(float, initReleaseProb)
-        self.initReleaseProb_nsprefix_ = None
-        self.tauRec = _cast(None, tauRec)
-        self.tauRec_nsprefix_ = None
-        self.tauFac = _cast(None, tauFac)
-        self.tauFac_nsprefix_ = None
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
+        self.init_release_prob = _cast(float, init_release_prob)
+        self.init_release_prob_nsprefix_ = None
+        self.tau_rec = _cast(None, tau_rec)
+        self.tau_rec_nsprefix_ = None
+        self.tau_fac = _cast(None, tau_fac)
+        self.tau_fac_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -3858,18 +3857,18 @@ class PlasticityMechanism(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='PlasticityMechanism'):
-        if self.type_ is not None and 'type_' not in already_processed:
-            already_processed.add('type_')
-            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type_), input_name='type')), ))
-        if self.initReleaseProb is not None and 'initReleaseProb' not in already_processed:
-            already_processed.add('initReleaseProb')
-            outfile.write(' initReleaseProb="%s"' % self.gds_format_float(self.initReleaseProb, input_name='initReleaseProb'))
-        if self.tauRec is not None and 'tauRec' not in already_processed:
-            already_processed.add('tauRec')
-            outfile.write(' tauRec=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.tauRec), input_name='tauRec')), ))
-        if self.tauFac is not None and 'tauFac' not in already_processed:
-            already_processed.add('tauFac')
-            outfile.write(' tauFac=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.tauFac), input_name='tauFac')), ))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type), input_name='type')), ))
+        if self.init_release_prob is not None and 'init_release_prob' not in already_processed:
+            already_processed.add('init_release_prob')
+            outfile.write(' initReleaseProb="%s"' % self.gds_format_float(self.init_release_prob, input_name='initReleaseProb'))
+        if self.tau_rec is not None and 'tau_rec' not in already_processed:
+            already_processed.add('tau_rec')
+            outfile.write(' tauRec=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.tau_rec), input_name='tauRec')), ))
+        if self.tau_fac is not None and 'tau_fac' not in already_processed:
+            already_processed.add('tau_fac')
+            outfile.write(' tauFac=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.tau_fac), input_name='tauFac')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='PlasticityMechanism', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node, gds_collector_=None):
@@ -3887,24 +3886,24 @@ class PlasticityMechanism(GeneratedsSuper):
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
             already_processed.add('type')
-            self.type_ = value
-            self.validate_PlasticityTypes(self.type_)    # validate type PlasticityTypes
+            self.type = value
+            self.validate_PlasticityTypes(self.type)    # validate type PlasticityTypes
         value = find_attr_value_('initReleaseProb', node)
         if value is not None and 'initReleaseProb' not in already_processed:
             already_processed.add('initReleaseProb')
             value = self.gds_parse_float(value, node, 'initReleaseProb')
             self.initReleaseProb = value
-            self.validate_ZeroToOne(self.initReleaseProb)    # validate type ZeroToOne
+            self.validate_ZeroToOne(self.init_release_prob)    # validate type ZeroToOne
         value = find_attr_value_('tauRec', node)
         if value is not None and 'tauRec' not in already_processed:
             already_processed.add('tauRec')
-            self.tauRec = value
-            self.validate_Nml2Quantity_time(self.tauRec)    # validate type Nml2Quantity_time
+            self.tau_rec = value
+            self.validate_Nml2Quantity_time(self.tau_rec)    # validate type Nml2Quantity_time
         value = find_attr_value_('tauFac', node)
         if value is not None and 'tauFac' not in already_processed:
             already_processed.add('tauFac')
-            self.tauFac = value
-            self.validate_Nml2Quantity_time(self.tauFac)    # validate type Nml2Quantity_time
+            self.tau_fac = value
+            self.validate_Nml2Quantity_time(self.tau_fac)    # validate type Nml2Quantity_time
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
 # end class PlasticityMechanism
@@ -3913,21 +3912,21 @@ class PlasticityMechanism(GeneratedsSuper):
 class SegmentParent(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('segment', 'NonNegativeInteger', 0, 0, {'use': 'required'}),
-        MemberSpec_('fractionAlong', 'ZeroToOne', 0, 1, {'use': 'optional'}),
+        MemberSpec_('segments', 'NonNegativeInteger', 0, 0, {'use': 'required'}),
+        MemberSpec_('fraction_along', 'ZeroToOne', 0, 1, {'use': 'optional'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, segment=None, fractionAlong='1', gds_collector_=None, **kwargs_):
+    def __init__(self, segments=None, fraction_along='1', gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.segment = _cast(int, segment)
-        self.segment_nsprefix_ = None
-        self.fractionAlong = _cast(float, fractionAlong)
-        self.fractionAlong_nsprefix_ = None
+        self.segments = _cast(int, segments)
+        self.segments_nsprefix_ = None
+        self.fraction_along = _cast(float, fraction_along)
+        self.fraction_along_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -3992,12 +3991,12 @@ class SegmentParent(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='SegmentParent'):
-        if self.segment is not None and 'segment' not in already_processed:
-            already_processed.add('segment')
-            outfile.write(' segment="%s"' % self.gds_format_integer(self.segment, input_name='segment'))
-        if self.fractionAlong != 1 and 'fractionAlong' not in already_processed:
-            already_processed.add('fractionAlong')
-            outfile.write(' fractionAlong="%s"' % self.gds_format_float(self.fractionAlong, input_name='fractionAlong'))
+        if self.segments is not None and 'segments' not in already_processed:
+            already_processed.add('segments')
+            outfile.write(' segment="%s"' % self.gds_format_integer(self.segments, input_name='segment'))
+        if self.fraction_along != 1 and 'fraction_along' not in already_processed:
+            already_processed.add('fraction_along')
+            outfile.write(' fractionAlong="%s"' % self.gds_format_float(self.fraction_along, input_name='fractionAlong'))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='SegmentParent', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node, gds_collector_=None):
@@ -4015,16 +4014,16 @@ class SegmentParent(GeneratedsSuper):
         value = find_attr_value_('segment', node)
         if value is not None and 'segment' not in already_processed:
             already_processed.add('segment')
-            self.segment = self.gds_parse_integer(value, node, 'segment')
-            if self.segment < 0:
+            self.segments = self.gds_parse_integer(value, node, 'segment')
+            if self.segments < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_NonNegativeInteger(self.segment)    # validate type NonNegativeInteger
+            self.validate_NonNegativeInteger(self.segments)    # validate type NonNegativeInteger
         value = find_attr_value_('fractionAlong', node)
         if value is not None and 'fractionAlong' not in already_processed:
             already_processed.add('fractionAlong')
             value = self.gds_parse_float(value, node, 'fractionAlong')
             self.fractionAlong = value
-            self.validate_ZeroToOne(self.fractionAlong)    # validate type ZeroToOne
+            self.validate_ZeroToOne(self.fraction_along)    # validate type ZeroToOne
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
 # end class SegmentParent
@@ -4183,18 +4182,18 @@ class Point3DWithDiam(GeneratedsSuper):
 class ProximalDetails(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('translationStart', 'xs:double', 0, 0, {'use': 'required'}),
+        MemberSpec_('translation_start', 'xs:double', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, translationStart=None, gds_collector_=None, **kwargs_):
+    def __init__(self, translation_start=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.translationStart = _cast(float, translationStart)
-        self.translationStart_nsprefix_ = None
+        self.translation_start = _cast(float, translation_start)
+        self.translation_start_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -4236,9 +4235,9 @@ class ProximalDetails(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='ProximalDetails'):
-        if self.translationStart is not None and 'translationStart' not in already_processed:
-            already_processed.add('translationStart')
-            outfile.write(' translationStart="%s"' % self.gds_format_double(self.translationStart, input_name='translationStart'))
+        if self.translation_start is not None and 'translation_start' not in already_processed:
+            already_processed.add('translation_start')
+            outfile.write(' translationStart="%s"' % self.gds_format_double(self.translation_start, input_name='translationStart'))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='ProximalDetails', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node, gds_collector_=None):
@@ -4266,18 +4265,18 @@ class ProximalDetails(GeneratedsSuper):
 class DistalDetails(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('normalizationEnd', 'xs:double', 0, 0, {'use': 'required'}),
+        MemberSpec_('normalization_end', 'xs:double', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, normalizationEnd=None, gds_collector_=None, **kwargs_):
+    def __init__(self, normalization_end=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.normalizationEnd = _cast(float, normalizationEnd)
-        self.normalizationEnd_nsprefix_ = None
+        self.normalization_end = _cast(float, normalization_end)
+        self.normalization_end_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -4319,9 +4318,9 @@ class DistalDetails(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='DistalDetails'):
-        if self.normalizationEnd is not None and 'normalizationEnd' not in already_processed:
-            already_processed.add('normalizationEnd')
-            outfile.write(' normalizationEnd="%s"' % self.gds_format_double(self.normalizationEnd, input_name='normalizationEnd'))
+        if self.normalization_end is not None and 'normalization_end' not in already_processed:
+            already_processed.add('normalization_end')
+            outfile.write(' normalizationEnd="%s"' % self.gds_format_double(self.normalization_end, input_name='normalizationEnd'))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='DistalDetails', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node, gds_collector_=None):
@@ -4349,18 +4348,18 @@ class DistalDetails(GeneratedsSuper):
 class Member(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('segment', 'NonNegativeInteger', 0, 0, {'use': 'required'}),
+        MemberSpec_('segments', 'NonNegativeInteger', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, segment=None, gds_collector_=None, **kwargs_):
+    def __init__(self, segments=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.segment = _cast(int, segment)
-        self.segment_nsprefix_ = None
+        self.segments = _cast(int, segments)
+        self.segments_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -4410,9 +4409,9 @@ class Member(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='Member'):
-        if self.segment is not None and 'segment' not in already_processed:
-            already_processed.add('segment')
-            outfile.write(' segment="%s"' % self.gds_format_integer(self.segment, input_name='segment'))
+        if self.segments is not None and 'segments' not in already_processed:
+            already_processed.add('segments')
+            outfile.write(' segment="%s"' % self.gds_format_integer(self.segments, input_name='segment'))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='Member', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node, gds_collector_=None):
@@ -4430,10 +4429,10 @@ class Member(GeneratedsSuper):
         value = find_attr_value_('segment', node)
         if value is not None and 'segment' not in already_processed:
             already_processed.add('segment')
-            self.segment = self.gds_parse_integer(value, node, 'segment')
-            if self.segment < 0:
+            self.segments = self.gds_parse_integer(value, node, 'segment')
+            if self.segments < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_NonNegativeInteger(self.segment)    # validate type NonNegativeInteger
+            self.validate_NonNegativeInteger(self.segments)    # validate type NonNegativeInteger
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
 # end class Member
@@ -4442,18 +4441,18 @@ class Member(GeneratedsSuper):
 class Include(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('segmentGroup', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('segment_groups', 'NmlId', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, segmentGroup=None, gds_collector_=None, **kwargs_):
+    def __init__(self, segment_groups=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.segmentGroup = _cast(None, segmentGroup)
-        self.segmentGroup_nsprefix_ = None
+        self.segment_groups = _cast(None, segment_groups)
+        self.segment_groups_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -4506,9 +4505,9 @@ class Include(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='Include'):
-        if self.segmentGroup is not None and 'segmentGroup' not in already_processed:
-            already_processed.add('segmentGroup')
-            outfile.write(' segmentGroup=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segmentGroup), input_name='segmentGroup')), ))
+        if self.segment_groups is not None and 'segment_groups' not in already_processed:
+            already_processed.add('segment_groups')
+            outfile.write(' segmentGroup=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segment_groups), input_name='segmentGroup')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='Include', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node, gds_collector_=None):
@@ -4526,8 +4525,8 @@ class Include(GeneratedsSuper):
         value = find_attr_value_('segmentGroup', node)
         if value is not None and 'segmentGroup' not in already_processed:
             already_processed.add('segmentGroup')
-            self.segmentGroup = value
-            self.validate_NmlId(self.segmentGroup)    # validate type NmlId
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)    # validate type NmlId
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
 # end class Include
@@ -4736,18 +4735,18 @@ class SubTree(GeneratedsSuper):
 class SegmentEndPoint(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('segment', 'NonNegativeInteger', 0, 0, {'use': 'required'}),
+        MemberSpec_('segments', 'NonNegativeInteger', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, segment=None, gds_collector_=None, **kwargs_):
+    def __init__(self, segments=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.segment = _cast(int, segment)
-        self.segment_nsprefix_ = None
+        self.segments = _cast(int, segments)
+        self.segments_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -4797,9 +4796,9 @@ class SegmentEndPoint(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='SegmentEndPoint'):
-        if self.segment is not None and 'segment' not in already_processed:
-            already_processed.add('segment')
-            outfile.write(' segment="%s"' % self.gds_format_integer(self.segment, input_name='segment'))
+        if self.segments is not None and 'segments' not in already_processed:
+            already_processed.add('segments')
+            outfile.write(' segment="%s"' % self.gds_format_integer(self.segments, input_name='segment'))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='SegmentEndPoint', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node, gds_collector_=None):
@@ -4817,10 +4816,10 @@ class SegmentEndPoint(GeneratedsSuper):
         value = find_attr_value_('segment', node)
         if value is not None and 'segment' not in already_processed:
             already_processed.add('segment')
-            self.segment = self.gds_parse_integer(value, node, 'segment')
-            if self.segment < 0:
+            self.segments = self.gds_parse_integer(value, node, 'segment')
+            if self.segments < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_NonNegativeInteger(self.segment)    # validate type NonNegativeInteger
+            self.validate_NonNegativeInteger(self.segments)    # validate type NonNegativeInteger
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
 # end class SegmentEndPoint
@@ -4829,87 +4828,87 @@ class SegmentEndPoint(GeneratedsSuper):
 class MembraneProperties(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('channelPopulation', 'ChannelPopulation', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelPopulation', 'type': 'ChannelPopulation'}, None),
-        MemberSpec_('channelDensity', 'ChannelDensity', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensity', 'type': 'ChannelDensity'}, None),
-        MemberSpec_('channelDensityVShift', 'ChannelDensityVShift', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensityVShift', 'type': 'ChannelDensityVShift'}, None),
-        MemberSpec_('channelDensityNernst', 'ChannelDensityNernst', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensityNernst', 'type': 'ChannelDensityNernst'}, None),
-        MemberSpec_('channelDensityGHK', 'ChannelDensityGHK', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensityGHK', 'type': 'ChannelDensityGHK'}, None),
-        MemberSpec_('channelDensityGHK2', 'ChannelDensityGHK2', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensityGHK2', 'type': 'ChannelDensityGHK2'}, None),
-        MemberSpec_('channelDensityNonUniform', 'ChannelDensityNonUniform', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensityNonUniform', 'type': 'ChannelDensityNonUniform'}, None),
-        MemberSpec_('channelDensityNonUniformNernst', 'ChannelDensityNonUniformNernst', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensityNonUniformNernst', 'type': 'ChannelDensityNonUniformNernst'}, None),
-        MemberSpec_('channelDensityNonUniformGHK', 'ChannelDensityNonUniformGHK', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensityNonUniformGHK', 'type': 'ChannelDensityNonUniformGHK'}, None),
-        MemberSpec_('spikeThresh', 'SpikeThresh', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'spikeThresh', 'type': 'SpikeThresh'}, None),
-        MemberSpec_('specificCapacitance', 'SpecificCapacitance', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'specificCapacitance', 'type': 'SpecificCapacitance'}, None),
-        MemberSpec_('initMembPotential', 'InitMembPotential', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'initMembPotential', 'type': 'InitMembPotential'}, None),
+        MemberSpec_('channel_populations', 'ChannelPopulation', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelPopulation', 'type': 'ChannelPopulation'}, None),
+        MemberSpec_('channel_densities', 'ChannelDensity', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensity', 'type': 'ChannelDensity'}, None),
+        MemberSpec_('channel_density_v_shifts', 'ChannelDensityVShift', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensityVShift', 'type': 'ChannelDensityVShift'}, None),
+        MemberSpec_('channel_density_nernsts', 'ChannelDensityNernst', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensityNernst', 'type': 'ChannelDensityNernst'}, None),
+        MemberSpec_('channel_density_ghks', 'ChannelDensityGHK', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensityGHK', 'type': 'ChannelDensityGHK'}, None),
+        MemberSpec_('channel_density_ghk2s', 'ChannelDensityGHK2', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensityGHK2', 'type': 'ChannelDensityGHK2'}, None),
+        MemberSpec_('channel_density_non_uniforms', 'ChannelDensityNonUniform', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensityNonUniform', 'type': 'ChannelDensityNonUniform'}, None),
+        MemberSpec_('channel_density_non_uniform_nernsts', 'ChannelDensityNonUniformNernst', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensityNonUniformNernst', 'type': 'ChannelDensityNonUniformNernst'}, None),
+        MemberSpec_('channel_density_non_uniform_ghks', 'ChannelDensityNonUniformGHK', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensityNonUniformGHK', 'type': 'ChannelDensityNonUniformGHK'}, None),
+        MemberSpec_('spike_threshes', 'SpikeThresh', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'spikeThresh', 'type': 'SpikeThresh'}, None),
+        MemberSpec_('specific_capacitances', 'SpecificCapacitance', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'specificCapacitance', 'type': 'SpecificCapacitance'}, None),
+        MemberSpec_('init_memb_potentials', 'InitMembPotential', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'initMembPotential', 'type': 'InitMembPotential'}, None),
     ]
     subclass = None
     superclass = None
-    def __init__(self, channelPopulation=None, channelDensity=None, channelDensityVShift=None, channelDensityNernst=None, channelDensityGHK=None, channelDensityGHK2=None, channelDensityNonUniform=None, channelDensityNonUniformNernst=None, channelDensityNonUniformGHK=None, spikeThresh=None, specificCapacitance=None, initMembPotential=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, channel_populations=None, channel_densities=None, channel_density_v_shifts=None, channel_density_nernsts=None, channel_density_ghks=None, channel_density_ghk2s=None, channel_density_non_uniforms=None, channel_density_non_uniform_nernsts=None, channel_density_non_uniform_ghks=None, spike_threshes=None, specific_capacitances=None, init_memb_potentials=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        if channelPopulation is None:
-            self.channelPopulation = []
+        if channel_populations is None:
+            self.channel_populations = []
         else:
-            self.channelPopulation = channelPopulation
-        self.channelPopulation_nsprefix_ = None
-        if channelDensity is None:
-            self.channelDensity = []
+            self.channel_populations = channel_populations
+        self.channel_populations_nsprefix_ = None
+        if channel_densities is None:
+            self.channel_densities = []
         else:
-            self.channelDensity = channelDensity
-        self.channelDensity_nsprefix_ = None
-        if channelDensityVShift is None:
-            self.channelDensityVShift = []
+            self.channel_densities = channel_densities
+        self.channel_densities_nsprefix_ = None
+        if channel_density_v_shifts is None:
+            self.channel_density_v_shifts = []
         else:
-            self.channelDensityVShift = channelDensityVShift
-        self.channelDensityVShift_nsprefix_ = None
-        if channelDensityNernst is None:
-            self.channelDensityNernst = []
+            self.channel_density_v_shifts = channel_density_v_shifts
+        self.channel_density_v_shifts_nsprefix_ = None
+        if channel_density_nernsts is None:
+            self.channel_density_nernsts = []
         else:
-            self.channelDensityNernst = channelDensityNernst
-        self.channelDensityNernst_nsprefix_ = None
-        if channelDensityGHK is None:
-            self.channelDensityGHK = []
+            self.channel_density_nernsts = channel_density_nernsts
+        self.channel_density_nernsts_nsprefix_ = None
+        if channel_density_ghks is None:
+            self.channel_density_ghks = []
         else:
-            self.channelDensityGHK = channelDensityGHK
-        self.channelDensityGHK_nsprefix_ = None
-        if channelDensityGHK2 is None:
-            self.channelDensityGHK2 = []
+            self.channel_density_ghks = channel_density_ghks
+        self.channel_density_ghks_nsprefix_ = None
+        if channel_density_ghk2s is None:
+            self.channel_density_ghk2s = []
         else:
-            self.channelDensityGHK2 = channelDensityGHK2
-        self.channelDensityGHK2_nsprefix_ = None
-        if channelDensityNonUniform is None:
-            self.channelDensityNonUniform = []
+            self.channel_density_ghk2s = channel_density_ghk2s
+        self.channel_density_ghk2s_nsprefix_ = None
+        if channel_density_non_uniforms is None:
+            self.channel_density_non_uniforms = []
         else:
-            self.channelDensityNonUniform = channelDensityNonUniform
-        self.channelDensityNonUniform_nsprefix_ = None
-        if channelDensityNonUniformNernst is None:
-            self.channelDensityNonUniformNernst = []
+            self.channel_density_non_uniforms = channel_density_non_uniforms
+        self.channel_density_non_uniforms_nsprefix_ = None
+        if channel_density_non_uniform_nernsts is None:
+            self.channel_density_non_uniform_nernsts = []
         else:
-            self.channelDensityNonUniformNernst = channelDensityNonUniformNernst
-        self.channelDensityNonUniformNernst_nsprefix_ = None
-        if channelDensityNonUniformGHK is None:
-            self.channelDensityNonUniformGHK = []
+            self.channel_density_non_uniform_nernsts = channel_density_non_uniform_nernsts
+        self.channel_density_non_uniform_nernsts_nsprefix_ = None
+        if channel_density_non_uniform_ghks is None:
+            self.channel_density_non_uniform_ghks = []
         else:
-            self.channelDensityNonUniformGHK = channelDensityNonUniformGHK
-        self.channelDensityNonUniformGHK_nsprefix_ = None
-        if spikeThresh is None:
-            self.spikeThresh = []
+            self.channel_density_non_uniform_ghks = channel_density_non_uniform_ghks
+        self.channel_density_non_uniform_ghks_nsprefix_ = None
+        if spike_threshes is None:
+            self.spike_threshes = []
         else:
-            self.spikeThresh = spikeThresh
-        self.spikeThresh_nsprefix_ = None
-        if specificCapacitance is None:
-            self.specificCapacitance = []
+            self.spike_threshes = spike_threshes
+        self.spike_threshes_nsprefix_ = None
+        if specific_capacitances is None:
+            self.specific_capacitances = []
         else:
-            self.specificCapacitance = specificCapacitance
-        self.specificCapacitance_nsprefix_ = None
-        if initMembPotential is None:
-            self.initMembPotential = []
+            self.specific_capacitances = specific_capacitances
+        self.specific_capacitances_nsprefix_ = None
+        if init_memb_potentials is None:
+            self.init_memb_potentials = []
         else:
-            self.initMembPotential = initMembPotential
-        self.initMembPotential_nsprefix_ = None
+            self.init_memb_potentials = init_memb_potentials
+        self.init_memb_potentials_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -4924,18 +4923,18 @@ class MembraneProperties(GeneratedsSuper):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.channelPopulation or
-            self.channelDensity or
-            self.channelDensityVShift or
-            self.channelDensityNernst or
-            self.channelDensityGHK or
-            self.channelDensityGHK2 or
-            self.channelDensityNonUniform or
-            self.channelDensityNonUniformNernst or
-            self.channelDensityNonUniformGHK or
-            self.spikeThresh or
-            self.specificCapacitance or
-            self.initMembPotential
+            self.channel_populations or
+            self.channel_densities or
+            self.channel_density_v_shifts or
+            self.channel_density_nernsts or
+            self.channel_density_ghks or
+            self.channel_density_ghk2s or
+            self.channel_density_non_uniforms or
+            self.channel_density_non_uniform_nernsts or
+            self.channel_density_non_uniform_ghks or
+            self.spike_threshes or
+            self.specific_capacitances or
+            self.init_memb_potentials
         ):
             return True
         else:
@@ -4978,41 +4977,41 @@ class MembraneProperties(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        for channelPopulation_ in self.channelPopulation:
-            namespaceprefix_ = self.channelPopulation_nsprefix_ + ':' if (UseCapturedNS_ and self.channelPopulation_nsprefix_) else ''
+        for channelPopulation_ in self.channel_populations:
+            namespaceprefix_ = self.channel_populations_nsprefix_ + ':' if (UseCapturedNS_ and self.channel_populations_nsprefix_) else ''
             channelPopulation_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='channelPopulation', pretty_print=pretty_print)
-        for channelDensity_ in self.channelDensity:
-            namespaceprefix_ = self.channelDensity_nsprefix_ + ':' if (UseCapturedNS_ and self.channelDensity_nsprefix_) else ''
+        for channelDensity_ in self.channel_densities:
+            namespaceprefix_ = self.channel_densities_nsprefix_ + ':' if (UseCapturedNS_ and self.channel_densities_nsprefix_) else ''
             channelDensity_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='channelDensity', pretty_print=pretty_print)
-        for channelDensityVShift_ in self.channelDensityVShift:
-            namespaceprefix_ = self.channelDensityVShift_nsprefix_ + ':' if (UseCapturedNS_ and self.channelDensityVShift_nsprefix_) else ''
+        for channelDensityVShift_ in self.channel_density_v_shifts:
+            namespaceprefix_ = self.channel_density_v_shifts_nsprefix_ + ':' if (UseCapturedNS_ and self.channel_density_v_shifts_nsprefix_) else ''
             channelDensityVShift_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='channelDensityVShift', pretty_print=pretty_print)
-        for channelDensityNernst_ in self.channelDensityNernst:
-            namespaceprefix_ = self.channelDensityNernst_nsprefix_ + ':' if (UseCapturedNS_ and self.channelDensityNernst_nsprefix_) else ''
+        for channelDensityNernst_ in self.channel_density_nernsts:
+            namespaceprefix_ = self.channel_density_nernsts_nsprefix_ + ':' if (UseCapturedNS_ and self.channel_density_nernsts_nsprefix_) else ''
             channelDensityNernst_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='channelDensityNernst', pretty_print=pretty_print)
-        for channelDensityGHK_ in self.channelDensityGHK:
-            namespaceprefix_ = self.channelDensityGHK_nsprefix_ + ':' if (UseCapturedNS_ and self.channelDensityGHK_nsprefix_) else ''
+        for channelDensityGHK_ in self.channel_density_ghks:
+            namespaceprefix_ = self.channel_density_ghks_nsprefix_ + ':' if (UseCapturedNS_ and self.channel_density_ghks_nsprefix_) else ''
             channelDensityGHK_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='channelDensityGHK', pretty_print=pretty_print)
-        for channelDensityGHK2_ in self.channelDensityGHK2:
-            namespaceprefix_ = self.channelDensityGHK2_nsprefix_ + ':' if (UseCapturedNS_ and self.channelDensityGHK2_nsprefix_) else ''
+        for channelDensityGHK2_ in self.channel_density_ghk2s:
+            namespaceprefix_ = self.channel_density_ghk2s_nsprefix_ + ':' if (UseCapturedNS_ and self.channel_density_ghk2s_nsprefix_) else ''
             channelDensityGHK2_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='channelDensityGHK2', pretty_print=pretty_print)
-        for channelDensityNonUniform_ in self.channelDensityNonUniform:
-            namespaceprefix_ = self.channelDensityNonUniform_nsprefix_ + ':' if (UseCapturedNS_ and self.channelDensityNonUniform_nsprefix_) else ''
+        for channelDensityNonUniform_ in self.channel_density_non_uniforms:
+            namespaceprefix_ = self.channel_density_non_uniforms_nsprefix_ + ':' if (UseCapturedNS_ and self.channel_density_non_uniforms_nsprefix_) else ''
             channelDensityNonUniform_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='channelDensityNonUniform', pretty_print=pretty_print)
-        for channelDensityNonUniformNernst_ in self.channelDensityNonUniformNernst:
-            namespaceprefix_ = self.channelDensityNonUniformNernst_nsprefix_ + ':' if (UseCapturedNS_ and self.channelDensityNonUniformNernst_nsprefix_) else ''
+        for channelDensityNonUniformNernst_ in self.channel_density_non_uniform_nernsts:
+            namespaceprefix_ = self.channel_density_non_uniform_nernsts_nsprefix_ + ':' if (UseCapturedNS_ and self.channel_density_non_uniform_nernsts_nsprefix_) else ''
             channelDensityNonUniformNernst_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='channelDensityNonUniformNernst', pretty_print=pretty_print)
-        for channelDensityNonUniformGHK_ in self.channelDensityNonUniformGHK:
-            namespaceprefix_ = self.channelDensityNonUniformGHK_nsprefix_ + ':' if (UseCapturedNS_ and self.channelDensityNonUniformGHK_nsprefix_) else ''
+        for channelDensityNonUniformGHK_ in self.channel_density_non_uniform_ghks:
+            namespaceprefix_ = self.channel_density_non_uniform_ghks_nsprefix_ + ':' if (UseCapturedNS_ and self.channel_density_non_uniform_ghks_nsprefix_) else ''
             channelDensityNonUniformGHK_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='channelDensityNonUniformGHK', pretty_print=pretty_print)
-        for spikeThresh_ in self.spikeThresh:
-            namespaceprefix_ = self.spikeThresh_nsprefix_ + ':' if (UseCapturedNS_ and self.spikeThresh_nsprefix_) else ''
+        for spikeThresh_ in self.spike_threshes:
+            namespaceprefix_ = self.spike_threshes_nsprefix_ + ':' if (UseCapturedNS_ and self.spike_threshes_nsprefix_) else ''
             spikeThresh_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='spikeThresh', pretty_print=pretty_print)
-        for specificCapacitance_ in self.specificCapacitance:
-            namespaceprefix_ = self.specificCapacitance_nsprefix_ + ':' if (UseCapturedNS_ and self.specificCapacitance_nsprefix_) else ''
+        for specificCapacitance_ in self.specific_capacitances:
+            namespaceprefix_ = self.specific_capacitances_nsprefix_ + ':' if (UseCapturedNS_ and self.specific_capacitances_nsprefix_) else ''
             specificCapacitance_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='specificCapacitance', pretty_print=pretty_print)
-        for initMembPotential_ in self.initMembPotential:
-            namespaceprefix_ = self.initMembPotential_nsprefix_ + ':' if (UseCapturedNS_ and self.initMembPotential_nsprefix_) else ''
+        for initMembPotential_ in self.init_memb_potentials:
+            namespaceprefix_ = self.init_memb_potentials_nsprefix_ + ':' if (UseCapturedNS_ and self.init_memb_potentials_nsprefix_) else ''
             initMembPotential_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='initMembPotential', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -5034,64 +5033,64 @@ class MembraneProperties(GeneratedsSuper):
         if nodeName_ == 'channelPopulation':
             obj_ = ChannelPopulation.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.channelPopulation.append(obj_)
+            self.channel_populations.append(obj_)
             obj_.original_tagname_ = 'channelPopulation'
         elif nodeName_ == 'channelDensity':
             class_obj_ = self.get_class_obj_(child_, ChannelDensity)
             obj_ = class_obj_.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.channelDensity.append(obj_)
+            self.channel_densities.append(obj_)
             obj_.original_tagname_ = 'channelDensity'
         elif nodeName_ == 'channelDensityVShift':
             obj_ = ChannelDensityVShift.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.channelDensityVShift.append(obj_)
+            self.channel_density_v_shifts.append(obj_)
             obj_.original_tagname_ = 'channelDensityVShift'
         elif nodeName_ == 'channelDensityNernst':
             class_obj_ = self.get_class_obj_(child_, ChannelDensityNernst)
             obj_ = class_obj_.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.channelDensityNernst.append(obj_)
+            self.channel_density_nernsts.append(obj_)
             obj_.original_tagname_ = 'channelDensityNernst'
         elif nodeName_ == 'channelDensityGHK':
             obj_ = ChannelDensityGHK.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.channelDensityGHK.append(obj_)
+            self.channel_density_ghks.append(obj_)
             obj_.original_tagname_ = 'channelDensityGHK'
         elif nodeName_ == 'channelDensityGHK2':
             obj_ = ChannelDensityGHK2.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.channelDensityGHK2.append(obj_)
+            self.channel_density_ghk2s.append(obj_)
             obj_.original_tagname_ = 'channelDensityGHK2'
         elif nodeName_ == 'channelDensityNonUniform':
             obj_ = ChannelDensityNonUniform.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.channelDensityNonUniform.append(obj_)
+            self.channel_density_non_uniforms.append(obj_)
             obj_.original_tagname_ = 'channelDensityNonUniform'
         elif nodeName_ == 'channelDensityNonUniformNernst':
             obj_ = ChannelDensityNonUniformNernst.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.channelDensityNonUniformNernst.append(obj_)
+            self.channel_density_non_uniform_nernsts.append(obj_)
             obj_.original_tagname_ = 'channelDensityNonUniformNernst'
         elif nodeName_ == 'channelDensityNonUniformGHK':
             obj_ = ChannelDensityNonUniformGHK.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.channelDensityNonUniformGHK.append(obj_)
+            self.channel_density_non_uniform_ghks.append(obj_)
             obj_.original_tagname_ = 'channelDensityNonUniformGHK'
         elif nodeName_ == 'spikeThresh':
             obj_ = SpikeThresh.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.spikeThresh.append(obj_)
+            self.spike_threshes.append(obj_)
             obj_.original_tagname_ = 'spikeThresh'
         elif nodeName_ == 'specificCapacitance':
             obj_ = SpecificCapacitance.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.specificCapacitance.append(obj_)
+            self.specific_capacitances.append(obj_)
             obj_.original_tagname_ = 'specificCapacitance'
         elif nodeName_ == 'initMembPotential':
             obj_ = InitMembPotential.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.initMembPotential.append(obj_)
+            self.init_memb_potentials.append(obj_)
             obj_.original_tagname_ = 'initMembPotential'
 # end class MembraneProperties
 
@@ -5099,22 +5098,22 @@ class MembraneProperties(GeneratedsSuper):
 class MembraneProperties2CaPools(MembraneProperties):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('channelDensityNernstCa2', 'ChannelDensityNernstCa2', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensityNernstCa2', 'type': 'ChannelDensityNernstCa2'}, None),
+        MemberSpec_('channel_density_nernst_ca2s', 'ChannelDensityNernstCa2', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'channelDensityNernstCa2', 'type': 'ChannelDensityNernstCa2'}, None),
     ]
     subclass = None
     superclass = MembraneProperties
-    def __init__(self, channelPopulation=None, channelDensity=None, channelDensityVShift=None, channelDensityNernst=None, channelDensityGHK=None, channelDensityGHK2=None, channelDensityNonUniform=None, channelDensityNonUniformNernst=None, channelDensityNonUniformGHK=None, spikeThresh=None, specificCapacitance=None, initMembPotential=None, channelDensityNernstCa2=None, gds_collector_=None, **kwargs_):
+    def __init__(self, channel_populations=None, channel_densities=None, channel_density_v_shifts=None, channel_density_nernsts=None, channel_density_ghks=None, channel_density_ghk2s=None, channel_density_non_uniforms=None, channel_density_non_uniform_nernsts=None, channel_density_non_uniform_ghks=None, spike_threshes=None, specific_capacitances=None, init_memb_potentials=None, channel_density_nernst_ca2s=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(MembraneProperties2CaPools, self).__init__(channelPopulation, channelDensity, channelDensityVShift, channelDensityNernst, channelDensityGHK, channelDensityGHK2, channelDensityNonUniform, channelDensityNonUniformNernst, channelDensityNonUniformGHK, spikeThresh, specificCapacitance, initMembPotential,  **kwargs_)
-        if channelDensityNernstCa2 is None:
-            self.channelDensityNernstCa2 = []
+        super(MembraneProperties2CaPools, self).__init__(channel_populations, channel_densities, channel_density_v_shifts, channel_density_nernsts, channel_density_ghks, channel_density_ghk2s, channel_density_non_uniforms, channel_density_non_uniform_nernsts, channel_density_non_uniform_ghks, spike_threshes, specific_capacitances, init_memb_potentials,  **kwargs_)
+        if channel_density_nernst_ca2s is None:
+            self.channel_density_nernst_ca2s = []
         else:
-            self.channelDensityNernstCa2 = channelDensityNernstCa2
-        self.channelDensityNernstCa2_nsprefix_ = None
+            self.channel_density_nernst_ca2s = channel_density_nernst_ca2s
+        self.channel_density_nernst_ca2s_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -5128,7 +5127,7 @@ class MembraneProperties2CaPools(MembraneProperties):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.channelDensityNernstCa2 or
+            self.channel_density_nernst_ca2s or
             super(MembraneProperties2CaPools, self).hasContent_()
         ):
             return True
@@ -5165,8 +5164,8 @@ class MembraneProperties2CaPools(MembraneProperties):
             eol_ = '\n'
         else:
             eol_ = ''
-        for channelDensityNernstCa2_ in self.channelDensityNernstCa2:
-            namespaceprefix_ = self.channelDensityNernstCa2_nsprefix_ + ':' if (UseCapturedNS_ and self.channelDensityNernstCa2_nsprefix_) else ''
+        for channelDensityNernstCa2_ in self.channel_density_nernst_ca2s:
+            namespaceprefix_ = self.channel_density_nernst_ca2s_nsprefix_ + ':' if (UseCapturedNS_ and self.channel_density_nernst_ca2s_nsprefix_) else ''
             channelDensityNernstCa2_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='channelDensityNernstCa2', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -5185,7 +5184,7 @@ class MembraneProperties2CaPools(MembraneProperties):
         if nodeName_ == 'channelDensityNernstCa2':
             obj_ = ChannelDensityNernstCa2.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.channelDensityNernstCa2.append(obj_)
+            self.channel_density_nernst_ca2s.append(obj_)
             obj_.original_tagname_ = 'channelDensityNernstCa2'
         super(MembraneProperties2CaPools, self).buildChildren(child_, node, nodeName_, True)
 # end class MembraneProperties2CaPools
@@ -5195,12 +5194,12 @@ class ValueAcrossSegOrSegGroup(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('value', 'Nml2Quantity', 0, 1, {'use': 'optional'}),
-        MemberSpec_('segmentGroup', 'NmlId', 0, 1, {'use': 'optional'}),
-        MemberSpec_('segment', 'NmlId', 0, 1, {'use': 'optional'}),
+        MemberSpec_('segment_groups', 'NmlId', 0, 1, {'use': 'optional'}),
+        MemberSpec_('segments', 'NmlId', 0, 1, {'use': 'optional'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, value=None, segmentGroup='all', segment=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, value=None, segment_groups='all', segments=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -5208,10 +5207,10 @@ class ValueAcrossSegOrSegGroup(GeneratedsSuper):
         self.ns_prefix_ = None
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
-        self.segmentGroup = _cast(None, segmentGroup)
-        self.segmentGroup_nsprefix_ = None
-        self.segment = _cast(None, segment)
-        self.segment_nsprefix_ = None
+        self.segment_groups = _cast(None, segment_groups)
+        self.segment_groups_nsprefix_ = None
+        self.segments = _cast(None, segments)
+        self.segments_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -5279,12 +5278,12 @@ class ValueAcrossSegOrSegGroup(GeneratedsSuper):
         if self.value is not None and 'value' not in already_processed:
             already_processed.add('value')
             outfile.write(' value=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.value), input_name='value')), ))
-        if self.segmentGroup != "all" and 'segmentGroup' not in already_processed:
-            already_processed.add('segmentGroup')
-            outfile.write(' segmentGroup=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segmentGroup), input_name='segmentGroup')), ))
-        if self.segment is not None and 'segment' not in already_processed:
-            already_processed.add('segment')
-            outfile.write(' segment=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segment), input_name='segment')), ))
+        if self.segment_groups != "all" and 'segment_groups' not in already_processed:
+            already_processed.add('segment_groups')
+            outfile.write(' segmentGroup=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segment_groups), input_name='segmentGroup')), ))
+        if self.segments is not None and 'segments' not in already_processed:
+            already_processed.add('segments')
+            outfile.write(' segment=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segments), input_name='segment')), ))
         if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -5315,13 +5314,13 @@ class ValueAcrossSegOrSegGroup(GeneratedsSuper):
         value = find_attr_value_('segmentGroup', node)
         if value is not None and 'segmentGroup' not in already_processed:
             already_processed.add('segmentGroup')
-            self.segmentGroup = value
-            self.validate_NmlId(self.segmentGroup)    # validate type NmlId
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)    # validate type NmlId
         value = find_attr_value_('segment', node)
         if value is not None and 'segment' not in already_processed:
             already_processed.add('segment')
-            self.segment = value
-            self.validate_NmlId(self.segment)    # validate type NmlId
+            self.segments = value
+            self.validate_NmlId(self.segments)    # validate type NmlId
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
@@ -5335,12 +5334,12 @@ class VariableParameter(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('parameter', 'xs:string', 0, 0, {'use': 'required'}),
-        MemberSpec_('segmentGroup', 'xs:string', 0, 0, {'use': 'required'}),
-        MemberSpec_('inhomogeneousValue', 'InhomogeneousValue', 0, 1, {'minOccurs': '0', 'name': 'inhomogeneousValue', 'type': 'InhomogeneousValue'}, None),
+        MemberSpec_('segment_groups', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('inhomogeneous_value', 'InhomogeneousValue', 0, 1, {'minOccurs': '0', 'name': 'inhomogeneousValue', 'type': 'InhomogeneousValue'}, None),
     ]
     subclass = None
     superclass = None
-    def __init__(self, parameter=None, segmentGroup=None, inhomogeneousValue=None, gds_collector_=None, **kwargs_):
+    def __init__(self, parameter=None, segment_groups=None, inhomogeneous_value=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -5348,10 +5347,10 @@ class VariableParameter(GeneratedsSuper):
         self.ns_prefix_ = None
         self.parameter = _cast(None, parameter)
         self.parameter_nsprefix_ = None
-        self.segmentGroup = _cast(None, segmentGroup)
-        self.segmentGroup_nsprefix_ = None
-        self.inhomogeneousValue = inhomogeneousValue
-        self.inhomogeneousValue_nsprefix_ = None
+        self.segment_groups = _cast(None, segment_groups)
+        self.segment_groups_nsprefix_ = None
+        self.inhomogeneous_value = inhomogeneous_value
+        self.inhomogeneous_value_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -5365,7 +5364,7 @@ class VariableParameter(GeneratedsSuper):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.inhomogeneousValue is not None
+            self.inhomogeneous_value is not None
         ):
             return True
         else:
@@ -5397,17 +5396,17 @@ class VariableParameter(GeneratedsSuper):
         if self.parameter is not None and 'parameter' not in already_processed:
             already_processed.add('parameter')
             outfile.write(' parameter=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.parameter), input_name='parameter')), ))
-        if self.segmentGroup is not None and 'segmentGroup' not in already_processed:
-            already_processed.add('segmentGroup')
-            outfile.write(' segmentGroup=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segmentGroup), input_name='segmentGroup')), ))
+        if self.segment_groups is not None and 'segment_groups' not in already_processed:
+            already_processed.add('segment_groups')
+            outfile.write(' segmentGroup=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segment_groups), input_name='segmentGroup')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ', name_='VariableParameter', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.inhomogeneousValue is not None:
-            namespaceprefix_ = self.inhomogeneousValue_nsprefix_ + ':' if (UseCapturedNS_ and self.inhomogeneousValue_nsprefix_) else ''
-            self.inhomogeneousValue.export(outfile, level, namespaceprefix_, namespacedef_='', name_='inhomogeneousValue', pretty_print=pretty_print)
+        if self.inhomogeneous_value is not None:
+            namespaceprefix_ = self.inhomogeneous_value_nsprefix_ + ':' if (UseCapturedNS_ and self.inhomogeneous_value_nsprefix_) else ''
+            self.inhomogeneous_value.export(outfile, level, namespaceprefix_, namespacedef_='', name_='inhomogeneousValue', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -5427,12 +5426,12 @@ class VariableParameter(GeneratedsSuper):
         value = find_attr_value_('segmentGroup', node)
         if value is not None and 'segmentGroup' not in already_processed:
             already_processed.add('segmentGroup')
-            self.segmentGroup = value
+            self.segment_groups = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'inhomogeneousValue':
             obj_ = InhomogeneousValue.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.inhomogeneousValue = obj_
+            self.inhomogeneous_value = obj_
             obj_.original_tagname_ = 'inhomogeneousValue'
 # end class VariableParameter
 
@@ -5440,19 +5439,19 @@ class VariableParameter(GeneratedsSuper):
 class InhomogeneousValue(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('inhomogeneousParameter', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('inhomogeneous_parameters', 'xs:string', 0, 0, {'use': 'required'}),
         MemberSpec_('value', 'xs:string', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, inhomogeneousParameter=None, value=None, gds_collector_=None, **kwargs_):
+    def __init__(self, inhomogeneous_parameters=None, value=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.inhomogeneousParameter = _cast(None, inhomogeneousParameter)
-        self.inhomogeneousParameter_nsprefix_ = None
+        self.inhomogeneous_parameters = _cast(None, inhomogeneous_parameters)
+        self.inhomogeneous_parameters_nsprefix_ = None
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -5496,9 +5495,9 @@ class InhomogeneousValue(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='InhomogeneousValue'):
-        if self.inhomogeneousParameter is not None and 'inhomogeneousParameter' not in already_processed:
-            already_processed.add('inhomogeneousParameter')
-            outfile.write(' inhomogeneousParameter=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.inhomogeneousParameter), input_name='inhomogeneousParameter')), ))
+        if self.inhomogeneous_parameters is not None and 'inhomogeneous_parameters' not in already_processed:
+            already_processed.add('inhomogeneous_parameters')
+            outfile.write(' inhomogeneousParameter=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.inhomogeneous_parameters), input_name='inhomogeneousParameter')), ))
         if self.value is not None and 'value' not in already_processed:
             already_processed.add('value')
             outfile.write(' value=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.value), input_name='value')), ))
@@ -5519,7 +5518,7 @@ class InhomogeneousValue(GeneratedsSuper):
         value = find_attr_value_('inhomogeneousParameter', node)
         if value is not None and 'inhomogeneousParameter' not in already_processed:
             already_processed.add('inhomogeneousParameter')
-            self.inhomogeneousParameter = value
+            self.inhomogeneous_parameters = value
         value = find_attr_value_('value', node)
         if value is not None and 'value' not in already_processed:
             already_processed.add('value')
@@ -5536,30 +5535,30 @@ class Species(ValueAcrossSegOrSegGroup):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('id', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('concentrationModel', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('concentration_model', 'NmlId', 0, 0, {'use': 'required'}),
         MemberSpec_('ion', 'NmlId', 0, 1, {'use': 'optional'}),
-        MemberSpec_('initialConcentration', 'Nml2Quantity_concentration', 0, 0, {'use': 'required'}),
-        MemberSpec_('initialExtConcentration', 'Nml2Quantity_concentration', 0, 0, {'use': 'required'}),
+        MemberSpec_('initial_concentration', 'Nml2Quantity_concentration', 0, 0, {'use': 'required'}),
+        MemberSpec_('initial_ext_concentration', 'Nml2Quantity_concentration', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = ValueAcrossSegOrSegGroup
-    def __init__(self, value=None, segmentGroup='all', segment=None, id=None, concentrationModel=None, ion=None, initialConcentration=None, initialExtConcentration=None, gds_collector_=None, **kwargs_):
+    def __init__(self, value=None, segment_groups='all', segments=None, id=None, concentration_model=None, ion=None, initial_concentration=None, initial_ext_concentration=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Species, self).__init__(value, segmentGroup, segment,  **kwargs_)
+        super(Species, self).__init__(value, segment_groups, segments,  **kwargs_)
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
-        self.concentrationModel = _cast(None, concentrationModel)
-        self.concentrationModel_nsprefix_ = None
+        self.concentration_model = _cast(None, concentration_model)
+        self.concentration_model_nsprefix_ = None
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
-        self.initialConcentration = _cast(None, initialConcentration)
-        self.initialConcentration_nsprefix_ = None
-        self.initialExtConcentration = _cast(None, initialExtConcentration)
-        self.initialExtConcentration_nsprefix_ = None
+        self.initial_concentration = _cast(None, initial_concentration)
+        self.initial_concentration_nsprefix_ = None
+        self.initial_ext_concentration = _cast(None, initial_ext_concentration)
+        self.initial_ext_concentration_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -5627,18 +5626,18 @@ class Species(ValueAcrossSegOrSegGroup):
         if self.id is not None and 'id' not in already_processed:
             already_processed.add('id')
             outfile.write(' id=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.id), input_name='id')), ))
-        if self.concentrationModel is not None and 'concentrationModel' not in already_processed:
-            already_processed.add('concentrationModel')
-            outfile.write(' concentrationModel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.concentrationModel), input_name='concentrationModel')), ))
+        if self.concentration_model is not None and 'concentration_model' not in already_processed:
+            already_processed.add('concentration_model')
+            outfile.write(' concentrationModel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.concentration_model), input_name='concentrationModel')), ))
         if self.ion is not None and 'ion' not in already_processed:
             already_processed.add('ion')
             outfile.write(' ion=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion), input_name='ion')), ))
-        if self.initialConcentration is not None and 'initialConcentration' not in already_processed:
-            already_processed.add('initialConcentration')
-            outfile.write(' initialConcentration=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.initialConcentration), input_name='initialConcentration')), ))
-        if self.initialExtConcentration is not None and 'initialExtConcentration' not in already_processed:
-            already_processed.add('initialExtConcentration')
-            outfile.write(' initialExtConcentration=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.initialExtConcentration), input_name='initialExtConcentration')), ))
+        if self.initial_concentration is not None and 'initial_concentration' not in already_processed:
+            already_processed.add('initial_concentration')
+            outfile.write(' initialConcentration=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.initial_concentration), input_name='initialConcentration')), ))
+        if self.initial_ext_concentration is not None and 'initial_ext_concentration' not in already_processed:
+            already_processed.add('initial_ext_concentration')
+            outfile.write(' initialExtConcentration=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.initial_ext_concentration), input_name='initialExtConcentration')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='Species', fromsubclass_=False, pretty_print=True):
         super(Species, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
         pass
@@ -5662,8 +5661,8 @@ class Species(ValueAcrossSegOrSegGroup):
         value = find_attr_value_('concentrationModel', node)
         if value is not None and 'concentrationModel' not in already_processed:
             already_processed.add('concentrationModel')
-            self.concentrationModel = value
-            self.validate_NmlId(self.concentrationModel)    # validate type NmlId
+            self.concentration_model = value
+            self.validate_NmlId(self.concentration_model)    # validate type NmlId
         value = find_attr_value_('ion', node)
         if value is not None and 'ion' not in already_processed:
             already_processed.add('ion')
@@ -5672,13 +5671,13 @@ class Species(ValueAcrossSegOrSegGroup):
         value = find_attr_value_('initialConcentration', node)
         if value is not None and 'initialConcentration' not in already_processed:
             already_processed.add('initialConcentration')
-            self.initialConcentration = value
-            self.validate_Nml2Quantity_concentration(self.initialConcentration)    # validate type Nml2Quantity_concentration
+            self.initial_concentration = value
+            self.validate_Nml2Quantity_concentration(self.initial_concentration)    # validate type Nml2Quantity_concentration
         value = find_attr_value_('initialExtConcentration', node)
         if value is not None and 'initialExtConcentration' not in already_processed:
             already_processed.add('initialExtConcentration')
-            self.initialExtConcentration = value
-            self.validate_Nml2Quantity_concentration(self.initialExtConcentration)    # validate type Nml2Quantity_concentration
+            self.initial_ext_concentration = value
+            self.validate_Nml2Quantity_concentration(self.initial_ext_concentration)    # validate type Nml2Quantity_concentration
         super(Species, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(Species, self).buildChildren(child_, node, nodeName_, True)
@@ -5690,11 +5689,11 @@ class IntracellularProperties(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('species', 'Species', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'species', 'type': 'Species'}, None),
-        MemberSpec_('resistivity', 'Resistivity', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'resistivity', 'type': 'Resistivity'}, None),
+        MemberSpec_('resistivities', 'Resistivity', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'resistivity', 'type': 'Resistivity'}, None),
     ]
     subclass = None
     superclass = None
-    def __init__(self, species=None, resistivity=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, species=None, resistivities=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -5705,11 +5704,11 @@ class IntracellularProperties(GeneratedsSuper):
         else:
             self.species = species
         self.species_nsprefix_ = None
-        if resistivity is None:
-            self.resistivity = []
+        if resistivities is None:
+            self.resistivities = []
         else:
-            self.resistivity = resistivity
-        self.resistivity_nsprefix_ = None
+            self.resistivities = resistivities
+        self.resistivities_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -5725,7 +5724,7 @@ class IntracellularProperties(GeneratedsSuper):
     def hasContent_(self):
         if (
             self.species or
-            self.resistivity
+            self.resistivities
         ):
             return True
         else:
@@ -5771,8 +5770,8 @@ class IntracellularProperties(GeneratedsSuper):
         for species_ in self.species:
             namespaceprefix_ = self.species_nsprefix_ + ':' if (UseCapturedNS_ and self.species_nsprefix_) else ''
             species_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='species', pretty_print=pretty_print)
-        for resistivity_ in self.resistivity:
-            namespaceprefix_ = self.resistivity_nsprefix_ + ':' if (UseCapturedNS_ and self.resistivity_nsprefix_) else ''
+        for resistivity_ in self.resistivities:
+            namespaceprefix_ = self.resistivities_nsprefix_ + ':' if (UseCapturedNS_ and self.resistivities_nsprefix_) else ''
             resistivity_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='resistivity', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -5799,7 +5798,7 @@ class IntracellularProperties(GeneratedsSuper):
         elif nodeName_ == 'resistivity':
             obj_ = Resistivity.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.resistivity.append(obj_)
+            self.resistivities.append(obj_)
             obj_.original_tagname_ = 'resistivity'
 # end class IntracellularProperties
 
@@ -5810,13 +5809,13 @@ class IntracellularProperties2CaPools(IntracellularProperties):
     ]
     subclass = None
     superclass = IntracellularProperties
-    def __init__(self, species=None, resistivity=None, gds_collector_=None, **kwargs_):
+    def __init__(self, species=None, resistivities=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IntracellularProperties2CaPools, self).__init__(species, resistivity,  **kwargs_)
+        super(IntracellularProperties2CaPools, self).__init__(species, resistivities,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -5975,33 +5974,33 @@ class ExtracellularPropertiesLocal(GeneratedsSuper):
 class SpaceStructure(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('xSpacing', 'xs:float', 0, 1, {'use': 'optional'}),
-        MemberSpec_('ySpacing', 'xs:float', 0, 1, {'use': 'optional'}),
-        MemberSpec_('zSpacing', 'xs:float', 0, 1, {'use': 'optional'}),
-        MemberSpec_('xStart', 'xs:float', 0, 1, {'use': 'optional'}),
-        MemberSpec_('yStart', 'xs:float', 0, 1, {'use': 'optional'}),
-        MemberSpec_('zStart', 'xs:float', 0, 1, {'use': 'optional'}),
+        MemberSpec_('x_spacing', 'xs:float', 0, 1, {'use': 'optional'}),
+        MemberSpec_('y_spacing', 'xs:float', 0, 1, {'use': 'optional'}),
+        MemberSpec_('z_spacing', 'xs:float', 0, 1, {'use': 'optional'}),
+        MemberSpec_('x_start', 'xs:float', 0, 1, {'use': 'optional'}),
+        MemberSpec_('y_start', 'xs:float', 0, 1, {'use': 'optional'}),
+        MemberSpec_('z_start', 'xs:float', 0, 1, {'use': 'optional'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, xSpacing=None, ySpacing=None, zSpacing=None, xStart=0, yStart=0, zStart=0, gds_collector_=None, **kwargs_):
+    def __init__(self, x_spacing=None, y_spacing=None, z_spacing=None, x_start=0, y_start=0, z_start=0, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.xSpacing = _cast(float, xSpacing)
-        self.xSpacing_nsprefix_ = None
-        self.ySpacing = _cast(float, ySpacing)
-        self.ySpacing_nsprefix_ = None
-        self.zSpacing = _cast(float, zSpacing)
-        self.zSpacing_nsprefix_ = None
-        self.xStart = _cast(float, xStart)
-        self.xStart_nsprefix_ = None
-        self.yStart = _cast(float, yStart)
-        self.yStart_nsprefix_ = None
-        self.zStart = _cast(float, zStart)
-        self.zStart_nsprefix_ = None
+        self.x_spacing = _cast(float, x_spacing)
+        self.x_spacing_nsprefix_ = None
+        self.y_spacing = _cast(float, y_spacing)
+        self.y_spacing_nsprefix_ = None
+        self.z_spacing = _cast(float, z_spacing)
+        self.z_spacing_nsprefix_ = None
+        self.x_start = _cast(float, x_start)
+        self.x_start_nsprefix_ = None
+        self.y_start = _cast(float, y_start)
+        self.y_start_nsprefix_ = None
+        self.z_start = _cast(float, z_start)
+        self.z_start_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -6043,24 +6042,24 @@ class SpaceStructure(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='SpaceStructure'):
-        if self.xSpacing is not None and 'xSpacing' not in already_processed:
-            already_processed.add('xSpacing')
-            outfile.write(' xSpacing="%s"' % self.gds_format_float(self.xSpacing, input_name='xSpacing'))
-        if self.ySpacing is not None and 'ySpacing' not in already_processed:
-            already_processed.add('ySpacing')
-            outfile.write(' ySpacing="%s"' % self.gds_format_float(self.ySpacing, input_name='ySpacing'))
-        if self.zSpacing is not None and 'zSpacing' not in already_processed:
-            already_processed.add('zSpacing')
-            outfile.write(' zSpacing="%s"' % self.gds_format_float(self.zSpacing, input_name='zSpacing'))
-        if self.xStart != 0 and 'xStart' not in already_processed:
-            already_processed.add('xStart')
-            outfile.write(' xStart="%s"' % self.gds_format_float(self.xStart, input_name='xStart'))
-        if self.yStart != 0 and 'yStart' not in already_processed:
-            already_processed.add('yStart')
-            outfile.write(' yStart="%s"' % self.gds_format_float(self.yStart, input_name='yStart'))
-        if self.zStart != 0 and 'zStart' not in already_processed:
-            already_processed.add('zStart')
-            outfile.write(' zStart="%s"' % self.gds_format_float(self.zStart, input_name='zStart'))
+        if self.x_spacing is not None and 'x_spacing' not in already_processed:
+            already_processed.add('x_spacing')
+            outfile.write(' xSpacing="%s"' % self.gds_format_float(self.x_spacing, input_name='xSpacing'))
+        if self.y_spacing is not None and 'y_spacing' not in already_processed:
+            already_processed.add('y_spacing')
+            outfile.write(' ySpacing="%s"' % self.gds_format_float(self.y_spacing, input_name='ySpacing'))
+        if self.z_spacing is not None and 'z_spacing' not in already_processed:
+            already_processed.add('z_spacing')
+            outfile.write(' zSpacing="%s"' % self.gds_format_float(self.z_spacing, input_name='zSpacing'))
+        if self.x_start != 0 and 'x_start' not in already_processed:
+            already_processed.add('x_start')
+            outfile.write(' xStart="%s"' % self.gds_format_float(self.x_start, input_name='xStart'))
+        if self.y_start != 0 and 'y_start' not in already_processed:
+            already_processed.add('y_start')
+            outfile.write(' yStart="%s"' % self.gds_format_float(self.y_start, input_name='yStart'))
+        if self.z_start != 0 and 'z_start' not in already_processed:
+            already_processed.add('z_start')
+            outfile.write(' zStart="%s"' % self.gds_format_float(self.z_start, input_name='zStart'))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='SpaceStructure', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node, gds_collector_=None):
@@ -6113,21 +6112,21 @@ class SpaceStructure(GeneratedsSuper):
 class Layout(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('space', 'NmlId', 0, 1, {'use': 'optional'}),
+        MemberSpec_('spaces', 'NmlId', 0, 1, {'use': 'optional'}),
         MemberSpec_('random', 'RandomLayout', 0, 0, {'name': 'random', 'type': 'RandomLayout'}, 5),
         MemberSpec_('grid', 'GridLayout', 0, 0, {'name': 'grid', 'type': 'GridLayout'}, 5),
         MemberSpec_('unstructured', 'UnstructuredLayout', 0, 0, {'name': 'unstructured', 'type': 'UnstructuredLayout'}, 5),
     ]
     subclass = None
     superclass = None
-    def __init__(self, space=None, random=None, grid=None, unstructured=None, gds_collector_=None, **kwargs_):
+    def __init__(self, spaces=None, random=None, grid=None, unstructured=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.space = _cast(None, space)
-        self.space_nsprefix_ = None
+        self.spaces = _cast(None, spaces)
+        self.spaces_nsprefix_ = None
         self.random = random
         self.random_nsprefix_ = None
         self.grid = grid
@@ -6189,9 +6188,9 @@ class Layout(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='Layout'):
-        if self.space is not None and 'space' not in already_processed:
-            already_processed.add('space')
-            outfile.write(' space=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.space), input_name='space')), ))
+        if self.spaces is not None and 'spaces' not in already_processed:
+            already_processed.add('spaces')
+            outfile.write(' space=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.spaces), input_name='space')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ', name_='Layout', fromsubclass_=False, pretty_print=True):
         if pretty_print:
             eol_ = '\n'
@@ -6221,8 +6220,8 @@ class Layout(GeneratedsSuper):
         value = find_attr_value_('space', node)
         if value is not None and 'space' not in already_processed:
             already_processed.add('space')
-            self.space = value
-            self.validate_NmlId(self.space)    # validate type NmlId
+            self.spaces = value
+            self.validate_NmlId(self.spaces)    # validate type NmlId
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'random':
             obj_ = RandomLayout.factory(parent_object_=self)
@@ -6330,11 +6329,11 @@ class RandomLayout(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('number', 'xs:nonNegativeInteger', 0, 1, {'use': 'optional'}),
-        MemberSpec_('region', 'NmlId', 0, 1, {'use': 'optional'}),
+        MemberSpec_('regions', 'NmlId', 0, 1, {'use': 'optional'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, number=None, region=None, gds_collector_=None, **kwargs_):
+    def __init__(self, number=None, regions=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -6342,8 +6341,8 @@ class RandomLayout(GeneratedsSuper):
         self.ns_prefix_ = None
         self.number = _cast(int, number)
         self.number_nsprefix_ = None
-        self.region = _cast(None, region)
-        self.region_nsprefix_ = None
+        self.regions = _cast(None, regions)
+        self.regions_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -6399,9 +6398,9 @@ class RandomLayout(GeneratedsSuper):
         if self.number is not None and 'number' not in already_processed:
             already_processed.add('number')
             outfile.write(' number="%s"' % self.gds_format_integer(self.number, input_name='number'))
-        if self.region is not None and 'region' not in already_processed:
-            already_processed.add('region')
-            outfile.write(' region=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.region), input_name='region')), ))
+        if self.regions is not None and 'regions' not in already_processed:
+            already_processed.add('regions')
+            outfile.write(' region=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.regions), input_name='region')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='RandomLayout', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node, gds_collector_=None):
@@ -6425,8 +6424,8 @@ class RandomLayout(GeneratedsSuper):
         value = find_attr_value_('region', node)
         if value is not None and 'region' not in already_processed:
             already_processed.add('region')
-            self.region = value
-            self.validate_NmlId(self.region)    # validate type NmlId
+            self.regions = value
+            self.validate_NmlId(self.regions)    # validate type NmlId
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
 # end class RandomLayout
@@ -6435,24 +6434,24 @@ class RandomLayout(GeneratedsSuper):
 class GridLayout(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('xSize', 'xs:nonNegativeInteger', 0, 1, {'use': 'optional'}),
-        MemberSpec_('ySize', 'xs:nonNegativeInteger', 0, 1, {'use': 'optional'}),
-        MemberSpec_('zSize', 'xs:nonNegativeInteger', 0, 1, {'use': 'optional'}),
+        MemberSpec_('x_size', 'xs:nonNegativeInteger', 0, 1, {'use': 'optional'}),
+        MemberSpec_('y_size', 'xs:nonNegativeInteger', 0, 1, {'use': 'optional'}),
+        MemberSpec_('z_size', 'xs:nonNegativeInteger', 0, 1, {'use': 'optional'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, xSize=None, ySize=None, zSize=None, gds_collector_=None, **kwargs_):
+    def __init__(self, x_size=None, y_size=None, z_size=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.xSize = _cast(int, xSize)
-        self.xSize_nsprefix_ = None
-        self.ySize = _cast(int, ySize)
-        self.ySize_nsprefix_ = None
-        self.zSize = _cast(int, zSize)
-        self.zSize_nsprefix_ = None
+        self.x_size = _cast(int, x_size)
+        self.x_size_nsprefix_ = None
+        self.y_size = _cast(int, y_size)
+        self.y_size_nsprefix_ = None
+        self.z_size = _cast(int, z_size)
+        self.z_size_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -6494,15 +6493,15 @@ class GridLayout(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='GridLayout'):
-        if self.xSize is not None and 'xSize' not in already_processed:
-            already_processed.add('xSize')
-            outfile.write(' xSize="%s"' % self.gds_format_integer(self.xSize, input_name='xSize'))
-        if self.ySize is not None and 'ySize' not in already_processed:
-            already_processed.add('ySize')
-            outfile.write(' ySize="%s"' % self.gds_format_integer(self.ySize, input_name='ySize'))
-        if self.zSize is not None and 'zSize' not in already_processed:
-            already_processed.add('zSize')
-            outfile.write(' zSize="%s"' % self.gds_format_integer(self.zSize, input_name='zSize'))
+        if self.x_size is not None and 'x_size' not in already_processed:
+            already_processed.add('x_size')
+            outfile.write(' xSize="%s"' % self.gds_format_integer(self.x_size, input_name='xSize'))
+        if self.y_size is not None and 'y_size' not in already_processed:
+            already_processed.add('y_size')
+            outfile.write(' ySize="%s"' % self.gds_format_integer(self.y_size, input_name='ySize'))
+        if self.z_size is not None and 'z_size' not in already_processed:
+            already_processed.add('z_size')
+            outfile.write(' zSize="%s"' % self.gds_format_integer(self.z_size, input_name='zSize'))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='GridLayout', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node, gds_collector_=None):
@@ -6520,20 +6519,20 @@ class GridLayout(GeneratedsSuper):
         value = find_attr_value_('xSize', node)
         if value is not None and 'xSize' not in already_processed:
             already_processed.add('xSize')
-            self.xSize = self.gds_parse_integer(value, node, 'xSize')
-            if self.xSize < 0:
+            self.x_size = self.gds_parse_integer(value, node, 'xSize')
+            if self.x_size < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
         value = find_attr_value_('ySize', node)
         if value is not None and 'ySize' not in already_processed:
             already_processed.add('ySize')
-            self.ySize = self.gds_parse_integer(value, node, 'ySize')
-            if self.ySize < 0:
+            self.y_size = self.gds_parse_integer(value, node, 'ySize')
+            if self.y_size < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
         value = find_attr_value_('zSize', node)
         if value is not None and 'zSize' not in already_processed:
             already_processed.add('zSize')
-            self.zSize = self.gds_parse_integer(value, node, 'zSize')
-            if self.zSize < 0:
+            self.z_size = self.gds_parse_integer(value, node, 'zSize')
+            if self.z_size < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
@@ -7109,12 +7108,12 @@ class Input(GeneratedsSuper):
         MemberSpec_('id', 'NonNegativeInteger', 0, 0, {'use': 'required'}),
         MemberSpec_('target', 'xs:string', 0, 0, {'use': 'required'}),
         MemberSpec_('destination', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('segmentId', 'NonNegativeInteger', 0, 1, {'use': 'optional'}),
-        MemberSpec_('fractionAlong', 'ZeroToOne', 0, 1, {'use': 'optional'}),
+        MemberSpec_('segment_id', 'NonNegativeInteger', 0, 1, {'use': 'optional'}),
+        MemberSpec_('fraction_along', 'ZeroToOne', 0, 1, {'use': 'optional'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, id=None, target=None, destination=None, segmentId=None, fractionAlong=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, id=None, target=None, destination=None, segment_id=None, fraction_along=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -7126,10 +7125,10 @@ class Input(GeneratedsSuper):
         self.target_nsprefix_ = None
         self.destination = _cast(None, destination)
         self.destination_nsprefix_ = None
-        self.segmentId = _cast(int, segmentId)
-        self.segmentId_nsprefix_ = None
-        self.fractionAlong = _cast(float, fractionAlong)
-        self.fractionAlong_nsprefix_ = None
+        self.segment_id = _cast(int, segment_id)
+        self.segment_id_nsprefix_ = None
+        self.fraction_along = _cast(float, fraction_along)
+        self.fraction_along_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -7215,12 +7214,12 @@ class Input(GeneratedsSuper):
         if self.destination is not None and 'destination' not in already_processed:
             already_processed.add('destination')
             outfile.write(' destination=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.destination), input_name='destination')), ))
-        if self.segmentId is not None and 'segmentId' not in already_processed:
-            already_processed.add('segmentId')
-            outfile.write(' segmentId="%s"' % self.gds_format_integer(self.segmentId, input_name='segmentId'))
-        if self.fractionAlong is not None and 'fractionAlong' not in already_processed:
-            already_processed.add('fractionAlong')
-            outfile.write(' fractionAlong="%s"' % self.gds_format_float(self.fractionAlong, input_name='fractionAlong'))
+        if self.segment_id is not None and 'segment_id' not in already_processed:
+            already_processed.add('segment_id')
+            outfile.write(' segmentId="%s"' % self.gds_format_integer(self.segment_id, input_name='segmentId'))
+        if self.fraction_along is not None and 'fraction_along' not in already_processed:
+            already_processed.add('fraction_along')
+            outfile.write(' fractionAlong="%s"' % self.gds_format_float(self.fraction_along, input_name='fractionAlong'))
         if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -7262,16 +7261,16 @@ class Input(GeneratedsSuper):
         value = find_attr_value_('segmentId', node)
         if value is not None and 'segmentId' not in already_processed:
             already_processed.add('segmentId')
-            self.segmentId = self.gds_parse_integer(value, node, 'segmentId')
-            if self.segmentId < 0:
+            self.segment_id = self.gds_parse_integer(value, node, 'segmentId')
+            if self.segment_id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_NonNegativeInteger(self.segmentId)    # validate type NonNegativeInteger
+            self.validate_NonNegativeInteger(self.segment_id)    # validate type NonNegativeInteger
         value = find_attr_value_('fractionAlong', node)
         if value is not None and 'fractionAlong' not in already_processed:
             already_processed.add('fractionAlong')
             value = self.gds_parse_float(value, node, 'fractionAlong')
             self.fractionAlong = value
-            self.validate_ZeroToOne(self.fractionAlong)    # validate type ZeroToOne
+            self.validate_ZeroToOne(self.fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
@@ -7313,13 +7312,13 @@ class InputW(Input):
     ]
     subclass = None
     superclass = Input
-    def __init__(self, id=None, target=None, destination=None, segmentId=None, fractionAlong=None, weight=None, gds_collector_=None, **kwargs_):
+    def __init__(self, id=None, target=None, destination=None, segment_id=None, fraction_along=None, weight=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(InputW, self).__init__(id, target, destination, segmentId, fractionAlong,  **kwargs_)
+        super(InputW, self).__init__(id, target, destination, segment_id, fraction_along,  **kwargs_)
         self.weight = _cast(float, weight)
         self.weight_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -7409,18 +7408,18 @@ class BaseWithoutId(GeneratedsSuper):
     Segment needs nonNegativeInteger)."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('neuroLexId', 'NeuroLexId', 0, 1, {'use': 'optional'}),
+        MemberSpec_('neuro_lex_id', 'NeuroLexId', 0, 1, {'use': 'optional'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, neuroLexId=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        self.neuroLexId = _cast(None, neuroLexId)
-        self.neuroLexId_nsprefix_ = None
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -7474,9 +7473,9 @@ class BaseWithoutId(GeneratedsSuper):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='BaseWithoutId'):
-        if self.neuroLexId is not None and 'neuroLexId' not in already_processed:
-            already_processed.add('neuroLexId')
-            outfile.write(' neuroLexId=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.neuroLexId), input_name='neuroLexId')), ))
+        if self.neuro_lex_id is not None and 'neuro_lex_id' not in already_processed:
+            already_processed.add('neuro_lex_id')
+            outfile.write(' neuroLexId=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.neuro_lex_id), input_name='neuroLexId')), ))
         if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -7502,8 +7501,8 @@ class BaseWithoutId(GeneratedsSuper):
         value = find_attr_value_('neuroLexId', node)
         if value is not None and 'neuroLexId' not in already_processed:
             already_processed.add('neuroLexId')
-            self.neuroLexId = value
-            self.validate_NeuroLexId(self.neuroLexId)    # validate type NeuroLexId
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)    # validate type NeuroLexId
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
@@ -7522,13 +7521,13 @@ class BaseNonNegativeIntegerId(BaseWithoutId):
     ]
     subclass = None
     superclass = BaseWithoutId
-    def __init__(self, neuroLexId=None, id=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseNonNegativeIntegerId, self).__init__(neuroLexId, extensiontype_,  **kwargs_)
+        super(BaseNonNegativeIntegerId, self).__init__(neuro_lex_id, extensiontype_,  **kwargs_)
         self.id = _cast(int, id)
         self.id_nsprefix_ = None
         self.extensiontype_ = extensiontype_
@@ -7635,13 +7634,13 @@ class Base(BaseWithoutId):
     ]
     subclass = None
     superclass = BaseWithoutId
-    def __init__(self, neuroLexId=None, id=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Base, self).__init__(neuroLexId, extensiontype_,  **kwargs_)
+        super(Base, self).__init__(neuro_lex_id, extensiontype_,  **kwargs_)
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
         self.extensiontype_ = extensiontype_
@@ -7747,28 +7746,28 @@ class Standalone(Base):
     member_data_items_ = [
         MemberSpec_('metaid', 'MetaId', 0, 1, {'use': 'optional'}),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0, 1, {'minOccurs': '0', 'name': 'notes', 'type': 'xs:string'}, None),
-        MemberSpec_('property', 'Property', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'property', 'type': 'Property'}, None),
+        MemberSpec_('properties', 'Property', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'property', 'type': 'Property'}, None),
         MemberSpec_('annotation', 'Annotation', 0, 1, {'minOccurs': '0', 'name': 'annotation', 'type': 'Annotation'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Standalone, self).__init__(neuroLexId, id, extensiontype_,  **kwargs_)
+        super(Standalone, self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
         self.metaid = _cast(None, metaid)
         self.metaid_nsprefix_ = None
         self.notes = notes
         self.validate_Notes(self.notes)
         self.notes_nsprefix_ = None
-        if property is None:
-            self.property = []
+        if properties is None:
+            self.properties = []
         else:
-            self.property = property
-        self.property_nsprefix_ = None
+            self.properties = properties
+        self.properties_nsprefix_ = None
         self.annotation = annotation
         self.annotation_nsprefix_ = None
         self.extensiontype_ = extensiontype_
@@ -7807,7 +7806,7 @@ class Standalone(Base):
     def hasContent_(self):
         if (
             self.notes is not None or
-            self.property or
+            self.properties or
             self.annotation is not None or
             super(Standalone, self).hasContent_()
         ):
@@ -7860,8 +7859,8 @@ class Standalone(Base):
             namespaceprefix_ = self.notes_nsprefix_ + ':' if (UseCapturedNS_ and self.notes_nsprefix_) else ''
             showIndent(outfile, level, pretty_print)
             outfile.write('<%snotes>%s</%snotes>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.notes), input_name='notes')), namespaceprefix_ , eol_))
-        for property_ in self.property:
-            namespaceprefix_ = self.property_nsprefix_ + ':' if (UseCapturedNS_ and self.property_nsprefix_) else ''
+        for property_ in self.properties:
+            namespaceprefix_ = self.properties_nsprefix_ + ':' if (UseCapturedNS_ and self.properties_nsprefix_) else ''
             property_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='property', pretty_print=pretty_print)
         if self.annotation is not None:
             namespaceprefix_ = self.annotation_nsprefix_ + ':' if (UseCapturedNS_ and self.annotation_nsprefix_) else ''
@@ -7900,7 +7899,7 @@ class Standalone(Base):
         elif nodeName_ == 'property':
             obj_ = Property.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.property.append(obj_)
+            self.properties.append(obj_)
             obj_.original_tagname_ = 'property'
         elif nodeName_ == 'annotation':
             obj_ = Annotation.factory(parent_object_=self)
@@ -7920,13 +7919,13 @@ class SpikeSourcePoisson(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, start=None, duration=None, rate=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, start=None, duration=None, rate=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SpikeSourcePoisson, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(SpikeSourcePoisson, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.start = _cast(None, start)
         self.start_nsprefix_ = None
         self.duration = _cast(None, duration)
@@ -8048,22 +8047,22 @@ class InputList(Base):
     specified component."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('population', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('populations', 'NmlId', 0, 0, {'use': 'required'}),
         MemberSpec_('component', 'NmlId', 0, 0, {'use': 'required'}),
         MemberSpec_('input', 'Input', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'input', 'type': 'Input'}, None),
-        MemberSpec_('inputW', 'InputW', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'inputW', 'type': 'InputW'}, None),
+        MemberSpec_('input_ws', 'InputW', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'inputW', 'type': 'InputW'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, population=None, component=None, input=None, inputW=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, populations=None, component=None, input=None, input_ws=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(InputList, self).__init__(neuroLexId, id,  **kwargs_)
-        self.population = _cast(None, population)
-        self.population_nsprefix_ = None
+        super(InputList, self).__init__(neuro_lex_id, id,  **kwargs_)
+        self.populations = _cast(None, populations)
+        self.populations_nsprefix_ = None
         self.component = _cast(None, component)
         self.component_nsprefix_ = None
         if input is None:
@@ -8071,11 +8070,11 @@ class InputList(Base):
         else:
             self.input = input
         self.input_nsprefix_ = None
-        if inputW is None:
-            self.inputW = []
+        if input_ws is None:
+            self.input_ws = []
         else:
-            self.inputW = inputW
-        self.inputW_nsprefix_ = None
+            self.input_ws = input_ws
+        self.input_ws_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -8101,7 +8100,7 @@ class InputList(Base):
     def hasContent_(self):
         if (
             self.input or
-            self.inputW or
+            self.input_ws or
             super(InputList, self).hasContent_()
         ):
             return True
@@ -8132,9 +8131,9 @@ class InputList(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='InputList'):
         super(InputList, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='InputList')
-        if self.population is not None and 'population' not in already_processed:
-            already_processed.add('population')
-            outfile.write(' population=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.population), input_name='population')), ))
+        if self.populations is not None and 'populations' not in already_processed:
+            already_processed.add('populations')
+            outfile.write(' population=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.populations), input_name='population')), ))
         if self.component is not None and 'component' not in already_processed:
             already_processed.add('component')
             outfile.write(' component=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.component), input_name='component')), ))
@@ -8147,8 +8146,8 @@ class InputList(Base):
         for input_ in self.input:
             namespaceprefix_ = self.input_nsprefix_ + ':' if (UseCapturedNS_ and self.input_nsprefix_) else ''
             input_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='input', pretty_print=pretty_print)
-        for inputW_ in self.inputW:
-            namespaceprefix_ = self.inputW_nsprefix_ + ':' if (UseCapturedNS_ and self.inputW_nsprefix_) else ''
+        for inputW_ in self.input_ws:
+            namespaceprefix_ = self.input_ws_nsprefix_ + ':' if (UseCapturedNS_ and self.input_ws_nsprefix_) else ''
             inputW_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='inputW', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -8165,8 +8164,8 @@ class InputList(Base):
         value = find_attr_value_('population', node)
         if value is not None and 'population' not in already_processed:
             already_processed.add('population')
-            self.population = value
-            self.validate_NmlId(self.population)    # validate type NmlId
+            self.populations = value
+            self.validate_NmlId(self.populations)    # validate type NmlId
         value = find_attr_value_('component', node)
         if value is not None and 'component' not in already_processed:
             already_processed.add('component')
@@ -8183,7 +8182,7 @@ class InputList(Base):
         elif nodeName_ == 'inputW':
             obj_ = InputW.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.inputW.append(obj_)
+            self.input_ws.append(obj_)
             obj_.original_tagname_ = 'inputW'
         super(InputList, self).buildChildren(child_, node, nodeName_, True)
 
@@ -8253,13 +8252,13 @@ class BaseConnection(BaseNonNegativeIntegerId):
     ]
     subclass = None
     superclass = BaseNonNegativeIntegerId
-    def __init__(self, neuroLexId=None, id=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseConnection, self).__init__(neuroLexId, id, extensiontype_,  **kwargs_)
+        super(BaseConnection, self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -8342,22 +8341,22 @@ class BaseProjection(Base):
     populations"""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('presynapticPopulation', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('postsynapticPopulation', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('presynaptic_population', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('postsynaptic_population', 'NmlId', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, presynapticPopulation=None, postsynapticPopulation=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseProjection, self).__init__(neuroLexId, id, extensiontype_,  **kwargs_)
-        self.presynapticPopulation = _cast(None, presynapticPopulation)
-        self.presynapticPopulation_nsprefix_ = None
-        self.postsynapticPopulation = _cast(None, postsynapticPopulation)
-        self.postsynapticPopulation_nsprefix_ = None
+        super(BaseProjection, self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
+        self.presynaptic_population = _cast(None, presynaptic_population)
+        self.presynaptic_population_nsprefix_ = None
+        self.postsynaptic_population = _cast(None, postsynaptic_population)
+        self.postsynaptic_population_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -8412,12 +8411,12 @@ class BaseProjection(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='BaseProjection'):
         super(BaseProjection, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='BaseProjection')
-        if self.presynapticPopulation is not None and 'presynapticPopulation' not in already_processed:
-            already_processed.add('presynapticPopulation')
-            outfile.write(' presynapticPopulation=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.presynapticPopulation), input_name='presynapticPopulation')), ))
-        if self.postsynapticPopulation is not None and 'postsynapticPopulation' not in already_processed:
-            already_processed.add('postsynapticPopulation')
-            outfile.write(' postsynapticPopulation=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.postsynapticPopulation), input_name='postsynapticPopulation')), ))
+        if self.presynaptic_population is not None and 'presynaptic_population' not in already_processed:
+            already_processed.add('presynaptic_population')
+            outfile.write(' presynapticPopulation=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.presynaptic_population), input_name='presynapticPopulation')), ))
+        if self.postsynaptic_population is not None and 'postsynaptic_population' not in already_processed:
+            already_processed.add('postsynaptic_population')
+            outfile.write(' postsynapticPopulation=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.postsynaptic_population), input_name='postsynapticPopulation')), ))
         if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -8444,13 +8443,13 @@ class BaseProjection(Base):
         value = find_attr_value_('presynapticPopulation', node)
         if value is not None and 'presynapticPopulation' not in already_processed:
             already_processed.add('presynapticPopulation')
-            self.presynapticPopulation = value
-            self.validate_NmlId(self.presynapticPopulation)    # validate type NmlId
+            self.presynaptic_population = value
+            self.validate_NmlId(self.presynaptic_population)    # validate type NmlId
         value = find_attr_value_('postsynapticPopulation', node)
         if value is not None and 'postsynapticPopulation' not in already_processed:
             already_processed.add('postsynapticPopulation')
-            self.postsynapticPopulation = value
-            self.validate_NmlId(self.postsynapticPopulation)    # validate type NmlId
+            self.postsynaptic_population = value
+            self.validate_NmlId(self.postsynaptic_population)    # validate type NmlId
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
@@ -8470,13 +8469,13 @@ class CellSet(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, select=None, anytypeobjs_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, select=None, anytypeobjs_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(CellSet, self).__init__(neuroLexId, id,  **kwargs_)
+        super(CellSet, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.select = _cast(None, select)
         self.select_nsprefix_ = None
         if anytypeobjs_ is None:
@@ -8567,35 +8566,35 @@ class Population(Standalone):
     member_data_items_ = [
         MemberSpec_('component', 'NmlId', 0, 0, {'use': 'required'}),
         MemberSpec_('size', 'NonNegativeInteger', 0, 1, {'use': 'optional'}),
-        MemberSpec_('type_', 'populationTypes', 0, 1, {'use': 'optional'}),
-        MemberSpec_('extracellularProperties', 'NmlId', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type', 'populationTypes', 0, 1, {'use': 'optional'}),
+        MemberSpec_('extracellular_properties', 'NmlId', 0, 1, {'use': 'optional'}),
         MemberSpec_('layout', 'Layout', 0, 1, {'minOccurs': '0', 'name': 'layout', 'type': 'Layout'}, 4),
-        MemberSpec_('instance', 'Instance', 1, 0, {'maxOccurs': 'unbounded', 'name': 'instance', 'type': 'Instance'}, 4),
+        MemberSpec_('instances', 'Instance', 1, 0, {'maxOccurs': 'unbounded', 'name': 'instance', 'type': 'Instance'}, 4),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, component=None, size=None, type_=None, extracellularProperties=None, layout=None, instance=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, component=None, size=None, type=None, extracellular_properties=None, layout=None, instances=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Population, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(Population, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.component = _cast(None, component)
         self.component_nsprefix_ = None
         self.size = _cast(int, size)
         self.size_nsprefix_ = None
-        self.type_ = _cast(None, type_)
-        self.type__nsprefix_ = None
-        self.extracellularProperties = _cast(None, extracellularProperties)
-        self.extracellularProperties_nsprefix_ = None
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
+        self.extracellular_properties = _cast(None, extracellular_properties)
+        self.extracellular_properties_nsprefix_ = None
         self.layout = layout
         self.layout_nsprefix_ = None
-        if instance is None:
-            self.instance = []
+        if instances is None:
+            self.instances = []
         else:
-            self.instance = instance
-        self.instance_nsprefix_ = None
+            self.instances = instances
+        self.instances_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -8642,7 +8641,7 @@ class Population(Standalone):
     def hasContent_(self):
         if (
             self.layout is not None or
-            self.instance or
+            self.instances or
             super(Population, self).hasContent_()
         ):
             return True
@@ -8679,12 +8678,12 @@ class Population(Standalone):
         if self.size is not None and 'size' not in already_processed:
             already_processed.add('size')
             outfile.write(' size="%s"' % self.gds_format_integer(self.size, input_name='size'))
-        if self.type_ is not None and 'type_' not in already_processed:
-            already_processed.add('type_')
-            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type_), input_name='type')), ))
-        if self.extracellularProperties is not None and 'extracellularProperties' not in already_processed:
-            already_processed.add('extracellularProperties')
-            outfile.write(' extracellularProperties=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.extracellularProperties), input_name='extracellularProperties')), ))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type), input_name='type')), ))
+        if self.extracellular_properties is not None and 'extracellular_properties' not in already_processed:
+            already_processed.add('extracellular_properties')
+            outfile.write(' extracellularProperties=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.extracellular_properties), input_name='extracellularProperties')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='Population', fromsubclass_=False, pretty_print=True):
         super(Population, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -8694,8 +8693,8 @@ class Population(Standalone):
         if self.layout is not None:
             namespaceprefix_ = self.layout_nsprefix_ + ':' if (UseCapturedNS_ and self.layout_nsprefix_) else ''
             self.layout.export(outfile, level, namespaceprefix_, namespacedef_='', name_='layout', pretty_print=pretty_print)
-        for instance_ in self.instance:
-            namespaceprefix_ = self.instance_nsprefix_ + ':' if (UseCapturedNS_ and self.instance_nsprefix_) else ''
+        for instance_ in self.instances:
+            namespaceprefix_ = self.instances_nsprefix_ + ':' if (UseCapturedNS_ and self.instances_nsprefix_) else ''
             instance_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='instance', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -8724,13 +8723,13 @@ class Population(Standalone):
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
             already_processed.add('type')
-            self.type_ = value
-            self.validate_populationTypes(self.type_)    # validate type populationTypes
+            self.type = value
+            self.validate_populationTypes(self.type)    # validate type populationTypes
         value = find_attr_value_('extracellularProperties', node)
         if value is not None and 'extracellularProperties' not in already_processed:
             already_processed.add('extracellularProperties')
-            self.extracellularProperties = value
-            self.validate_NmlId(self.extracellularProperties)    # validate type NmlId
+            self.extracellular_properties = value
+            self.validate_NmlId(self.extracellular_properties)    # validate type NmlId
         super(Population, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'layout':
@@ -8741,7 +8740,7 @@ class Population(Standalone):
         elif nodeName_ == 'instance':
             obj_ = Instance.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.instance.append(obj_)
+            self.instances.append(obj_)
             obj_.original_tagname_ = 'instance'
         super(Population, self).buildChildren(child_, node, nodeName_, True)
 
@@ -8796,20 +8795,20 @@ class Population(Standalone):
 class Region(Base):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('space', 'NmlId', 0, 1, {'use': 'optional'}),
+        MemberSpec_('spaces', 'NmlId', 0, 1, {'use': 'optional'}),
         MemberSpec_('__ANY__', '__ANY__', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'processContents': 'skip'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, space=None, anytypeobjs_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, spaces=None, anytypeobjs_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Region, self).__init__(neuroLexId, id,  **kwargs_)
-        self.space = _cast(None, space)
-        self.space_nsprefix_ = None
+        super(Region, self).__init__(neuro_lex_id, id,  **kwargs_)
+        self.spaces = _cast(None, spaces)
+        self.spaces_nsprefix_ = None
         if anytypeobjs_ is None:
             self.anytypeobjs_ = []
         else:
@@ -8869,9 +8868,9 @@ class Region(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='Region'):
         super(Region, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='Region')
-        if self.space is not None and 'space' not in already_processed:
-            already_processed.add('space')
-            outfile.write(' space=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.space), input_name='space')), ))
+        if self.spaces is not None and 'spaces' not in already_processed:
+            already_processed.add('spaces')
+            outfile.write(' space=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.spaces), input_name='space')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='Region', fromsubclass_=False, pretty_print=True):
         super(Region, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -8895,8 +8894,8 @@ class Region(Base):
         value = find_attr_value_('space', node)
         if value is not None and 'space' not in already_processed:
             already_processed.add('space')
-            self.space = value
-            self.validate_NmlId(self.space)    # validate type NmlId
+            self.spaces = value
+            self.validate_NmlId(self.spaces)    # validate type NmlId
         super(Region, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         content_ = self.gds_build_any(child_, 'Region')
@@ -8908,20 +8907,20 @@ class Region(Base):
 class Space(Base):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('basedOn', 'allowedSpaces', 0, 1, {'use': 'optional'}),
+        MemberSpec_('based_on', 'allowedSpaces', 0, 1, {'use': 'optional'}),
         MemberSpec_('structure', 'SpaceStructure', 0, 1, {'minOccurs': '0', 'name': 'structure', 'type': 'SpaceStructure'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, basedOn=None, structure=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, based_on=None, structure=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Space, self).__init__(neuroLexId, id,  **kwargs_)
-        self.basedOn = _cast(None, basedOn)
-        self.basedOn_nsprefix_ = None
+        super(Space, self).__init__(neuro_lex_id, id,  **kwargs_)
+        self.based_on = _cast(None, based_on)
+        self.based_on_nsprefix_ = None
         self.structure = structure
         self.structure_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -8981,9 +8980,9 @@ class Space(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='Space'):
         super(Space, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='Space')
-        if self.basedOn is not None and 'basedOn' not in already_processed:
-            already_processed.add('basedOn')
-            outfile.write(' basedOn=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.basedOn), input_name='basedOn')), ))
+        if self.based_on is not None and 'based_on' not in already_processed:
+            already_processed.add('based_on')
+            outfile.write(' basedOn=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.based_on), input_name='basedOn')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='Space', fromsubclass_=False, pretty_print=True):
         super(Space, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -9008,8 +9007,8 @@ class Space(Base):
         value = find_attr_value_('basedOn', node)
         if value is not None and 'basedOn' not in already_processed:
             already_processed.add('basedOn')
-            self.basedOn = value
-            self.validate_allowedSpaces(self.basedOn)    # validate type allowedSpaces
+            self.based_on = value
+            self.validate_allowedSpaces(self.based_on)    # validate type allowedSpaces
         super(Space, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'structure':
@@ -9024,88 +9023,88 @@ class Space(Base):
 class Network(Standalone):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('type_', 'networkTypes', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type', 'networkTypes', 0, 1, {'use': 'optional'}),
         MemberSpec_('temperature', 'Nml2Quantity_temperature', 0, 1, {'use': 'optional'}),
-        MemberSpec_('space', 'Space', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'space', 'type': 'Space'}, None),
-        MemberSpec_('region', 'Region', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'region', 'type': 'Region'}, None),
-        MemberSpec_('extracellularProperties', 'ExtracellularPropertiesLocal', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'extracellularProperties', 'type': 'ExtracellularPropertiesLocal'}, None),
-        MemberSpec_('population', 'Population', 1, 0, {'maxOccurs': 'unbounded', 'name': 'population', 'type': 'Population'}, None),
-        MemberSpec_('cellSet', 'CellSet', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'cellSet', 'type': 'CellSet'}, None),
-        MemberSpec_('synapticConnection', 'SynapticConnection', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'synapticConnection', 'type': 'SynapticConnection'}, None),
-        MemberSpec_('projection', 'Projection', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'projection', 'type': 'Projection'}, None),
-        MemberSpec_('electricalProjection', 'ElectricalProjection', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'electricalProjection', 'type': 'ElectricalProjection'}, None),
-        MemberSpec_('continuousProjection', 'ContinuousProjection', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'continuousProjection', 'type': 'ContinuousProjection'}, None),
-        MemberSpec_('explicitInput', 'ExplicitInput', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'explicitInput', 'type': 'ExplicitInput'}, None),
-        MemberSpec_('inputList', 'InputList', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'inputList', 'type': 'InputList'}, None),
+        MemberSpec_('spaces', 'Space', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'space', 'type': 'Space'}, None),
+        MemberSpec_('regions', 'Region', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'region', 'type': 'Region'}, None),
+        MemberSpec_('extracellular_properties', 'ExtracellularPropertiesLocal', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'extracellularProperties', 'type': 'ExtracellularPropertiesLocal'}, None),
+        MemberSpec_('populations', 'Population', 1, 0, {'maxOccurs': 'unbounded', 'name': 'population', 'type': 'Population'}, None),
+        MemberSpec_('cell_sets', 'CellSet', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'cellSet', 'type': 'CellSet'}, None),
+        MemberSpec_('synaptic_connections', 'SynapticConnection', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'synapticConnection', 'type': 'SynapticConnection'}, None),
+        MemberSpec_('projections', 'Projection', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'projection', 'type': 'Projection'}, None),
+        MemberSpec_('electrical_projections', 'ElectricalProjection', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'electricalProjection', 'type': 'ElectricalProjection'}, None),
+        MemberSpec_('continuous_projections', 'ContinuousProjection', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'continuousProjection', 'type': 'ContinuousProjection'}, None),
+        MemberSpec_('explicit_inputs', 'ExplicitInput', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'explicitInput', 'type': 'ExplicitInput'}, None),
+        MemberSpec_('input_lists', 'InputList', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'inputList', 'type': 'InputList'}, None),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, type_=None, temperature=None, space=None, region=None, extracellularProperties=None, population=None, cellSet=None, synapticConnection=None, projection=None, electricalProjection=None, continuousProjection=None, explicitInput=None, inputList=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, type=None, temperature=None, spaces=None, regions=None, extracellular_properties=None, populations=None, cell_sets=None, synaptic_connections=None, projections=None, electrical_projections=None, continuous_projections=None, explicit_inputs=None, input_lists=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Network, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
-        self.type_ = _cast(None, type_)
-        self.type__nsprefix_ = None
+        super(Network, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
         self.temperature = _cast(None, temperature)
         self.temperature_nsprefix_ = None
-        if space is None:
-            self.space = []
+        if spaces is None:
+            self.spaces = []
         else:
-            self.space = space
-        self.space_nsprefix_ = None
-        if region is None:
-            self.region = []
+            self.spaces = spaces
+        self.spaces_nsprefix_ = None
+        if regions is None:
+            self.regions = []
         else:
-            self.region = region
-        self.region_nsprefix_ = None
-        if extracellularProperties is None:
-            self.extracellularProperties = []
+            self.regions = regions
+        self.regions_nsprefix_ = None
+        if extracellular_properties is None:
+            self.extracellular_properties = []
         else:
-            self.extracellularProperties = extracellularProperties
-        self.extracellularProperties_nsprefix_ = None
-        if population is None:
-            self.population = []
+            self.extracellular_properties = extracellular_properties
+        self.extracellular_properties_nsprefix_ = None
+        if populations is None:
+            self.populations = []
         else:
-            self.population = population
-        self.population_nsprefix_ = None
-        if cellSet is None:
-            self.cellSet = []
+            self.populations = populations
+        self.populations_nsprefix_ = None
+        if cell_sets is None:
+            self.cell_sets = []
         else:
-            self.cellSet = cellSet
-        self.cellSet_nsprefix_ = None
-        if synapticConnection is None:
-            self.synapticConnection = []
+            self.cell_sets = cell_sets
+        self.cell_sets_nsprefix_ = None
+        if synaptic_connections is None:
+            self.synaptic_connections = []
         else:
-            self.synapticConnection = synapticConnection
-        self.synapticConnection_nsprefix_ = None
-        if projection is None:
-            self.projection = []
+            self.synaptic_connections = synaptic_connections
+        self.synaptic_connections_nsprefix_ = None
+        if projections is None:
+            self.projections = []
         else:
-            self.projection = projection
-        self.projection_nsprefix_ = None
-        if electricalProjection is None:
-            self.electricalProjection = []
+            self.projections = projections
+        self.projections_nsprefix_ = None
+        if electrical_projections is None:
+            self.electrical_projections = []
         else:
-            self.electricalProjection = electricalProjection
-        self.electricalProjection_nsprefix_ = None
-        if continuousProjection is None:
-            self.continuousProjection = []
+            self.electrical_projections = electrical_projections
+        self.electrical_projections_nsprefix_ = None
+        if continuous_projections is None:
+            self.continuous_projections = []
         else:
-            self.continuousProjection = continuousProjection
-        self.continuousProjection_nsprefix_ = None
-        if explicitInput is None:
-            self.explicitInput = []
+            self.continuous_projections = continuous_projections
+        self.continuous_projections_nsprefix_ = None
+        if explicit_inputs is None:
+            self.explicit_inputs = []
         else:
-            self.explicitInput = explicitInput
-        self.explicitInput_nsprefix_ = None
-        if inputList is None:
-            self.inputList = []
+            self.explicit_inputs = explicit_inputs
+        self.explicit_inputs_nsprefix_ = None
+        if input_lists is None:
+            self.input_lists = []
         else:
-            self.inputList = inputList
-        self.inputList_nsprefix_ = None
+            self.input_lists = input_lists
+        self.input_lists_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -9143,17 +9142,17 @@ class Network(Standalone):
     validate_Nml2Quantity_temperature_patterns_ = [['^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(degC))$']]
     def hasContent_(self):
         if (
-            self.space or
-            self.region or
-            self.extracellularProperties or
-            self.population or
-            self.cellSet or
-            self.synapticConnection or
-            self.projection or
-            self.electricalProjection or
-            self.continuousProjection or
-            self.explicitInput or
-            self.inputList or
+            self.spaces or
+            self.regions or
+            self.extracellular_properties or
+            self.populations or
+            self.cell_sets or
+            self.synaptic_connections or
+            self.projections or
+            self.electrical_projections or
+            self.continuous_projections or
+            self.explicit_inputs or
+            self.input_lists or
             super(Network, self).hasContent_()
         ):
             return True
@@ -9184,9 +9183,9 @@ class Network(Standalone):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='Network'):
         super(Network, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='Network')
-        if self.type_ is not None and 'type_' not in already_processed:
-            already_processed.add('type_')
-            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type_), input_name='type')), ))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type), input_name='type')), ))
         if self.temperature is not None and 'temperature' not in already_processed:
             already_processed.add('temperature')
             outfile.write(' temperature=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.temperature), input_name='temperature')), ))
@@ -9196,38 +9195,38 @@ class Network(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        for space_ in self.space:
-            namespaceprefix_ = self.space_nsprefix_ + ':' if (UseCapturedNS_ and self.space_nsprefix_) else ''
+        for space_ in self.spaces:
+            namespaceprefix_ = self.spaces_nsprefix_ + ':' if (UseCapturedNS_ and self.spaces_nsprefix_) else ''
             space_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='space', pretty_print=pretty_print)
-        for region_ in self.region:
-            namespaceprefix_ = self.region_nsprefix_ + ':' if (UseCapturedNS_ and self.region_nsprefix_) else ''
+        for region_ in self.regions:
+            namespaceprefix_ = self.regions_nsprefix_ + ':' if (UseCapturedNS_ and self.regions_nsprefix_) else ''
             region_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='region', pretty_print=pretty_print)
-        for extracellularProperties_ in self.extracellularProperties:
-            namespaceprefix_ = self.extracellularProperties_nsprefix_ + ':' if (UseCapturedNS_ and self.extracellularProperties_nsprefix_) else ''
+        for extracellularProperties_ in self.extracellular_properties:
+            namespaceprefix_ = self.extracellular_properties_nsprefix_ + ':' if (UseCapturedNS_ and self.extracellular_properties_nsprefix_) else ''
             extracellularProperties_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='extracellularProperties', pretty_print=pretty_print)
-        for population_ in self.population:
-            namespaceprefix_ = self.population_nsprefix_ + ':' if (UseCapturedNS_ and self.population_nsprefix_) else ''
+        for population_ in self.populations:
+            namespaceprefix_ = self.populations_nsprefix_ + ':' if (UseCapturedNS_ and self.populations_nsprefix_) else ''
             population_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='population', pretty_print=pretty_print)
-        for cellSet_ in self.cellSet:
-            namespaceprefix_ = self.cellSet_nsprefix_ + ':' if (UseCapturedNS_ and self.cellSet_nsprefix_) else ''
+        for cellSet_ in self.cell_sets:
+            namespaceprefix_ = self.cell_sets_nsprefix_ + ':' if (UseCapturedNS_ and self.cell_sets_nsprefix_) else ''
             cellSet_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='cellSet', pretty_print=pretty_print)
-        for synapticConnection_ in self.synapticConnection:
-            namespaceprefix_ = self.synapticConnection_nsprefix_ + ':' if (UseCapturedNS_ and self.synapticConnection_nsprefix_) else ''
+        for synapticConnection_ in self.synaptic_connections:
+            namespaceprefix_ = self.synaptic_connections_nsprefix_ + ':' if (UseCapturedNS_ and self.synaptic_connections_nsprefix_) else ''
             synapticConnection_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='synapticConnection', pretty_print=pretty_print)
-        for projection_ in self.projection:
-            namespaceprefix_ = self.projection_nsprefix_ + ':' if (UseCapturedNS_ and self.projection_nsprefix_) else ''
+        for projection_ in self.projections:
+            namespaceprefix_ = self.projections_nsprefix_ + ':' if (UseCapturedNS_ and self.projections_nsprefix_) else ''
             projection_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='projection', pretty_print=pretty_print)
-        for electricalProjection_ in self.electricalProjection:
-            namespaceprefix_ = self.electricalProjection_nsprefix_ + ':' if (UseCapturedNS_ and self.electricalProjection_nsprefix_) else ''
+        for electricalProjection_ in self.electrical_projections:
+            namespaceprefix_ = self.electrical_projections_nsprefix_ + ':' if (UseCapturedNS_ and self.electrical_projections_nsprefix_) else ''
             electricalProjection_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='electricalProjection', pretty_print=pretty_print)
-        for continuousProjection_ in self.continuousProjection:
-            namespaceprefix_ = self.continuousProjection_nsprefix_ + ':' if (UseCapturedNS_ and self.continuousProjection_nsprefix_) else ''
+        for continuousProjection_ in self.continuous_projections:
+            namespaceprefix_ = self.continuous_projections_nsprefix_ + ':' if (UseCapturedNS_ and self.continuous_projections_nsprefix_) else ''
             continuousProjection_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='continuousProjection', pretty_print=pretty_print)
-        for explicitInput_ in self.explicitInput:
-            namespaceprefix_ = self.explicitInput_nsprefix_ + ':' if (UseCapturedNS_ and self.explicitInput_nsprefix_) else ''
+        for explicitInput_ in self.explicit_inputs:
+            namespaceprefix_ = self.explicit_inputs_nsprefix_ + ':' if (UseCapturedNS_ and self.explicit_inputs_nsprefix_) else ''
             explicitInput_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='explicitInput', pretty_print=pretty_print)
-        for inputList_ in self.inputList:
-            namespaceprefix_ = self.inputList_nsprefix_ + ':' if (UseCapturedNS_ and self.inputList_nsprefix_) else ''
+        for inputList_ in self.input_lists:
+            namespaceprefix_ = self.input_lists_nsprefix_ + ':' if (UseCapturedNS_ and self.input_lists_nsprefix_) else ''
             inputList_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='inputList', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -9244,8 +9243,8 @@ class Network(Standalone):
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
             already_processed.add('type')
-            self.type_ = value
-            self.validate_networkTypes(self.type_)    # validate type networkTypes
+            self.type = value
+            self.validate_networkTypes(self.type)    # validate type networkTypes
         value = find_attr_value_('temperature', node)
         if value is not None and 'temperature' not in already_processed:
             already_processed.add('temperature')
@@ -9256,57 +9255,57 @@ class Network(Standalone):
         if nodeName_ == 'space':
             obj_ = Space.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.space.append(obj_)
+            self.spaces.append(obj_)
             obj_.original_tagname_ = 'space'
         elif nodeName_ == 'region':
             obj_ = Region.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.region.append(obj_)
+            self.regions.append(obj_)
             obj_.original_tagname_ = 'region'
         elif nodeName_ == 'extracellularProperties':
             obj_ = ExtracellularPropertiesLocal.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.extracellularProperties.append(obj_)
+            self.extracellular_properties.append(obj_)
             obj_.original_tagname_ = 'extracellularProperties'
         elif nodeName_ == 'population':
             obj_ = Population.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.population.append(obj_)
+            self.populations.append(obj_)
             obj_.original_tagname_ = 'population'
         elif nodeName_ == 'cellSet':
             obj_ = CellSet.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.cellSet.append(obj_)
+            self.cell_sets.append(obj_)
             obj_.original_tagname_ = 'cellSet'
         elif nodeName_ == 'synapticConnection':
             obj_ = SynapticConnection.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.synapticConnection.append(obj_)
+            self.synaptic_connections.append(obj_)
             obj_.original_tagname_ = 'synapticConnection'
         elif nodeName_ == 'projection':
             obj_ = Projection.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.projection.append(obj_)
+            self.projections.append(obj_)
             obj_.original_tagname_ = 'projection'
         elif nodeName_ == 'electricalProjection':
             obj_ = ElectricalProjection.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.electricalProjection.append(obj_)
+            self.electrical_projections.append(obj_)
             obj_.original_tagname_ = 'electricalProjection'
         elif nodeName_ == 'continuousProjection':
             obj_ = ContinuousProjection.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.continuousProjection.append(obj_)
+            self.continuous_projections.append(obj_)
             obj_.original_tagname_ = 'continuousProjection'
         elif nodeName_ == 'explicitInput':
             obj_ = ExplicitInput.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.explicitInput.append(obj_)
+            self.explicit_inputs.append(obj_)
             obj_.original_tagname_ = 'explicitInput'
         elif nodeName_ == 'inputList':
             obj_ = InputList.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.inputList.append(obj_)
+            self.input_lists.append(obj_)
             obj_.original_tagname_ = 'inputList'
         super(Network, self).buildChildren(child_, node, nodeName_, True)
 
@@ -9375,31 +9374,31 @@ class Network(Standalone):
 class TransientPoissonFiringSynapse(Standalone):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('averageRate', 'Nml2Quantity_pertime', 0, 0, {'use': 'required'}),
+        MemberSpec_('average_rate', 'Nml2Quantity_pertime', 0, 0, {'use': 'required'}),
         MemberSpec_('delay', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
         MemberSpec_('duration', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
         MemberSpec_('synapse', 'xs:string', 0, 0, {'use': 'required'}),
-        MemberSpec_('spikeTarget', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('spike_target', 'xs:string', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, averageRate=None, delay=None, duration=None, synapse=None, spikeTarget=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, average_rate=None, delay=None, duration=None, synapse=None, spike_target=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(TransientPoissonFiringSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
-        self.averageRate = _cast(None, averageRate)
-        self.averageRate_nsprefix_ = None
+        super(TransientPoissonFiringSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        self.average_rate = _cast(None, average_rate)
+        self.average_rate_nsprefix_ = None
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
         self.duration = _cast(None, duration)
         self.duration_nsprefix_ = None
         self.synapse = _cast(None, synapse)
         self.synapse_nsprefix_ = None
-        self.spikeTarget = _cast(None, spikeTarget)
-        self.spikeTarget_nsprefix_ = None
+        self.spike_target = _cast(None, spike_target)
+        self.spike_target_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -9465,9 +9464,9 @@ class TransientPoissonFiringSynapse(Standalone):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='TransientPoissonFiringSynapse'):
         super(TransientPoissonFiringSynapse, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='TransientPoissonFiringSynapse')
-        if self.averageRate is not None and 'averageRate' not in already_processed:
-            already_processed.add('averageRate')
-            outfile.write(' averageRate=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.averageRate), input_name='averageRate')), ))
+        if self.average_rate is not None and 'average_rate' not in already_processed:
+            already_processed.add('average_rate')
+            outfile.write(' averageRate=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.average_rate), input_name='averageRate')), ))
         if self.delay is not None and 'delay' not in already_processed:
             already_processed.add('delay')
             outfile.write(' delay=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.delay), input_name='delay')), ))
@@ -9477,9 +9476,9 @@ class TransientPoissonFiringSynapse(Standalone):
         if self.synapse is not None and 'synapse' not in already_processed:
             already_processed.add('synapse')
             outfile.write(' synapse=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.synapse), input_name='synapse')), ))
-        if self.spikeTarget is not None and 'spikeTarget' not in already_processed:
-            already_processed.add('spikeTarget')
-            outfile.write(' spikeTarget=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.spikeTarget), input_name='spikeTarget')), ))
+        if self.spike_target is not None and 'spike_target' not in already_processed:
+            already_processed.add('spike_target')
+            outfile.write(' spikeTarget=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.spike_target), input_name='spikeTarget')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='TransientPoissonFiringSynapse', fromsubclass_=False, pretty_print=True):
         super(TransientPoissonFiringSynapse, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
@@ -9497,8 +9496,8 @@ class TransientPoissonFiringSynapse(Standalone):
         value = find_attr_value_('averageRate', node)
         if value is not None and 'averageRate' not in already_processed:
             already_processed.add('averageRate')
-            self.averageRate = value
-            self.validate_Nml2Quantity_pertime(self.averageRate)    # validate type Nml2Quantity_pertime
+            self.average_rate = value
+            self.validate_Nml2Quantity_pertime(self.average_rate)    # validate type Nml2Quantity_pertime
         value = find_attr_value_('delay', node)
         if value is not None and 'delay' not in already_processed:
             already_processed.add('delay')
@@ -9516,7 +9515,7 @@ class TransientPoissonFiringSynapse(Standalone):
         value = find_attr_value_('spikeTarget', node)
         if value is not None and 'spikeTarget' not in already_processed:
             already_processed.add('spikeTarget')
-            self.spikeTarget = value
+            self.spike_target = value
         super(TransientPoissonFiringSynapse, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(TransientPoissonFiringSynapse, self).buildChildren(child_, node, nodeName_, True)
@@ -9527,25 +9526,25 @@ class TransientPoissonFiringSynapse(Standalone):
 class PoissonFiringSynapse(Standalone):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('averageRate', 'Nml2Quantity_pertime', 0, 0, {'use': 'required'}),
+        MemberSpec_('average_rate', 'Nml2Quantity_pertime', 0, 0, {'use': 'required'}),
         MemberSpec_('synapse', 'xs:string', 0, 0, {'use': 'required'}),
-        MemberSpec_('spikeTarget', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('spike_target', 'xs:string', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, averageRate=None, synapse=None, spikeTarget=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, average_rate=None, synapse=None, spike_target=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(PoissonFiringSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
-        self.averageRate = _cast(None, averageRate)
-        self.averageRate_nsprefix_ = None
+        super(PoissonFiringSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        self.average_rate = _cast(None, average_rate)
+        self.average_rate_nsprefix_ = None
         self.synapse = _cast(None, synapse)
         self.synapse_nsprefix_ = None
-        self.spikeTarget = _cast(None, spikeTarget)
-        self.spikeTarget_nsprefix_ = None
+        self.spike_target = _cast(None, spike_target)
+        self.spike_target_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -9600,15 +9599,15 @@ class PoissonFiringSynapse(Standalone):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='PoissonFiringSynapse'):
         super(PoissonFiringSynapse, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='PoissonFiringSynapse')
-        if self.averageRate is not None and 'averageRate' not in already_processed:
-            already_processed.add('averageRate')
-            outfile.write(' averageRate=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.averageRate), input_name='averageRate')), ))
+        if self.average_rate is not None and 'average_rate' not in already_processed:
+            already_processed.add('average_rate')
+            outfile.write(' averageRate=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.average_rate), input_name='averageRate')), ))
         if self.synapse is not None and 'synapse' not in already_processed:
             already_processed.add('synapse')
             outfile.write(' synapse=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.synapse), input_name='synapse')), ))
-        if self.spikeTarget is not None and 'spikeTarget' not in already_processed:
-            already_processed.add('spikeTarget')
-            outfile.write(' spikeTarget=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.spikeTarget), input_name='spikeTarget')), ))
+        if self.spike_target is not None and 'spike_target' not in already_processed:
+            already_processed.add('spike_target')
+            outfile.write(' spikeTarget=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.spike_target), input_name='spikeTarget')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='PoissonFiringSynapse', fromsubclass_=False, pretty_print=True):
         super(PoissonFiringSynapse, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
@@ -9626,8 +9625,8 @@ class PoissonFiringSynapse(Standalone):
         value = find_attr_value_('averageRate', node)
         if value is not None and 'averageRate' not in already_processed:
             already_processed.add('averageRate')
-            self.averageRate = value
-            self.validate_Nml2Quantity_pertime(self.averageRate)    # validate type Nml2Quantity_pertime
+            self.average_rate = value
+            self.validate_Nml2Quantity_pertime(self.average_rate)    # validate type Nml2Quantity_pertime
         value = find_attr_value_('synapse', node)
         if value is not None and 'synapse' not in already_processed:
             already_processed.add('synapse')
@@ -9635,7 +9634,7 @@ class PoissonFiringSynapse(Standalone):
         value = find_attr_value_('spikeTarget', node)
         if value is not None and 'spikeTarget' not in already_processed:
             already_processed.add('spikeTarget')
-            self.spikeTarget = value
+            self.spike_target = value
         super(PoissonFiringSynapse, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(PoissonFiringSynapse, self).buildChildren(child_, node, nodeName_, True)
@@ -9646,19 +9645,19 @@ class PoissonFiringSynapse(Standalone):
 class SpikeGeneratorPoisson(Standalone):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('averageRate', 'Nml2Quantity_pertime', 0, 0, {'use': 'required'}),
+        MemberSpec_('average_rate', 'Nml2Quantity_pertime', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, averageRate=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, average_rate=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SpikeGeneratorPoisson, self).__init__(neuroLexId, id, metaid, notes, property, annotation, extensiontype_,  **kwargs_)
-        self.averageRate = _cast(None, averageRate)
-        self.averageRate_nsprefix_ = None
+        super(SpikeGeneratorPoisson, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        self.average_rate = _cast(None, average_rate)
+        self.average_rate_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -9714,9 +9713,9 @@ class SpikeGeneratorPoisson(Standalone):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='SpikeGeneratorPoisson'):
         super(SpikeGeneratorPoisson, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='SpikeGeneratorPoisson')
-        if self.averageRate is not None and 'averageRate' not in already_processed:
-            already_processed.add('averageRate')
-            outfile.write(' averageRate=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.averageRate), input_name='averageRate')), ))
+        if self.average_rate is not None and 'average_rate' not in already_processed:
+            already_processed.add('average_rate')
+            outfile.write(' averageRate=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.average_rate), input_name='averageRate')), ))
         if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -9742,8 +9741,8 @@ class SpikeGeneratorPoisson(Standalone):
         value = find_attr_value_('averageRate', node)
         if value is not None and 'averageRate' not in already_processed:
             already_processed.add('averageRate')
-            self.averageRate = value
-            self.validate_Nml2Quantity_pertime(self.averageRate)    # validate type Nml2Quantity_pertime
+            self.average_rate = value
+            self.validate_Nml2Quantity_pertime(self.average_rate)    # validate type Nml2Quantity_pertime
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
@@ -9758,22 +9757,22 @@ class SpikeGeneratorPoisson(Standalone):
 class SpikeGeneratorRandom(Standalone):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('maxISI', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
-        MemberSpec_('minISI', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
+        MemberSpec_('max_isi', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
+        MemberSpec_('min_isi', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, maxISI=None, minISI=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, max_isi=None, min_isi=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SpikeGeneratorRandom, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
-        self.maxISI = _cast(None, maxISI)
-        self.maxISI_nsprefix_ = None
-        self.minISI = _cast(None, minISI)
-        self.minISI_nsprefix_ = None
+        super(SpikeGeneratorRandom, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        self.max_isi = _cast(None, max_isi)
+        self.max_isi_nsprefix_ = None
+        self.min_isi = _cast(None, min_isi)
+        self.min_isi_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -9828,12 +9827,12 @@ class SpikeGeneratorRandom(Standalone):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='SpikeGeneratorRandom'):
         super(SpikeGeneratorRandom, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='SpikeGeneratorRandom')
-        if self.maxISI is not None and 'maxISI' not in already_processed:
-            already_processed.add('maxISI')
-            outfile.write(' maxISI=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.maxISI), input_name='maxISI')), ))
-        if self.minISI is not None and 'minISI' not in already_processed:
-            already_processed.add('minISI')
-            outfile.write(' minISI=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.minISI), input_name='minISI')), ))
+        if self.max_isi is not None and 'max_isi' not in already_processed:
+            already_processed.add('max_isi')
+            outfile.write(' maxISI=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.max_isi), input_name='maxISI')), ))
+        if self.min_isi is not None and 'min_isi' not in already_processed:
+            already_processed.add('min_isi')
+            outfile.write(' minISI=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.min_isi), input_name='minISI')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='SpikeGeneratorRandom', fromsubclass_=False, pretty_print=True):
         super(SpikeGeneratorRandom, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
@@ -9851,13 +9850,13 @@ class SpikeGeneratorRandom(Standalone):
         value = find_attr_value_('maxISI', node)
         if value is not None and 'maxISI' not in already_processed:
             already_processed.add('maxISI')
-            self.maxISI = value
-            self.validate_Nml2Quantity_time(self.maxISI)    # validate type Nml2Quantity_time
+            self.max_isi = value
+            self.validate_Nml2Quantity_time(self.max_isi)    # validate type Nml2Quantity_time
         value = find_attr_value_('minISI', node)
         if value is not None and 'minISI' not in already_processed:
             already_processed.add('minISI')
-            self.minISI = value
-            self.validate_Nml2Quantity_time(self.minISI)    # validate type Nml2Quantity_time
+            self.min_isi = value
+            self.validate_Nml2Quantity_time(self.min_isi)    # validate type Nml2Quantity_time
         super(SpikeGeneratorRandom, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(SpikeGeneratorRandom, self).buildChildren(child_, node, nodeName_, True)
@@ -9872,13 +9871,13 @@ class SpikeGenerator(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, period=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, period=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SpikeGenerator, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(SpikeGenerator, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.period = _cast(None, period)
         self.period_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -9968,27 +9967,27 @@ class TimedSynapticInput(Standalone):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('synapse', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('spikeTarget', 'xs:string', 0, 0, {'use': 'required'}),
-        MemberSpec_('spike', 'Spike', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'spike', 'type': 'Spike'}, None),
+        MemberSpec_('spike_target', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('spikes', 'Spike', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'spike', 'type': 'Spike'}, None),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, synapse=None, spikeTarget=None, spike=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, synapse=None, spike_target=None, spikes=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(TimedSynapticInput, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(TimedSynapticInput, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.synapse = _cast(None, synapse)
         self.synapse_nsprefix_ = None
-        self.spikeTarget = _cast(None, spikeTarget)
-        self.spikeTarget_nsprefix_ = None
-        if spike is None:
-            self.spike = []
+        self.spike_target = _cast(None, spike_target)
+        self.spike_target_nsprefix_ = None
+        if spikes is None:
+            self.spikes = []
         else:
-            self.spike = spike
-        self.spike_nsprefix_ = None
+            self.spikes = spikes
+        self.spikes_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -10013,7 +10012,7 @@ class TimedSynapticInput(Standalone):
     validate_NmlId_patterns_ = [['^([a-zA-Z_][a-zA-Z0-9_]*)$']]
     def hasContent_(self):
         if (
-            self.spike or
+            self.spikes or
             super(TimedSynapticInput, self).hasContent_()
         ):
             return True
@@ -10047,17 +10046,17 @@ class TimedSynapticInput(Standalone):
         if self.synapse is not None and 'synapse' not in already_processed:
             already_processed.add('synapse')
             outfile.write(' synapse=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.synapse), input_name='synapse')), ))
-        if self.spikeTarget is not None and 'spikeTarget' not in already_processed:
-            already_processed.add('spikeTarget')
-            outfile.write(' spikeTarget=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.spikeTarget), input_name='spikeTarget')), ))
+        if self.spike_target is not None and 'spike_target' not in already_processed:
+            already_processed.add('spike_target')
+            outfile.write(' spikeTarget=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.spike_target), input_name='spikeTarget')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='TimedSynapticInput', fromsubclass_=False, pretty_print=True):
         super(TimedSynapticInput, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
         if pretty_print:
             eol_ = '\n'
         else:
             eol_ = ''
-        for spike_ in self.spike:
-            namespaceprefix_ = self.spike_nsprefix_ + ':' if (UseCapturedNS_ and self.spike_nsprefix_) else ''
+        for spike_ in self.spikes:
+            namespaceprefix_ = self.spikes_nsprefix_ + ':' if (UseCapturedNS_ and self.spikes_nsprefix_) else ''
             spike_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='spike', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -10079,13 +10078,13 @@ class TimedSynapticInput(Standalone):
         value = find_attr_value_('spikeTarget', node)
         if value is not None and 'spikeTarget' not in already_processed:
             already_processed.add('spikeTarget')
-            self.spikeTarget = value
+            self.spike_target = value
         super(TimedSynapticInput, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'spike':
             obj_ = Spike.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.spike.append(obj_)
+            self.spikes.append(obj_)
             obj_.original_tagname_ = 'spike'
         super(TimedSynapticInput, self).buildChildren(child_, node, nodeName_, True)
 # end class TimedSynapticInput
@@ -10094,22 +10093,22 @@ class TimedSynapticInput(Standalone):
 class SpikeArray(Standalone):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('spike', 'Spike', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'spike', 'type': 'Spike'}, None),
+        MemberSpec_('spikes', 'Spike', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'spike', 'type': 'Spike'}, None),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, spike=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, spikes=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SpikeArray, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
-        if spike is None:
-            self.spike = []
+        super(SpikeArray, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        if spikes is None:
+            self.spikes = []
         else:
-            self.spike = spike
-        self.spike_nsprefix_ = None
+            self.spikes = spikes
+        self.spikes_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -10123,7 +10122,7 @@ class SpikeArray(Standalone):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.spike or
+            self.spikes or
             super(SpikeArray, self).hasContent_()
         ):
             return True
@@ -10160,8 +10159,8 @@ class SpikeArray(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        for spike_ in self.spike:
-            namespaceprefix_ = self.spike_nsprefix_ + ':' if (UseCapturedNS_ and self.spike_nsprefix_) else ''
+        for spike_ in self.spikes:
+            namespaceprefix_ = self.spikes_nsprefix_ + ':' if (UseCapturedNS_ and self.spikes_nsprefix_) else ''
             spike_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='spike', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -10180,7 +10179,7 @@ class SpikeArray(Standalone):
         if nodeName_ == 'spike':
             obj_ = Spike.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.spike.append(obj_)
+            self.spikes.append(obj_)
             obj_.original_tagname_ = 'spike'
         super(SpikeArray, self).buildChildren(child_, node, nodeName_, True)
 # end class SpikeArray
@@ -10193,13 +10192,13 @@ class Spike(BaseNonNegativeIntegerId):
     ]
     subclass = None
     superclass = BaseNonNegativeIntegerId
-    def __init__(self, neuroLexId=None, id=None, time=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, time=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Spike, self).__init__(neuroLexId, id,  **kwargs_)
+        super(Spike, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.time = _cast(None, time)
         self.time_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -10291,34 +10290,34 @@ class VoltageClampTriple(Standalone):
         MemberSpec_('active', 'ZeroOrOne', 0, 0, {'use': 'required'}),
         MemberSpec_('delay', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
         MemberSpec_('duration', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
-        MemberSpec_('conditioningVoltage', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
-        MemberSpec_('testingVoltage', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
-        MemberSpec_('returnVoltage', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
-        MemberSpec_('simpleSeriesResistance', 'Nml2Quantity_resistance', 0, 0, {'use': 'required'}),
+        MemberSpec_('conditioning_voltage', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
+        MemberSpec_('testing_voltage', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
+        MemberSpec_('return_voltage', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
+        MemberSpec_('simple_series_resistance', 'Nml2Quantity_resistance', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, active=None, delay=None, duration=None, conditioningVoltage=None, testingVoltage=None, returnVoltage=None, simpleSeriesResistance=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, active=None, delay=None, duration=None, conditioning_voltage=None, testing_voltage=None, return_voltage=None, simple_series_resistance=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(VoltageClampTriple, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(VoltageClampTriple, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.active = _cast(float, active)
         self.active_nsprefix_ = None
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
         self.duration = _cast(None, duration)
         self.duration_nsprefix_ = None
-        self.conditioningVoltage = _cast(None, conditioningVoltage)
-        self.conditioningVoltage_nsprefix_ = None
-        self.testingVoltage = _cast(None, testingVoltage)
-        self.testingVoltage_nsprefix_ = None
-        self.returnVoltage = _cast(None, returnVoltage)
-        self.returnVoltage_nsprefix_ = None
-        self.simpleSeriesResistance = _cast(None, simpleSeriesResistance)
-        self.simpleSeriesResistance_nsprefix_ = None
+        self.conditioning_voltage = _cast(None, conditioning_voltage)
+        self.conditioning_voltage_nsprefix_ = None
+        self.testing_voltage = _cast(None, testing_voltage)
+        self.testing_voltage_nsprefix_ = None
+        self.return_voltage = _cast(None, return_voltage)
+        self.return_voltage_nsprefix_ = None
+        self.simple_series_resistance = _cast(None, simple_series_resistance)
+        self.simple_series_resistance_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -10417,18 +10416,18 @@ class VoltageClampTriple(Standalone):
         if self.duration is not None and 'duration' not in already_processed:
             already_processed.add('duration')
             outfile.write(' duration=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.duration), input_name='duration')), ))
-        if self.conditioningVoltage is not None and 'conditioningVoltage' not in already_processed:
-            already_processed.add('conditioningVoltage')
-            outfile.write(' conditioningVoltage=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.conditioningVoltage), input_name='conditioningVoltage')), ))
-        if self.testingVoltage is not None and 'testingVoltage' not in already_processed:
-            already_processed.add('testingVoltage')
-            outfile.write(' testingVoltage=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.testingVoltage), input_name='testingVoltage')), ))
-        if self.returnVoltage is not None and 'returnVoltage' not in already_processed:
-            already_processed.add('returnVoltage')
-            outfile.write(' returnVoltage=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.returnVoltage), input_name='returnVoltage')), ))
-        if self.simpleSeriesResistance is not None and 'simpleSeriesResistance' not in already_processed:
-            already_processed.add('simpleSeriesResistance')
-            outfile.write(' simpleSeriesResistance=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.simpleSeriesResistance), input_name='simpleSeriesResistance')), ))
+        if self.conditioning_voltage is not None and 'conditioning_voltage' not in already_processed:
+            already_processed.add('conditioning_voltage')
+            outfile.write(' conditioningVoltage=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.conditioning_voltage), input_name='conditioningVoltage')), ))
+        if self.testing_voltage is not None and 'testing_voltage' not in already_processed:
+            already_processed.add('testing_voltage')
+            outfile.write(' testingVoltage=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.testing_voltage), input_name='testingVoltage')), ))
+        if self.return_voltage is not None and 'return_voltage' not in already_processed:
+            already_processed.add('return_voltage')
+            outfile.write(' returnVoltage=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.return_voltage), input_name='returnVoltage')), ))
+        if self.simple_series_resistance is not None and 'simple_series_resistance' not in already_processed:
+            already_processed.add('simple_series_resistance')
+            outfile.write(' simpleSeriesResistance=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.simple_series_resistance), input_name='simpleSeriesResistance')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='VoltageClampTriple', fromsubclass_=False, pretty_print=True):
         super(VoltageClampTriple, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
@@ -10462,23 +10461,23 @@ class VoltageClampTriple(Standalone):
         value = find_attr_value_('conditioningVoltage', node)
         if value is not None and 'conditioningVoltage' not in already_processed:
             already_processed.add('conditioningVoltage')
-            self.conditioningVoltage = value
-            self.validate_Nml2Quantity_voltage(self.conditioningVoltage)    # validate type Nml2Quantity_voltage
+            self.conditioning_voltage = value
+            self.validate_Nml2Quantity_voltage(self.conditioning_voltage)    # validate type Nml2Quantity_voltage
         value = find_attr_value_('testingVoltage', node)
         if value is not None and 'testingVoltage' not in already_processed:
             already_processed.add('testingVoltage')
-            self.testingVoltage = value
-            self.validate_Nml2Quantity_voltage(self.testingVoltage)    # validate type Nml2Quantity_voltage
+            self.testing_voltage = value
+            self.validate_Nml2Quantity_voltage(self.testing_voltage)    # validate type Nml2Quantity_voltage
         value = find_attr_value_('returnVoltage', node)
         if value is not None and 'returnVoltage' not in already_processed:
             already_processed.add('returnVoltage')
-            self.returnVoltage = value
-            self.validate_Nml2Quantity_voltage(self.returnVoltage)    # validate type Nml2Quantity_voltage
+            self.return_voltage = value
+            self.validate_Nml2Quantity_voltage(self.return_voltage)    # validate type Nml2Quantity_voltage
         value = find_attr_value_('simpleSeriesResistance', node)
         if value is not None and 'simpleSeriesResistance' not in already_processed:
             already_processed.add('simpleSeriesResistance')
-            self.simpleSeriesResistance = value
-            self.validate_Nml2Quantity_resistance(self.simpleSeriesResistance)    # validate type Nml2Quantity_resistance
+            self.simple_series_resistance = value
+            self.validate_Nml2Quantity_resistance(self.simple_series_resistance)    # validate type Nml2Quantity_resistance
         super(VoltageClampTriple, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(VoltageClampTriple, self).buildChildren(child_, node, nodeName_, True)
@@ -10491,26 +10490,26 @@ class VoltageClamp(Standalone):
     member_data_items_ = [
         MemberSpec_('delay', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
         MemberSpec_('duration', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
-        MemberSpec_('targetVoltage', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
-        MemberSpec_('simpleSeriesResistance', 'Nml2Quantity_resistance', 0, 0, {'use': 'required'}),
+        MemberSpec_('target_voltage', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
+        MemberSpec_('simple_series_resistance', 'Nml2Quantity_resistance', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, delay=None, duration=None, targetVoltage=None, simpleSeriesResistance=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, delay=None, duration=None, target_voltage=None, simple_series_resistance=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(VoltageClamp, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(VoltageClamp, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
         self.duration = _cast(None, duration)
         self.duration_nsprefix_ = None
-        self.targetVoltage = _cast(None, targetVoltage)
-        self.targetVoltage_nsprefix_ = None
-        self.simpleSeriesResistance = _cast(None, simpleSeriesResistance)
-        self.simpleSeriesResistance_nsprefix_ = None
+        self.target_voltage = _cast(None, target_voltage)
+        self.target_voltage_nsprefix_ = None
+        self.simple_series_resistance = _cast(None, simple_series_resistance)
+        self.simple_series_resistance_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -10593,12 +10592,12 @@ class VoltageClamp(Standalone):
         if self.duration is not None and 'duration' not in already_processed:
             already_processed.add('duration')
             outfile.write(' duration=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.duration), input_name='duration')), ))
-        if self.targetVoltage is not None and 'targetVoltage' not in already_processed:
-            already_processed.add('targetVoltage')
-            outfile.write(' targetVoltage=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.targetVoltage), input_name='targetVoltage')), ))
-        if self.simpleSeriesResistance is not None and 'simpleSeriesResistance' not in already_processed:
-            already_processed.add('simpleSeriesResistance')
-            outfile.write(' simpleSeriesResistance=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.simpleSeriesResistance), input_name='simpleSeriesResistance')), ))
+        if self.target_voltage is not None and 'target_voltage' not in already_processed:
+            already_processed.add('target_voltage')
+            outfile.write(' targetVoltage=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.target_voltage), input_name='targetVoltage')), ))
+        if self.simple_series_resistance is not None and 'simple_series_resistance' not in already_processed:
+            already_processed.add('simple_series_resistance')
+            outfile.write(' simpleSeriesResistance=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.simple_series_resistance), input_name='simpleSeriesResistance')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='VoltageClamp', fromsubclass_=False, pretty_print=True):
         super(VoltageClamp, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
@@ -10626,13 +10625,13 @@ class VoltageClamp(Standalone):
         value = find_attr_value_('targetVoltage', node)
         if value is not None and 'targetVoltage' not in already_processed:
             already_processed.add('targetVoltage')
-            self.targetVoltage = value
-            self.validate_Nml2Quantity_voltage(self.targetVoltage)    # validate type Nml2Quantity_voltage
+            self.target_voltage = value
+            self.validate_Nml2Quantity_voltage(self.target_voltage)    # validate type Nml2Quantity_voltage
         value = find_attr_value_('simpleSeriesResistance', node)
         if value is not None and 'simpleSeriesResistance' not in already_processed:
             already_processed.add('simpleSeriesResistance')
-            self.simpleSeriesResistance = value
-            self.validate_Nml2Quantity_resistance(self.simpleSeriesResistance)    # validate type Nml2Quantity_resistance
+            self.simple_series_resistance = value
+            self.validate_Nml2Quantity_resistance(self.simple_series_resistance)    # validate type Nml2Quantity_resistance
         super(VoltageClamp, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(VoltageClamp, self).buildChildren(child_, node, nodeName_, True)
@@ -10643,34 +10642,34 @@ class VoltageClamp(Standalone):
 class CompoundInputDL(Standalone):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('pulseGeneratorDL', 'PulseGeneratorDL', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'pulseGeneratorDL', 'type': 'PulseGeneratorDL'}, None),
-        MemberSpec_('sineGeneratorDL', 'SineGeneratorDL', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'sineGeneratorDL', 'type': 'SineGeneratorDL'}, None),
-        MemberSpec_('rampGeneratorDL', 'RampGeneratorDL', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'rampGeneratorDL', 'type': 'RampGeneratorDL'}, None),
+        MemberSpec_('pulse_generator_dls', 'PulseGeneratorDL', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'pulseGeneratorDL', 'type': 'PulseGeneratorDL'}, None),
+        MemberSpec_('sine_generator_dls', 'SineGeneratorDL', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'sineGeneratorDL', 'type': 'SineGeneratorDL'}, None),
+        MemberSpec_('ramp_generator_dls', 'RampGeneratorDL', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'rampGeneratorDL', 'type': 'RampGeneratorDL'}, None),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, pulseGeneratorDL=None, sineGeneratorDL=None, rampGeneratorDL=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, pulse_generator_dls=None, sine_generator_dls=None, ramp_generator_dls=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(CompoundInputDL, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
-        if pulseGeneratorDL is None:
-            self.pulseGeneratorDL = []
+        super(CompoundInputDL, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        if pulse_generator_dls is None:
+            self.pulse_generator_dls = []
         else:
-            self.pulseGeneratorDL = pulseGeneratorDL
-        self.pulseGeneratorDL_nsprefix_ = None
-        if sineGeneratorDL is None:
-            self.sineGeneratorDL = []
+            self.pulse_generator_dls = pulse_generator_dls
+        self.pulse_generator_dls_nsprefix_ = None
+        if sine_generator_dls is None:
+            self.sine_generator_dls = []
         else:
-            self.sineGeneratorDL = sineGeneratorDL
-        self.sineGeneratorDL_nsprefix_ = None
-        if rampGeneratorDL is None:
-            self.rampGeneratorDL = []
+            self.sine_generator_dls = sine_generator_dls
+        self.sine_generator_dls_nsprefix_ = None
+        if ramp_generator_dls is None:
+            self.ramp_generator_dls = []
         else:
-            self.rampGeneratorDL = rampGeneratorDL
-        self.rampGeneratorDL_nsprefix_ = None
+            self.ramp_generator_dls = ramp_generator_dls
+        self.ramp_generator_dls_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -10684,9 +10683,9 @@ class CompoundInputDL(Standalone):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.pulseGeneratorDL or
-            self.sineGeneratorDL or
-            self.rampGeneratorDL or
+            self.pulse_generator_dls or
+            self.sine_generator_dls or
+            self.ramp_generator_dls or
             super(CompoundInputDL, self).hasContent_()
         ):
             return True
@@ -10723,14 +10722,14 @@ class CompoundInputDL(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        for pulseGeneratorDL_ in self.pulseGeneratorDL:
-            namespaceprefix_ = self.pulseGeneratorDL_nsprefix_ + ':' if (UseCapturedNS_ and self.pulseGeneratorDL_nsprefix_) else ''
+        for pulseGeneratorDL_ in self.pulse_generator_dls:
+            namespaceprefix_ = self.pulse_generator_dls_nsprefix_ + ':' if (UseCapturedNS_ and self.pulse_generator_dls_nsprefix_) else ''
             pulseGeneratorDL_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='pulseGeneratorDL', pretty_print=pretty_print)
-        for sineGeneratorDL_ in self.sineGeneratorDL:
-            namespaceprefix_ = self.sineGeneratorDL_nsprefix_ + ':' if (UseCapturedNS_ and self.sineGeneratorDL_nsprefix_) else ''
+        for sineGeneratorDL_ in self.sine_generator_dls:
+            namespaceprefix_ = self.sine_generator_dls_nsprefix_ + ':' if (UseCapturedNS_ and self.sine_generator_dls_nsprefix_) else ''
             sineGeneratorDL_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='sineGeneratorDL', pretty_print=pretty_print)
-        for rampGeneratorDL_ in self.rampGeneratorDL:
-            namespaceprefix_ = self.rampGeneratorDL_nsprefix_ + ':' if (UseCapturedNS_ and self.rampGeneratorDL_nsprefix_) else ''
+        for rampGeneratorDL_ in self.ramp_generator_dls:
+            namespaceprefix_ = self.ramp_generator_dls_nsprefix_ + ':' if (UseCapturedNS_ and self.ramp_generator_dls_nsprefix_) else ''
             rampGeneratorDL_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='rampGeneratorDL', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -10749,17 +10748,17 @@ class CompoundInputDL(Standalone):
         if nodeName_ == 'pulseGeneratorDL':
             obj_ = PulseGeneratorDL.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.pulseGeneratorDL.append(obj_)
+            self.pulse_generator_dls.append(obj_)
             obj_.original_tagname_ = 'pulseGeneratorDL'
         elif nodeName_ == 'sineGeneratorDL':
             obj_ = SineGeneratorDL.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.sineGeneratorDL.append(obj_)
+            self.sine_generator_dls.append(obj_)
             obj_.original_tagname_ = 'sineGeneratorDL'
         elif nodeName_ == 'rampGeneratorDL':
             obj_ = RampGeneratorDL.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.rampGeneratorDL.append(obj_)
+            self.ramp_generator_dls.append(obj_)
             obj_.original_tagname_ = 'rampGeneratorDL'
         super(CompoundInputDL, self).buildChildren(child_, node, nodeName_, True)
 # end class CompoundInputDL
@@ -10768,34 +10767,34 @@ class CompoundInputDL(Standalone):
 class CompoundInput(Standalone):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('pulseGenerator', 'PulseGenerator', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'pulseGenerator', 'type': 'PulseGenerator'}, None),
-        MemberSpec_('sineGenerator', 'SineGenerator', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'sineGenerator', 'type': 'SineGenerator'}, None),
-        MemberSpec_('rampGenerator', 'RampGenerator', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'rampGenerator', 'type': 'RampGenerator'}, None),
+        MemberSpec_('pulse_generators', 'PulseGenerator', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'pulseGenerator', 'type': 'PulseGenerator'}, None),
+        MemberSpec_('sine_generators', 'SineGenerator', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'sineGenerator', 'type': 'SineGenerator'}, None),
+        MemberSpec_('ramp_generators', 'RampGenerator', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'rampGenerator', 'type': 'RampGenerator'}, None),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, pulseGenerator=None, sineGenerator=None, rampGenerator=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, pulse_generators=None, sine_generators=None, ramp_generators=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(CompoundInput, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
-        if pulseGenerator is None:
-            self.pulseGenerator = []
+        super(CompoundInput, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        if pulse_generators is None:
+            self.pulse_generators = []
         else:
-            self.pulseGenerator = pulseGenerator
-        self.pulseGenerator_nsprefix_ = None
-        if sineGenerator is None:
-            self.sineGenerator = []
+            self.pulse_generators = pulse_generators
+        self.pulse_generators_nsprefix_ = None
+        if sine_generators is None:
+            self.sine_generators = []
         else:
-            self.sineGenerator = sineGenerator
-        self.sineGenerator_nsprefix_ = None
-        if rampGenerator is None:
-            self.rampGenerator = []
+            self.sine_generators = sine_generators
+        self.sine_generators_nsprefix_ = None
+        if ramp_generators is None:
+            self.ramp_generators = []
         else:
-            self.rampGenerator = rampGenerator
-        self.rampGenerator_nsprefix_ = None
+            self.ramp_generators = ramp_generators
+        self.ramp_generators_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -10809,9 +10808,9 @@ class CompoundInput(Standalone):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.pulseGenerator or
-            self.sineGenerator or
-            self.rampGenerator or
+            self.pulse_generators or
+            self.sine_generators or
+            self.ramp_generators or
             super(CompoundInput, self).hasContent_()
         ):
             return True
@@ -10848,14 +10847,14 @@ class CompoundInput(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        for pulseGenerator_ in self.pulseGenerator:
-            namespaceprefix_ = self.pulseGenerator_nsprefix_ + ':' if (UseCapturedNS_ and self.pulseGenerator_nsprefix_) else ''
+        for pulseGenerator_ in self.pulse_generators:
+            namespaceprefix_ = self.pulse_generators_nsprefix_ + ':' if (UseCapturedNS_ and self.pulse_generators_nsprefix_) else ''
             pulseGenerator_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='pulseGenerator', pretty_print=pretty_print)
-        for sineGenerator_ in self.sineGenerator:
-            namespaceprefix_ = self.sineGenerator_nsprefix_ + ':' if (UseCapturedNS_ and self.sineGenerator_nsprefix_) else ''
+        for sineGenerator_ in self.sine_generators:
+            namespaceprefix_ = self.sine_generators_nsprefix_ + ':' if (UseCapturedNS_ and self.sine_generators_nsprefix_) else ''
             sineGenerator_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='sineGenerator', pretty_print=pretty_print)
-        for rampGenerator_ in self.rampGenerator:
-            namespaceprefix_ = self.rampGenerator_nsprefix_ + ':' if (UseCapturedNS_ and self.rampGenerator_nsprefix_) else ''
+        for rampGenerator_ in self.ramp_generators:
+            namespaceprefix_ = self.ramp_generators_nsprefix_ + ':' if (UseCapturedNS_ and self.ramp_generators_nsprefix_) else ''
             rampGenerator_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='rampGenerator', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -10874,17 +10873,17 @@ class CompoundInput(Standalone):
         if nodeName_ == 'pulseGenerator':
             obj_ = PulseGenerator.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.pulseGenerator.append(obj_)
+            self.pulse_generators.append(obj_)
             obj_.original_tagname_ = 'pulseGenerator'
         elif nodeName_ == 'sineGenerator':
             obj_ = SineGenerator.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.sineGenerator.append(obj_)
+            self.sine_generators.append(obj_)
             obj_.original_tagname_ = 'sineGenerator'
         elif nodeName_ == 'rampGenerator':
             obj_ = RampGenerator.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.rampGenerator.append(obj_)
+            self.ramp_generators.append(obj_)
             obj_.original_tagname_ = 'rampGenerator'
         super(CompoundInput, self).buildChildren(child_, node, nodeName_, True)
 # end class CompoundInput
@@ -10895,29 +10894,29 @@ class RampGeneratorDL(Standalone):
     member_data_items_ = [
         MemberSpec_('delay', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
         MemberSpec_('duration', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
-        MemberSpec_('startAmplitude', 'Nml2Quantity_none', 0, 0, {'use': 'required'}),
-        MemberSpec_('finishAmplitude', 'Nml2Quantity_none', 0, 0, {'use': 'required'}),
-        MemberSpec_('baselineAmplitude', 'Nml2Quantity_none', 0, 0, {'use': 'required'}),
+        MemberSpec_('start_amplitude', 'Nml2Quantity_none', 0, 0, {'use': 'required'}),
+        MemberSpec_('finish_amplitude', 'Nml2Quantity_none', 0, 0, {'use': 'required'}),
+        MemberSpec_('baseline_amplitude', 'Nml2Quantity_none', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, delay=None, duration=None, startAmplitude=None, finishAmplitude=None, baselineAmplitude=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, delay=None, duration=None, start_amplitude=None, finish_amplitude=None, baseline_amplitude=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(RampGeneratorDL, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(RampGeneratorDL, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
         self.duration = _cast(None, duration)
         self.duration_nsprefix_ = None
-        self.startAmplitude = _cast(None, startAmplitude)
-        self.startAmplitude_nsprefix_ = None
-        self.finishAmplitude = _cast(None, finishAmplitude)
-        self.finishAmplitude_nsprefix_ = None
-        self.baselineAmplitude = _cast(None, baselineAmplitude)
-        self.baselineAmplitude_nsprefix_ = None
+        self.start_amplitude = _cast(None, start_amplitude)
+        self.start_amplitude_nsprefix_ = None
+        self.finish_amplitude = _cast(None, finish_amplitude)
+        self.finish_amplitude_nsprefix_ = None
+        self.baseline_amplitude = _cast(None, baseline_amplitude)
+        self.baseline_amplitude_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -10989,15 +10988,15 @@ class RampGeneratorDL(Standalone):
         if self.duration is not None and 'duration' not in already_processed:
             already_processed.add('duration')
             outfile.write(' duration=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.duration), input_name='duration')), ))
-        if self.startAmplitude is not None and 'startAmplitude' not in already_processed:
-            already_processed.add('startAmplitude')
-            outfile.write(' startAmplitude=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.startAmplitude), input_name='startAmplitude')), ))
-        if self.finishAmplitude is not None and 'finishAmplitude' not in already_processed:
-            already_processed.add('finishAmplitude')
-            outfile.write(' finishAmplitude=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.finishAmplitude), input_name='finishAmplitude')), ))
-        if self.baselineAmplitude is not None and 'baselineAmplitude' not in already_processed:
-            already_processed.add('baselineAmplitude')
-            outfile.write(' baselineAmplitude=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.baselineAmplitude), input_name='baselineAmplitude')), ))
+        if self.start_amplitude is not None and 'start_amplitude' not in already_processed:
+            already_processed.add('start_amplitude')
+            outfile.write(' startAmplitude=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.start_amplitude), input_name='startAmplitude')), ))
+        if self.finish_amplitude is not None and 'finish_amplitude' not in already_processed:
+            already_processed.add('finish_amplitude')
+            outfile.write(' finishAmplitude=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.finish_amplitude), input_name='finishAmplitude')), ))
+        if self.baseline_amplitude is not None and 'baseline_amplitude' not in already_processed:
+            already_processed.add('baseline_amplitude')
+            outfile.write(' baselineAmplitude=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.baseline_amplitude), input_name='baselineAmplitude')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='RampGeneratorDL', fromsubclass_=False, pretty_print=True):
         super(RampGeneratorDL, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
@@ -11025,18 +11024,18 @@ class RampGeneratorDL(Standalone):
         value = find_attr_value_('startAmplitude', node)
         if value is not None and 'startAmplitude' not in already_processed:
             already_processed.add('startAmplitude')
-            self.startAmplitude = value
-            self.validate_Nml2Quantity_none(self.startAmplitude)    # validate type Nml2Quantity_none
+            self.start_amplitude = value
+            self.validate_Nml2Quantity_none(self.start_amplitude)    # validate type Nml2Quantity_none
         value = find_attr_value_('finishAmplitude', node)
         if value is not None and 'finishAmplitude' not in already_processed:
             already_processed.add('finishAmplitude')
-            self.finishAmplitude = value
-            self.validate_Nml2Quantity_none(self.finishAmplitude)    # validate type Nml2Quantity_none
+            self.finish_amplitude = value
+            self.validate_Nml2Quantity_none(self.finish_amplitude)    # validate type Nml2Quantity_none
         value = find_attr_value_('baselineAmplitude', node)
         if value is not None and 'baselineAmplitude' not in already_processed:
             already_processed.add('baselineAmplitude')
-            self.baselineAmplitude = value
-            self.validate_Nml2Quantity_none(self.baselineAmplitude)    # validate type Nml2Quantity_none
+            self.baseline_amplitude = value
+            self.validate_Nml2Quantity_none(self.baseline_amplitude)    # validate type Nml2Quantity_none
         super(RampGeneratorDL, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(RampGeneratorDL, self).buildChildren(child_, node, nodeName_, True)
@@ -11049,29 +11048,29 @@ class RampGenerator(Standalone):
     member_data_items_ = [
         MemberSpec_('delay', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
         MemberSpec_('duration', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
-        MemberSpec_('startAmplitude', 'Nml2Quantity_current', 0, 0, {'use': 'required'}),
-        MemberSpec_('finishAmplitude', 'Nml2Quantity_current', 0, 0, {'use': 'required'}),
-        MemberSpec_('baselineAmplitude', 'Nml2Quantity_current', 0, 0, {'use': 'required'}),
+        MemberSpec_('start_amplitude', 'Nml2Quantity_current', 0, 0, {'use': 'required'}),
+        MemberSpec_('finish_amplitude', 'Nml2Quantity_current', 0, 0, {'use': 'required'}),
+        MemberSpec_('baseline_amplitude', 'Nml2Quantity_current', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, delay=None, duration=None, startAmplitude=None, finishAmplitude=None, baselineAmplitude=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, delay=None, duration=None, start_amplitude=None, finish_amplitude=None, baseline_amplitude=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(RampGenerator, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(RampGenerator, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
         self.duration = _cast(None, duration)
         self.duration_nsprefix_ = None
-        self.startAmplitude = _cast(None, startAmplitude)
-        self.startAmplitude_nsprefix_ = None
-        self.finishAmplitude = _cast(None, finishAmplitude)
-        self.finishAmplitude_nsprefix_ = None
-        self.baselineAmplitude = _cast(None, baselineAmplitude)
-        self.baselineAmplitude_nsprefix_ = None
+        self.start_amplitude = _cast(None, start_amplitude)
+        self.start_amplitude_nsprefix_ = None
+        self.finish_amplitude = _cast(None, finish_amplitude)
+        self.finish_amplitude_nsprefix_ = None
+        self.baseline_amplitude = _cast(None, baseline_amplitude)
+        self.baseline_amplitude_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -11143,15 +11142,15 @@ class RampGenerator(Standalone):
         if self.duration is not None and 'duration' not in already_processed:
             already_processed.add('duration')
             outfile.write(' duration=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.duration), input_name='duration')), ))
-        if self.startAmplitude is not None and 'startAmplitude' not in already_processed:
-            already_processed.add('startAmplitude')
-            outfile.write(' startAmplitude=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.startAmplitude), input_name='startAmplitude')), ))
-        if self.finishAmplitude is not None and 'finishAmplitude' not in already_processed:
-            already_processed.add('finishAmplitude')
-            outfile.write(' finishAmplitude=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.finishAmplitude), input_name='finishAmplitude')), ))
-        if self.baselineAmplitude is not None and 'baselineAmplitude' not in already_processed:
-            already_processed.add('baselineAmplitude')
-            outfile.write(' baselineAmplitude=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.baselineAmplitude), input_name='baselineAmplitude')), ))
+        if self.start_amplitude is not None and 'start_amplitude' not in already_processed:
+            already_processed.add('start_amplitude')
+            outfile.write(' startAmplitude=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.start_amplitude), input_name='startAmplitude')), ))
+        if self.finish_amplitude is not None and 'finish_amplitude' not in already_processed:
+            already_processed.add('finish_amplitude')
+            outfile.write(' finishAmplitude=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.finish_amplitude), input_name='finishAmplitude')), ))
+        if self.baseline_amplitude is not None and 'baseline_amplitude' not in already_processed:
+            already_processed.add('baseline_amplitude')
+            outfile.write(' baselineAmplitude=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.baseline_amplitude), input_name='baselineAmplitude')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='RampGenerator', fromsubclass_=False, pretty_print=True):
         super(RampGenerator, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
@@ -11179,18 +11178,18 @@ class RampGenerator(Standalone):
         value = find_attr_value_('startAmplitude', node)
         if value is not None and 'startAmplitude' not in already_processed:
             already_processed.add('startAmplitude')
-            self.startAmplitude = value
-            self.validate_Nml2Quantity_current(self.startAmplitude)    # validate type Nml2Quantity_current
+            self.start_amplitude = value
+            self.validate_Nml2Quantity_current(self.start_amplitude)    # validate type Nml2Quantity_current
         value = find_attr_value_('finishAmplitude', node)
         if value is not None and 'finishAmplitude' not in already_processed:
             already_processed.add('finishAmplitude')
-            self.finishAmplitude = value
-            self.validate_Nml2Quantity_current(self.finishAmplitude)    # validate type Nml2Quantity_current
+            self.finish_amplitude = value
+            self.validate_Nml2Quantity_current(self.finish_amplitude)    # validate type Nml2Quantity_current
         value = find_attr_value_('baselineAmplitude', node)
         if value is not None and 'baselineAmplitude' not in already_processed:
             already_processed.add('baselineAmplitude')
-            self.baselineAmplitude = value
-            self.validate_Nml2Quantity_current(self.baselineAmplitude)    # validate type Nml2Quantity_current
+            self.baseline_amplitude = value
+            self.validate_Nml2Quantity_current(self.baseline_amplitude)    # validate type Nml2Quantity_current
         super(RampGenerator, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(RampGenerator, self).buildChildren(child_, node, nodeName_, True)
@@ -11209,13 +11208,13 @@ class SineGeneratorDL(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, delay=None, phase=None, duration=None, amplitude=None, period=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, delay=None, phase=None, duration=None, amplitude=None, period=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SineGeneratorDL, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(SineGeneratorDL, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
         self.phase = _cast(None, phase)
@@ -11363,13 +11362,13 @@ class SineGenerator(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, delay=None, phase=None, duration=None, amplitude=None, period=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, delay=None, phase=None, duration=None, amplitude=None, period=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SineGenerator, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(SineGenerator, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
         self.phase = _cast(None, phase)
@@ -11528,13 +11527,13 @@ class PulseGeneratorDL(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, delay=None, duration=None, amplitude=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, delay=None, duration=None, amplitude=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(PulseGeneratorDL, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(PulseGeneratorDL, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
         self.duration = _cast(None, duration)
@@ -11662,13 +11661,13 @@ class PulseGenerator(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, delay=None, duration=None, amplitude=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, delay=None, duration=None, amplitude=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(PulseGenerator, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(PulseGenerator, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
         self.duration = _cast(None, duration)
@@ -11789,22 +11788,22 @@ class ReactionScheme(Base):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('source', 'xs:string', 0, 0, {'use': 'required'}),
-        MemberSpec_('type_', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('type', 'xs:string', 0, 0, {'use': 'required'}),
         MemberSpec_('__ANY__', '__ANY__', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'processContents': 'skip'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, source=None, type_=None, anytypeobjs_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, source=None, type=None, anytypeobjs_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ReactionScheme, self).__init__(neuroLexId, id,  **kwargs_)
+        super(ReactionScheme, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.source = _cast(None, source)
         self.source_nsprefix_ = None
-        self.type_ = _cast(None, type_)
-        self.type__nsprefix_ = None
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
         if anytypeobjs_ is None:
             self.anytypeobjs_ = []
         else:
@@ -11856,9 +11855,9 @@ class ReactionScheme(Base):
         if self.source is not None and 'source' not in already_processed:
             already_processed.add('source')
             outfile.write(' source=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.source), input_name='source')), ))
-        if self.type_ is not None and 'type_' not in already_processed:
-            already_processed.add('type_')
-            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type_), input_name='type')), ))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type), input_name='type')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='ReactionScheme', fromsubclass_=False, pretty_print=True):
         super(ReactionScheme, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -11886,7 +11885,7 @@ class ReactionScheme(Base):
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
             already_processed.add('type')
-            self.type_ = value
+            self.type = value
         super(ReactionScheme, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         content_ = self.gds_build_any(child_, 'ReactionScheme')
@@ -11902,13 +11901,13 @@ class ExtracellularProperties(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, species=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, species=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ExtracellularProperties, self).__init__(neuroLexId, id,  **kwargs_)
+        super(ExtracellularProperties, self).__init__(neuro_lex_id, id,  **kwargs_)
         if species is None:
             self.species = []
         else:
@@ -12003,29 +12002,29 @@ class ChannelDensityGHK2(Base):
     element. TODO: remove."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('ionChannel', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('condDensity', 'Nml2Quantity_conductanceDensity', 0, 1, {'use': 'optional'}),
-        MemberSpec_('segmentGroup', 'NmlId', 0, 1, {'use': 'optional'}),
-        MemberSpec_('segment', 'NmlId', 0, 1, {'use': 'optional'}),
+        MemberSpec_('ion_channel', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('cond_density', 'Nml2Quantity_conductanceDensity', 0, 1, {'use': 'optional'}),
+        MemberSpec_('segment_groups', 'NmlId', 0, 1, {'use': 'optional'}),
+        MemberSpec_('segments', 'NmlId', 0, 1, {'use': 'optional'}),
         MemberSpec_('ion', 'NmlId', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, ionChannel=None, condDensity=None, segmentGroup='all', segment=None, ion=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, cond_density=None, segment_groups='all', segments=None, ion=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensityGHK2, self).__init__(neuroLexId, id,  **kwargs_)
-        self.ionChannel = _cast(None, ionChannel)
-        self.ionChannel_nsprefix_ = None
-        self.condDensity = _cast(None, condDensity)
-        self.condDensity_nsprefix_ = None
-        self.segmentGroup = _cast(None, segmentGroup)
-        self.segmentGroup_nsprefix_ = None
-        self.segment = _cast(None, segment)
-        self.segment_nsprefix_ = None
+        super(ChannelDensityGHK2, self).__init__(neuro_lex_id, id,  **kwargs_)
+        self.ion_channel = _cast(None, ion_channel)
+        self.ion_channel_nsprefix_ = None
+        self.cond_density = _cast(None, cond_density)
+        self.cond_density_nsprefix_ = None
+        self.segment_groups = _cast(None, segment_groups)
+        self.segment_groups_nsprefix_ = None
+        self.segments = _cast(None, segments)
+        self.segments_nsprefix_ = None
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -12092,18 +12091,18 @@ class ChannelDensityGHK2(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='ChannelDensityGHK2'):
         super(ChannelDensityGHK2, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='ChannelDensityGHK2')
-        if self.ionChannel is not None and 'ionChannel' not in already_processed:
-            already_processed.add('ionChannel')
-            outfile.write(' ionChannel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ionChannel), input_name='ionChannel')), ))
-        if self.condDensity is not None and 'condDensity' not in already_processed:
-            already_processed.add('condDensity')
-            outfile.write(' condDensity=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.condDensity), input_name='condDensity')), ))
-        if self.segmentGroup != "all" and 'segmentGroup' not in already_processed:
-            already_processed.add('segmentGroup')
-            outfile.write(' segmentGroup=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segmentGroup), input_name='segmentGroup')), ))
-        if self.segment is not None and 'segment' not in already_processed:
-            already_processed.add('segment')
-            outfile.write(' segment=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segment), input_name='segment')), ))
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
+            outfile.write(' ionChannel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion_channel), input_name='ionChannel')), ))
+        if self.cond_density is not None and 'cond_density' not in already_processed:
+            already_processed.add('cond_density')
+            outfile.write(' condDensity=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.cond_density), input_name='condDensity')), ))
+        if self.segment_groups != "all" and 'segment_groups' not in already_processed:
+            already_processed.add('segment_groups')
+            outfile.write(' segmentGroup=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segment_groups), input_name='segmentGroup')), ))
+        if self.segments is not None and 'segments' not in already_processed:
+            already_processed.add('segments')
+            outfile.write(' segment=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segments), input_name='segment')), ))
         if self.ion is not None and 'ion' not in already_processed:
             already_processed.add('ion')
             outfile.write(' ion=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion), input_name='ion')), ))
@@ -12125,23 +12124,23 @@ class ChannelDensityGHK2(Base):
         value = find_attr_value_('ionChannel', node)
         if value is not None and 'ionChannel' not in already_processed:
             already_processed.add('ionChannel')
-            self.ionChannel = value
-            self.validate_NmlId(self.ionChannel)    # validate type NmlId
+            self.ion_channel = value
+            self.validate_NmlId(self.ion_channel)    # validate type NmlId
         value = find_attr_value_('condDensity', node)
         if value is not None and 'condDensity' not in already_processed:
             already_processed.add('condDensity')
-            self.condDensity = value
-            self.validate_Nml2Quantity_conductanceDensity(self.condDensity)    # validate type Nml2Quantity_conductanceDensity
+            self.cond_density = value
+            self.validate_Nml2Quantity_conductanceDensity(self.cond_density)    # validate type Nml2Quantity_conductanceDensity
         value = find_attr_value_('segmentGroup', node)
         if value is not None and 'segmentGroup' not in already_processed:
             already_processed.add('segmentGroup')
-            self.segmentGroup = value
-            self.validate_NmlId(self.segmentGroup)    # validate type NmlId
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)    # validate type NmlId
         value = find_attr_value_('segment', node)
         if value is not None and 'segment' not in already_processed:
             already_processed.add('segment')
-            self.segment = value
-            self.validate_NmlId(self.segment)    # validate type NmlId
+            self.segments = value
+            self.validate_NmlId(self.segments)    # validate type NmlId
         value = find_attr_value_('ion', node)
         if value is not None and 'ion' not in already_processed:
             already_processed.add('ion')
@@ -12167,29 +12166,29 @@ class ChannelDensityGHK(Base):
     element. TODO: remove."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('ionChannel', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('ion_channel', 'NmlId', 0, 0, {'use': 'required'}),
         MemberSpec_('permeability', 'Nml2Quantity_permeability', 0, 0, {'use': 'required'}),
-        MemberSpec_('segmentGroup', 'NmlId', 0, 1, {'use': 'optional'}),
-        MemberSpec_('segment', 'NmlId', 0, 1, {'use': 'optional'}),
+        MemberSpec_('segment_groups', 'NmlId', 0, 1, {'use': 'optional'}),
+        MemberSpec_('segments', 'NmlId', 0, 1, {'use': 'optional'}),
         MemberSpec_('ion', 'NmlId', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, ionChannel=None, permeability=None, segmentGroup='all', segment=None, ion=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, permeability=None, segment_groups='all', segments=None, ion=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensityGHK, self).__init__(neuroLexId, id,  **kwargs_)
-        self.ionChannel = _cast(None, ionChannel)
-        self.ionChannel_nsprefix_ = None
+        super(ChannelDensityGHK, self).__init__(neuro_lex_id, id,  **kwargs_)
+        self.ion_channel = _cast(None, ion_channel)
+        self.ion_channel_nsprefix_ = None
         self.permeability = _cast(None, permeability)
         self.permeability_nsprefix_ = None
-        self.segmentGroup = _cast(None, segmentGroup)
-        self.segmentGroup_nsprefix_ = None
-        self.segment = _cast(None, segment)
-        self.segment_nsprefix_ = None
+        self.segment_groups = _cast(None, segment_groups)
+        self.segment_groups_nsprefix_ = None
+        self.segments = _cast(None, segments)
+        self.segments_nsprefix_ = None
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -12256,18 +12255,18 @@ class ChannelDensityGHK(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='ChannelDensityGHK'):
         super(ChannelDensityGHK, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='ChannelDensityGHK')
-        if self.ionChannel is not None and 'ionChannel' not in already_processed:
-            already_processed.add('ionChannel')
-            outfile.write(' ionChannel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ionChannel), input_name='ionChannel')), ))
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
+            outfile.write(' ionChannel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion_channel), input_name='ionChannel')), ))
         if self.permeability is not None and 'permeability' not in already_processed:
             already_processed.add('permeability')
             outfile.write(' permeability=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.permeability), input_name='permeability')), ))
-        if self.segmentGroup != "all" and 'segmentGroup' not in already_processed:
-            already_processed.add('segmentGroup')
-            outfile.write(' segmentGroup=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segmentGroup), input_name='segmentGroup')), ))
-        if self.segment is not None and 'segment' not in already_processed:
-            already_processed.add('segment')
-            outfile.write(' segment=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segment), input_name='segment')), ))
+        if self.segment_groups != "all" and 'segment_groups' not in already_processed:
+            already_processed.add('segment_groups')
+            outfile.write(' segmentGroup=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segment_groups), input_name='segmentGroup')), ))
+        if self.segments is not None and 'segments' not in already_processed:
+            already_processed.add('segments')
+            outfile.write(' segment=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segments), input_name='segment')), ))
         if self.ion is not None and 'ion' not in already_processed:
             already_processed.add('ion')
             outfile.write(' ion=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion), input_name='ion')), ))
@@ -12289,8 +12288,8 @@ class ChannelDensityGHK(Base):
         value = find_attr_value_('ionChannel', node)
         if value is not None and 'ionChannel' not in already_processed:
             already_processed.add('ionChannel')
-            self.ionChannel = value
-            self.validate_NmlId(self.ionChannel)    # validate type NmlId
+            self.ion_channel = value
+            self.validate_NmlId(self.ion_channel)    # validate type NmlId
         value = find_attr_value_('permeability', node)
         if value is not None and 'permeability' not in already_processed:
             already_processed.add('permeability')
@@ -12299,13 +12298,13 @@ class ChannelDensityGHK(Base):
         value = find_attr_value_('segmentGroup', node)
         if value is not None and 'segmentGroup' not in already_processed:
             already_processed.add('segmentGroup')
-            self.segmentGroup = value
-            self.validate_NmlId(self.segmentGroup)    # validate type NmlId
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)    # validate type NmlId
         value = find_attr_value_('segment', node)
         if value is not None and 'segment' not in already_processed:
             already_processed.add('segment')
-            self.segment = value
-            self.validate_NmlId(self.segment)    # validate type NmlId
+            self.segments = value
+            self.validate_NmlId(self.segments)    # validate type NmlId
         value = find_attr_value_('ion', node)
         if value is not None and 'ion' not in already_processed:
             already_processed.add('ion')
@@ -12331,37 +12330,37 @@ class ChannelDensityNernst(Base):
     element. TODO: remove."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('ionChannel', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('condDensity', 'Nml2Quantity_conductanceDensity', 0, 1, {'use': 'optional'}),
-        MemberSpec_('segmentGroup', 'NmlId', 0, 1, {'use': 'optional'}),
-        MemberSpec_('segment', 'NmlId', 0, 1, {'use': 'optional'}),
+        MemberSpec_('ion_channel', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('cond_density', 'Nml2Quantity_conductanceDensity', 0, 1, {'use': 'optional'}),
+        MemberSpec_('segment_groups', 'NmlId', 0, 1, {'use': 'optional'}),
+        MemberSpec_('segments', 'NmlId', 0, 1, {'use': 'optional'}),
         MemberSpec_('ion', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('variableParameter', 'VariableParameter', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'variableParameter', 'type': 'VariableParameter'}, None),
+        MemberSpec_('variable_parameters', 'VariableParameter', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'variableParameter', 'type': 'VariableParameter'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, ionChannel=None, condDensity=None, segmentGroup='all', segment=None, ion=None, variableParameter=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, cond_density=None, segment_groups='all', segments=None, ion=None, variable_parameters=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensityNernst, self).__init__(neuroLexId, id, extensiontype_,  **kwargs_)
-        self.ionChannel = _cast(None, ionChannel)
-        self.ionChannel_nsprefix_ = None
-        self.condDensity = _cast(None, condDensity)
-        self.condDensity_nsprefix_ = None
-        self.segmentGroup = _cast(None, segmentGroup)
-        self.segmentGroup_nsprefix_ = None
-        self.segment = _cast(None, segment)
-        self.segment_nsprefix_ = None
+        super(ChannelDensityNernst, self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
+        self.ion_channel = _cast(None, ion_channel)
+        self.ion_channel_nsprefix_ = None
+        self.cond_density = _cast(None, cond_density)
+        self.cond_density_nsprefix_ = None
+        self.segment_groups = _cast(None, segment_groups)
+        self.segment_groups_nsprefix_ = None
+        self.segments = _cast(None, segments)
+        self.segments_nsprefix_ = None
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
-        if variableParameter is None:
-            self.variableParameter = []
+        if variable_parameters is None:
+            self.variable_parameters = []
         else:
-            self.variableParameter = variableParameter
-        self.variableParameter_nsprefix_ = None
+            self.variable_parameters = variable_parameters
+        self.variable_parameters_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -12398,7 +12397,7 @@ class ChannelDensityNernst(Base):
     validate_Nml2Quantity_conductanceDensity_patterns_ = [['^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S_per_m2|mS_per_cm2|S_per_cm2))$']]
     def hasContent_(self):
         if (
-            self.variableParameter or
+            self.variable_parameters or
             super(ChannelDensityNernst, self).hasContent_()
         ):
             return True
@@ -12429,18 +12428,18 @@ class ChannelDensityNernst(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='ChannelDensityNernst'):
         super(ChannelDensityNernst, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='ChannelDensityNernst')
-        if self.ionChannel is not None and 'ionChannel' not in already_processed:
-            already_processed.add('ionChannel')
-            outfile.write(' ionChannel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ionChannel), input_name='ionChannel')), ))
-        if self.condDensity is not None and 'condDensity' not in already_processed:
-            already_processed.add('condDensity')
-            outfile.write(' condDensity=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.condDensity), input_name='condDensity')), ))
-        if self.segmentGroup != "all" and 'segmentGroup' not in already_processed:
-            already_processed.add('segmentGroup')
-            outfile.write(' segmentGroup=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segmentGroup), input_name='segmentGroup')), ))
-        if self.segment is not None and 'segment' not in already_processed:
-            already_processed.add('segment')
-            outfile.write(' segment=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segment), input_name='segment')), ))
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
+            outfile.write(' ionChannel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion_channel), input_name='ionChannel')), ))
+        if self.cond_density is not None and 'cond_density' not in already_processed:
+            already_processed.add('cond_density')
+            outfile.write(' condDensity=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.cond_density), input_name='condDensity')), ))
+        if self.segment_groups != "all" and 'segment_groups' not in already_processed:
+            already_processed.add('segment_groups')
+            outfile.write(' segmentGroup=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segment_groups), input_name='segmentGroup')), ))
+        if self.segments is not None and 'segments' not in already_processed:
+            already_processed.add('segments')
+            outfile.write(' segment=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segments), input_name='segment')), ))
         if self.ion is not None and 'ion' not in already_processed:
             already_processed.add('ion')
             outfile.write(' ion=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion), input_name='ion')), ))
@@ -12458,8 +12457,8 @@ class ChannelDensityNernst(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        for variableParameter_ in self.variableParameter:
-            namespaceprefix_ = self.variableParameter_nsprefix_ + ':' if (UseCapturedNS_ and self.variableParameter_nsprefix_) else ''
+        for variableParameter_ in self.variable_parameters:
+            namespaceprefix_ = self.variable_parameters_nsprefix_ + ':' if (UseCapturedNS_ and self.variable_parameters_nsprefix_) else ''
             variableParameter_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='variableParameter', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -12476,23 +12475,23 @@ class ChannelDensityNernst(Base):
         value = find_attr_value_('ionChannel', node)
         if value is not None and 'ionChannel' not in already_processed:
             already_processed.add('ionChannel')
-            self.ionChannel = value
-            self.validate_NmlId(self.ionChannel)    # validate type NmlId
+            self.ion_channel = value
+            self.validate_NmlId(self.ion_channel)    # validate type NmlId
         value = find_attr_value_('condDensity', node)
         if value is not None and 'condDensity' not in already_processed:
             already_processed.add('condDensity')
-            self.condDensity = value
-            self.validate_Nml2Quantity_conductanceDensity(self.condDensity)    # validate type Nml2Quantity_conductanceDensity
+            self.cond_density = value
+            self.validate_Nml2Quantity_conductanceDensity(self.cond_density)    # validate type Nml2Quantity_conductanceDensity
         value = find_attr_value_('segmentGroup', node)
         if value is not None and 'segmentGroup' not in already_processed:
             already_processed.add('segmentGroup')
-            self.segmentGroup = value
-            self.validate_NmlId(self.segmentGroup)    # validate type NmlId
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)    # validate type NmlId
         value = find_attr_value_('segment', node)
         if value is not None and 'segment' not in already_processed:
             already_processed.add('segment')
-            self.segment = value
-            self.validate_NmlId(self.segment)    # validate type NmlId
+            self.segments = value
+            self.validate_NmlId(self.segments)    # validate type NmlId
         value = find_attr_value_('ion', node)
         if value is not None and 'ion' not in already_processed:
             already_processed.add('ion')
@@ -12507,7 +12506,7 @@ class ChannelDensityNernst(Base):
         if nodeName_ == 'variableParameter':
             obj_ = VariableParameter.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.variableParameter.append(obj_)
+            self.variable_parameters.append(obj_)
             obj_.original_tagname_ = 'variableParameter'
         super(ChannelDensityNernst, self).buildChildren(child_, node, nodeName_, True)
 # end class ChannelDensityNernst
@@ -12526,40 +12525,40 @@ class ChannelDensity(Base):
     element. TODO: remove."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('ionChannel', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('condDensity', 'Nml2Quantity_conductanceDensity', 0, 1, {'use': 'optional'}),
+        MemberSpec_('ion_channel', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('cond_density', 'Nml2Quantity_conductanceDensity', 0, 1, {'use': 'optional'}),
         MemberSpec_('erev', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
-        MemberSpec_('segmentGroup', 'NmlId', 0, 1, {'use': 'optional'}),
-        MemberSpec_('segment', 'NonNegativeInteger', 0, 1, {'use': 'optional'}),
+        MemberSpec_('segment_groups', 'NmlId', 0, 1, {'use': 'optional'}),
+        MemberSpec_('segments', 'NonNegativeInteger', 0, 1, {'use': 'optional'}),
         MemberSpec_('ion', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('variableParameter', 'VariableParameter', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'variableParameter', 'type': 'VariableParameter'}, None),
+        MemberSpec_('variable_parameters', 'VariableParameter', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'variableParameter', 'type': 'VariableParameter'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, ionChannel=None, condDensity=None, erev=None, segmentGroup='all', segment=None, ion=None, variableParameter=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, cond_density=None, erev=None, segment_groups='all', segments=None, ion=None, variable_parameters=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensity, self).__init__(neuroLexId, id, extensiontype_,  **kwargs_)
-        self.ionChannel = _cast(None, ionChannel)
-        self.ionChannel_nsprefix_ = None
-        self.condDensity = _cast(None, condDensity)
-        self.condDensity_nsprefix_ = None
+        super(ChannelDensity, self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
+        self.ion_channel = _cast(None, ion_channel)
+        self.ion_channel_nsprefix_ = None
+        self.cond_density = _cast(None, cond_density)
+        self.cond_density_nsprefix_ = None
         self.erev = _cast(None, erev)
         self.erev_nsprefix_ = None
-        self.segmentGroup = _cast(None, segmentGroup)
-        self.segmentGroup_nsprefix_ = None
-        self.segment = _cast(int, segment)
-        self.segment_nsprefix_ = None
+        self.segment_groups = _cast(None, segment_groups)
+        self.segment_groups_nsprefix_ = None
+        self.segments = _cast(int, segments)
+        self.segments_nsprefix_ = None
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
-        if variableParameter is None:
-            self.variableParameter = []
+        if variable_parameters is None:
+            self.variable_parameters = []
         else:
-            self.variableParameter = variableParameter
-        self.variableParameter_nsprefix_ = None
+            self.variable_parameters = variable_parameters
+        self.variable_parameters_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -12615,7 +12614,7 @@ class ChannelDensity(Base):
             pass
     def hasContent_(self):
         if (
-            self.variableParameter or
+            self.variable_parameters or
             super(ChannelDensity, self).hasContent_()
         ):
             return True
@@ -12646,21 +12645,21 @@ class ChannelDensity(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='ChannelDensity'):
         super(ChannelDensity, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='ChannelDensity')
-        if self.ionChannel is not None and 'ionChannel' not in already_processed:
-            already_processed.add('ionChannel')
-            outfile.write(' ionChannel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ionChannel), input_name='ionChannel')), ))
-        if self.condDensity is not None and 'condDensity' not in already_processed:
-            already_processed.add('condDensity')
-            outfile.write(' condDensity=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.condDensity), input_name='condDensity')), ))
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
+            outfile.write(' ionChannel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion_channel), input_name='ionChannel')), ))
+        if self.cond_density is not None and 'cond_density' not in already_processed:
+            already_processed.add('cond_density')
+            outfile.write(' condDensity=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.cond_density), input_name='condDensity')), ))
         if self.erev is not None and 'erev' not in already_processed:
             already_processed.add('erev')
             outfile.write(' erev=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.erev), input_name='erev')), ))
-        if self.segmentGroup != "all" and 'segmentGroup' not in already_processed:
-            already_processed.add('segmentGroup')
-            outfile.write(' segmentGroup=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segmentGroup), input_name='segmentGroup')), ))
-        if self.segment is not None and 'segment' not in already_processed:
-            already_processed.add('segment')
-            outfile.write(' segment="%s"' % self.gds_format_integer(self.segment, input_name='segment'))
+        if self.segment_groups != "all" and 'segment_groups' not in already_processed:
+            already_processed.add('segment_groups')
+            outfile.write(' segmentGroup=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segment_groups), input_name='segmentGroup')), ))
+        if self.segments is not None and 'segments' not in already_processed:
+            already_processed.add('segments')
+            outfile.write(' segment="%s"' % self.gds_format_integer(self.segments, input_name='segment'))
         if self.ion is not None and 'ion' not in already_processed:
             already_processed.add('ion')
             outfile.write(' ion=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion), input_name='ion')), ))
@@ -12678,8 +12677,8 @@ class ChannelDensity(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        for variableParameter_ in self.variableParameter:
-            namespaceprefix_ = self.variableParameter_nsprefix_ + ':' if (UseCapturedNS_ and self.variableParameter_nsprefix_) else ''
+        for variableParameter_ in self.variable_parameters:
+            namespaceprefix_ = self.variable_parameters_nsprefix_ + ':' if (UseCapturedNS_ and self.variable_parameters_nsprefix_) else ''
             variableParameter_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='variableParameter', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -12696,13 +12695,13 @@ class ChannelDensity(Base):
         value = find_attr_value_('ionChannel', node)
         if value is not None and 'ionChannel' not in already_processed:
             already_processed.add('ionChannel')
-            self.ionChannel = value
-            self.validate_NmlId(self.ionChannel)    # validate type NmlId
+            self.ion_channel = value
+            self.validate_NmlId(self.ion_channel)    # validate type NmlId
         value = find_attr_value_('condDensity', node)
         if value is not None and 'condDensity' not in already_processed:
             already_processed.add('condDensity')
-            self.condDensity = value
-            self.validate_Nml2Quantity_conductanceDensity(self.condDensity)    # validate type Nml2Quantity_conductanceDensity
+            self.cond_density = value
+            self.validate_Nml2Quantity_conductanceDensity(self.cond_density)    # validate type Nml2Quantity_conductanceDensity
         value = find_attr_value_('erev', node)
         if value is not None and 'erev' not in already_processed:
             already_processed.add('erev')
@@ -12711,15 +12710,15 @@ class ChannelDensity(Base):
         value = find_attr_value_('segmentGroup', node)
         if value is not None and 'segmentGroup' not in already_processed:
             already_processed.add('segmentGroup')
-            self.segmentGroup = value
-            self.validate_NmlId(self.segmentGroup)    # validate type NmlId
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)    # validate type NmlId
         value = find_attr_value_('segment', node)
         if value is not None and 'segment' not in already_processed:
             already_processed.add('segment')
-            self.segment = self.gds_parse_integer(value, node, 'segment')
-            if self.segment < 0:
+            self.segments = self.gds_parse_integer(value, node, 'segment')
+            if self.segments < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_NonNegativeInteger(self.segment)    # validate type NonNegativeInteger
+            self.validate_NonNegativeInteger(self.segments)    # validate type NonNegativeInteger
         value = find_attr_value_('ion', node)
         if value is not None and 'ion' not in already_processed:
             already_processed.add('ion')
@@ -12734,7 +12733,7 @@ class ChannelDensity(Base):
         if nodeName_ == 'variableParameter':
             obj_ = VariableParameter.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.variableParameter.append(obj_)
+            self.variable_parameters.append(obj_)
             obj_.original_tagname_ = 'variableParameter'
         super(ChannelDensity, self).buildChildren(child_, node, nodeName_, True)
 # end class ChannelDensity
@@ -12753,28 +12752,28 @@ class ChannelDensityNonUniformGHK(Base):
     element. TODO: remove."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('ionChannel', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('ion_channel', 'NmlId', 0, 0, {'use': 'required'}),
         MemberSpec_('ion', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('variableParameter', 'VariableParameter', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'variableParameter', 'type': 'VariableParameter'}, None),
+        MemberSpec_('variable_parameters', 'VariableParameter', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'variableParameter', 'type': 'VariableParameter'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, ionChannel=None, ion=None, variableParameter=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, ion=None, variable_parameters=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensityNonUniformGHK, self).__init__(neuroLexId, id,  **kwargs_)
-        self.ionChannel = _cast(None, ionChannel)
-        self.ionChannel_nsprefix_ = None
+        super(ChannelDensityNonUniformGHK, self).__init__(neuro_lex_id, id,  **kwargs_)
+        self.ion_channel = _cast(None, ion_channel)
+        self.ion_channel_nsprefix_ = None
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
-        if variableParameter is None:
-            self.variableParameter = []
+        if variable_parameters is None:
+            self.variable_parameters = []
         else:
-            self.variableParameter = variableParameter
-        self.variableParameter_nsprefix_ = None
+            self.variable_parameters = variable_parameters
+        self.variable_parameters_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -12799,7 +12798,7 @@ class ChannelDensityNonUniformGHK(Base):
     validate_NmlId_patterns_ = [['^([a-zA-Z_][a-zA-Z0-9_]*)$']]
     def hasContent_(self):
         if (
-            self.variableParameter or
+            self.variable_parameters or
             super(ChannelDensityNonUniformGHK, self).hasContent_()
         ):
             return True
@@ -12830,9 +12829,9 @@ class ChannelDensityNonUniformGHK(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='ChannelDensityNonUniformGHK'):
         super(ChannelDensityNonUniformGHK, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='ChannelDensityNonUniformGHK')
-        if self.ionChannel is not None and 'ionChannel' not in already_processed:
-            already_processed.add('ionChannel')
-            outfile.write(' ionChannel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ionChannel), input_name='ionChannel')), ))
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
+            outfile.write(' ionChannel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion_channel), input_name='ionChannel')), ))
         if self.ion is not None and 'ion' not in already_processed:
             already_processed.add('ion')
             outfile.write(' ion=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion), input_name='ion')), ))
@@ -12842,8 +12841,8 @@ class ChannelDensityNonUniformGHK(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        for variableParameter_ in self.variableParameter:
-            namespaceprefix_ = self.variableParameter_nsprefix_ + ':' if (UseCapturedNS_ and self.variableParameter_nsprefix_) else ''
+        for variableParameter_ in self.variable_parameters:
+            namespaceprefix_ = self.variable_parameters_nsprefix_ + ':' if (UseCapturedNS_ and self.variable_parameters_nsprefix_) else ''
             variableParameter_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='variableParameter', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -12860,8 +12859,8 @@ class ChannelDensityNonUniformGHK(Base):
         value = find_attr_value_('ionChannel', node)
         if value is not None and 'ionChannel' not in already_processed:
             already_processed.add('ionChannel')
-            self.ionChannel = value
-            self.validate_NmlId(self.ionChannel)    # validate type NmlId
+            self.ion_channel = value
+            self.validate_NmlId(self.ion_channel)    # validate type NmlId
         value = find_attr_value_('ion', node)
         if value is not None and 'ion' not in already_processed:
             already_processed.add('ion')
@@ -12872,7 +12871,7 @@ class ChannelDensityNonUniformGHK(Base):
         if nodeName_ == 'variableParameter':
             obj_ = VariableParameter.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.variableParameter.append(obj_)
+            self.variable_parameters.append(obj_)
             obj_.original_tagname_ = 'variableParameter'
         super(ChannelDensityNonUniformGHK, self).buildChildren(child_, node, nodeName_, True)
 # end class ChannelDensityNonUniformGHK
@@ -12891,28 +12890,28 @@ class ChannelDensityNonUniformNernst(Base):
     element. TODO: remove."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('ionChannel', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('ion_channel', 'NmlId', 0, 0, {'use': 'required'}),
         MemberSpec_('ion', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('variableParameter', 'VariableParameter', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'variableParameter', 'type': 'VariableParameter'}, None),
+        MemberSpec_('variable_parameters', 'VariableParameter', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'variableParameter', 'type': 'VariableParameter'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, ionChannel=None, ion=None, variableParameter=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, ion=None, variable_parameters=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensityNonUniformNernst, self).__init__(neuroLexId, id,  **kwargs_)
-        self.ionChannel = _cast(None, ionChannel)
-        self.ionChannel_nsprefix_ = None
+        super(ChannelDensityNonUniformNernst, self).__init__(neuro_lex_id, id,  **kwargs_)
+        self.ion_channel = _cast(None, ion_channel)
+        self.ion_channel_nsprefix_ = None
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
-        if variableParameter is None:
-            self.variableParameter = []
+        if variable_parameters is None:
+            self.variable_parameters = []
         else:
-            self.variableParameter = variableParameter
-        self.variableParameter_nsprefix_ = None
+            self.variable_parameters = variable_parameters
+        self.variable_parameters_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -12937,7 +12936,7 @@ class ChannelDensityNonUniformNernst(Base):
     validate_NmlId_patterns_ = [['^([a-zA-Z_][a-zA-Z0-9_]*)$']]
     def hasContent_(self):
         if (
-            self.variableParameter or
+            self.variable_parameters or
             super(ChannelDensityNonUniformNernst, self).hasContent_()
         ):
             return True
@@ -12968,9 +12967,9 @@ class ChannelDensityNonUniformNernst(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='ChannelDensityNonUniformNernst'):
         super(ChannelDensityNonUniformNernst, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='ChannelDensityNonUniformNernst')
-        if self.ionChannel is not None and 'ionChannel' not in already_processed:
-            already_processed.add('ionChannel')
-            outfile.write(' ionChannel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ionChannel), input_name='ionChannel')), ))
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
+            outfile.write(' ionChannel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion_channel), input_name='ionChannel')), ))
         if self.ion is not None and 'ion' not in already_processed:
             already_processed.add('ion')
             outfile.write(' ion=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion), input_name='ion')), ))
@@ -12980,8 +12979,8 @@ class ChannelDensityNonUniformNernst(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        for variableParameter_ in self.variableParameter:
-            namespaceprefix_ = self.variableParameter_nsprefix_ + ':' if (UseCapturedNS_ and self.variableParameter_nsprefix_) else ''
+        for variableParameter_ in self.variable_parameters:
+            namespaceprefix_ = self.variable_parameters_nsprefix_ + ':' if (UseCapturedNS_ and self.variable_parameters_nsprefix_) else ''
             variableParameter_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='variableParameter', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -12998,8 +12997,8 @@ class ChannelDensityNonUniformNernst(Base):
         value = find_attr_value_('ionChannel', node)
         if value is not None and 'ionChannel' not in already_processed:
             already_processed.add('ionChannel')
-            self.ionChannel = value
-            self.validate_NmlId(self.ionChannel)    # validate type NmlId
+            self.ion_channel = value
+            self.validate_NmlId(self.ion_channel)    # validate type NmlId
         value = find_attr_value_('ion', node)
         if value is not None and 'ion' not in already_processed:
             already_processed.add('ion')
@@ -13010,7 +13009,7 @@ class ChannelDensityNonUniformNernst(Base):
         if nodeName_ == 'variableParameter':
             obj_ = VariableParameter.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.variableParameter.append(obj_)
+            self.variable_parameters.append(obj_)
             obj_.original_tagname_ = 'variableParameter'
         super(ChannelDensityNonUniformNernst, self).buildChildren(child_, node, nodeName_, True)
 # end class ChannelDensityNonUniformNernst
@@ -13029,31 +13028,31 @@ class ChannelDensityNonUniform(Base):
     element. TODO: remove."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('ionChannel', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('ion_channel', 'NmlId', 0, 0, {'use': 'required'}),
         MemberSpec_('erev', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
         MemberSpec_('ion', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('variableParameter', 'VariableParameter', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'variableParameter', 'type': 'VariableParameter'}, None),
+        MemberSpec_('variable_parameters', 'VariableParameter', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'variableParameter', 'type': 'VariableParameter'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, ionChannel=None, erev=None, ion=None, variableParameter=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, erev=None, ion=None, variable_parameters=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensityNonUniform, self).__init__(neuroLexId, id,  **kwargs_)
-        self.ionChannel = _cast(None, ionChannel)
-        self.ionChannel_nsprefix_ = None
+        super(ChannelDensityNonUniform, self).__init__(neuro_lex_id, id,  **kwargs_)
+        self.ion_channel = _cast(None, ion_channel)
+        self.ion_channel_nsprefix_ = None
         self.erev = _cast(None, erev)
         self.erev_nsprefix_ = None
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
-        if variableParameter is None:
-            self.variableParameter = []
+        if variable_parameters is None:
+            self.variable_parameters = []
         else:
-            self.variableParameter = variableParameter
-        self.variableParameter_nsprefix_ = None
+            self.variable_parameters = variable_parameters
+        self.variable_parameters_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -13089,7 +13088,7 @@ class ChannelDensityNonUniform(Base):
     validate_Nml2Quantity_voltage_patterns_ = [['^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$']]
     def hasContent_(self):
         if (
-            self.variableParameter or
+            self.variable_parameters or
             super(ChannelDensityNonUniform, self).hasContent_()
         ):
             return True
@@ -13120,9 +13119,9 @@ class ChannelDensityNonUniform(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='ChannelDensityNonUniform'):
         super(ChannelDensityNonUniform, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='ChannelDensityNonUniform')
-        if self.ionChannel is not None and 'ionChannel' not in already_processed:
-            already_processed.add('ionChannel')
-            outfile.write(' ionChannel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ionChannel), input_name='ionChannel')), ))
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
+            outfile.write(' ionChannel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion_channel), input_name='ionChannel')), ))
         if self.erev is not None and 'erev' not in already_processed:
             already_processed.add('erev')
             outfile.write(' erev=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.erev), input_name='erev')), ))
@@ -13135,8 +13134,8 @@ class ChannelDensityNonUniform(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        for variableParameter_ in self.variableParameter:
-            namespaceprefix_ = self.variableParameter_nsprefix_ + ':' if (UseCapturedNS_ and self.variableParameter_nsprefix_) else ''
+        for variableParameter_ in self.variable_parameters:
+            namespaceprefix_ = self.variable_parameters_nsprefix_ + ':' if (UseCapturedNS_ and self.variable_parameters_nsprefix_) else ''
             variableParameter_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='variableParameter', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -13153,8 +13152,8 @@ class ChannelDensityNonUniform(Base):
         value = find_attr_value_('ionChannel', node)
         if value is not None and 'ionChannel' not in already_processed:
             already_processed.add('ionChannel')
-            self.ionChannel = value
-            self.validate_NmlId(self.ionChannel)    # validate type NmlId
+            self.ion_channel = value
+            self.validate_NmlId(self.ion_channel)    # validate type NmlId
         value = find_attr_value_('erev', node)
         if value is not None and 'erev' not in already_processed:
             already_processed.add('erev')
@@ -13170,7 +13169,7 @@ class ChannelDensityNonUniform(Base):
         if nodeName_ == 'variableParameter':
             obj_ = VariableParameter.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.variableParameter.append(obj_)
+            self.variable_parameters.append(obj_)
             obj_.original_tagname_ = 'variableParameter'
         super(ChannelDensityNonUniform, self).buildChildren(child_, node, nodeName_, True)
 # end class ChannelDensityNonUniform
@@ -13189,40 +13188,40 @@ class ChannelPopulation(Base):
     element. TODO: remove."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('ionChannel', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('ion_channel', 'NmlId', 0, 0, {'use': 'required'}),
         MemberSpec_('number', 'NonNegativeInteger', 0, 0, {'use': 'required'}),
         MemberSpec_('erev', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
-        MemberSpec_('segmentGroup', 'NmlId', 0, 1, {'use': 'optional'}),
-        MemberSpec_('segment', 'NonNegativeInteger', 0, 1, {'use': 'optional'}),
+        MemberSpec_('segment_groups', 'NmlId', 0, 1, {'use': 'optional'}),
+        MemberSpec_('segments', 'NonNegativeInteger', 0, 1, {'use': 'optional'}),
         MemberSpec_('ion', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('variableParameter', 'VariableParameter', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'variableParameter', 'type': 'VariableParameter'}, None),
+        MemberSpec_('variable_parameters', 'VariableParameter', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'variableParameter', 'type': 'VariableParameter'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, ionChannel=None, number=None, erev=None, segmentGroup='all', segment=None, ion=None, variableParameter=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, number=None, erev=None, segment_groups='all', segments=None, ion=None, variable_parameters=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelPopulation, self).__init__(neuroLexId, id,  **kwargs_)
-        self.ionChannel = _cast(None, ionChannel)
-        self.ionChannel_nsprefix_ = None
+        super(ChannelPopulation, self).__init__(neuro_lex_id, id,  **kwargs_)
+        self.ion_channel = _cast(None, ion_channel)
+        self.ion_channel_nsprefix_ = None
         self.number = _cast(int, number)
         self.number_nsprefix_ = None
         self.erev = _cast(None, erev)
         self.erev_nsprefix_ = None
-        self.segmentGroup = _cast(None, segmentGroup)
-        self.segmentGroup_nsprefix_ = None
-        self.segment = _cast(int, segment)
-        self.segment_nsprefix_ = None
+        self.segment_groups = _cast(None, segment_groups)
+        self.segment_groups_nsprefix_ = None
+        self.segments = _cast(int, segments)
+        self.segments_nsprefix_ = None
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
-        if variableParameter is None:
-            self.variableParameter = []
+        if variable_parameters is None:
+            self.variable_parameters = []
         else:
-            self.variableParameter = variableParameter
-        self.variableParameter_nsprefix_ = None
+            self.variable_parameters = variable_parameters
+        self.variable_parameters_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -13266,7 +13265,7 @@ class ChannelPopulation(Base):
     validate_Nml2Quantity_voltage_patterns_ = [['^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$']]
     def hasContent_(self):
         if (
-            self.variableParameter or
+            self.variable_parameters or
             super(ChannelPopulation, self).hasContent_()
         ):
             return True
@@ -13297,21 +13296,21 @@ class ChannelPopulation(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='ChannelPopulation'):
         super(ChannelPopulation, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='ChannelPopulation')
-        if self.ionChannel is not None and 'ionChannel' not in already_processed:
-            already_processed.add('ionChannel')
-            outfile.write(' ionChannel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ionChannel), input_name='ionChannel')), ))
+        if self.ion_channel is not None and 'ion_channel' not in already_processed:
+            already_processed.add('ion_channel')
+            outfile.write(' ionChannel=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion_channel), input_name='ionChannel')), ))
         if self.number is not None and 'number' not in already_processed:
             already_processed.add('number')
             outfile.write(' number="%s"' % self.gds_format_integer(self.number, input_name='number'))
         if self.erev is not None and 'erev' not in already_processed:
             already_processed.add('erev')
             outfile.write(' erev=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.erev), input_name='erev')), ))
-        if self.segmentGroup != "all" and 'segmentGroup' not in already_processed:
-            already_processed.add('segmentGroup')
-            outfile.write(' segmentGroup=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segmentGroup), input_name='segmentGroup')), ))
-        if self.segment is not None and 'segment' not in already_processed:
-            already_processed.add('segment')
-            outfile.write(' segment="%s"' % self.gds_format_integer(self.segment, input_name='segment'))
+        if self.segment_groups != "all" and 'segment_groups' not in already_processed:
+            already_processed.add('segment_groups')
+            outfile.write(' segmentGroup=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.segment_groups), input_name='segmentGroup')), ))
+        if self.segments is not None and 'segments' not in already_processed:
+            already_processed.add('segments')
+            outfile.write(' segment="%s"' % self.gds_format_integer(self.segments, input_name='segment'))
         if self.ion is not None and 'ion' not in already_processed:
             already_processed.add('ion')
             outfile.write(' ion=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion), input_name='ion')), ))
@@ -13321,8 +13320,8 @@ class ChannelPopulation(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        for variableParameter_ in self.variableParameter:
-            namespaceprefix_ = self.variableParameter_nsprefix_ + ':' if (UseCapturedNS_ and self.variableParameter_nsprefix_) else ''
+        for variableParameter_ in self.variable_parameters:
+            namespaceprefix_ = self.variable_parameters_nsprefix_ + ':' if (UseCapturedNS_ and self.variable_parameters_nsprefix_) else ''
             variableParameter_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='variableParameter', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -13339,8 +13338,8 @@ class ChannelPopulation(Base):
         value = find_attr_value_('ionChannel', node)
         if value is not None and 'ionChannel' not in already_processed:
             already_processed.add('ionChannel')
-            self.ionChannel = value
-            self.validate_NmlId(self.ionChannel)    # validate type NmlId
+            self.ion_channel = value
+            self.validate_NmlId(self.ion_channel)    # validate type NmlId
         value = find_attr_value_('number', node)
         if value is not None and 'number' not in already_processed:
             already_processed.add('number')
@@ -13356,15 +13355,15 @@ class ChannelPopulation(Base):
         value = find_attr_value_('segmentGroup', node)
         if value is not None and 'segmentGroup' not in already_processed:
             already_processed.add('segmentGroup')
-            self.segmentGroup = value
-            self.validate_NmlId(self.segmentGroup)    # validate type NmlId
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)    # validate type NmlId
         value = find_attr_value_('segment', node)
         if value is not None and 'segment' not in already_processed:
             already_processed.add('segment')
-            self.segment = self.gds_parse_integer(value, node, 'segment')
-            if self.segment < 0:
+            self.segments = self.gds_parse_integer(value, node, 'segment')
+            if self.segments < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_NonNegativeInteger(self.segment)    # validate type NonNegativeInteger
+            self.validate_NonNegativeInteger(self.segments)    # validate type NonNegativeInteger
         value = find_attr_value_('ion', node)
         if value is not None and 'ion' not in already_processed:
             already_processed.add('ion')
@@ -13375,7 +13374,7 @@ class ChannelPopulation(Base):
         if nodeName_ == 'variableParameter':
             obj_ = VariableParameter.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.variableParameter.append(obj_)
+            self.variable_parameters.append(obj_)
             obj_.original_tagname_ = 'variableParameter'
         super(ChannelPopulation, self).buildChildren(child_, node, nodeName_, True)
 # end class ChannelPopulation
@@ -13389,13 +13388,13 @@ class Resistivity(ValueAcrossSegOrSegGroup):
     ]
     subclass = None
     superclass = ValueAcrossSegOrSegGroup
-    def __init__(self, value=None, segmentGroup='all', segment=None, gds_collector_=None, **kwargs_):
+    def __init__(self, value=None, segment_groups='all', segments=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Resistivity, self).__init__(value, segmentGroup, segment,  **kwargs_)
+        super(Resistivity, self).__init__(value, segment_groups, segments,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -13468,13 +13467,13 @@ class InitMembPotential(ValueAcrossSegOrSegGroup):
     ]
     subclass = None
     superclass = ValueAcrossSegOrSegGroup
-    def __init__(self, value=None, segmentGroup='all', segment=None, gds_collector_=None, **kwargs_):
+    def __init__(self, value=None, segment_groups='all', segments=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(InitMembPotential, self).__init__(value, segmentGroup, segment,  **kwargs_)
+        super(InitMembPotential, self).__init__(value, segment_groups, segments,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -13547,13 +13546,13 @@ class SpecificCapacitance(ValueAcrossSegOrSegGroup):
     ]
     subclass = None
     superclass = ValueAcrossSegOrSegGroup
-    def __init__(self, value=None, segmentGroup='all', segment=None, gds_collector_=None, **kwargs_):
+    def __init__(self, value=None, segment_groups='all', segments=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SpecificCapacitance, self).__init__(value, segmentGroup, segment,  **kwargs_)
+        super(SpecificCapacitance, self).__init__(value, segment_groups, segments,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -13626,13 +13625,13 @@ class SpikeThresh(ValueAcrossSegOrSegGroup):
     ]
     subclass = None
     superclass = ValueAcrossSegOrSegGroup
-    def __init__(self, value=None, segmentGroup='all', segment=None, gds_collector_=None, **kwargs_):
+    def __init__(self, value=None, segment_groups='all', segments=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SpikeThresh, self).__init__(value, segmentGroup, segment,  **kwargs_)
+        super(SpikeThresh, self).__init__(value, segment_groups, segments,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -13703,25 +13702,25 @@ class BiophysicalProperties2CaPools(Standalone):
     referenced by id."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('membraneProperties2CaPools', 'MembraneProperties2CaPools', 0, 0, {'name': 'membraneProperties2CaPools', 'type': 'MembraneProperties2CaPools'}, None),
-        MemberSpec_('intracellularProperties2CaPools', 'IntracellularProperties2CaPools', 0, 1, {'minOccurs': '0', 'name': 'intracellularProperties2CaPools', 'type': 'IntracellularProperties2CaPools'}, None),
-        MemberSpec_('extracellularProperties', 'ExtracellularProperties', 0, 1, {'minOccurs': '0', 'name': 'extracellularProperties', 'type': 'ExtracellularProperties'}, None),
+        MemberSpec_('membrane_properties2_ca_pools', 'MembraneProperties2CaPools', 0, 0, {'name': 'membraneProperties2CaPools', 'type': 'MembraneProperties2CaPools'}, None),
+        MemberSpec_('intracellular_properties2_ca_pools', 'IntracellularProperties2CaPools', 0, 1, {'minOccurs': '0', 'name': 'intracellularProperties2CaPools', 'type': 'IntracellularProperties2CaPools'}, None),
+        MemberSpec_('extracellular_properties', 'ExtracellularProperties', 0, 1, {'minOccurs': '0', 'name': 'extracellularProperties', 'type': 'ExtracellularProperties'}, None),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, membraneProperties2CaPools=None, intracellularProperties2CaPools=None, extracellularProperties=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, membrane_properties2_ca_pools=None, intracellular_properties2_ca_pools=None, extracellular_properties=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BiophysicalProperties2CaPools, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
-        self.membraneProperties2CaPools = membraneProperties2CaPools
-        self.membraneProperties2CaPools_nsprefix_ = None
-        self.intracellularProperties2CaPools = intracellularProperties2CaPools
-        self.intracellularProperties2CaPools_nsprefix_ = None
-        self.extracellularProperties = extracellularProperties
-        self.extracellularProperties_nsprefix_ = None
+        super(BiophysicalProperties2CaPools, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        self.membrane_properties2_ca_pools = membrane_properties2_ca_pools
+        self.membrane_properties2_ca_pools_nsprefix_ = None
+        self.intracellular_properties2_ca_pools = intracellular_properties2_ca_pools
+        self.intracellular_properties2_ca_pools_nsprefix_ = None
+        self.extracellular_properties = extracellular_properties
+        self.extracellular_properties_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -13735,9 +13734,9 @@ class BiophysicalProperties2CaPools(Standalone):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.membraneProperties2CaPools is not None or
-            self.intracellularProperties2CaPools is not None or
-            self.extracellularProperties is not None or
+            self.membrane_properties2_ca_pools is not None or
+            self.intracellular_properties2_ca_pools is not None or
+            self.extracellular_properties is not None or
             super(BiophysicalProperties2CaPools, self).hasContent_()
         ):
             return True
@@ -13774,15 +13773,15 @@ class BiophysicalProperties2CaPools(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.membraneProperties2CaPools is not None:
-            namespaceprefix_ = self.membraneProperties2CaPools_nsprefix_ + ':' if (UseCapturedNS_ and self.membraneProperties2CaPools_nsprefix_) else ''
-            self.membraneProperties2CaPools.export(outfile, level, namespaceprefix_, namespacedef_='', name_='membraneProperties2CaPools', pretty_print=pretty_print)
-        if self.intracellularProperties2CaPools is not None:
-            namespaceprefix_ = self.intracellularProperties2CaPools_nsprefix_ + ':' if (UseCapturedNS_ and self.intracellularProperties2CaPools_nsprefix_) else ''
-            self.intracellularProperties2CaPools.export(outfile, level, namespaceprefix_, namespacedef_='', name_='intracellularProperties2CaPools', pretty_print=pretty_print)
-        if self.extracellularProperties is not None:
-            namespaceprefix_ = self.extracellularProperties_nsprefix_ + ':' if (UseCapturedNS_ and self.extracellularProperties_nsprefix_) else ''
-            self.extracellularProperties.export(outfile, level, namespaceprefix_, namespacedef_='', name_='extracellularProperties', pretty_print=pretty_print)
+        if self.membrane_properties2_ca_pools is not None:
+            namespaceprefix_ = self.membrane_properties2_ca_pools_nsprefix_ + ':' if (UseCapturedNS_ and self.membrane_properties2_ca_pools_nsprefix_) else ''
+            self.membrane_properties2_ca_pools.export(outfile, level, namespaceprefix_, namespacedef_='', name_='membraneProperties2CaPools', pretty_print=pretty_print)
+        if self.intracellular_properties2_ca_pools is not None:
+            namespaceprefix_ = self.intracellular_properties2_ca_pools_nsprefix_ + ':' if (UseCapturedNS_ and self.intracellular_properties2_ca_pools_nsprefix_) else ''
+            self.intracellular_properties2_ca_pools.export(outfile, level, namespaceprefix_, namespacedef_='', name_='intracellularProperties2CaPools', pretty_print=pretty_print)
+        if self.extracellular_properties is not None:
+            namespaceprefix_ = self.extracellular_properties_nsprefix_ + ':' if (UseCapturedNS_ and self.extracellular_properties_nsprefix_) else ''
+            self.extracellular_properties.export(outfile, level, namespaceprefix_, namespacedef_='', name_='extracellularProperties', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -13800,17 +13799,17 @@ class BiophysicalProperties2CaPools(Standalone):
         if nodeName_ == 'membraneProperties2CaPools':
             obj_ = MembraneProperties2CaPools.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.membraneProperties2CaPools = obj_
+            self.membrane_properties2_ca_pools = obj_
             obj_.original_tagname_ = 'membraneProperties2CaPools'
         elif nodeName_ == 'intracellularProperties2CaPools':
             obj_ = IntracellularProperties2CaPools.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.intracellularProperties2CaPools = obj_
+            self.intracellular_properties2_ca_pools = obj_
             obj_.original_tagname_ = 'intracellularProperties2CaPools'
         elif nodeName_ == 'extracellularProperties':
             obj_ = ExtracellularProperties.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.extracellularProperties = obj_
+            self.extracellular_properties = obj_
             obj_.original_tagname_ = 'extracellularProperties'
         super(BiophysicalProperties2CaPools, self).buildChildren(child_, node, nodeName_, True)
 # end class BiophysicalProperties2CaPools
@@ -13822,25 +13821,25 @@ class BiophysicalProperties(Standalone):
     referenced by id."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('membraneProperties', 'MembraneProperties', 0, 0, {'name': 'membraneProperties', 'type': 'MembraneProperties'}, None),
-        MemberSpec_('intracellularProperties', 'IntracellularProperties', 0, 1, {'minOccurs': '0', 'name': 'intracellularProperties', 'type': 'IntracellularProperties'}, None),
-        MemberSpec_('extracellularProperties', 'ExtracellularProperties', 0, 1, {'minOccurs': '0', 'name': 'extracellularProperties', 'type': 'ExtracellularProperties'}, None),
+        MemberSpec_('membrane_properties', 'MembraneProperties', 0, 0, {'name': 'membraneProperties', 'type': 'MembraneProperties'}, None),
+        MemberSpec_('intracellular_properties', 'IntracellularProperties', 0, 1, {'minOccurs': '0', 'name': 'intracellularProperties', 'type': 'IntracellularProperties'}, None),
+        MemberSpec_('extracellular_properties', 'ExtracellularProperties', 0, 1, {'minOccurs': '0', 'name': 'extracellularProperties', 'type': 'ExtracellularProperties'}, None),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, membraneProperties=None, intracellularProperties=None, extracellularProperties=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, membrane_properties=None, intracellular_properties=None, extracellular_properties=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BiophysicalProperties, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
-        self.membraneProperties = membraneProperties
-        self.membraneProperties_nsprefix_ = None
-        self.intracellularProperties = intracellularProperties
-        self.intracellularProperties_nsprefix_ = None
-        self.extracellularProperties = extracellularProperties
-        self.extracellularProperties_nsprefix_ = None
+        super(BiophysicalProperties, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        self.membrane_properties = membrane_properties
+        self.membrane_properties_nsprefix_ = None
+        self.intracellular_properties = intracellular_properties
+        self.intracellular_properties_nsprefix_ = None
+        self.extracellular_properties = extracellular_properties
+        self.extracellular_properties_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -13854,9 +13853,9 @@ class BiophysicalProperties(Standalone):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.membraneProperties is not None or
-            self.intracellularProperties is not None or
-            self.extracellularProperties is not None or
+            self.membrane_properties is not None or
+            self.intracellular_properties is not None or
+            self.extracellular_properties is not None or
             super(BiophysicalProperties, self).hasContent_()
         ):
             return True
@@ -13893,15 +13892,15 @@ class BiophysicalProperties(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.membraneProperties is not None:
-            namespaceprefix_ = self.membraneProperties_nsprefix_ + ':' if (UseCapturedNS_ and self.membraneProperties_nsprefix_) else ''
-            self.membraneProperties.export(outfile, level, namespaceprefix_, namespacedef_='', name_='membraneProperties', pretty_print=pretty_print)
-        if self.intracellularProperties is not None:
-            namespaceprefix_ = self.intracellularProperties_nsprefix_ + ':' if (UseCapturedNS_ and self.intracellularProperties_nsprefix_) else ''
-            self.intracellularProperties.export(outfile, level, namespaceprefix_, namespacedef_='', name_='intracellularProperties', pretty_print=pretty_print)
-        if self.extracellularProperties is not None:
-            namespaceprefix_ = self.extracellularProperties_nsprefix_ + ':' if (UseCapturedNS_ and self.extracellularProperties_nsprefix_) else ''
-            self.extracellularProperties.export(outfile, level, namespaceprefix_, namespacedef_='', name_='extracellularProperties', pretty_print=pretty_print)
+        if self.membrane_properties is not None:
+            namespaceprefix_ = self.membrane_properties_nsprefix_ + ':' if (UseCapturedNS_ and self.membrane_properties_nsprefix_) else ''
+            self.membrane_properties.export(outfile, level, namespaceprefix_, namespacedef_='', name_='membraneProperties', pretty_print=pretty_print)
+        if self.intracellular_properties is not None:
+            namespaceprefix_ = self.intracellular_properties_nsprefix_ + ':' if (UseCapturedNS_ and self.intracellular_properties_nsprefix_) else ''
+            self.intracellular_properties.export(outfile, level, namespaceprefix_, namespacedef_='', name_='intracellularProperties', pretty_print=pretty_print)
+        if self.extracellular_properties is not None:
+            namespaceprefix_ = self.extracellular_properties_nsprefix_ + ':' if (UseCapturedNS_ and self.extracellular_properties_nsprefix_) else ''
+            self.extracellular_properties.export(outfile, level, namespaceprefix_, namespacedef_='', name_='extracellularProperties', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -13920,18 +13919,18 @@ class BiophysicalProperties(Standalone):
             class_obj_ = self.get_class_obj_(child_, MembraneProperties)
             obj_ = class_obj_.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.membraneProperties = obj_
+            self.membrane_properties = obj_
             obj_.original_tagname_ = 'membraneProperties'
         elif nodeName_ == 'intracellularProperties':
             class_obj_ = self.get_class_obj_(child_, IntracellularProperties)
             obj_ = class_obj_.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.intracellularProperties = obj_
+            self.intracellular_properties = obj_
             obj_.original_tagname_ = 'intracellularProperties'
         elif nodeName_ == 'extracellularProperties':
             obj_ = ExtracellularProperties.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.extracellularProperties = obj_
+            self.extracellular_properties = obj_
             obj_.original_tagname_ = 'extracellularProperties'
         super(BiophysicalProperties, self).buildChildren(child_, node, nodeName_, True)
 # end class BiophysicalProperties
@@ -13947,13 +13946,13 @@ class InhomogeneousParameter(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, variable=None, metric=None, proximal=None, distal=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, variable=None, metric=None, proximal=None, distal=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(InhomogeneousParameter, self).__init__(neuroLexId, id,  **kwargs_)
+        super(InhomogeneousParameter, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.variable = _cast(None, variable)
         self.variable_nsprefix_ = None
         self.metric = _cast(None, metric)
@@ -14079,58 +14078,58 @@ class SegmentGroup(Base):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('notes', ['Notes', 'xs:string'], 0, 1, {'minOccurs': '0', 'name': 'notes', 'type': 'xs:string'}, None),
-        MemberSpec_('property', 'Property', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'property', 'type': 'Property'}, None),
+        MemberSpec_('properties', 'Property', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'property', 'type': 'Property'}, None),
         MemberSpec_('annotation', 'Annotation', 0, 1, {'minOccurs': '0', 'name': 'annotation', 'type': 'Annotation'}, None),
-        MemberSpec_('member', 'Member', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'member', 'type': 'Member'}, None),
-        MemberSpec_('include', 'Include', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'include', 'type': 'Include'}, None),
-        MemberSpec_('path', 'Path', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'path', 'type': 'Path'}, None),
-        MemberSpec_('subTree', 'SubTree', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'subTree', 'type': 'SubTree'}, None),
-        MemberSpec_('inhomogeneousParameter', 'InhomogeneousParameter', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'inhomogeneousParameter', 'type': 'InhomogeneousParameter'}, None),
+        MemberSpec_('members', 'Member', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'member', 'type': 'Member'}, None),
+        MemberSpec_('includes', 'Include', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'include', 'type': 'Include'}, None),
+        MemberSpec_('paths', 'Path', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'path', 'type': 'Path'}, None),
+        MemberSpec_('sub_trees', 'SubTree', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'subTree', 'type': 'SubTree'}, None),
+        MemberSpec_('inhomogeneous_parameters', 'InhomogeneousParameter', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'inhomogeneousParameter', 'type': 'InhomogeneousParameter'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, notes=None, property=None, annotation=None, member=None, include=None, path=None, subTree=None, inhomogeneousParameter=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, notes=None, properties=None, annotation=None, members=None, includes=None, paths=None, sub_trees=None, inhomogeneous_parameters=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SegmentGroup, self).__init__(neuroLexId, id,  **kwargs_)
+        super(SegmentGroup, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.notes = notes
         self.validate_Notes(self.notes)
         self.notes_nsprefix_ = None
-        if property is None:
-            self.property = []
+        if properties is None:
+            self.properties = []
         else:
-            self.property = property
-        self.property_nsprefix_ = None
+            self.properties = properties
+        self.properties_nsprefix_ = None
         self.annotation = annotation
         self.annotation_nsprefix_ = None
-        if member is None:
-            self.member = []
+        if members is None:
+            self.members = []
         else:
-            self.member = member
-        self.member_nsprefix_ = None
-        if include is None:
-            self.include = []
+            self.members = members
+        self.members_nsprefix_ = None
+        if includes is None:
+            self.includes = []
         else:
-            self.include = include
-        self.include_nsprefix_ = None
-        if path is None:
-            self.path = []
+            self.includes = includes
+        self.includes_nsprefix_ = None
+        if paths is None:
+            self.paths = []
         else:
-            self.path = path
-        self.path_nsprefix_ = None
-        if subTree is None:
-            self.subTree = []
+            self.paths = paths
+        self.paths_nsprefix_ = None
+        if sub_trees is None:
+            self.sub_trees = []
         else:
-            self.subTree = subTree
-        self.subTree_nsprefix_ = None
-        if inhomogeneousParameter is None:
-            self.inhomogeneousParameter = []
+            self.sub_trees = sub_trees
+        self.sub_trees_nsprefix_ = None
+        if inhomogeneous_parameters is None:
+            self.inhomogeneous_parameters = []
         else:
-            self.inhomogeneousParameter = inhomogeneousParameter
-        self.inhomogeneousParameter_nsprefix_ = None
+            self.inhomogeneous_parameters = inhomogeneous_parameters
+        self.inhomogeneous_parameters_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -14155,13 +14154,13 @@ class SegmentGroup(Base):
     def hasContent_(self):
         if (
             self.notes is not None or
-            self.property or
+            self.properties or
             self.annotation is not None or
-            self.member or
-            self.include or
-            self.path or
-            self.subTree or
-            self.inhomogeneousParameter or
+            self.members or
+            self.includes or
+            self.paths or
+            self.sub_trees or
+            self.inhomogeneous_parameters or
             super(SegmentGroup, self).hasContent_()
         ):
             return True
@@ -14202,26 +14201,26 @@ class SegmentGroup(Base):
             namespaceprefix_ = self.notes_nsprefix_ + ':' if (UseCapturedNS_ and self.notes_nsprefix_) else ''
             showIndent(outfile, level, pretty_print)
             outfile.write('<%snotes>%s</%snotes>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.notes), input_name='notes')), namespaceprefix_ , eol_))
-        for property_ in self.property:
-            namespaceprefix_ = self.property_nsprefix_ + ':' if (UseCapturedNS_ and self.property_nsprefix_) else ''
+        for property_ in self.properties:
+            namespaceprefix_ = self.properties_nsprefix_ + ':' if (UseCapturedNS_ and self.properties_nsprefix_) else ''
             property_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='property', pretty_print=pretty_print)
         if self.annotation is not None:
             namespaceprefix_ = self.annotation_nsprefix_ + ':' if (UseCapturedNS_ and self.annotation_nsprefix_) else ''
             self.annotation.export(outfile, level, namespaceprefix_, namespacedef_='', name_='annotation', pretty_print=pretty_print)
-        for member_ in self.member:
-            namespaceprefix_ = self.member_nsprefix_ + ':' if (UseCapturedNS_ and self.member_nsprefix_) else ''
+        for member_ in self.members:
+            namespaceprefix_ = self.members_nsprefix_ + ':' if (UseCapturedNS_ and self.members_nsprefix_) else ''
             member_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='member', pretty_print=pretty_print)
-        for include_ in self.include:
-            namespaceprefix_ = self.include_nsprefix_ + ':' if (UseCapturedNS_ and self.include_nsprefix_) else ''
+        for include_ in self.includes:
+            namespaceprefix_ = self.includes_nsprefix_ + ':' if (UseCapturedNS_ and self.includes_nsprefix_) else ''
             include_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='include', pretty_print=pretty_print)
-        for path_ in self.path:
-            namespaceprefix_ = self.path_nsprefix_ + ':' if (UseCapturedNS_ and self.path_nsprefix_) else ''
+        for path_ in self.paths:
+            namespaceprefix_ = self.paths_nsprefix_ + ':' if (UseCapturedNS_ and self.paths_nsprefix_) else ''
             path_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='path', pretty_print=pretty_print)
-        for subTree_ in self.subTree:
-            namespaceprefix_ = self.subTree_nsprefix_ + ':' if (UseCapturedNS_ and self.subTree_nsprefix_) else ''
+        for subTree_ in self.sub_trees:
+            namespaceprefix_ = self.sub_trees_nsprefix_ + ':' if (UseCapturedNS_ and self.sub_trees_nsprefix_) else ''
             subTree_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='subTree', pretty_print=pretty_print)
-        for inhomogeneousParameter_ in self.inhomogeneousParameter:
-            namespaceprefix_ = self.inhomogeneousParameter_nsprefix_ + ':' if (UseCapturedNS_ and self.inhomogeneousParameter_nsprefix_) else ''
+        for inhomogeneousParameter_ in self.inhomogeneous_parameters:
+            namespaceprefix_ = self.inhomogeneous_parameters_nsprefix_ + ':' if (UseCapturedNS_ and self.inhomogeneous_parameters_nsprefix_) else ''
             inhomogeneousParameter_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='inhomogeneousParameter', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -14248,7 +14247,7 @@ class SegmentGroup(Base):
         elif nodeName_ == 'property':
             obj_ = Property.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.property.append(obj_)
+            self.properties.append(obj_)
             obj_.original_tagname_ = 'property'
         elif nodeName_ == 'annotation':
             obj_ = Annotation.factory(parent_object_=self)
@@ -14258,27 +14257,27 @@ class SegmentGroup(Base):
         elif nodeName_ == 'member':
             obj_ = Member.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.member.append(obj_)
+            self.members.append(obj_)
             obj_.original_tagname_ = 'member'
         elif nodeName_ == 'include':
             obj_ = Include.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.include.append(obj_)
+            self.includes.append(obj_)
             obj_.original_tagname_ = 'include'
         elif nodeName_ == 'path':
             obj_ = Path.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.path.append(obj_)
+            self.paths.append(obj_)
             obj_.original_tagname_ = 'path'
         elif nodeName_ == 'subTree':
             obj_ = SubTree.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.subTree.append(obj_)
+            self.sub_trees.append(obj_)
             obj_.original_tagname_ = 'subTree'
         elif nodeName_ == 'inhomogeneousParameter':
             obj_ = InhomogeneousParameter.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.inhomogeneousParameter.append(obj_)
+            self.inhomogeneous_parameters.append(obj_)
             obj_.original_tagname_ = 'inhomogeneousParameter'
         super(SegmentGroup, self).buildChildren(child_, node, nodeName_, True)
 
@@ -14304,13 +14303,13 @@ class Segment(BaseNonNegativeIntegerId):
     ]
     subclass = None
     superclass = BaseNonNegativeIntegerId
-    def __init__(self, neuroLexId=None, id=None, name=None, parent=None, proximal=None, distal=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, name=None, parent=None, proximal=None, distal=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Segment, self).__init__(neuroLexId, id,  **kwargs_)
+        super(Segment, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
         self.parent = parent
@@ -14498,28 +14497,28 @@ class Morphology(Standalone):
     referenced by id."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('segment', 'Segment', 1, 0, {'maxOccurs': 'unbounded', 'name': 'segment', 'type': 'Segment'}, None),
-        MemberSpec_('segmentGroup', 'SegmentGroup', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'segmentGroup', 'type': 'SegmentGroup'}, None),
+        MemberSpec_('segments', 'Segment', 1, 0, {'maxOccurs': 'unbounded', 'name': 'segment', 'type': 'Segment'}, None),
+        MemberSpec_('segment_groups', 'SegmentGroup', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'segmentGroup', 'type': 'SegmentGroup'}, None),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, segment=None, segmentGroup=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, segments=None, segment_groups=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Morphology, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
-        if segment is None:
-            self.segment = []
+        super(Morphology, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        if segments is None:
+            self.segments = []
         else:
-            self.segment = segment
-        self.segment_nsprefix_ = None
-        if segmentGroup is None:
-            self.segmentGroup = []
+            self.segments = segments
+        self.segments_nsprefix_ = None
+        if segment_groups is None:
+            self.segment_groups = []
         else:
-            self.segmentGroup = segmentGroup
-        self.segmentGroup_nsprefix_ = None
+            self.segment_groups = segment_groups
+        self.segment_groups_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -14533,8 +14532,8 @@ class Morphology(Standalone):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.segment or
-            self.segmentGroup or
+            self.segments or
+            self.segment_groups or
             super(Morphology, self).hasContent_()
         ):
             return True
@@ -14571,11 +14570,11 @@ class Morphology(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        for segment_ in self.segment:
-            namespaceprefix_ = self.segment_nsprefix_ + ':' if (UseCapturedNS_ and self.segment_nsprefix_) else ''
+        for segment_ in self.segments:
+            namespaceprefix_ = self.segments_nsprefix_ + ':' if (UseCapturedNS_ and self.segments_nsprefix_) else ''
             segment_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='segment', pretty_print=pretty_print)
-        for segmentGroup_ in self.segmentGroup:
-            namespaceprefix_ = self.segmentGroup_nsprefix_ + ':' if (UseCapturedNS_ and self.segmentGroup_nsprefix_) else ''
+        for segmentGroup_ in self.segment_groups:
+            namespaceprefix_ = self.segment_groups_nsprefix_ + ':' if (UseCapturedNS_ and self.segment_groups_nsprefix_) else ''
             segmentGroup_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='segmentGroup', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -14594,12 +14593,12 @@ class Morphology(Standalone):
         if nodeName_ == 'segment':
             obj_ = Segment.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.segment.append(obj_)
+            self.segments.append(obj_)
             obj_.original_tagname_ = 'segment'
         elif nodeName_ == 'segmentGroup':
             obj_ = SegmentGroup.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.segmentGroup.append(obj_)
+            self.segment_groups.append(obj_)
             obj_.original_tagname_ = 'segmentGroup'
         super(Morphology, self).buildChildren(child_, node, nodeName_, True)
     @property
@@ -14614,13 +14613,13 @@ class BaseCell(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseCell, self).__init__(neuroLexId, id, metaid, notes, property, annotation, extensiontype_,  **kwargs_)
+        super(BaseCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -14704,13 +14703,13 @@ class BaseSynapse(Standalone):
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation, extensiontype_,  **kwargs_)
+        super(BaseSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -14793,25 +14792,25 @@ class FixedFactorConcentrationModel(Standalone):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('ion', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('restingConc', 'Nml2Quantity_concentration', 0, 0, {'use': 'required'}),
-        MemberSpec_('decayConstant', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
+        MemberSpec_('resting_conc', 'Nml2Quantity_concentration', 0, 0, {'use': 'required'}),
+        MemberSpec_('decay_constant', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
         MemberSpec_('rho', 'Nml2Quantity_rhoFactor', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, ion=None, restingConc=None, decayConstant=None, rho=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, ion=None, resting_conc=None, decay_constant=None, rho=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(FixedFactorConcentrationModel, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(FixedFactorConcentrationModel, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
-        self.restingConc = _cast(None, restingConc)
-        self.restingConc_nsprefix_ = None
-        self.decayConstant = _cast(None, decayConstant)
-        self.decayConstant_nsprefix_ = None
+        self.resting_conc = _cast(None, resting_conc)
+        self.resting_conc_nsprefix_ = None
+        self.decay_constant = _cast(None, decay_constant)
+        self.decay_constant_nsprefix_ = None
         self.rho = _cast(None, rho)
         self.rho_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -14904,12 +14903,12 @@ class FixedFactorConcentrationModel(Standalone):
         if self.ion is not None and 'ion' not in already_processed:
             already_processed.add('ion')
             outfile.write(' ion=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion), input_name='ion')), ))
-        if self.restingConc is not None and 'restingConc' not in already_processed:
-            already_processed.add('restingConc')
-            outfile.write(' restingConc=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.restingConc), input_name='restingConc')), ))
-        if self.decayConstant is not None and 'decayConstant' not in already_processed:
-            already_processed.add('decayConstant')
-            outfile.write(' decayConstant=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.decayConstant), input_name='decayConstant')), ))
+        if self.resting_conc is not None and 'resting_conc' not in already_processed:
+            already_processed.add('resting_conc')
+            outfile.write(' restingConc=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.resting_conc), input_name='restingConc')), ))
+        if self.decay_constant is not None and 'decay_constant' not in already_processed:
+            already_processed.add('decay_constant')
+            outfile.write(' decayConstant=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.decay_constant), input_name='decayConstant')), ))
         if self.rho is not None and 'rho' not in already_processed:
             already_processed.add('rho')
             outfile.write(' rho=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.rho), input_name='rho')), ))
@@ -14935,13 +14934,13 @@ class FixedFactorConcentrationModel(Standalone):
         value = find_attr_value_('restingConc', node)
         if value is not None and 'restingConc' not in already_processed:
             already_processed.add('restingConc')
-            self.restingConc = value
-            self.validate_Nml2Quantity_concentration(self.restingConc)    # validate type Nml2Quantity_concentration
+            self.resting_conc = value
+            self.validate_Nml2Quantity_concentration(self.resting_conc)    # validate type Nml2Quantity_concentration
         value = find_attr_value_('decayConstant', node)
         if value is not None and 'decayConstant' not in already_processed:
             already_processed.add('decayConstant')
-            self.decayConstant = value
-            self.validate_Nml2Quantity_time(self.decayConstant)    # validate type Nml2Quantity_time
+            self.decay_constant = value
+            self.validate_Nml2Quantity_time(self.decay_constant)    # validate type Nml2Quantity_time
         value = find_attr_value_('rho', node)
         if value is not None and 'rho' not in already_processed:
             already_processed.add('rho')
@@ -14959,27 +14958,27 @@ class DecayingPoolConcentrationModel(Standalone):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('ion', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('restingConc', 'Nml2Quantity_concentration', 0, 0, {'use': 'required'}),
-        MemberSpec_('decayConstant', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
-        MemberSpec_('shellThickness', 'Nml2Quantity_length', 0, 0, {'use': 'required'}),
+        MemberSpec_('resting_conc', 'Nml2Quantity_concentration', 0, 0, {'use': 'required'}),
+        MemberSpec_('decay_constant', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
+        MemberSpec_('shell_thickness', 'Nml2Quantity_length', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, ion=None, restingConc=None, decayConstant=None, shellThickness=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, ion=None, resting_conc=None, decay_constant=None, shell_thickness=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(DecayingPoolConcentrationModel, self).__init__(neuroLexId, id, metaid, notes, property, annotation, extensiontype_,  **kwargs_)
+        super(DecayingPoolConcentrationModel, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
-        self.restingConc = _cast(None, restingConc)
-        self.restingConc_nsprefix_ = None
-        self.decayConstant = _cast(None, decayConstant)
-        self.decayConstant_nsprefix_ = None
-        self.shellThickness = _cast(None, shellThickness)
-        self.shellThickness_nsprefix_ = None
+        self.resting_conc = _cast(None, resting_conc)
+        self.resting_conc_nsprefix_ = None
+        self.decay_constant = _cast(None, decay_constant)
+        self.decay_constant_nsprefix_ = None
+        self.shell_thickness = _cast(None, shell_thickness)
+        self.shell_thickness_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -15071,15 +15070,15 @@ class DecayingPoolConcentrationModel(Standalone):
         if self.ion is not None and 'ion' not in already_processed:
             already_processed.add('ion')
             outfile.write(' ion=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.ion), input_name='ion')), ))
-        if self.restingConc is not None and 'restingConc' not in already_processed:
-            already_processed.add('restingConc')
-            outfile.write(' restingConc=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.restingConc), input_name='restingConc')), ))
-        if self.decayConstant is not None and 'decayConstant' not in already_processed:
-            already_processed.add('decayConstant')
-            outfile.write(' decayConstant=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.decayConstant), input_name='decayConstant')), ))
-        if self.shellThickness is not None and 'shellThickness' not in already_processed:
-            already_processed.add('shellThickness')
-            outfile.write(' shellThickness=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.shellThickness), input_name='shellThickness')), ))
+        if self.resting_conc is not None and 'resting_conc' not in already_processed:
+            already_processed.add('resting_conc')
+            outfile.write(' restingConc=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.resting_conc), input_name='restingConc')), ))
+        if self.decay_constant is not None and 'decay_constant' not in already_processed:
+            already_processed.add('decay_constant')
+            outfile.write(' decayConstant=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.decay_constant), input_name='decayConstant')), ))
+        if self.shell_thickness is not None and 'shell_thickness' not in already_processed:
+            already_processed.add('shell_thickness')
+            outfile.write(' shellThickness=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.shell_thickness), input_name='shellThickness')), ))
         if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -15110,18 +15109,18 @@ class DecayingPoolConcentrationModel(Standalone):
         value = find_attr_value_('restingConc', node)
         if value is not None and 'restingConc' not in already_processed:
             already_processed.add('restingConc')
-            self.restingConc = value
-            self.validate_Nml2Quantity_concentration(self.restingConc)    # validate type Nml2Quantity_concentration
+            self.resting_conc = value
+            self.validate_Nml2Quantity_concentration(self.resting_conc)    # validate type Nml2Quantity_concentration
         value = find_attr_value_('decayConstant', node)
         if value is not None and 'decayConstant' not in already_processed:
             already_processed.add('decayConstant')
-            self.decayConstant = value
-            self.validate_Nml2Quantity_time(self.decayConstant)    # validate type Nml2Quantity_time
+            self.decay_constant = value
+            self.validate_Nml2Quantity_time(self.decay_constant)    # validate type Nml2Quantity_time
         value = find_attr_value_('shellThickness', node)
         if value is not None and 'shellThickness' not in already_processed:
             already_processed.add('shellThickness')
-            self.shellThickness = value
-            self.validate_Nml2Quantity_length(self.shellThickness)    # validate type Nml2Quantity_length
+            self.shell_thickness = value
+            self.validate_Nml2Quantity_length(self.shell_thickness)    # validate type Nml2Quantity_length
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
@@ -15136,32 +15135,32 @@ class DecayingPoolConcentrationModel(Standalone):
 class GateFractionalSubgate(Base):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('fractionalConductance', 'Nml2Quantity_none', 0, 0, {'use': 'required'}),
+        MemberSpec_('fractional_conductance', 'Nml2Quantity_none', 0, 0, {'use': 'required'}),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0, 1, {'minOccurs': '0', 'name': 'notes', 'type': 'xs:string'}, None),
-        MemberSpec_('q10Settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
-        MemberSpec_('steadyState', 'HHVariable', 0, 0, {'minOccurs': '1', 'name': 'steadyState', 'type': 'HHVariable'}, None),
-        MemberSpec_('timeCourse', 'HHTime', 0, 0, {'minOccurs': '1', 'name': 'timeCourse', 'type': 'HHTime'}, None),
+        MemberSpec_('q10_settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
+        MemberSpec_('steady_state', 'HHVariable', 0, 0, {'minOccurs': '1', 'name': 'steadyState', 'type': 'HHVariable'}, None),
+        MemberSpec_('time_course', 'HHTime', 0, 0, {'minOccurs': '1', 'name': 'timeCourse', 'type': 'HHTime'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, fractionalConductance=None, notes=None, q10Settings=None, steadyState=None, timeCourse=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, fractional_conductance=None, notes=None, q10_settings=None, steady_state=None, time_course=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateFractionalSubgate, self).__init__(neuroLexId, id,  **kwargs_)
-        self.fractionalConductance = _cast(None, fractionalConductance)
-        self.fractionalConductance_nsprefix_ = None
+        super(GateFractionalSubgate, self).__init__(neuro_lex_id, id,  **kwargs_)
+        self.fractional_conductance = _cast(None, fractional_conductance)
+        self.fractional_conductance_nsprefix_ = None
         self.notes = notes
         self.validate_Notes(self.notes)
         self.notes_nsprefix_ = None
-        self.q10Settings = q10Settings
-        self.q10Settings_nsprefix_ = None
-        self.steadyState = steadyState
-        self.steadyState_nsprefix_ = None
-        self.timeCourse = timeCourse
-        self.timeCourse_nsprefix_ = None
+        self.q10_settings = q10_settings
+        self.q10_settings_nsprefix_ = None
+        self.steady_state = steady_state
+        self.steady_state_nsprefix_ = None
+        self.time_course = time_course
+        self.time_course_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -15197,9 +15196,9 @@ class GateFractionalSubgate(Base):
     def hasContent_(self):
         if (
             self.notes is not None or
-            self.q10Settings is not None or
-            self.steadyState is not None or
-            self.timeCourse is not None or
+            self.q10_settings is not None or
+            self.steady_state is not None or
+            self.time_course is not None or
             super(GateFractionalSubgate, self).hasContent_()
         ):
             return True
@@ -15230,9 +15229,9 @@ class GateFractionalSubgate(Base):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='GateFractionalSubgate'):
         super(GateFractionalSubgate, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='GateFractionalSubgate')
-        if self.fractionalConductance is not None and 'fractionalConductance' not in already_processed:
-            already_processed.add('fractionalConductance')
-            outfile.write(' fractionalConductance=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.fractionalConductance), input_name='fractionalConductance')), ))
+        if self.fractional_conductance is not None and 'fractional_conductance' not in already_processed:
+            already_processed.add('fractional_conductance')
+            outfile.write(' fractionalConductance=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.fractional_conductance), input_name='fractionalConductance')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='GateFractionalSubgate', fromsubclass_=False, pretty_print=True):
         super(GateFractionalSubgate, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -15243,15 +15242,15 @@ class GateFractionalSubgate(Base):
             namespaceprefix_ = self.notes_nsprefix_ + ':' if (UseCapturedNS_ and self.notes_nsprefix_) else ''
             showIndent(outfile, level, pretty_print)
             outfile.write('<%snotes>%s</%snotes>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.notes), input_name='notes')), namespaceprefix_ , eol_))
-        if self.q10Settings is not None:
-            namespaceprefix_ = self.q10Settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10Settings_nsprefix_) else ''
-            self.q10Settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
-        if self.steadyState is not None:
-            namespaceprefix_ = self.steadyState_nsprefix_ + ':' if (UseCapturedNS_ and self.steadyState_nsprefix_) else ''
-            self.steadyState.export(outfile, level, namespaceprefix_, namespacedef_='', name_='steadyState', pretty_print=pretty_print)
-        if self.timeCourse is not None:
-            namespaceprefix_ = self.timeCourse_nsprefix_ + ':' if (UseCapturedNS_ and self.timeCourse_nsprefix_) else ''
-            self.timeCourse.export(outfile, level, namespaceprefix_, namespacedef_='', name_='timeCourse', pretty_print=pretty_print)
+        if self.q10_settings is not None:
+            namespaceprefix_ = self.q10_settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10_settings_nsprefix_) else ''
+            self.q10_settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
+        if self.steady_state is not None:
+            namespaceprefix_ = self.steady_state_nsprefix_ + ':' if (UseCapturedNS_ and self.steady_state_nsprefix_) else ''
+            self.steady_state.export(outfile, level, namespaceprefix_, namespacedef_='', name_='steadyState', pretty_print=pretty_print)
+        if self.time_course is not None:
+            namespaceprefix_ = self.time_course_nsprefix_ + ':' if (UseCapturedNS_ and self.time_course_nsprefix_) else ''
+            self.time_course.export(outfile, level, namespaceprefix_, namespacedef_='', name_='timeCourse', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -15267,8 +15266,8 @@ class GateFractionalSubgate(Base):
         value = find_attr_value_('fractionalConductance', node)
         if value is not None and 'fractionalConductance' not in already_processed:
             already_processed.add('fractionalConductance')
-            self.fractionalConductance = value
-            self.validate_Nml2Quantity_none(self.fractionalConductance)    # validate type Nml2Quantity_none
+            self.fractional_conductance = value
+            self.validate_Nml2Quantity_none(self.fractional_conductance)    # validate type Nml2Quantity_none
         super(GateFractionalSubgate, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'notes':
@@ -15282,17 +15281,17 @@ class GateFractionalSubgate(Base):
         elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.q10Settings = obj_
+            self.q10_settings = obj_
             obj_.original_tagname_ = 'q10Settings'
         elif nodeName_ == 'steadyState':
             obj_ = HHVariable.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.steadyState = obj_
+            self.steady_state = obj_
             obj_.original_tagname_ = 'steadyState'
         elif nodeName_ == 'timeCourse':
             obj_ = HHTime.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.timeCourse = obj_
+            self.time_course = obj_
             obj_.original_tagname_ = 'timeCourse'
         super(GateFractionalSubgate, self).buildChildren(child_, node, nodeName_, True)
 # end class GateFractionalSubgate
@@ -15303,30 +15302,30 @@ class GateFractional(Base):
     member_data_items_ = [
         MemberSpec_('instances', 'PositiveInteger', 0, 0, {'use': 'required'}),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0, 1, {'minOccurs': '0', 'name': 'notes', 'type': 'xs:string'}, None),
-        MemberSpec_('q10Settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
-        MemberSpec_('subGate', 'GateFractionalSubgate', 1, 0, {'maxOccurs': 'unbounded', 'minOccurs': '1', 'name': 'subGate', 'type': 'GateFractionalSubgate'}, None),
+        MemberSpec_('q10_settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
+        MemberSpec_('sub_gates', 'GateFractionalSubgate', 1, 0, {'maxOccurs': 'unbounded', 'minOccurs': '1', 'name': 'subGate', 'type': 'GateFractionalSubgate'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, instances=None, notes=None, q10Settings=None, subGate=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, sub_gates=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateFractional, self).__init__(neuroLexId, id,  **kwargs_)
+        super(GateFractional, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
         self.validate_Notes(self.notes)
         self.notes_nsprefix_ = None
-        self.q10Settings = q10Settings
-        self.q10Settings_nsprefix_ = None
-        if subGate is None:
-            self.subGate = []
+        self.q10_settings = q10_settings
+        self.q10_settings_nsprefix_ = None
+        if sub_gates is None:
+            self.sub_gates = []
         else:
-            self.subGate = subGate
-        self.subGate_nsprefix_ = None
+            self.sub_gates = sub_gates
+        self.sub_gates_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -15359,8 +15358,8 @@ class GateFractional(Base):
     def hasContent_(self):
         if (
             self.notes is not None or
-            self.q10Settings is not None or
-            self.subGate or
+            self.q10_settings is not None or
+            self.sub_gates or
             super(GateFractional, self).hasContent_()
         ):
             return True
@@ -15404,11 +15403,11 @@ class GateFractional(Base):
             namespaceprefix_ = self.notes_nsprefix_ + ':' if (UseCapturedNS_ and self.notes_nsprefix_) else ''
             showIndent(outfile, level, pretty_print)
             outfile.write('<%snotes>%s</%snotes>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.notes), input_name='notes')), namespaceprefix_ , eol_))
-        if self.q10Settings is not None:
-            namespaceprefix_ = self.q10Settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10Settings_nsprefix_) else ''
-            self.q10Settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
-        for subGate_ in self.subGate:
-            namespaceprefix_ = self.subGate_nsprefix_ + ':' if (UseCapturedNS_ and self.subGate_nsprefix_) else ''
+        if self.q10_settings is not None:
+            namespaceprefix_ = self.q10_settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10_settings_nsprefix_) else ''
+            self.q10_settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
+        for subGate_ in self.sub_gates:
+            namespaceprefix_ = self.sub_gates_nsprefix_ + ':' if (UseCapturedNS_ and self.sub_gates_nsprefix_) else ''
             subGate_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='subGate', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -15442,12 +15441,12 @@ class GateFractional(Base):
         elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.q10Settings = obj_
+            self.q10_settings = obj_
             obj_.original_tagname_ = 'q10Settings'
         elif nodeName_ == 'subGate':
             obj_ = GateFractionalSubgate.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.subGate.append(obj_)
+            self.sub_gates.append(obj_)
             obj_.original_tagname_ = 'subGate'
         super(GateFractional, self).buildChildren(child_, node, nodeName_, True)
 # end class GateFractional
@@ -15458,24 +15457,24 @@ class GateHHInstantaneous(Base):
     member_data_items_ = [
         MemberSpec_('instances', 'PositiveInteger', 0, 0, {'use': 'required'}),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0, 1, {'minOccurs': '0', 'name': 'notes', 'type': 'xs:string'}, None),
-        MemberSpec_('steadyState', 'HHVariable', 0, 0, {'minOccurs': '1', 'name': 'steadyState', 'type': 'HHVariable'}, None),
+        MemberSpec_('steady_state', 'HHVariable', 0, 0, {'minOccurs': '1', 'name': 'steadyState', 'type': 'HHVariable'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, instances=None, notes=None, steadyState=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, steady_state=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateHHInstantaneous, self).__init__(neuroLexId, id,  **kwargs_)
+        super(GateHHInstantaneous, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
         self.validate_Notes(self.notes)
         self.notes_nsprefix_ = None
-        self.steadyState = steadyState
-        self.steadyState_nsprefix_ = None
+        self.steady_state = steady_state
+        self.steady_state_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -15508,7 +15507,7 @@ class GateHHInstantaneous(Base):
     def hasContent_(self):
         if (
             self.notes is not None or
-            self.steadyState is not None or
+            self.steady_state is not None or
             super(GateHHInstantaneous, self).hasContent_()
         ):
             return True
@@ -15552,9 +15551,9 @@ class GateHHInstantaneous(Base):
             namespaceprefix_ = self.notes_nsprefix_ + ':' if (UseCapturedNS_ and self.notes_nsprefix_) else ''
             showIndent(outfile, level, pretty_print)
             outfile.write('<%snotes>%s</%snotes>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.notes), input_name='notes')), namespaceprefix_ , eol_))
-        if self.steadyState is not None:
-            namespaceprefix_ = self.steadyState_nsprefix_ + ':' if (UseCapturedNS_ and self.steadyState_nsprefix_) else ''
-            self.steadyState.export(outfile, level, namespaceprefix_, namespacedef_='', name_='steadyState', pretty_print=pretty_print)
+        if self.steady_state is not None:
+            namespaceprefix_ = self.steady_state_nsprefix_ + ':' if (UseCapturedNS_ and self.steady_state_nsprefix_) else ''
+            self.steady_state.export(outfile, level, namespaceprefix_, namespacedef_='', name_='steadyState', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -15587,7 +15586,7 @@ class GateHHInstantaneous(Base):
         elif nodeName_ == 'steadyState':
             obj_ = HHVariable.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.steadyState = obj_
+            self.steady_state = obj_
             obj_.original_tagname_ = 'steadyState'
         super(GateHHInstantaneous, self).buildChildren(child_, node, nodeName_, True)
 # end class GateHHInstantaneous
@@ -15598,33 +15597,33 @@ class GateHHRatesInf(Base):
     member_data_items_ = [
         MemberSpec_('instances', 'PositiveInteger', 0, 0, {'use': 'required'}),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0, 1, {'minOccurs': '0', 'name': 'notes', 'type': 'xs:string'}, None),
-        MemberSpec_('q10Settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
-        MemberSpec_('forwardRate', 'HHRate', 0, 0, {'minOccurs': '1', 'name': 'forwardRate', 'type': 'HHRate'}, None),
-        MemberSpec_('reverseRate', 'HHRate', 0, 0, {'minOccurs': '1', 'name': 'reverseRate', 'type': 'HHRate'}, None),
-        MemberSpec_('steadyState', 'HHVariable', 0, 0, {'minOccurs': '1', 'name': 'steadyState', 'type': 'HHVariable'}, None),
+        MemberSpec_('q10_settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
+        MemberSpec_('forward_rate', 'HHRate', 0, 0, {'minOccurs': '1', 'name': 'forwardRate', 'type': 'HHRate'}, None),
+        MemberSpec_('reverse_rate', 'HHRate', 0, 0, {'minOccurs': '1', 'name': 'reverseRate', 'type': 'HHRate'}, None),
+        MemberSpec_('steady_state', 'HHVariable', 0, 0, {'minOccurs': '1', 'name': 'steadyState', 'type': 'HHVariable'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, instances=None, notes=None, q10Settings=None, forwardRate=None, reverseRate=None, steadyState=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, steady_state=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateHHRatesInf, self).__init__(neuroLexId, id,  **kwargs_)
+        super(GateHHRatesInf, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
         self.validate_Notes(self.notes)
         self.notes_nsprefix_ = None
-        self.q10Settings = q10Settings
-        self.q10Settings_nsprefix_ = None
-        self.forwardRate = forwardRate
-        self.forwardRate_nsprefix_ = None
-        self.reverseRate = reverseRate
-        self.reverseRate_nsprefix_ = None
-        self.steadyState = steadyState
-        self.steadyState_nsprefix_ = None
+        self.q10_settings = q10_settings
+        self.q10_settings_nsprefix_ = None
+        self.forward_rate = forward_rate
+        self.forward_rate_nsprefix_ = None
+        self.reverse_rate = reverse_rate
+        self.reverse_rate_nsprefix_ = None
+        self.steady_state = steady_state
+        self.steady_state_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -15657,10 +15656,10 @@ class GateHHRatesInf(Base):
     def hasContent_(self):
         if (
             self.notes is not None or
-            self.q10Settings is not None or
-            self.forwardRate is not None or
-            self.reverseRate is not None or
-            self.steadyState is not None or
+            self.q10_settings is not None or
+            self.forward_rate is not None or
+            self.reverse_rate is not None or
+            self.steady_state is not None or
             super(GateHHRatesInf, self).hasContent_()
         ):
             return True
@@ -15704,18 +15703,18 @@ class GateHHRatesInf(Base):
             namespaceprefix_ = self.notes_nsprefix_ + ':' if (UseCapturedNS_ and self.notes_nsprefix_) else ''
             showIndent(outfile, level, pretty_print)
             outfile.write('<%snotes>%s</%snotes>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.notes), input_name='notes')), namespaceprefix_ , eol_))
-        if self.q10Settings is not None:
-            namespaceprefix_ = self.q10Settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10Settings_nsprefix_) else ''
-            self.q10Settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
-        if self.forwardRate is not None:
-            namespaceprefix_ = self.forwardRate_nsprefix_ + ':' if (UseCapturedNS_ and self.forwardRate_nsprefix_) else ''
-            self.forwardRate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='forwardRate', pretty_print=pretty_print)
-        if self.reverseRate is not None:
-            namespaceprefix_ = self.reverseRate_nsprefix_ + ':' if (UseCapturedNS_ and self.reverseRate_nsprefix_) else ''
-            self.reverseRate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='reverseRate', pretty_print=pretty_print)
-        if self.steadyState is not None:
-            namespaceprefix_ = self.steadyState_nsprefix_ + ':' if (UseCapturedNS_ and self.steadyState_nsprefix_) else ''
-            self.steadyState.export(outfile, level, namespaceprefix_, namespacedef_='', name_='steadyState', pretty_print=pretty_print)
+        if self.q10_settings is not None:
+            namespaceprefix_ = self.q10_settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10_settings_nsprefix_) else ''
+            self.q10_settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
+        if self.forward_rate is not None:
+            namespaceprefix_ = self.forward_rate_nsprefix_ + ':' if (UseCapturedNS_ and self.forward_rate_nsprefix_) else ''
+            self.forward_rate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='forwardRate', pretty_print=pretty_print)
+        if self.reverse_rate is not None:
+            namespaceprefix_ = self.reverse_rate_nsprefix_ + ':' if (UseCapturedNS_ and self.reverse_rate_nsprefix_) else ''
+            self.reverse_rate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='reverseRate', pretty_print=pretty_print)
+        if self.steady_state is not None:
+            namespaceprefix_ = self.steady_state_nsprefix_ + ':' if (UseCapturedNS_ and self.steady_state_nsprefix_) else ''
+            self.steady_state.export(outfile, level, namespaceprefix_, namespacedef_='', name_='steadyState', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -15748,22 +15747,22 @@ class GateHHRatesInf(Base):
         elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.q10Settings = obj_
+            self.q10_settings = obj_
             obj_.original_tagname_ = 'q10Settings'
         elif nodeName_ == 'forwardRate':
             obj_ = HHRate.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.forwardRate = obj_
+            self.forward_rate = obj_
             obj_.original_tagname_ = 'forwardRate'
         elif nodeName_ == 'reverseRate':
             obj_ = HHRate.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.reverseRate = obj_
+            self.reverse_rate = obj_
             obj_.original_tagname_ = 'reverseRate'
         elif nodeName_ == 'steadyState':
             obj_ = HHVariable.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.steadyState = obj_
+            self.steady_state = obj_
             obj_.original_tagname_ = 'steadyState'
         super(GateHHRatesInf, self).buildChildren(child_, node, nodeName_, True)
 # end class GateHHRatesInf
@@ -15774,33 +15773,33 @@ class GateHHRatesTau(Base):
     member_data_items_ = [
         MemberSpec_('instances', 'PositiveInteger', 0, 0, {'use': 'required'}),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0, 1, {'minOccurs': '0', 'name': 'notes', 'type': 'xs:string'}, None),
-        MemberSpec_('q10Settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
-        MemberSpec_('forwardRate', 'HHRate', 0, 0, {'minOccurs': '1', 'name': 'forwardRate', 'type': 'HHRate'}, None),
-        MemberSpec_('reverseRate', 'HHRate', 0, 0, {'minOccurs': '1', 'name': 'reverseRate', 'type': 'HHRate'}, None),
-        MemberSpec_('timeCourse', 'HHTime', 0, 0, {'minOccurs': '1', 'name': 'timeCourse', 'type': 'HHTime'}, None),
+        MemberSpec_('q10_settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
+        MemberSpec_('forward_rate', 'HHRate', 0, 0, {'minOccurs': '1', 'name': 'forwardRate', 'type': 'HHRate'}, None),
+        MemberSpec_('reverse_rate', 'HHRate', 0, 0, {'minOccurs': '1', 'name': 'reverseRate', 'type': 'HHRate'}, None),
+        MemberSpec_('time_course', 'HHTime', 0, 0, {'minOccurs': '1', 'name': 'timeCourse', 'type': 'HHTime'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, instances=None, notes=None, q10Settings=None, forwardRate=None, reverseRate=None, timeCourse=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateHHRatesTau, self).__init__(neuroLexId, id,  **kwargs_)
+        super(GateHHRatesTau, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
         self.validate_Notes(self.notes)
         self.notes_nsprefix_ = None
-        self.q10Settings = q10Settings
-        self.q10Settings_nsprefix_ = None
-        self.forwardRate = forwardRate
-        self.forwardRate_nsprefix_ = None
-        self.reverseRate = reverseRate
-        self.reverseRate_nsprefix_ = None
-        self.timeCourse = timeCourse
-        self.timeCourse_nsprefix_ = None
+        self.q10_settings = q10_settings
+        self.q10_settings_nsprefix_ = None
+        self.forward_rate = forward_rate
+        self.forward_rate_nsprefix_ = None
+        self.reverse_rate = reverse_rate
+        self.reverse_rate_nsprefix_ = None
+        self.time_course = time_course
+        self.time_course_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -15833,10 +15832,10 @@ class GateHHRatesTau(Base):
     def hasContent_(self):
         if (
             self.notes is not None or
-            self.q10Settings is not None or
-            self.forwardRate is not None or
-            self.reverseRate is not None or
-            self.timeCourse is not None or
+            self.q10_settings is not None or
+            self.forward_rate is not None or
+            self.reverse_rate is not None or
+            self.time_course is not None or
             super(GateHHRatesTau, self).hasContent_()
         ):
             return True
@@ -15880,18 +15879,18 @@ class GateHHRatesTau(Base):
             namespaceprefix_ = self.notes_nsprefix_ + ':' if (UseCapturedNS_ and self.notes_nsprefix_) else ''
             showIndent(outfile, level, pretty_print)
             outfile.write('<%snotes>%s</%snotes>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.notes), input_name='notes')), namespaceprefix_ , eol_))
-        if self.q10Settings is not None:
-            namespaceprefix_ = self.q10Settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10Settings_nsprefix_) else ''
-            self.q10Settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
-        if self.forwardRate is not None:
-            namespaceprefix_ = self.forwardRate_nsprefix_ + ':' if (UseCapturedNS_ and self.forwardRate_nsprefix_) else ''
-            self.forwardRate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='forwardRate', pretty_print=pretty_print)
-        if self.reverseRate is not None:
-            namespaceprefix_ = self.reverseRate_nsprefix_ + ':' if (UseCapturedNS_ and self.reverseRate_nsprefix_) else ''
-            self.reverseRate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='reverseRate', pretty_print=pretty_print)
-        if self.timeCourse is not None:
-            namespaceprefix_ = self.timeCourse_nsprefix_ + ':' if (UseCapturedNS_ and self.timeCourse_nsprefix_) else ''
-            self.timeCourse.export(outfile, level, namespaceprefix_, namespacedef_='', name_='timeCourse', pretty_print=pretty_print)
+        if self.q10_settings is not None:
+            namespaceprefix_ = self.q10_settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10_settings_nsprefix_) else ''
+            self.q10_settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
+        if self.forward_rate is not None:
+            namespaceprefix_ = self.forward_rate_nsprefix_ + ':' if (UseCapturedNS_ and self.forward_rate_nsprefix_) else ''
+            self.forward_rate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='forwardRate', pretty_print=pretty_print)
+        if self.reverse_rate is not None:
+            namespaceprefix_ = self.reverse_rate_nsprefix_ + ':' if (UseCapturedNS_ and self.reverse_rate_nsprefix_) else ''
+            self.reverse_rate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='reverseRate', pretty_print=pretty_print)
+        if self.time_course is not None:
+            namespaceprefix_ = self.time_course_nsprefix_ + ':' if (UseCapturedNS_ and self.time_course_nsprefix_) else ''
+            self.time_course.export(outfile, level, namespaceprefix_, namespacedef_='', name_='timeCourse', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -15924,22 +15923,22 @@ class GateHHRatesTau(Base):
         elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.q10Settings = obj_
+            self.q10_settings = obj_
             obj_.original_tagname_ = 'q10Settings'
         elif nodeName_ == 'forwardRate':
             obj_ = HHRate.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.forwardRate = obj_
+            self.forward_rate = obj_
             obj_.original_tagname_ = 'forwardRate'
         elif nodeName_ == 'reverseRate':
             obj_ = HHRate.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.reverseRate = obj_
+            self.reverse_rate = obj_
             obj_.original_tagname_ = 'reverseRate'
         elif nodeName_ == 'timeCourse':
             obj_ = HHTime.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.timeCourse = obj_
+            self.time_course = obj_
             obj_.original_tagname_ = 'timeCourse'
         super(GateHHRatesTau, self).buildChildren(child_, node, nodeName_, True)
 # end class GateHHRatesTau
@@ -15950,36 +15949,36 @@ class GateHHRatesTauInf(Base):
     member_data_items_ = [
         MemberSpec_('instances', 'PositiveInteger', 0, 0, {'use': 'required'}),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0, 1, {'minOccurs': '0', 'name': 'notes', 'type': 'xs:string'}, None),
-        MemberSpec_('q10Settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
-        MemberSpec_('forwardRate', 'HHRate', 0, 0, {'minOccurs': '1', 'name': 'forwardRate', 'type': 'HHRate'}, None),
-        MemberSpec_('reverseRate', 'HHRate', 0, 0, {'minOccurs': '1', 'name': 'reverseRate', 'type': 'HHRate'}, None),
-        MemberSpec_('timeCourse', 'HHTime', 0, 0, {'minOccurs': '1', 'name': 'timeCourse', 'type': 'HHTime'}, None),
-        MemberSpec_('steadyState', 'HHVariable', 0, 0, {'minOccurs': '1', 'name': 'steadyState', 'type': 'HHVariable'}, None),
+        MemberSpec_('q10_settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
+        MemberSpec_('forward_rate', 'HHRate', 0, 0, {'minOccurs': '1', 'name': 'forwardRate', 'type': 'HHRate'}, None),
+        MemberSpec_('reverse_rate', 'HHRate', 0, 0, {'minOccurs': '1', 'name': 'reverseRate', 'type': 'HHRate'}, None),
+        MemberSpec_('time_course', 'HHTime', 0, 0, {'minOccurs': '1', 'name': 'timeCourse', 'type': 'HHTime'}, None),
+        MemberSpec_('steady_state', 'HHVariable', 0, 0, {'minOccurs': '1', 'name': 'steadyState', 'type': 'HHVariable'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, instances=None, notes=None, q10Settings=None, forwardRate=None, reverseRate=None, timeCourse=None, steadyState=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None, steady_state=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateHHRatesTauInf, self).__init__(neuroLexId, id,  **kwargs_)
+        super(GateHHRatesTauInf, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
         self.validate_Notes(self.notes)
         self.notes_nsprefix_ = None
-        self.q10Settings = q10Settings
-        self.q10Settings_nsprefix_ = None
-        self.forwardRate = forwardRate
-        self.forwardRate_nsprefix_ = None
-        self.reverseRate = reverseRate
-        self.reverseRate_nsprefix_ = None
-        self.timeCourse = timeCourse
-        self.timeCourse_nsprefix_ = None
-        self.steadyState = steadyState
-        self.steadyState_nsprefix_ = None
+        self.q10_settings = q10_settings
+        self.q10_settings_nsprefix_ = None
+        self.forward_rate = forward_rate
+        self.forward_rate_nsprefix_ = None
+        self.reverse_rate = reverse_rate
+        self.reverse_rate_nsprefix_ = None
+        self.time_course = time_course
+        self.time_course_nsprefix_ = None
+        self.steady_state = steady_state
+        self.steady_state_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -16012,11 +16011,11 @@ class GateHHRatesTauInf(Base):
     def hasContent_(self):
         if (
             self.notes is not None or
-            self.q10Settings is not None or
-            self.forwardRate is not None or
-            self.reverseRate is not None or
-            self.timeCourse is not None or
-            self.steadyState is not None or
+            self.q10_settings is not None or
+            self.forward_rate is not None or
+            self.reverse_rate is not None or
+            self.time_course is not None or
+            self.steady_state is not None or
             super(GateHHRatesTauInf, self).hasContent_()
         ):
             return True
@@ -16060,21 +16059,21 @@ class GateHHRatesTauInf(Base):
             namespaceprefix_ = self.notes_nsprefix_ + ':' if (UseCapturedNS_ and self.notes_nsprefix_) else ''
             showIndent(outfile, level, pretty_print)
             outfile.write('<%snotes>%s</%snotes>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.notes), input_name='notes')), namespaceprefix_ , eol_))
-        if self.q10Settings is not None:
-            namespaceprefix_ = self.q10Settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10Settings_nsprefix_) else ''
-            self.q10Settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
-        if self.forwardRate is not None:
-            namespaceprefix_ = self.forwardRate_nsprefix_ + ':' if (UseCapturedNS_ and self.forwardRate_nsprefix_) else ''
-            self.forwardRate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='forwardRate', pretty_print=pretty_print)
-        if self.reverseRate is not None:
-            namespaceprefix_ = self.reverseRate_nsprefix_ + ':' if (UseCapturedNS_ and self.reverseRate_nsprefix_) else ''
-            self.reverseRate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='reverseRate', pretty_print=pretty_print)
-        if self.timeCourse is not None:
-            namespaceprefix_ = self.timeCourse_nsprefix_ + ':' if (UseCapturedNS_ and self.timeCourse_nsprefix_) else ''
-            self.timeCourse.export(outfile, level, namespaceprefix_, namespacedef_='', name_='timeCourse', pretty_print=pretty_print)
-        if self.steadyState is not None:
-            namespaceprefix_ = self.steadyState_nsprefix_ + ':' if (UseCapturedNS_ and self.steadyState_nsprefix_) else ''
-            self.steadyState.export(outfile, level, namespaceprefix_, namespacedef_='', name_='steadyState', pretty_print=pretty_print)
+        if self.q10_settings is not None:
+            namespaceprefix_ = self.q10_settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10_settings_nsprefix_) else ''
+            self.q10_settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
+        if self.forward_rate is not None:
+            namespaceprefix_ = self.forward_rate_nsprefix_ + ':' if (UseCapturedNS_ and self.forward_rate_nsprefix_) else ''
+            self.forward_rate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='forwardRate', pretty_print=pretty_print)
+        if self.reverse_rate is not None:
+            namespaceprefix_ = self.reverse_rate_nsprefix_ + ':' if (UseCapturedNS_ and self.reverse_rate_nsprefix_) else ''
+            self.reverse_rate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='reverseRate', pretty_print=pretty_print)
+        if self.time_course is not None:
+            namespaceprefix_ = self.time_course_nsprefix_ + ':' if (UseCapturedNS_ and self.time_course_nsprefix_) else ''
+            self.time_course.export(outfile, level, namespaceprefix_, namespacedef_='', name_='timeCourse', pretty_print=pretty_print)
+        if self.steady_state is not None:
+            namespaceprefix_ = self.steady_state_nsprefix_ + ':' if (UseCapturedNS_ and self.steady_state_nsprefix_) else ''
+            self.steady_state.export(outfile, level, namespaceprefix_, namespacedef_='', name_='steadyState', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -16107,27 +16106,27 @@ class GateHHRatesTauInf(Base):
         elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.q10Settings = obj_
+            self.q10_settings = obj_
             obj_.original_tagname_ = 'q10Settings'
         elif nodeName_ == 'forwardRate':
             obj_ = HHRate.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.forwardRate = obj_
+            self.forward_rate = obj_
             obj_.original_tagname_ = 'forwardRate'
         elif nodeName_ == 'reverseRate':
             obj_ = HHRate.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.reverseRate = obj_
+            self.reverse_rate = obj_
             obj_.original_tagname_ = 'reverseRate'
         elif nodeName_ == 'timeCourse':
             obj_ = HHTime.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.timeCourse = obj_
+            self.time_course = obj_
             obj_.original_tagname_ = 'timeCourse'
         elif nodeName_ == 'steadyState':
             obj_ = HHVariable.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.steadyState = obj_
+            self.steady_state = obj_
             obj_.original_tagname_ = 'steadyState'
         super(GateHHRatesTauInf, self).buildChildren(child_, node, nodeName_, True)
 # end class GateHHRatesTauInf
@@ -16138,30 +16137,30 @@ class GateHHTauInf(Base):
     member_data_items_ = [
         MemberSpec_('instances', 'PositiveInteger', 0, 0, {'use': 'required'}),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0, 1, {'minOccurs': '0', 'name': 'notes', 'type': 'xs:string'}, None),
-        MemberSpec_('q10Settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
-        MemberSpec_('timeCourse', 'HHTime', 0, 0, {'minOccurs': '1', 'name': 'timeCourse', 'type': 'HHTime'}, None),
-        MemberSpec_('steadyState', 'HHVariable', 0, 0, {'minOccurs': '1', 'name': 'steadyState', 'type': 'HHVariable'}, None),
+        MemberSpec_('q10_settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
+        MemberSpec_('time_course', 'HHTime', 0, 0, {'minOccurs': '1', 'name': 'timeCourse', 'type': 'HHTime'}, None),
+        MemberSpec_('steady_state', 'HHVariable', 0, 0, {'minOccurs': '1', 'name': 'steadyState', 'type': 'HHVariable'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, instances=None, notes=None, q10Settings=None, timeCourse=None, steadyState=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, time_course=None, steady_state=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateHHTauInf, self).__init__(neuroLexId, id,  **kwargs_)
+        super(GateHHTauInf, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
         self.validate_Notes(self.notes)
         self.notes_nsprefix_ = None
-        self.q10Settings = q10Settings
-        self.q10Settings_nsprefix_ = None
-        self.timeCourse = timeCourse
-        self.timeCourse_nsprefix_ = None
-        self.steadyState = steadyState
-        self.steadyState_nsprefix_ = None
+        self.q10_settings = q10_settings
+        self.q10_settings_nsprefix_ = None
+        self.time_course = time_course
+        self.time_course_nsprefix_ = None
+        self.steady_state = steady_state
+        self.steady_state_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -16194,9 +16193,9 @@ class GateHHTauInf(Base):
     def hasContent_(self):
         if (
             self.notes is not None or
-            self.q10Settings is not None or
-            self.timeCourse is not None or
-            self.steadyState is not None or
+            self.q10_settings is not None or
+            self.time_course is not None or
+            self.steady_state is not None or
             super(GateHHTauInf, self).hasContent_()
         ):
             return True
@@ -16240,15 +16239,15 @@ class GateHHTauInf(Base):
             namespaceprefix_ = self.notes_nsprefix_ + ':' if (UseCapturedNS_ and self.notes_nsprefix_) else ''
             showIndent(outfile, level, pretty_print)
             outfile.write('<%snotes>%s</%snotes>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.notes), input_name='notes')), namespaceprefix_ , eol_))
-        if self.q10Settings is not None:
-            namespaceprefix_ = self.q10Settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10Settings_nsprefix_) else ''
-            self.q10Settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
-        if self.timeCourse is not None:
-            namespaceprefix_ = self.timeCourse_nsprefix_ + ':' if (UseCapturedNS_ and self.timeCourse_nsprefix_) else ''
-            self.timeCourse.export(outfile, level, namespaceprefix_, namespacedef_='', name_='timeCourse', pretty_print=pretty_print)
-        if self.steadyState is not None:
-            namespaceprefix_ = self.steadyState_nsprefix_ + ':' if (UseCapturedNS_ and self.steadyState_nsprefix_) else ''
-            self.steadyState.export(outfile, level, namespaceprefix_, namespacedef_='', name_='steadyState', pretty_print=pretty_print)
+        if self.q10_settings is not None:
+            namespaceprefix_ = self.q10_settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10_settings_nsprefix_) else ''
+            self.q10_settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
+        if self.time_course is not None:
+            namespaceprefix_ = self.time_course_nsprefix_ + ':' if (UseCapturedNS_ and self.time_course_nsprefix_) else ''
+            self.time_course.export(outfile, level, namespaceprefix_, namespacedef_='', name_='timeCourse', pretty_print=pretty_print)
+        if self.steady_state is not None:
+            namespaceprefix_ = self.steady_state_nsprefix_ + ':' if (UseCapturedNS_ and self.steady_state_nsprefix_) else ''
+            self.steady_state.export(outfile, level, namespaceprefix_, namespacedef_='', name_='steadyState', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -16281,17 +16280,17 @@ class GateHHTauInf(Base):
         elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.q10Settings = obj_
+            self.q10_settings = obj_
             obj_.original_tagname_ = 'q10Settings'
         elif nodeName_ == 'timeCourse':
             obj_ = HHTime.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.timeCourse = obj_
+            self.time_course = obj_
             obj_.original_tagname_ = 'timeCourse'
         elif nodeName_ == 'steadyState':
             obj_ = HHVariable.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.steadyState = obj_
+            self.steady_state = obj_
             obj_.original_tagname_ = 'steadyState'
         super(GateHHTauInf, self).buildChildren(child_, node, nodeName_, True)
 # end class GateHHTauInf
@@ -16302,30 +16301,30 @@ class GateHHRates(Base):
     member_data_items_ = [
         MemberSpec_('instances', 'PositiveInteger', 0, 0, {'use': 'required'}),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0, 1, {'minOccurs': '0', 'name': 'notes', 'type': 'xs:string'}, None),
-        MemberSpec_('q10Settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
-        MemberSpec_('forwardRate', 'HHRate', 0, 0, {'minOccurs': '1', 'name': 'forwardRate', 'type': 'HHRate'}, None),
-        MemberSpec_('reverseRate', 'HHRate', 0, 0, {'minOccurs': '1', 'name': 'reverseRate', 'type': 'HHRate'}, None),
+        MemberSpec_('q10_settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
+        MemberSpec_('forward_rate', 'HHRate', 0, 0, {'minOccurs': '1', 'name': 'forwardRate', 'type': 'HHRate'}, None),
+        MemberSpec_('reverse_rate', 'HHRate', 0, 0, {'minOccurs': '1', 'name': 'reverseRate', 'type': 'HHRate'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, instances=None, notes=None, q10Settings=None, forwardRate=None, reverseRate=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateHHRates, self).__init__(neuroLexId, id,  **kwargs_)
+        super(GateHHRates, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
         self.validate_Notes(self.notes)
         self.notes_nsprefix_ = None
-        self.q10Settings = q10Settings
-        self.q10Settings_nsprefix_ = None
-        self.forwardRate = forwardRate
-        self.forwardRate_nsprefix_ = None
-        self.reverseRate = reverseRate
-        self.reverseRate_nsprefix_ = None
+        self.q10_settings = q10_settings
+        self.q10_settings_nsprefix_ = None
+        self.forward_rate = forward_rate
+        self.forward_rate_nsprefix_ = None
+        self.reverse_rate = reverse_rate
+        self.reverse_rate_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -16358,9 +16357,9 @@ class GateHHRates(Base):
     def hasContent_(self):
         if (
             self.notes is not None or
-            self.q10Settings is not None or
-            self.forwardRate is not None or
-            self.reverseRate is not None or
+            self.q10_settings is not None or
+            self.forward_rate is not None or
+            self.reverse_rate is not None or
             super(GateHHRates, self).hasContent_()
         ):
             return True
@@ -16404,15 +16403,15 @@ class GateHHRates(Base):
             namespaceprefix_ = self.notes_nsprefix_ + ':' if (UseCapturedNS_ and self.notes_nsprefix_) else ''
             showIndent(outfile, level, pretty_print)
             outfile.write('<%snotes>%s</%snotes>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.notes), input_name='notes')), namespaceprefix_ , eol_))
-        if self.q10Settings is not None:
-            namespaceprefix_ = self.q10Settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10Settings_nsprefix_) else ''
-            self.q10Settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
-        if self.forwardRate is not None:
-            namespaceprefix_ = self.forwardRate_nsprefix_ + ':' if (UseCapturedNS_ and self.forwardRate_nsprefix_) else ''
-            self.forwardRate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='forwardRate', pretty_print=pretty_print)
-        if self.reverseRate is not None:
-            namespaceprefix_ = self.reverseRate_nsprefix_ + ':' if (UseCapturedNS_ and self.reverseRate_nsprefix_) else ''
-            self.reverseRate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='reverseRate', pretty_print=pretty_print)
+        if self.q10_settings is not None:
+            namespaceprefix_ = self.q10_settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10_settings_nsprefix_) else ''
+            self.q10_settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
+        if self.forward_rate is not None:
+            namespaceprefix_ = self.forward_rate_nsprefix_ + ':' if (UseCapturedNS_ and self.forward_rate_nsprefix_) else ''
+            self.forward_rate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='forwardRate', pretty_print=pretty_print)
+        if self.reverse_rate is not None:
+            namespaceprefix_ = self.reverse_rate_nsprefix_ + ':' if (UseCapturedNS_ and self.reverse_rate_nsprefix_) else ''
+            self.reverse_rate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='reverseRate', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -16445,17 +16444,17 @@ class GateHHRates(Base):
         elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.q10Settings = obj_
+            self.q10_settings = obj_
             obj_.original_tagname_ = 'q10Settings'
         elif nodeName_ == 'forwardRate':
             obj_ = HHRate.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.forwardRate = obj_
+            self.forward_rate = obj_
             obj_.original_tagname_ = 'forwardRate'
         elif nodeName_ == 'reverseRate':
             obj_ = HHRate.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.reverseRate = obj_
+            self.reverse_rate = obj_
             obj_.original_tagname_ = 'reverseRate'
         super(GateHHRates, self).buildChildren(child_, node, nodeName_, True)
 # end class GateHHRates
@@ -16468,46 +16467,46 @@ class GateHHUndetermined(Base):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('instances', 'PositiveInteger', 0, 0, {'use': 'required'}),
-        MemberSpec_('type_', 'gateTypes', 0, 0, {'use': 'required'}),
+        MemberSpec_('type', 'gateTypes', 0, 0, {'use': 'required'}),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0, 1, {'minOccurs': '0', 'name': 'notes', 'type': 'xs:string'}, None),
-        MemberSpec_('q10Settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
-        MemberSpec_('forwardRate', 'HHRate', 0, 1, {'minOccurs': '0', 'name': 'forwardRate', 'type': 'HHRate'}, None),
-        MemberSpec_('reverseRate', 'HHRate', 0, 1, {'minOccurs': '0', 'name': 'reverseRate', 'type': 'HHRate'}, None),
-        MemberSpec_('timeCourse', 'HHTime', 0, 1, {'minOccurs': '0', 'name': 'timeCourse', 'type': 'HHTime'}, None),
-        MemberSpec_('steadyState', 'HHVariable', 0, 1, {'minOccurs': '0', 'name': 'steadyState', 'type': 'HHVariable'}, None),
-        MemberSpec_('subGate', 'GateFractionalSubgate', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'subGate', 'type': 'GateFractionalSubgate'}, None),
+        MemberSpec_('q10_settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
+        MemberSpec_('forward_rate', 'HHRate', 0, 1, {'minOccurs': '0', 'name': 'forwardRate', 'type': 'HHRate'}, None),
+        MemberSpec_('reverse_rate', 'HHRate', 0, 1, {'minOccurs': '0', 'name': 'reverseRate', 'type': 'HHRate'}, None),
+        MemberSpec_('time_course', 'HHTime', 0, 1, {'minOccurs': '0', 'name': 'timeCourse', 'type': 'HHTime'}, None),
+        MemberSpec_('steady_state', 'HHVariable', 0, 1, {'minOccurs': '0', 'name': 'steadyState', 'type': 'HHVariable'}, None),
+        MemberSpec_('sub_gates', 'GateFractionalSubgate', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'subGate', 'type': 'GateFractionalSubgate'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, instances=None, type_=None, notes=None, q10Settings=None, forwardRate=None, reverseRate=None, timeCourse=None, steadyState=None, subGate=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, instances=None, type=None, notes=None, q10_settings=None, forward_rate=None, reverse_rate=None, time_course=None, steady_state=None, sub_gates=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateHHUndetermined, self).__init__(neuroLexId, id,  **kwargs_)
+        super(GateHHUndetermined, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
-        self.type_ = _cast(None, type_)
-        self.type__nsprefix_ = None
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
         self.notes = notes
         self.validate_Notes(self.notes)
         self.notes_nsprefix_ = None
-        self.q10Settings = q10Settings
-        self.q10Settings_nsprefix_ = None
-        self.forwardRate = forwardRate
-        self.forwardRate_nsprefix_ = None
-        self.reverseRate = reverseRate
-        self.reverseRate_nsprefix_ = None
-        self.timeCourse = timeCourse
-        self.timeCourse_nsprefix_ = None
-        self.steadyState = steadyState
-        self.steadyState_nsprefix_ = None
-        if subGate is None:
-            self.subGate = []
+        self.q10_settings = q10_settings
+        self.q10_settings_nsprefix_ = None
+        self.forward_rate = forward_rate
+        self.forward_rate_nsprefix_ = None
+        self.reverse_rate = reverse_rate
+        self.reverse_rate_nsprefix_ = None
+        self.time_course = time_course
+        self.time_course_nsprefix_ = None
+        self.steady_state = steady_state
+        self.steady_state_nsprefix_ = None
+        if sub_gates is None:
+            self.sub_gates = []
         else:
-            self.subGate = subGate
-        self.subGate_nsprefix_ = None
+            self.sub_gates = sub_gates
+        self.sub_gates_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -16553,12 +16552,12 @@ class GateHHUndetermined(Base):
     def hasContent_(self):
         if (
             self.notes is not None or
-            self.q10Settings is not None or
-            self.forwardRate is not None or
-            self.reverseRate is not None or
-            self.timeCourse is not None or
-            self.steadyState is not None or
-            self.subGate or
+            self.q10_settings is not None or
+            self.forward_rate is not None or
+            self.reverse_rate is not None or
+            self.time_course is not None or
+            self.steady_state is not None or
+            self.sub_gates or
             super(GateHHUndetermined, self).hasContent_()
         ):
             return True
@@ -16592,9 +16591,9 @@ class GateHHUndetermined(Base):
         if self.instances is not None and 'instances' not in already_processed:
             already_processed.add('instances')
             outfile.write(' instances="%s"' % self.gds_format_integer(self.instances, input_name='instances'))
-        if self.type_ is not None and 'type_' not in already_processed:
-            already_processed.add('type_')
-            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type_), input_name='type')), ))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type), input_name='type')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='GateHHUndetermined', fromsubclass_=False, pretty_print=True):
         super(GateHHUndetermined, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
         if pretty_print:
@@ -16605,23 +16604,23 @@ class GateHHUndetermined(Base):
             namespaceprefix_ = self.notes_nsprefix_ + ':' if (UseCapturedNS_ and self.notes_nsprefix_) else ''
             showIndent(outfile, level, pretty_print)
             outfile.write('<%snotes>%s</%snotes>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.notes), input_name='notes')), namespaceprefix_ , eol_))
-        if self.q10Settings is not None:
-            namespaceprefix_ = self.q10Settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10Settings_nsprefix_) else ''
-            self.q10Settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
-        if self.forwardRate is not None:
-            namespaceprefix_ = self.forwardRate_nsprefix_ + ':' if (UseCapturedNS_ and self.forwardRate_nsprefix_) else ''
-            self.forwardRate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='forwardRate', pretty_print=pretty_print)
-        if self.reverseRate is not None:
-            namespaceprefix_ = self.reverseRate_nsprefix_ + ':' if (UseCapturedNS_ and self.reverseRate_nsprefix_) else ''
-            self.reverseRate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='reverseRate', pretty_print=pretty_print)
-        if self.timeCourse is not None:
-            namespaceprefix_ = self.timeCourse_nsprefix_ + ':' if (UseCapturedNS_ and self.timeCourse_nsprefix_) else ''
-            self.timeCourse.export(outfile, level, namespaceprefix_, namespacedef_='', name_='timeCourse', pretty_print=pretty_print)
-        if self.steadyState is not None:
-            namespaceprefix_ = self.steadyState_nsprefix_ + ':' if (UseCapturedNS_ and self.steadyState_nsprefix_) else ''
-            self.steadyState.export(outfile, level, namespaceprefix_, namespacedef_='', name_='steadyState', pretty_print=pretty_print)
-        for subGate_ in self.subGate:
-            namespaceprefix_ = self.subGate_nsprefix_ + ':' if (UseCapturedNS_ and self.subGate_nsprefix_) else ''
+        if self.q10_settings is not None:
+            namespaceprefix_ = self.q10_settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10_settings_nsprefix_) else ''
+            self.q10_settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
+        if self.forward_rate is not None:
+            namespaceprefix_ = self.forward_rate_nsprefix_ + ':' if (UseCapturedNS_ and self.forward_rate_nsprefix_) else ''
+            self.forward_rate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='forwardRate', pretty_print=pretty_print)
+        if self.reverse_rate is not None:
+            namespaceprefix_ = self.reverse_rate_nsprefix_ + ':' if (UseCapturedNS_ and self.reverse_rate_nsprefix_) else ''
+            self.reverse_rate.export(outfile, level, namespaceprefix_, namespacedef_='', name_='reverseRate', pretty_print=pretty_print)
+        if self.time_course is not None:
+            namespaceprefix_ = self.time_course_nsprefix_ + ':' if (UseCapturedNS_ and self.time_course_nsprefix_) else ''
+            self.time_course.export(outfile, level, namespaceprefix_, namespacedef_='', name_='timeCourse', pretty_print=pretty_print)
+        if self.steady_state is not None:
+            namespaceprefix_ = self.steady_state_nsprefix_ + ':' if (UseCapturedNS_ and self.steady_state_nsprefix_) else ''
+            self.steady_state.export(outfile, level, namespaceprefix_, namespacedef_='', name_='steadyState', pretty_print=pretty_print)
+        for subGate_ in self.sub_gates:
+            namespaceprefix_ = self.sub_gates_nsprefix_ + ':' if (UseCapturedNS_ and self.sub_gates_nsprefix_) else ''
             subGate_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='subGate', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -16645,8 +16644,8 @@ class GateHHUndetermined(Base):
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
             already_processed.add('type')
-            self.type_ = value
-            self.validate_gateTypes(self.type_)    # validate type gateTypes
+            self.type = value
+            self.validate_gateTypes(self.type)    # validate type gateTypes
         super(GateHHUndetermined, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         if nodeName_ == 'notes':
@@ -16660,32 +16659,32 @@ class GateHHUndetermined(Base):
         elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.q10Settings = obj_
+            self.q10_settings = obj_
             obj_.original_tagname_ = 'q10Settings'
         elif nodeName_ == 'forwardRate':
             obj_ = HHRate.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.forwardRate = obj_
+            self.forward_rate = obj_
             obj_.original_tagname_ = 'forwardRate'
         elif nodeName_ == 'reverseRate':
             obj_ = HHRate.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.reverseRate = obj_
+            self.reverse_rate = obj_
             obj_.original_tagname_ = 'reverseRate'
         elif nodeName_ == 'timeCourse':
             obj_ = HHTime.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.timeCourse = obj_
+            self.time_course = obj_
             obj_.original_tagname_ = 'timeCourse'
         elif nodeName_ == 'steadyState':
             obj_ = HHVariable.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.steadyState = obj_
+            self.steady_state = obj_
             obj_.original_tagname_ = 'steadyState'
         elif nodeName_ == 'subGate':
             obj_ = GateFractionalSubgate.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.subGate.append(obj_)
+            self.sub_gates.append(obj_)
             obj_.original_tagname_ = 'subGate'
         super(GateHHUndetermined, self).buildChildren(child_, node, nodeName_, True)
 # end class GateHHUndetermined
@@ -16696,54 +16695,54 @@ class GateKS(Base):
     member_data_items_ = [
         MemberSpec_('instances', 'PositiveInteger', 0, 0, {'use': 'required'}),
         MemberSpec_('notes', ['Notes', 'xs:string'], 0, 1, {'minOccurs': '0', 'name': 'notes', 'type': 'xs:string'}, None),
-        MemberSpec_('q10Settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
-        MemberSpec_('closedState', 'ClosedState', 1, 0, {'maxOccurs': 'unbounded', 'minOccurs': '1', 'name': 'closedState', 'type': 'ClosedState'}, None),
-        MemberSpec_('openState', 'OpenState', 1, 0, {'maxOccurs': 'unbounded', 'minOccurs': '1', 'name': 'openState', 'type': 'OpenState'}, None),
-        MemberSpec_('forwardTransition', 'ForwardTransition', 1, 0, {'name': 'forwardTransition', 'type': 'ForwardTransition'}, 2),
-        MemberSpec_('reverseTransition', 'ReverseTransition', 1, 0, {'name': 'reverseTransition', 'type': 'ReverseTransition'}, 2),
-        MemberSpec_('tauInfTransition', 'TauInfTransition', 1, 0, {'name': 'tauInfTransition', 'type': 'TauInfTransition'}, 2),
+        MemberSpec_('q10_settings', 'Q10Settings', 0, 1, {'minOccurs': '0', 'name': 'q10Settings', 'type': 'Q10Settings'}, None),
+        MemberSpec_('closed_states', 'ClosedState', 1, 0, {'maxOccurs': 'unbounded', 'minOccurs': '1', 'name': 'closedState', 'type': 'ClosedState'}, None),
+        MemberSpec_('open_states', 'OpenState', 1, 0, {'maxOccurs': 'unbounded', 'minOccurs': '1', 'name': 'openState', 'type': 'OpenState'}, None),
+        MemberSpec_('forward_transition', 'ForwardTransition', 1, 0, {'name': 'forwardTransition', 'type': 'ForwardTransition'}, 2),
+        MemberSpec_('reverse_transition', 'ReverseTransition', 1, 0, {'name': 'reverseTransition', 'type': 'ReverseTransition'}, 2),
+        MemberSpec_('tau_inf_transition', 'TauInfTransition', 1, 0, {'name': 'tauInfTransition', 'type': 'TauInfTransition'}, 2),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, instances=None, notes=None, q10Settings=None, closedState=None, openState=None, forwardTransition=None, reverseTransition=None, tauInfTransition=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, instances=None, notes=None, q10_settings=None, closed_states=None, open_states=None, forward_transition=None, reverse_transition=None, tau_inf_transition=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateKS, self).__init__(neuroLexId, id,  **kwargs_)
+        super(GateKS, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
         self.validate_Notes(self.notes)
         self.notes_nsprefix_ = None
-        self.q10Settings = q10Settings
-        self.q10Settings_nsprefix_ = None
-        if closedState is None:
-            self.closedState = []
+        self.q10_settings = q10_settings
+        self.q10_settings_nsprefix_ = None
+        if closed_states is None:
+            self.closed_states = []
         else:
-            self.closedState = closedState
-        self.closedState_nsprefix_ = None
-        if openState is None:
-            self.openState = []
+            self.closed_states = closed_states
+        self.closed_states_nsprefix_ = None
+        if open_states is None:
+            self.open_states = []
         else:
-            self.openState = openState
-        self.openState_nsprefix_ = None
-        if forwardTransition is None:
-            self.forwardTransition = []
+            self.open_states = open_states
+        self.open_states_nsprefix_ = None
+        if forward_transition is None:
+            self.forward_transition = []
         else:
-            self.forwardTransition = forwardTransition
-        self.forwardTransition_nsprefix_ = None
-        if reverseTransition is None:
-            self.reverseTransition = []
+            self.forward_transition = forward_transition
+        self.forward_transition_nsprefix_ = None
+        if reverse_transition is None:
+            self.reverse_transition = []
         else:
-            self.reverseTransition = reverseTransition
-        self.reverseTransition_nsprefix_ = None
-        if tauInfTransition is None:
-            self.tauInfTransition = []
+            self.reverse_transition = reverse_transition
+        self.reverse_transition_nsprefix_ = None
+        if tau_inf_transition is None:
+            self.tau_inf_transition = []
         else:
-            self.tauInfTransition = tauInfTransition
-        self.tauInfTransition_nsprefix_ = None
+            self.tau_inf_transition = tau_inf_transition
+        self.tau_inf_transition_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -16776,12 +16775,12 @@ class GateKS(Base):
     def hasContent_(self):
         if (
             self.notes is not None or
-            self.q10Settings is not None or
-            self.closedState or
-            self.openState or
-            self.forwardTransition or
-            self.reverseTransition or
-            self.tauInfTransition or
+            self.q10_settings is not None or
+            self.closed_states or
+            self.open_states or
+            self.forward_transition or
+            self.reverse_transition or
+            self.tau_inf_transition or
             super(GateKS, self).hasContent_()
         ):
             return True
@@ -16825,23 +16824,23 @@ class GateKS(Base):
             namespaceprefix_ = self.notes_nsprefix_ + ':' if (UseCapturedNS_ and self.notes_nsprefix_) else ''
             showIndent(outfile, level, pretty_print)
             outfile.write('<%snotes>%s</%snotes>%s' % (namespaceprefix_ , self.gds_encode(self.gds_format_string(quote_xml(self.notes), input_name='notes')), namespaceprefix_ , eol_))
-        if self.q10Settings is not None:
-            namespaceprefix_ = self.q10Settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10Settings_nsprefix_) else ''
-            self.q10Settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
-        for closedState_ in self.closedState:
-            namespaceprefix_ = self.closedState_nsprefix_ + ':' if (UseCapturedNS_ and self.closedState_nsprefix_) else ''
+        if self.q10_settings is not None:
+            namespaceprefix_ = self.q10_settings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10_settings_nsprefix_) else ''
+            self.q10_settings.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10Settings', pretty_print=pretty_print)
+        for closedState_ in self.closed_states:
+            namespaceprefix_ = self.closed_states_nsprefix_ + ':' if (UseCapturedNS_ and self.closed_states_nsprefix_) else ''
             closedState_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='closedState', pretty_print=pretty_print)
-        for openState_ in self.openState:
-            namespaceprefix_ = self.openState_nsprefix_ + ':' if (UseCapturedNS_ and self.openState_nsprefix_) else ''
+        for openState_ in self.open_states:
+            namespaceprefix_ = self.open_states_nsprefix_ + ':' if (UseCapturedNS_ and self.open_states_nsprefix_) else ''
             openState_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='openState', pretty_print=pretty_print)
-        for forwardTransition_ in self.forwardTransition:
-            namespaceprefix_ = self.forwardTransition_nsprefix_ + ':' if (UseCapturedNS_ and self.forwardTransition_nsprefix_) else ''
+        for forwardTransition_ in self.forward_transition:
+            namespaceprefix_ = self.forward_transition_nsprefix_ + ':' if (UseCapturedNS_ and self.forward_transition_nsprefix_) else ''
             forwardTransition_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='forwardTransition', pretty_print=pretty_print)
-        for reverseTransition_ in self.reverseTransition:
-            namespaceprefix_ = self.reverseTransition_nsprefix_ + ':' if (UseCapturedNS_ and self.reverseTransition_nsprefix_) else ''
+        for reverseTransition_ in self.reverse_transition:
+            namespaceprefix_ = self.reverse_transition_nsprefix_ + ':' if (UseCapturedNS_ and self.reverse_transition_nsprefix_) else ''
             reverseTransition_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='reverseTransition', pretty_print=pretty_print)
-        for tauInfTransition_ in self.tauInfTransition:
-            namespaceprefix_ = self.tauInfTransition_nsprefix_ + ':' if (UseCapturedNS_ and self.tauInfTransition_nsprefix_) else ''
+        for tauInfTransition_ in self.tau_inf_transition:
+            namespaceprefix_ = self.tau_inf_transition_nsprefix_ + ':' if (UseCapturedNS_ and self.tau_inf_transition_nsprefix_) else ''
             tauInfTransition_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='tauInfTransition', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -16875,32 +16874,32 @@ class GateKS(Base):
         elif nodeName_ == 'q10Settings':
             obj_ = Q10Settings.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.q10Settings = obj_
+            self.q10_settings = obj_
             obj_.original_tagname_ = 'q10Settings'
         elif nodeName_ == 'closedState':
             obj_ = ClosedState.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.closedState.append(obj_)
+            self.closed_states.append(obj_)
             obj_.original_tagname_ = 'closedState'
         elif nodeName_ == 'openState':
             obj_ = OpenState.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.openState.append(obj_)
+            self.open_states.append(obj_)
             obj_.original_tagname_ = 'openState'
         elif nodeName_ == 'forwardTransition':
             obj_ = ForwardTransition.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.forwardTransition.append(obj_)
+            self.forward_transition.append(obj_)
             obj_.original_tagname_ = 'forwardTransition'
         elif nodeName_ == 'reverseTransition':
             obj_ = ReverseTransition.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.reverseTransition.append(obj_)
+            self.reverse_transition.append(obj_)
             obj_.original_tagname_ = 'reverseTransition'
         elif nodeName_ == 'tauInfTransition':
             obj_ = TauInfTransition.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.tauInfTransition.append(obj_)
+            self.tau_inf_transition.append(obj_)
             obj_.original_tagname_ = 'tauInfTransition'
         super(GateKS, self).buildChildren(child_, node, nodeName_, True)
 # end class GateKS
@@ -16911,26 +16910,26 @@ class TauInfTransition(Base):
     member_data_items_ = [
         MemberSpec_('from_', 'NmlId', 0, 0, {'use': 'required'}),
         MemberSpec_('to', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('steadyState', 'HHVariable', 0, 0, {'name': 'steadyState', 'type': 'HHVariable'}, None),
-        MemberSpec_('timeCourse', 'HHTime', 0, 0, {'name': 'timeCourse', 'type': 'HHTime'}, None),
+        MemberSpec_('steady_state', 'HHVariable', 0, 0, {'name': 'steadyState', 'type': 'HHVariable'}, None),
+        MemberSpec_('time_course', 'HHTime', 0, 0, {'name': 'timeCourse', 'type': 'HHTime'}, None),
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, from_=None, to=None, steadyState=None, timeCourse=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, from_=None, to=None, steady_state=None, time_course=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(TauInfTransition, self).__init__(neuroLexId, id,  **kwargs_)
+        super(TauInfTransition, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
         self.to = _cast(None, to)
         self.to_nsprefix_ = None
-        self.steadyState = steadyState
-        self.steadyState_nsprefix_ = None
-        self.timeCourse = timeCourse
-        self.timeCourse_nsprefix_ = None
+        self.steady_state = steady_state
+        self.steady_state_nsprefix_ = None
+        self.time_course = time_course
+        self.time_course_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -16955,8 +16954,8 @@ class TauInfTransition(Base):
     validate_NmlId_patterns_ = [['^([a-zA-Z_][a-zA-Z0-9_]*)$']]
     def hasContent_(self):
         if (
-            self.steadyState is not None or
-            self.timeCourse is not None or
+            self.steady_state is not None or
+            self.time_course is not None or
             super(TauInfTransition, self).hasContent_()
         ):
             return True
@@ -16999,12 +16998,12 @@ class TauInfTransition(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.steadyState is not None:
-            namespaceprefix_ = self.steadyState_nsprefix_ + ':' if (UseCapturedNS_ and self.steadyState_nsprefix_) else ''
-            self.steadyState.export(outfile, level, namespaceprefix_, namespacedef_='', name_='steadyState', pretty_print=pretty_print)
-        if self.timeCourse is not None:
-            namespaceprefix_ = self.timeCourse_nsprefix_ + ':' if (UseCapturedNS_ and self.timeCourse_nsprefix_) else ''
-            self.timeCourse.export(outfile, level, namespaceprefix_, namespacedef_='', name_='timeCourse', pretty_print=pretty_print)
+        if self.steady_state is not None:
+            namespaceprefix_ = self.steady_state_nsprefix_ + ':' if (UseCapturedNS_ and self.steady_state_nsprefix_) else ''
+            self.steady_state.export(outfile, level, namespaceprefix_, namespacedef_='', name_='steadyState', pretty_print=pretty_print)
+        if self.time_course is not None:
+            namespaceprefix_ = self.time_course_nsprefix_ + ':' if (UseCapturedNS_ and self.time_course_nsprefix_) else ''
+            self.time_course.export(outfile, level, namespaceprefix_, namespacedef_='', name_='timeCourse', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -17032,12 +17031,12 @@ class TauInfTransition(Base):
         if nodeName_ == 'steadyState':
             obj_ = HHVariable.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.steadyState = obj_
+            self.steady_state = obj_
             obj_.original_tagname_ = 'steadyState'
         elif nodeName_ == 'timeCourse':
             obj_ = HHTime.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.timeCourse = obj_
+            self.time_course = obj_
             obj_.original_tagname_ = 'timeCourse'
         super(TauInfTransition, self).buildChildren(child_, node, nodeName_, True)
 # end class TauInfTransition
@@ -17052,13 +17051,13 @@ class ReverseTransition(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, from_=None, to=None, anytypeobjs_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, from_=None, to=None, anytypeobjs_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ReverseTransition, self).__init__(neuroLexId, id,  **kwargs_)
+        super(ReverseTransition, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
         self.to = _cast(None, to)
@@ -17175,13 +17174,13 @@ class ForwardTransition(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, from_=None, to=None, anytypeobjs_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, from_=None, to=None, anytypeobjs_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ForwardTransition, self).__init__(neuroLexId, id,  **kwargs_)
+        super(ForwardTransition, self).__init__(neuro_lex_id, id,  **kwargs_)
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
         self.to = _cast(None, to)
@@ -17295,13 +17294,13 @@ class OpenState(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(OpenState, self).__init__(neuroLexId, id,  **kwargs_)
+        super(OpenState, self).__init__(neuro_lex_id, id,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -17372,13 +17371,13 @@ class ClosedState(Base):
     ]
     subclass = None
     superclass = Base
-    def __init__(self, neuroLexId=None, id=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ClosedState, self).__init__(neuroLexId, id,  **kwargs_)
+        super(ClosedState, self).__init__(neuro_lex_id, id,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -17449,26 +17448,26 @@ class IonChannelKS(Standalone):
     member_data_items_ = [
         MemberSpec_('species', 'NmlId', 0, 1, {'use': 'optional'}),
         MemberSpec_('conductance', 'Nml2Quantity_conductance', 0, 1, {'use': 'optional'}),
-        MemberSpec_('gateKS', 'GateKS', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gateKS', 'type': 'GateKS'}, None),
+        MemberSpec_('gate_kses', 'GateKS', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gateKS', 'type': 'GateKS'}, None),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, species=None, conductance=None, gateKS=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, species=None, conductance=None, gate_kses=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IonChannelKS, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(IonChannelKS, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.species = _cast(None, species)
         self.species_nsprefix_ = None
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
-        if gateKS is None:
-            self.gateKS = []
+        if gate_kses is None:
+            self.gate_kses = []
         else:
-            self.gateKS = gateKS
-        self.gateKS_nsprefix_ = None
+            self.gate_kses = gate_kses
+        self.gate_kses_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -17504,7 +17503,7 @@ class IonChannelKS(Standalone):
     validate_Nml2Quantity_conductance_patterns_ = [['^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS))$']]
     def hasContent_(self):
         if (
-            self.gateKS or
+            self.gate_kses or
             super(IonChannelKS, self).hasContent_()
         ):
             return True
@@ -17547,8 +17546,8 @@ class IonChannelKS(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        for gateKS_ in self.gateKS:
-            namespaceprefix_ = self.gateKS_nsprefix_ + ':' if (UseCapturedNS_ and self.gateKS_nsprefix_) else ''
+        for gateKS_ in self.gate_kses:
+            namespaceprefix_ = self.gate_kses_nsprefix_ + ':' if (UseCapturedNS_ and self.gate_kses_nsprefix_) else ''
             gateKS_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='gateKS', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -17577,7 +17576,7 @@ class IonChannelKS(Standalone):
         if nodeName_ == 'gateKS':
             obj_ = GateKS.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.gateKS.append(obj_)
+            self.gate_kses.append(obj_)
             obj_.original_tagname_ = 'gateKS'
         super(IonChannelKS, self).buildChildren(child_, node, nodeName_, True)
 # end class IonChannelKS
@@ -17586,22 +17585,22 @@ class IonChannelKS(Standalone):
 class IonChannelScalable(Standalone):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('q10ConductanceScaling', 'Q10ConductanceScaling', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'q10ConductanceScaling', 'type': 'Q10ConductanceScaling'}, None),
+        MemberSpec_('q10_conductance_scalings', 'Q10ConductanceScaling', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'q10ConductanceScaling', 'type': 'Q10ConductanceScaling'}, None),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, q10ConductanceScaling=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, q10_conductance_scalings=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IonChannelScalable, self).__init__(neuroLexId, id, metaid, notes, property, annotation, extensiontype_,  **kwargs_)
-        if q10ConductanceScaling is None:
-            self.q10ConductanceScaling = []
+        super(IonChannelScalable, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        if q10_conductance_scalings is None:
+            self.q10_conductance_scalings = []
         else:
-            self.q10ConductanceScaling = q10ConductanceScaling
-        self.q10ConductanceScaling_nsprefix_ = None
+            self.q10_conductance_scalings = q10_conductance_scalings
+        self.q10_conductance_scalings_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -17616,7 +17615,7 @@ class IonChannelScalable(Standalone):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.q10ConductanceScaling or
+            self.q10_conductance_scalings or
             super(IonChannelScalable, self).hasContent_()
         ):
             return True
@@ -17661,8 +17660,8 @@ class IonChannelScalable(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        for q10ConductanceScaling_ in self.q10ConductanceScaling:
-            namespaceprefix_ = self.q10ConductanceScaling_nsprefix_ + ':' if (UseCapturedNS_ and self.q10ConductanceScaling_nsprefix_) else ''
+        for q10ConductanceScaling_ in self.q10_conductance_scalings:
+            namespaceprefix_ = self.q10_conductance_scalings_nsprefix_ + ':' if (UseCapturedNS_ and self.q10_conductance_scalings_nsprefix_) else ''
             q10ConductanceScaling_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='q10ConductanceScaling', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -17685,7 +17684,7 @@ class IonChannelScalable(Standalone):
         if nodeName_ == 'q10ConductanceScaling':
             obj_ = Q10ConductanceScaling.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.q10ConductanceScaling.append(obj_)
+            self.q10_conductance_scalings.append(obj_)
             obj_.original_tagname_ = 'q10ConductanceScaling'
         super(IonChannelScalable, self).buildChildren(child_, node, nodeName_, True)
 # end class IonChannelScalable
@@ -17694,59 +17693,59 @@ class IonChannelScalable(Standalone):
 class NeuroMLDocument(Standalone):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('include', 'IncludeType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'include', 'type': 'IncludeType'}, None),
-        MemberSpec_('extracellularProperties', 'ExtracellularProperties', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'extracellularProperties', 'type': 'ExtracellularProperties'}, None),
-        MemberSpec_('intracellularProperties', 'IntracellularProperties', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'intracellularProperties', 'type': 'IntracellularProperties'}, None),
+        MemberSpec_('includes', 'IncludeType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'include', 'type': 'IncludeType'}, None),
+        MemberSpec_('extracellular_properties', 'ExtracellularProperties', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'extracellularProperties', 'type': 'ExtracellularProperties'}, None),
+        MemberSpec_('intracellular_properties', 'IntracellularProperties', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'intracellularProperties', 'type': 'IntracellularProperties'}, None),
         MemberSpec_('morphology', 'Morphology', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'morphology', 'type': 'Morphology'}, None),
-        MemberSpec_('ionChannel', 'IonChannel', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'ionChannel', 'type': 'IonChannel'}, None),
-        MemberSpec_('ionChannelHH', 'IonChannelHH', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'ionChannelHH', 'type': 'IonChannelHH'}, None),
-        MemberSpec_('ionChannelVShift', 'IonChannelVShift', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'ionChannelVShift', 'type': 'IonChannelVShift'}, None),
-        MemberSpec_('ionChannelKS', 'IonChannelKS', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'ionChannelKS', 'type': 'IonChannelKS'}, None),
-        MemberSpec_('decayingPoolConcentrationModel', 'DecayingPoolConcentrationModel', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'decayingPoolConcentrationModel', 'type': 'DecayingPoolConcentrationModel'}, None),
-        MemberSpec_('fixedFactorConcentrationModel', 'FixedFactorConcentrationModel', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'fixedFactorConcentrationModel', 'type': 'FixedFactorConcentrationModel'}, None),
-        MemberSpec_('alphaCurrentSynapse', 'AlphaCurrentSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'alphaCurrentSynapse', 'type': 'AlphaCurrentSynapse'}, None),
-        MemberSpec_('alphaSynapse', 'AlphaSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'alphaSynapse', 'type': 'AlphaSynapse'}, None),
-        MemberSpec_('expOneSynapse', 'ExpOneSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'expOneSynapse', 'type': 'ExpOneSynapse'}, None),
-        MemberSpec_('expTwoSynapse', 'ExpTwoSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'expTwoSynapse', 'type': 'ExpTwoSynapse'}, None),
-        MemberSpec_('expThreeSynapse', 'ExpThreeSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'expThreeSynapse', 'type': 'ExpThreeSynapse'}, None),
-        MemberSpec_('blockingPlasticSynapse', 'BlockingPlasticSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'blockingPlasticSynapse', 'type': 'BlockingPlasticSynapse'}, None),
-        MemberSpec_('doubleSynapse', 'DoubleSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'doubleSynapse', 'type': 'DoubleSynapse'}, None),
-        MemberSpec_('gapJunction', 'GapJunction', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gapJunction', 'type': 'GapJunction'}, None),
-        MemberSpec_('silentSynapse', 'SilentSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'silentSynapse', 'type': 'SilentSynapse'}, None),
-        MemberSpec_('linearGradedSynapse', 'LinearGradedSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'linearGradedSynapse', 'type': 'LinearGradedSynapse'}, None),
-        MemberSpec_('gradedSynapse', 'GradedSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gradedSynapse', 'type': 'GradedSynapse'}, None),
-        MemberSpec_('biophysicalProperties', 'BiophysicalProperties', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'biophysicalProperties', 'type': 'BiophysicalProperties'}, None),
-        MemberSpec_('cell', 'Cell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'cell', 'type': 'Cell'}, None),
-        MemberSpec_('cell2CaPools', 'Cell2CaPools', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'cell2CaPools', 'type': 'Cell2CaPools'}, None),
-        MemberSpec_('baseCell', 'BaseCell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'baseCell', 'type': 'BaseCell'}, None),
-        MemberSpec_('iafTauCell', 'IafTauCell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'iafTauCell', 'type': 'IafTauCell'}, None),
-        MemberSpec_('iafTauRefCell', 'IafTauRefCell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'iafTauRefCell', 'type': 'IafTauRefCell'}, None),
-        MemberSpec_('iafCell', 'IafCell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'iafCell', 'type': 'IafCell'}, None),
-        MemberSpec_('iafRefCell', 'IafRefCell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'iafRefCell', 'type': 'IafRefCell'}, None),
-        MemberSpec_('izhikevichCell', 'IzhikevichCell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'izhikevichCell', 'type': 'IzhikevichCell'}, None),
-        MemberSpec_('izhikevich2007Cell', 'Izhikevich2007Cell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'izhikevich2007Cell', 'type': 'Izhikevich2007Cell'}, None),
-        MemberSpec_('adExIaFCell', 'AdExIaFCell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'adExIaFCell', 'type': 'AdExIaFCell'}, None),
-        MemberSpec_('fitzHughNagumoCell', 'FitzHughNagumoCell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'fitzHughNagumoCell', 'type': 'FitzHughNagumoCell'}, None),
-        MemberSpec_('fitzHughNagumo1969Cell', 'FitzHughNagumo1969Cell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'fitzHughNagumo1969Cell', 'type': 'FitzHughNagumo1969Cell'}, None),
-        MemberSpec_('pinskyRinzelCA3Cell', 'PinskyRinzelCA3Cell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'pinskyRinzelCA3Cell', 'type': 'PinskyRinzelCA3Cell'}, None),
-        MemberSpec_('pulseGenerator', 'PulseGenerator', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'pulseGenerator', 'type': 'PulseGenerator'}, None),
-        MemberSpec_('pulseGeneratorDL', 'PulseGeneratorDL', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'pulseGeneratorDL', 'type': 'PulseGeneratorDL'}, None),
-        MemberSpec_('sineGenerator', 'SineGenerator', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'sineGenerator', 'type': 'SineGenerator'}, None),
-        MemberSpec_('sineGeneratorDL', 'SineGeneratorDL', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'sineGeneratorDL', 'type': 'SineGeneratorDL'}, None),
-        MemberSpec_('rampGenerator', 'RampGenerator', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'rampGenerator', 'type': 'RampGenerator'}, None),
-        MemberSpec_('rampGeneratorDL', 'RampGeneratorDL', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'rampGeneratorDL', 'type': 'RampGeneratorDL'}, None),
-        MemberSpec_('compoundInput', 'CompoundInput', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'compoundInput', 'type': 'CompoundInput'}, None),
-        MemberSpec_('compoundInputDL', 'CompoundInputDL', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'compoundInputDL', 'type': 'CompoundInputDL'}, None),
-        MemberSpec_('voltageClamp', 'VoltageClamp', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'voltageClamp', 'type': 'VoltageClamp'}, None),
-        MemberSpec_('voltageClampTriple', 'VoltageClampTriple', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'voltageClampTriple', 'type': 'VoltageClampTriple'}, None),
-        MemberSpec_('spikeArray', 'SpikeArray', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'spikeArray', 'type': 'SpikeArray'}, None),
-        MemberSpec_('timedSynapticInput', 'TimedSynapticInput', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'timedSynapticInput', 'type': 'TimedSynapticInput'}, None),
-        MemberSpec_('spikeGenerator', 'SpikeGenerator', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'spikeGenerator', 'type': 'SpikeGenerator'}, None),
-        MemberSpec_('spikeGeneratorRandom', 'SpikeGeneratorRandom', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'spikeGeneratorRandom', 'type': 'SpikeGeneratorRandom'}, None),
-        MemberSpec_('spikeGeneratorPoisson', 'SpikeGeneratorPoisson', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'spikeGeneratorPoisson', 'type': 'SpikeGeneratorPoisson'}, None),
-        MemberSpec_('spikeGeneratorRefPoisson', 'SpikeGeneratorRefPoisson', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'spikeGeneratorRefPoisson', 'type': 'SpikeGeneratorRefPoisson'}, None),
-        MemberSpec_('poissonFiringSynapse', 'PoissonFiringSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'poissonFiringSynapse', 'type': 'PoissonFiringSynapse'}, None),
-        MemberSpec_('transientPoissonFiringSynapse', 'TransientPoissonFiringSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'transientPoissonFiringSynapse', 'type': 'TransientPoissonFiringSynapse'}, None),
+        MemberSpec_('ion_channel', 'IonChannel', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'ionChannel', 'type': 'IonChannel'}, None),
+        MemberSpec_('ion_channel_hhs', 'IonChannelHH', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'ionChannelHH', 'type': 'IonChannelHH'}, None),
+        MemberSpec_('ion_channel_v_shifts', 'IonChannelVShift', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'ionChannelVShift', 'type': 'IonChannelVShift'}, None),
+        MemberSpec_('ion_channel_kses', 'IonChannelKS', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'ionChannelKS', 'type': 'IonChannelKS'}, None),
+        MemberSpec_('decaying_pool_concentration_models', 'DecayingPoolConcentrationModel', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'decayingPoolConcentrationModel', 'type': 'DecayingPoolConcentrationModel'}, None),
+        MemberSpec_('fixed_factor_concentration_models', 'FixedFactorConcentrationModel', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'fixedFactorConcentrationModel', 'type': 'FixedFactorConcentrationModel'}, None),
+        MemberSpec_('alpha_current_synapses', 'AlphaCurrentSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'alphaCurrentSynapse', 'type': 'AlphaCurrentSynapse'}, None),
+        MemberSpec_('alpha_synapses', 'AlphaSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'alphaSynapse', 'type': 'AlphaSynapse'}, None),
+        MemberSpec_('exp_one_synapses', 'ExpOneSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'expOneSynapse', 'type': 'ExpOneSynapse'}, None),
+        MemberSpec_('exp_two_synapses', 'ExpTwoSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'expTwoSynapse', 'type': 'ExpTwoSynapse'}, None),
+        MemberSpec_('exp_three_synapses', 'ExpThreeSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'expThreeSynapse', 'type': 'ExpThreeSynapse'}, None),
+        MemberSpec_('blocking_plastic_synapses', 'BlockingPlasticSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'blockingPlasticSynapse', 'type': 'BlockingPlasticSynapse'}, None),
+        MemberSpec_('double_synapses', 'DoubleSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'doubleSynapse', 'type': 'DoubleSynapse'}, None),
+        MemberSpec_('gap_junctions', 'GapJunction', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gapJunction', 'type': 'GapJunction'}, None),
+        MemberSpec_('silent_synapses', 'SilentSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'silentSynapse', 'type': 'SilentSynapse'}, None),
+        MemberSpec_('linear_graded_synapses', 'LinearGradedSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'linearGradedSynapse', 'type': 'LinearGradedSynapse'}, None),
+        MemberSpec_('graded_synapses', 'GradedSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gradedSynapse', 'type': 'GradedSynapse'}, None),
+        MemberSpec_('biophysical_properties', 'BiophysicalProperties', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'biophysicalProperties', 'type': 'BiophysicalProperties'}, None),
+        MemberSpec_('cells', 'Cell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'cell', 'type': 'Cell'}, None),
+        MemberSpec_('cell2_ca_poolses', 'Cell2CaPools', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'cell2CaPools', 'type': 'Cell2CaPools'}, None),
+        MemberSpec_('base_cells', 'BaseCell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'baseCell', 'type': 'BaseCell'}, None),
+        MemberSpec_('iaf_tau_cells', 'IafTauCell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'iafTauCell', 'type': 'IafTauCell'}, None),
+        MemberSpec_('iaf_tau_ref_cells', 'IafTauRefCell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'iafTauRefCell', 'type': 'IafTauRefCell'}, None),
+        MemberSpec_('iaf_cells', 'IafCell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'iafCell', 'type': 'IafCell'}, None),
+        MemberSpec_('iaf_ref_cells', 'IafRefCell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'iafRefCell', 'type': 'IafRefCell'}, None),
+        MemberSpec_('izhikevich_cells', 'IzhikevichCell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'izhikevichCell', 'type': 'IzhikevichCell'}, None),
+        MemberSpec_('izhikevich2007_cells', 'Izhikevich2007Cell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'izhikevich2007Cell', 'type': 'Izhikevich2007Cell'}, None),
+        MemberSpec_('ad_ex_ia_f_cells', 'AdExIaFCell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'adExIaFCell', 'type': 'AdExIaFCell'}, None),
+        MemberSpec_('fitz_hugh_nagumo_cells', 'FitzHughNagumoCell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'fitzHughNagumoCell', 'type': 'FitzHughNagumoCell'}, None),
+        MemberSpec_('fitz_hugh_nagumo1969_cells', 'FitzHughNagumo1969Cell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'fitzHughNagumo1969Cell', 'type': 'FitzHughNagumo1969Cell'}, None),
+        MemberSpec_('pinsky_rinzel_ca3_cells', 'PinskyRinzelCA3Cell', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'pinskyRinzelCA3Cell', 'type': 'PinskyRinzelCA3Cell'}, None),
+        MemberSpec_('pulse_generators', 'PulseGenerator', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'pulseGenerator', 'type': 'PulseGenerator'}, None),
+        MemberSpec_('pulse_generator_dls', 'PulseGeneratorDL', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'pulseGeneratorDL', 'type': 'PulseGeneratorDL'}, None),
+        MemberSpec_('sine_generators', 'SineGenerator', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'sineGenerator', 'type': 'SineGenerator'}, None),
+        MemberSpec_('sine_generator_dls', 'SineGeneratorDL', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'sineGeneratorDL', 'type': 'SineGeneratorDL'}, None),
+        MemberSpec_('ramp_generators', 'RampGenerator', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'rampGenerator', 'type': 'RampGenerator'}, None),
+        MemberSpec_('ramp_generator_dls', 'RampGeneratorDL', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'rampGeneratorDL', 'type': 'RampGeneratorDL'}, None),
+        MemberSpec_('compound_inputs', 'CompoundInput', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'compoundInput', 'type': 'CompoundInput'}, None),
+        MemberSpec_('compound_input_dls', 'CompoundInputDL', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'compoundInputDL', 'type': 'CompoundInputDL'}, None),
+        MemberSpec_('voltage_clamps', 'VoltageClamp', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'voltageClamp', 'type': 'VoltageClamp'}, None),
+        MemberSpec_('voltage_clamp_triples', 'VoltageClampTriple', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'voltageClampTriple', 'type': 'VoltageClampTriple'}, None),
+        MemberSpec_('spike_arrays', 'SpikeArray', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'spikeArray', 'type': 'SpikeArray'}, None),
+        MemberSpec_('timed_synaptic_inputs', 'TimedSynapticInput', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'timedSynapticInput', 'type': 'TimedSynapticInput'}, None),
+        MemberSpec_('spike_generators', 'SpikeGenerator', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'spikeGenerator', 'type': 'SpikeGenerator'}, None),
+        MemberSpec_('spike_generator_randoms', 'SpikeGeneratorRandom', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'spikeGeneratorRandom', 'type': 'SpikeGeneratorRandom'}, None),
+        MemberSpec_('spike_generator_poissons', 'SpikeGeneratorPoisson', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'spikeGeneratorPoisson', 'type': 'SpikeGeneratorPoisson'}, None),
+        MemberSpec_('spike_generator_ref_poissons', 'SpikeGeneratorRefPoisson', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'spikeGeneratorRefPoisson', 'type': 'SpikeGeneratorRefPoisson'}, None),
+        MemberSpec_('poisson_firing_synapses', 'PoissonFiringSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'poissonFiringSynapse', 'type': 'PoissonFiringSynapse'}, None),
+        MemberSpec_('transient_poisson_firing_synapses', 'TransientPoissonFiringSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'transientPoissonFiringSynapse', 'type': 'TransientPoissonFiringSynapse'}, None),
         MemberSpec_('IF_curr_alpha', 'IF_curr_alpha', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'IF_curr_alpha', 'type': 'IF_curr_alpha'}, None),
         MemberSpec_('IF_curr_exp', 'IF_curr_exp', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'IF_curr_exp', 'type': 'IF_curr_exp'}, None),
         MemberSpec_('IF_cond_alpha', 'IF_cond_alpha', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'IF_cond_alpha', 'type': 'IF_cond_alpha'}, None),
@@ -17754,288 +17753,288 @@ class NeuroMLDocument(Standalone):
         MemberSpec_('EIF_cond_exp_isfa_ista', 'EIF_cond_exp_isfa_ista', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'EIF_cond_exp_isfa_ista', 'type': 'EIF_cond_exp_isfa_ista'}, None),
         MemberSpec_('EIF_cond_alpha_isfa_ista', 'EIF_cond_alpha_isfa_ista', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'EIF_cond_alpha_isfa_ista', 'type': 'EIF_cond_alpha_isfa_ista'}, None),
         MemberSpec_('HH_cond_exp', 'HH_cond_exp', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'HH_cond_exp', 'type': 'HH_cond_exp'}, None),
-        MemberSpec_('expCondSynapse', 'ExpCondSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'expCondSynapse', 'type': 'ExpCondSynapse'}, None),
-        MemberSpec_('alphaCondSynapse', 'AlphaCondSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'alphaCondSynapse', 'type': 'AlphaCondSynapse'}, None),
-        MemberSpec_('expCurrSynapse', 'ExpCurrSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'expCurrSynapse', 'type': 'ExpCurrSynapse'}, None),
-        MemberSpec_('alphaCurrSynapse', 'AlphaCurrSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'alphaCurrSynapse', 'type': 'AlphaCurrSynapse'}, None),
+        MemberSpec_('exp_cond_synapses', 'ExpCondSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'expCondSynapse', 'type': 'ExpCondSynapse'}, None),
+        MemberSpec_('alpha_cond_synapses', 'AlphaCondSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'alphaCondSynapse', 'type': 'AlphaCondSynapse'}, None),
+        MemberSpec_('exp_curr_synapses', 'ExpCurrSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'expCurrSynapse', 'type': 'ExpCurrSynapse'}, None),
+        MemberSpec_('alpha_curr_synapses', 'AlphaCurrSynapse', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'alphaCurrSynapse', 'type': 'AlphaCurrSynapse'}, None),
         MemberSpec_('SpikeSourcePoisson', 'SpikeSourcePoisson', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'SpikeSourcePoisson', 'type': 'SpikeSourcePoisson'}, None),
-        MemberSpec_('network', 'Network', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'network', 'type': 'Network'}, None),
+        MemberSpec_('networks', 'Network', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'network', 'type': 'Network'}, None),
         MemberSpec_('ComponentType', 'ComponentType', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'ComponentType', 'type': 'ComponentType'}, None),
     ]
     subclass = None
     superclass = Standalone
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, include=None, extracellularProperties=None, intracellularProperties=None, morphology=None, ionChannel=None, ionChannelHH=None, ionChannelVShift=None, ionChannelKS=None, decayingPoolConcentrationModel=None, fixedFactorConcentrationModel=None, alphaCurrentSynapse=None, alphaSynapse=None, expOneSynapse=None, expTwoSynapse=None, expThreeSynapse=None, blockingPlasticSynapse=None, doubleSynapse=None, gapJunction=None, silentSynapse=None, linearGradedSynapse=None, gradedSynapse=None, biophysicalProperties=None, cell=None, cell2CaPools=None, baseCell=None, iafTauCell=None, iafTauRefCell=None, iafCell=None, iafRefCell=None, izhikevichCell=None, izhikevich2007Cell=None, adExIaFCell=None, fitzHughNagumoCell=None, fitzHughNagumo1969Cell=None, pinskyRinzelCA3Cell=None, pulseGenerator=None, pulseGeneratorDL=None, sineGenerator=None, sineGeneratorDL=None, rampGenerator=None, rampGeneratorDL=None, compoundInput=None, compoundInputDL=None, voltageClamp=None, voltageClampTriple=None, spikeArray=None, timedSynapticInput=None, spikeGenerator=None, spikeGeneratorRandom=None, spikeGeneratorPoisson=None, spikeGeneratorRefPoisson=None, poissonFiringSynapse=None, transientPoissonFiringSynapse=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, expCondSynapse=None, alphaCondSynapse=None, expCurrSynapse=None, alphaCurrSynapse=None, SpikeSourcePoisson=None, network=None, ComponentType=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, includes=None, extracellular_properties=None, intracellular_properties=None, morphology=None, ion_channel=None, ion_channel_hhs=None, ion_channel_v_shifts=None, ion_channel_kses=None, decaying_pool_concentration_models=None, fixed_factor_concentration_models=None, alpha_current_synapses=None, alpha_synapses=None, exp_one_synapses=None, exp_two_synapses=None, exp_three_synapses=None, blocking_plastic_synapses=None, double_synapses=None, gap_junctions=None, silent_synapses=None, linear_graded_synapses=None, graded_synapses=None, biophysical_properties=None, cells=None, cell2_ca_poolses=None, base_cells=None, iaf_tau_cells=None, iaf_tau_ref_cells=None, iaf_cells=None, iaf_ref_cells=None, izhikevich_cells=None, izhikevich2007_cells=None, ad_ex_ia_f_cells=None, fitz_hugh_nagumo_cells=None, fitz_hugh_nagumo1969_cells=None, pinsky_rinzel_ca3_cells=None, pulse_generators=None, pulse_generator_dls=None, sine_generators=None, sine_generator_dls=None, ramp_generators=None, ramp_generator_dls=None, compound_inputs=None, compound_input_dls=None, voltage_clamps=None, voltage_clamp_triples=None, spike_arrays=None, timed_synaptic_inputs=None, spike_generators=None, spike_generator_randoms=None, spike_generator_poissons=None, spike_generator_ref_poissons=None, poisson_firing_synapses=None, transient_poisson_firing_synapses=None, IF_curr_alpha=None, IF_curr_exp=None, IF_cond_alpha=None, IF_cond_exp=None, EIF_cond_exp_isfa_ista=None, EIF_cond_alpha_isfa_ista=None, HH_cond_exp=None, exp_cond_synapses=None, alpha_cond_synapses=None, exp_curr_synapses=None, alpha_curr_synapses=None, SpikeSourcePoisson=None, networks=None, ComponentType=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(NeuroMLDocument, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
-        if include is None:
-            self.include = []
+        super(NeuroMLDocument, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        if includes is None:
+            self.includes = []
         else:
-            self.include = include
-        self.include_nsprefix_ = None
-        if extracellularProperties is None:
-            self.extracellularProperties = []
+            self.includes = includes
+        self.includes_nsprefix_ = None
+        if extracellular_properties is None:
+            self.extracellular_properties = []
         else:
-            self.extracellularProperties = extracellularProperties
-        self.extracellularProperties_nsprefix_ = None
-        if intracellularProperties is None:
-            self.intracellularProperties = []
+            self.extracellular_properties = extracellular_properties
+        self.extracellular_properties_nsprefix_ = None
+        if intracellular_properties is None:
+            self.intracellular_properties = []
         else:
-            self.intracellularProperties = intracellularProperties
-        self.intracellularProperties_nsprefix_ = None
+            self.intracellular_properties = intracellular_properties
+        self.intracellular_properties_nsprefix_ = None
         if morphology is None:
             self.morphology = []
         else:
             self.morphology = morphology
         self.morphology_nsprefix_ = None
-        if ionChannel is None:
-            self.ionChannel = []
+        if ion_channel is None:
+            self.ion_channel = []
         else:
-            self.ionChannel = ionChannel
-        self.ionChannel_nsprefix_ = None
-        if ionChannelHH is None:
-            self.ionChannelHH = []
+            self.ion_channel = ion_channel
+        self.ion_channel_nsprefix_ = None
+        if ion_channel_hhs is None:
+            self.ion_channel_hhs = []
         else:
-            self.ionChannelHH = ionChannelHH
-        self.ionChannelHH_nsprefix_ = None
-        if ionChannelVShift is None:
-            self.ionChannelVShift = []
+            self.ion_channel_hhs = ion_channel_hhs
+        self.ion_channel_hhs_nsprefix_ = None
+        if ion_channel_v_shifts is None:
+            self.ion_channel_v_shifts = []
         else:
-            self.ionChannelVShift = ionChannelVShift
-        self.ionChannelVShift_nsprefix_ = None
-        if ionChannelKS is None:
-            self.ionChannelKS = []
+            self.ion_channel_v_shifts = ion_channel_v_shifts
+        self.ion_channel_v_shifts_nsprefix_ = None
+        if ion_channel_kses is None:
+            self.ion_channel_kses = []
         else:
-            self.ionChannelKS = ionChannelKS
-        self.ionChannelKS_nsprefix_ = None
-        if decayingPoolConcentrationModel is None:
-            self.decayingPoolConcentrationModel = []
+            self.ion_channel_kses = ion_channel_kses
+        self.ion_channel_kses_nsprefix_ = None
+        if decaying_pool_concentration_models is None:
+            self.decaying_pool_concentration_models = []
         else:
-            self.decayingPoolConcentrationModel = decayingPoolConcentrationModel
-        self.decayingPoolConcentrationModel_nsprefix_ = None
-        if fixedFactorConcentrationModel is None:
-            self.fixedFactorConcentrationModel = []
+            self.decaying_pool_concentration_models = decaying_pool_concentration_models
+        self.decaying_pool_concentration_models_nsprefix_ = None
+        if fixed_factor_concentration_models is None:
+            self.fixed_factor_concentration_models = []
         else:
-            self.fixedFactorConcentrationModel = fixedFactorConcentrationModel
-        self.fixedFactorConcentrationModel_nsprefix_ = None
-        if alphaCurrentSynapse is None:
-            self.alphaCurrentSynapse = []
+            self.fixed_factor_concentration_models = fixed_factor_concentration_models
+        self.fixed_factor_concentration_models_nsprefix_ = None
+        if alpha_current_synapses is None:
+            self.alpha_current_synapses = []
         else:
-            self.alphaCurrentSynapse = alphaCurrentSynapse
-        self.alphaCurrentSynapse_nsprefix_ = None
-        if alphaSynapse is None:
-            self.alphaSynapse = []
+            self.alpha_current_synapses = alpha_current_synapses
+        self.alpha_current_synapses_nsprefix_ = None
+        if alpha_synapses is None:
+            self.alpha_synapses = []
         else:
-            self.alphaSynapse = alphaSynapse
-        self.alphaSynapse_nsprefix_ = None
-        if expOneSynapse is None:
-            self.expOneSynapse = []
+            self.alpha_synapses = alpha_synapses
+        self.alpha_synapses_nsprefix_ = None
+        if exp_one_synapses is None:
+            self.exp_one_synapses = []
         else:
-            self.expOneSynapse = expOneSynapse
-        self.expOneSynapse_nsprefix_ = None
-        if expTwoSynapse is None:
-            self.expTwoSynapse = []
+            self.exp_one_synapses = exp_one_synapses
+        self.exp_one_synapses_nsprefix_ = None
+        if exp_two_synapses is None:
+            self.exp_two_synapses = []
         else:
-            self.expTwoSynapse = expTwoSynapse
-        self.expTwoSynapse_nsprefix_ = None
-        if expThreeSynapse is None:
-            self.expThreeSynapse = []
+            self.exp_two_synapses = exp_two_synapses
+        self.exp_two_synapses_nsprefix_ = None
+        if exp_three_synapses is None:
+            self.exp_three_synapses = []
         else:
-            self.expThreeSynapse = expThreeSynapse
-        self.expThreeSynapse_nsprefix_ = None
-        if blockingPlasticSynapse is None:
-            self.blockingPlasticSynapse = []
+            self.exp_three_synapses = exp_three_synapses
+        self.exp_three_synapses_nsprefix_ = None
+        if blocking_plastic_synapses is None:
+            self.blocking_plastic_synapses = []
         else:
-            self.blockingPlasticSynapse = blockingPlasticSynapse
-        self.blockingPlasticSynapse_nsprefix_ = None
-        if doubleSynapse is None:
-            self.doubleSynapse = []
+            self.blocking_plastic_synapses = blocking_plastic_synapses
+        self.blocking_plastic_synapses_nsprefix_ = None
+        if double_synapses is None:
+            self.double_synapses = []
         else:
-            self.doubleSynapse = doubleSynapse
-        self.doubleSynapse_nsprefix_ = None
-        if gapJunction is None:
-            self.gapJunction = []
+            self.double_synapses = double_synapses
+        self.double_synapses_nsprefix_ = None
+        if gap_junctions is None:
+            self.gap_junctions = []
         else:
-            self.gapJunction = gapJunction
-        self.gapJunction_nsprefix_ = None
-        if silentSynapse is None:
-            self.silentSynapse = []
+            self.gap_junctions = gap_junctions
+        self.gap_junctions_nsprefix_ = None
+        if silent_synapses is None:
+            self.silent_synapses = []
         else:
-            self.silentSynapse = silentSynapse
-        self.silentSynapse_nsprefix_ = None
-        if linearGradedSynapse is None:
-            self.linearGradedSynapse = []
+            self.silent_synapses = silent_synapses
+        self.silent_synapses_nsprefix_ = None
+        if linear_graded_synapses is None:
+            self.linear_graded_synapses = []
         else:
-            self.linearGradedSynapse = linearGradedSynapse
-        self.linearGradedSynapse_nsprefix_ = None
-        if gradedSynapse is None:
-            self.gradedSynapse = []
+            self.linear_graded_synapses = linear_graded_synapses
+        self.linear_graded_synapses_nsprefix_ = None
+        if graded_synapses is None:
+            self.graded_synapses = []
         else:
-            self.gradedSynapse = gradedSynapse
-        self.gradedSynapse_nsprefix_ = None
-        if biophysicalProperties is None:
-            self.biophysicalProperties = []
+            self.graded_synapses = graded_synapses
+        self.graded_synapses_nsprefix_ = None
+        if biophysical_properties is None:
+            self.biophysical_properties = []
         else:
-            self.biophysicalProperties = biophysicalProperties
-        self.biophysicalProperties_nsprefix_ = None
-        if cell is None:
-            self.cell = []
+            self.biophysical_properties = biophysical_properties
+        self.biophysical_properties_nsprefix_ = None
+        if cells is None:
+            self.cells = []
         else:
-            self.cell = cell
-        self.cell_nsprefix_ = None
-        if cell2CaPools is None:
-            self.cell2CaPools = []
+            self.cells = cells
+        self.cells_nsprefix_ = None
+        if cell2_ca_poolses is None:
+            self.cell2_ca_poolses = []
         else:
-            self.cell2CaPools = cell2CaPools
-        self.cell2CaPools_nsprefix_ = None
-        if baseCell is None:
-            self.baseCell = []
+            self.cell2_ca_poolses = cell2_ca_poolses
+        self.cell2_ca_poolses_nsprefix_ = None
+        if base_cells is None:
+            self.base_cells = []
         else:
-            self.baseCell = baseCell
-        self.baseCell_nsprefix_ = None
-        if iafTauCell is None:
-            self.iafTauCell = []
+            self.base_cells = base_cells
+        self.base_cells_nsprefix_ = None
+        if iaf_tau_cells is None:
+            self.iaf_tau_cells = []
         else:
-            self.iafTauCell = iafTauCell
-        self.iafTauCell_nsprefix_ = None
-        if iafTauRefCell is None:
-            self.iafTauRefCell = []
+            self.iaf_tau_cells = iaf_tau_cells
+        self.iaf_tau_cells_nsprefix_ = None
+        if iaf_tau_ref_cells is None:
+            self.iaf_tau_ref_cells = []
         else:
-            self.iafTauRefCell = iafTauRefCell
-        self.iafTauRefCell_nsprefix_ = None
-        if iafCell is None:
-            self.iafCell = []
+            self.iaf_tau_ref_cells = iaf_tau_ref_cells
+        self.iaf_tau_ref_cells_nsprefix_ = None
+        if iaf_cells is None:
+            self.iaf_cells = []
         else:
-            self.iafCell = iafCell
-        self.iafCell_nsprefix_ = None
-        if iafRefCell is None:
-            self.iafRefCell = []
+            self.iaf_cells = iaf_cells
+        self.iaf_cells_nsprefix_ = None
+        if iaf_ref_cells is None:
+            self.iaf_ref_cells = []
         else:
-            self.iafRefCell = iafRefCell
-        self.iafRefCell_nsprefix_ = None
-        if izhikevichCell is None:
-            self.izhikevichCell = []
+            self.iaf_ref_cells = iaf_ref_cells
+        self.iaf_ref_cells_nsprefix_ = None
+        if izhikevich_cells is None:
+            self.izhikevich_cells = []
         else:
-            self.izhikevichCell = izhikevichCell
-        self.izhikevichCell_nsprefix_ = None
-        if izhikevich2007Cell is None:
-            self.izhikevich2007Cell = []
+            self.izhikevich_cells = izhikevich_cells
+        self.izhikevich_cells_nsprefix_ = None
+        if izhikevich2007_cells is None:
+            self.izhikevich2007_cells = []
         else:
-            self.izhikevich2007Cell = izhikevich2007Cell
-        self.izhikevich2007Cell_nsprefix_ = None
-        if adExIaFCell is None:
-            self.adExIaFCell = []
+            self.izhikevich2007_cells = izhikevich2007_cells
+        self.izhikevich2007_cells_nsprefix_ = None
+        if ad_ex_ia_f_cells is None:
+            self.ad_ex_ia_f_cells = []
         else:
-            self.adExIaFCell = adExIaFCell
-        self.adExIaFCell_nsprefix_ = None
-        if fitzHughNagumoCell is None:
-            self.fitzHughNagumoCell = []
+            self.ad_ex_ia_f_cells = ad_ex_ia_f_cells
+        self.ad_ex_ia_f_cells_nsprefix_ = None
+        if fitz_hugh_nagumo_cells is None:
+            self.fitz_hugh_nagumo_cells = []
         else:
-            self.fitzHughNagumoCell = fitzHughNagumoCell
-        self.fitzHughNagumoCell_nsprefix_ = None
-        if fitzHughNagumo1969Cell is None:
-            self.fitzHughNagumo1969Cell = []
+            self.fitz_hugh_nagumo_cells = fitz_hugh_nagumo_cells
+        self.fitz_hugh_nagumo_cells_nsprefix_ = None
+        if fitz_hugh_nagumo1969_cells is None:
+            self.fitz_hugh_nagumo1969_cells = []
         else:
-            self.fitzHughNagumo1969Cell = fitzHughNagumo1969Cell
-        self.fitzHughNagumo1969Cell_nsprefix_ = None
-        if pinskyRinzelCA3Cell is None:
-            self.pinskyRinzelCA3Cell = []
+            self.fitz_hugh_nagumo1969_cells = fitz_hugh_nagumo1969_cells
+        self.fitz_hugh_nagumo1969_cells_nsprefix_ = None
+        if pinsky_rinzel_ca3_cells is None:
+            self.pinsky_rinzel_ca3_cells = []
         else:
-            self.pinskyRinzelCA3Cell = pinskyRinzelCA3Cell
-        self.pinskyRinzelCA3Cell_nsprefix_ = None
-        if pulseGenerator is None:
-            self.pulseGenerator = []
+            self.pinsky_rinzel_ca3_cells = pinsky_rinzel_ca3_cells
+        self.pinsky_rinzel_ca3_cells_nsprefix_ = None
+        if pulse_generators is None:
+            self.pulse_generators = []
         else:
-            self.pulseGenerator = pulseGenerator
-        self.pulseGenerator_nsprefix_ = None
-        if pulseGeneratorDL is None:
-            self.pulseGeneratorDL = []
+            self.pulse_generators = pulse_generators
+        self.pulse_generators_nsprefix_ = None
+        if pulse_generator_dls is None:
+            self.pulse_generator_dls = []
         else:
-            self.pulseGeneratorDL = pulseGeneratorDL
-        self.pulseGeneratorDL_nsprefix_ = None
-        if sineGenerator is None:
-            self.sineGenerator = []
+            self.pulse_generator_dls = pulse_generator_dls
+        self.pulse_generator_dls_nsprefix_ = None
+        if sine_generators is None:
+            self.sine_generators = []
         else:
-            self.sineGenerator = sineGenerator
-        self.sineGenerator_nsprefix_ = None
-        if sineGeneratorDL is None:
-            self.sineGeneratorDL = []
+            self.sine_generators = sine_generators
+        self.sine_generators_nsprefix_ = None
+        if sine_generator_dls is None:
+            self.sine_generator_dls = []
         else:
-            self.sineGeneratorDL = sineGeneratorDL
-        self.sineGeneratorDL_nsprefix_ = None
-        if rampGenerator is None:
-            self.rampGenerator = []
+            self.sine_generator_dls = sine_generator_dls
+        self.sine_generator_dls_nsprefix_ = None
+        if ramp_generators is None:
+            self.ramp_generators = []
         else:
-            self.rampGenerator = rampGenerator
-        self.rampGenerator_nsprefix_ = None
-        if rampGeneratorDL is None:
-            self.rampGeneratorDL = []
+            self.ramp_generators = ramp_generators
+        self.ramp_generators_nsprefix_ = None
+        if ramp_generator_dls is None:
+            self.ramp_generator_dls = []
         else:
-            self.rampGeneratorDL = rampGeneratorDL
-        self.rampGeneratorDL_nsprefix_ = None
-        if compoundInput is None:
-            self.compoundInput = []
+            self.ramp_generator_dls = ramp_generator_dls
+        self.ramp_generator_dls_nsprefix_ = None
+        if compound_inputs is None:
+            self.compound_inputs = []
         else:
-            self.compoundInput = compoundInput
-        self.compoundInput_nsprefix_ = None
-        if compoundInputDL is None:
-            self.compoundInputDL = []
+            self.compound_inputs = compound_inputs
+        self.compound_inputs_nsprefix_ = None
+        if compound_input_dls is None:
+            self.compound_input_dls = []
         else:
-            self.compoundInputDL = compoundInputDL
-        self.compoundInputDL_nsprefix_ = None
-        if voltageClamp is None:
-            self.voltageClamp = []
+            self.compound_input_dls = compound_input_dls
+        self.compound_input_dls_nsprefix_ = None
+        if voltage_clamps is None:
+            self.voltage_clamps = []
         else:
-            self.voltageClamp = voltageClamp
-        self.voltageClamp_nsprefix_ = None
-        if voltageClampTriple is None:
-            self.voltageClampTriple = []
+            self.voltage_clamps = voltage_clamps
+        self.voltage_clamps_nsprefix_ = None
+        if voltage_clamp_triples is None:
+            self.voltage_clamp_triples = []
         else:
-            self.voltageClampTriple = voltageClampTriple
-        self.voltageClampTriple_nsprefix_ = None
-        if spikeArray is None:
-            self.spikeArray = []
+            self.voltage_clamp_triples = voltage_clamp_triples
+        self.voltage_clamp_triples_nsprefix_ = None
+        if spike_arrays is None:
+            self.spike_arrays = []
         else:
-            self.spikeArray = spikeArray
-        self.spikeArray_nsprefix_ = None
-        if timedSynapticInput is None:
-            self.timedSynapticInput = []
+            self.spike_arrays = spike_arrays
+        self.spike_arrays_nsprefix_ = None
+        if timed_synaptic_inputs is None:
+            self.timed_synaptic_inputs = []
         else:
-            self.timedSynapticInput = timedSynapticInput
-        self.timedSynapticInput_nsprefix_ = None
-        if spikeGenerator is None:
-            self.spikeGenerator = []
+            self.timed_synaptic_inputs = timed_synaptic_inputs
+        self.timed_synaptic_inputs_nsprefix_ = None
+        if spike_generators is None:
+            self.spike_generators = []
         else:
-            self.spikeGenerator = spikeGenerator
-        self.spikeGenerator_nsprefix_ = None
-        if spikeGeneratorRandom is None:
-            self.spikeGeneratorRandom = []
+            self.spike_generators = spike_generators
+        self.spike_generators_nsprefix_ = None
+        if spike_generator_randoms is None:
+            self.spike_generator_randoms = []
         else:
-            self.spikeGeneratorRandom = spikeGeneratorRandom
-        self.spikeGeneratorRandom_nsprefix_ = None
-        if spikeGeneratorPoisson is None:
-            self.spikeGeneratorPoisson = []
+            self.spike_generator_randoms = spike_generator_randoms
+        self.spike_generator_randoms_nsprefix_ = None
+        if spike_generator_poissons is None:
+            self.spike_generator_poissons = []
         else:
-            self.spikeGeneratorPoisson = spikeGeneratorPoisson
-        self.spikeGeneratorPoisson_nsprefix_ = None
-        if spikeGeneratorRefPoisson is None:
-            self.spikeGeneratorRefPoisson = []
+            self.spike_generator_poissons = spike_generator_poissons
+        self.spike_generator_poissons_nsprefix_ = None
+        if spike_generator_ref_poissons is None:
+            self.spike_generator_ref_poissons = []
         else:
-            self.spikeGeneratorRefPoisson = spikeGeneratorRefPoisson
-        self.spikeGeneratorRefPoisson_nsprefix_ = None
-        if poissonFiringSynapse is None:
-            self.poissonFiringSynapse = []
+            self.spike_generator_ref_poissons = spike_generator_ref_poissons
+        self.spike_generator_ref_poissons_nsprefix_ = None
+        if poisson_firing_synapses is None:
+            self.poisson_firing_synapses = []
         else:
-            self.poissonFiringSynapse = poissonFiringSynapse
-        self.poissonFiringSynapse_nsprefix_ = None
-        if transientPoissonFiringSynapse is None:
-            self.transientPoissonFiringSynapse = []
+            self.poisson_firing_synapses = poisson_firing_synapses
+        self.poisson_firing_synapses_nsprefix_ = None
+        if transient_poisson_firing_synapses is None:
+            self.transient_poisson_firing_synapses = []
         else:
-            self.transientPoissonFiringSynapse = transientPoissonFiringSynapse
-        self.transientPoissonFiringSynapse_nsprefix_ = None
+            self.transient_poisson_firing_synapses = transient_poisson_firing_synapses
+        self.transient_poisson_firing_synapses_nsprefix_ = None
         if IF_curr_alpha is None:
             self.IF_curr_alpha = []
         else:
@@ -18071,36 +18070,36 @@ class NeuroMLDocument(Standalone):
         else:
             self.HH_cond_exp = HH_cond_exp
         self.HH_cond_exp_nsprefix_ = None
-        if expCondSynapse is None:
-            self.expCondSynapse = []
+        if exp_cond_synapses is None:
+            self.exp_cond_synapses = []
         else:
-            self.expCondSynapse = expCondSynapse
-        self.expCondSynapse_nsprefix_ = None
-        if alphaCondSynapse is None:
-            self.alphaCondSynapse = []
+            self.exp_cond_synapses = exp_cond_synapses
+        self.exp_cond_synapses_nsprefix_ = None
+        if alpha_cond_synapses is None:
+            self.alpha_cond_synapses = []
         else:
-            self.alphaCondSynapse = alphaCondSynapse
-        self.alphaCondSynapse_nsprefix_ = None
-        if expCurrSynapse is None:
-            self.expCurrSynapse = []
+            self.alpha_cond_synapses = alpha_cond_synapses
+        self.alpha_cond_synapses_nsprefix_ = None
+        if exp_curr_synapses is None:
+            self.exp_curr_synapses = []
         else:
-            self.expCurrSynapse = expCurrSynapse
-        self.expCurrSynapse_nsprefix_ = None
-        if alphaCurrSynapse is None:
-            self.alphaCurrSynapse = []
+            self.exp_curr_synapses = exp_curr_synapses
+        self.exp_curr_synapses_nsprefix_ = None
+        if alpha_curr_synapses is None:
+            self.alpha_curr_synapses = []
         else:
-            self.alphaCurrSynapse = alphaCurrSynapse
-        self.alphaCurrSynapse_nsprefix_ = None
+            self.alpha_curr_synapses = alpha_curr_synapses
+        self.alpha_curr_synapses_nsprefix_ = None
         if SpikeSourcePoisson is None:
             self.SpikeSourcePoisson = []
         else:
             self.SpikeSourcePoisson = SpikeSourcePoisson
         self.SpikeSourcePoisson_nsprefix_ = None
-        if network is None:
-            self.network = []
+        if networks is None:
+            self.networks = []
         else:
-            self.network = network
-        self.network_nsprefix_ = None
+            self.networks = networks
+        self.networks_nsprefix_ = None
         if ComponentType is None:
             self.ComponentType = []
         else:
@@ -18119,59 +18118,59 @@ class NeuroMLDocument(Standalone):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.include or
-            self.extracellularProperties or
-            self.intracellularProperties or
+            self.includes or
+            self.extracellular_properties or
+            self.intracellular_properties or
             self.morphology or
-            self.ionChannel or
-            self.ionChannelHH or
-            self.ionChannelVShift or
-            self.ionChannelKS or
-            self.decayingPoolConcentrationModel or
-            self.fixedFactorConcentrationModel or
-            self.alphaCurrentSynapse or
-            self.alphaSynapse or
-            self.expOneSynapse or
-            self.expTwoSynapse or
-            self.expThreeSynapse or
-            self.blockingPlasticSynapse or
-            self.doubleSynapse or
-            self.gapJunction or
-            self.silentSynapse or
-            self.linearGradedSynapse or
-            self.gradedSynapse or
-            self.biophysicalProperties or
-            self.cell or
-            self.cell2CaPools or
-            self.baseCell or
-            self.iafTauCell or
-            self.iafTauRefCell or
-            self.iafCell or
-            self.iafRefCell or
-            self.izhikevichCell or
-            self.izhikevich2007Cell or
-            self.adExIaFCell or
-            self.fitzHughNagumoCell or
-            self.fitzHughNagumo1969Cell or
-            self.pinskyRinzelCA3Cell or
-            self.pulseGenerator or
-            self.pulseGeneratorDL or
-            self.sineGenerator or
-            self.sineGeneratorDL or
-            self.rampGenerator or
-            self.rampGeneratorDL or
-            self.compoundInput or
-            self.compoundInputDL or
-            self.voltageClamp or
-            self.voltageClampTriple or
-            self.spikeArray or
-            self.timedSynapticInput or
-            self.spikeGenerator or
-            self.spikeGeneratorRandom or
-            self.spikeGeneratorPoisson or
-            self.spikeGeneratorRefPoisson or
-            self.poissonFiringSynapse or
-            self.transientPoissonFiringSynapse or
+            self.ion_channel or
+            self.ion_channel_hhs or
+            self.ion_channel_v_shifts or
+            self.ion_channel_kses or
+            self.decaying_pool_concentration_models or
+            self.fixed_factor_concentration_models or
+            self.alpha_current_synapses or
+            self.alpha_synapses or
+            self.exp_one_synapses or
+            self.exp_two_synapses or
+            self.exp_three_synapses or
+            self.blocking_plastic_synapses or
+            self.double_synapses or
+            self.gap_junctions or
+            self.silent_synapses or
+            self.linear_graded_synapses or
+            self.graded_synapses or
+            self.biophysical_properties or
+            self.cells or
+            self.cell2_ca_poolses or
+            self.base_cells or
+            self.iaf_tau_cells or
+            self.iaf_tau_ref_cells or
+            self.iaf_cells or
+            self.iaf_ref_cells or
+            self.izhikevich_cells or
+            self.izhikevich2007_cells or
+            self.ad_ex_ia_f_cells or
+            self.fitz_hugh_nagumo_cells or
+            self.fitz_hugh_nagumo1969_cells or
+            self.pinsky_rinzel_ca3_cells or
+            self.pulse_generators or
+            self.pulse_generator_dls or
+            self.sine_generators or
+            self.sine_generator_dls or
+            self.ramp_generators or
+            self.ramp_generator_dls or
+            self.compound_inputs or
+            self.compound_input_dls or
+            self.voltage_clamps or
+            self.voltage_clamp_triples or
+            self.spike_arrays or
+            self.timed_synaptic_inputs or
+            self.spike_generators or
+            self.spike_generator_randoms or
+            self.spike_generator_poissons or
+            self.spike_generator_ref_poissons or
+            self.poisson_firing_synapses or
+            self.transient_poisson_firing_synapses or
             self.IF_curr_alpha or
             self.IF_curr_exp or
             self.IF_cond_alpha or
@@ -18179,12 +18178,12 @@ class NeuroMLDocument(Standalone):
             self.EIF_cond_exp_isfa_ista or
             self.EIF_cond_alpha_isfa_ista or
             self.HH_cond_exp or
-            self.expCondSynapse or
-            self.alphaCondSynapse or
-            self.expCurrSynapse or
-            self.alphaCurrSynapse or
+            self.exp_cond_synapses or
+            self.alpha_cond_synapses or
+            self.exp_curr_synapses or
+            self.alpha_curr_synapses or
             self.SpikeSourcePoisson or
-            self.network or
+            self.networks or
             self.ComponentType or
             super(NeuroMLDocument, self).hasContent_()
         ):
@@ -18222,164 +18221,164 @@ class NeuroMLDocument(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        for include_ in self.include:
-            namespaceprefix_ = self.include_nsprefix_ + ':' if (UseCapturedNS_ and self.include_nsprefix_) else ''
+        for include_ in self.includes:
+            namespaceprefix_ = self.includes_nsprefix_ + ':' if (UseCapturedNS_ and self.includes_nsprefix_) else ''
             include_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='include', pretty_print=pretty_print)
-        for extracellularProperties_ in self.extracellularProperties:
-            namespaceprefix_ = self.extracellularProperties_nsprefix_ + ':' if (UseCapturedNS_ and self.extracellularProperties_nsprefix_) else ''
+        for extracellularProperties_ in self.extracellular_properties:
+            namespaceprefix_ = self.extracellular_properties_nsprefix_ + ':' if (UseCapturedNS_ and self.extracellular_properties_nsprefix_) else ''
             extracellularProperties_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='extracellularProperties', pretty_print=pretty_print)
-        for intracellularProperties_ in self.intracellularProperties:
-            namespaceprefix_ = self.intracellularProperties_nsprefix_ + ':' if (UseCapturedNS_ and self.intracellularProperties_nsprefix_) else ''
+        for intracellularProperties_ in self.intracellular_properties:
+            namespaceprefix_ = self.intracellular_properties_nsprefix_ + ':' if (UseCapturedNS_ and self.intracellular_properties_nsprefix_) else ''
             intracellularProperties_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='intracellularProperties', pretty_print=pretty_print)
         for morphology_ in self.morphology:
             namespaceprefix_ = self.morphology_nsprefix_ + ':' if (UseCapturedNS_ and self.morphology_nsprefix_) else ''
             morphology_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='morphology', pretty_print=pretty_print)
-        for ionChannel_ in self.ionChannel:
-            namespaceprefix_ = self.ionChannel_nsprefix_ + ':' if (UseCapturedNS_ and self.ionChannel_nsprefix_) else ''
+        for ionChannel_ in self.ion_channel:
+            namespaceprefix_ = self.ion_channel_nsprefix_ + ':' if (UseCapturedNS_ and self.ion_channel_nsprefix_) else ''
             ionChannel_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='ionChannel', pretty_print=pretty_print)
-        for ionChannelHH_ in self.ionChannelHH:
-            namespaceprefix_ = self.ionChannelHH_nsprefix_ + ':' if (UseCapturedNS_ and self.ionChannelHH_nsprefix_) else ''
+        for ionChannelHH_ in self.ion_channel_hhs:
+            namespaceprefix_ = self.ion_channel_hhs_nsprefix_ + ':' if (UseCapturedNS_ and self.ion_channel_hhs_nsprefix_) else ''
             ionChannelHH_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='ionChannelHH', pretty_print=pretty_print)
-        for ionChannelVShift_ in self.ionChannelVShift:
-            namespaceprefix_ = self.ionChannelVShift_nsprefix_ + ':' if (UseCapturedNS_ and self.ionChannelVShift_nsprefix_) else ''
+        for ionChannelVShift_ in self.ion_channel_v_shifts:
+            namespaceprefix_ = self.ion_channel_v_shifts_nsprefix_ + ':' if (UseCapturedNS_ and self.ion_channel_v_shifts_nsprefix_) else ''
             ionChannelVShift_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='ionChannelVShift', pretty_print=pretty_print)
-        for ionChannelKS_ in self.ionChannelKS:
-            namespaceprefix_ = self.ionChannelKS_nsprefix_ + ':' if (UseCapturedNS_ and self.ionChannelKS_nsprefix_) else ''
+        for ionChannelKS_ in self.ion_channel_kses:
+            namespaceprefix_ = self.ion_channel_kses_nsprefix_ + ':' if (UseCapturedNS_ and self.ion_channel_kses_nsprefix_) else ''
             ionChannelKS_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='ionChannelKS', pretty_print=pretty_print)
-        for decayingPoolConcentrationModel_ in self.decayingPoolConcentrationModel:
-            namespaceprefix_ = self.decayingPoolConcentrationModel_nsprefix_ + ':' if (UseCapturedNS_ and self.decayingPoolConcentrationModel_nsprefix_) else ''
+        for decayingPoolConcentrationModel_ in self.decaying_pool_concentration_models:
+            namespaceprefix_ = self.decaying_pool_concentration_models_nsprefix_ + ':' if (UseCapturedNS_ and self.decaying_pool_concentration_models_nsprefix_) else ''
             decayingPoolConcentrationModel_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='decayingPoolConcentrationModel', pretty_print=pretty_print)
-        for fixedFactorConcentrationModel_ in self.fixedFactorConcentrationModel:
-            namespaceprefix_ = self.fixedFactorConcentrationModel_nsprefix_ + ':' if (UseCapturedNS_ and self.fixedFactorConcentrationModel_nsprefix_) else ''
+        for fixedFactorConcentrationModel_ in self.fixed_factor_concentration_models:
+            namespaceprefix_ = self.fixed_factor_concentration_models_nsprefix_ + ':' if (UseCapturedNS_ and self.fixed_factor_concentration_models_nsprefix_) else ''
             fixedFactorConcentrationModel_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='fixedFactorConcentrationModel', pretty_print=pretty_print)
-        for alphaCurrentSynapse_ in self.alphaCurrentSynapse:
-            namespaceprefix_ = self.alphaCurrentSynapse_nsprefix_ + ':' if (UseCapturedNS_ and self.alphaCurrentSynapse_nsprefix_) else ''
+        for alphaCurrentSynapse_ in self.alpha_current_synapses:
+            namespaceprefix_ = self.alpha_current_synapses_nsprefix_ + ':' if (UseCapturedNS_ and self.alpha_current_synapses_nsprefix_) else ''
             alphaCurrentSynapse_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='alphaCurrentSynapse', pretty_print=pretty_print)
-        for alphaSynapse_ in self.alphaSynapse:
-            namespaceprefix_ = self.alphaSynapse_nsprefix_ + ':' if (UseCapturedNS_ and self.alphaSynapse_nsprefix_) else ''
+        for alphaSynapse_ in self.alpha_synapses:
+            namespaceprefix_ = self.alpha_synapses_nsprefix_ + ':' if (UseCapturedNS_ and self.alpha_synapses_nsprefix_) else ''
             alphaSynapse_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='alphaSynapse', pretty_print=pretty_print)
-        for expOneSynapse_ in self.expOneSynapse:
-            namespaceprefix_ = self.expOneSynapse_nsprefix_ + ':' if (UseCapturedNS_ and self.expOneSynapse_nsprefix_) else ''
+        for expOneSynapse_ in self.exp_one_synapses:
+            namespaceprefix_ = self.exp_one_synapses_nsprefix_ + ':' if (UseCapturedNS_ and self.exp_one_synapses_nsprefix_) else ''
             expOneSynapse_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='expOneSynapse', pretty_print=pretty_print)
-        for expTwoSynapse_ in self.expTwoSynapse:
-            namespaceprefix_ = self.expTwoSynapse_nsprefix_ + ':' if (UseCapturedNS_ and self.expTwoSynapse_nsprefix_) else ''
+        for expTwoSynapse_ in self.exp_two_synapses:
+            namespaceprefix_ = self.exp_two_synapses_nsprefix_ + ':' if (UseCapturedNS_ and self.exp_two_synapses_nsprefix_) else ''
             expTwoSynapse_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='expTwoSynapse', pretty_print=pretty_print)
-        for expThreeSynapse_ in self.expThreeSynapse:
-            namespaceprefix_ = self.expThreeSynapse_nsprefix_ + ':' if (UseCapturedNS_ and self.expThreeSynapse_nsprefix_) else ''
+        for expThreeSynapse_ in self.exp_three_synapses:
+            namespaceprefix_ = self.exp_three_synapses_nsprefix_ + ':' if (UseCapturedNS_ and self.exp_three_synapses_nsprefix_) else ''
             expThreeSynapse_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='expThreeSynapse', pretty_print=pretty_print)
-        for blockingPlasticSynapse_ in self.blockingPlasticSynapse:
-            namespaceprefix_ = self.blockingPlasticSynapse_nsprefix_ + ':' if (UseCapturedNS_ and self.blockingPlasticSynapse_nsprefix_) else ''
+        for blockingPlasticSynapse_ in self.blocking_plastic_synapses:
+            namespaceprefix_ = self.blocking_plastic_synapses_nsprefix_ + ':' if (UseCapturedNS_ and self.blocking_plastic_synapses_nsprefix_) else ''
             blockingPlasticSynapse_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='blockingPlasticSynapse', pretty_print=pretty_print)
-        for doubleSynapse_ in self.doubleSynapse:
-            namespaceprefix_ = self.doubleSynapse_nsprefix_ + ':' if (UseCapturedNS_ and self.doubleSynapse_nsprefix_) else ''
+        for doubleSynapse_ in self.double_synapses:
+            namespaceprefix_ = self.double_synapses_nsprefix_ + ':' if (UseCapturedNS_ and self.double_synapses_nsprefix_) else ''
             doubleSynapse_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='doubleSynapse', pretty_print=pretty_print)
-        for gapJunction_ in self.gapJunction:
-            namespaceprefix_ = self.gapJunction_nsprefix_ + ':' if (UseCapturedNS_ and self.gapJunction_nsprefix_) else ''
+        for gapJunction_ in self.gap_junctions:
+            namespaceprefix_ = self.gap_junctions_nsprefix_ + ':' if (UseCapturedNS_ and self.gap_junctions_nsprefix_) else ''
             gapJunction_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='gapJunction', pretty_print=pretty_print)
-        for silentSynapse_ in self.silentSynapse:
-            namespaceprefix_ = self.silentSynapse_nsprefix_ + ':' if (UseCapturedNS_ and self.silentSynapse_nsprefix_) else ''
+        for silentSynapse_ in self.silent_synapses:
+            namespaceprefix_ = self.silent_synapses_nsprefix_ + ':' if (UseCapturedNS_ and self.silent_synapses_nsprefix_) else ''
             silentSynapse_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='silentSynapse', pretty_print=pretty_print)
-        for linearGradedSynapse_ in self.linearGradedSynapse:
-            namespaceprefix_ = self.linearGradedSynapse_nsprefix_ + ':' if (UseCapturedNS_ and self.linearGradedSynapse_nsprefix_) else ''
+        for linearGradedSynapse_ in self.linear_graded_synapses:
+            namespaceprefix_ = self.linear_graded_synapses_nsprefix_ + ':' if (UseCapturedNS_ and self.linear_graded_synapses_nsprefix_) else ''
             linearGradedSynapse_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='linearGradedSynapse', pretty_print=pretty_print)
-        for gradedSynapse_ in self.gradedSynapse:
-            namespaceprefix_ = self.gradedSynapse_nsprefix_ + ':' if (UseCapturedNS_ and self.gradedSynapse_nsprefix_) else ''
+        for gradedSynapse_ in self.graded_synapses:
+            namespaceprefix_ = self.graded_synapses_nsprefix_ + ':' if (UseCapturedNS_ and self.graded_synapses_nsprefix_) else ''
             gradedSynapse_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='gradedSynapse', pretty_print=pretty_print)
-        for biophysicalProperties_ in self.biophysicalProperties:
-            namespaceprefix_ = self.biophysicalProperties_nsprefix_ + ':' if (UseCapturedNS_ and self.biophysicalProperties_nsprefix_) else ''
+        for biophysicalProperties_ in self.biophysical_properties:
+            namespaceprefix_ = self.biophysical_properties_nsprefix_ + ':' if (UseCapturedNS_ and self.biophysical_properties_nsprefix_) else ''
             biophysicalProperties_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='biophysicalProperties', pretty_print=pretty_print)
-        for cell_ in self.cell:
-            namespaceprefix_ = self.cell_nsprefix_ + ':' if (UseCapturedNS_ and self.cell_nsprefix_) else ''
+        for cell_ in self.cells:
+            namespaceprefix_ = self.cells_nsprefix_ + ':' if (UseCapturedNS_ and self.cells_nsprefix_) else ''
             cell_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='cell', pretty_print=pretty_print)
-        for cell2CaPools_ in self.cell2CaPools:
-            namespaceprefix_ = self.cell2CaPools_nsprefix_ + ':' if (UseCapturedNS_ and self.cell2CaPools_nsprefix_) else ''
+        for cell2CaPools_ in self.cell2_ca_poolses:
+            namespaceprefix_ = self.cell2_ca_poolses_nsprefix_ + ':' if (UseCapturedNS_ and self.cell2_ca_poolses_nsprefix_) else ''
             cell2CaPools_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='cell2CaPools', pretty_print=pretty_print)
-        for baseCell_ in self.baseCell:
-            namespaceprefix_ = self.baseCell_nsprefix_ + ':' if (UseCapturedNS_ and self.baseCell_nsprefix_) else ''
+        for baseCell_ in self.base_cells:
+            namespaceprefix_ = self.base_cells_nsprefix_ + ':' if (UseCapturedNS_ and self.base_cells_nsprefix_) else ''
             baseCell_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='baseCell', pretty_print=pretty_print)
-        for iafTauCell_ in self.iafTauCell:
-            namespaceprefix_ = self.iafTauCell_nsprefix_ + ':' if (UseCapturedNS_ and self.iafTauCell_nsprefix_) else ''
+        for iafTauCell_ in self.iaf_tau_cells:
+            namespaceprefix_ = self.iaf_tau_cells_nsprefix_ + ':' if (UseCapturedNS_ and self.iaf_tau_cells_nsprefix_) else ''
             iafTauCell_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='iafTauCell', pretty_print=pretty_print)
-        for iafTauRefCell_ in self.iafTauRefCell:
-            namespaceprefix_ = self.iafTauRefCell_nsprefix_ + ':' if (UseCapturedNS_ and self.iafTauRefCell_nsprefix_) else ''
+        for iafTauRefCell_ in self.iaf_tau_ref_cells:
+            namespaceprefix_ = self.iaf_tau_ref_cells_nsprefix_ + ':' if (UseCapturedNS_ and self.iaf_tau_ref_cells_nsprefix_) else ''
             iafTauRefCell_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='iafTauRefCell', pretty_print=pretty_print)
-        for iafCell_ in self.iafCell:
-            namespaceprefix_ = self.iafCell_nsprefix_ + ':' if (UseCapturedNS_ and self.iafCell_nsprefix_) else ''
+        for iafCell_ in self.iaf_cells:
+            namespaceprefix_ = self.iaf_cells_nsprefix_ + ':' if (UseCapturedNS_ and self.iaf_cells_nsprefix_) else ''
             iafCell_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='iafCell', pretty_print=pretty_print)
-        for iafRefCell_ in self.iafRefCell:
-            namespaceprefix_ = self.iafRefCell_nsprefix_ + ':' if (UseCapturedNS_ and self.iafRefCell_nsprefix_) else ''
+        for iafRefCell_ in self.iaf_ref_cells:
+            namespaceprefix_ = self.iaf_ref_cells_nsprefix_ + ':' if (UseCapturedNS_ and self.iaf_ref_cells_nsprefix_) else ''
             iafRefCell_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='iafRefCell', pretty_print=pretty_print)
-        for izhikevichCell_ in self.izhikevichCell:
-            namespaceprefix_ = self.izhikevichCell_nsprefix_ + ':' if (UseCapturedNS_ and self.izhikevichCell_nsprefix_) else ''
+        for izhikevichCell_ in self.izhikevich_cells:
+            namespaceprefix_ = self.izhikevich_cells_nsprefix_ + ':' if (UseCapturedNS_ and self.izhikevich_cells_nsprefix_) else ''
             izhikevichCell_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='izhikevichCell', pretty_print=pretty_print)
-        for izhikevich2007Cell_ in self.izhikevich2007Cell:
-            namespaceprefix_ = self.izhikevich2007Cell_nsprefix_ + ':' if (UseCapturedNS_ and self.izhikevich2007Cell_nsprefix_) else ''
+        for izhikevich2007Cell_ in self.izhikevich2007_cells:
+            namespaceprefix_ = self.izhikevich2007_cells_nsprefix_ + ':' if (UseCapturedNS_ and self.izhikevich2007_cells_nsprefix_) else ''
             izhikevich2007Cell_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='izhikevich2007Cell', pretty_print=pretty_print)
-        for adExIaFCell_ in self.adExIaFCell:
-            namespaceprefix_ = self.adExIaFCell_nsprefix_ + ':' if (UseCapturedNS_ and self.adExIaFCell_nsprefix_) else ''
+        for adExIaFCell_ in self.ad_ex_ia_f_cells:
+            namespaceprefix_ = self.ad_ex_ia_f_cells_nsprefix_ + ':' if (UseCapturedNS_ and self.ad_ex_ia_f_cells_nsprefix_) else ''
             adExIaFCell_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='adExIaFCell', pretty_print=pretty_print)
-        for fitzHughNagumoCell_ in self.fitzHughNagumoCell:
-            namespaceprefix_ = self.fitzHughNagumoCell_nsprefix_ + ':' if (UseCapturedNS_ and self.fitzHughNagumoCell_nsprefix_) else ''
+        for fitzHughNagumoCell_ in self.fitz_hugh_nagumo_cells:
+            namespaceprefix_ = self.fitz_hugh_nagumo_cells_nsprefix_ + ':' if (UseCapturedNS_ and self.fitz_hugh_nagumo_cells_nsprefix_) else ''
             fitzHughNagumoCell_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='fitzHughNagumoCell', pretty_print=pretty_print)
-        for fitzHughNagumo1969Cell_ in self.fitzHughNagumo1969Cell:
-            namespaceprefix_ = self.fitzHughNagumo1969Cell_nsprefix_ + ':' if (UseCapturedNS_ and self.fitzHughNagumo1969Cell_nsprefix_) else ''
+        for fitzHughNagumo1969Cell_ in self.fitz_hugh_nagumo1969_cells:
+            namespaceprefix_ = self.fitz_hugh_nagumo1969_cells_nsprefix_ + ':' if (UseCapturedNS_ and self.fitz_hugh_nagumo1969_cells_nsprefix_) else ''
             fitzHughNagumo1969Cell_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='fitzHughNagumo1969Cell', pretty_print=pretty_print)
-        for pinskyRinzelCA3Cell_ in self.pinskyRinzelCA3Cell:
-            namespaceprefix_ = self.pinskyRinzelCA3Cell_nsprefix_ + ':' if (UseCapturedNS_ and self.pinskyRinzelCA3Cell_nsprefix_) else ''
+        for pinskyRinzelCA3Cell_ in self.pinsky_rinzel_ca3_cells:
+            namespaceprefix_ = self.pinsky_rinzel_ca3_cells_nsprefix_ + ':' if (UseCapturedNS_ and self.pinsky_rinzel_ca3_cells_nsprefix_) else ''
             pinskyRinzelCA3Cell_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='pinskyRinzelCA3Cell', pretty_print=pretty_print)
-        for pulseGenerator_ in self.pulseGenerator:
-            namespaceprefix_ = self.pulseGenerator_nsprefix_ + ':' if (UseCapturedNS_ and self.pulseGenerator_nsprefix_) else ''
+        for pulseGenerator_ in self.pulse_generators:
+            namespaceprefix_ = self.pulse_generators_nsprefix_ + ':' if (UseCapturedNS_ and self.pulse_generators_nsprefix_) else ''
             pulseGenerator_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='pulseGenerator', pretty_print=pretty_print)
-        for pulseGeneratorDL_ in self.pulseGeneratorDL:
-            namespaceprefix_ = self.pulseGeneratorDL_nsprefix_ + ':' if (UseCapturedNS_ and self.pulseGeneratorDL_nsprefix_) else ''
+        for pulseGeneratorDL_ in self.pulse_generator_dls:
+            namespaceprefix_ = self.pulse_generator_dls_nsprefix_ + ':' if (UseCapturedNS_ and self.pulse_generator_dls_nsprefix_) else ''
             pulseGeneratorDL_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='pulseGeneratorDL', pretty_print=pretty_print)
-        for sineGenerator_ in self.sineGenerator:
-            namespaceprefix_ = self.sineGenerator_nsprefix_ + ':' if (UseCapturedNS_ and self.sineGenerator_nsprefix_) else ''
+        for sineGenerator_ in self.sine_generators:
+            namespaceprefix_ = self.sine_generators_nsprefix_ + ':' if (UseCapturedNS_ and self.sine_generators_nsprefix_) else ''
             sineGenerator_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='sineGenerator', pretty_print=pretty_print)
-        for sineGeneratorDL_ in self.sineGeneratorDL:
-            namespaceprefix_ = self.sineGeneratorDL_nsprefix_ + ':' if (UseCapturedNS_ and self.sineGeneratorDL_nsprefix_) else ''
+        for sineGeneratorDL_ in self.sine_generator_dls:
+            namespaceprefix_ = self.sine_generator_dls_nsprefix_ + ':' if (UseCapturedNS_ and self.sine_generator_dls_nsprefix_) else ''
             sineGeneratorDL_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='sineGeneratorDL', pretty_print=pretty_print)
-        for rampGenerator_ in self.rampGenerator:
-            namespaceprefix_ = self.rampGenerator_nsprefix_ + ':' if (UseCapturedNS_ and self.rampGenerator_nsprefix_) else ''
+        for rampGenerator_ in self.ramp_generators:
+            namespaceprefix_ = self.ramp_generators_nsprefix_ + ':' if (UseCapturedNS_ and self.ramp_generators_nsprefix_) else ''
             rampGenerator_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='rampGenerator', pretty_print=pretty_print)
-        for rampGeneratorDL_ in self.rampGeneratorDL:
-            namespaceprefix_ = self.rampGeneratorDL_nsprefix_ + ':' if (UseCapturedNS_ and self.rampGeneratorDL_nsprefix_) else ''
+        for rampGeneratorDL_ in self.ramp_generator_dls:
+            namespaceprefix_ = self.ramp_generator_dls_nsprefix_ + ':' if (UseCapturedNS_ and self.ramp_generator_dls_nsprefix_) else ''
             rampGeneratorDL_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='rampGeneratorDL', pretty_print=pretty_print)
-        for compoundInput_ in self.compoundInput:
-            namespaceprefix_ = self.compoundInput_nsprefix_ + ':' if (UseCapturedNS_ and self.compoundInput_nsprefix_) else ''
+        for compoundInput_ in self.compound_inputs:
+            namespaceprefix_ = self.compound_inputs_nsprefix_ + ':' if (UseCapturedNS_ and self.compound_inputs_nsprefix_) else ''
             compoundInput_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='compoundInput', pretty_print=pretty_print)
-        for compoundInputDL_ in self.compoundInputDL:
-            namespaceprefix_ = self.compoundInputDL_nsprefix_ + ':' if (UseCapturedNS_ and self.compoundInputDL_nsprefix_) else ''
+        for compoundInputDL_ in self.compound_input_dls:
+            namespaceprefix_ = self.compound_input_dls_nsprefix_ + ':' if (UseCapturedNS_ and self.compound_input_dls_nsprefix_) else ''
             compoundInputDL_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='compoundInputDL', pretty_print=pretty_print)
-        for voltageClamp_ in self.voltageClamp:
-            namespaceprefix_ = self.voltageClamp_nsprefix_ + ':' if (UseCapturedNS_ and self.voltageClamp_nsprefix_) else ''
+        for voltageClamp_ in self.voltage_clamps:
+            namespaceprefix_ = self.voltage_clamps_nsprefix_ + ':' if (UseCapturedNS_ and self.voltage_clamps_nsprefix_) else ''
             voltageClamp_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='voltageClamp', pretty_print=pretty_print)
-        for voltageClampTriple_ in self.voltageClampTriple:
-            namespaceprefix_ = self.voltageClampTriple_nsprefix_ + ':' if (UseCapturedNS_ and self.voltageClampTriple_nsprefix_) else ''
+        for voltageClampTriple_ in self.voltage_clamp_triples:
+            namespaceprefix_ = self.voltage_clamp_triples_nsprefix_ + ':' if (UseCapturedNS_ and self.voltage_clamp_triples_nsprefix_) else ''
             voltageClampTriple_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='voltageClampTriple', pretty_print=pretty_print)
-        for spikeArray_ in self.spikeArray:
-            namespaceprefix_ = self.spikeArray_nsprefix_ + ':' if (UseCapturedNS_ and self.spikeArray_nsprefix_) else ''
+        for spikeArray_ in self.spike_arrays:
+            namespaceprefix_ = self.spike_arrays_nsprefix_ + ':' if (UseCapturedNS_ and self.spike_arrays_nsprefix_) else ''
             spikeArray_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='spikeArray', pretty_print=pretty_print)
-        for timedSynapticInput_ in self.timedSynapticInput:
-            namespaceprefix_ = self.timedSynapticInput_nsprefix_ + ':' if (UseCapturedNS_ and self.timedSynapticInput_nsprefix_) else ''
+        for timedSynapticInput_ in self.timed_synaptic_inputs:
+            namespaceprefix_ = self.timed_synaptic_inputs_nsprefix_ + ':' if (UseCapturedNS_ and self.timed_synaptic_inputs_nsprefix_) else ''
             timedSynapticInput_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='timedSynapticInput', pretty_print=pretty_print)
-        for spikeGenerator_ in self.spikeGenerator:
-            namespaceprefix_ = self.spikeGenerator_nsprefix_ + ':' if (UseCapturedNS_ and self.spikeGenerator_nsprefix_) else ''
+        for spikeGenerator_ in self.spike_generators:
+            namespaceprefix_ = self.spike_generators_nsprefix_ + ':' if (UseCapturedNS_ and self.spike_generators_nsprefix_) else ''
             spikeGenerator_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='spikeGenerator', pretty_print=pretty_print)
-        for spikeGeneratorRandom_ in self.spikeGeneratorRandom:
-            namespaceprefix_ = self.spikeGeneratorRandom_nsprefix_ + ':' if (UseCapturedNS_ and self.spikeGeneratorRandom_nsprefix_) else ''
+        for spikeGeneratorRandom_ in self.spike_generator_randoms:
+            namespaceprefix_ = self.spike_generator_randoms_nsprefix_ + ':' if (UseCapturedNS_ and self.spike_generator_randoms_nsprefix_) else ''
             spikeGeneratorRandom_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='spikeGeneratorRandom', pretty_print=pretty_print)
-        for spikeGeneratorPoisson_ in self.spikeGeneratorPoisson:
-            namespaceprefix_ = self.spikeGeneratorPoisson_nsprefix_ + ':' if (UseCapturedNS_ and self.spikeGeneratorPoisson_nsprefix_) else ''
+        for spikeGeneratorPoisson_ in self.spike_generator_poissons:
+            namespaceprefix_ = self.spike_generator_poissons_nsprefix_ + ':' if (UseCapturedNS_ and self.spike_generator_poissons_nsprefix_) else ''
             spikeGeneratorPoisson_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='spikeGeneratorPoisson', pretty_print=pretty_print)
-        for spikeGeneratorRefPoisson_ in self.spikeGeneratorRefPoisson:
-            namespaceprefix_ = self.spikeGeneratorRefPoisson_nsprefix_ + ':' if (UseCapturedNS_ and self.spikeGeneratorRefPoisson_nsprefix_) else ''
+        for spikeGeneratorRefPoisson_ in self.spike_generator_ref_poissons:
+            namespaceprefix_ = self.spike_generator_ref_poissons_nsprefix_ + ':' if (UseCapturedNS_ and self.spike_generator_ref_poissons_nsprefix_) else ''
             spikeGeneratorRefPoisson_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='spikeGeneratorRefPoisson', pretty_print=pretty_print)
-        for poissonFiringSynapse_ in self.poissonFiringSynapse:
-            namespaceprefix_ = self.poissonFiringSynapse_nsprefix_ + ':' if (UseCapturedNS_ and self.poissonFiringSynapse_nsprefix_) else ''
+        for poissonFiringSynapse_ in self.poisson_firing_synapses:
+            namespaceprefix_ = self.poisson_firing_synapses_nsprefix_ + ':' if (UseCapturedNS_ and self.poisson_firing_synapses_nsprefix_) else ''
             poissonFiringSynapse_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='poissonFiringSynapse', pretty_print=pretty_print)
-        for transientPoissonFiringSynapse_ in self.transientPoissonFiringSynapse:
-            namespaceprefix_ = self.transientPoissonFiringSynapse_nsprefix_ + ':' if (UseCapturedNS_ and self.transientPoissonFiringSynapse_nsprefix_) else ''
+        for transientPoissonFiringSynapse_ in self.transient_poisson_firing_synapses:
+            namespaceprefix_ = self.transient_poisson_firing_synapses_nsprefix_ + ':' if (UseCapturedNS_ and self.transient_poisson_firing_synapses_nsprefix_) else ''
             transientPoissonFiringSynapse_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='transientPoissonFiringSynapse', pretty_print=pretty_print)
         for IF_curr_alpha_ in self.IF_curr_alpha:
             namespaceprefix_ = self.IF_curr_alpha_nsprefix_ + ':' if (UseCapturedNS_ and self.IF_curr_alpha_nsprefix_) else ''
@@ -18402,23 +18401,23 @@ class NeuroMLDocument(Standalone):
         for HH_cond_exp_ in self.HH_cond_exp:
             namespaceprefix_ = self.HH_cond_exp_nsprefix_ + ':' if (UseCapturedNS_ and self.HH_cond_exp_nsprefix_) else ''
             HH_cond_exp_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='HH_cond_exp', pretty_print=pretty_print)
-        for expCondSynapse_ in self.expCondSynapse:
-            namespaceprefix_ = self.expCondSynapse_nsprefix_ + ':' if (UseCapturedNS_ and self.expCondSynapse_nsprefix_) else ''
+        for expCondSynapse_ in self.exp_cond_synapses:
+            namespaceprefix_ = self.exp_cond_synapses_nsprefix_ + ':' if (UseCapturedNS_ and self.exp_cond_synapses_nsprefix_) else ''
             expCondSynapse_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='expCondSynapse', pretty_print=pretty_print)
-        for alphaCondSynapse_ in self.alphaCondSynapse:
-            namespaceprefix_ = self.alphaCondSynapse_nsprefix_ + ':' if (UseCapturedNS_ and self.alphaCondSynapse_nsprefix_) else ''
+        for alphaCondSynapse_ in self.alpha_cond_synapses:
+            namespaceprefix_ = self.alpha_cond_synapses_nsprefix_ + ':' if (UseCapturedNS_ and self.alpha_cond_synapses_nsprefix_) else ''
             alphaCondSynapse_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='alphaCondSynapse', pretty_print=pretty_print)
-        for expCurrSynapse_ in self.expCurrSynapse:
-            namespaceprefix_ = self.expCurrSynapse_nsprefix_ + ':' if (UseCapturedNS_ and self.expCurrSynapse_nsprefix_) else ''
+        for expCurrSynapse_ in self.exp_curr_synapses:
+            namespaceprefix_ = self.exp_curr_synapses_nsprefix_ + ':' if (UseCapturedNS_ and self.exp_curr_synapses_nsprefix_) else ''
             expCurrSynapse_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='expCurrSynapse', pretty_print=pretty_print)
-        for alphaCurrSynapse_ in self.alphaCurrSynapse:
-            namespaceprefix_ = self.alphaCurrSynapse_nsprefix_ + ':' if (UseCapturedNS_ and self.alphaCurrSynapse_nsprefix_) else ''
+        for alphaCurrSynapse_ in self.alpha_curr_synapses:
+            namespaceprefix_ = self.alpha_curr_synapses_nsprefix_ + ':' if (UseCapturedNS_ and self.alpha_curr_synapses_nsprefix_) else ''
             alphaCurrSynapse_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='alphaCurrSynapse', pretty_print=pretty_print)
         for SpikeSourcePoisson_ in self.SpikeSourcePoisson:
             namespaceprefix_ = self.SpikeSourcePoisson_nsprefix_ + ':' if (UseCapturedNS_ and self.SpikeSourcePoisson_nsprefix_) else ''
             SpikeSourcePoisson_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='SpikeSourcePoisson', pretty_print=pretty_print)
-        for network_ in self.network:
-            namespaceprefix_ = self.network_nsprefix_ + ':' if (UseCapturedNS_ and self.network_nsprefix_) else ''
+        for network_ in self.networks:
+            namespaceprefix_ = self.networks_nsprefix_ + ':' if (UseCapturedNS_ and self.networks_nsprefix_) else ''
             network_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='network', pretty_print=pretty_print)
         for ComponentType_ in self.ComponentType:
             namespaceprefix_ = self.ComponentType_nsprefix_ + ':' if (UseCapturedNS_ and self.ComponentType_nsprefix_) else ''
@@ -18440,18 +18439,18 @@ class NeuroMLDocument(Standalone):
         if nodeName_ == 'include':
             obj_ = IncludeType.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.include.append(obj_)
+            self.includes.append(obj_)
             obj_.original_tagname_ = 'include'
         elif nodeName_ == 'extracellularProperties':
             obj_ = ExtracellularProperties.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.extracellularProperties.append(obj_)
+            self.extracellular_properties.append(obj_)
             obj_.original_tagname_ = 'extracellularProperties'
         elif nodeName_ == 'intracellularProperties':
             class_obj_ = self.get_class_obj_(child_, IntracellularProperties)
             obj_ = class_obj_.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.intracellularProperties.append(obj_)
+            self.intracellular_properties.append(obj_)
             obj_.original_tagname_ = 'intracellularProperties'
         elif nodeName_ == 'morphology':
             obj_ = Morphology.factory(parent_object_=self)
@@ -18462,254 +18461,254 @@ class NeuroMLDocument(Standalone):
             class_obj_ = self.get_class_obj_(child_, IonChannel)
             obj_ = class_obj_.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.ionChannel.append(obj_)
+            self.ion_channel.append(obj_)
             obj_.original_tagname_ = 'ionChannel'
         elif nodeName_ == 'ionChannelHH':
             obj_ = IonChannelHH.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.ionChannelHH.append(obj_)
+            self.ion_channel_hhs.append(obj_)
             obj_.original_tagname_ = 'ionChannelHH'
         elif nodeName_ == 'ionChannelVShift':
             obj_ = IonChannelVShift.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.ionChannelVShift.append(obj_)
+            self.ion_channel_v_shifts.append(obj_)
             obj_.original_tagname_ = 'ionChannelVShift'
         elif nodeName_ == 'ionChannelKS':
             obj_ = IonChannelKS.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.ionChannelKS.append(obj_)
+            self.ion_channel_kses.append(obj_)
             obj_.original_tagname_ = 'ionChannelKS'
         elif nodeName_ == 'decayingPoolConcentrationModel':
             class_obj_ = self.get_class_obj_(child_, DecayingPoolConcentrationModel)
             obj_ = class_obj_.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.decayingPoolConcentrationModel.append(obj_)
+            self.decaying_pool_concentration_models.append(obj_)
             obj_.original_tagname_ = 'decayingPoolConcentrationModel'
         elif nodeName_ == 'fixedFactorConcentrationModel':
             obj_ = FixedFactorConcentrationModel.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.fixedFactorConcentrationModel.append(obj_)
+            self.fixed_factor_concentration_models.append(obj_)
             obj_.original_tagname_ = 'fixedFactorConcentrationModel'
         elif nodeName_ == 'alphaCurrentSynapse':
             obj_ = AlphaCurrentSynapse.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.alphaCurrentSynapse.append(obj_)
+            self.alpha_current_synapses.append(obj_)
             obj_.original_tagname_ = 'alphaCurrentSynapse'
         elif nodeName_ == 'alphaSynapse':
             obj_ = AlphaSynapse.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.alphaSynapse.append(obj_)
+            self.alpha_synapses.append(obj_)
             obj_.original_tagname_ = 'alphaSynapse'
         elif nodeName_ == 'expOneSynapse':
             obj_ = ExpOneSynapse.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.expOneSynapse.append(obj_)
+            self.exp_one_synapses.append(obj_)
             obj_.original_tagname_ = 'expOneSynapse'
         elif nodeName_ == 'expTwoSynapse':
             class_obj_ = self.get_class_obj_(child_, ExpTwoSynapse)
             obj_ = class_obj_.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.expTwoSynapse.append(obj_)
+            self.exp_two_synapses.append(obj_)
             obj_.original_tagname_ = 'expTwoSynapse'
         elif nodeName_ == 'expThreeSynapse':
             obj_ = ExpThreeSynapse.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.expThreeSynapse.append(obj_)
+            self.exp_three_synapses.append(obj_)
             obj_.original_tagname_ = 'expThreeSynapse'
         elif nodeName_ == 'blockingPlasticSynapse':
             obj_ = BlockingPlasticSynapse.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.blockingPlasticSynapse.append(obj_)
+            self.blocking_plastic_synapses.append(obj_)
             obj_.original_tagname_ = 'blockingPlasticSynapse'
         elif nodeName_ == 'doubleSynapse':
             obj_ = DoubleSynapse.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.doubleSynapse.append(obj_)
+            self.double_synapses.append(obj_)
             obj_.original_tagname_ = 'doubleSynapse'
         elif nodeName_ == 'gapJunction':
             obj_ = GapJunction.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.gapJunction.append(obj_)
+            self.gap_junctions.append(obj_)
             obj_.original_tagname_ = 'gapJunction'
         elif nodeName_ == 'silentSynapse':
             obj_ = SilentSynapse.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.silentSynapse.append(obj_)
+            self.silent_synapses.append(obj_)
             obj_.original_tagname_ = 'silentSynapse'
         elif nodeName_ == 'linearGradedSynapse':
             obj_ = LinearGradedSynapse.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.linearGradedSynapse.append(obj_)
+            self.linear_graded_synapses.append(obj_)
             obj_.original_tagname_ = 'linearGradedSynapse'
         elif nodeName_ == 'gradedSynapse':
             obj_ = GradedSynapse.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.gradedSynapse.append(obj_)
+            self.graded_synapses.append(obj_)
             obj_.original_tagname_ = 'gradedSynapse'
         elif nodeName_ == 'biophysicalProperties':
             obj_ = BiophysicalProperties.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.biophysicalProperties.append(obj_)
+            self.biophysical_properties.append(obj_)
             obj_.original_tagname_ = 'biophysicalProperties'
         elif nodeName_ == 'cell':
             class_obj_ = self.get_class_obj_(child_, Cell)
             obj_ = class_obj_.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.cell.append(obj_)
+            self.cells.append(obj_)
             obj_.original_tagname_ = 'cell'
         elif nodeName_ == 'cell2CaPools':
             obj_ = Cell2CaPools.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.cell2CaPools.append(obj_)
+            self.cell2_ca_poolses.append(obj_)
             obj_.original_tagname_ = 'cell2CaPools'
         elif nodeName_ == 'baseCell':
             class_obj_ = self.get_class_obj_(child_, BaseCell)
             obj_ = class_obj_.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.baseCell.append(obj_)
+            self.base_cells.append(obj_)
             obj_.original_tagname_ = 'baseCell'
         elif nodeName_ == 'iafTauCell':
             class_obj_ = self.get_class_obj_(child_, IafTauCell)
             obj_ = class_obj_.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.iafTauCell.append(obj_)
+            self.iaf_tau_cells.append(obj_)
             obj_.original_tagname_ = 'iafTauCell'
         elif nodeName_ == 'iafTauRefCell':
             obj_ = IafTauRefCell.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.iafTauRefCell.append(obj_)
+            self.iaf_tau_ref_cells.append(obj_)
             obj_.original_tagname_ = 'iafTauRefCell'
         elif nodeName_ == 'iafCell':
             class_obj_ = self.get_class_obj_(child_, IafCell)
             obj_ = class_obj_.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.iafCell.append(obj_)
+            self.iaf_cells.append(obj_)
             obj_.original_tagname_ = 'iafCell'
         elif nodeName_ == 'iafRefCell':
             obj_ = IafRefCell.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.iafRefCell.append(obj_)
+            self.iaf_ref_cells.append(obj_)
             obj_.original_tagname_ = 'iafRefCell'
         elif nodeName_ == 'izhikevichCell':
             obj_ = IzhikevichCell.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.izhikevichCell.append(obj_)
+            self.izhikevich_cells.append(obj_)
             obj_.original_tagname_ = 'izhikevichCell'
         elif nodeName_ == 'izhikevich2007Cell':
             obj_ = Izhikevich2007Cell.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.izhikevich2007Cell.append(obj_)
+            self.izhikevich2007_cells.append(obj_)
             obj_.original_tagname_ = 'izhikevich2007Cell'
         elif nodeName_ == 'adExIaFCell':
             obj_ = AdExIaFCell.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.adExIaFCell.append(obj_)
+            self.ad_ex_ia_f_cells.append(obj_)
             obj_.original_tagname_ = 'adExIaFCell'
         elif nodeName_ == 'fitzHughNagumoCell':
             obj_ = FitzHughNagumoCell.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.fitzHughNagumoCell.append(obj_)
+            self.fitz_hugh_nagumo_cells.append(obj_)
             obj_.original_tagname_ = 'fitzHughNagumoCell'
         elif nodeName_ == 'fitzHughNagumo1969Cell':
             obj_ = FitzHughNagumo1969Cell.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.fitzHughNagumo1969Cell.append(obj_)
+            self.fitz_hugh_nagumo1969_cells.append(obj_)
             obj_.original_tagname_ = 'fitzHughNagumo1969Cell'
         elif nodeName_ == 'pinskyRinzelCA3Cell':
             obj_ = PinskyRinzelCA3Cell.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.pinskyRinzelCA3Cell.append(obj_)
+            self.pinsky_rinzel_ca3_cells.append(obj_)
             obj_.original_tagname_ = 'pinskyRinzelCA3Cell'
         elif nodeName_ == 'pulseGenerator':
             obj_ = PulseGenerator.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.pulseGenerator.append(obj_)
+            self.pulse_generators.append(obj_)
             obj_.original_tagname_ = 'pulseGenerator'
         elif nodeName_ == 'pulseGeneratorDL':
             obj_ = PulseGeneratorDL.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.pulseGeneratorDL.append(obj_)
+            self.pulse_generator_dls.append(obj_)
             obj_.original_tagname_ = 'pulseGeneratorDL'
         elif nodeName_ == 'sineGenerator':
             obj_ = SineGenerator.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.sineGenerator.append(obj_)
+            self.sine_generators.append(obj_)
             obj_.original_tagname_ = 'sineGenerator'
         elif nodeName_ == 'sineGeneratorDL':
             obj_ = SineGeneratorDL.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.sineGeneratorDL.append(obj_)
+            self.sine_generator_dls.append(obj_)
             obj_.original_tagname_ = 'sineGeneratorDL'
         elif nodeName_ == 'rampGenerator':
             obj_ = RampGenerator.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.rampGenerator.append(obj_)
+            self.ramp_generators.append(obj_)
             obj_.original_tagname_ = 'rampGenerator'
         elif nodeName_ == 'rampGeneratorDL':
             obj_ = RampGeneratorDL.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.rampGeneratorDL.append(obj_)
+            self.ramp_generator_dls.append(obj_)
             obj_.original_tagname_ = 'rampGeneratorDL'
         elif nodeName_ == 'compoundInput':
             obj_ = CompoundInput.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.compoundInput.append(obj_)
+            self.compound_inputs.append(obj_)
             obj_.original_tagname_ = 'compoundInput'
         elif nodeName_ == 'compoundInputDL':
             obj_ = CompoundInputDL.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.compoundInputDL.append(obj_)
+            self.compound_input_dls.append(obj_)
             obj_.original_tagname_ = 'compoundInputDL'
         elif nodeName_ == 'voltageClamp':
             obj_ = VoltageClamp.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.voltageClamp.append(obj_)
+            self.voltage_clamps.append(obj_)
             obj_.original_tagname_ = 'voltageClamp'
         elif nodeName_ == 'voltageClampTriple':
             obj_ = VoltageClampTriple.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.voltageClampTriple.append(obj_)
+            self.voltage_clamp_triples.append(obj_)
             obj_.original_tagname_ = 'voltageClampTriple'
         elif nodeName_ == 'spikeArray':
             obj_ = SpikeArray.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.spikeArray.append(obj_)
+            self.spike_arrays.append(obj_)
             obj_.original_tagname_ = 'spikeArray'
         elif nodeName_ == 'timedSynapticInput':
             obj_ = TimedSynapticInput.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.timedSynapticInput.append(obj_)
+            self.timed_synaptic_inputs.append(obj_)
             obj_.original_tagname_ = 'timedSynapticInput'
         elif nodeName_ == 'spikeGenerator':
             obj_ = SpikeGenerator.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.spikeGenerator.append(obj_)
+            self.spike_generators.append(obj_)
             obj_.original_tagname_ = 'spikeGenerator'
         elif nodeName_ == 'spikeGeneratorRandom':
             obj_ = SpikeGeneratorRandom.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.spikeGeneratorRandom.append(obj_)
+            self.spike_generator_randoms.append(obj_)
             obj_.original_tagname_ = 'spikeGeneratorRandom'
         elif nodeName_ == 'spikeGeneratorPoisson':
             class_obj_ = self.get_class_obj_(child_, SpikeGeneratorPoisson)
             obj_ = class_obj_.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.spikeGeneratorPoisson.append(obj_)
+            self.spike_generator_poissons.append(obj_)
             obj_.original_tagname_ = 'spikeGeneratorPoisson'
         elif nodeName_ == 'spikeGeneratorRefPoisson':
             obj_ = SpikeGeneratorRefPoisson.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.spikeGeneratorRefPoisson.append(obj_)
+            self.spike_generator_ref_poissons.append(obj_)
             obj_.original_tagname_ = 'spikeGeneratorRefPoisson'
         elif nodeName_ == 'poissonFiringSynapse':
             obj_ = PoissonFiringSynapse.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.poissonFiringSynapse.append(obj_)
+            self.poisson_firing_synapses.append(obj_)
             obj_.original_tagname_ = 'poissonFiringSynapse'
         elif nodeName_ == 'transientPoissonFiringSynapse':
             obj_ = TransientPoissonFiringSynapse.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.transientPoissonFiringSynapse.append(obj_)
+            self.transient_poisson_firing_synapses.append(obj_)
             obj_.original_tagname_ = 'transientPoissonFiringSynapse'
         elif nodeName_ == 'IF_curr_alpha':
             obj_ = IF_curr_alpha.factory(parent_object_=self)
@@ -18750,22 +18749,22 @@ class NeuroMLDocument(Standalone):
         elif nodeName_ == 'expCondSynapse':
             obj_ = ExpCondSynapse.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.expCondSynapse.append(obj_)
+            self.exp_cond_synapses.append(obj_)
             obj_.original_tagname_ = 'expCondSynapse'
         elif nodeName_ == 'alphaCondSynapse':
             obj_ = AlphaCondSynapse.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.alphaCondSynapse.append(obj_)
+            self.alpha_cond_synapses.append(obj_)
             obj_.original_tagname_ = 'alphaCondSynapse'
         elif nodeName_ == 'expCurrSynapse':
             obj_ = ExpCurrSynapse.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.expCurrSynapse.append(obj_)
+            self.exp_curr_synapses.append(obj_)
             obj_.original_tagname_ = 'expCurrSynapse'
         elif nodeName_ == 'alphaCurrSynapse':
             obj_ = AlphaCurrSynapse.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.alphaCurrSynapse.append(obj_)
+            self.alpha_curr_synapses.append(obj_)
             obj_.original_tagname_ = 'alphaCurrSynapse'
         elif nodeName_ == 'SpikeSourcePoisson':
             obj_ = SpikeSourcePoisson.factory(parent_object_=self)
@@ -18775,7 +18774,7 @@ class NeuroMLDocument(Standalone):
         elif nodeName_ == 'network':
             obj_ = Network.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.network.append(obj_)
+            self.networks.append(obj_)
             obj_.original_tagname_ = 'network'
         elif nodeName_ == 'ComponentType':
             obj_ = ComponentType.factory(parent_object_=self)
@@ -18949,13 +18948,13 @@ class BasePynnSynapse(BaseSynapse):
     ]
     subclass = None
     superclass = BaseSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, tau_syn=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, tau_syn=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BasePynnSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation, extensiontype_,  **kwargs_)
+        super(BasePynnSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.tau_syn = _cast(float, tau_syn)
         self.tau_syn_nsprefix_ = None
         self.extensiontype_ = extensiontype_
@@ -19054,13 +19053,13 @@ class basePyNNCell(BaseCell):
     ]
     subclass = None
     superclass = BaseCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(basePyNNCell, self).__init__(neuroLexId, id, metaid, notes, property, annotation, extensiontype_,  **kwargs_)
+        super(basePyNNCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.cm = _cast(float, cm)
         self.cm_nsprefix_ = None
         self.i_offset = _cast(float, i_offset)
@@ -19193,34 +19192,34 @@ class ContinuousProjection(BaseProjection):
     (e.g. graded synapses)"""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('continuousConnection', 'ContinuousConnection', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'continuousConnection', 'type': 'ContinuousConnection'}, None),
-        MemberSpec_('continuousConnectionInstance', 'ContinuousConnectionInstance', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'continuousConnectionInstance', 'type': 'ContinuousConnectionInstance'}, None),
-        MemberSpec_('continuousConnectionInstanceW', 'ContinuousConnectionInstanceW', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'continuousConnectionInstanceW', 'type': 'ContinuousConnectionInstanceW'}, None),
+        MemberSpec_('continuous_connections', 'ContinuousConnection', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'continuousConnection', 'type': 'ContinuousConnection'}, None),
+        MemberSpec_('continuous_connection_instances', 'ContinuousConnectionInstance', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'continuousConnectionInstance', 'type': 'ContinuousConnectionInstance'}, None),
+        MemberSpec_('continuous_connection_instance_ws', 'ContinuousConnectionInstanceW', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'continuousConnectionInstanceW', 'type': 'ContinuousConnectionInstanceW'}, None),
     ]
     subclass = None
     superclass = BaseProjection
-    def __init__(self, neuroLexId=None, id=None, presynapticPopulation=None, postsynapticPopulation=None, continuousConnection=None, continuousConnectionInstance=None, continuousConnectionInstanceW=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, continuous_connections=None, continuous_connection_instances=None, continuous_connection_instance_ws=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ContinuousProjection, self).__init__(neuroLexId, id, presynapticPopulation, postsynapticPopulation,  **kwargs_)
-        if continuousConnection is None:
-            self.continuousConnection = []
+        super(ContinuousProjection, self).__init__(neuro_lex_id, id, presynaptic_population, postsynaptic_population,  **kwargs_)
+        if continuous_connections is None:
+            self.continuous_connections = []
         else:
-            self.continuousConnection = continuousConnection
-        self.continuousConnection_nsprefix_ = None
-        if continuousConnectionInstance is None:
-            self.continuousConnectionInstance = []
+            self.continuous_connections = continuous_connections
+        self.continuous_connections_nsprefix_ = None
+        if continuous_connection_instances is None:
+            self.continuous_connection_instances = []
         else:
-            self.continuousConnectionInstance = continuousConnectionInstance
-        self.continuousConnectionInstance_nsprefix_ = None
-        if continuousConnectionInstanceW is None:
-            self.continuousConnectionInstanceW = []
+            self.continuous_connection_instances = continuous_connection_instances
+        self.continuous_connection_instances_nsprefix_ = None
+        if continuous_connection_instance_ws is None:
+            self.continuous_connection_instance_ws = []
         else:
-            self.continuousConnectionInstanceW = continuousConnectionInstanceW
-        self.continuousConnectionInstanceW_nsprefix_ = None
+            self.continuous_connection_instance_ws = continuous_connection_instance_ws
+        self.continuous_connection_instance_ws_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -19234,9 +19233,9 @@ class ContinuousProjection(BaseProjection):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.continuousConnection or
-            self.continuousConnectionInstance or
-            self.continuousConnectionInstanceW or
+            self.continuous_connections or
+            self.continuous_connection_instances or
+            self.continuous_connection_instance_ws or
             super(ContinuousProjection, self).hasContent_()
         ):
             return True
@@ -19273,14 +19272,14 @@ class ContinuousProjection(BaseProjection):
             eol_ = '\n'
         else:
             eol_ = ''
-        for continuousConnection_ in self.continuousConnection:
-            namespaceprefix_ = self.continuousConnection_nsprefix_ + ':' if (UseCapturedNS_ and self.continuousConnection_nsprefix_) else ''
+        for continuousConnection_ in self.continuous_connections:
+            namespaceprefix_ = self.continuous_connections_nsprefix_ + ':' if (UseCapturedNS_ and self.continuous_connections_nsprefix_) else ''
             continuousConnection_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='continuousConnection', pretty_print=pretty_print)
-        for continuousConnectionInstance_ in self.continuousConnectionInstance:
-            namespaceprefix_ = self.continuousConnectionInstance_nsprefix_ + ':' if (UseCapturedNS_ and self.continuousConnectionInstance_nsprefix_) else ''
+        for continuousConnectionInstance_ in self.continuous_connection_instances:
+            namespaceprefix_ = self.continuous_connection_instances_nsprefix_ + ':' if (UseCapturedNS_ and self.continuous_connection_instances_nsprefix_) else ''
             continuousConnectionInstance_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='continuousConnectionInstance', pretty_print=pretty_print)
-        for continuousConnectionInstanceW_ in self.continuousConnectionInstanceW:
-            namespaceprefix_ = self.continuousConnectionInstanceW_nsprefix_ + ':' if (UseCapturedNS_ and self.continuousConnectionInstanceW_nsprefix_) else ''
+        for continuousConnectionInstanceW_ in self.continuous_connection_instance_ws:
+            namespaceprefix_ = self.continuous_connection_instance_ws_nsprefix_ + ':' if (UseCapturedNS_ and self.continuous_connection_instance_ws_nsprefix_) else ''
             continuousConnectionInstanceW_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='continuousConnectionInstanceW', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -19300,18 +19299,18 @@ class ContinuousProjection(BaseProjection):
             class_obj_ = self.get_class_obj_(child_, ContinuousConnection)
             obj_ = class_obj_.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.continuousConnection.append(obj_)
+            self.continuous_connections.append(obj_)
             obj_.original_tagname_ = 'continuousConnection'
         elif nodeName_ == 'continuousConnectionInstance':
             class_obj_ = self.get_class_obj_(child_, ContinuousConnectionInstance)
             obj_ = class_obj_.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.continuousConnectionInstance.append(obj_)
+            self.continuous_connection_instances.append(obj_)
             obj_.original_tagname_ = 'continuousConnectionInstance'
         elif nodeName_ == 'continuousConnectionInstanceW':
             obj_ = ContinuousConnectionInstanceW.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.continuousConnectionInstanceW.append(obj_)
+            self.continuous_connection_instance_ws.append(obj_)
             obj_.original_tagname_ = 'continuousConnectionInstanceW'
         super(ContinuousProjection, self).buildChildren(child_, node, nodeName_, True)
 
@@ -19402,34 +19401,34 @@ class ElectricalProjection(BaseProjection):
     (gap junctions)"""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('electricalConnection', 'ElectricalConnection', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'electricalConnection', 'type': 'ElectricalConnection'}, None),
-        MemberSpec_('electricalConnectionInstance', 'ElectricalConnectionInstance', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'electricalConnectionInstance', 'type': 'ElectricalConnectionInstance'}, None),
-        MemberSpec_('electricalConnectionInstanceW', 'ElectricalConnectionInstanceW', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'electricalConnectionInstanceW', 'type': 'ElectricalConnectionInstanceW'}, None),
+        MemberSpec_('electrical_connections', 'ElectricalConnection', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'electricalConnection', 'type': 'ElectricalConnection'}, None),
+        MemberSpec_('electrical_connection_instances', 'ElectricalConnectionInstance', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'electricalConnectionInstance', 'type': 'ElectricalConnectionInstance'}, None),
+        MemberSpec_('electrical_connection_instance_ws', 'ElectricalConnectionInstanceW', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'electricalConnectionInstanceW', 'type': 'ElectricalConnectionInstanceW'}, None),
     ]
     subclass = None
     superclass = BaseProjection
-    def __init__(self, neuroLexId=None, id=None, presynapticPopulation=None, postsynapticPopulation=None, electricalConnection=None, electricalConnectionInstance=None, electricalConnectionInstanceW=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, electrical_connections=None, electrical_connection_instances=None, electrical_connection_instance_ws=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ElectricalProjection, self).__init__(neuroLexId, id, presynapticPopulation, postsynapticPopulation,  **kwargs_)
-        if electricalConnection is None:
-            self.electricalConnection = []
+        super(ElectricalProjection, self).__init__(neuro_lex_id, id, presynaptic_population, postsynaptic_population,  **kwargs_)
+        if electrical_connections is None:
+            self.electrical_connections = []
         else:
-            self.electricalConnection = electricalConnection
-        self.electricalConnection_nsprefix_ = None
-        if electricalConnectionInstance is None:
-            self.electricalConnectionInstance = []
+            self.electrical_connections = electrical_connections
+        self.electrical_connections_nsprefix_ = None
+        if electrical_connection_instances is None:
+            self.electrical_connection_instances = []
         else:
-            self.electricalConnectionInstance = electricalConnectionInstance
-        self.electricalConnectionInstance_nsprefix_ = None
-        if electricalConnectionInstanceW is None:
-            self.electricalConnectionInstanceW = []
+            self.electrical_connection_instances = electrical_connection_instances
+        self.electrical_connection_instances_nsprefix_ = None
+        if electrical_connection_instance_ws is None:
+            self.electrical_connection_instance_ws = []
         else:
-            self.electricalConnectionInstanceW = electricalConnectionInstanceW
-        self.electricalConnectionInstanceW_nsprefix_ = None
+            self.electrical_connection_instance_ws = electrical_connection_instance_ws
+        self.electrical_connection_instance_ws_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -19443,9 +19442,9 @@ class ElectricalProjection(BaseProjection):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.electricalConnection or
-            self.electricalConnectionInstance or
-            self.electricalConnectionInstanceW or
+            self.electrical_connections or
+            self.electrical_connection_instances or
+            self.electrical_connection_instance_ws or
             super(ElectricalProjection, self).hasContent_()
         ):
             return True
@@ -19482,14 +19481,14 @@ class ElectricalProjection(BaseProjection):
             eol_ = '\n'
         else:
             eol_ = ''
-        for electricalConnection_ in self.electricalConnection:
-            namespaceprefix_ = self.electricalConnection_nsprefix_ + ':' if (UseCapturedNS_ and self.electricalConnection_nsprefix_) else ''
+        for electricalConnection_ in self.electrical_connections:
+            namespaceprefix_ = self.electrical_connections_nsprefix_ + ':' if (UseCapturedNS_ and self.electrical_connections_nsprefix_) else ''
             electricalConnection_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='electricalConnection', pretty_print=pretty_print)
-        for electricalConnectionInstance_ in self.electricalConnectionInstance:
-            namespaceprefix_ = self.electricalConnectionInstance_nsprefix_ + ':' if (UseCapturedNS_ and self.electricalConnectionInstance_nsprefix_) else ''
+        for electricalConnectionInstance_ in self.electrical_connection_instances:
+            namespaceprefix_ = self.electrical_connection_instances_nsprefix_ + ':' if (UseCapturedNS_ and self.electrical_connection_instances_nsprefix_) else ''
             electricalConnectionInstance_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='electricalConnectionInstance', pretty_print=pretty_print)
-        for electricalConnectionInstanceW_ in self.electricalConnectionInstanceW:
-            namespaceprefix_ = self.electricalConnectionInstanceW_nsprefix_ + ':' if (UseCapturedNS_ and self.electricalConnectionInstanceW_nsprefix_) else ''
+        for electricalConnectionInstanceW_ in self.electrical_connection_instance_ws:
+            namespaceprefix_ = self.electrical_connection_instance_ws_nsprefix_ + ':' if (UseCapturedNS_ and self.electrical_connection_instance_ws_nsprefix_) else ''
             electricalConnectionInstanceW_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='electricalConnectionInstanceW', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -19509,18 +19508,18 @@ class ElectricalProjection(BaseProjection):
             class_obj_ = self.get_class_obj_(child_, ElectricalConnection)
             obj_ = class_obj_.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.electricalConnection.append(obj_)
+            self.electrical_connections.append(obj_)
             obj_.original_tagname_ = 'electricalConnection'
         elif nodeName_ == 'electricalConnectionInstance':
             class_obj_ = self.get_class_obj_(child_, ElectricalConnectionInstance)
             obj_ = class_obj_.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.electricalConnectionInstance.append(obj_)
+            self.electrical_connection_instances.append(obj_)
             obj_.original_tagname_ = 'electricalConnectionInstance'
         elif nodeName_ == 'electricalConnectionInstanceW':
             obj_ = ElectricalConnectionInstanceW.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.electricalConnectionInstanceW.append(obj_)
+            self.electrical_connection_instance_ws.append(obj_)
             obj_.original_tagname_ = 'electricalConnectionInstanceW'
         super(ElectricalProjection, self).buildChildren(child_, node, nodeName_, True)
 
@@ -19606,34 +19605,34 @@ class BaseConnectionNewFormat(BaseConnection):
     See BaseConnectionOldFormat"""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('preCell', 'xs:string', 0, 0, {'use': 'required'}),
-        MemberSpec_('preSegment', 'NonNegativeInteger', 0, 1, {'use': 'optional'}),
-        MemberSpec_('preFractionAlong', 'ZeroToOne', 0, 1, {'use': 'optional'}),
-        MemberSpec_('postCell', 'xs:string', 0, 0, {'use': 'required'}),
-        MemberSpec_('postSegment', 'NonNegativeInteger', 0, 1, {'use': 'optional'}),
-        MemberSpec_('postFractionAlong', 'ZeroToOne', 0, 1, {'use': 'optional'}),
+        MemberSpec_('pre_cell', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('pre_segment', 'NonNegativeInteger', 0, 1, {'use': 'optional'}),
+        MemberSpec_('pre_fraction_along', 'ZeroToOne', 0, 1, {'use': 'optional'}),
+        MemberSpec_('post_cell', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('post_segment', 'NonNegativeInteger', 0, 1, {'use': 'optional'}),
+        MemberSpec_('post_fraction_along', 'ZeroToOne', 0, 1, {'use': 'optional'}),
     ]
     subclass = None
     superclass = BaseConnection
-    def __init__(self, neuroLexId=None, id=None, preCell=None, preSegment='0', preFractionAlong='0.5', postCell=None, postSegment='0', postFractionAlong='0.5', extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, pre_cell=None, pre_segment='0', pre_fraction_along='0.5', post_cell=None, post_segment='0', post_fraction_along='0.5', extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseConnectionNewFormat, self).__init__(neuroLexId, id, extensiontype_,  **kwargs_)
-        self.preCell = _cast(None, preCell)
-        self.preCell_nsprefix_ = None
-        self.preSegment = _cast(int, preSegment)
-        self.preSegment_nsprefix_ = None
-        self.preFractionAlong = _cast(float, preFractionAlong)
-        self.preFractionAlong_nsprefix_ = None
-        self.postCell = _cast(None, postCell)
-        self.postCell_nsprefix_ = None
-        self.postSegment = _cast(int, postSegment)
-        self.postSegment_nsprefix_ = None
-        self.postFractionAlong = _cast(float, postFractionAlong)
-        self.postFractionAlong_nsprefix_ = None
+        super(BaseConnectionNewFormat, self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
+        self.pre_cell = _cast(None, pre_cell)
+        self.pre_cell_nsprefix_ = None
+        self.pre_segment = _cast(int, pre_segment)
+        self.pre_segment_nsprefix_ = None
+        self.pre_fraction_along = _cast(float, pre_fraction_along)
+        self.pre_fraction_along_nsprefix_ = None
+        self.post_cell = _cast(None, post_cell)
+        self.post_cell_nsprefix_ = None
+        self.post_segment = _cast(int, post_segment)
+        self.post_segment_nsprefix_ = None
+        self.post_fraction_along = _cast(float, post_fraction_along)
+        self.post_fraction_along_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -19700,24 +19699,24 @@ class BaseConnectionNewFormat(BaseConnection):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='BaseConnectionNewFormat'):
         super(BaseConnectionNewFormat, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='BaseConnectionNewFormat')
-        if self.preCell is not None and 'preCell' not in already_processed:
-            already_processed.add('preCell')
-            outfile.write(' preCell=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.preCell), input_name='preCell')), ))
-        if self.preSegment != 0 and 'preSegment' not in already_processed:
-            already_processed.add('preSegment')
-            outfile.write(' preSegment="%s"' % self.gds_format_integer(self.preSegment, input_name='preSegment'))
-        if self.preFractionAlong != 0.5 and 'preFractionAlong' not in already_processed:
-            already_processed.add('preFractionAlong')
-            outfile.write(' preFractionAlong="%s"' % self.gds_format_float(self.preFractionAlong, input_name='preFractionAlong'))
-        if self.postCell is not None and 'postCell' not in already_processed:
-            already_processed.add('postCell')
-            outfile.write(' postCell=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.postCell), input_name='postCell')), ))
-        if self.postSegment != 0 and 'postSegment' not in already_processed:
-            already_processed.add('postSegment')
-            outfile.write(' postSegment="%s"' % self.gds_format_integer(self.postSegment, input_name='postSegment'))
-        if self.postFractionAlong != 0.5 and 'postFractionAlong' not in already_processed:
-            already_processed.add('postFractionAlong')
-            outfile.write(' postFractionAlong="%s"' % self.gds_format_float(self.postFractionAlong, input_name='postFractionAlong'))
+        if self.pre_cell is not None and 'pre_cell' not in already_processed:
+            already_processed.add('pre_cell')
+            outfile.write(' preCell=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.pre_cell), input_name='preCell')), ))
+        if self.pre_segment != 0 and 'pre_segment' not in already_processed:
+            already_processed.add('pre_segment')
+            outfile.write(' preSegment="%s"' % self.gds_format_integer(self.pre_segment, input_name='preSegment'))
+        if self.pre_fraction_along != 0.5 and 'pre_fraction_along' not in already_processed:
+            already_processed.add('pre_fraction_along')
+            outfile.write(' preFractionAlong="%s"' % self.gds_format_float(self.pre_fraction_along, input_name='preFractionAlong'))
+        if self.post_cell is not None and 'post_cell' not in already_processed:
+            already_processed.add('post_cell')
+            outfile.write(' postCell=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.post_cell), input_name='postCell')), ))
+        if self.post_segment != 0 and 'post_segment' not in already_processed:
+            already_processed.add('post_segment')
+            outfile.write(' postSegment="%s"' % self.gds_format_integer(self.post_segment, input_name='postSegment'))
+        if self.post_fraction_along != 0.5 and 'post_fraction_along' not in already_processed:
+            already_processed.add('post_fraction_along')
+            outfile.write(' postFractionAlong="%s"' % self.gds_format_float(self.post_fraction_along, input_name='postFractionAlong'))
         if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -19744,37 +19743,37 @@ class BaseConnectionNewFormat(BaseConnection):
         value = find_attr_value_('preCell', node)
         if value is not None and 'preCell' not in already_processed:
             already_processed.add('preCell')
-            self.preCell = value
+            self.pre_cell = value
         value = find_attr_value_('preSegment', node)
         if value is not None and 'preSegment' not in already_processed:
             already_processed.add('preSegment')
-            self.preSegment = self.gds_parse_integer(value, node, 'preSegment')
-            if self.preSegment < 0:
+            self.pre_segment = self.gds_parse_integer(value, node, 'preSegment')
+            if self.pre_segment < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_NonNegativeInteger(self.preSegment)    # validate type NonNegativeInteger
+            self.validate_NonNegativeInteger(self.pre_segment)    # validate type NonNegativeInteger
         value = find_attr_value_('preFractionAlong', node)
         if value is not None and 'preFractionAlong' not in already_processed:
             already_processed.add('preFractionAlong')
             value = self.gds_parse_float(value, node, 'preFractionAlong')
             self.preFractionAlong = value
-            self.validate_ZeroToOne(self.preFractionAlong)    # validate type ZeroToOne
+            self.validate_ZeroToOne(self.pre_fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('postCell', node)
         if value is not None and 'postCell' not in already_processed:
             already_processed.add('postCell')
-            self.postCell = value
+            self.post_cell = value
         value = find_attr_value_('postSegment', node)
         if value is not None and 'postSegment' not in already_processed:
             already_processed.add('postSegment')
-            self.postSegment = self.gds_parse_integer(value, node, 'postSegment')
-            if self.postSegment < 0:
+            self.post_segment = self.gds_parse_integer(value, node, 'postSegment')
+            if self.post_segment < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_NonNegativeInteger(self.postSegment)    # validate type NonNegativeInteger
+            self.validate_NonNegativeInteger(self.post_segment)    # validate type NonNegativeInteger
         value = find_attr_value_('postFractionAlong', node)
         if value is not None and 'postFractionAlong' not in already_processed:
             already_processed.add('postFractionAlong')
             value = self.gds_parse_float(value, node, 'postFractionAlong')
             self.postFractionAlong = value
-            self.validate_ZeroToOne(self.postFractionAlong)    # validate type ZeroToOne
+            self.validate_ZeroToOne(self.post_fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
@@ -19792,34 +19791,34 @@ class BaseConnectionOldFormat(BaseConnection):
     superfluous, hence BaseConnectionNewFormat"""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('preCellId', 'xs:string', 0, 0, {'use': 'required'}),
-        MemberSpec_('preSegmentId', 'NonNegativeInteger', 0, 1, {'use': 'optional'}),
-        MemberSpec_('preFractionAlong', 'ZeroToOne', 0, 1, {'use': 'optional'}),
-        MemberSpec_('postCellId', 'xs:string', 0, 0, {'use': 'required'}),
-        MemberSpec_('postSegmentId', 'NonNegativeInteger', 0, 1, {'use': 'optional'}),
-        MemberSpec_('postFractionAlong', 'ZeroToOne', 0, 1, {'use': 'optional'}),
+        MemberSpec_('pre_cell_id', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('pre_segment_id', 'NonNegativeInteger', 0, 1, {'use': 'optional'}),
+        MemberSpec_('pre_fraction_along', 'ZeroToOne', 0, 1, {'use': 'optional'}),
+        MemberSpec_('post_cell_id', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('post_segment_id', 'NonNegativeInteger', 0, 1, {'use': 'optional'}),
+        MemberSpec_('post_fraction_along', 'ZeroToOne', 0, 1, {'use': 'optional'}),
     ]
     subclass = None
     superclass = BaseConnection
-    def __init__(self, neuroLexId=None, id=None, preCellId=None, preSegmentId='0', preFractionAlong='0.5', postCellId=None, postSegmentId='0', postFractionAlong='0.5', extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, pre_cell_id=None, pre_segment_id='0', pre_fraction_along='0.5', post_cell_id=None, post_segment_id='0', post_fraction_along='0.5', extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseConnectionOldFormat, self).__init__(neuroLexId, id, extensiontype_,  **kwargs_)
-        self.preCellId = _cast(None, preCellId)
-        self.preCellId_nsprefix_ = None
-        self.preSegmentId = _cast(int, preSegmentId)
-        self.preSegmentId_nsprefix_ = None
-        self.preFractionAlong = _cast(float, preFractionAlong)
-        self.preFractionAlong_nsprefix_ = None
-        self.postCellId = _cast(None, postCellId)
-        self.postCellId_nsprefix_ = None
-        self.postSegmentId = _cast(int, postSegmentId)
-        self.postSegmentId_nsprefix_ = None
-        self.postFractionAlong = _cast(float, postFractionAlong)
-        self.postFractionAlong_nsprefix_ = None
+        super(BaseConnectionOldFormat, self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
+        self.pre_cell_id = _cast(None, pre_cell_id)
+        self.pre_cell_id_nsprefix_ = None
+        self.pre_segment_id = _cast(int, pre_segment_id)
+        self.pre_segment_id_nsprefix_ = None
+        self.pre_fraction_along = _cast(float, pre_fraction_along)
+        self.pre_fraction_along_nsprefix_ = None
+        self.post_cell_id = _cast(None, post_cell_id)
+        self.post_cell_id_nsprefix_ = None
+        self.post_segment_id = _cast(int, post_segment_id)
+        self.post_segment_id_nsprefix_ = None
+        self.post_fraction_along = _cast(float, post_fraction_along)
+        self.post_fraction_along_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -19886,24 +19885,24 @@ class BaseConnectionOldFormat(BaseConnection):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='BaseConnectionOldFormat'):
         super(BaseConnectionOldFormat, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='BaseConnectionOldFormat')
-        if self.preCellId is not None and 'preCellId' not in already_processed:
-            already_processed.add('preCellId')
-            outfile.write(' preCellId=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.preCellId), input_name='preCellId')), ))
-        if self.preSegmentId != 0 and 'preSegmentId' not in already_processed:
-            already_processed.add('preSegmentId')
-            outfile.write(' preSegmentId="%s"' % self.gds_format_integer(self.preSegmentId, input_name='preSegmentId'))
-        if self.preFractionAlong != 0.5 and 'preFractionAlong' not in already_processed:
-            already_processed.add('preFractionAlong')
-            outfile.write(' preFractionAlong="%s"' % self.gds_format_float(self.preFractionAlong, input_name='preFractionAlong'))
-        if self.postCellId is not None and 'postCellId' not in already_processed:
-            already_processed.add('postCellId')
-            outfile.write(' postCellId=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.postCellId), input_name='postCellId')), ))
-        if self.postSegmentId != 0 and 'postSegmentId' not in already_processed:
-            already_processed.add('postSegmentId')
-            outfile.write(' postSegmentId="%s"' % self.gds_format_integer(self.postSegmentId, input_name='postSegmentId'))
-        if self.postFractionAlong != 0.5 and 'postFractionAlong' not in already_processed:
-            already_processed.add('postFractionAlong')
-            outfile.write(' postFractionAlong="%s"' % self.gds_format_float(self.postFractionAlong, input_name='postFractionAlong'))
+        if self.pre_cell_id is not None and 'pre_cell_id' not in already_processed:
+            already_processed.add('pre_cell_id')
+            outfile.write(' preCellId=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.pre_cell_id), input_name='preCellId')), ))
+        if self.pre_segment_id != 0 and 'pre_segment_id' not in already_processed:
+            already_processed.add('pre_segment_id')
+            outfile.write(' preSegmentId="%s"' % self.gds_format_integer(self.pre_segment_id, input_name='preSegmentId'))
+        if self.pre_fraction_along != 0.5 and 'pre_fraction_along' not in already_processed:
+            already_processed.add('pre_fraction_along')
+            outfile.write(' preFractionAlong="%s"' % self.gds_format_float(self.pre_fraction_along, input_name='preFractionAlong'))
+        if self.post_cell_id is not None and 'post_cell_id' not in already_processed:
+            already_processed.add('post_cell_id')
+            outfile.write(' postCellId=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.post_cell_id), input_name='postCellId')), ))
+        if self.post_segment_id != 0 and 'post_segment_id' not in already_processed:
+            already_processed.add('post_segment_id')
+            outfile.write(' postSegmentId="%s"' % self.gds_format_integer(self.post_segment_id, input_name='postSegmentId'))
+        if self.post_fraction_along != 0.5 and 'post_fraction_along' not in already_processed:
+            already_processed.add('post_fraction_along')
+            outfile.write(' postFractionAlong="%s"' % self.gds_format_float(self.post_fraction_along, input_name='postFractionAlong'))
         if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -19930,37 +19929,37 @@ class BaseConnectionOldFormat(BaseConnection):
         value = find_attr_value_('preCellId', node)
         if value is not None and 'preCellId' not in already_processed:
             already_processed.add('preCellId')
-            self.preCellId = value
+            self.pre_cell_id = value
         value = find_attr_value_('preSegmentId', node)
         if value is not None and 'preSegmentId' not in already_processed:
             already_processed.add('preSegmentId')
-            self.preSegmentId = self.gds_parse_integer(value, node, 'preSegmentId')
-            if self.preSegmentId < 0:
+            self.pre_segment_id = self.gds_parse_integer(value, node, 'preSegmentId')
+            if self.pre_segment_id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_NonNegativeInteger(self.preSegmentId)    # validate type NonNegativeInteger
+            self.validate_NonNegativeInteger(self.pre_segment_id)    # validate type NonNegativeInteger
         value = find_attr_value_('preFractionAlong', node)
         if value is not None and 'preFractionAlong' not in already_processed:
             already_processed.add('preFractionAlong')
             value = self.gds_parse_float(value, node, 'preFractionAlong')
             self.preFractionAlong = value
-            self.validate_ZeroToOne(self.preFractionAlong)    # validate type ZeroToOne
+            self.validate_ZeroToOne(self.pre_fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('postCellId', node)
         if value is not None and 'postCellId' not in already_processed:
             already_processed.add('postCellId')
-            self.postCellId = value
+            self.post_cell_id = value
         value = find_attr_value_('postSegmentId', node)
         if value is not None and 'postSegmentId' not in already_processed:
             already_processed.add('postSegmentId')
-            self.postSegmentId = self.gds_parse_integer(value, node, 'postSegmentId')
-            if self.postSegmentId < 0:
+            self.post_segment_id = self.gds_parse_integer(value, node, 'postSegmentId')
+            if self.post_segment_id < 0:
                 raise_parse_error(node, 'Invalid NonNegativeInteger')
-            self.validate_NonNegativeInteger(self.postSegmentId)    # validate type NonNegativeInteger
+            self.validate_NonNegativeInteger(self.post_segment_id)    # validate type NonNegativeInteger
         value = find_attr_value_('postFractionAlong', node)
         if value is not None and 'postFractionAlong' not in already_processed:
             already_processed.add('postFractionAlong')
             value = self.gds_parse_float(value, node, 'postFractionAlong')
             self.postFractionAlong = value
-            self.validate_ZeroToOne(self.postFractionAlong)    # validate type ZeroToOne
+            self.validate_ZeroToOne(self.post_fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
@@ -19978,30 +19977,30 @@ class Projection(BaseProjection):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('synapse', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('connection', 'Connection', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'connection', 'type': 'Connection'}, None),
-        MemberSpec_('connectionWD', 'ConnectionWD', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'connectionWD', 'type': 'ConnectionWD'}, None),
+        MemberSpec_('connections', 'Connection', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'connection', 'type': 'Connection'}, None),
+        MemberSpec_('connection_wds', 'ConnectionWD', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'connectionWD', 'type': 'ConnectionWD'}, None),
     ]
     subclass = None
     superclass = BaseProjection
-    def __init__(self, neuroLexId=None, id=None, presynapticPopulation=None, postsynapticPopulation=None, synapse=None, connection=None, connectionWD=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, presynaptic_population=None, postsynaptic_population=None, synapse=None, connections=None, connection_wds=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Projection, self).__init__(neuroLexId, id, presynapticPopulation, postsynapticPopulation,  **kwargs_)
+        super(Projection, self).__init__(neuro_lex_id, id, presynaptic_population, postsynaptic_population,  **kwargs_)
         self.synapse = _cast(None, synapse)
         self.synapse_nsprefix_ = None
-        if connection is None:
-            self.connection = []
+        if connections is None:
+            self.connections = []
         else:
-            self.connection = connection
-        self.connection_nsprefix_ = None
-        if connectionWD is None:
-            self.connectionWD = []
+            self.connections = connections
+        self.connections_nsprefix_ = None
+        if connection_wds is None:
+            self.connection_wds = []
         else:
-            self.connectionWD = connectionWD
-        self.connectionWD_nsprefix_ = None
+            self.connection_wds = connection_wds
+        self.connection_wds_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -20026,8 +20025,8 @@ class Projection(BaseProjection):
     validate_NmlId_patterns_ = [['^([a-zA-Z_][a-zA-Z0-9_]*)$']]
     def hasContent_(self):
         if (
-            self.connection or
-            self.connectionWD or
+            self.connections or
+            self.connection_wds or
             super(Projection, self).hasContent_()
         ):
             return True
@@ -20067,11 +20066,11 @@ class Projection(BaseProjection):
             eol_ = '\n'
         else:
             eol_ = ''
-        for connection_ in self.connection:
-            namespaceprefix_ = self.connection_nsprefix_ + ':' if (UseCapturedNS_ and self.connection_nsprefix_) else ''
+        for connection_ in self.connections:
+            namespaceprefix_ = self.connections_nsprefix_ + ':' if (UseCapturedNS_ and self.connections_nsprefix_) else ''
             connection_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='connection', pretty_print=pretty_print)
-        for connectionWD_ in self.connectionWD:
-            namespaceprefix_ = self.connectionWD_nsprefix_ + ':' if (UseCapturedNS_ and self.connectionWD_nsprefix_) else ''
+        for connectionWD_ in self.connection_wds:
+            namespaceprefix_ = self.connection_wds_nsprefix_ + ':' if (UseCapturedNS_ and self.connection_wds_nsprefix_) else ''
             connectionWD_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='connectionWD', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -20095,12 +20094,12 @@ class Projection(BaseProjection):
         if nodeName_ == 'connection':
             obj_ = Connection.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.connection.append(obj_)
+            self.connections.append(obj_)
             obj_.original_tagname_ = 'connection'
         elif nodeName_ == 'connectionWD':
             obj_ = ConnectionWD.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.connectionWD.append(obj_)
+            self.connection_wds.append(obj_)
             obj_.original_tagname_ = 'connectionWD'
         super(Projection, self).buildChildren(child_, node, nodeName_, True)
 
@@ -20202,19 +20201,19 @@ class Projection(BaseProjection):
 class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('minimumISI', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
+        MemberSpec_('minimum_isi', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = SpikeGeneratorPoisson
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, averageRate=None, minimumISI=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, average_rate=None, minimum_isi=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SpikeGeneratorRefPoisson, self).__init__(neuroLexId, id, metaid, notes, property, annotation, averageRate,  **kwargs_)
-        self.minimumISI = _cast(None, minimumISI)
-        self.minimumISI_nsprefix_ = None
+        super(SpikeGeneratorRefPoisson, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, average_rate,  **kwargs_)
+        self.minimum_isi = _cast(None, minimum_isi)
+        self.minimum_isi_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -20269,9 +20268,9 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='SpikeGeneratorRefPoisson'):
         super(SpikeGeneratorRefPoisson, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='SpikeGeneratorRefPoisson')
-        if self.minimumISI is not None and 'minimumISI' not in already_processed:
-            already_processed.add('minimumISI')
-            outfile.write(' minimumISI=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.minimumISI), input_name='minimumISI')), ))
+        if self.minimum_isi is not None and 'minimum_isi' not in already_processed:
+            already_processed.add('minimum_isi')
+            outfile.write(' minimumISI=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.minimum_isi), input_name='minimumISI')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='SpikeGeneratorRefPoisson', fromsubclass_=False, pretty_print=True):
         super(SpikeGeneratorRefPoisson, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
@@ -20289,8 +20288,8 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
         value = find_attr_value_('minimumISI', node)
         if value is not None and 'minimumISI' not in already_processed:
             already_processed.add('minimumISI')
-            self.minimumISI = value
-            self.validate_Nml2Quantity_time(self.minimumISI)    # validate type Nml2Quantity_time
+            self.minimum_isi = value
+            self.validate_Nml2Quantity_time(self.minimum_isi)    # validate type Nml2Quantity_time
         super(SpikeGeneratorRefPoisson, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(SpikeGeneratorRefPoisson, self).buildChildren(child_, node, nodeName_, True)
@@ -20301,19 +20300,19 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
 class ConcentrationModel_D(DecayingPoolConcentrationModel):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('type_', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('type', 'xs:string', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = DecayingPoolConcentrationModel
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, ion=None, restingConc=None, decayConstant=None, shellThickness=None, type_='decayingPoolConcentrationModel', gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, ion=None, resting_conc=None, decay_constant=None, shell_thickness=None, type='decayingPoolConcentrationModel', gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ConcentrationModel_D, self).__init__(neuroLexId, id, metaid, notes, property, annotation, ion, restingConc, decayConstant, shellThickness,  **kwargs_)
-        self.type_ = _cast(None, type_)
-        self.type__nsprefix_ = None
+        super(ConcentrationModel_D, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, ion, resting_conc, decay_constant, shell_thickness,  **kwargs_)
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -20357,9 +20356,9 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='ConcentrationModel_D'):
         super(ConcentrationModel_D, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='ConcentrationModel_D')
-        if self.type_ is not None and 'type_' not in already_processed:
-            already_processed.add('type_')
-            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type_), input_name='type')), ))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type), input_name='type')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='ConcentrationModel_D', fromsubclass_=False, pretty_print=True):
         super(ConcentrationModel_D, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
@@ -20377,7 +20376,7 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
             already_processed.add('type')
-            self.type_ = value
+            self.type = value
         super(ConcentrationModel_D, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(ConcentrationModel_D, self).buildChildren(child_, node, nodeName_, True)
@@ -20391,13 +20390,13 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
     ]
     subclass = None
     superclass = ChannelDensityNernst
-    def __init__(self, neuroLexId=None, id=None, ionChannel=None, condDensity=None, segmentGroup='all', segment=None, ion=None, variableParameter=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, cond_density=None, segment_groups='all', segments=None, ion=None, variable_parameters=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensityNernstCa2, self).__init__(neuroLexId, id, ionChannel, condDensity, segmentGroup, segment, ion, variableParameter,  **kwargs_)
+        super(ChannelDensityNernstCa2, self).__init__(neuro_lex_id, id, ion_channel, cond_density, segment_groups, segments, ion, variable_parameters,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -20465,19 +20464,19 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
 class ChannelDensityVShift(ChannelDensity):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('vShift', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
+        MemberSpec_('v_shift', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = ChannelDensity
-    def __init__(self, neuroLexId=None, id=None, ionChannel=None, condDensity=None, erev=None, segmentGroup='all', segment=None, ion=None, variableParameter=None, vShift=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, ion_channel=None, cond_density=None, erev=None, segment_groups='all', segments=None, ion=None, variable_parameters=None, v_shift=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensityVShift, self).__init__(neuroLexId, id, ionChannel, condDensity, erev, segmentGroup, segment, ion, variableParameter,  **kwargs_)
-        self.vShift = _cast(None, vShift)
-        self.vShift_nsprefix_ = None
+        super(ChannelDensityVShift, self).__init__(neuro_lex_id, id, ion_channel, cond_density, erev, segment_groups, segments, ion, variable_parameters,  **kwargs_)
+        self.v_shift = _cast(None, v_shift)
+        self.v_shift_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -20532,9 +20531,9 @@ class ChannelDensityVShift(ChannelDensity):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='ChannelDensityVShift'):
         super(ChannelDensityVShift, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='ChannelDensityVShift')
-        if self.vShift is not None and 'vShift' not in already_processed:
-            already_processed.add('vShift')
-            outfile.write(' vShift=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.vShift), input_name='vShift')), ))
+        if self.v_shift is not None and 'v_shift' not in already_processed:
+            already_processed.add('v_shift')
+            outfile.write(' vShift=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.v_shift), input_name='vShift')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='ChannelDensityVShift', fromsubclass_=False, pretty_print=True):
         super(ChannelDensityVShift, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
@@ -20552,8 +20551,8 @@ class ChannelDensityVShift(ChannelDensity):
         value = find_attr_value_('vShift', node)
         if value is not None and 'vShift' not in already_processed:
             already_processed.add('vShift')
-            self.vShift = value
-            self.validate_Nml2Quantity_voltage(self.vShift)    # validate type Nml2Quantity_voltage
+            self.v_shift = value
+            self.validate_Nml2Quantity_voltage(self.v_shift)    # validate type Nml2Quantity_voltage
         super(ChannelDensityVShift, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(ChannelDensityVShift, self).buildChildren(child_, node, nodeName_, True)
@@ -20569,27 +20568,27 @@ class Cell(BaseCell):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('morphology_attr', 'NmlId', 0, 1, {'use': 'optional'}),
-        MemberSpec_('biophysicalProperties_attr', 'NmlId', 0, 1, {'use': 'optional'}),
+        MemberSpec_('biophysical_properties_attr', 'NmlId', 0, 1, {'use': 'optional'}),
         MemberSpec_('morphology', 'Morphology', 0, 1, {'minOccurs': '0', 'name': 'morphology', 'type': 'Morphology'}, None),
-        MemberSpec_('biophysicalProperties', 'BiophysicalProperties', 0, 1, {'minOccurs': '0', 'name': 'biophysicalProperties', 'type': 'BiophysicalProperties'}, None),
+        MemberSpec_('biophysical_properties', 'BiophysicalProperties', 0, 1, {'minOccurs': '0', 'name': 'biophysicalProperties', 'type': 'BiophysicalProperties'}, None),
     ]
     subclass = None
     superclass = BaseCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, morphology_attr=None, biophysicalProperties_attr=None, morphology=None, biophysicalProperties=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, morphology_attr=None, biophysical_properties_attr=None, morphology=None, biophysical_properties=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Cell, self).__init__(neuroLexId, id, metaid, notes, property, annotation, extensiontype_,  **kwargs_)
+        super(Cell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.morphology_attr = _cast(None, morphology_attr)
         self.morphology_attr_nsprefix_ = None
-        self.biophysicalProperties_attr = _cast(None, biophysicalProperties_attr)
-        self.biophysicalProperties_attr_nsprefix_ = None
+        self.biophysical_properties_attr = _cast(None, biophysical_properties_attr)
+        self.biophysical_properties_attr_nsprefix_ = None
         self.morphology = morphology
         self.morphology_nsprefix_ = None
-        self.biophysicalProperties = biophysicalProperties
-        self.biophysicalProperties_nsprefix_ = None
+        self.biophysical_properties = biophysical_properties
+        self.biophysical_properties_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -20616,7 +20615,7 @@ class Cell(BaseCell):
     def hasContent_(self):
         if (
             self.morphology is not None or
-            self.biophysicalProperties is not None or
+            self.biophysical_properties is not None or
             super(Cell, self).hasContent_()
         ):
             return True
@@ -20650,9 +20649,9 @@ class Cell(BaseCell):
         if self.morphology_attr is not None and 'morphology_attr' not in already_processed:
             already_processed.add('morphology_attr')
             outfile.write(' morphology=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.morphology_attr), input_name='morphology_attr')), ))
-        if self.biophysicalProperties_attr is not None and 'biophysicalProperties_attr' not in already_processed:
-            already_processed.add('biophysicalProperties_attr')
-            outfile.write(' biophysicalProperties=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.biophysicalProperties_attr), input_name='biophysicalProperties_attr')), ))
+        if self.biophysical_properties_attr is not None and 'biophysical_properties_attr' not in already_processed:
+            already_processed.add('biophysical_properties_attr')
+            outfile.write(' biophysicalProperties=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.biophysical_properties_attr), input_name='biophysical_properties_attr')), ))
         if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -20670,9 +20669,9 @@ class Cell(BaseCell):
         if self.morphology is not None:
             namespaceprefix_ = self.morphology_nsprefix_ + ':' if (UseCapturedNS_ and self.morphology_nsprefix_) else ''
             self.morphology.export(outfile, level, namespaceprefix_, namespacedef_='', name_='morphology', pretty_print=pretty_print)
-        if self.biophysicalProperties is not None:
-            namespaceprefix_ = self.biophysicalProperties_nsprefix_ + ':' if (UseCapturedNS_ and self.biophysicalProperties_nsprefix_) else ''
-            self.biophysicalProperties.export(outfile, level, namespaceprefix_, namespacedef_='', name_='biophysicalProperties', pretty_print=pretty_print)
+        if self.biophysical_properties is not None:
+            namespaceprefix_ = self.biophysical_properties_nsprefix_ + ':' if (UseCapturedNS_ and self.biophysical_properties_nsprefix_) else ''
+            self.biophysical_properties.export(outfile, level, namespaceprefix_, namespacedef_='', name_='biophysicalProperties', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -20691,10 +20690,10 @@ class Cell(BaseCell):
             self.morphology_attr = value
             self.validate_NmlId(self.morphology_attr)    # validate type NmlId
         value = find_attr_value_('biophysicalProperties', node)
-        if value is not None and 'biophysicalProperties_attr' not in already_processed:
-            already_processed.add('biophysicalProperties_attr')
-            self.biophysicalProperties_attr = value
-            self.validate_NmlId(self.biophysicalProperties_attr)    # validate type NmlId
+        if value is not None and 'biophysical_properties_attr' not in already_processed:
+            already_processed.add('biophysical_properties_attr')
+            self.biophysical_properties_attr = value
+            self.validate_NmlId(self.biophysical_properties_attr)    # validate type NmlId
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
@@ -20709,7 +20708,7 @@ class Cell(BaseCell):
         elif nodeName_ == 'biophysicalProperties':
             obj_ = BiophysicalProperties.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.biophysicalProperties = obj_
+            self.biophysical_properties = obj_
             obj_.original_tagname_ = 'biophysicalProperties'
         super(Cell, self).buildChildren(child_, node, nodeName_, True)
 
@@ -21011,22 +21010,22 @@ class Cell(BaseCell):
 class PinskyRinzelCA3Cell(BaseCell):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('iSoma', 'Nml2Quantity_currentDensity', 0, 0, {'use': 'required'}),
-        MemberSpec_('iDend', 'Nml2Quantity_currentDensity', 0, 0, {'use': 'required'}),
+        MemberSpec_('i_soma', 'Nml2Quantity_currentDensity', 0, 0, {'use': 'required'}),
+        MemberSpec_('i_dend', 'Nml2Quantity_currentDensity', 0, 0, {'use': 'required'}),
         MemberSpec_('gc', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
-        MemberSpec_('gLs', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
-        MemberSpec_('gLd', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
-        MemberSpec_('gNa', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
-        MemberSpec_('gKdr', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
-        MemberSpec_('gCa', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
-        MemberSpec_('gKahp', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
-        MemberSpec_('gKC', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
-        MemberSpec_('gNmda', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
-        MemberSpec_('gAmpa', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
-        MemberSpec_('eNa', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
-        MemberSpec_('eCa', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
-        MemberSpec_('eK', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
-        MemberSpec_('eL', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
+        MemberSpec_('g_ls', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
+        MemberSpec_('g_ld', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
+        MemberSpec_('g_na', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
+        MemberSpec_('g_kdr', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
+        MemberSpec_('g_ca', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
+        MemberSpec_('g_kahp', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
+        MemberSpec_('g_kc', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
+        MemberSpec_('g_nmda', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
+        MemberSpec_('g_ampa', 'Nml2Quantity_conductanceDensity', 0, 0, {'use': 'required'}),
+        MemberSpec_('e_na', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
+        MemberSpec_('e_ca', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
+        MemberSpec_('e_k', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
+        MemberSpec_('e_l', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
         MemberSpec_('qd0', 'Nml2Quantity_none', 0, 0, {'use': 'required'}),
         MemberSpec_('pp', 'Nml2Quantity_none', 0, 0, {'use': 'required'}),
         MemberSpec_('alphac', 'Nml2Quantity_none', 0, 0, {'use': 'required'}),
@@ -21035,45 +21034,45 @@ class PinskyRinzelCA3Cell(BaseCell):
     ]
     subclass = None
     superclass = BaseCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, iSoma=None, iDend=None, gc=None, gLs=None, gLd=None, gNa=None, gKdr=None, gCa=None, gKahp=None, gKC=None, gNmda=None, gAmpa=None, eNa=None, eCa=None, eK=None, eL=None, qd0=None, pp=None, alphac=None, betac=None, cm=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, i_soma=None, i_dend=None, gc=None, g_ls=None, g_ld=None, g_na=None, g_kdr=None, g_ca=None, g_kahp=None, g_kc=None, g_nmda=None, g_ampa=None, e_na=None, e_ca=None, e_k=None, e_l=None, qd0=None, pp=None, alphac=None, betac=None, cm=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(PinskyRinzelCA3Cell, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
-        self.iSoma = _cast(None, iSoma)
-        self.iSoma_nsprefix_ = None
-        self.iDend = _cast(None, iDend)
-        self.iDend_nsprefix_ = None
+        super(PinskyRinzelCA3Cell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        self.i_soma = _cast(None, i_soma)
+        self.i_soma_nsprefix_ = None
+        self.i_dend = _cast(None, i_dend)
+        self.i_dend_nsprefix_ = None
         self.gc = _cast(None, gc)
         self.gc_nsprefix_ = None
-        self.gLs = _cast(None, gLs)
-        self.gLs_nsprefix_ = None
-        self.gLd = _cast(None, gLd)
-        self.gLd_nsprefix_ = None
-        self.gNa = _cast(None, gNa)
-        self.gNa_nsprefix_ = None
-        self.gKdr = _cast(None, gKdr)
-        self.gKdr_nsprefix_ = None
-        self.gCa = _cast(None, gCa)
-        self.gCa_nsprefix_ = None
-        self.gKahp = _cast(None, gKahp)
-        self.gKahp_nsprefix_ = None
-        self.gKC = _cast(None, gKC)
-        self.gKC_nsprefix_ = None
-        self.gNmda = _cast(None, gNmda)
-        self.gNmda_nsprefix_ = None
-        self.gAmpa = _cast(None, gAmpa)
-        self.gAmpa_nsprefix_ = None
-        self.eNa = _cast(None, eNa)
-        self.eNa_nsprefix_ = None
-        self.eCa = _cast(None, eCa)
-        self.eCa_nsprefix_ = None
-        self.eK = _cast(None, eK)
-        self.eK_nsprefix_ = None
-        self.eL = _cast(None, eL)
-        self.eL_nsprefix_ = None
+        self.g_ls = _cast(None, g_ls)
+        self.g_ls_nsprefix_ = None
+        self.g_ld = _cast(None, g_ld)
+        self.g_ld_nsprefix_ = None
+        self.g_na = _cast(None, g_na)
+        self.g_na_nsprefix_ = None
+        self.g_kdr = _cast(None, g_kdr)
+        self.g_kdr_nsprefix_ = None
+        self.g_ca = _cast(None, g_ca)
+        self.g_ca_nsprefix_ = None
+        self.g_kahp = _cast(None, g_kahp)
+        self.g_kahp_nsprefix_ = None
+        self.g_kc = _cast(None, g_kc)
+        self.g_kc_nsprefix_ = None
+        self.g_nmda = _cast(None, g_nmda)
+        self.g_nmda_nsprefix_ = None
+        self.g_ampa = _cast(None, g_ampa)
+        self.g_ampa_nsprefix_ = None
+        self.e_na = _cast(None, e_na)
+        self.e_na_nsprefix_ = None
+        self.e_ca = _cast(None, e_ca)
+        self.e_ca_nsprefix_ = None
+        self.e_k = _cast(None, e_k)
+        self.e_k_nsprefix_ = None
+        self.e_l = _cast(None, e_l)
+        self.e_l_nsprefix_ = None
         self.qd0 = _cast(None, qd0)
         self.qd0_nsprefix_ = None
         self.pp = _cast(None, pp)
@@ -21182,54 +21181,54 @@ class PinskyRinzelCA3Cell(BaseCell):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='PinskyRinzelCA3Cell'):
         super(PinskyRinzelCA3Cell, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='PinskyRinzelCA3Cell')
-        if self.iSoma is not None and 'iSoma' not in already_processed:
-            already_processed.add('iSoma')
-            outfile.write(' iSoma=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.iSoma), input_name='iSoma')), ))
-        if self.iDend is not None and 'iDend' not in already_processed:
-            already_processed.add('iDend')
-            outfile.write(' iDend=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.iDend), input_name='iDend')), ))
+        if self.i_soma is not None and 'i_soma' not in already_processed:
+            already_processed.add('i_soma')
+            outfile.write(' iSoma=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.i_soma), input_name='iSoma')), ))
+        if self.i_dend is not None and 'i_dend' not in already_processed:
+            already_processed.add('i_dend')
+            outfile.write(' iDend=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.i_dend), input_name='iDend')), ))
         if self.gc is not None and 'gc' not in already_processed:
             already_processed.add('gc')
             outfile.write(' gc=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.gc), input_name='gc')), ))
-        if self.gLs is not None and 'gLs' not in already_processed:
-            already_processed.add('gLs')
-            outfile.write(' gLs=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.gLs), input_name='gLs')), ))
-        if self.gLd is not None and 'gLd' not in already_processed:
-            already_processed.add('gLd')
-            outfile.write(' gLd=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.gLd), input_name='gLd')), ))
-        if self.gNa is not None and 'gNa' not in already_processed:
-            already_processed.add('gNa')
-            outfile.write(' gNa=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.gNa), input_name='gNa')), ))
-        if self.gKdr is not None and 'gKdr' not in already_processed:
-            already_processed.add('gKdr')
-            outfile.write(' gKdr=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.gKdr), input_name='gKdr')), ))
-        if self.gCa is not None and 'gCa' not in already_processed:
-            already_processed.add('gCa')
-            outfile.write(' gCa=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.gCa), input_name='gCa')), ))
-        if self.gKahp is not None and 'gKahp' not in already_processed:
-            already_processed.add('gKahp')
-            outfile.write(' gKahp=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.gKahp), input_name='gKahp')), ))
-        if self.gKC is not None and 'gKC' not in already_processed:
-            already_processed.add('gKC')
-            outfile.write(' gKC=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.gKC), input_name='gKC')), ))
-        if self.gNmda is not None and 'gNmda' not in already_processed:
-            already_processed.add('gNmda')
-            outfile.write(' gNmda=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.gNmda), input_name='gNmda')), ))
-        if self.gAmpa is not None and 'gAmpa' not in already_processed:
-            already_processed.add('gAmpa')
-            outfile.write(' gAmpa=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.gAmpa), input_name='gAmpa')), ))
-        if self.eNa is not None and 'eNa' not in already_processed:
-            already_processed.add('eNa')
-            outfile.write(' eNa=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.eNa), input_name='eNa')), ))
-        if self.eCa is not None and 'eCa' not in already_processed:
-            already_processed.add('eCa')
-            outfile.write(' eCa=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.eCa), input_name='eCa')), ))
-        if self.eK is not None and 'eK' not in already_processed:
-            already_processed.add('eK')
-            outfile.write(' eK=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.eK), input_name='eK')), ))
-        if self.eL is not None and 'eL' not in already_processed:
-            already_processed.add('eL')
-            outfile.write(' eL=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.eL), input_name='eL')), ))
+        if self.g_ls is not None and 'g_ls' not in already_processed:
+            already_processed.add('g_ls')
+            outfile.write(' gLs=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.g_ls), input_name='gLs')), ))
+        if self.g_ld is not None and 'g_ld' not in already_processed:
+            already_processed.add('g_ld')
+            outfile.write(' gLd=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.g_ld), input_name='gLd')), ))
+        if self.g_na is not None and 'g_na' not in already_processed:
+            already_processed.add('g_na')
+            outfile.write(' gNa=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.g_na), input_name='gNa')), ))
+        if self.g_kdr is not None and 'g_kdr' not in already_processed:
+            already_processed.add('g_kdr')
+            outfile.write(' gKdr=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.g_kdr), input_name='gKdr')), ))
+        if self.g_ca is not None and 'g_ca' not in already_processed:
+            already_processed.add('g_ca')
+            outfile.write(' gCa=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.g_ca), input_name='gCa')), ))
+        if self.g_kahp is not None and 'g_kahp' not in already_processed:
+            already_processed.add('g_kahp')
+            outfile.write(' gKahp=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.g_kahp), input_name='gKahp')), ))
+        if self.g_kc is not None and 'g_kc' not in already_processed:
+            already_processed.add('g_kc')
+            outfile.write(' gKC=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.g_kc), input_name='gKC')), ))
+        if self.g_nmda is not None and 'g_nmda' not in already_processed:
+            already_processed.add('g_nmda')
+            outfile.write(' gNmda=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.g_nmda), input_name='gNmda')), ))
+        if self.g_ampa is not None and 'g_ampa' not in already_processed:
+            already_processed.add('g_ampa')
+            outfile.write(' gAmpa=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.g_ampa), input_name='gAmpa')), ))
+        if self.e_na is not None and 'e_na' not in already_processed:
+            already_processed.add('e_na')
+            outfile.write(' eNa=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.e_na), input_name='eNa')), ))
+        if self.e_ca is not None and 'e_ca' not in already_processed:
+            already_processed.add('e_ca')
+            outfile.write(' eCa=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.e_ca), input_name='eCa')), ))
+        if self.e_k is not None and 'e_k' not in already_processed:
+            already_processed.add('e_k')
+            outfile.write(' eK=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.e_k), input_name='eK')), ))
+        if self.e_l is not None and 'e_l' not in already_processed:
+            already_processed.add('e_l')
+            outfile.write(' eL=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.e_l), input_name='eL')), ))
         if self.qd0 is not None and 'qd0' not in already_processed:
             already_processed.add('qd0')
             outfile.write(' qd0=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.qd0), input_name='qd0')), ))
@@ -21262,13 +21261,13 @@ class PinskyRinzelCA3Cell(BaseCell):
         value = find_attr_value_('iSoma', node)
         if value is not None and 'iSoma' not in already_processed:
             already_processed.add('iSoma')
-            self.iSoma = value
-            self.validate_Nml2Quantity_currentDensity(self.iSoma)    # validate type Nml2Quantity_currentDensity
+            self.i_soma = value
+            self.validate_Nml2Quantity_currentDensity(self.i_soma)    # validate type Nml2Quantity_currentDensity
         value = find_attr_value_('iDend', node)
         if value is not None and 'iDend' not in already_processed:
             already_processed.add('iDend')
-            self.iDend = value
-            self.validate_Nml2Quantity_currentDensity(self.iDend)    # validate type Nml2Quantity_currentDensity
+            self.i_dend = value
+            self.validate_Nml2Quantity_currentDensity(self.i_dend)    # validate type Nml2Quantity_currentDensity
         value = find_attr_value_('gc', node)
         if value is not None and 'gc' not in already_processed:
             already_processed.add('gc')
@@ -21277,68 +21276,68 @@ class PinskyRinzelCA3Cell(BaseCell):
         value = find_attr_value_('gLs', node)
         if value is not None and 'gLs' not in already_processed:
             already_processed.add('gLs')
-            self.gLs = value
-            self.validate_Nml2Quantity_conductanceDensity(self.gLs)    # validate type Nml2Quantity_conductanceDensity
+            self.g_ls = value
+            self.validate_Nml2Quantity_conductanceDensity(self.g_ls)    # validate type Nml2Quantity_conductanceDensity
         value = find_attr_value_('gLd', node)
         if value is not None and 'gLd' not in already_processed:
             already_processed.add('gLd')
-            self.gLd = value
-            self.validate_Nml2Quantity_conductanceDensity(self.gLd)    # validate type Nml2Quantity_conductanceDensity
+            self.g_ld = value
+            self.validate_Nml2Quantity_conductanceDensity(self.g_ld)    # validate type Nml2Quantity_conductanceDensity
         value = find_attr_value_('gNa', node)
         if value is not None and 'gNa' not in already_processed:
             already_processed.add('gNa')
-            self.gNa = value
-            self.validate_Nml2Quantity_conductanceDensity(self.gNa)    # validate type Nml2Quantity_conductanceDensity
+            self.g_na = value
+            self.validate_Nml2Quantity_conductanceDensity(self.g_na)    # validate type Nml2Quantity_conductanceDensity
         value = find_attr_value_('gKdr', node)
         if value is not None and 'gKdr' not in already_processed:
             already_processed.add('gKdr')
-            self.gKdr = value
-            self.validate_Nml2Quantity_conductanceDensity(self.gKdr)    # validate type Nml2Quantity_conductanceDensity
+            self.g_kdr = value
+            self.validate_Nml2Quantity_conductanceDensity(self.g_kdr)    # validate type Nml2Quantity_conductanceDensity
         value = find_attr_value_('gCa', node)
         if value is not None and 'gCa' not in already_processed:
             already_processed.add('gCa')
-            self.gCa = value
-            self.validate_Nml2Quantity_conductanceDensity(self.gCa)    # validate type Nml2Quantity_conductanceDensity
+            self.g_ca = value
+            self.validate_Nml2Quantity_conductanceDensity(self.g_ca)    # validate type Nml2Quantity_conductanceDensity
         value = find_attr_value_('gKahp', node)
         if value is not None and 'gKahp' not in already_processed:
             already_processed.add('gKahp')
-            self.gKahp = value
-            self.validate_Nml2Quantity_conductanceDensity(self.gKahp)    # validate type Nml2Quantity_conductanceDensity
+            self.g_kahp = value
+            self.validate_Nml2Quantity_conductanceDensity(self.g_kahp)    # validate type Nml2Quantity_conductanceDensity
         value = find_attr_value_('gKC', node)
         if value is not None and 'gKC' not in already_processed:
             already_processed.add('gKC')
-            self.gKC = value
-            self.validate_Nml2Quantity_conductanceDensity(self.gKC)    # validate type Nml2Quantity_conductanceDensity
+            self.g_kc = value
+            self.validate_Nml2Quantity_conductanceDensity(self.g_kc)    # validate type Nml2Quantity_conductanceDensity
         value = find_attr_value_('gNmda', node)
         if value is not None and 'gNmda' not in already_processed:
             already_processed.add('gNmda')
-            self.gNmda = value
-            self.validate_Nml2Quantity_conductanceDensity(self.gNmda)    # validate type Nml2Quantity_conductanceDensity
+            self.g_nmda = value
+            self.validate_Nml2Quantity_conductanceDensity(self.g_nmda)    # validate type Nml2Quantity_conductanceDensity
         value = find_attr_value_('gAmpa', node)
         if value is not None and 'gAmpa' not in already_processed:
             already_processed.add('gAmpa')
-            self.gAmpa = value
-            self.validate_Nml2Quantity_conductanceDensity(self.gAmpa)    # validate type Nml2Quantity_conductanceDensity
+            self.g_ampa = value
+            self.validate_Nml2Quantity_conductanceDensity(self.g_ampa)    # validate type Nml2Quantity_conductanceDensity
         value = find_attr_value_('eNa', node)
         if value is not None and 'eNa' not in already_processed:
             already_processed.add('eNa')
-            self.eNa = value
-            self.validate_Nml2Quantity_voltage(self.eNa)    # validate type Nml2Quantity_voltage
+            self.e_na = value
+            self.validate_Nml2Quantity_voltage(self.e_na)    # validate type Nml2Quantity_voltage
         value = find_attr_value_('eCa', node)
         if value is not None and 'eCa' not in already_processed:
             already_processed.add('eCa')
-            self.eCa = value
-            self.validate_Nml2Quantity_voltage(self.eCa)    # validate type Nml2Quantity_voltage
+            self.e_ca = value
+            self.validate_Nml2Quantity_voltage(self.e_ca)    # validate type Nml2Quantity_voltage
         value = find_attr_value_('eK', node)
         if value is not None and 'eK' not in already_processed:
             already_processed.add('eK')
-            self.eK = value
-            self.validate_Nml2Quantity_voltage(self.eK)    # validate type Nml2Quantity_voltage
+            self.e_k = value
+            self.validate_Nml2Quantity_voltage(self.e_k)    # validate type Nml2Quantity_voltage
         value = find_attr_value_('eL', node)
         if value is not None and 'eL' not in already_processed:
             already_processed.add('eL')
-            self.eL = value
-            self.validate_Nml2Quantity_voltage(self.eL)    # validate type Nml2Quantity_voltage
+            self.e_l = value
+            self.validate_Nml2Quantity_voltage(self.e_l)    # validate type Nml2Quantity_voltage
         value = find_attr_value_('qd0', node)
         if value is not None and 'qd0' not in already_processed:
             already_processed.add('qd0')
@@ -21383,13 +21382,13 @@ class FitzHughNagumo1969Cell(BaseCell):
     ]
     subclass = None
     superclass = BaseCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, a=None, b=None, I=None, phi=None, V0=None, W0=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, a=None, b=None, I=None, phi=None, V0=None, W0=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(FitzHughNagumo1969Cell, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(FitzHughNagumo1969Cell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.a = _cast(None, a)
         self.a_nsprefix_ = None
         self.b = _cast(None, b)
@@ -21532,13 +21531,13 @@ class FitzHughNagumoCell(BaseCell):
     ]
     subclass = None
     superclass = BaseCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, I=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, I=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(FitzHughNagumoCell, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(FitzHughNagumoCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.I = _cast(None, I)
         self.I_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -21633,13 +21632,13 @@ class BaseCellMembPotCap(BaseCell):
     ]
     subclass = None
     superclass = BaseCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, C=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, C=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseCellMembPotCap, self).__init__(neuroLexId, id, metaid, notes, property, annotation, extensiontype_,  **kwargs_)
+        super(BaseCellMembPotCap, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.C = _cast(None, C)
         self.C_nsprefix_ = None
         self.extensiontype_ = extensiontype_
@@ -21750,13 +21749,13 @@ class IzhikevichCell(BaseCell):
     ]
     subclass = None
     superclass = BaseCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, v0=None, thresh=None, a=None, b=None, c=None, d=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, v0=None, thresh=None, a=None, b=None, c=None, d=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IzhikevichCell, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(IzhikevichCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.v0 = _cast(None, v0)
         self.v0_nsprefix_ = None
         self.thresh = _cast(None, thresh)
@@ -21906,31 +21905,31 @@ class IzhikevichCell(BaseCell):
 class IafCell(BaseCell):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('leakReversal', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
+        MemberSpec_('leak_reversal', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
         MemberSpec_('thresh', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
         MemberSpec_('reset', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
         MemberSpec_('C', 'Nml2Quantity_capacitance', 0, 0, {'use': 'required'}),
-        MemberSpec_('leakConductance', 'Nml2Quantity_conductance', 0, 0, {'use': 'required'}),
+        MemberSpec_('leak_conductance', 'Nml2Quantity_conductance', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = BaseCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, leakReversal=None, thresh=None, reset=None, C=None, leakConductance=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, leak_reversal=None, thresh=None, reset=None, C=None, leak_conductance=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IafCell, self).__init__(neuroLexId, id, metaid, notes, property, annotation, extensiontype_,  **kwargs_)
-        self.leakReversal = _cast(None, leakReversal)
-        self.leakReversal_nsprefix_ = None
+        super(IafCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        self.leak_reversal = _cast(None, leak_reversal)
+        self.leak_reversal_nsprefix_ = None
         self.thresh = _cast(None, thresh)
         self.thresh_nsprefix_ = None
         self.reset = _cast(None, reset)
         self.reset_nsprefix_ = None
         self.C = _cast(None, C)
         self.C_nsprefix_ = None
-        self.leakConductance = _cast(None, leakConductance)
-        self.leakConductance_nsprefix_ = None
+        self.leak_conductance = _cast(None, leak_conductance)
+        self.leak_conductance_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -22008,9 +22007,9 @@ class IafCell(BaseCell):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='IafCell'):
         super(IafCell, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='IafCell')
-        if self.leakReversal is not None and 'leakReversal' not in already_processed:
-            already_processed.add('leakReversal')
-            outfile.write(' leakReversal=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.leakReversal), input_name='leakReversal')), ))
+        if self.leak_reversal is not None and 'leak_reversal' not in already_processed:
+            already_processed.add('leak_reversal')
+            outfile.write(' leakReversal=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.leak_reversal), input_name='leakReversal')), ))
         if self.thresh is not None and 'thresh' not in already_processed:
             already_processed.add('thresh')
             outfile.write(' thresh=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.thresh), input_name='thresh')), ))
@@ -22020,9 +22019,9 @@ class IafCell(BaseCell):
         if self.C is not None and 'C' not in already_processed:
             already_processed.add('C')
             outfile.write(' C=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.C), input_name='C')), ))
-        if self.leakConductance is not None and 'leakConductance' not in already_processed:
-            already_processed.add('leakConductance')
-            outfile.write(' leakConductance=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.leakConductance), input_name='leakConductance')), ))
+        if self.leak_conductance is not None and 'leak_conductance' not in already_processed:
+            already_processed.add('leak_conductance')
+            outfile.write(' leakConductance=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.leak_conductance), input_name='leakConductance')), ))
         if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -22048,8 +22047,8 @@ class IafCell(BaseCell):
         value = find_attr_value_('leakReversal', node)
         if value is not None and 'leakReversal' not in already_processed:
             already_processed.add('leakReversal')
-            self.leakReversal = value
-            self.validate_Nml2Quantity_voltage(self.leakReversal)    # validate type Nml2Quantity_voltage
+            self.leak_reversal = value
+            self.validate_Nml2Quantity_voltage(self.leak_reversal)    # validate type Nml2Quantity_voltage
         value = find_attr_value_('thresh', node)
         if value is not None and 'thresh' not in already_processed:
             already_processed.add('thresh')
@@ -22068,8 +22067,8 @@ class IafCell(BaseCell):
         value = find_attr_value_('leakConductance', node)
         if value is not None and 'leakConductance' not in already_processed:
             already_processed.add('leakConductance')
-            self.leakConductance = value
-            self.validate_Nml2Quantity_conductance(self.leakConductance)    # validate type Nml2Quantity_conductance
+            self.leak_conductance = value
+            self.validate_Nml2Quantity_conductance(self.leak_conductance)    # validate type Nml2Quantity_conductance
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
@@ -22084,22 +22083,22 @@ class IafCell(BaseCell):
 class IafTauCell(BaseCell):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('leakReversal', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
+        MemberSpec_('leak_reversal', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
         MemberSpec_('thresh', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
         MemberSpec_('reset', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
         MemberSpec_('tau', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = BaseCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, leakReversal=None, thresh=None, reset=None, tau=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, leak_reversal=None, thresh=None, reset=None, tau=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IafTauCell, self).__init__(neuroLexId, id, metaid, notes, property, annotation, extensiontype_,  **kwargs_)
-        self.leakReversal = _cast(None, leakReversal)
-        self.leakReversal_nsprefix_ = None
+        super(IafTauCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        self.leak_reversal = _cast(None, leak_reversal)
+        self.leak_reversal_nsprefix_ = None
         self.thresh = _cast(None, thresh)
         self.thresh_nsprefix_ = None
         self.reset = _cast(None, reset)
@@ -22172,9 +22171,9 @@ class IafTauCell(BaseCell):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='IafTauCell'):
         super(IafTauCell, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='IafTauCell')
-        if self.leakReversal is not None and 'leakReversal' not in already_processed:
-            already_processed.add('leakReversal')
-            outfile.write(' leakReversal=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.leakReversal), input_name='leakReversal')), ))
+        if self.leak_reversal is not None and 'leak_reversal' not in already_processed:
+            already_processed.add('leak_reversal')
+            outfile.write(' leakReversal=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.leak_reversal), input_name='leakReversal')), ))
         if self.thresh is not None and 'thresh' not in already_processed:
             already_processed.add('thresh')
             outfile.write(' thresh=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.thresh), input_name='thresh')), ))
@@ -22209,8 +22208,8 @@ class IafTauCell(BaseCell):
         value = find_attr_value_('leakReversal', node)
         if value is not None and 'leakReversal' not in already_processed:
             already_processed.add('leakReversal')
-            self.leakReversal = value
-            self.validate_Nml2Quantity_voltage(self.leakReversal)    # validate type Nml2Quantity_voltage
+            self.leak_reversal = value
+            self.validate_Nml2Quantity_voltage(self.leak_reversal)    # validate type Nml2Quantity_voltage
         value = find_attr_value_('thresh', node)
         if value is not None and 'thresh' not in already_processed:
             already_processed.add('thresh')
@@ -22250,13 +22249,13 @@ class GradedSynapse(BaseSynapse):
     ]
     subclass = None
     superclass = BaseSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, conductance=None, delta=None, Vth=None, k=None, erev=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, conductance=None, delta=None, Vth=None, k=None, erev=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GradedSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(GradedSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
         self.delta = _cast(None, delta)
@@ -22412,13 +22411,13 @@ class LinearGradedSynapse(BaseSynapse):
     ]
     subclass = None
     superclass = BaseSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, conductance=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, conductance=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(LinearGradedSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(LinearGradedSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -22512,13 +22511,13 @@ class SilentSynapse(BaseSynapse):
     ]
     subclass = None
     superclass = BaseSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SilentSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(SilentSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -22591,13 +22590,13 @@ class GapJunction(BaseSynapse):
     ]
     subclass = None
     superclass = BaseSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, conductance=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, conductance=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GapJunction, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(GapJunction, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -22689,13 +22688,13 @@ class BaseCurrentBasedSynapse(BaseSynapse):
     ]
     subclass = None
     superclass = BaseSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseCurrentBasedSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation, extensiontype_,  **kwargs_)
+        super(BaseCurrentBasedSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -22779,13 +22778,13 @@ class BaseVoltageDepSynapse(BaseSynapse):
     ]
     subclass = None
     superclass = BaseSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseVoltageDepSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation, extensiontype_,  **kwargs_)
+        super(BaseVoltageDepSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -22871,72 +22870,72 @@ class IonChannel(IonChannelScalable):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_('species', 'NmlId', 0, 1, {'use': 'optional'}),
-        MemberSpec_('type_', 'channelTypes', 0, 1, {'use': 'optional'}),
+        MemberSpec_('type', 'channelTypes', 0, 1, {'use': 'optional'}),
         MemberSpec_('conductance', 'Nml2Quantity_conductance', 0, 1, {'use': 'optional'}),
-        MemberSpec_('gate', 'GateHHUndetermined', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gate', 'type': 'GateHHUndetermined'}, 1),
-        MemberSpec_('gateHHrates', 'GateHHRates', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gateHHrates', 'type': 'GateHHRates'}, 1),
-        MemberSpec_('gateHHratesTau', 'GateHHRatesTau', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gateHHratesTau', 'type': 'GateHHRatesTau'}, 1),
-        MemberSpec_('gateHHtauInf', 'GateHHTauInf', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gateHHtauInf', 'type': 'GateHHTauInf'}, 1),
-        MemberSpec_('gateHHratesInf', 'GateHHRatesInf', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gateHHratesInf', 'type': 'GateHHRatesInf'}, 1),
-        MemberSpec_('gateHHratesTauInf', 'GateHHRatesTauInf', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gateHHratesTauInf', 'type': 'GateHHRatesTauInf'}, 1),
-        MemberSpec_('gateHHInstantaneous', 'GateHHInstantaneous', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gateHHInstantaneous', 'type': 'GateHHInstantaneous'}, 1),
-        MemberSpec_('gateFractional', 'GateFractional', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gateFractional', 'type': 'GateFractional'}, 1),
+        MemberSpec_('gates', 'GateHHUndetermined', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gate', 'type': 'GateHHUndetermined'}, 1),
+        MemberSpec_('gate_hh_rates', 'GateHHRates', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gateHHrates', 'type': 'GateHHRates'}, 1),
+        MemberSpec_('gate_h_hrates_taus', 'GateHHRatesTau', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gateHHratesTau', 'type': 'GateHHRatesTau'}, 1),
+        MemberSpec_('gate_hh_tau_infs', 'GateHHTauInf', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gateHHtauInf', 'type': 'GateHHTauInf'}, 1),
+        MemberSpec_('gate_h_hrates_infs', 'GateHHRatesInf', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gateHHratesInf', 'type': 'GateHHRatesInf'}, 1),
+        MemberSpec_('gate_h_hrates_tau_infs', 'GateHHRatesTauInf', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gateHHratesTauInf', 'type': 'GateHHRatesTauInf'}, 1),
+        MemberSpec_('gate_hh_instantaneouses', 'GateHHInstantaneous', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gateHHInstantaneous', 'type': 'GateHHInstantaneous'}, 1),
+        MemberSpec_('gate_fractionals', 'GateFractional', 1, 1, {'maxOccurs': 'unbounded', 'minOccurs': '0', 'name': 'gateFractional', 'type': 'GateFractional'}, 1),
     ]
     subclass = None
     superclass = IonChannelScalable
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, q10ConductanceScaling=None, species=None, type_=None, conductance=None, gate=None, gateHHrates=None, gateHHratesTau=None, gateHHtauInf=None, gateHHratesInf=None, gateHHratesTauInf=None, gateHHInstantaneous=None, gateFractional=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, q10_conductance_scalings=None, species=None, type=None, conductance=None, gates=None, gate_hh_rates=None, gate_h_hrates_taus=None, gate_hh_tau_infs=None, gate_h_hrates_infs=None, gate_h_hrates_tau_infs=None, gate_hh_instantaneouses=None, gate_fractionals=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IonChannel, self).__init__(neuroLexId, id, metaid, notes, property, annotation, q10ConductanceScaling, extensiontype_,  **kwargs_)
+        super(IonChannel, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, q10_conductance_scalings, extensiontype_,  **kwargs_)
         self.species = _cast(None, species)
         self.species_nsprefix_ = None
-        self.type_ = _cast(None, type_)
-        self.type__nsprefix_ = None
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
-        if gate is None:
-            self.gate = []
+        if gates is None:
+            self.gates = []
         else:
-            self.gate = gate
-        self.gate_nsprefix_ = None
-        if gateHHrates is None:
-            self.gateHHrates = []
+            self.gates = gates
+        self.gates_nsprefix_ = None
+        if gate_hh_rates is None:
+            self.gate_hh_rates = []
         else:
-            self.gateHHrates = gateHHrates
-        self.gateHHrates_nsprefix_ = None
-        if gateHHratesTau is None:
-            self.gateHHratesTau = []
+            self.gate_hh_rates = gate_hh_rates
+        self.gate_hh_rates_nsprefix_ = None
+        if gate_h_hrates_taus is None:
+            self.gate_h_hrates_taus = []
         else:
-            self.gateHHratesTau = gateHHratesTau
-        self.gateHHratesTau_nsprefix_ = None
-        if gateHHtauInf is None:
-            self.gateHHtauInf = []
+            self.gate_h_hrates_taus = gate_h_hrates_taus
+        self.gate_h_hrates_taus_nsprefix_ = None
+        if gate_hh_tau_infs is None:
+            self.gate_hh_tau_infs = []
         else:
-            self.gateHHtauInf = gateHHtauInf
-        self.gateHHtauInf_nsprefix_ = None
-        if gateHHratesInf is None:
-            self.gateHHratesInf = []
+            self.gate_hh_tau_infs = gate_hh_tau_infs
+        self.gate_hh_tau_infs_nsprefix_ = None
+        if gate_h_hrates_infs is None:
+            self.gate_h_hrates_infs = []
         else:
-            self.gateHHratesInf = gateHHratesInf
-        self.gateHHratesInf_nsprefix_ = None
-        if gateHHratesTauInf is None:
-            self.gateHHratesTauInf = []
+            self.gate_h_hrates_infs = gate_h_hrates_infs
+        self.gate_h_hrates_infs_nsprefix_ = None
+        if gate_h_hrates_tau_infs is None:
+            self.gate_h_hrates_tau_infs = []
         else:
-            self.gateHHratesTauInf = gateHHratesTauInf
-        self.gateHHratesTauInf_nsprefix_ = None
-        if gateHHInstantaneous is None:
-            self.gateHHInstantaneous = []
+            self.gate_h_hrates_tau_infs = gate_h_hrates_tau_infs
+        self.gate_h_hrates_tau_infs_nsprefix_ = None
+        if gate_hh_instantaneouses is None:
+            self.gate_hh_instantaneouses = []
         else:
-            self.gateHHInstantaneous = gateHHInstantaneous
-        self.gateHHInstantaneous_nsprefix_ = None
-        if gateFractional is None:
-            self.gateFractional = []
+            self.gate_hh_instantaneouses = gate_hh_instantaneouses
+        self.gate_hh_instantaneouses_nsprefix_ = None
+        if gate_fractionals is None:
+            self.gate_fractionals = []
         else:
-            self.gateFractional = gateFractional
-        self.gateFractional_nsprefix_ = None
+            self.gate_fractionals = gate_fractionals
+        self.gate_fractionals_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -22986,14 +22985,14 @@ class IonChannel(IonChannelScalable):
     validate_Nml2Quantity_conductance_patterns_ = [['^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS))$']]
     def hasContent_(self):
         if (
-            self.gate or
-            self.gateHHrates or
-            self.gateHHratesTau or
-            self.gateHHtauInf or
-            self.gateHHratesInf or
-            self.gateHHratesTauInf or
-            self.gateHHInstantaneous or
-            self.gateFractional or
+            self.gates or
+            self.gate_hh_rates or
+            self.gate_h_hrates_taus or
+            self.gate_hh_tau_infs or
+            self.gate_h_hrates_infs or
+            self.gate_h_hrates_tau_infs or
+            self.gate_hh_instantaneouses or
+            self.gate_fractionals or
             super(IonChannel, self).hasContent_()
         ):
             return True
@@ -23027,9 +23026,9 @@ class IonChannel(IonChannelScalable):
         if self.species is not None and 'species' not in already_processed:
             already_processed.add('species')
             outfile.write(' species=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.species), input_name='species')), ))
-        if self.type_ is not None and 'type_' not in already_processed:
-            already_processed.add('type_')
-            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type_), input_name='type')), ))
+        if self.type is not None and 'type' not in already_processed:
+            already_processed.add('type')
+            outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type), input_name='type')), ))
         if self.conductance is not None and 'conductance' not in already_processed:
             already_processed.add('conductance')
             outfile.write(' conductance=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.conductance), input_name='conductance')), ))
@@ -23047,29 +23046,29 @@ class IonChannel(IonChannelScalable):
             eol_ = '\n'
         else:
             eol_ = ''
-        for gate_ in self.gate:
-            namespaceprefix_ = self.gate_nsprefix_ + ':' if (UseCapturedNS_ and self.gate_nsprefix_) else ''
+        for gate_ in self.gates:
+            namespaceprefix_ = self.gates_nsprefix_ + ':' if (UseCapturedNS_ and self.gates_nsprefix_) else ''
             gate_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='gate', pretty_print=pretty_print)
-        for gateHHrates_ in self.gateHHrates:
-            namespaceprefix_ = self.gateHHrates_nsprefix_ + ':' if (UseCapturedNS_ and self.gateHHrates_nsprefix_) else ''
+        for gateHHrates_ in self.gate_hh_rates:
+            namespaceprefix_ = self.gate_hh_rates_nsprefix_ + ':' if (UseCapturedNS_ and self.gate_hh_rates_nsprefix_) else ''
             gateHHrates_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='gateHHrates', pretty_print=pretty_print)
-        for gateHHratesTau_ in self.gateHHratesTau:
-            namespaceprefix_ = self.gateHHratesTau_nsprefix_ + ':' if (UseCapturedNS_ and self.gateHHratesTau_nsprefix_) else ''
+        for gateHHratesTau_ in self.gate_h_hrates_taus:
+            namespaceprefix_ = self.gate_h_hrates_taus_nsprefix_ + ':' if (UseCapturedNS_ and self.gate_h_hrates_taus_nsprefix_) else ''
             gateHHratesTau_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='gateHHratesTau', pretty_print=pretty_print)
-        for gateHHtauInf_ in self.gateHHtauInf:
-            namespaceprefix_ = self.gateHHtauInf_nsprefix_ + ':' if (UseCapturedNS_ and self.gateHHtauInf_nsprefix_) else ''
+        for gateHHtauInf_ in self.gate_hh_tau_infs:
+            namespaceprefix_ = self.gate_hh_tau_infs_nsprefix_ + ':' if (UseCapturedNS_ and self.gate_hh_tau_infs_nsprefix_) else ''
             gateHHtauInf_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='gateHHtauInf', pretty_print=pretty_print)
-        for gateHHratesInf_ in self.gateHHratesInf:
-            namespaceprefix_ = self.gateHHratesInf_nsprefix_ + ':' if (UseCapturedNS_ and self.gateHHratesInf_nsprefix_) else ''
+        for gateHHratesInf_ in self.gate_h_hrates_infs:
+            namespaceprefix_ = self.gate_h_hrates_infs_nsprefix_ + ':' if (UseCapturedNS_ and self.gate_h_hrates_infs_nsprefix_) else ''
             gateHHratesInf_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='gateHHratesInf', pretty_print=pretty_print)
-        for gateHHratesTauInf_ in self.gateHHratesTauInf:
-            namespaceprefix_ = self.gateHHratesTauInf_nsprefix_ + ':' if (UseCapturedNS_ and self.gateHHratesTauInf_nsprefix_) else ''
+        for gateHHratesTauInf_ in self.gate_h_hrates_tau_infs:
+            namespaceprefix_ = self.gate_h_hrates_tau_infs_nsprefix_ + ':' if (UseCapturedNS_ and self.gate_h_hrates_tau_infs_nsprefix_) else ''
             gateHHratesTauInf_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='gateHHratesTauInf', pretty_print=pretty_print)
-        for gateHHInstantaneous_ in self.gateHHInstantaneous:
-            namespaceprefix_ = self.gateHHInstantaneous_nsprefix_ + ':' if (UseCapturedNS_ and self.gateHHInstantaneous_nsprefix_) else ''
+        for gateHHInstantaneous_ in self.gate_hh_instantaneouses:
+            namespaceprefix_ = self.gate_hh_instantaneouses_nsprefix_ + ':' if (UseCapturedNS_ and self.gate_hh_instantaneouses_nsprefix_) else ''
             gateHHInstantaneous_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='gateHHInstantaneous', pretty_print=pretty_print)
-        for gateFractional_ in self.gateFractional:
-            namespaceprefix_ = self.gateFractional_nsprefix_ + ':' if (UseCapturedNS_ and self.gateFractional_nsprefix_) else ''
+        for gateFractional_ in self.gate_fractionals:
+            namespaceprefix_ = self.gate_fractionals_nsprefix_ + ':' if (UseCapturedNS_ and self.gate_fractionals_nsprefix_) else ''
             gateFractional_.export(outfile, level, namespaceprefix_, namespacedef_='', name_='gateFractional', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -23091,8 +23090,8 @@ class IonChannel(IonChannelScalable):
         value = find_attr_value_('type', node)
         if value is not None and 'type' not in already_processed:
             already_processed.add('type')
-            self.type_ = value
-            self.validate_channelTypes(self.type_)    # validate type channelTypes
+            self.type = value
+            self.validate_channelTypes(self.type)    # validate type channelTypes
         value = find_attr_value_('conductance', node)
         if value is not None and 'conductance' not in already_processed:
             already_processed.add('conductance')
@@ -23107,42 +23106,42 @@ class IonChannel(IonChannelScalable):
         if nodeName_ == 'gate':
             obj_ = GateHHUndetermined.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.gate.append(obj_)
+            self.gates.append(obj_)
             obj_.original_tagname_ = 'gate'
         elif nodeName_ == 'gateHHrates':
             obj_ = GateHHRates.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.gateHHrates.append(obj_)
+            self.gate_hh_rates.append(obj_)
             obj_.original_tagname_ = 'gateHHrates'
         elif nodeName_ == 'gateHHratesTau':
             obj_ = GateHHRatesTau.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.gateHHratesTau.append(obj_)
+            self.gate_h_hrates_taus.append(obj_)
             obj_.original_tagname_ = 'gateHHratesTau'
         elif nodeName_ == 'gateHHtauInf':
             obj_ = GateHHTauInf.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.gateHHtauInf.append(obj_)
+            self.gate_hh_tau_infs.append(obj_)
             obj_.original_tagname_ = 'gateHHtauInf'
         elif nodeName_ == 'gateHHratesInf':
             obj_ = GateHHRatesInf.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.gateHHratesInf.append(obj_)
+            self.gate_h_hrates_infs.append(obj_)
             obj_.original_tagname_ = 'gateHHratesInf'
         elif nodeName_ == 'gateHHratesTauInf':
             obj_ = GateHHRatesTauInf.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.gateHHratesTauInf.append(obj_)
+            self.gate_h_hrates_tau_infs.append(obj_)
             obj_.original_tagname_ = 'gateHHratesTauInf'
         elif nodeName_ == 'gateHHInstantaneous':
             obj_ = GateHHInstantaneous.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.gateHHInstantaneous.append(obj_)
+            self.gate_hh_instantaneouses.append(obj_)
             obj_.original_tagname_ = 'gateHHInstantaneous'
         elif nodeName_ == 'gateFractional':
             obj_ = GateFractional.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.gateFractional.append(obj_)
+            self.gate_fractionals.append(obj_)
             obj_.original_tagname_ = 'gateFractional'
         super(IonChannel, self).buildChildren(child_, node, nodeName_, True)
 # end class IonChannel
@@ -23154,13 +23153,13 @@ class AlphaCurrSynapse(BasePynnSynapse):
     ]
     subclass = None
     superclass = BasePynnSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, tau_syn=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, tau_syn=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(AlphaCurrSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation, tau_syn,  **kwargs_)
+        super(AlphaCurrSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -23231,13 +23230,13 @@ class ExpCurrSynapse(BasePynnSynapse):
     ]
     subclass = None
     superclass = BasePynnSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, tau_syn=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, tau_syn=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ExpCurrSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation, tau_syn,  **kwargs_)
+        super(ExpCurrSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -23309,13 +23308,13 @@ class AlphaCondSynapse(BasePynnSynapse):
     ]
     subclass = None
     superclass = BasePynnSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, tau_syn=None, e_rev=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, tau_syn=None, e_rev=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(AlphaCondSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation, tau_syn,  **kwargs_)
+        super(AlphaCondSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn,  **kwargs_)
         self.e_rev = _cast(float, e_rev)
         self.e_rev_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -23397,13 +23396,13 @@ class ExpCondSynapse(BasePynnSynapse):
     ]
     subclass = None
     superclass = BasePynnSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, tau_syn=None, e_rev=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, tau_syn=None, e_rev=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ExpCondSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation, tau_syn,  **kwargs_)
+        super(ExpCondSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn,  **kwargs_)
         self.e_rev = _cast(float, e_rev)
         self.e_rev_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -23493,13 +23492,13 @@ class HH_cond_exp(basePyNNCell):
     ]
     subclass = None
     superclass = basePyNNCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, v_offset=None, e_rev_E=None, e_rev_I=None, e_rev_K=None, e_rev_Na=None, e_rev_leak=None, g_leak=None, gbar_K=None, gbar_Na=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, v_offset=None, e_rev_E=None, e_rev_I=None, e_rev_K=None, e_rev_Na=None, e_rev_leak=None, g_leak=None, gbar_K=None, gbar_Na=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(HH_cond_exp, self).__init__(neuroLexId, id, metaid, notes, property, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init,  **kwargs_)
+        super(HH_cond_exp, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init,  **kwargs_)
         self.v_offset = _cast(float, v_offset)
         self.v_offset_nsprefix_ = None
         self.e_rev_E = _cast(float, e_rev_E)
@@ -23665,13 +23664,13 @@ class basePyNNIaFCell(basePyNNCell):
     ]
     subclass = None
     superclass = basePyNNCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(basePyNNIaFCell, self).__init__(neuroLexId, id, metaid, notes, property, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, extensiontype_,  **kwargs_)
+        super(basePyNNIaFCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, extensiontype_,  **kwargs_)
         self.tau_m = _cast(float, tau_m)
         self.tau_m_nsprefix_ = None
         self.tau_refrac = _cast(float, tau_refrac)
@@ -23803,22 +23802,22 @@ class ContinuousConnection(BaseConnectionNewFormat):
     """Individual continuous/analog synaptic connection"""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('preComponent', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('postComponent', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('pre_component', 'NmlId', 0, 0, {'use': 'required'}),
+        MemberSpec_('post_component', 'NmlId', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = BaseConnectionNewFormat
-    def __init__(self, neuroLexId=None, id=None, preCell=None, preSegment='0', preFractionAlong='0.5', postCell=None, postSegment='0', postFractionAlong='0.5', preComponent=None, postComponent=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, pre_cell=None, pre_segment='0', pre_fraction_along='0.5', post_cell=None, post_segment='0', post_fraction_along='0.5', pre_component=None, post_component=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ContinuousConnection, self).__init__(neuroLexId, id, preCell, preSegment, preFractionAlong, postCell, postSegment, postFractionAlong, extensiontype_,  **kwargs_)
-        self.preComponent = _cast(None, preComponent)
-        self.preComponent_nsprefix_ = None
-        self.postComponent = _cast(None, postComponent)
-        self.postComponent_nsprefix_ = None
+        super(ContinuousConnection, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, extensiontype_,  **kwargs_)
+        self.pre_component = _cast(None, pre_component)
+        self.pre_component_nsprefix_ = None
+        self.post_component = _cast(None, post_component)
+        self.post_component_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -23873,12 +23872,12 @@ class ContinuousConnection(BaseConnectionNewFormat):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='ContinuousConnection'):
         super(ContinuousConnection, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='ContinuousConnection')
-        if self.preComponent is not None and 'preComponent' not in already_processed:
-            already_processed.add('preComponent')
-            outfile.write(' preComponent=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.preComponent), input_name='preComponent')), ))
-        if self.postComponent is not None and 'postComponent' not in already_processed:
-            already_processed.add('postComponent')
-            outfile.write(' postComponent=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.postComponent), input_name='postComponent')), ))
+        if self.pre_component is not None and 'pre_component' not in already_processed:
+            already_processed.add('pre_component')
+            outfile.write(' preComponent=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.pre_component), input_name='preComponent')), ))
+        if self.post_component is not None and 'post_component' not in already_processed:
+            already_processed.add('post_component')
+            outfile.write(' postComponent=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.post_component), input_name='postComponent')), ))
         if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -23905,13 +23904,13 @@ class ContinuousConnection(BaseConnectionNewFormat):
         value = find_attr_value_('preComponent', node)
         if value is not None and 'preComponent' not in already_processed:
             already_processed.add('preComponent')
-            self.preComponent = value
-            self.validate_NmlId(self.preComponent)    # validate type NmlId
+            self.pre_component = value
+            self.validate_NmlId(self.pre_component)    # validate type NmlId
         value = find_attr_value_('postComponent', node)
         if value is not None and 'postComponent' not in already_processed:
             already_processed.add('postComponent')
-            self.postComponent = value
-            self.validate_NmlId(self.postComponent)    # validate type NmlId
+            self.post_component = value
+            self.validate_NmlId(self.post_component)    # validate type NmlId
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
@@ -23975,13 +23974,13 @@ class ElectricalConnection(BaseConnectionNewFormat):
     ]
     subclass = None
     superclass = BaseConnectionNewFormat
-    def __init__(self, neuroLexId=None, id=None, preCell=None, preSegment='0', preFractionAlong='0.5', postCell=None, postSegment='0', postFractionAlong='0.5', synapse=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, pre_cell=None, pre_segment='0', pre_fraction_along='0.5', post_cell=None, post_segment='0', post_fraction_along='0.5', synapse=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ElectricalConnection, self).__init__(neuroLexId, id, preCell, preSegment, preFractionAlong, postCell, postSegment, postFractionAlong, extensiontype_,  **kwargs_)
+        super(ElectricalConnection, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, extensiontype_,  **kwargs_)
         self.synapse = _cast(None, synapse)
         self.synapse_nsprefix_ = None
         self.extensiontype_ = extensiontype_
@@ -24132,13 +24131,13 @@ class ConnectionWD(BaseConnectionOldFormat):
     ]
     subclass = None
     superclass = BaseConnectionOldFormat
-    def __init__(self, neuroLexId=None, id=None, preCellId=None, preSegmentId='0', preFractionAlong='0.5', postCellId=None, postSegmentId='0', postFractionAlong='0.5', weight=None, delay=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, pre_cell_id=None, pre_segment_id='0', pre_fraction_along='0.5', post_cell_id=None, post_segment_id='0', post_fraction_along='0.5', weight=None, delay=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ConnectionWD, self).__init__(neuroLexId, id, preCellId, preSegmentId, preFractionAlong, postCellId, postSegmentId, postFractionAlong,  **kwargs_)
+        super(ConnectionWD, self).__init__(neuro_lex_id, id, pre_cell_id, pre_segment_id, pre_fraction_along, post_cell_id, post_segment_id, post_fraction_along,  **kwargs_)
         self.weight = _cast(float, weight)
         self.weight_nsprefix_ = None
         self.delay = _cast(None, delay)
@@ -24297,13 +24296,13 @@ class Connection(BaseConnectionOldFormat):
     ]
     subclass = None
     superclass = BaseConnectionOldFormat
-    def __init__(self, neuroLexId=None, id=None, preCellId=None, preSegmentId='0', preFractionAlong='0.5', postCellId=None, postSegmentId='0', postFractionAlong='0.5', gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, pre_cell_id=None, pre_segment_id='0', pre_fraction_along='0.5', post_cell_id=None, post_segment_id='0', post_fraction_along='0.5', gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Connection, self).__init__(neuroLexId, id, preCellId, preSegmentId, preFractionAlong, postCellId, postSegmentId, postFractionAlong,  **kwargs_)
+        super(Connection, self).__init__(neuro_lex_id, id, pre_cell_id, pre_segment_id, pre_fraction_along, post_cell_id, post_segment_id, post_fraction_along,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -24415,19 +24414,19 @@ class Connection(BaseConnectionOldFormat):
 class Cell2CaPools(Cell):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('biophysicalProperties2CaPools', 'BiophysicalProperties2CaPools', 0, 1, {'minOccurs': '0', 'name': 'biophysicalProperties2CaPools', 'type': 'BiophysicalProperties2CaPools'}, None),
+        MemberSpec_('biophysical_properties2_ca_pools', 'BiophysicalProperties2CaPools', 0, 1, {'minOccurs': '0', 'name': 'biophysicalProperties2CaPools', 'type': 'BiophysicalProperties2CaPools'}, None),
     ]
     subclass = None
     superclass = Cell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, morphology_attr=None, biophysicalProperties_attr=None, morphology=None, biophysicalProperties=None, biophysicalProperties2CaPools=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, morphology_attr=None, biophysical_properties_attr=None, morphology=None, biophysical_properties=None, biophysical_properties2_ca_pools=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Cell2CaPools, self).__init__(neuroLexId, id, metaid, notes, property, annotation, morphology_attr, biophysicalProperties_attr, morphology, biophysicalProperties,  **kwargs_)
-        self.biophysicalProperties2CaPools = biophysicalProperties2CaPools
-        self.biophysicalProperties2CaPools_nsprefix_ = None
+        super(Cell2CaPools, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, morphology_attr, biophysical_properties_attr, morphology, biophysical_properties,  **kwargs_)
+        self.biophysical_properties2_ca_pools = biophysical_properties2_ca_pools
+        self.biophysical_properties2_ca_pools_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -24441,7 +24440,7 @@ class Cell2CaPools(Cell):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.biophysicalProperties2CaPools is not None or
+            self.biophysical_properties2_ca_pools is not None or
             super(Cell2CaPools, self).hasContent_()
         ):
             return True
@@ -24478,9 +24477,9 @@ class Cell2CaPools(Cell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.biophysicalProperties2CaPools is not None:
-            namespaceprefix_ = self.biophysicalProperties2CaPools_nsprefix_ + ':' if (UseCapturedNS_ and self.biophysicalProperties2CaPools_nsprefix_) else ''
-            self.biophysicalProperties2CaPools.export(outfile, level, namespaceprefix_, namespacedef_='', name_='biophysicalProperties2CaPools', pretty_print=pretty_print)
+        if self.biophysical_properties2_ca_pools is not None:
+            namespaceprefix_ = self.biophysical_properties2_ca_pools_nsprefix_ + ':' if (UseCapturedNS_ and self.biophysical_properties2_ca_pools_nsprefix_) else ''
+            self.biophysical_properties2_ca_pools.export(outfile, level, namespaceprefix_, namespacedef_='', name_='biophysicalProperties2CaPools', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -24498,7 +24497,7 @@ class Cell2CaPools(Cell):
         if nodeName_ == 'biophysicalProperties2CaPools':
             obj_ = BiophysicalProperties2CaPools.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.biophysicalProperties2CaPools = obj_
+            self.biophysical_properties2_ca_pools = obj_
             obj_.original_tagname_ = 'biophysicalProperties2CaPools'
         super(Cell2CaPools, self).buildChildren(child_, node, nodeName_, True)
 # end class Cell2CaPools
@@ -24507,12 +24506,12 @@ class Cell2CaPools(Cell):
 class AdExIaFCell(BaseCellMembPotCap):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('gL', 'Nml2Quantity_conductance', 0, 0, {'use': 'required'}),
+        MemberSpec_('g_l', 'Nml2Quantity_conductance', 0, 0, {'use': 'required'}),
         MemberSpec_('EL', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
         MemberSpec_('reset', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
         MemberSpec_('VT', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
         MemberSpec_('thresh', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
-        MemberSpec_('delT', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
+        MemberSpec_('del_t', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
         MemberSpec_('tauw', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
         MemberSpec_('refract', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
         MemberSpec_('a', 'Nml2Quantity_conductance', 0, 0, {'use': 'required'}),
@@ -24520,15 +24519,15 @@ class AdExIaFCell(BaseCellMembPotCap):
     ]
     subclass = None
     superclass = BaseCellMembPotCap
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, C=None, gL=None, EL=None, reset=None, VT=None, thresh=None, delT=None, tauw=None, refract=None, a=None, b=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, C=None, g_l=None, EL=None, reset=None, VT=None, thresh=None, del_t=None, tauw=None, refract=None, a=None, b=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(AdExIaFCell, self).__init__(neuroLexId, id, metaid, notes, property, annotation, C,  **kwargs_)
-        self.gL = _cast(None, gL)
-        self.gL_nsprefix_ = None
+        super(AdExIaFCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, C,  **kwargs_)
+        self.g_l = _cast(None, g_l)
+        self.g_l_nsprefix_ = None
         self.EL = _cast(None, EL)
         self.EL_nsprefix_ = None
         self.reset = _cast(None, reset)
@@ -24537,8 +24536,8 @@ class AdExIaFCell(BaseCellMembPotCap):
         self.VT_nsprefix_ = None
         self.thresh = _cast(None, thresh)
         self.thresh_nsprefix_ = None
-        self.delT = _cast(None, delT)
-        self.delT_nsprefix_ = None
+        self.del_t = _cast(None, del_t)
+        self.del_t_nsprefix_ = None
         self.tauw = _cast(None, tauw)
         self.tauw_nsprefix_ = None
         self.refract = _cast(None, refract)
@@ -24634,9 +24633,9 @@ class AdExIaFCell(BaseCellMembPotCap):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='AdExIaFCell'):
         super(AdExIaFCell, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='AdExIaFCell')
-        if self.gL is not None and 'gL' not in already_processed:
-            already_processed.add('gL')
-            outfile.write(' gL=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.gL), input_name='gL')), ))
+        if self.g_l is not None and 'g_l' not in already_processed:
+            already_processed.add('g_l')
+            outfile.write(' gL=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.g_l), input_name='gL')), ))
         if self.EL is not None and 'EL' not in already_processed:
             already_processed.add('EL')
             outfile.write(' EL=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.EL), input_name='EL')), ))
@@ -24649,9 +24648,9 @@ class AdExIaFCell(BaseCellMembPotCap):
         if self.thresh is not None and 'thresh' not in already_processed:
             already_processed.add('thresh')
             outfile.write(' thresh=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.thresh), input_name='thresh')), ))
-        if self.delT is not None and 'delT' not in already_processed:
-            already_processed.add('delT')
-            outfile.write(' delT=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.delT), input_name='delT')), ))
+        if self.del_t is not None and 'del_t' not in already_processed:
+            already_processed.add('del_t')
+            outfile.write(' delT=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.del_t), input_name='delT')), ))
         if self.tauw is not None and 'tauw' not in already_processed:
             already_processed.add('tauw')
             outfile.write(' tauw=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.tauw), input_name='tauw')), ))
@@ -24681,8 +24680,8 @@ class AdExIaFCell(BaseCellMembPotCap):
         value = find_attr_value_('gL', node)
         if value is not None and 'gL' not in already_processed:
             already_processed.add('gL')
-            self.gL = value
-            self.validate_Nml2Quantity_conductance(self.gL)    # validate type Nml2Quantity_conductance
+            self.g_l = value
+            self.validate_Nml2Quantity_conductance(self.g_l)    # validate type Nml2Quantity_conductance
         value = find_attr_value_('EL', node)
         if value is not None and 'EL' not in already_processed:
             already_processed.add('EL')
@@ -24706,8 +24705,8 @@ class AdExIaFCell(BaseCellMembPotCap):
         value = find_attr_value_('delT', node)
         if value is not None and 'delT' not in already_processed:
             already_processed.add('delT')
-            self.delT = value
-            self.validate_Nml2Quantity_voltage(self.delT)    # validate type Nml2Quantity_voltage
+            self.del_t = value
+            self.validate_Nml2Quantity_voltage(self.del_t)    # validate type Nml2Quantity_voltage
         value = find_attr_value_('tauw', node)
         if value is not None and 'tauw' not in already_processed:
             already_processed.add('tauw')
@@ -24750,13 +24749,13 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
     ]
     subclass = None
     superclass = BaseCellMembPotCap
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, C=None, v0=None, k=None, vr=None, vt=None, vpeak=None, a=None, b=None, c=None, d=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, C=None, v0=None, k=None, vr=None, vt=None, vpeak=None, a=None, b=None, c=None, d=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Izhikevich2007Cell, self).__init__(neuroLexId, id, metaid, notes, property, annotation, C,  **kwargs_)
+        super(Izhikevich2007Cell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, C,  **kwargs_)
         self.v0 = _cast(None, v0)
         self.v0_nsprefix_ = None
         self.k = _cast(None, k)
@@ -24973,13 +24972,13 @@ class IafRefCell(IafCell):
     ]
     subclass = None
     superclass = IafCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, leakReversal=None, thresh=None, reset=None, C=None, leakConductance=None, refract=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, leak_reversal=None, thresh=None, reset=None, C=None, leak_conductance=None, refract=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IafRefCell, self).__init__(neuroLexId, id, metaid, notes, property, annotation, leakReversal, thresh, reset, C, leakConductance,  **kwargs_)
+        super(IafRefCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, leak_reversal, thresh, reset, C, leak_conductance,  **kwargs_)
         self.refract = _cast(None, refract)
         self.refract_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -25072,13 +25071,13 @@ class IafTauRefCell(IafTauCell):
     ]
     subclass = None
     superclass = IafTauCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, leakReversal=None, thresh=None, reset=None, tau=None, refract=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, leak_reversal=None, thresh=None, reset=None, tau=None, refract=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IafTauRefCell, self).__init__(neuroLexId, id, metaid, notes, property, annotation, leakReversal, thresh, reset, tau,  **kwargs_)
+        super(IafTauRefCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, leak_reversal, thresh, reset, tau,  **kwargs_)
         self.refract = _cast(None, refract)
         self.refract_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -25169,26 +25168,26 @@ class DoubleSynapse(BaseVoltageDepSynapse):
     member_data_items_ = [
         MemberSpec_('synapse1', 'NmlId', 0, 0, {'use': 'required'}),
         MemberSpec_('synapse2', 'NmlId', 0, 0, {'use': 'required'}),
-        MemberSpec_('synapse1Path', 'xs:string', 0, 0, {'use': 'required'}),
-        MemberSpec_('synapse2Path', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('synapse1_path', 'xs:string', 0, 0, {'use': 'required'}),
+        MemberSpec_('synapse2_path', 'xs:string', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = BaseVoltageDepSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, synapse1=None, synapse2=None, synapse1Path=None, synapse2Path=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, synapse1=None, synapse2=None, synapse1_path=None, synapse2_path=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(DoubleSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(DoubleSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.synapse1 = _cast(None, synapse1)
         self.synapse1_nsprefix_ = None
         self.synapse2 = _cast(None, synapse2)
         self.synapse2_nsprefix_ = None
-        self.synapse1Path = _cast(None, synapse1Path)
-        self.synapse1Path_nsprefix_ = None
-        self.synapse2Path = _cast(None, synapse2Path)
-        self.synapse2Path_nsprefix_ = None
+        self.synapse1_path = _cast(None, synapse1_path)
+        self.synapse1_path_nsprefix_ = None
+        self.synapse2_path = _cast(None, synapse2_path)
+        self.synapse2_path_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -25249,12 +25248,12 @@ class DoubleSynapse(BaseVoltageDepSynapse):
         if self.synapse2 is not None and 'synapse2' not in already_processed:
             already_processed.add('synapse2')
             outfile.write(' synapse2=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.synapse2), input_name='synapse2')), ))
-        if self.synapse1Path is not None and 'synapse1Path' not in already_processed:
-            already_processed.add('synapse1Path')
-            outfile.write(' synapse1Path=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.synapse1Path), input_name='synapse1Path')), ))
-        if self.synapse2Path is not None and 'synapse2Path' not in already_processed:
-            already_processed.add('synapse2Path')
-            outfile.write(' synapse2Path=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.synapse2Path), input_name='synapse2Path')), ))
+        if self.synapse1_path is not None and 'synapse1_path' not in already_processed:
+            already_processed.add('synapse1_path')
+            outfile.write(' synapse1Path=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.synapse1_path), input_name='synapse1Path')), ))
+        if self.synapse2_path is not None and 'synapse2_path' not in already_processed:
+            already_processed.add('synapse2_path')
+            outfile.write(' synapse2Path=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.synapse2_path), input_name='synapse2Path')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='DoubleSynapse', fromsubclass_=False, pretty_print=True):
         super(DoubleSynapse, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
@@ -25282,11 +25281,11 @@ class DoubleSynapse(BaseVoltageDepSynapse):
         value = find_attr_value_('synapse1Path', node)
         if value is not None and 'synapse1Path' not in already_processed:
             already_processed.add('synapse1Path')
-            self.synapse1Path = value
+            self.synapse1_path = value
         value = find_attr_value_('synapse2Path', node)
         if value is not None and 'synapse2Path' not in already_processed:
             already_processed.add('synapse2Path')
-            self.synapse2Path = value
+            self.synapse2_path = value
         super(DoubleSynapse, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(DoubleSynapse, self).buildChildren(child_, node, nodeName_, True)
@@ -25302,13 +25301,13 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
     ]
     subclass = None
     superclass = BaseCurrentBasedSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, tau=None, ibase=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, tau=None, ibase=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(AlphaCurrentSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation,  **kwargs_)
+        super(AlphaCurrentSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.tau = _cast(None, tau)
         self.tau_nsprefix_ = None
         self.ibase = _cast(None, ibase)
@@ -25424,13 +25423,13 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
     ]
     subclass = None
     superclass = BaseVoltageDepSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, gbase1=None, gbase2=None, erev=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, gbase1=None, gbase2=None, erev=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseConductanceBasedSynapseTwo, self).__init__(neuroLexId, id, metaid, notes, property, annotation, extensiontype_,  **kwargs_)
+        super(BaseConductanceBasedSynapseTwo, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.gbase1 = _cast(None, gbase1)
         self.gbase1_nsprefix_ = None
         self.gbase2 = _cast(None, gbase2)
@@ -25568,13 +25567,13 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
     ]
     subclass = None
     superclass = BaseVoltageDepSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, gbase=None, erev=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, gbase=None, erev=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseConductanceBasedSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation, extensiontype_,  **kwargs_)
+        super(BaseConductanceBasedSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.gbase = _cast(None, gbase)
         self.gbase_nsprefix_ = None
         self.erev = _cast(None, erev)
@@ -25700,19 +25699,19 @@ class IonChannelVShift(IonChannel):
     is determined by the individual gates."""
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('vShift', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
+        MemberSpec_('v_shift', 'Nml2Quantity_voltage', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = IonChannel
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, q10ConductanceScaling=None, species=None, type_=None, conductance=None, gate=None, gateHHrates=None, gateHHratesTau=None, gateHHtauInf=None, gateHHratesInf=None, gateHHratesTauInf=None, gateHHInstantaneous=None, gateFractional=None, vShift=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, q10_conductance_scalings=None, species=None, type=None, conductance=None, gates=None, gate_hh_rates=None, gate_h_hrates_taus=None, gate_hh_tau_infs=None, gate_h_hrates_infs=None, gate_h_hrates_tau_infs=None, gate_hh_instantaneouses=None, gate_fractionals=None, v_shift=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IonChannelVShift, self).__init__(neuroLexId, id, metaid, notes, property, annotation, q10ConductanceScaling, species, type_, conductance, gate, gateHHrates, gateHHratesTau, gateHHtauInf, gateHHratesInf, gateHHratesTauInf, gateHHInstantaneous, gateFractional,  **kwargs_)
-        self.vShift = _cast(None, vShift)
-        self.vShift_nsprefix_ = None
+        super(IonChannelVShift, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, q10_conductance_scalings, species, type, conductance, gates, gate_hh_rates, gate_h_hrates_taus, gate_hh_tau_infs, gate_h_hrates_infs, gate_h_hrates_tau_infs, gate_hh_instantaneouses, gate_fractionals,  **kwargs_)
+        self.v_shift = _cast(None, v_shift)
+        self.v_shift_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -25767,9 +25766,9 @@ class IonChannelVShift(IonChannel):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='IonChannelVShift'):
         super(IonChannelVShift, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='IonChannelVShift')
-        if self.vShift is not None and 'vShift' not in already_processed:
-            already_processed.add('vShift')
-            outfile.write(' vShift=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.vShift), input_name='vShift')), ))
+        if self.v_shift is not None and 'v_shift' not in already_processed:
+            already_processed.add('v_shift')
+            outfile.write(' vShift=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.v_shift), input_name='vShift')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='IonChannelVShift', fromsubclass_=False, pretty_print=True):
         super(IonChannelVShift, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
@@ -25787,8 +25786,8 @@ class IonChannelVShift(IonChannel):
         value = find_attr_value_('vShift', node)
         if value is not None and 'vShift' not in already_processed:
             already_processed.add('vShift')
-            self.vShift = value
-            self.validate_Nml2Quantity_voltage(self.vShift)    # validate type Nml2Quantity_voltage
+            self.v_shift = value
+            self.validate_Nml2Quantity_voltage(self.v_shift)    # validate type Nml2Quantity_voltage
         super(IonChannelVShift, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(IonChannelVShift, self).buildChildren(child_, node, nodeName_, True)
@@ -25806,13 +25805,13 @@ class IonChannelHH(IonChannel):
     ]
     subclass = None
     superclass = IonChannel
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, q10ConductanceScaling=None, species=None, type_=None, conductance=None, gate=None, gateHHrates=None, gateHHratesTau=None, gateHHtauInf=None, gateHHratesInf=None, gateHHratesTauInf=None, gateHHInstantaneous=None, gateFractional=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, q10_conductance_scalings=None, species=None, type=None, conductance=None, gates=None, gate_hh_rates=None, gate_h_hrates_taus=None, gate_hh_tau_infs=None, gate_h_hrates_infs=None, gate_h_hrates_tau_infs=None, gate_hh_instantaneouses=None, gate_fractionals=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IonChannelHH, self).__init__(neuroLexId, id, metaid, notes, property, annotation, q10ConductanceScaling, species, type_, conductance, gate, gateHHrates, gateHHratesTau, gateHHtauInf, gateHHratesInf, gateHHratesTauInf, gateHHInstantaneous, gateFractional,  **kwargs_)
+        super(IonChannelHH, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, q10_conductance_scalings, species, type, conductance, gates, gate_hh_rates, gate_h_hrates_taus, gate_hh_tau_infs, gate_h_hrates_infs, gate_h_hrates_tau_infs, gate_hh_instantaneouses, gate_fractionals,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -25883,13 +25882,13 @@ class IF_curr_exp(basePyNNIaFCell):
     ]
     subclass = None
     superclass = basePyNNIaFCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IF_curr_exp, self).__init__(neuroLexId, id, metaid, notes, property, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh,  **kwargs_)
+        super(IF_curr_exp, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -25960,13 +25959,13 @@ class IF_curr_alpha(basePyNNIaFCell):
     ]
     subclass = None
     superclass = basePyNNIaFCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IF_curr_alpha, self).__init__(neuroLexId, id, metaid, notes, property, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh,  **kwargs_)
+        super(IF_curr_alpha, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -26039,13 +26038,13 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
     ]
     subclass = None
     superclass = basePyNNIaFCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, e_rev_E=None, e_rev_I=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, e_rev_E=None, e_rev_I=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(basePyNNIaFCondCell, self).__init__(neuroLexId, id, metaid, notes, property, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, extensiontype_,  **kwargs_)
+        super(basePyNNIaFCondCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, extensiontype_,  **kwargs_)
         self.e_rev_E = _cast(float, e_rev_E)
         self.e_rev_E_nsprefix_ = None
         self.e_rev_I = _cast(float, e_rev_I)
@@ -26150,13 +26149,13 @@ class ContinuousConnectionInstance(ContinuousConnection):
     ]
     subclass = None
     superclass = ContinuousConnection
-    def __init__(self, neuroLexId=None, id=None, preCell=None, preSegment='0', preFractionAlong='0.5', postCell=None, postSegment='0', postFractionAlong='0.5', preComponent=None, postComponent=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, pre_cell=None, pre_segment='0', pre_fraction_along='0.5', post_cell=None, post_segment='0', post_fraction_along='0.5', pre_component=None, post_component=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ContinuousConnectionInstance, self).__init__(neuroLexId, id, preCell, preSegment, preFractionAlong, postCell, postSegment, postFractionAlong, preComponent, postComponent, extensiontype_,  **kwargs_)
+        super(ContinuousConnectionInstance, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, pre_component, post_component, extensiontype_,  **kwargs_)
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -26255,13 +26254,13 @@ class ElectricalConnectionInstance(ElectricalConnection):
     ]
     subclass = None
     superclass = ElectricalConnection
-    def __init__(self, neuroLexId=None, id=None, preCell=None, preSegment='0', preFractionAlong='0.5', postCell=None, postSegment='0', postFractionAlong='0.5', synapse=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, pre_cell=None, pre_segment='0', pre_fraction_along='0.5', post_cell=None, post_segment='0', post_fraction_along='0.5', synapse=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ElectricalConnectionInstance, self).__init__(neuroLexId, id, preCell, preSegment, preFractionAlong, postCell, postSegment, postFractionAlong, synapse, extensiontype_,  **kwargs_)
+        super(ElectricalConnectionInstance, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, synapse, extensiontype_,  **kwargs_)
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -26354,25 +26353,25 @@ class ElectricalConnectionInstance(ElectricalConnection):
 class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('tauDecay1', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
-        MemberSpec_('tauDecay2', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
-        MemberSpec_('tauRise', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
+        MemberSpec_('tau_decay1', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
+        MemberSpec_('tau_decay2', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
+        MemberSpec_('tau_rise', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = BaseConductanceBasedSynapseTwo
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, gbase1=None, gbase2=None, erev=None, tauDecay1=None, tauDecay2=None, tauRise=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, gbase1=None, gbase2=None, erev=None, tau_decay1=None, tau_decay2=None, tau_rise=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ExpThreeSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation, gbase1, gbase2, erev,  **kwargs_)
-        self.tauDecay1 = _cast(None, tauDecay1)
-        self.tauDecay1_nsprefix_ = None
-        self.tauDecay2 = _cast(None, tauDecay2)
-        self.tauDecay2_nsprefix_ = None
-        self.tauRise = _cast(None, tauRise)
-        self.tauRise_nsprefix_ = None
+        super(ExpThreeSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, gbase1, gbase2, erev,  **kwargs_)
+        self.tau_decay1 = _cast(None, tau_decay1)
+        self.tau_decay1_nsprefix_ = None
+        self.tau_decay2 = _cast(None, tau_decay2)
+        self.tau_decay2_nsprefix_ = None
+        self.tau_rise = _cast(None, tau_rise)
+        self.tau_rise_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -26427,15 +26426,15 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='ExpThreeSynapse'):
         super(ExpThreeSynapse, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='ExpThreeSynapse')
-        if self.tauDecay1 is not None and 'tauDecay1' not in already_processed:
-            already_processed.add('tauDecay1')
-            outfile.write(' tauDecay1=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.tauDecay1), input_name='tauDecay1')), ))
-        if self.tauDecay2 is not None and 'tauDecay2' not in already_processed:
-            already_processed.add('tauDecay2')
-            outfile.write(' tauDecay2=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.tauDecay2), input_name='tauDecay2')), ))
-        if self.tauRise is not None and 'tauRise' not in already_processed:
-            already_processed.add('tauRise')
-            outfile.write(' tauRise=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.tauRise), input_name='tauRise')), ))
+        if self.tau_decay1 is not None and 'tau_decay1' not in already_processed:
+            already_processed.add('tau_decay1')
+            outfile.write(' tauDecay1=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.tau_decay1), input_name='tauDecay1')), ))
+        if self.tau_decay2 is not None and 'tau_decay2' not in already_processed:
+            already_processed.add('tau_decay2')
+            outfile.write(' tauDecay2=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.tau_decay2), input_name='tauDecay2')), ))
+        if self.tau_rise is not None and 'tau_rise' not in already_processed:
+            already_processed.add('tau_rise')
+            outfile.write(' tauRise=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.tau_rise), input_name='tauRise')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='ExpThreeSynapse', fromsubclass_=False, pretty_print=True):
         super(ExpThreeSynapse, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
@@ -26453,18 +26452,18 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
         value = find_attr_value_('tauDecay1', node)
         if value is not None and 'tauDecay1' not in already_processed:
             already_processed.add('tauDecay1')
-            self.tauDecay1 = value
-            self.validate_Nml2Quantity_time(self.tauDecay1)    # validate type Nml2Quantity_time
+            self.tau_decay1 = value
+            self.validate_Nml2Quantity_time(self.tau_decay1)    # validate type Nml2Quantity_time
         value = find_attr_value_('tauDecay2', node)
         if value is not None and 'tauDecay2' not in already_processed:
             already_processed.add('tauDecay2')
-            self.tauDecay2 = value
-            self.validate_Nml2Quantity_time(self.tauDecay2)    # validate type Nml2Quantity_time
+            self.tau_decay2 = value
+            self.validate_Nml2Quantity_time(self.tau_decay2)    # validate type Nml2Quantity_time
         value = find_attr_value_('tauRise', node)
         if value is not None and 'tauRise' not in already_processed:
             already_processed.add('tauRise')
-            self.tauRise = value
-            self.validate_Nml2Quantity_time(self.tauRise)    # validate type Nml2Quantity_time
+            self.tau_rise = value
+            self.validate_Nml2Quantity_time(self.tau_rise)    # validate type Nml2Quantity_time
         super(ExpThreeSynapse, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(ExpThreeSynapse, self).buildChildren(child_, node, nodeName_, True)
@@ -26475,22 +26474,22 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
 class ExpTwoSynapse(BaseConductanceBasedSynapse):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('tauDecay', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
-        MemberSpec_('tauRise', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
+        MemberSpec_('tau_decay', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
+        MemberSpec_('tau_rise', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = BaseConductanceBasedSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, gbase=None, erev=None, tauDecay=None, tauRise=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, gbase=None, erev=None, tau_decay=None, tau_rise=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ExpTwoSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation, gbase, erev, extensiontype_,  **kwargs_)
-        self.tauDecay = _cast(None, tauDecay)
-        self.tauDecay_nsprefix_ = None
-        self.tauRise = _cast(None, tauRise)
-        self.tauRise_nsprefix_ = None
+        super(ExpTwoSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, gbase, erev, extensiontype_,  **kwargs_)
+        self.tau_decay = _cast(None, tau_decay)
+        self.tau_decay_nsprefix_ = None
+        self.tau_rise = _cast(None, tau_rise)
+        self.tau_rise_nsprefix_ = None
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -26546,12 +26545,12 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='ExpTwoSynapse'):
         super(ExpTwoSynapse, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='ExpTwoSynapse')
-        if self.tauDecay is not None and 'tauDecay' not in already_processed:
-            already_processed.add('tauDecay')
-            outfile.write(' tauDecay=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.tauDecay), input_name='tauDecay')), ))
-        if self.tauRise is not None and 'tauRise' not in already_processed:
-            already_processed.add('tauRise')
-            outfile.write(' tauRise=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.tauRise), input_name='tauRise')), ))
+        if self.tau_decay is not None and 'tau_decay' not in already_processed:
+            already_processed.add('tau_decay')
+            outfile.write(' tauDecay=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.tau_decay), input_name='tauDecay')), ))
+        if self.tau_rise is not None and 'tau_rise' not in already_processed:
+            already_processed.add('tau_rise')
+            outfile.write(' tauRise=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.tau_rise), input_name='tauRise')), ))
         if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -26577,13 +26576,13 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
         value = find_attr_value_('tauDecay', node)
         if value is not None and 'tauDecay' not in already_processed:
             already_processed.add('tauDecay')
-            self.tauDecay = value
-            self.validate_Nml2Quantity_time(self.tauDecay)    # validate type Nml2Quantity_time
+            self.tau_decay = value
+            self.validate_Nml2Quantity_time(self.tau_decay)    # validate type Nml2Quantity_time
         value = find_attr_value_('tauRise', node)
         if value is not None and 'tauRise' not in already_processed:
             already_processed.add('tauRise')
-            self.tauRise = value
-            self.validate_Nml2Quantity_time(self.tauRise)    # validate type Nml2Quantity_time
+            self.tau_rise = value
+            self.validate_Nml2Quantity_time(self.tau_rise)    # validate type Nml2Quantity_time
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
             already_processed.add('xsi:type')
@@ -26598,19 +26597,19 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
 class ExpOneSynapse(BaseConductanceBasedSynapse):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('tauDecay', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
+        MemberSpec_('tau_decay', 'Nml2Quantity_time', 0, 0, {'use': 'required'}),
     ]
     subclass = None
     superclass = BaseConductanceBasedSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, gbase=None, erev=None, tauDecay=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, gbase=None, erev=None, tau_decay=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ExpOneSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation, gbase, erev,  **kwargs_)
-        self.tauDecay = _cast(None, tauDecay)
-        self.tauDecay_nsprefix_ = None
+        super(ExpOneSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, gbase, erev,  **kwargs_)
+        self.tau_decay = _cast(None, tau_decay)
+        self.tau_decay_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -26665,9 +26664,9 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='ExpOneSynapse'):
         super(ExpOneSynapse, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='ExpOneSynapse')
-        if self.tauDecay is not None and 'tauDecay' not in already_processed:
-            already_processed.add('tauDecay')
-            outfile.write(' tauDecay=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.tauDecay), input_name='tauDecay')), ))
+        if self.tau_decay is not None and 'tau_decay' not in already_processed:
+            already_processed.add('tau_decay')
+            outfile.write(' tauDecay=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.tau_decay), input_name='tauDecay')), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='ExpOneSynapse', fromsubclass_=False, pretty_print=True):
         super(ExpOneSynapse, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
@@ -26685,8 +26684,8 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
         value = find_attr_value_('tauDecay', node)
         if value is not None and 'tauDecay' not in already_processed:
             already_processed.add('tauDecay')
-            self.tauDecay = value
-            self.validate_Nml2Quantity_time(self.tauDecay)    # validate type Nml2Quantity_time
+            self.tau_decay = value
+            self.validate_Nml2Quantity_time(self.tau_decay)    # validate type Nml2Quantity_time
         super(ExpOneSynapse, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(ExpOneSynapse, self).buildChildren(child_, node, nodeName_, True)
@@ -26701,13 +26700,13 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
     ]
     subclass = None
     superclass = BaseConductanceBasedSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, gbase=None, erev=None, tau=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, gbase=None, erev=None, tau=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(AlphaSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation, gbase, erev,  **kwargs_)
+        super(AlphaSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, gbase, erev,  **kwargs_)
         self.tau = _cast(None, tau)
         self.tau_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -26804,13 +26803,13 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
     ]
     subclass = None
     superclass = basePyNNIaFCondCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, e_rev_E=None, e_rev_I=None, a=None, b=None, delta_T=None, tau_w=None, v_spike=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, e_rev_E=None, e_rev_I=None, a=None, b=None, delta_T=None, tau_w=None, v_spike=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(EIF_cond_exp_isfa_ista, self).__init__(neuroLexId, id, metaid, notes, property, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I, extensiontype_,  **kwargs_)
+        super(EIF_cond_exp_isfa_ista, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I, extensiontype_,  **kwargs_)
         self.a = _cast(float, a)
         self.a_nsprefix_ = None
         self.b = _cast(float, b)
@@ -26944,13 +26943,13 @@ class IF_cond_exp(basePyNNIaFCondCell):
     ]
     subclass = None
     superclass = basePyNNIaFCondCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, e_rev_E=None, e_rev_I=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, e_rev_E=None, e_rev_I=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IF_cond_exp, self).__init__(neuroLexId, id, metaid, notes, property, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I,  **kwargs_)
+        super(IF_cond_exp, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -27021,13 +27020,13 @@ class IF_cond_alpha(basePyNNIaFCondCell):
     ]
     subclass = None
     superclass = basePyNNIaFCondCell
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, e_rev_E=None, e_rev_I=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, e_rev_E=None, e_rev_I=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IF_cond_alpha, self).__init__(neuroLexId, id, metaid, notes, property, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I,  **kwargs_)
+        super(IF_cond_alpha, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -27101,13 +27100,13 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
     ]
     subclass = None
     superclass = ContinuousConnectionInstance
-    def __init__(self, neuroLexId=None, id=None, preCell=None, preSegment='0', preFractionAlong='0.5', postCell=None, postSegment='0', postFractionAlong='0.5', preComponent=None, postComponent=None, weight=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, pre_cell=None, pre_segment='0', pre_fraction_along='0.5', post_cell=None, post_segment='0', post_fraction_along='0.5', pre_component=None, post_component=None, weight=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ContinuousConnectionInstanceW, self).__init__(neuroLexId, id, preCell, preSegment, preFractionAlong, postCell, postSegment, postFractionAlong, preComponent, postComponent,  **kwargs_)
+        super(ContinuousConnectionInstanceW, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, pre_component, post_component,  **kwargs_)
         self.weight = _cast(float, weight)
         self.weight_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -27202,13 +27201,13 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
     ]
     subclass = None
     superclass = ElectricalConnectionInstance
-    def __init__(self, neuroLexId=None, id=None, preCell=None, preSegment='0', preFractionAlong='0.5', postCell=None, postSegment='0', postFractionAlong='0.5', synapse=None, weight=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, pre_cell=None, pre_segment='0', pre_fraction_along='0.5', post_cell=None, post_segment='0', post_fraction_along='0.5', synapse=None, weight=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ElectricalConnectionInstanceW, self).__init__(neuroLexId, id, preCell, preSegment, preFractionAlong, postCell, postSegment, postFractionAlong, synapse,  **kwargs_)
+        super(ElectricalConnectionInstanceW, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, synapse,  **kwargs_)
         self.weight = _cast(float, weight)
         self.weight_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -27295,22 +27294,22 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
 class BlockingPlasticSynapse(ExpTwoSynapse):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_('plasticityMechanism', 'PlasticityMechanism', 0, 1, {'minOccurs': '0', 'name': 'plasticityMechanism', 'type': 'PlasticityMechanism'}, None),
-        MemberSpec_('blockMechanism', 'BlockMechanism', 0, 1, {'minOccurs': '0', 'name': 'blockMechanism', 'type': 'BlockMechanism'}, None),
+        MemberSpec_('plasticity_mechanism', 'PlasticityMechanism', 0, 1, {'minOccurs': '0', 'name': 'plasticityMechanism', 'type': 'PlasticityMechanism'}, None),
+        MemberSpec_('block_mechanism', 'BlockMechanism', 0, 1, {'minOccurs': '0', 'name': 'blockMechanism', 'type': 'BlockMechanism'}, None),
     ]
     subclass = None
     superclass = ExpTwoSynapse
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, gbase=None, erev=None, tauDecay=None, tauRise=None, plasticityMechanism=None, blockMechanism=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, gbase=None, erev=None, tau_decay=None, tau_rise=None, plasticity_mechanism=None, block_mechanism=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BlockingPlasticSynapse, self).__init__(neuroLexId, id, metaid, notes, property, annotation, gbase, erev, tauDecay, tauRise,  **kwargs_)
-        self.plasticityMechanism = plasticityMechanism
-        self.plasticityMechanism_nsprefix_ = None
-        self.blockMechanism = blockMechanism
-        self.blockMechanism_nsprefix_ = None
+        super(BlockingPlasticSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, gbase, erev, tau_decay, tau_rise,  **kwargs_)
+        self.plasticity_mechanism = plasticity_mechanism
+        self.plasticity_mechanism_nsprefix_ = None
+        self.block_mechanism = block_mechanism
+        self.block_mechanism_nsprefix_ = None
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -27324,8 +27323,8 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
     factory = staticmethod(factory)
     def hasContent_(self):
         if (
-            self.plasticityMechanism is not None or
-            self.blockMechanism is not None or
+            self.plasticity_mechanism is not None or
+            self.block_mechanism is not None or
             super(BlockingPlasticSynapse, self).hasContent_()
         ):
             return True
@@ -27362,12 +27361,12 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.plasticityMechanism is not None:
-            namespaceprefix_ = self.plasticityMechanism_nsprefix_ + ':' if (UseCapturedNS_ and self.plasticityMechanism_nsprefix_) else ''
-            self.plasticityMechanism.export(outfile, level, namespaceprefix_, namespacedef_='', name_='plasticityMechanism', pretty_print=pretty_print)
-        if self.blockMechanism is not None:
-            namespaceprefix_ = self.blockMechanism_nsprefix_ + ':' if (UseCapturedNS_ and self.blockMechanism_nsprefix_) else ''
-            self.blockMechanism.export(outfile, level, namespaceprefix_, namespacedef_='', name_='blockMechanism', pretty_print=pretty_print)
+        if self.plasticity_mechanism is not None:
+            namespaceprefix_ = self.plasticity_mechanism_nsprefix_ + ':' if (UseCapturedNS_ and self.plasticity_mechanism_nsprefix_) else ''
+            self.plasticity_mechanism.export(outfile, level, namespaceprefix_, namespacedef_='', name_='plasticityMechanism', pretty_print=pretty_print)
+        if self.block_mechanism is not None:
+            namespaceprefix_ = self.block_mechanism_nsprefix_ + ':' if (UseCapturedNS_ and self.block_mechanism_nsprefix_) else ''
+            self.block_mechanism.export(outfile, level, namespaceprefix_, namespacedef_='', name_='blockMechanism', pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -27385,12 +27384,12 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
         if nodeName_ == 'plasticityMechanism':
             obj_ = PlasticityMechanism.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.plasticityMechanism = obj_
+            self.plasticity_mechanism = obj_
             obj_.original_tagname_ = 'plasticityMechanism'
         elif nodeName_ == 'blockMechanism':
             obj_ = BlockMechanism.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
-            self.blockMechanism = obj_
+            self.block_mechanism = obj_
             obj_.original_tagname_ = 'blockMechanism'
         super(BlockingPlasticSynapse, self).buildChildren(child_, node, nodeName_, True)
 # end class BlockingPlasticSynapse
@@ -27402,13 +27401,13 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
     ]
     subclass = None
     superclass = EIF_cond_exp_isfa_ista
-    def __init__(self, neuroLexId=None, id=None, metaid=None, notes=None, property=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, e_rev_E=None, e_rev_I=None, a=None, b=None, delta_T=None, tau_w=None, v_spike=None, gds_collector_=None, **kwargs_):
+    def __init__(self, neuro_lex_id=None, id=None, metaid=None, notes=None, properties=None, annotation=None, cm=None, i_offset=None, tau_syn_E=None, tau_syn_I=None, v_init=None, tau_m=None, tau_refrac=None, v_reset=None, v_rest=None, v_thresh=None, e_rev_E=None, e_rev_I=None, a=None, b=None, delta_T=None, tau_w=None, v_spike=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(EIF_cond_alpha_isfa_ista, self).__init__(neuroLexId, id, metaid, notes, property, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I, a, b, delta_T, tau_w, v_spike,  **kwargs_)
+        super(EIF_cond_alpha_isfa_ista, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I, a, b, delta_T, tau_w, v_spike,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -27529,12 +27528,12 @@ def parse(inFileName, silence=False, print_warnings=True):
     if not SaveElementTreeNode:
         doc = None
         rootNode = None
-##     if not silence:
-##         sys.stdout.write('<?xml version="1.0" ?>\n')
-##         rootObj.export(
-##             sys.stdout, 0, name_=rootTag,
-##             namespacedef_=namespacedefs,
-##             pretty_print=True)
+    if not silence:
+        sys.stdout.write('<?xml version="1.0" ?>\n')
+        rootObj.export(
+            sys.stdout, 0, name_=rootTag,
+            namespacedef_=namespacedefs,
+            pretty_print=True)
     if print_warnings and len(gds_collector.get_messages()) > 0:
         separator = ('-' * 50) + '\n'
         sys.stderr.write(separator)
@@ -27563,12 +27562,12 @@ def parseEtree(inFileName, silence=False, print_warnings=True):
     if not SaveElementTreeNode:
         doc = None
         rootNode = None
-##     if not silence:
-##         content = etree_.tostring(
-##             rootElement, pretty_print=True,
-##             xml_declaration=True, encoding="utf-8")
-##         sys.stdout.write(str(content))
-##         sys.stdout.write('\n')
+    if not silence:
+        content = etree_.tostring(
+            rootElement, pretty_print=True,
+            xml_declaration=True, encoding="utf-8")
+        sys.stdout.write(str(content))
+        sys.stdout.write('\n')
     if print_warnings and len(gds_collector.get_messages()) > 0:
         separator = ('-' * 50) + '\n'
         sys.stderr.write(separator)
@@ -27599,11 +27598,11 @@ def parseString(inString, silence=False, print_warnings=True):
     rootObj.build(rootNode, gds_collector_=gds_collector)
     if not SaveElementTreeNode:
         rootNode = None
-##     if not silence:
-##         sys.stdout.write('<?xml version="1.0" ?>\n')
-##         rootObj.export(
-##             sys.stdout, 0, name_=rootTag,
-##             namespacedef_='')
+    if not silence:
+        sys.stdout.write('<?xml version="1.0" ?>\n')
+        rootObj.export(
+            sys.stdout, 0, name_=rootTag,
+            namespacedef_='')
     if print_warnings and len(gds_collector.get_messages()) > 0:
         separator = ('-' * 50) + '\n'
         sys.stderr.write(separator)
@@ -27629,12 +27628,12 @@ def parseLiteral(inFileName, silence=False, print_warnings=True):
     if not SaveElementTreeNode:
         doc = None
         rootNode = None
-##     if not silence:
-##         sys.stdout.write('#from nml import *\n\n')
-##         sys.stdout.write('import nml as model_\n\n')
-##         sys.stdout.write('rootObj = model_.rootClass(\n')
-##         rootObj.exportLiteral(sys.stdout, 0, name_=rootTag)
-##         sys.stdout.write(')\n')
+    if not silence:
+        sys.stdout.write('#from nml import *\n\n')
+        sys.stdout.write('import nml as model_\n\n')
+        sys.stdout.write('rootObj = model_.rootClass(\n')
+        rootObj.exportLiteral(sys.stdout, 0, name_=rootTag)
+        sys.stdout.write(')\n')
     if print_warnings and len(gds_collector.get_messages()) > 0:
         separator = ('-' * 50) + '\n'
         sys.stderr.write(separator)
