@@ -25,7 +25,7 @@ Documentation is available at http://readthedocs.org/docs/libneuroml/en/latest/
 
 For installation instructions, see http://readthedocs.org/docs/libneuroml/en/latest/install.html
 
-For an overview of all NeuroML related libraries/documentation/publications see https://neuroml.org/getneuroml.
+For an overview of all NeuroML related libraries/documentation/publications see https://docs.neuroml.org
 
 ## pyNeuroML
 
@@ -36,7 +36,9 @@ pyNeuroML builds on: [libNeuroML](https://github.com/NeuralEnsemble/libNeuroML) 
 
 ## Development process for libNeuroML
 
-Most of the work happens in the [development branch](https://github.com/NeuralEnsemble/libNeuroML/tree/development). That branch is kept up to date with the development branches for [NeuroML 2](https://github.com/NeuroML/NeuroML2/tree/development) and related libraries. See https://neuroml.org/getneuroml for an overview of the various NeuroML libraries.
+Most of the work happens in the [development branch](https://github.com/NeuralEnsemble/libNeuroML/tree/development).
+That branch is kept up to date with the development branches for [NeuroML 2](https://github.com/NeuroML/NeuroML2/tree/development) and related libraries.
+See https://docs.neuroml.org/ for an overview of the various NeuroML libraries.
 
 ## Changelog
 
