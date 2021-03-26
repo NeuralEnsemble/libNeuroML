@@ -33,11 +33,20 @@ If these are not included in the output, generateds_config.py has not run, and t
 
 Author: @sanjayankur31
 
-Generated using Python 3.9 for NeuroMLv2.1.xsd using generateDS.py 2.35.5
+Resort to using Python 2.7 and generateDS.py 2.30.11 for the time being.
 
-    # Generated Fri Mar 26 09:44:40 2021 by generateDS.py version 2.35.5.
-    # Python 3.9.2 (default, Feb 20 2021, 00:00:00)  [GCC 11.0.0 20210210 (Red Hat 11.0.0-0)]
-    # ~/.virtualenvs/generateds/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods.py" NeuroML_v2.1.xsd
+- all tests and examples pass
+
+#### March 26, 2020
+
+Author: @sanjayankur31
+
+Generation attempt using Python 3.9 for NeuroMLv2.1.xsd using generateDS.py 2.38.3:
+
+- generation requires updating of the generateds_config.py file
+- generated nml.py seems to contain issues: https://sourceforge.net/p/generateds/tickets/13/
+- after tweaking nml.py, json serialization example still fails.
+
 
 #### February 2020
 
