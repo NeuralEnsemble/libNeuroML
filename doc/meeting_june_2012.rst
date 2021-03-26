@@ -18,10 +18,6 @@ Minutes
 Agreeing on terminology (segments, etc.) & scope
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-An introduction to the background to the project and the projected scope is here:
-
-:doc:`scope_of_project`
-
 A discussion on the definitions of the key terms Node, Segment and Section is here, and was the basis for discussions on
 these definitions at the meeting:
 

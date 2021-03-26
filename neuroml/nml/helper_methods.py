@@ -802,6 +802,13 @@ cell_methods = MethodSpec(name='cell_methods',
 
     # Get segment object by its id
     def get_segment(self, segment_id):
+        """Get segment object by its id
+
+        :param segment_id: ID of segment
+        :return: segment
+
+        :raises Exception: if the segment is not found in the cell
+        """
 
         for segment in self.morphology.segments:
             if segment.id == segment_id:
@@ -812,6 +819,16 @@ cell_methods = MethodSpec(name='cell_methods',
     # Get the proximal point of a segment, even the proximal field is None and
     # so the proximal point is on the parent (at a point set by fraction_along)
     def get_actual_proximal(self, segment_id):
+
+        """Get the proximal point of a segment.
+
+        Get the proximal point of a segment, even the proximal field is None
+        and so the proximal point is on the parent (at a point set by
+        fraction_along).
+
+        :param segment_id: ID of segment
+        :return: proximal point
+        """
 
         segment = self.get_segment(segment_id)
         if segment.proximal:
@@ -832,6 +849,11 @@ cell_methods = MethodSpec(name='cell_methods',
             return p
 
     def get_segment_length(self, segment_id):
+        """Get the length of the segment.
+
+        :param segment_id: ID of segment
+        :return: length of segment
+        """
 
         segment = self.get_segment(segment_id)
         if segment.proximal:
@@ -844,6 +866,11 @@ cell_methods = MethodSpec(name='cell_methods',
             return length
 
     def get_segment_surface_area(self, segment_id):
+        """Get the surface area of the segment.
+
+        :param segment_id: ID of the segment
+        :return: surface area of segment
+        """
 
         segment = self.get_segment(segment_id)
         if segment.proximal:
@@ -856,7 +883,11 @@ cell_methods = MethodSpec(name='cell_methods',
             return temp_seg.surface_area
 
     def get_segment_volume(self, segment_id):
+        """Get volume of segment
 
+        :param segment_id: ID of the segment
+        :return: volume of the segment
+        """
         segment = self.get_segment(segment_id)
         if segment.proximal:
             return segment.volume
@@ -868,6 +899,10 @@ cell_methods = MethodSpec(name='cell_methods',
             return temp_seg.volume
 
     def get_segment_ids_vs_segments(self):
+        """Get a dictionary of segment IDs and the segments in the cell.
+
+        :return: dictionary with segment ID as key, and segment as value
+        """
 
         segments = {}
         for segment in self.morphology.segments:
@@ -878,6 +913,18 @@ cell_methods = MethodSpec(name='cell_methods',
     def get_all_segments_in_group(self,
                                   segment_group,
                                   assume_all_means_all=True):
+        """Get all the segments in a segment group of the cell.
+
+        :param segment_group: segment group to get all segments of
+        :param assume_all_means_all: return all segments if the segment group
+            wasn't explicitly defined
+
+        :todo: check docstring
+
+        :return: list of segments
+
+        :raises Exception: if no segment group is found in the cell.
+        """
 
         if isinstance(segment_group, str):
             for sg in self.morphology.segment_groups:
@@ -912,6 +959,20 @@ cell_methods = MethodSpec(name='cell_methods',
                                        include_cumulative_lengths=False,
                                        include_path_lengths=False,
                                        path_length_metric="Path Length from root"): # Only option supported
+        """
+        Get ordered list of segments in specified groups
+
+        :param group_list: list of groups to get segments from
+        :param check_parentage: verify parentage
+        :param include_commulative_lengths: also include cummulative lengths
+        :param include_path_lengths: also include path lengths
+        :param path_length_metric:
+
+        :return: dictionary of segments with additional information depending
+            on what parameters were used:
+
+        :raises: Exception if check_parentage is True and parentage cannot be verified
+        """
 
         unord_segs = {}
         other_segs = {}
@@ -1022,6 +1083,7 @@ cell_methods = MethodSpec(name='cell_methods',
 
 
     def summary(self):
+        """Print cell summary."""
         print("*******************************************************")
         print("* Cell: "+str(self.id))
         print("* Notes: "+str(self.notes))
@@ -1436,12 +1498,14 @@ synaptic_connections = MethodSpec(name='synaptic_connections',
     source='''\
 
     def _get_cell_id(self,ref):
+        """Get cell ID"""
         if '[' in ref:
             return int(ref.split('[')[1].split(']')[0])
         else:
             return int(ref.split('/')[2])
 
     def _get_population(self,ref):
+        """Get population"""
         if '[' in ref:
             return ref.split('[')[0]
         else:
@@ -1464,12 +1528,14 @@ explicit_inputs = MethodSpec(name='explicit_inputs',
     source='''\
 
     def get_target_cell_id(self,):
+        """Get target cell ID"""
         if '[' in self.target:
             return int(self.target.split('[')[1].split(']')[0])
         else:
             return int(self.target.split('/')[2])
 
     def get_target_population(self,):
+        """Get target population."""
         if '[' in self.target:
             return self.target.split('[')[0]
         else:

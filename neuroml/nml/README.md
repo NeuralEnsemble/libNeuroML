@@ -16,4 +16,40 @@ You may have to add the current folder to your PYTHONPATH, i.e.
 
     export PYTHONPATH=$PYTHONPATH:.
 
-Note from PG Feb 2021: retested & regenerated using Python 2.7 with generateDS.py v2.30.11- currently fails when generated with Python 3...
+
+Note that generateDS.py will import the generateds_config.py file and run it.
+Your output should, therefore, include lines of the form:
+
+    generateds_config.py is being processed
+    Saving NameTable to csv file: name_table.csv
+    Saving name changes table to csv file: changed_names.csv
+
+
+If these are not included in the output, generateds_config.py has not run, and the generated nml.py file will be incorrect.
+
+### Changelog
+
+#### March 26, 2020
+
+Author: @sanjayankur31
+
+Resort to using Python 2.7 and generateDS.py 2.30.11 for the time being.
+
+- all tests and examples pass
+
+#### March 26, 2020
+
+Author: @sanjayankur31
+
+Generation attempt using Python 3.9 for NeuroMLv2.1.xsd using generateDS.py 2.38.3:
+
+- generation requires updating of the generateds_config.py file
+- generated nml.py seems to contain issues: https://sourceforge.net/p/generateds/tickets/13/
+- after tweaking nml.py, json serialization example still fails.
+
+
+#### February 2020
+
+Author: @pgleeson
+
+Retested & regenerated using Python 2.7 with generateDS.py v2.30.11- currently fails when generated with Python 3.

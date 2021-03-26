@@ -2,12 +2,11 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Feb 15 14:47:04 2021 by generateDS.py version 2.30.11.
-# Python 2.7.15 |Anaconda, Inc.| (default, Oct 23 2018, 13:35:16)  [GCC 4.2.1 Compatible Clang 4.0.1 (tags/RELEASE_401/final)]
+# Generated Fri Mar 26 16:21:07 2021 by generateDS.py version 2.30.11.
+# Python 2.7.18 (default, Feb  3 2021, 00:00:00)  [GCC 11.0.0 20210130 (Red Hat 11.0.0-0)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
-#   ('-f', '')
 #   ('--use-getter-setter', 'none')
 #   ('--silence', '')
 #   ('--user-methods', 'helper_methods')
@@ -16,7 +15,7 @@
 #   NeuroML_v2.1.xsd
 #
 # Command line:
-#   /Users/padraig/anaconda/envs/py27/bin/generateDS.py -o "nml.py" -f --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2.1.xsd
+#   /home/asinha/.local/share/virtualenvs/generateds-2.7/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2.1.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -35,7 +34,7 @@ except ImportError:
 
 Validate_simpletypes_ = True
 if sys.version_info.major == 2:
-    BaseStrType_ = basestring  # noqa: F821
+    BaseStrType_ = basestring
 else:
     BaseStrType_ = str
 
@@ -415,7 +414,7 @@ except ImportError as exp:
         def convert_unicode(instring):
             if isinstance(instring, str):
                 result = quote_xml(instring)
-            elif sys.version_info.major == 2 and isinstance(instring, unicode): # noqa: F821
+            elif sys.version_info.major == 2 and isinstance(instring, unicode):
                 result = quote_xml(instring).encode('utf8')
             else:
                 result = GeneratedsSuper.gds_encode(str(instring))
@@ -5934,12 +5933,14 @@ class SynapticConnection(GeneratedsSuper):
         pass
 
     def _get_cell_id(self,ref):
+        """Get cell ID"""
         if '[' in ref:
             return int(ref.split('[')[1].split(']')[0])
         else:
             return int(ref.split('/')[2])
 
     def _get_population(self,ref):
+        """Get population"""
         if '[' in ref:
             return ref.split('[')[0]
         else:
@@ -6068,12 +6069,14 @@ class ExplicitInput(GeneratedsSuper):
 
     
     def get_target_cell_id(self,):
+        """Get target cell ID"""
         if '[' in self.target:
             return int(self.target.split('[')[1].split(']')[0])
         else:
             return int(self.target.split('/')[2])
 
     def get_target_population(self,):
+        """Get target population."""
         if '[' in self.target:
             return self.target.split('[')[0]
         else:
@@ -17820,6 +17823,13 @@ class Cell(BaseCell):
 
     # Get segment object by its id
     def get_segment(self, segment_id):
+        """Get segment object by its id
+
+        :param segment_id: ID of segment
+        :return: segment
+
+        :raises Exception: if the segment is not found in the cell
+        """
 
         for segment in self.morphology.segments:
             if segment.id == segment_id:
@@ -17830,6 +17840,16 @@ class Cell(BaseCell):
     # Get the proximal point of a segment, even the proximal field is None and
     # so the proximal point is on the parent (at a point set by fraction_along)
     def get_actual_proximal(self, segment_id):
+
+        """Get the proximal point of a segment.
+
+        Get the proximal point of a segment, even the proximal field is None
+        and so the proximal point is on the parent (at a point set by
+        fraction_along).
+
+        :param segment_id: ID of segment
+        :return: proximal point
+        """
 
         segment = self.get_segment(segment_id)
         if segment.proximal:
@@ -17850,6 +17870,11 @@ class Cell(BaseCell):
             return p
 
     def get_segment_length(self, segment_id):
+        """Get the length of the segment.
+
+        :param segment_id: ID of segment
+        :return: length of segment
+        """
 
         segment = self.get_segment(segment_id)
         if segment.proximal:
@@ -17862,6 +17887,11 @@ class Cell(BaseCell):
             return length
 
     def get_segment_surface_area(self, segment_id):
+        """Get the surface area of the segment.
+
+        :param segment_id: ID of the segment
+        :return: surface area of segment
+        """
 
         segment = self.get_segment(segment_id)
         if segment.proximal:
@@ -17874,7 +17904,11 @@ class Cell(BaseCell):
             return temp_seg.surface_area
 
     def get_segment_volume(self, segment_id):
+        """Get volume of segment
 
+        :param segment_id: ID of the segment
+        :return: volume of the segment
+        """
         segment = self.get_segment(segment_id)
         if segment.proximal:
             return segment.volume
@@ -17886,6 +17920,10 @@ class Cell(BaseCell):
             return temp_seg.volume
 
     def get_segment_ids_vs_segments(self):
+        """Get a dictionary of segment IDs and the segments in the cell.
+
+        :return: dictionary with segment ID as key, and segment as value
+        """
 
         segments = {}
         for segment in self.morphology.segments:
@@ -17896,6 +17934,18 @@ class Cell(BaseCell):
     def get_all_segments_in_group(self,
                                   segment_group,
                                   assume_all_means_all=True):
+        """Get all the segments in a segment group of the cell.
+
+        :param segment_group: segment group to get all segments of
+        :param assume_all_means_all: return all segments if the segment group
+            wasn't explicitly defined
+
+        :todo: check docstring
+
+        :return: list of segments
+
+        :raises Exception: if no segment group is found in the cell.
+        """
 
         if isinstance(segment_group, str):
             for sg in self.morphology.segment_groups:
@@ -17930,6 +17980,20 @@ class Cell(BaseCell):
                                        include_cumulative_lengths=False,
                                        include_path_lengths=False,
                                        path_length_metric="Path Length from root"): # Only option supported
+        """
+        Get ordered list of segments in specified groups
+
+        :param group_list: list of groups to get segments from
+        :param check_parentage: verify parentage
+        :param include_commulative_lengths: also include cummulative lengths
+        :param include_path_lengths: also include path lengths
+        :param path_length_metric:
+
+        :return: dictionary of segments with additional information depending
+            on what parameters were used:
+
+        :raises: Exception if check_parentage is True and parentage cannot be verified
+        """
 
         unord_segs = {}
         other_segs = {}
@@ -18040,6 +18104,7 @@ class Cell(BaseCell):
 
 
     def summary(self):
+        """Print cell summary."""
         print("*******************************************************")
         print("* Cell: "+str(self.id))
         print("* Notes: "+str(self.notes))

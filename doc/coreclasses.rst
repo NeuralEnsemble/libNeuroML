@@ -1,10 +1,5 @@
-NeuroML core classes
-====================
-
-
-
-:mod:`nml` Module
------------------------------
+:mod:`nml` Module (NeuroML Core classes)
+-----------------------------------------
 
 Note: This module is included in the top level of the `neuroml` package, so you can use these classes by importing neuroml:
 
@@ -14,5 +9,6 @@ Note: This module is included in the top level of the `neuroml` package, so you 
 
 .. automodule:: neuroml.nml.nml
     :members:
-    :show-inheritance:
+
+
 
