@@ -42,6 +42,12 @@ See https://docs.neuroml.org/ for an overview of the various NeuroML libraries.
 
 ## Changelog
 
+### version 0.2.55
+
+ - Patch release with minor changes under the hood.
+ - Use PyTest for testing.
+ - Enable CI on GitHub Actions
+
 ### version 0.2.54
  - Using Schema for NeuroML v2.1. Better compatibility with Python 3
 
