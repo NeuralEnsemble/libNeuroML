@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Mar 26 11:39:57 2021 by generateDS.py version 2.35.5.
+# Generated Fri Mar 26 14:33:58 2021 by generateDS.py version 2.38.3.
 # Python 3.9.2 (default, Feb 20 2021, 00:00:00)  [GCC 11.0.0 20210210 (Red Hat 11.0.0-0)]
 #
 # Command line options:
@@ -11,25 +11,29 @@
 #   ('--user-methods', 'helper_methods.py')
 #
 # Command line arguments:
-#   ./NeuroML_v2.1.xsd
+#   NeuroML_v2.1.xsd
 #
 # Command line:
-#   /home/asinha/.virtualenvs/generateds/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" ./NeuroML_v2.1.xsd
+#   /home/asinha/.virtualenvs/generateds/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" NeuroML_v2.1.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
 #
 
+import sys
+try:
+    ModulenotfoundExp_ = ModuleNotFoundError
+except NameError:
+    ModulenotfoundExp_ = ImportError
 from six.moves import zip_longest
 import os
-import sys
 import re as re_
 import base64
 import datetime as datetime_
 import decimal as decimal_
 try:
     from lxml import etree as etree_
-except ImportError:
+except ModulenotfoundExp_ :
     from xml.etree import ElementTree as etree_
 
 
@@ -108,11 +112,11 @@ def parsexmlstring_(instring, parser=None, **kwargs):
 
 try:
     from generatedsnamespaces import GenerateDSNamespaceDefs as GenerateDSNamespaceDefs_
-except ImportError:
+except ModulenotfoundExp_ :
     GenerateDSNamespaceDefs_ = {}
 try:
     from generatedsnamespaces import GenerateDSNamespaceTypePrefixes as GenerateDSNamespaceTypePrefixes_
-except ImportError:
+except ModulenotfoundExp_ :
     GenerateDSNamespaceTypePrefixes_ = {}
 
 #
@@ -123,7 +127,7 @@ except ImportError:
 #
 try:
     from generatedscollector import GdsCollector as GdsCollector_
-except ImportError:
+except ModulenotfoundExp_ :
 
     class GdsCollector_(object):
 
@@ -157,7 +161,7 @@ except ImportError:
 
 try:
     from enum import Enum
-except ImportError:
+except ModulenotfoundExp_ :
     Enum = object
 
 #
@@ -169,7 +173,7 @@ except ImportError:
 
 try:
     from generatedssuper import GeneratedsSuper
-except ImportError as exp:
+except ModulenotfoundExp_ as exp:
     
     class GeneratedsSuper(object):
         __hash__ = object.__hash__
@@ -212,6 +216,8 @@ except ImportError as exp:
                 raise_parse_error(node, 'Requires integer value')
             return value
         def gds_format_integer_list(self, input_data, input_name=''):
+            if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType_):
+                input_data = [str(s) for s in input_data]
             return '%s' % ' '.join(input_data)
         def gds_validate_integer_list(
                 self, input_data, node=None, input_name=''):
@@ -220,7 +226,7 @@ except ImportError as exp:
                 try:
                     int(value)
                 except (TypeError, ValueError):
-                    raise_parse_error(node, 'Requires sequence of integer valuess')
+                    raise_parse_error(node, 'Requires sequence of integer values')
             return values
         def gds_format_float(self, input_data, input_name=''):
             return ('%.15f' % input_data).rstrip('0')
@@ -237,6 +243,8 @@ except ImportError as exp:
                 raise_parse_error(node, 'Requires float value')
             return value
         def gds_format_float_list(self, input_data, input_name=''):
+            if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType_):
+                input_data = [str(s) for s in input_data]
             return '%s' % ' '.join(input_data)
         def gds_validate_float_list(
                 self, input_data, node=None, input_name=''):
@@ -248,7 +256,12 @@ except ImportError as exp:
                     raise_parse_error(node, 'Requires sequence of float values')
             return values
         def gds_format_decimal(self, input_data, input_name=''):
-            return ('%0.10f' % input_data).rstrip('0')
+            return_value = '%s' % input_data
+            if '.' in return_value:
+                return_value = return_value.rstrip('0')
+                if return_value.endswith('.'):
+                    return_value = return_value.rstrip('.')
+            return return_value
         def gds_parse_decimal(self, input_data, node=None, input_name=''):
             try:
                 decimal_value = decimal_.Decimal(input_data)
@@ -262,7 +275,9 @@ except ImportError as exp:
                 raise_parse_error(node, 'Requires decimal value')
             return value
         def gds_format_decimal_list(self, input_data, input_name=''):
-            return '%s' % ' '.join(input_data)
+            if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType_):
+                input_data = [str(s) for s in input_data]
+            return ' '.join([self.gds_format_decimal(item) for item in input_data])
         def gds_validate_decimal_list(
                 self, input_data, node=None, input_name=''):
             values = input_data.split()
@@ -273,7 +288,7 @@ except ImportError as exp:
                     raise_parse_error(node, 'Requires sequence of decimal values')
             return values
         def gds_format_double(self, input_data, input_name=''):
-            return '%e' % input_data
+            return '%s' % input_data
         def gds_parse_double(self, input_data, node=None, input_name=''):
             try:
                 fval_ = float(input_data)
@@ -287,6 +302,8 @@ except ImportError as exp:
                 raise_parse_error(node, 'Requires double or float value')
             return value
         def gds_format_double_list(self, input_data, input_name=''):
+            if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType_):
+                input_data = [str(s) for s in input_data]
             return '%s' % ' '.join(input_data)
         def gds_validate_double_list(
                 self, input_data, node=None, input_name=''):
@@ -316,6 +333,8 @@ except ImportError as exp:
                     '(one of True, 1, False, 0)')
             return input_data
         def gds_format_boolean_list(self, input_data, input_name=''):
+            if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType_):
+                input_data = [str(s) for s in input_data]
             return '%s' % ' '.join(input_data)
         def gds_validate_boolean_list(
                 self, input_data, node=None, input_name=''):
@@ -767,7 +786,10 @@ def find_attr_value_(attr_name, node):
         value = attrs.get(attr_name)
     elif len(attr_parts) == 2:
         prefix, name = attr_parts
-        namespace = node.nsmap.get(prefix)
+        if prefix == 'xml':
+            namespace = 'http://www.w3.org/XML/1998/namespace'
+        else:
+            namespace = node.nsmap.get(prefix)
         if namespace is not None:
             value = attrs.get('{%s}%s' % (namespace, name, ))
     return value
@@ -848,7 +870,7 @@ class MixedContainer:
                 self.name,
                 base64.b64encode(self.value),
                 self.name))
-    def to_etree(self, element):
+    def to_etree(self, element, mapping_=None, nsmap_=None):
         if self.category == MixedContainer.CategoryText:
             # Prevent exporting empty content as empty lines.
             if self.value.strip():
@@ -868,7 +890,7 @@ class MixedContainer:
             subelement.text = self.to_etree_simple()
         else:    # category == MixedContainer.CategoryComplex
             self.value.to_etree(element)
-    def to_etree_simple(self):
+    def to_etree_simple(self, mapping_=None, nsmap_=None):
         if self.content_type == MixedContainer.TypeString:
             text = self.value
         elif (self.content_type == MixedContainer.TypeInteger or
@@ -946,27 +968,27 @@ def _cast(typ, value):
 #
 
 
-class BlockTypes(Enum):
+class BlockTypes(str, Enum):
     VOLTAGE_CONC_DEP_BLOCK_MECHANISM='voltageConcDepBlockMechanism'
 
 
-class Metric(Enum):
+class Metric(str, Enum):
     """Allowed metrics for InhomogeneousParam"""
     PATH_LENGTHFROMROOT='Path Length from root'
 
 
-class PlasticityTypes(Enum):
+class PlasticityTypes(str, Enum):
     TSODYKS_MARKRAM_DEP_MECHANISM='tsodyksMarkramDepMechanism'
     TSODYKS_MARKRAM_DEP_FAC_MECHANISM='tsodyksMarkramDepFacMechanism'
 
 
-class ZeroOrOne(Enum):
+class ZeroOrOne(str, Enum):
     """Value which is either 0 or 1"""
     _0='0'
     _1='1'
 
 
-class allowedSpaces(Enum):
+class allowedSpaces(str, Enum):
     EUCLIDEAN__1_D='Euclidean_1D'
     EUCLIDEAN__2_D='Euclidean_2D'
     EUCLIDEAN__3_D='Euclidean_3D'
@@ -975,12 +997,12 @@ class allowedSpaces(Enum):
     GRID__3_D='Grid_3D'
 
 
-class channelTypes(Enum):
+class channelTypes(str, Enum):
     ION_CHANNEL_PASSIVE='ionChannelPassive'
     ION_CHANNEL_HH='ionChannelHH'
 
 
-class gateTypes(Enum):
+class gateTypes(str, Enum):
     GATE_H_HRATES='gateHHrates'
     GATE_H_HRATES_TAU='gateHHratesTau'
     GATE_H_HTAU_INF='gateHHtauInf'
@@ -991,12 +1013,12 @@ class gateTypes(Enum):
     GATE_FRACTIONAL='gateFractional'
 
 
-class networkTypes(Enum):
+class networkTypes(str, Enum):
     NETWORK='network'
     NETWORK_WITH_TEMPERATURE='networkWithTemperature'
 
 
-class populationTypes(Enum):
+class populationTypes(str, Enum):
     POPULATION='population'
     POPULATION_LIST='populationList'
 
@@ -1046,7 +1068,7 @@ class Property(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Property':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -1138,7 +1160,7 @@ class Annotation(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Annotation':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -1160,8 +1182,11 @@ class Annotation(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        for obj_ in self.anytypeobjs_:
-            obj_.export(outfile, level, namespaceprefix_, pretty_print=pretty_print)
+        if not fromsubclass_:
+            for obj_ in self.anytypeobjs_:
+                showIndent(outfile, level, pretty_print)
+                outfile.write(obj_)
+                outfile.write('\n')
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -1278,7 +1303,7 @@ class ComponentType(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ComponentType':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -1454,7 +1479,7 @@ class Constant(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Constant':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -1565,7 +1590,7 @@ class Exposure(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Exposure':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -1668,7 +1693,7 @@ class NamedDimensionalType(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'NamedDimensionalType':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -1786,7 +1811,7 @@ class NamedDimensionalVariable(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'NamedDimensionalVariable':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -1872,7 +1897,7 @@ class Parameter(NamedDimensionalType):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Parameter, self).__init__(name, dimension, description,  **kwargs_)
+        super(globals().get("Parameter"), self).__init__(name, dimension, description,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -1899,7 +1924,7 @@ class Parameter(NamedDimensionalType):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Parameter':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -1950,7 +1975,7 @@ class LEMS_Property(NamedDimensionalType):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(LEMS_Property, self).__init__(name, dimension, description,  **kwargs_)
+        super(globals().get("LEMS_Property"), self).__init__(name, dimension, description,  **kwargs_)
         self.default_value = _cast(float, default_value)
         self.default_value_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -1979,7 +2004,7 @@ class LEMS_Property(NamedDimensionalType):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'LEMS_Property':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -2017,7 +2042,7 @@ class LEMS_Property(NamedDimensionalType):
         if value is not None and 'defaultValue' not in already_processed:
             already_processed.add('defaultValue')
             value = self.gds_parse_double(value, node, 'defaultValue')
-            self.defaultValue = value
+            self.default_value = value
         super(LEMS_Property, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         super(LEMS_Property, self).buildChildren(child_, node, nodeName_, True)
@@ -2037,7 +2062,7 @@ class Requirement(NamedDimensionalType):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Requirement, self).__init__(name, dimension, description,  **kwargs_)
+        super(globals().get("Requirement"), self).__init__(name, dimension, description,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -2064,7 +2089,7 @@ class Requirement(NamedDimensionalType):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Requirement':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -2146,7 +2171,7 @@ class InstanceRequirement(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'InstanceRequirement':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -2260,7 +2285,7 @@ class Dynamics(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Dynamics':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -2346,7 +2371,7 @@ class DerivedVariable(NamedDimensionalVariable):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(DerivedVariable, self).__init__(name, dimension, description, exposure,  **kwargs_)
+        super(globals().get("DerivedVariable"), self).__init__(name, dimension, description, exposure,  **kwargs_)
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.select = _cast(None, select)
@@ -2377,7 +2402,7 @@ class DerivedVariable(NamedDimensionalVariable):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'DerivedVariable':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -2441,7 +2466,7 @@ class StateVariable(NamedDimensionalVariable):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(StateVariable, self).__init__(name, dimension, description, exposure,  **kwargs_)
+        super(globals().get("StateVariable"), self).__init__(name, dimension, description, exposure,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -2468,7 +2493,7 @@ class StateVariable(NamedDimensionalVariable):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'StateVariable':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -2520,7 +2545,7 @@ class ConditionalDerivedVariable(NamedDimensionalVariable):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ConditionalDerivedVariable, self).__init__(name, dimension, description, exposure,  **kwargs_)
+        super(globals().get("ConditionalDerivedVariable"), self).__init__(name, dimension, description, exposure,  **kwargs_)
         if Case is None:
             self.Case = []
         else:
@@ -2553,7 +2578,7 @@ class ConditionalDerivedVariable(NamedDimensionalVariable):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ConditionalDerivedVariable':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -2646,7 +2671,7 @@ class Case(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Case':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -2738,7 +2763,7 @@ class TimeDerivative(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'TimeDerivative':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -2827,7 +2852,7 @@ class IncludeType(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'IncludeType':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -2934,7 +2959,7 @@ class Q10ConductanceScaling(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Q10ConductanceScaling':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -3067,7 +3092,7 @@ class Q10Settings(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Q10Settings':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -3216,7 +3241,7 @@ class HHRate(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'HHRate':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -3354,7 +3379,7 @@ class HHVariable(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'HHVariable':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -3506,7 +3531,7 @@ class HHTime(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'HHTime':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -3679,7 +3704,7 @@ class BlockMechanism(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BlockMechanism':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -3842,7 +3867,7 @@ class PlasticityMechanism(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'PlasticityMechanism':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -3892,7 +3917,7 @@ class PlasticityMechanism(GeneratedsSuper):
         if value is not None and 'initReleaseProb' not in already_processed:
             already_processed.add('initReleaseProb')
             value = self.gds_parse_float(value, node, 'initReleaseProb')
-            self.initReleaseProb = value
+            self.init_release_prob = value
             self.validate_ZeroToOne(self.init_release_prob)    # validate type ZeroToOne
         value = find_attr_value_('tauRec', node)
         if value is not None and 'tauRec' not in already_processed:
@@ -3976,7 +4001,7 @@ class SegmentParent(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'SegmentParent':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -4022,7 +4047,7 @@ class SegmentParent(GeneratedsSuper):
         if value is not None and 'fractionAlong' not in already_processed:
             already_processed.add('fractionAlong')
             value = self.gds_parse_float(value, node, 'fractionAlong')
-            self.fractionAlong = value
+            self.fraction_along = value
             self.validate_ZeroToOne(self.fraction_along)    # validate type ZeroToOne
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
@@ -4091,7 +4116,7 @@ class Point3DWithDiam(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Point3DWithDiam':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -4220,7 +4245,7 @@ class ProximalDetails(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ProximalDetails':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -4256,7 +4281,7 @@ class ProximalDetails(GeneratedsSuper):
         if value is not None and 'translationStart' not in already_processed:
             already_processed.add('translationStart')
             value = self.gds_parse_double(value, node, 'translationStart')
-            self.translationStart = value
+            self.translation_start = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
 # end class ProximalDetails
@@ -4303,7 +4328,7 @@ class DistalDetails(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'DistalDetails':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -4339,7 +4364,7 @@ class DistalDetails(GeneratedsSuper):
         if value is not None and 'normalizationEnd' not in already_processed:
             already_processed.add('normalizationEnd')
             value = self.gds_parse_double(value, node, 'normalizationEnd')
-            self.normalizationEnd = value
+            self.normalization_end = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
 # end class DistalDetails
@@ -4394,7 +4419,7 @@ class Member(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Member':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -4490,7 +4515,7 @@ class Include(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Include':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -4577,7 +4602,7 @@ class Path(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Path':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -4677,7 +4702,7 @@ class SubTree(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'SubTree':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -4781,7 +4806,7 @@ class SegmentEndPoint(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'SegmentEndPoint':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -4947,7 +4972,7 @@ class MembraneProperties(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'MembraneProperties':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -5108,7 +5133,7 @@ class MembraneProperties2CaPools(MembraneProperties):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(MembraneProperties2CaPools, self).__init__(channel_populations, channel_densities, channel_density_v_shifts, channel_density_nernsts, channel_density_ghks, channel_density_ghk2s, channel_density_non_uniforms, channel_density_non_uniform_nernsts, channel_density_non_uniform_ghks, spike_threshes, specific_capacitances, init_memb_potentials,  **kwargs_)
+        super(globals().get("MembraneProperties2CaPools"), self).__init__(channel_populations, channel_densities, channel_density_v_shifts, channel_density_nernsts, channel_density_ghks, channel_density_ghk2s, channel_density_non_uniforms, channel_density_non_uniform_nernsts, channel_density_non_uniform_ghks, spike_threshes, specific_capacitances, init_memb_potentials,  **kwargs_)
         if channel_density_nernst_ca2s is None:
             self.channel_density_nernst_ca2s = []
         else:
@@ -5141,7 +5166,7 @@ class MembraneProperties2CaPools(MembraneProperties):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'MembraneProperties2CaPools':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -5260,7 +5285,7 @@ class ValueAcrossSegOrSegGroup(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ValueAcrossSegOrSegGroup':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -5377,7 +5402,7 @@ class VariableParameter(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'VariableParameter':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -5480,7 +5505,7 @@ class InhomogeneousValue(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'InhomogeneousValue':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -5548,7 +5573,7 @@ class Species(ValueAcrossSegOrSegGroup):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Species, self).__init__(value, segment_groups, segments,  **kwargs_)
+        super(globals().get("Species"), self).__init__(value, segment_groups, segments,  **kwargs_)
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
         self.concentration_model = _cast(None, concentration_model)
@@ -5607,7 +5632,7 @@ class Species(ValueAcrossSegOrSegGroup):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Species':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -5737,7 +5762,7 @@ class IntracellularProperties(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'IntracellularProperties':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -5815,7 +5840,7 @@ class IntracellularProperties2CaPools(IntracellularProperties):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IntracellularProperties2CaPools, self).__init__(species, resistivities,  **kwargs_)
+        super(globals().get("IntracellularProperties2CaPools"), self).__init__(species, resistivities,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -5842,7 +5867,7 @@ class IntracellularProperties2CaPools(IntracellularProperties):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'IntracellularProperties2CaPools':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -5924,7 +5949,7 @@ class ExtracellularPropertiesLocal(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ExtracellularPropertiesLocal':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -6027,7 +6052,7 @@ class SpaceStructure(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'SpaceStructure':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -6078,32 +6103,32 @@ class SpaceStructure(GeneratedsSuper):
         if value is not None and 'xSpacing' not in already_processed:
             already_processed.add('xSpacing')
             value = self.gds_parse_float(value, node, 'xSpacing')
-            self.xSpacing = value
+            self.x_spacing = value
         value = find_attr_value_('ySpacing', node)
         if value is not None and 'ySpacing' not in already_processed:
             already_processed.add('ySpacing')
             value = self.gds_parse_float(value, node, 'ySpacing')
-            self.ySpacing = value
+            self.y_spacing = value
         value = find_attr_value_('zSpacing', node)
         if value is not None and 'zSpacing' not in already_processed:
             already_processed.add('zSpacing')
             value = self.gds_parse_float(value, node, 'zSpacing')
-            self.zSpacing = value
+            self.z_spacing = value
         value = find_attr_value_('xStart', node)
         if value is not None and 'xStart' not in already_processed:
             already_processed.add('xStart')
             value = self.gds_parse_float(value, node, 'xStart')
-            self.xStart = value
+            self.x_start = value
         value = find_attr_value_('yStart', node)
         if value is not None and 'yStart' not in already_processed:
             already_processed.add('yStart')
             value = self.gds_parse_float(value, node, 'yStart')
-            self.yStart = value
+            self.y_start = value
         value = find_attr_value_('zStart', node)
         if value is not None and 'zStart' not in already_processed:
             already_processed.add('zStart')
             value = self.gds_parse_float(value, node, 'zStart')
-            self.zStart = value
+            self.z_start = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         pass
 # end class SpaceStructure
@@ -6172,7 +6197,7 @@ class Layout(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Layout':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -6282,7 +6307,7 @@ class UnstructuredLayout(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'UnstructuredLayout':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -6380,7 +6405,7 @@ class RandomLayout(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'RandomLayout':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -6478,7 +6503,7 @@ class GridLayout(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'GridLayout':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -6592,7 +6617,7 @@ class Instance(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Instance':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -6730,7 +6755,7 @@ class Location(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Location':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -6868,7 +6893,7 @@ class SynapticConnection(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'SynapticConnection':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -7002,7 +7027,7 @@ class ExplicitInput(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ExplicitInput':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -7190,7 +7215,7 @@ class Input(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Input':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -7269,7 +7294,7 @@ class Input(GeneratedsSuper):
         if value is not None and 'fractionAlong' not in already_processed:
             already_processed.add('fractionAlong')
             value = self.gds_parse_float(value, node, 'fractionAlong')
-            self.fractionAlong = value
+            self.fraction_along = value
             self.validate_ZeroToOne(self.fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
@@ -7318,7 +7343,7 @@ class InputW(Input):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(InputW, self).__init__(id, target, destination, segment_id, fraction_along,  **kwargs_)
+        super(globals().get("InputW"), self).__init__(id, target, destination, segment_id, fraction_along,  **kwargs_)
         self.weight = _cast(float, weight)
         self.weight_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -7347,7 +7372,7 @@ class InputW(Input):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'InputW':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -7458,7 +7483,7 @@ class BaseWithoutId(GeneratedsSuper):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BaseWithoutId':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -7527,7 +7552,7 @@ class BaseNonNegativeIntegerId(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseNonNegativeIntegerId, self).__init__(neuro_lex_id, extensiontype_,  **kwargs_)
+        super(globals().get("BaseNonNegativeIntegerId"), self).__init__(neuro_lex_id, extensiontype_,  **kwargs_)
         self.id = _cast(int, id)
         self.id_nsprefix_ = None
         self.extensiontype_ = extensiontype_
@@ -7565,7 +7590,7 @@ class BaseNonNegativeIntegerId(BaseWithoutId):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BaseNonNegativeIntegerId':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -7640,7 +7665,7 @@ class Base(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Base, self).__init__(neuro_lex_id, extensiontype_,  **kwargs_)
+        super(globals().get("Base"), self).__init__(neuro_lex_id, extensiontype_,  **kwargs_)
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
         self.extensiontype_ = extensiontype_
@@ -7681,7 +7706,7 @@ class Base(BaseWithoutId):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Base':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -7757,7 +7782,7 @@ class Standalone(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Standalone, self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
+        super(globals().get("Standalone"), self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
         self.metaid = _cast(None, metaid)
         self.metaid_nsprefix_ = None
         self.notes = notes
@@ -7821,7 +7846,7 @@ class Standalone(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Standalone':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -7925,7 +7950,7 @@ class SpikeSourcePoisson(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SpikeSourcePoisson, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("SpikeSourcePoisson"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.start = _cast(None, start)
         self.start_nsprefix_ = None
         self.duration = _cast(None, duration)
@@ -7980,7 +8005,7 @@ class SpikeSourcePoisson(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'SpikeSourcePoisson':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -8060,7 +8085,7 @@ class InputList(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(InputList, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("InputList"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.populations = _cast(None, populations)
         self.populations_nsprefix_ = None
         self.component = _cast(None, component)
@@ -8114,7 +8139,7 @@ class InputList(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'InputList':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -8258,7 +8283,7 @@ class BaseConnection(BaseNonNegativeIntegerId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseConnection, self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
+        super(globals().get("BaseConnection"), self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -8286,7 +8311,7 @@ class BaseConnection(BaseNonNegativeIntegerId):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BaseConnection':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -8352,7 +8377,7 @@ class BaseProjection(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseProjection, self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
+        super(globals().get("BaseProjection"), self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
         self.presynaptic_population = _cast(None, presynaptic_population)
         self.presynaptic_population_nsprefix_ = None
         self.postsynaptic_population = _cast(None, postsynaptic_population)
@@ -8395,7 +8420,7 @@ class BaseProjection(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BaseProjection':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -8475,7 +8500,7 @@ class CellSet(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(CellSet, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("CellSet"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.select = _cast(None, select)
         self.select_nsprefix_ = None
         if anytypeobjs_ is None:
@@ -8509,7 +8534,7 @@ class CellSet(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'CellSet':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -8535,8 +8560,11 @@ class CellSet(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        for obj_ in self.anytypeobjs_:
-            obj_.export(outfile, level, namespaceprefix_, pretty_print=pretty_print)
+        if not fromsubclass_:
+            for obj_ in self.anytypeobjs_:
+                showIndent(outfile, level, pretty_print)
+                outfile.write(obj_)
+                outfile.write('\n')
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -8579,7 +8607,7 @@ class Population(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Population, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("Population"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.component = _cast(None, component)
         self.component_nsprefix_ = None
         self.size = _cast(int, size)
@@ -8655,7 +8683,7 @@ class Population(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Population':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -8806,7 +8834,7 @@ class Region(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Region, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("Region"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.spaces = _cast(None, spaces)
         self.spaces_nsprefix_ = None
         if anytypeobjs_ is None:
@@ -8851,7 +8879,7 @@ class Region(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Region':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -8877,8 +8905,11 @@ class Region(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        for obj_ in self.anytypeobjs_:
-            obj_.export(outfile, level, namespaceprefix_, pretty_print=pretty_print)
+        if not fromsubclass_:
+            for obj_ in self.anytypeobjs_:
+                showIndent(outfile, level, pretty_print)
+                outfile.write(obj_)
+                outfile.write('\n')
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -8918,7 +8949,7 @@ class Space(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Space, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("Space"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.based_on = _cast(None, based_on)
         self.based_on_nsprefix_ = None
         self.structure = structure
@@ -8963,7 +8994,7 @@ class Space(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Space':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -9045,7 +9076,7 @@ class Network(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Network, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("Network"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.temperature = _cast(None, temperature)
@@ -9166,7 +9197,7 @@ class Network(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Network':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -9388,7 +9419,7 @@ class TransientPoissonFiringSynapse(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(TransientPoissonFiringSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("TransientPoissonFiringSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.average_rate = _cast(None, average_rate)
         self.average_rate_nsprefix_ = None
         self.delay = _cast(None, delay)
@@ -9447,7 +9478,7 @@ class TransientPoissonFiringSynapse(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'TransientPoissonFiringSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -9538,7 +9569,7 @@ class PoissonFiringSynapse(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(PoissonFiringSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("PoissonFiringSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.average_rate = _cast(None, average_rate)
         self.average_rate_nsprefix_ = None
         self.synapse = _cast(None, synapse)
@@ -9582,7 +9613,7 @@ class PoissonFiringSynapse(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'PoissonFiringSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -9655,7 +9686,7 @@ class SpikeGeneratorPoisson(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SpikeGeneratorPoisson, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        super(globals().get("SpikeGeneratorPoisson"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.average_rate = _cast(None, average_rate)
         self.average_rate_nsprefix_ = None
         self.extensiontype_ = extensiontype_
@@ -9696,7 +9727,7 @@ class SpikeGeneratorPoisson(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'SpikeGeneratorPoisson':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -9768,7 +9799,7 @@ class SpikeGeneratorRandom(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SpikeGeneratorRandom, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("SpikeGeneratorRandom"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.max_isi = _cast(None, max_isi)
         self.max_isi_nsprefix_ = None
         self.min_isi = _cast(None, min_isi)
@@ -9810,7 +9841,7 @@ class SpikeGeneratorRandom(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'SpikeGeneratorRandom':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -9877,7 +9908,7 @@ class SpikeGenerator(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SpikeGenerator, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("SpikeGenerator"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.period = _cast(None, period)
         self.period_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -9917,7 +9948,7 @@ class SpikeGenerator(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'SpikeGenerator':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -9978,7 +10009,7 @@ class TimedSynapticInput(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(TimedSynapticInput, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("TimedSynapticInput"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.synapse = _cast(None, synapse)
         self.synapse_nsprefix_ = None
         self.spike_target = _cast(None, spike_target)
@@ -10026,7 +10057,7 @@ class TimedSynapticInput(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'TimedSynapticInput':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -10103,7 +10134,7 @@ class SpikeArray(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SpikeArray, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("SpikeArray"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         if spikes is None:
             self.spikes = []
         else:
@@ -10136,7 +10167,7 @@ class SpikeArray(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'SpikeArray':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -10198,7 +10229,7 @@ class Spike(BaseNonNegativeIntegerId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Spike, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("Spike"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.time = _cast(None, time)
         self.time_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -10238,7 +10269,7 @@ class Spike(BaseNonNegativeIntegerId):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Spike':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -10303,7 +10334,7 @@ class VoltageClampTriple(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(VoltageClampTriple, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("VoltageClampTriple"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.active = _cast(float, active)
         self.active_nsprefix_ = None
         self.delay = _cast(None, delay)
@@ -10390,7 +10421,7 @@ class VoltageClampTriple(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'VoltageClampTriple':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -10501,7 +10532,7 @@ class VoltageClamp(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(VoltageClamp, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("VoltageClamp"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
         self.duration = _cast(None, duration)
@@ -10569,7 +10600,7 @@ class VoltageClamp(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'VoltageClamp':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -10654,7 +10685,7 @@ class CompoundInputDL(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(CompoundInputDL, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("CompoundInputDL"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         if pulse_generator_dls is None:
             self.pulse_generator_dls = []
         else:
@@ -10699,7 +10730,7 @@ class CompoundInputDL(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'CompoundInputDL':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -10779,7 +10810,7 @@ class CompoundInput(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(CompoundInput, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("CompoundInput"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         if pulse_generators is None:
             self.pulse_generators = []
         else:
@@ -10824,7 +10855,7 @@ class CompoundInput(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'CompoundInput':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -10906,7 +10937,7 @@ class RampGeneratorDL(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(RampGeneratorDL, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("RampGeneratorDL"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
         self.duration = _cast(None, duration)
@@ -10965,7 +10996,7 @@ class RampGeneratorDL(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'RampGeneratorDL':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -11060,7 +11091,7 @@ class RampGenerator(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(RampGenerator, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("RampGenerator"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
         self.duration = _cast(None, duration)
@@ -11119,7 +11150,7 @@ class RampGenerator(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'RampGenerator':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -11214,7 +11245,7 @@ class SineGeneratorDL(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SineGeneratorDL, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("SineGeneratorDL"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
         self.phase = _cast(None, phase)
@@ -11273,7 +11304,7 @@ class SineGeneratorDL(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'SineGeneratorDL':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -11368,7 +11399,7 @@ class SineGenerator(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SineGenerator, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("SineGenerator"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
         self.phase = _cast(None, phase)
@@ -11438,7 +11469,7 @@ class SineGenerator(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'SineGenerator':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -11533,7 +11564,7 @@ class PulseGeneratorDL(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(PulseGeneratorDL, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("PulseGeneratorDL"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
         self.duration = _cast(None, duration)
@@ -11588,7 +11619,7 @@ class PulseGeneratorDL(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'PulseGeneratorDL':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -11667,7 +11698,7 @@ class PulseGenerator(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(PulseGenerator, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("PulseGenerator"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
         self.duration = _cast(None, duration)
@@ -11722,7 +11753,7 @@ class PulseGenerator(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'PulseGenerator':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -11799,7 +11830,7 @@ class ReactionScheme(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ReactionScheme, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("ReactionScheme"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.source = _cast(None, source)
         self.source_nsprefix_ = None
         self.type = _cast(None, type)
@@ -11835,7 +11866,7 @@ class ReactionScheme(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ReactionScheme':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -11864,8 +11895,11 @@ class ReactionScheme(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        for obj_ in self.anytypeobjs_:
-            obj_.export(outfile, level, namespaceprefix_, pretty_print=pretty_print)
+        if not fromsubclass_:
+            for obj_ in self.anytypeobjs_:
+                showIndent(outfile, level, pretty_print)
+                outfile.write(obj_)
+                outfile.write('\n')
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -11907,7 +11941,7 @@ class ExtracellularProperties(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ExtracellularProperties, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("ExtracellularProperties"), self).__init__(neuro_lex_id, id,  **kwargs_)
         if species is None:
             self.species = []
         else:
@@ -11940,7 +11974,7 @@ class ExtracellularProperties(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ExtracellularProperties':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -12016,7 +12050,7 @@ class ChannelDensityGHK2(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensityGHK2, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("ChannelDensityGHK2"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.cond_density = _cast(None, cond_density)
@@ -12075,7 +12109,7 @@ class ChannelDensityGHK2(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ChannelDensityGHK2':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -12180,7 +12214,7 @@ class ChannelDensityGHK(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensityGHK, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("ChannelDensityGHK"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.permeability = _cast(None, permeability)
@@ -12239,7 +12273,7 @@ class ChannelDensityGHK(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ChannelDensityGHK':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -12345,7 +12379,7 @@ class ChannelDensityNernst(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensityNernst, self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
+        super(globals().get("ChannelDensityNernst"), self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.cond_density = _cast(None, cond_density)
@@ -12411,7 +12445,7 @@ class ChannelDensityNernst(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ChannelDensityNernst':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -12541,7 +12575,7 @@ class ChannelDensity(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensity, self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
+        super(globals().get("ChannelDensity"), self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.cond_density = _cast(None, cond_density)
@@ -12628,7 +12662,7 @@ class ChannelDensity(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ChannelDensity':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -12764,7 +12798,7 @@ class ChannelDensityNonUniformGHK(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensityNonUniformGHK, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("ChannelDensityNonUniformGHK"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.ion = _cast(None, ion)
@@ -12812,7 +12846,7 @@ class ChannelDensityNonUniformGHK(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ChannelDensityNonUniformGHK':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -12902,7 +12936,7 @@ class ChannelDensityNonUniformNernst(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensityNonUniformNernst, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("ChannelDensityNonUniformNernst"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.ion = _cast(None, ion)
@@ -12950,7 +12984,7 @@ class ChannelDensityNonUniformNernst(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ChannelDensityNonUniformNernst':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -13041,7 +13075,7 @@ class ChannelDensityNonUniform(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensityNonUniform, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("ChannelDensityNonUniform"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.erev = _cast(None, erev)
@@ -13102,7 +13136,7 @@ class ChannelDensityNonUniform(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ChannelDensityNonUniform':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -13204,7 +13238,7 @@ class ChannelPopulation(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelPopulation, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("ChannelPopulation"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.number = _cast(int, number)
@@ -13279,7 +13313,7 @@ class ChannelPopulation(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ChannelPopulation':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -13394,7 +13428,7 @@ class Resistivity(ValueAcrossSegOrSegGroup):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Resistivity, self).__init__(value, segment_groups, segments,  **kwargs_)
+        super(globals().get("Resistivity"), self).__init__(value, segment_groups, segments,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -13421,7 +13455,7 @@ class Resistivity(ValueAcrossSegOrSegGroup):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Resistivity':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -13473,7 +13507,7 @@ class InitMembPotential(ValueAcrossSegOrSegGroup):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(InitMembPotential, self).__init__(value, segment_groups, segments,  **kwargs_)
+        super(globals().get("InitMembPotential"), self).__init__(value, segment_groups, segments,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -13500,7 +13534,7 @@ class InitMembPotential(ValueAcrossSegOrSegGroup):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'InitMembPotential':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -13552,7 +13586,7 @@ class SpecificCapacitance(ValueAcrossSegOrSegGroup):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SpecificCapacitance, self).__init__(value, segment_groups, segments,  **kwargs_)
+        super(globals().get("SpecificCapacitance"), self).__init__(value, segment_groups, segments,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -13579,7 +13613,7 @@ class SpecificCapacitance(ValueAcrossSegOrSegGroup):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'SpecificCapacitance':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -13631,7 +13665,7 @@ class SpikeThresh(ValueAcrossSegOrSegGroup):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SpikeThresh, self).__init__(value, segment_groups, segments,  **kwargs_)
+        super(globals().get("SpikeThresh"), self).__init__(value, segment_groups, segments,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -13658,7 +13692,7 @@ class SpikeThresh(ValueAcrossSegOrSegGroup):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'SpikeThresh':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -13714,7 +13748,7 @@ class BiophysicalProperties2CaPools(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BiophysicalProperties2CaPools, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("BiophysicalProperties2CaPools"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.membrane_properties2_ca_pools = membrane_properties2_ca_pools
         self.membrane_properties2_ca_pools_nsprefix_ = None
         self.intracellular_properties2_ca_pools = intracellular_properties2_ca_pools
@@ -13750,7 +13784,7 @@ class BiophysicalProperties2CaPools(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BiophysicalProperties2CaPools':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -13833,7 +13867,7 @@ class BiophysicalProperties(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BiophysicalProperties, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("BiophysicalProperties"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.membrane_properties = membrane_properties
         self.membrane_properties_nsprefix_ = None
         self.intracellular_properties = intracellular_properties
@@ -13869,7 +13903,7 @@ class BiophysicalProperties(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BiophysicalProperties':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -13952,7 +13986,7 @@ class InhomogeneousParameter(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(InhomogeneousParameter, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("InhomogeneousParameter"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.variable = _cast(None, variable)
         self.variable_nsprefix_ = None
         self.metric = _cast(None, metric)
@@ -14002,7 +14036,7 @@ class InhomogeneousParameter(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'InhomogeneousParameter':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -14094,7 +14128,7 @@ class SegmentGroup(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SegmentGroup, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("SegmentGroup"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.notes = notes
         self.validate_Notes(self.notes)
         self.notes_nsprefix_ = None
@@ -14174,7 +14208,7 @@ class SegmentGroup(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'SegmentGroup':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -14309,7 +14343,7 @@ class Segment(BaseNonNegativeIntegerId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Segment, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("Segment"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
         self.parent = parent
@@ -14347,7 +14381,7 @@ class Segment(BaseNonNegativeIntegerId):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Segment':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -14508,7 +14542,7 @@ class Morphology(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Morphology, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("Morphology"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         if segments is None:
             self.segments = []
         else:
@@ -14547,7 +14581,7 @@ class Morphology(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Morphology':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -14619,7 +14653,7 @@ class BaseCell(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        super(globals().get("BaseCell"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -14647,7 +14681,7 @@ class BaseCell(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BaseCell':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -14709,7 +14743,7 @@ class BaseSynapse(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        super(globals().get("BaseSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -14737,7 +14771,7 @@ class BaseSynapse(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BaseSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -14804,7 +14838,7 @@ class FixedFactorConcentrationModel(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(FixedFactorConcentrationModel, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("FixedFactorConcentrationModel"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
         self.resting_conc = _cast(None, resting_conc)
@@ -14883,7 +14917,7 @@ class FixedFactorConcentrationModel(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'FixedFactorConcentrationModel':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -14970,7 +15004,7 @@ class DecayingPoolConcentrationModel(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(DecayingPoolConcentrationModel, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        super(globals().get("DecayingPoolConcentrationModel"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
         self.resting_conc = _cast(None, resting_conc)
@@ -15050,7 +15084,7 @@ class DecayingPoolConcentrationModel(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'DecayingPoolConcentrationModel':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -15149,7 +15183,7 @@ class GateFractionalSubgate(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateFractionalSubgate, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("GateFractionalSubgate"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.fractional_conductance = _cast(None, fractional_conductance)
         self.fractional_conductance_nsprefix_ = None
         self.notes = notes
@@ -15212,7 +15246,7 @@ class GateFractionalSubgate(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'GateFractionalSubgate':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -15313,7 +15347,7 @@ class GateFractional(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateFractional, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("GateFractional"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -15373,7 +15407,7 @@ class GateFractional(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'GateFractional':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -15467,7 +15501,7 @@ class GateHHInstantaneous(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateHHInstantaneous, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("GateHHInstantaneous"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -15521,7 +15555,7 @@ class GateHHInstantaneous(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'GateHHInstantaneous':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -15610,7 +15644,7 @@ class GateHHRatesInf(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateHHRatesInf, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("GateHHRatesInf"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -15673,7 +15707,7 @@ class GateHHRatesInf(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'GateHHRatesInf':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -15786,7 +15820,7 @@ class GateHHRatesTau(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateHHRatesTau, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("GateHHRatesTau"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -15849,7 +15883,7 @@ class GateHHRatesTau(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'GateHHRatesTau':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -15963,7 +15997,7 @@ class GateHHRatesTauInf(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateHHRatesTauInf, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("GateHHRatesTauInf"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -16029,7 +16063,7 @@ class GateHHRatesTauInf(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'GateHHRatesTauInf':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -16149,7 +16183,7 @@ class GateHHTauInf(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateHHTauInf, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("GateHHTauInf"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -16209,7 +16243,7 @@ class GateHHTauInf(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'GateHHTauInf':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -16313,7 +16347,7 @@ class GateHHRates(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateHHRates, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("GateHHRates"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -16373,7 +16407,7 @@ class GateHHRates(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'GateHHRates':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -16484,7 +16518,7 @@ class GateHHUndetermined(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateHHUndetermined, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("GateHHUndetermined"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.type = _cast(None, type)
@@ -16571,7 +16605,7 @@ class GateHHUndetermined(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'GateHHUndetermined':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -16710,7 +16744,7 @@ class GateKS(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GateKS, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("GateKS"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -16794,7 +16828,7 @@ class GateKS(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'GateKS':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -16921,7 +16955,7 @@ class TauInfTransition(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(TauInfTransition, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("TauInfTransition"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
         self.to = _cast(None, to)
@@ -16969,7 +17003,7 @@ class TauInfTransition(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'TauInfTransition':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -17057,7 +17091,7 @@ class ReverseTransition(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ReverseTransition, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("ReverseTransition"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
         self.to = _cast(None, to)
@@ -17104,7 +17138,7 @@ class ReverseTransition(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ReverseTransition':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -17133,8 +17167,11 @@ class ReverseTransition(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        for obj_ in self.anytypeobjs_:
-            obj_.export(outfile, level, namespaceprefix_, pretty_print=pretty_print)
+        if not fromsubclass_:
+            for obj_ in self.anytypeobjs_:
+                showIndent(outfile, level, pretty_print)
+                outfile.write(obj_)
+                outfile.write('\n')
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -17180,7 +17217,7 @@ class ForwardTransition(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ForwardTransition, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("ForwardTransition"), self).__init__(neuro_lex_id, id,  **kwargs_)
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
         self.to = _cast(None, to)
@@ -17227,7 +17264,7 @@ class ForwardTransition(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ForwardTransition':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -17256,8 +17293,11 @@ class ForwardTransition(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        for obj_ in self.anytypeobjs_:
-            obj_.export(outfile, level, namespaceprefix_, pretty_print=pretty_print)
+        if not fromsubclass_:
+            for obj_ in self.anytypeobjs_:
+                showIndent(outfile, level, pretty_print)
+                outfile.write(obj_)
+                outfile.write('\n')
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -17300,7 +17340,7 @@ class OpenState(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(OpenState, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("OpenState"), self).__init__(neuro_lex_id, id,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -17327,7 +17367,7 @@ class OpenState(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'OpenState':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -17377,7 +17417,7 @@ class ClosedState(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ClosedState, self).__init__(neuro_lex_id, id,  **kwargs_)
+        super(globals().get("ClosedState"), self).__init__(neuro_lex_id, id,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -17404,7 +17444,7 @@ class ClosedState(Base):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ClosedState':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -17458,7 +17498,7 @@ class IonChannelKS(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IonChannelKS, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("IonChannelKS"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.species = _cast(None, species)
         self.species_nsprefix_ = None
         self.conductance = _cast(None, conductance)
@@ -17517,7 +17557,7 @@ class IonChannelKS(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'IonChannelKS':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -17595,7 +17635,7 @@ class IonChannelScalable(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IonChannelScalable, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        super(globals().get("IonChannelScalable"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         if q10_conductance_scalings is None:
             self.q10_conductance_scalings = []
         else:
@@ -17629,7 +17669,7 @@ class IonChannelScalable(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'IonChannelScalable':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -17769,7 +17809,7 @@ class NeuroMLDocument(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(NeuroMLDocument, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("NeuroMLDocument"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         if includes is None:
             self.includes = []
         else:
@@ -18198,7 +18238,7 @@ class NeuroMLDocument(Standalone):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'NeuroMLDocument':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -18954,7 +18994,7 @@ class BasePynnSynapse(BaseSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BasePynnSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        super(globals().get("BasePynnSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.tau_syn = _cast(float, tau_syn)
         self.tau_syn_nsprefix_ = None
         self.extensiontype_ = extensiontype_
@@ -18984,7 +19024,7 @@ class BasePynnSynapse(BaseSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BasePynnSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -19059,7 +19099,7 @@ class basePyNNCell(BaseCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(basePyNNCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        super(globals().get("basePyNNCell"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.cm = _cast(float, cm)
         self.cm_nsprefix_ = None
         self.i_offset = _cast(float, i_offset)
@@ -19097,7 +19137,7 @@ class basePyNNCell(BaseCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'basePyNNCell':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -19204,7 +19244,7 @@ class ContinuousProjection(BaseProjection):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ContinuousProjection, self).__init__(neuro_lex_id, id, presynaptic_population, postsynaptic_population,  **kwargs_)
+        super(globals().get("ContinuousProjection"), self).__init__(neuro_lex_id, id, presynaptic_population, postsynaptic_population,  **kwargs_)
         if continuous_connections is None:
             self.continuous_connections = []
         else:
@@ -19249,7 +19289,7 @@ class ContinuousProjection(BaseProjection):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ContinuousProjection':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -19413,7 +19453,7 @@ class ElectricalProjection(BaseProjection):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ElectricalProjection, self).__init__(neuro_lex_id, id, presynaptic_population, postsynaptic_population,  **kwargs_)
+        super(globals().get("ElectricalProjection"), self).__init__(neuro_lex_id, id, presynaptic_population, postsynaptic_population,  **kwargs_)
         if electrical_connections is None:
             self.electrical_connections = []
         else:
@@ -19458,7 +19498,7 @@ class ElectricalProjection(BaseProjection):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ElectricalProjection':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -19620,7 +19660,7 @@ class BaseConnectionNewFormat(BaseConnection):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseConnectionNewFormat, self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
+        super(globals().get("BaseConnectionNewFormat"), self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
         self.pre_cell = _cast(None, pre_cell)
         self.pre_cell_nsprefix_ = None
         self.pre_segment = _cast(int, pre_segment)
@@ -19683,7 +19723,7 @@ class BaseConnectionNewFormat(BaseConnection):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BaseConnectionNewFormat':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -19755,7 +19795,7 @@ class BaseConnectionNewFormat(BaseConnection):
         if value is not None and 'preFractionAlong' not in already_processed:
             already_processed.add('preFractionAlong')
             value = self.gds_parse_float(value, node, 'preFractionAlong')
-            self.preFractionAlong = value
+            self.pre_fraction_along = value
             self.validate_ZeroToOne(self.pre_fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('postCell', node)
         if value is not None and 'postCell' not in already_processed:
@@ -19772,7 +19812,7 @@ class BaseConnectionNewFormat(BaseConnection):
         if value is not None and 'postFractionAlong' not in already_processed:
             already_processed.add('postFractionAlong')
             value = self.gds_parse_float(value, node, 'postFractionAlong')
-            self.postFractionAlong = value
+            self.post_fraction_along = value
             self.validate_ZeroToOne(self.post_fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
@@ -19806,7 +19846,7 @@ class BaseConnectionOldFormat(BaseConnection):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseConnectionOldFormat, self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
+        super(globals().get("BaseConnectionOldFormat"), self).__init__(neuro_lex_id, id, extensiontype_,  **kwargs_)
         self.pre_cell_id = _cast(None, pre_cell_id)
         self.pre_cell_id_nsprefix_ = None
         self.pre_segment_id = _cast(int, pre_segment_id)
@@ -19869,7 +19909,7 @@ class BaseConnectionOldFormat(BaseConnection):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BaseConnectionOldFormat':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -19941,7 +19981,7 @@ class BaseConnectionOldFormat(BaseConnection):
         if value is not None and 'preFractionAlong' not in already_processed:
             already_processed.add('preFractionAlong')
             value = self.gds_parse_float(value, node, 'preFractionAlong')
-            self.preFractionAlong = value
+            self.pre_fraction_along = value
             self.validate_ZeroToOne(self.pre_fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('postCellId', node)
         if value is not None and 'postCellId' not in already_processed:
@@ -19958,7 +19998,7 @@ class BaseConnectionOldFormat(BaseConnection):
         if value is not None and 'postFractionAlong' not in already_processed:
             already_processed.add('postFractionAlong')
             value = self.gds_parse_float(value, node, 'postFractionAlong')
-            self.postFractionAlong = value
+            self.post_fraction_along = value
             self.validate_ZeroToOne(self.post_fraction_along)    # validate type ZeroToOne
         value = find_attr_value_('xsi:type', node)
         if value is not None and 'xsi:type' not in already_processed:
@@ -19988,7 +20028,7 @@ class Projection(BaseProjection):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Projection, self).__init__(neuro_lex_id, id, presynaptic_population, postsynaptic_population,  **kwargs_)
+        super(globals().get("Projection"), self).__init__(neuro_lex_id, id, presynaptic_population, postsynaptic_population,  **kwargs_)
         self.synapse = _cast(None, synapse)
         self.synapse_nsprefix_ = None
         if connections is None:
@@ -20040,7 +20080,7 @@ class Projection(BaseProjection):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Projection':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -20211,7 +20251,7 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SpikeGeneratorRefPoisson, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, average_rate,  **kwargs_)
+        super(globals().get("SpikeGeneratorRefPoisson"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, average_rate,  **kwargs_)
         self.minimum_isi = _cast(None, minimum_isi)
         self.minimum_isi_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -20251,7 +20291,7 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'SpikeGeneratorRefPoisson':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -20310,7 +20350,7 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ConcentrationModel_D, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, ion, resting_conc, decay_constant, shell_thickness,  **kwargs_)
+        super(globals().get("ConcentrationModel_D"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, ion, resting_conc, decay_constant, shell_thickness,  **kwargs_)
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -20339,7 +20379,7 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ConcentrationModel_D':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -20396,7 +20436,7 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensityNernstCa2, self).__init__(neuro_lex_id, id, ion_channel, cond_density, segment_groups, segments, ion, variable_parameters,  **kwargs_)
+        super(globals().get("ChannelDensityNernstCa2"), self).__init__(neuro_lex_id, id, ion_channel, cond_density, segment_groups, segments, ion, variable_parameters,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -20423,7 +20463,7 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ChannelDensityNernstCa2':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -20474,7 +20514,7 @@ class ChannelDensityVShift(ChannelDensity):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ChannelDensityVShift, self).__init__(neuro_lex_id, id, ion_channel, cond_density, erev, segment_groups, segments, ion, variable_parameters,  **kwargs_)
+        super(globals().get("ChannelDensityVShift"), self).__init__(neuro_lex_id, id, ion_channel, cond_density, erev, segment_groups, segments, ion, variable_parameters,  **kwargs_)
         self.v_shift = _cast(None, v_shift)
         self.v_shift_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -20514,7 +20554,7 @@ class ChannelDensityVShift(ChannelDensity):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ChannelDensityVShift':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -20580,7 +20620,7 @@ class Cell(BaseCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Cell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        super(globals().get("Cell"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.morphology_attr = _cast(None, morphology_attr)
         self.morphology_attr_nsprefix_ = None
         self.biophysical_properties_attr = _cast(None, biophysical_properties_attr)
@@ -20629,7 +20669,7 @@ class Cell(BaseCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Cell':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -21040,7 +21080,7 @@ class PinskyRinzelCA3Cell(BaseCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(PinskyRinzelCA3Cell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("PinskyRinzelCA3Cell"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.i_soma = _cast(None, i_soma)
         self.i_soma_nsprefix_ = None
         self.i_dend = _cast(None, i_dend)
@@ -21164,7 +21204,7 @@ class PinskyRinzelCA3Cell(BaseCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'PinskyRinzelCA3Cell':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -21388,7 +21428,7 @@ class FitzHughNagumo1969Cell(BaseCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(FitzHughNagumo1969Cell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("FitzHughNagumo1969Cell"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.a = _cast(None, a)
         self.a_nsprefix_ = None
         self.b = _cast(None, b)
@@ -21438,7 +21478,7 @@ class FitzHughNagumo1969Cell(BaseCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'FitzHughNagumo1969Cell':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -21537,7 +21577,7 @@ class FitzHughNagumoCell(BaseCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(FitzHughNagumoCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("FitzHughNagumoCell"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.I = _cast(None, I)
         self.I_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -21577,7 +21617,7 @@ class FitzHughNagumoCell(BaseCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'FitzHughNagumoCell':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -21638,7 +21678,7 @@ class BaseCellMembPotCap(BaseCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseCellMembPotCap, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        super(globals().get("BaseCellMembPotCap"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.C = _cast(None, C)
         self.C_nsprefix_ = None
         self.extensiontype_ = extensiontype_
@@ -21679,7 +21719,7 @@ class BaseCellMembPotCap(BaseCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BaseCellMembPotCap':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -21755,7 +21795,7 @@ class IzhikevichCell(BaseCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IzhikevichCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("IzhikevichCell"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.v0 = _cast(None, v0)
         self.v0_nsprefix_ = None
         self.thresh = _cast(None, thresh)
@@ -21816,7 +21856,7 @@ class IzhikevichCell(BaseCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'IzhikevichCell':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -21919,7 +21959,7 @@ class IafCell(BaseCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IafCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        super(globals().get("IafCell"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.leak_reversal = _cast(None, leak_reversal)
         self.leak_reversal_nsprefix_ = None
         self.thresh = _cast(None, thresh)
@@ -21990,7 +22030,7 @@ class IafCell(BaseCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'IafCell':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -22096,7 +22136,7 @@ class IafTauCell(BaseCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IafTauCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        super(globals().get("IafTauCell"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.leak_reversal = _cast(None, leak_reversal)
         self.leak_reversal_nsprefix_ = None
         self.thresh = _cast(None, thresh)
@@ -22154,7 +22194,7 @@ class IafTauCell(BaseCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'IafTauCell':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -22255,7 +22295,7 @@ class GradedSynapse(BaseSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GradedSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("GradedSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
         self.delta = _cast(None, delta)
@@ -22325,7 +22365,7 @@ class GradedSynapse(BaseSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'GradedSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -22417,7 +22457,7 @@ class LinearGradedSynapse(BaseSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(LinearGradedSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("LinearGradedSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -22457,7 +22497,7 @@ class LinearGradedSynapse(BaseSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'LinearGradedSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -22517,7 +22557,7 @@ class SilentSynapse(BaseSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(SilentSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("SilentSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -22544,7 +22584,7 @@ class SilentSynapse(BaseSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'SilentSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -22596,7 +22636,7 @@ class GapJunction(BaseSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(GapJunction, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("GapJunction"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -22636,7 +22676,7 @@ class GapJunction(BaseSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'GapJunction':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -22694,7 +22734,7 @@ class BaseCurrentBasedSynapse(BaseSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseCurrentBasedSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        super(globals().get("BaseCurrentBasedSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -22722,7 +22762,7 @@ class BaseCurrentBasedSynapse(BaseSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BaseCurrentBasedSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -22784,7 +22824,7 @@ class BaseVoltageDepSynapse(BaseSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseVoltageDepSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        super(globals().get("BaseVoltageDepSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -22812,7 +22852,7 @@ class BaseVoltageDepSynapse(BaseSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BaseVoltageDepSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -22889,7 +22929,7 @@ class IonChannel(IonChannelScalable):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IonChannel, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, q10_conductance_scalings, extensiontype_,  **kwargs_)
+        super(globals().get("IonChannel"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, q10_conductance_scalings, extensiontype_,  **kwargs_)
         self.species = _cast(None, species)
         self.species_nsprefix_ = None
         self.type = _cast(None, type)
@@ -23006,7 +23046,7 @@ class IonChannel(IonChannelScalable):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'IonChannel':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -23159,7 +23199,7 @@ class AlphaCurrSynapse(BasePynnSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(AlphaCurrSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn,  **kwargs_)
+        super(globals().get("AlphaCurrSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -23186,7 +23226,7 @@ class AlphaCurrSynapse(BasePynnSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'AlphaCurrSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -23236,7 +23276,7 @@ class ExpCurrSynapse(BasePynnSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ExpCurrSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn,  **kwargs_)
+        super(globals().get("ExpCurrSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -23263,7 +23303,7 @@ class ExpCurrSynapse(BasePynnSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ExpCurrSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -23314,7 +23354,7 @@ class AlphaCondSynapse(BasePynnSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(AlphaCondSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn,  **kwargs_)
+        super(globals().get("AlphaCondSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn,  **kwargs_)
         self.e_rev = _cast(float, e_rev)
         self.e_rev_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -23343,7 +23383,7 @@ class AlphaCondSynapse(BasePynnSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'AlphaCondSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -23402,7 +23442,7 @@ class ExpCondSynapse(BasePynnSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ExpCondSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn,  **kwargs_)
+        super(globals().get("ExpCondSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn,  **kwargs_)
         self.e_rev = _cast(float, e_rev)
         self.e_rev_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -23431,7 +23471,7 @@ class ExpCondSynapse(BasePynnSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ExpCondSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -23498,7 +23538,7 @@ class HH_cond_exp(basePyNNCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(HH_cond_exp, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init,  **kwargs_)
+        super(globals().get("HH_cond_exp"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init,  **kwargs_)
         self.v_offset = _cast(float, v_offset)
         self.v_offset_nsprefix_ = None
         self.e_rev_E = _cast(float, e_rev_E)
@@ -23543,7 +23583,7 @@ class HH_cond_exp(basePyNNCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'HH_cond_exp':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -23670,7 +23710,7 @@ class basePyNNIaFCell(basePyNNCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(basePyNNIaFCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, extensiontype_,  **kwargs_)
+        super(globals().get("basePyNNIaFCell"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, extensiontype_,  **kwargs_)
         self.tau_m = _cast(float, tau_m)
         self.tau_m_nsprefix_ = None
         self.tau_refrac = _cast(float, tau_refrac)
@@ -23708,7 +23748,7 @@ class basePyNNIaFCell(basePyNNCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'basePyNNIaFCell':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -23813,7 +23853,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ContinuousConnection, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, extensiontype_,  **kwargs_)
+        super(globals().get("ContinuousConnection"), self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, extensiontype_,  **kwargs_)
         self.pre_component = _cast(None, pre_component)
         self.pre_component_nsprefix_ = None
         self.post_component = _cast(None, post_component)
@@ -23856,7 +23896,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ContinuousConnection':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -23980,7 +24020,7 @@ class ElectricalConnection(BaseConnectionNewFormat):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ElectricalConnection, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, extensiontype_,  **kwargs_)
+        super(globals().get("ElectricalConnection"), self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, extensiontype_,  **kwargs_)
         self.synapse = _cast(None, synapse)
         self.synapse_nsprefix_ = None
         self.extensiontype_ = extensiontype_
@@ -24021,7 +24061,7 @@ class ElectricalConnection(BaseConnectionNewFormat):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ElectricalConnection':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -24137,7 +24177,7 @@ class ConnectionWD(BaseConnectionOldFormat):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ConnectionWD, self).__init__(neuro_lex_id, id, pre_cell_id, pre_segment_id, pre_fraction_along, post_cell_id, post_segment_id, post_fraction_along,  **kwargs_)
+        super(globals().get("ConnectionWD"), self).__init__(neuro_lex_id, id, pre_cell_id, pre_segment_id, pre_fraction_along, post_cell_id, post_segment_id, post_fraction_along,  **kwargs_)
         self.weight = _cast(float, weight)
         self.weight_nsprefix_ = None
         self.delay = _cast(None, delay)
@@ -24179,7 +24219,7 @@ class ConnectionWD(BaseConnectionOldFormat):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ConnectionWD':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -24302,7 +24342,7 @@ class Connection(BaseConnectionOldFormat):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Connection, self).__init__(neuro_lex_id, id, pre_cell_id, pre_segment_id, pre_fraction_along, post_cell_id, post_segment_id, post_fraction_along,  **kwargs_)
+        super(globals().get("Connection"), self).__init__(neuro_lex_id, id, pre_cell_id, pre_segment_id, pre_fraction_along, post_cell_id, post_segment_id, post_fraction_along,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -24329,7 +24369,7 @@ class Connection(BaseConnectionOldFormat):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Connection':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -24424,7 +24464,7 @@ class Cell2CaPools(Cell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Cell2CaPools, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, morphology_attr, biophysical_properties_attr, morphology, biophysical_properties,  **kwargs_)
+        super(globals().get("Cell2CaPools"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, morphology_attr, biophysical_properties_attr, morphology, biophysical_properties,  **kwargs_)
         self.biophysical_properties2_ca_pools = biophysical_properties2_ca_pools
         self.biophysical_properties2_ca_pools_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -24454,7 +24494,7 @@ class Cell2CaPools(Cell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Cell2CaPools':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -24525,7 +24565,7 @@ class AdExIaFCell(BaseCellMembPotCap):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(AdExIaFCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, C,  **kwargs_)
+        super(globals().get("AdExIaFCell"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, C,  **kwargs_)
         self.g_l = _cast(None, g_l)
         self.g_l_nsprefix_ = None
         self.EL = _cast(None, EL)
@@ -24616,7 +24656,7 @@ class AdExIaFCell(BaseCellMembPotCap):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'AdExIaFCell':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -24755,7 +24795,7 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(Izhikevich2007Cell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, C,  **kwargs_)
+        super(globals().get("Izhikevich2007Cell"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, C,  **kwargs_)
         self.v0 = _cast(None, v0)
         self.v0_nsprefix_ = None
         self.k = _cast(None, k)
@@ -24855,7 +24895,7 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'Izhikevich2007Cell':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -24978,7 +25018,7 @@ class IafRefCell(IafCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IafRefCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, leak_reversal, thresh, reset, C, leak_conductance,  **kwargs_)
+        super(globals().get("IafRefCell"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, leak_reversal, thresh, reset, C, leak_conductance,  **kwargs_)
         self.refract = _cast(None, refract)
         self.refract_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -25018,7 +25058,7 @@ class IafRefCell(IafCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'IafRefCell':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -25077,7 +25117,7 @@ class IafTauRefCell(IafTauCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IafTauRefCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, leak_reversal, thresh, reset, tau,  **kwargs_)
+        super(globals().get("IafTauRefCell"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, leak_reversal, thresh, reset, tau,  **kwargs_)
         self.refract = _cast(None, refract)
         self.refract_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -25117,7 +25157,7 @@ class IafTauRefCell(IafTauCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'IafTauRefCell':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -25179,7 +25219,7 @@ class DoubleSynapse(BaseVoltageDepSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(DoubleSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("DoubleSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.synapse1 = _cast(None, synapse1)
         self.synapse1_nsprefix_ = None
         self.synapse2 = _cast(None, synapse2)
@@ -25225,7 +25265,7 @@ class DoubleSynapse(BaseVoltageDepSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'DoubleSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -25307,7 +25347,7 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(AlphaCurrentSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
+        super(globals().get("AlphaCurrentSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation,  **kwargs_)
         self.tau = _cast(None, tau)
         self.tau_nsprefix_ = None
         self.ibase = _cast(None, ibase)
@@ -25360,7 +25400,7 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'AlphaCurrentSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -25429,7 +25469,7 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseConductanceBasedSynapseTwo, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        super(globals().get("BaseConductanceBasedSynapseTwo"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.gbase1 = _cast(None, gbase1)
         self.gbase1_nsprefix_ = None
         self.gbase2 = _cast(None, gbase2)
@@ -25485,7 +25525,7 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BaseConductanceBasedSynapseTwo':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -25573,7 +25613,7 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BaseConductanceBasedSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
+        super(globals().get("BaseConductanceBasedSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, extensiontype_,  **kwargs_)
         self.gbase = _cast(None, gbase)
         self.gbase_nsprefix_ = None
         self.erev = _cast(None, erev)
@@ -25627,7 +25667,7 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BaseConductanceBasedSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -25709,7 +25749,7 @@ class IonChannelVShift(IonChannel):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IonChannelVShift, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, q10_conductance_scalings, species, type, conductance, gates, gate_hh_rates, gate_h_hrates_taus, gate_hh_tau_infs, gate_h_hrates_infs, gate_h_hrates_tau_infs, gate_hh_instantaneouses, gate_fractionals,  **kwargs_)
+        super(globals().get("IonChannelVShift"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, q10_conductance_scalings, species, type, conductance, gates, gate_hh_rates, gate_h_hrates_taus, gate_hh_tau_infs, gate_h_hrates_infs, gate_h_hrates_tau_infs, gate_hh_instantaneouses, gate_fractionals,  **kwargs_)
         self.v_shift = _cast(None, v_shift)
         self.v_shift_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -25749,7 +25789,7 @@ class IonChannelVShift(IonChannel):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'IonChannelVShift':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -25811,7 +25851,7 @@ class IonChannelHH(IonChannel):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IonChannelHH, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, q10_conductance_scalings, species, type, conductance, gates, gate_hh_rates, gate_h_hrates_taus, gate_hh_tau_infs, gate_h_hrates_infs, gate_h_hrates_tau_infs, gate_hh_instantaneouses, gate_fractionals,  **kwargs_)
+        super(globals().get("IonChannelHH"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, q10_conductance_scalings, species, type, conductance, gates, gate_hh_rates, gate_h_hrates_taus, gate_hh_tau_infs, gate_h_hrates_infs, gate_h_hrates_tau_infs, gate_hh_instantaneouses, gate_fractionals,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -25838,7 +25878,7 @@ class IonChannelHH(IonChannel):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'IonChannelHH':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -25888,7 +25928,7 @@ class IF_curr_exp(basePyNNIaFCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IF_curr_exp, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh,  **kwargs_)
+        super(globals().get("IF_curr_exp"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -25915,7 +25955,7 @@ class IF_curr_exp(basePyNNIaFCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'IF_curr_exp':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -25965,7 +26005,7 @@ class IF_curr_alpha(basePyNNIaFCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IF_curr_alpha, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh,  **kwargs_)
+        super(globals().get("IF_curr_alpha"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -25992,7 +26032,7 @@ class IF_curr_alpha(basePyNNIaFCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'IF_curr_alpha':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -26044,7 +26084,7 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(basePyNNIaFCondCell, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, extensiontype_,  **kwargs_)
+        super(globals().get("basePyNNIaFCondCell"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, extensiontype_,  **kwargs_)
         self.e_rev_E = _cast(float, e_rev_E)
         self.e_rev_E_nsprefix_ = None
         self.e_rev_I = _cast(float, e_rev_I)
@@ -26076,7 +26116,7 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'basePyNNIaFCondCell':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -26155,7 +26195,7 @@ class ContinuousConnectionInstance(ContinuousConnection):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ContinuousConnectionInstance, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, pre_component, post_component, extensiontype_,  **kwargs_)
+        super(globals().get("ContinuousConnectionInstance"), self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, pre_component, post_component, extensiontype_,  **kwargs_)
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -26183,7 +26223,7 @@ class ContinuousConnectionInstance(ContinuousConnection):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ContinuousConnectionInstance':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -26260,7 +26300,7 @@ class ElectricalConnectionInstance(ElectricalConnection):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ElectricalConnectionInstance, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, synapse, extensiontype_,  **kwargs_)
+        super(globals().get("ElectricalConnectionInstance"), self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, synapse, extensiontype_,  **kwargs_)
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -26288,7 +26328,7 @@ class ElectricalConnectionInstance(ElectricalConnection):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ElectricalConnectionInstance':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -26365,7 +26405,7 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ExpThreeSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, gbase1, gbase2, erev,  **kwargs_)
+        super(globals().get("ExpThreeSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, gbase1, gbase2, erev,  **kwargs_)
         self.tau_decay1 = _cast(None, tau_decay1)
         self.tau_decay1_nsprefix_ = None
         self.tau_decay2 = _cast(None, tau_decay2)
@@ -26409,7 +26449,7 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ExpThreeSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -26485,7 +26525,7 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ExpTwoSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, gbase, erev, extensiontype_,  **kwargs_)
+        super(globals().get("ExpTwoSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, gbase, erev, extensiontype_,  **kwargs_)
         self.tau_decay = _cast(None, tau_decay)
         self.tau_decay_nsprefix_ = None
         self.tau_rise = _cast(None, tau_rise)
@@ -26528,7 +26568,7 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ExpTwoSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -26607,7 +26647,7 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ExpOneSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, gbase, erev,  **kwargs_)
+        super(globals().get("ExpOneSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, gbase, erev,  **kwargs_)
         self.tau_decay = _cast(None, tau_decay)
         self.tau_decay_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -26647,7 +26687,7 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ExpOneSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -26706,7 +26746,7 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(AlphaSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, gbase, erev,  **kwargs_)
+        super(globals().get("AlphaSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, gbase, erev,  **kwargs_)
         self.tau = _cast(None, tau)
         self.tau_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -26746,7 +26786,7 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'AlphaSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -26809,7 +26849,7 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(EIF_cond_exp_isfa_ista, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I, extensiontype_,  **kwargs_)
+        super(globals().get("EIF_cond_exp_isfa_ista"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I, extensiontype_,  **kwargs_)
         self.a = _cast(float, a)
         self.a_nsprefix_ = None
         self.b = _cast(float, b)
@@ -26847,7 +26887,7 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'EIF_cond_exp_isfa_ista':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -26949,7 +26989,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IF_cond_exp, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I,  **kwargs_)
+        super(globals().get("IF_cond_exp"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -26976,7 +27016,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'IF_cond_exp':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -27026,7 +27066,7 @@ class IF_cond_alpha(basePyNNIaFCondCell):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(IF_cond_alpha, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I,  **kwargs_)
+        super(globals().get("IF_cond_alpha"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -27053,7 +27093,7 @@ class IF_cond_alpha(basePyNNIaFCondCell):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'IF_cond_alpha':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -27106,7 +27146,7 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ContinuousConnectionInstanceW, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, pre_component, post_component,  **kwargs_)
+        super(globals().get("ContinuousConnectionInstanceW"), self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, pre_component, post_component,  **kwargs_)
         self.weight = _cast(float, weight)
         self.weight_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -27135,7 +27175,7 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ContinuousConnectionInstanceW':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -27207,7 +27247,7 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(ElectricalConnectionInstanceW, self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, synapse,  **kwargs_)
+        super(globals().get("ElectricalConnectionInstanceW"), self).__init__(neuro_lex_id, id, pre_cell, pre_segment, pre_fraction_along, post_cell, post_segment, post_fraction_along, synapse,  **kwargs_)
         self.weight = _cast(float, weight)
         self.weight_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -27236,7 +27276,7 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'ElectricalConnectionInstanceW':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -27305,7 +27345,7 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(BlockingPlasticSynapse, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, gbase, erev, tau_decay, tau_rise,  **kwargs_)
+        super(globals().get("BlockingPlasticSynapse"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, gbase, erev, tau_decay, tau_rise,  **kwargs_)
         self.plasticity_mechanism = plasticity_mechanism
         self.plasticity_mechanism_nsprefix_ = None
         self.block_mechanism = block_mechanism
@@ -27338,7 +27378,7 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'BlockingPlasticSynapse':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -27407,7 +27447,7 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.ns_prefix_ = None
-        super(EIF_cond_alpha_isfa_ista, self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I, a, b, delta_T, tau_w, v_spike,  **kwargs_)
+        super(globals().get("EIF_cond_alpha_isfa_ista"), self).__init__(neuro_lex_id, id, metaid, notes, properties, annotation, cm, i_offset, tau_syn_E, tau_syn_I, v_init, tau_m, tau_refrac, v_reset, v_rest, v_thresh, e_rev_E, e_rev_I, a, b, delta_T, tau_w, v_spike,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -27434,7 +27474,7 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
             eol_ = '\n'
         else:
             eol_ = ''
-        if self.original_tagname_ is not None:
+        if self.original_tagname_ is not None and name_ == 'EIF_cond_alpha_isfa_ista':
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ':'
@@ -27544,7 +27584,8 @@ def parse(inFileName, silence=False, print_warnings=True):
     return rootObj
 
 
-def parseEtree(inFileName, silence=False, print_warnings=True):
+def parseEtree(inFileName, silence=False, print_warnings=True,
+               mapping=None, nsmap=None):
     parser = None
     doc = parsexml_(inFileName, parser)
     gds_collector = GdsCollector_()
@@ -27556,8 +27597,10 @@ def parseEtree(inFileName, silence=False, print_warnings=True):
     rootObj = rootClass.factory()
     rootObj.build(rootNode, gds_collector_=gds_collector)
     # Enable Python to collect the space used by the DOM.
-    mapping = {}
-    rootElement = rootObj.to_etree(None, name_=rootTag, mapping_=mapping)
+    if mapping is None:
+        mapping = {}
+    rootElement = rootObj.to_etree(
+        None, name_=rootTag, mapping_=mapping, nsmap_=nsmap)
     reverse_mapping = rootObj.gds_reverse_node_mapping(mapping)
     if not SaveElementTreeNode:
         doc = None
@@ -27658,6 +27701,668 @@ if __name__ == '__main__':
 
 RenameMappings_ = {
 }
+
+#
+# Mapping of namespaces to types defined in them
+# and the file in which each is defined.
+# simpleTypes are marked "ST" and complexTypes "CT".
+NamespaceToDefMappings_ = {'http://www.neuroml.org/schema/neuroml2': [('NmlId', 'NeuroML_v2.1.xsd', 'ST'),
+                                            ('Nml2Quantity',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Nml2Quantity_none',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Nml2Quantity_voltage',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Nml2Quantity_length',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Nml2Quantity_resistance',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Nml2Quantity_conductance',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Nml2Quantity_conductanceDensity',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Nml2Quantity_permeability',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Nml2Quantity_time',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Nml2Quantity_pertime',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Nml2Quantity_capacitance',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Nml2Quantity_specificCapacitance',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Nml2Quantity_concentration',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Nml2Quantity_current',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Nml2Quantity_currentDensity',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Nml2Quantity_temperature',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Nml2Quantity_rhoFactor',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Nml2Quantity_conductancePerVoltage',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('MetaId',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('NeuroLexId',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('NonNegativeInteger',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('PositiveInteger',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('DoubleGreaterThanZero',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('ZeroOrOne',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Notes', 'NeuroML_v2.1.xsd', 'ST'),
+                                            ('ZeroToOne',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('channelTypes',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('gateTypes',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('BlockTypes',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('PlasticityTypes',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Metric',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('networkTypes',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('allowedSpaces',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('populationTypes',
+                                             'NeuroML_v2.1.xsd',
+                                             'ST'),
+                                            ('Property',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Annotation',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ComponentType',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Constant',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Exposure',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('NamedDimensionalType',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('NamedDimensionalVariable',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Parameter',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('LEMS_Property',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Requirement',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('InstanceRequirement',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Dynamics',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('DerivedVariable',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('StateVariable',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ConditionalDerivedVariable',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Case', 'NeuroML_v2.1.xsd', 'CT'),
+                                            ('TimeDerivative',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('NeuroMLDocument',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('IncludeType',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('IonChannelScalable',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('IonChannelKS',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('IonChannel',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('IonChannelHH',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('IonChannelVShift',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Q10ConductanceScaling',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ClosedState',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('OpenState',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ForwardTransition',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ReverseTransition',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('TauInfTransition',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('GateKS',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('GateHHUndetermined',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('GateHHRates',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('GateHHTauInf',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('GateHHRatesTauInf',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('GateHHRatesTau',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('GateHHRatesInf',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('GateHHInstantaneous',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('GateFractional',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('GateFractionalSubgate',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Q10Settings',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('HHRate',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('HHVariable',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('HHTime',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('DecayingPoolConcentrationModel',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('FixedFactorConcentrationModel',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BaseSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BaseVoltageDepSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BaseCurrentBasedSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BaseConductanceBasedSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BaseConductanceBasedSynapseTwo',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('GapJunction',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('SilentSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('LinearGradedSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('GradedSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('AlphaCurrentSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('AlphaSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ExpOneSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ExpTwoSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ExpThreeSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('DoubleSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BlockingPlasticSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BlockMechanism',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('PlasticityMechanism',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BaseCell',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('IafTauCell',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('IafTauRefCell',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('IafCell',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('IafRefCell',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('IzhikevichCell',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BaseCellMembPotCap',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Izhikevich2007Cell',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('AdExIaFCell',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('FitzHughNagumoCell',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('FitzHughNagumo1969Cell',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('PinskyRinzelCA3Cell',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Cell', 'NeuroML_v2.1.xsd', 'CT'),
+                                            ('Cell2CaPools',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Morphology',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Segment',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('SegmentParent',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Point3DWithDiam',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('SegmentGroup',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('InhomogeneousParameter',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ProximalDetails',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('DistalDetails',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Member',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Include',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Path', 'NeuroML_v2.1.xsd', 'CT'),
+                                            ('SubTree',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('SegmentEndPoint',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BiophysicalProperties',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BiophysicalProperties2CaPools',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('MembraneProperties',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('MembraneProperties2CaPools',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('SpikeThresh',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('SpecificCapacitance',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('InitMembPotential',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Resistivity',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ChannelPopulation',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ChannelDensityNonUniform',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ChannelDensityNonUniformNernst',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ChannelDensityNonUniformGHK',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ChannelDensity',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ChannelDensityVShift',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ChannelDensityNernst',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ChannelDensityNernstCa2',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ChannelDensityGHK',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ChannelDensityGHK2',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ValueAcrossSegOrSegGroup',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('VariableParameter',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('InhomogeneousValue',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Species',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ConcentrationModel_D',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('IntracellularProperties',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('IntracellularProperties2CaPools',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ExtracellularProperties',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ExtracellularPropertiesLocal',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ReactionScheme',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('PulseGenerator',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('PulseGeneratorDL',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('SineGenerator',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('SineGeneratorDL',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('RampGenerator',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('RampGeneratorDL',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('CompoundInput',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('CompoundInputDL',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('VoltageClamp',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('VoltageClampTriple',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Spike', 'NeuroML_v2.1.xsd', 'CT'),
+                                            ('SpikeArray',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('TimedSynapticInput',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('SpikeGenerator',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('SpikeGeneratorRandom',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('SpikeGeneratorPoisson',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('SpikeGeneratorRefPoisson',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('PoissonFiringSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('TransientPoissonFiringSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Network',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Space', 'NeuroML_v2.1.xsd', 'CT'),
+                                            ('SpaceStructure',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Region',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Population',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Layout',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('UnstructuredLayout',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('RandomLayout',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('GridLayout',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Instance',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Location',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('CellSet',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('SynapticConnection',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BaseProjection',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Projection',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BaseConnection',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BaseConnectionOldFormat',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BaseConnectionNewFormat',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Connection',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ConnectionWD',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ElectricalProjection',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ElectricalConnection',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ElectricalConnectionInstance',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ElectricalConnectionInstanceW',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ContinuousProjection',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ContinuousConnection',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ContinuousConnectionInstance',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ContinuousConnectionInstanceW',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ExplicitInput',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('InputList',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Input', 'NeuroML_v2.1.xsd', 'CT'),
+                                            ('InputW',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('basePyNNCell',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('basePyNNIaFCell',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('basePyNNIaFCondCell',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('IF_curr_alpha',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('IF_curr_exp',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('IF_cond_alpha',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('IF_cond_exp',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('EIF_cond_exp_isfa_ista',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('EIF_cond_alpha_isfa_ista',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('HH_cond_exp',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BasePynnSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ExpCondSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('AlphaCondSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('ExpCurrSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('AlphaCurrSynapse',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('SpikeSourcePoisson',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BaseWithoutId',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('BaseNonNegativeIntegerId',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT'),
+                                            ('Base', 'NeuroML_v2.1.xsd', 'CT'),
+                                            ('Standalone',
+                                             'NeuroML_v2.1.xsd',
+                                             'CT')]}
 
 __all__ = [
     "AdExIaFCell",
