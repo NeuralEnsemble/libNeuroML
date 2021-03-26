@@ -16,4 +16,21 @@ You may have to add the current folder to your PYTHONPATH, i.e.
 
     export PYTHONPATH=$PYTHONPATH:.
 
-Note from PG Feb 2021: retested & regenerated using Python 2.7 with generateDS.py v2.30.11- currently fails when generated with Python 3...
+
+### Changelog
+
+#### March 26, 2020
+
+Author: @sanjayankur31
+
+Generated using Python 3.9 for NeuroMLv2.1.xsd using generateDS.py 2.35.5
+
+    # Generated Fri Mar 26 09:44:40 2021 by generateDS.py version 2.35.5.
+    # Python 3.9.2 (default, Feb 20 2021, 00:00:00)  [GCC 11.0.0 20210210 (Red Hat 11.0.0-0)]
+    # ~/.virtualenvs/generateds/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods.py" NeuroML_v2.1.xsd
+
+#### February 2020
+
+Author: @pgleeson
+
+Retested & regenerated using Python 2.7 with generateDS.py v2.30.11- currently fails when generated with Python 3.
