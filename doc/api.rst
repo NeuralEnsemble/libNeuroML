@@ -1,48 +1,13 @@
 API documentation
 =================
 
-:mod:`nml` Module (NeuroML Core classes)
------------------------------------------
+.. toctree::
+   :maxdepth: 2
 
-Note: This module is included in the top level of the `neuroml` package, so you can use these classes by importing neuroml:
-
-::
-
-    from neuroml import AdExIaFCell
-
-.. automodule:: neuroml.nml.nml
-    :members:
-    :show-inheritance:
+   coreclasses
+   loaders
+   writers
+   utils
+   arraymorph
 
 
-:mod:`loaders` Module
----------------------
-
-.. automodule:: neuroml.loaders
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`writers` Module
----------------------
-
-.. automodule:: neuroml.writers
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`utils` Module
----------------------
-
-.. automodule:: neuroml.utils
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`arraymorph` Module
-------------------------
-
-.. automodule:: neuroml.arraymorph
-    :members:
-    :undoc-members:
-    :show-inheritance:
