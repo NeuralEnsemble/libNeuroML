@@ -11,7 +11,8 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys, os
+import sys
+import os
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -28,13 +29,19 @@ sys.path.insert(0, os.path.abspath('..'))
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.todo']
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.todo',
+              'sphinxcontrib.bibtex']
+
+bibtex_bibfiles = ['refs.bib']
+
+# Include TODOs in docs
+todo_include_todos = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
 # The suffix of source filenames.
-source_suffix = '.txt'
+source_suffix = '.rst'
 
 # The encoding of source files.
 #source_encoding = 'utf-8-sig'
@@ -44,16 +51,19 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'libNeuroML'
-copyright = u'2017, libNeuroML authors and contributors'
+copyright = u'2021, libNeuroML authors and contributors'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-for l in open('../neuroml/__init__.py'):
-    if '__version__' in l:
-        version = l.split("'")[1]
+version = ""
+for aline in open('../neuroml/__init__.py'):
+    # space here is important since __version__ is used in generation of
+    # version_info also
+    if '__version__ =' in aline:
+        version = aline.split("'")[1]
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -115,7 +125,7 @@ html_theme = 'nature'
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = 'neuroml_logo.png'
+html_logo = '_static/neuroml_logo.png'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -174,7 +184,6 @@ htmlhelp_basename = 'libNeuroMLdoc'
 
 # -- Options for LaTeX output --------------------------------------------------
 
-latex_elements = {
 # The paper size ('letterpaper' or 'a4paper').
 #'papersize': 'letterpaper',
 
@@ -183,13 +192,13 @@ latex_elements = {
 
 # Additional stuff for the LaTeX preamble.
 #'preamble': '',
-}
+latex_elements = {}
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'libNeuroML.tex', u'libNeuroML Documentation',
-   u'libNeuroML authors and contributors', 'manual'),
+    ('index', 'libNeuroML.tex', 'libNeuroML Documentation',
+     'libNeuroML authors and contributors', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -218,8 +227,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'libneuroml', u'libNeuroML Documentation',
-     [u'libNeuroML authors and contributors'], 1)
+    ('index', 'libneuroml', 'libNeuroML Documentation',
+     ['libNeuroML authors and contributors'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -232,9 +241,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'libNeuroML', u'libNeuroML Documentation',
-   u'libNeuroML authors and contributors', 'libNeuroML', 'One line description of project.',
-   'Miscellaneous'),
+    ('index', 'libNeuroML', 'libNeuroML Documentation',
+     'libNeuroML authors and contributors', 'libNeuroML', 'This package provides libNeuroML for working with neuronal models specified in NeuroML 2.',
+     'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.
