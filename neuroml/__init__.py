@@ -4,4 +4,4 @@ __version__ = '0.2.56'
 __version_info__ = tuple(int(i) for i in __version__.split('.'))
 
 
-current_neuroml_version = "v2.1"
+current_neuroml_version = "v2.2"
