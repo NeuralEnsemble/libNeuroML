@@ -17,6 +17,16 @@ You may have to add the current folder to your PYTHONPATH, i.e.
     export PYTHONPATH=$PYTHONPATH:.
 
 
+Note that generateDS.py will import the generateds_config.py file and run it.
+Your output should, therefore, include lines of the form:
+
+    generateds_config.py is being processed
+    Saving NameTable to csv file: name_table.csv
+    Saving name changes table to csv file: changed_names.csv
+
+
+If these are not included in the output, generateds_config.py has not run, and the generated nml.py file will be incorrect.
+
 ### Changelog
 
 #### March 26, 2020
