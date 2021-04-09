@@ -50,3 +50,4 @@ neuroml/test/*.h5
 /mongoo
 
 .venv
+/data
