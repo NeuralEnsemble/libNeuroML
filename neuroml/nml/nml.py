@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Mar 26 16:21:07 2021 by generateDS.py version 2.30.11.
-# Python 2.7.18 (default, Feb  3 2021, 00:00:00)  [GCC 11.0.0 20210130 (Red Hat 11.0.0-0)]
+# Generated Fri Jun 25 13:12:33 2021 by generateDS.py version 2.30.11.
+# Python 2.7.18 (default, May 19 2021, 00:00:00)  [GCC 11.1.1 20210428 (Red Hat 11.1.1-1)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -12,10 +12,10 @@
 #   ('--user-methods', 'helper_methods')
 #
 # Command line arguments:
-#   NeuroML_v2.1.xsd
+#   NeuroML_v2.2.xsd
 #
 # Command line:
-#   /home/asinha/.local/share/virtualenvs/generateds-2.7/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2.1.xsd
+#   /home/asinha/.local/share/virtualenvs/generateds-2.7/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --silence --user-methods="helper_methods" NeuroML_v2.2.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -4386,39 +4386,40 @@ class MembraneProperties2CaPools(MembraneProperties):
 # end class MembraneProperties2CaPools
 
 
-class ValueAcrossSegOrSegGroup(GeneratedsSuper):
+class SpikeThresh(GeneratedsSuper):
+    """Membrane potential at which to emit a spiking event. Note, usually
+    the spiking event will not be emitted again until the membrane
+    potential has fallen below this value and rises again to cross
+    it in a positive direction."""
     member_data_items_ = [
-        MemberSpec_('value', 'Nml2Quantity', 0, 1, {'use': u'optional'}),
+        MemberSpec_('value', 'Nml2Quantity_voltage', 0, 0, {'use': u'required'}),
         MemberSpec_('segment_groups', 'NmlId', 0, 1, {'use': u'optional'}),
-        MemberSpec_('segments', 'NmlId', 0, 1, {'use': u'optional'}),
     ]
     subclass = None
     superclass = None
-    def __init__(self, value=None, segment_groups='all', segments=None, extensiontype_=None, **kwargs_):
+    def __init__(self, value=None, segment_groups='all', **kwargs_):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
         self.value = _cast(None, value)
         self.segment_groups = _cast(None, segment_groups)
-        self.segments = _cast(None, segments)
-        self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, ValueAcrossSegOrSegGroup)
+                CurrentSubclassModule_, SpikeThresh)
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if ValueAcrossSegOrSegGroup.subclass:
-            return ValueAcrossSegOrSegGroup.subclass(*args_, **kwargs_)
+        if SpikeThresh.subclass:
+            return SpikeThresh.subclass(*args_, **kwargs_)
         else:
-            return ValueAcrossSegOrSegGroup(*args_, **kwargs_)
+            return SpikeThresh(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def validate_Nml2Quantity(self, value):
-        # Validate type Nml2Quantity, a restriction on xs:string.
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
             if not self.gds_validate_simple_patterns(
-                    self.validate_Nml2Quantity_patterns_, value):
-                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_patterns_, ))
-    validate_Nml2Quantity_patterns_ = [[u'^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*([_a-zA-Z0-9])*$']]
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [[u'^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_:
@@ -4433,8 +4434,8 @@ class ValueAcrossSegOrSegGroup(GeneratedsSuper):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='ValueAcrossSegOrSegGroup', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('ValueAcrossSegOrSegGroup')
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='SpikeThresh', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('SpikeThresh')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
@@ -4446,28 +4447,21 @@ class ValueAcrossSegOrSegGroup(GeneratedsSuper):
         showIndent(outfile, level, pretty_print)
         outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
         already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='ValueAcrossSegOrSegGroup')
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='SpikeThresh')
         if self.hasContent_():
             outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='ValueAcrossSegOrSegGroup', pretty_print=pretty_print)
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='SpikeThresh', pretty_print=pretty_print)
             outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
         else:
             outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='ValueAcrossSegOrSegGroup'):
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='SpikeThresh'):
         if self.value is not None and 'value' not in already_processed:
             already_processed.add('value')
             outfile.write(' value=%s' % (quote_attrib(self.value), ))
         if self.segment_groups != "all" and 'segment_groups' not in already_processed:
             already_processed.add('segment_groups')
             outfile.write(' segmentGroup=%s' % (quote_attrib(self.segment_groups), ))
-        if self.segments is not None and 'segments' not in already_processed:
-            already_processed.add('segments')
-            outfile.write(' segment=%s' % (quote_attrib(self.segments), ))
-        if self.extensiontype_ is not None and 'xsi:type' not in already_processed:
-            already_processed.add('xsi:type')
-            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
-            outfile.write(' xsi:type="%s"' % self.extensiontype_)
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='ValueAcrossSegOrSegGroup', fromsubclass_=False, pretty_print=True):
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='SpikeThresh', fromsubclass_=False, pretty_print=True):
         pass
     def build(self, node):
         already_processed = set()
@@ -4481,24 +4475,306 @@ class ValueAcrossSegOrSegGroup(GeneratedsSuper):
         if value is not None and 'value' not in already_processed:
             already_processed.add('value')
             self.value = value
-            self.validate_Nml2Quantity(self.value)    # validate type Nml2Quantity
+            self.validate_Nml2Quantity_voltage(self.value)    # validate type Nml2Quantity_voltage
         value = find_attr_value_('segmentGroup', node)
         if value is not None and 'segmentGroup' not in already_processed:
             already_processed.add('segmentGroup')
             self.segment_groups = value
             self.validate_NmlId(self.segment_groups)    # validate type NmlId
-        value = find_attr_value_('segment', node)
-        if value is not None and 'segment' not in already_processed:
-            already_processed.add('segment')
-            self.segments = value
-            self.validate_NmlId(self.segments)    # validate type NmlId
-        value = find_attr_value_('xsi:type', node)
-        if value is not None and 'xsi:type' not in already_processed:
-            already_processed.add('xsi:type')
-            self.extensiontype_ = value
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         pass
-# end class ValueAcrossSegOrSegGroup
+# end class SpikeThresh
+
+
+class SpecificCapacitance(GeneratedsSuper):
+    """Capacitance per unit area"""
+    member_data_items_ = [
+        MemberSpec_('value', 'Nml2Quantity_specificCapacitance', 0, 0, {'use': u'required'}),
+        MemberSpec_('segment_groups', 'NmlId', 0, 1, {'use': u'optional'}),
+    ]
+    subclass = None
+    superclass = None
+    def __init__(self, value=None, segment_groups='all', **kwargs_):
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get('parent_object_')
+        self.value = _cast(None, value)
+        self.segment_groups = _cast(None, segment_groups)
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, SpecificCapacitance)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if SpecificCapacitance.subclass:
+            return SpecificCapacitance.subclass(*args_, **kwargs_)
+        else:
+            return SpecificCapacitance(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Nml2Quantity_specificCapacitance(self, value):
+        # Validate type Nml2Quantity_specificCapacitance, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_specificCapacitance_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_specificCapacitance_patterns_, ))
+    validate_Nml2Quantity_specificCapacitance_patterns_ = [[u'^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(F_per_m2|uF_per_cm2)$']]
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [[u'^[a-zA-Z_][a-zA-Z0-9_]*$']]
+    def hasContent_(self):
+        if (
+
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='SpecificCapacitance', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('SpecificCapacitance')
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='SpecificCapacitance')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='SpecificCapacitance', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='SpecificCapacitance'):
+        if self.value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            outfile.write(' value=%s' % (quote_attrib(self.value), ))
+        if self.segment_groups != "all" and 'segment_groups' not in already_processed:
+            already_processed.add('segment_groups')
+            outfile.write(' segmentGroup=%s' % (quote_attrib(self.segment_groups), ))
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='SpecificCapacitance', fromsubclass_=False, pretty_print=True):
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('value', node)
+        if value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            self.value = value
+            self.validate_Nml2Quantity_specificCapacitance(self.value)    # validate type Nml2Quantity_specificCapacitance
+        value = find_attr_value_('segmentGroup', node)
+        if value is not None and 'segmentGroup' not in already_processed:
+            already_processed.add('segmentGroup')
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)    # validate type NmlId
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        pass
+# end class SpecificCapacitance
+
+
+class InitMembPotential(GeneratedsSuper):
+    """Explicitly set initial membrane potential for the cell"""
+    member_data_items_ = [
+        MemberSpec_('value', 'Nml2Quantity_voltage', 0, 0, {'use': u'required'}),
+        MemberSpec_('segment_groups', 'NmlId', 0, 1, {'use': u'optional'}),
+    ]
+    subclass = None
+    superclass = None
+    def __init__(self, value=None, segment_groups='all', **kwargs_):
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get('parent_object_')
+        self.value = _cast(None, value)
+        self.segment_groups = _cast(None, segment_groups)
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, InitMembPotential)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if InitMembPotential.subclass:
+            return InitMembPotential.subclass(*args_, **kwargs_)
+        else:
+            return InitMembPotential(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_voltage_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_voltage_patterns_, ))
+    validate_Nml2Quantity_voltage_patterns_ = [[u'^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV)$']]
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [[u'^[a-zA-Z_][a-zA-Z0-9_]*$']]
+    def hasContent_(self):
+        if (
+
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='InitMembPotential', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('InitMembPotential')
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='InitMembPotential')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='InitMembPotential', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='InitMembPotential'):
+        if self.value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            outfile.write(' value=%s' % (quote_attrib(self.value), ))
+        if self.segment_groups != "all" and 'segment_groups' not in already_processed:
+            already_processed.add('segment_groups')
+            outfile.write(' segmentGroup=%s' % (quote_attrib(self.segment_groups), ))
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='InitMembPotential', fromsubclass_=False, pretty_print=True):
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('value', node)
+        if value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            self.value = value
+            self.validate_Nml2Quantity_voltage(self.value)    # validate type Nml2Quantity_voltage
+        value = find_attr_value_('segmentGroup', node)
+        if value is not None and 'segmentGroup' not in already_processed:
+            already_processed.add('segmentGroup')
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)    # validate type NmlId
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        pass
+# end class InitMembPotential
+
+
+class Resistivity(GeneratedsSuper):
+    """The resistivity, or specific axial resistance, of the cytoplasm"""
+    member_data_items_ = [
+        MemberSpec_('value', 'Nml2Quantity_resistivity', 0, 0, {'use': u'required'}),
+        MemberSpec_('segment_groups', 'NmlId', 0, 1, {'use': u'optional'}),
+    ]
+    subclass = None
+    superclass = None
+    def __init__(self, value=None, segment_groups='all', **kwargs_):
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get('parent_object_')
+        self.value = _cast(None, value)
+        self.segment_groups = _cast(None, segment_groups)
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, Resistivity)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Resistivity.subclass:
+            return Resistivity.subclass(*args_, **kwargs_)
+        else:
+            return Resistivity(*args_, **kwargs_)
+    factory = staticmethod(factory)
+    def validate_Nml2Quantity_resistivity(self, value):
+        # Validate type Nml2Quantity_resistivity, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_Nml2Quantity_resistivity_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_Nml2Quantity_resistivity_patterns_, ))
+    validate_Nml2Quantity_resistivity_patterns_ = [[u'^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(ohm_cm|kohm_cm|ohm_m)$']]
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if value is not None and Validate_simpletypes_:
+            if not self.gds_validate_simple_patterns(
+                    self.validate_NmlId_patterns_, value):
+                warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_NmlId_patterns_, ))
+    validate_NmlId_patterns_ = [[u'^[a-zA-Z_][a-zA-Z0-9_]*$']]
+    def hasContent_(self):
+        if (
+
+        ):
+            return True
+        else:
+            return False
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='Resistivity', pretty_print=True):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get('Resistivity')
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = '\n'
+        else:
+            eol_ = ''
+        if self.original_tagname_ is not None:
+            name_ = self.original_tagname_
+        showIndent(outfile, level, pretty_print)
+        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
+        already_processed = set()
+        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='Resistivity')
+        if self.hasContent_():
+            outfile.write('>%s' % (eol_, ))
+            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='Resistivity', pretty_print=pretty_print)
+            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write('/>%s' % (eol_, ))
+    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='Resistivity'):
+        if self.value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            outfile.write(' value=%s' % (quote_attrib(self.value), ))
+        if self.segment_groups != "all" and 'segment_groups' not in already_processed:
+            already_processed.add('segment_groups')
+            outfile.write(' segmentGroup=%s' % (quote_attrib(self.segment_groups), ))
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='Resistivity', fromsubclass_=False, pretty_print=True):
+        pass
+    def build(self, node):
+        already_processed = set()
+        self.buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self.buildChildren(child, node, nodeName_)
+        return self
+    def buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_('value', node)
+        if value is not None and 'value' not in already_processed:
+            already_processed.add('value')
+            self.value = value
+            self.validate_Nml2Quantity_resistivity(self.value)    # validate type Nml2Quantity_resistivity
+        value = find_attr_value_('segmentGroup', node)
+        if value is not None and 'segmentGroup' not in already_processed:
+            already_processed.add('segmentGroup')
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)    # validate type NmlId
+    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
+        pass
+# end class Resistivity
 
 
 class VariableParameter(GeneratedsSuper):
@@ -4673,7 +4949,7 @@ class InhomogeneousValue(GeneratedsSuper):
 # end class InhomogeneousValue
 
 
-class Species(ValueAcrossSegOrSegGroup):
+class Species(GeneratedsSuper):
     """Specifying the ion here again is redundant, the ion name should be
     the same as id. Kept for now until LEMS implementation can
     select by id. TODO: remove."""
@@ -4683,18 +4959,19 @@ class Species(ValueAcrossSegOrSegGroup):
         MemberSpec_('ion', 'NmlId', 0, 1, {'use': u'optional'}),
         MemberSpec_('initial_concentration', 'Nml2Quantity_concentration', 0, 0, {'use': u'required'}),
         MemberSpec_('initial_ext_concentration', 'Nml2Quantity_concentration', 0, 0, {'use': u'required'}),
+        MemberSpec_('segment_groups', 'NmlId', 0, 1, {'use': u'optional'}),
     ]
     subclass = None
-    superclass = ValueAcrossSegOrSegGroup
-    def __init__(self, value=None, segment_groups='all', segments=None, id=None, concentration_model=None, ion=None, initial_concentration=None, initial_ext_concentration=None, **kwargs_):
+    superclass = None
+    def __init__(self, id=None, concentration_model=None, ion=None, initial_concentration=None, initial_ext_concentration=None, segment_groups='all', **kwargs_):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        super(Species, self).__init__(value, segment_groups, segments,  **kwargs_)
         self.id = _cast(None, id)
         self.concentration_model = _cast(None, concentration_model)
         self.ion = _cast(None, ion)
         self.initial_concentration = _cast(None, initial_concentration)
         self.initial_ext_concentration = _cast(None, initial_ext_concentration)
+        self.segment_groups = _cast(None, segment_groups)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -4722,7 +4999,7 @@ class Species(ValueAcrossSegOrSegGroup):
     validate_Nml2Quantity_concentration_patterns_ = [[u'^-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM)$']]
     def hasContent_(self):
         if (
-            super(Species, self).hasContent_()
+
         ):
             return True
         else:
@@ -4748,7 +5025,6 @@ class Species(ValueAcrossSegOrSegGroup):
         else:
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='Species'):
-        super(Species, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='Species')
         if self.id is not None and 'id' not in already_processed:
             already_processed.add('id')
             outfile.write(' id=%s' % (quote_attrib(self.id), ))
@@ -4764,8 +5040,10 @@ class Species(ValueAcrossSegOrSegGroup):
         if self.initial_ext_concentration is not None and 'initial_ext_concentration' not in already_processed:
             already_processed.add('initial_ext_concentration')
             outfile.write(' initialExtConcentration=%s' % (quote_attrib(self.initial_ext_concentration), ))
+        if self.segment_groups != "all" and 'segment_groups' not in already_processed:
+            already_processed.add('segment_groups')
+            outfile.write(' segmentGroup=%s' % (quote_attrib(self.segment_groups), ))
     def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='Species', fromsubclass_=False, pretty_print=True):
-        super(Species, self).exportChildren(outfile, level, namespaceprefix_, name_, True, pretty_print=pretty_print)
         pass
     def build(self, node):
         already_processed = set()
@@ -4800,9 +5078,12 @@ class Species(ValueAcrossSegOrSegGroup):
             already_processed.add('initialExtConcentration')
             self.initial_ext_concentration = value
             self.validate_Nml2Quantity_concentration(self.initial_ext_concentration)    # validate type Nml2Quantity_concentration
-        super(Species, self).buildAttributes(node, attrs, already_processed)
+        value = find_attr_value_('segmentGroup', node)
+        if value is not None and 'segmentGroup' not in already_processed:
+            already_processed.add('segmentGroup')
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)    # validate type NmlId
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        super(Species, self).buildChildren(child_, node, nodeName_, True)
         pass
 # end class Species
 
@@ -11487,282 +11768,6 @@ class ChannelPopulation(Base):
             obj_.original_tagname_ = 'variableParameter'
         super(ChannelPopulation, self).buildChildren(child_, node, nodeName_, True)
 # end class ChannelPopulation
-
-
-class Resistivity(ValueAcrossSegOrSegGroup):
-    """Using a thin extension of ValueAcrossSegOrSegGroup to facilitate
-    library generation (e.g. libNeuroML)"""
-    member_data_items_ = [
-    ]
-    subclass = None
-    superclass = ValueAcrossSegOrSegGroup
-    def __init__(self, value=None, segment_groups='all', segments=None, **kwargs_):
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        super(Resistivity, self).__init__(value, segment_groups, segments,  **kwargs_)
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, Resistivity)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Resistivity.subclass:
-            return Resistivity.subclass(*args_, **kwargs_)
-        else:
-            return Resistivity(*args_, **kwargs_)
-    factory = staticmethod(factory)
-    def hasContent_(self):
-        if (
-            super(Resistivity, self).hasContent_()
-        ):
-            return True
-        else:
-            return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='Resistivity', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('Resistivity')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='Resistivity')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='Resistivity', pretty_print=pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='Resistivity'):
-        super(Resistivity, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='Resistivity')
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='Resistivity', fromsubclass_=False, pretty_print=True):
-        super(Resistivity, self).exportChildren(outfile, level, namespaceprefix_, name_, True, pretty_print=pretty_print)
-        pass
-    def build(self, node):
-        already_processed = set()
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_)
-        return self
-    def buildAttributes(self, node, attrs, already_processed):
-        super(Resistivity, self).buildAttributes(node, attrs, already_processed)
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        super(Resistivity, self).buildChildren(child_, node, nodeName_, True)
-        pass
-# end class Resistivity
-
-
-class InitMembPotential(ValueAcrossSegOrSegGroup):
-    """Using a thin extension of ValueAcrossSegOrSegGroup to facilitate
-    library generation (e.g. libNeuroML)"""
-    member_data_items_ = [
-    ]
-    subclass = None
-    superclass = ValueAcrossSegOrSegGroup
-    def __init__(self, value=None, segment_groups='all', segments=None, **kwargs_):
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        super(InitMembPotential, self).__init__(value, segment_groups, segments,  **kwargs_)
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, InitMembPotential)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if InitMembPotential.subclass:
-            return InitMembPotential.subclass(*args_, **kwargs_)
-        else:
-            return InitMembPotential(*args_, **kwargs_)
-    factory = staticmethod(factory)
-    def hasContent_(self):
-        if (
-            super(InitMembPotential, self).hasContent_()
-        ):
-            return True
-        else:
-            return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='InitMembPotential', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('InitMembPotential')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='InitMembPotential')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='InitMembPotential', pretty_print=pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='InitMembPotential'):
-        super(InitMembPotential, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='InitMembPotential')
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='InitMembPotential', fromsubclass_=False, pretty_print=True):
-        super(InitMembPotential, self).exportChildren(outfile, level, namespaceprefix_, name_, True, pretty_print=pretty_print)
-        pass
-    def build(self, node):
-        already_processed = set()
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_)
-        return self
-    def buildAttributes(self, node, attrs, already_processed):
-        super(InitMembPotential, self).buildAttributes(node, attrs, already_processed)
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        super(InitMembPotential, self).buildChildren(child_, node, nodeName_, True)
-        pass
-# end class InitMembPotential
-
-
-class SpecificCapacitance(ValueAcrossSegOrSegGroup):
-    """Using a thin extension of ValueAcrossSegOrSegGroup to facilitate
-    library generation (e.g. libNeuroML)"""
-    member_data_items_ = [
-    ]
-    subclass = None
-    superclass = ValueAcrossSegOrSegGroup
-    def __init__(self, value=None, segment_groups='all', segments=None, **kwargs_):
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        super(SpecificCapacitance, self).__init__(value, segment_groups, segments,  **kwargs_)
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, SpecificCapacitance)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if SpecificCapacitance.subclass:
-            return SpecificCapacitance.subclass(*args_, **kwargs_)
-        else:
-            return SpecificCapacitance(*args_, **kwargs_)
-    factory = staticmethod(factory)
-    def hasContent_(self):
-        if (
-            super(SpecificCapacitance, self).hasContent_()
-        ):
-            return True
-        else:
-            return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='SpecificCapacitance', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('SpecificCapacitance')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='SpecificCapacitance')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='SpecificCapacitance', pretty_print=pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='SpecificCapacitance'):
-        super(SpecificCapacitance, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='SpecificCapacitance')
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='SpecificCapacitance', fromsubclass_=False, pretty_print=True):
-        super(SpecificCapacitance, self).exportChildren(outfile, level, namespaceprefix_, name_, True, pretty_print=pretty_print)
-        pass
-    def build(self, node):
-        already_processed = set()
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_)
-        return self
-    def buildAttributes(self, node, attrs, already_processed):
-        super(SpecificCapacitance, self).buildAttributes(node, attrs, already_processed)
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        super(SpecificCapacitance, self).buildChildren(child_, node, nodeName_, True)
-        pass
-# end class SpecificCapacitance
-
-
-class SpikeThresh(ValueAcrossSegOrSegGroup):
-    """Using a thin extension of ValueAcrossSegOrSegGroup to facilitate
-    library generation (e.g. libNeuroML)"""
-    member_data_items_ = [
-    ]
-    subclass = None
-    superclass = ValueAcrossSegOrSegGroup
-    def __init__(self, value=None, segment_groups='all', segments=None, **kwargs_):
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get('parent_object_')
-        super(SpikeThresh, self).__init__(value, segment_groups, segments,  **kwargs_)
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, SpikeThresh)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if SpikeThresh.subclass:
-            return SpikeThresh.subclass(*args_, **kwargs_)
-        else:
-            return SpikeThresh(*args_, **kwargs_)
-    factory = staticmethod(factory)
-    def hasContent_(self):
-        if (
-            super(SpikeThresh, self).hasContent_()
-        ):
-            return True
-        else:
-            return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='SpikeThresh', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('SpikeThresh')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespaceprefix_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='SpikeThresh')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespaceprefix_, namespacedef_, name_='SpikeThresh', pretty_print=pretty_print)
-            outfile.write('</%s%s>%s' % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='SpikeThresh'):
-        super(SpikeThresh, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='SpikeThresh')
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='SpikeThresh', fromsubclass_=False, pretty_print=True):
-        super(SpikeThresh, self).exportChildren(outfile, level, namespaceprefix_, name_, True, pretty_print=pretty_print)
-        pass
-    def build(self, node):
-        already_processed = set()
-        self.buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self.buildChildren(child, node, nodeName_)
-        return self
-    def buildAttributes(self, node, attrs, already_processed):
-        super(SpikeThresh, self).buildAttributes(node, attrs, already_processed)
-    def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
-        super(SpikeThresh, self).buildChildren(child_, node, nodeName_, True)
-        pass
-# end class SpikeThresh
 
 
 class BiophysicalProperties2CaPools(Standalone):
@@ -19692,8 +19697,8 @@ class BaseVoltageDepSynapse(BaseSynapse):
 class IonChannel(IonChannelScalable):
     """Note ionChannel and ionChannelHH are currently functionally
     identical. This is needed since many existing examples use
-    ionChannel, some use ionChannelHH. NeuroML v2beta4 should remove
-    one of these, probably ionChannelHH."""
+    ionChannel, some use ionChannelHH. One of these should be
+    removed, probably ionChannelHH."""
     member_data_items_ = [
         MemberSpec_('species', 'NmlId', 0, 1, {'use': u'optional'}),
         MemberSpec_('type', 'channelTypes', 0, 1, {'use': u'optional'}),
@@ -22253,8 +22258,8 @@ class IonChannelVShift(IonChannel):
 class IonChannelHH(IonChannel):
     """Note ionChannel and ionChannelHH are currently functionally
     identical. This is needed since many existing examples use
-    ionChannel, some use ionChannelHH. NeuroML v2beta4 should remove
-    one of these, probably ionChannelHH."""
+    ionChannel, some use ionChannelHH. One of these should be
+    removed, probably ionChannelHH."""
     member_data_items_ = [
     ]
     subclass = None
@@ -24031,7 +24036,6 @@ __all__ = [
     "TimedSynapticInput",
     "TransientPoissonFiringSynapse",
     "UnstructuredLayout",
-    "ValueAcrossSegOrSegGroup",
     "VariableParameter",
     "VoltageClamp",
     "VoltageClampTriple",
