@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Jun 23 17:35:13 2021 by generateDS.py version 2.30.11.
+# Generated Fri Jun 25 13:12:33 2021 by generateDS.py version 2.30.11.
 # Python 2.7.18 (default, May 19 2021, 00:00:00)  [GCC 11.1.1 20210428 (Red Hat 11.1.1-1)]
 #
 # Command line options:
@@ -4392,7 +4392,7 @@ class SpikeThresh(GeneratedsSuper):
     potential has fallen below this value and rises again to cross
     it in a positive direction."""
     member_data_items_ = [
-        MemberSpec_('value', 'Nml2Quantity_voltage', 0, 1, {'use': u'optional'}),
+        MemberSpec_('value', 'Nml2Quantity_voltage', 0, 0, {'use': u'required'}),
         MemberSpec_('segment_groups', 'NmlId', 0, 1, {'use': u'optional'}),
     ]
     subclass = None
@@ -4489,7 +4489,7 @@ class SpikeThresh(GeneratedsSuper):
 class SpecificCapacitance(GeneratedsSuper):
     """Capacitance per unit area"""
     member_data_items_ = [
-        MemberSpec_('value', 'Nml2Quantity_specificCapacitance', 0, 1, {'use': u'optional'}),
+        MemberSpec_('value', 'Nml2Quantity_specificCapacitance', 0, 0, {'use': u'required'}),
         MemberSpec_('segment_groups', 'NmlId', 0, 1, {'use': u'optional'}),
     ]
     subclass = None
@@ -4586,7 +4586,7 @@ class SpecificCapacitance(GeneratedsSuper):
 class InitMembPotential(GeneratedsSuper):
     """Explicitly set initial membrane potential for the cell"""
     member_data_items_ = [
-        MemberSpec_('value', 'Nml2Quantity_voltage', 0, 1, {'use': u'optional'}),
+        MemberSpec_('value', 'Nml2Quantity_voltage', 0, 0, {'use': u'required'}),
         MemberSpec_('segment_groups', 'NmlId', 0, 1, {'use': u'optional'}),
     ]
     subclass = None
@@ -4683,7 +4683,7 @@ class InitMembPotential(GeneratedsSuper):
 class Resistivity(GeneratedsSuper):
     """The resistivity, or specific axial resistance, of the cytoplasm"""
     member_data_items_ = [
-        MemberSpec_('value', 'Nml2Quantity_resistivity', 0, 1, {'use': u'optional'}),
+        MemberSpec_('value', 'Nml2Quantity_resistivity', 0, 0, {'use': u'required'}),
         MemberSpec_('segment_groups', 'NmlId', 0, 1, {'use': u'optional'}),
     ]
     subclass = None
