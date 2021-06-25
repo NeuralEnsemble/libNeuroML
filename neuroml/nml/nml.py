@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Jun 25 16:21:11 2021 by generateDS.py version 2.30.11.
+# Generated Fri Jun 25 16:58:24 2021 by generateDS.py version 2.30.11.
 # Python 2.7.18 (default, May 19 2021, 00:00:00)  [GCC 11.1.1 20210428 (Red Hat 11.1.1-1)]
 #
 # Command line options:
@@ -17843,7 +17843,7 @@ class Cell(BaseCell):
 
         raise Exception("Segment with id "+str(segment_id)+" not found in cell "+str(self.id))
 
-    def get_segment_by_substring(self, substring):
+    def get_segments_by_substring(self, substring):
         # type: (str) -> dict
         """Get a dictionary of segment IDs and the segment matching the specified substring
 
@@ -18149,7 +18149,7 @@ class Cell(BaseCell):
 
         raise Exception("Segment group with id "+str(sg_id)+" not found in cell "+str(self.id))
 
-    def get_segment_group_by_substring(self, substring):
+    def get_segment_groups_by_substring(self, substring):
         # type: (str) -> dict
         """Get a dictionary of segment group IDs and the segment groups matching the specified substring
 
