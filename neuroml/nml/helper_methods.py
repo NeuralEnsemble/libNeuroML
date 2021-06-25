@@ -817,7 +817,7 @@ cell_methods = MethodSpec(name='cell_methods',
 
         raise Exception("Segment with id "+str(segment_id)+" not found in cell "+str(self.id))
 
-    def get_segment_by_substring(self, substring):
+    def get_segments_by_substring(self, substring):
         # type: (str) -> dict
         """Get a dictionary of segment IDs and the segment matching the specified substring
 
@@ -1123,7 +1123,7 @@ cell_methods = MethodSpec(name='cell_methods',
 
         raise Exception("Segment group with id "+str(sg_id)+" not found in cell "+str(self.id))
 
-    def get_segment_group_by_substring(self, substring):
+    def get_segment_groups_by_substring(self, substring):
         # type: (str) -> dict
         """Get a dictionary of segment group IDs and the segment groups matching the specified substring
 
