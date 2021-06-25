@@ -816,6 +816,26 @@ cell_methods = MethodSpec(name='cell_methods',
 
         raise Exception("Segment with id "+str(segment_id)+" not found in cell "+str(self.id))
 
+    def get_segment_by_substring(self, substring):
+        # type (str) -> dict
+        """Get a dictionary of segment IDs and the segment matching the specified substring
+
+        :param substring: substring to match
+        :type substring: str
+        :return: dictionary with segment ID as key, and segment as value
+        :raises Exception: if no segments are found
+
+        """
+        segments = {}
+        if substring:
+            for segment in self.morphology.segments::
+                if substring in segment.id:
+                    segments[segment.id] = segment
+        if len(segments) == 0:
+            raise Exception("Segments with id matching "+str(substring)+" not found in cell "+str(self.id))
+        return segments
+
+
     # Get the proximal point of a segment, even the proximal field is None and
     # so the proximal point is on the parent (at a point set by fraction_along)
     def get_actual_proximal(self, segment_id):
@@ -1080,6 +1100,38 @@ cell_methods = MethodSpec(name='cell_methods',
 
         return ord_segs
 
+    def get_segment_group(self, sg_id):
+        # type (str) -> SegmentGroup
+        """Return the SegmentGroup object for the specified segment group id.
+
+        :param sg_id: id of segment group to find
+        :type sg_id: str
+        :returns: SegmentGroup object of specified ID
+        :raises Exception: if segment group is not found in cell
+        """
+        if sg_id:
+            for sg in self.morphology.segment_groups:
+                if sg.id == sg_id:
+                    return sg
+
+        raise Exception("Segment group with id "+str(sg_id)+" not found in cell "+str(self.id))
+
+    def get_segment_group_by_substring(self, substring):
+        # type (str) -> dict
+        """Get a dictionary of segment group IDs and the segment groups matching the specified substring
+
+        :param substring: substring to match
+        :type substring: str
+        :return: dictionary with segment group ID as key, and segment group as value
+        :raises Exception: if no segment groups are not found in cell
+        """
+        sgs = {}
+        for sg in self.morphology.segment_groups:
+            if substring in sg.id:
+                sgs[sg.id] = sg
+        if len(sgs) == 0:
+            raise Exception("Segment group with id matching "+str(substring)+" not found in cell "+str(self.id))
+        return sgs
 
 
     def summary(self):
