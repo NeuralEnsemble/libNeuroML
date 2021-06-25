@@ -829,7 +829,7 @@ cell_methods = MethodSpec(name='cell_methods',
         """
         segments = {}
         if substring:
-            for segment in self.morphology.segments::
+            for segment in self.morphology.segments:
                 if substring in segment.id:
                     segments[segment.id] = segment
         if len(segments) == 0:
