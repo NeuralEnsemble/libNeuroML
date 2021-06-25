@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Jun 25 13:12:33 2021 by generateDS.py version 2.30.11.
+# Generated Fri Jun 25 16:58:24 2021 by generateDS.py version 2.30.11.
 # Python 2.7.18 (default, May 19 2021, 00:00:00)  [GCC 11.1.1 20210428 (Red Hat 11.1.1-1)]
 #
 # Command line options:
@@ -17828,6 +17828,7 @@ class Cell(BaseCell):
 
     # Get segment object by its id
     def get_segment(self, segment_id):
+        # type: (str) -> Segment
         """Get segment object by its id
 
         :param segment_id: ID of segment
@@ -17842,10 +17843,30 @@ class Cell(BaseCell):
 
         raise Exception("Segment with id "+str(segment_id)+" not found in cell "+str(self.id))
 
+    def get_segments_by_substring(self, substring):
+        # type: (str) -> dict
+        """Get a dictionary of segment IDs and the segment matching the specified substring
+
+        :param substring: substring to match
+        :type substring: str
+        :return: dictionary with segment ID as key, and segment as value
+        :raises Exception: if no segments are found
+
+        """
+        segments = {}
+        if substring:
+            for segment in self.morphology.segments:
+                if substring in segment.id:
+                    segments[segment.id] = segment
+        if len(segments) == 0:
+            raise Exception("Segments with id matching "+str(substring)+" not found in cell "+str(self.id))
+        return segments
+
+
     # Get the proximal point of a segment, even the proximal field is None and
     # so the proximal point is on the parent (at a point set by fraction_along)
     def get_actual_proximal(self, segment_id):
-
+        # type: (str) -> Point3DWithDiam
         """Get the proximal point of a segment.
 
         Get the proximal point of a segment, even the proximal field is None
@@ -17875,6 +17896,7 @@ class Cell(BaseCell):
             return p
 
     def get_segment_length(self, segment_id):
+        # type: (str) -> float
         """Get the length of the segment.
 
         :param segment_id: ID of segment
@@ -17892,6 +17914,7 @@ class Cell(BaseCell):
             return length
 
     def get_segment_surface_area(self, segment_id):
+        # type: (str) -> float
         """Get the surface area of the segment.
 
         :param segment_id: ID of the segment
@@ -17909,6 +17932,7 @@ class Cell(BaseCell):
             return temp_seg.surface_area
 
     def get_segment_volume(self, segment_id):
+        # type: (str) -> float
         """Get volume of segment
 
         :param segment_id: ID of the segment
@@ -17925,6 +17949,7 @@ class Cell(BaseCell):
             return temp_seg.volume
 
     def get_segment_ids_vs_segments(self):
+        # type: () -> Dict
         """Get a dictionary of segment IDs and the segments in the cell.
 
         :return: dictionary with segment ID as key, and segment as value
@@ -17939,6 +17964,7 @@ class Cell(BaseCell):
     def get_all_segments_in_group(self,
                                   segment_group,
                                   assume_all_means_all=True):
+        # type: (SegmentGroup, bool) -> List[Segment]
         """Get all the segments in a segment group of the cell.
 
         :param segment_group: segment group to get all segments of
@@ -17985,6 +18011,7 @@ class Cell(BaseCell):
                                        include_cumulative_lengths=False,
                                        include_path_lengths=False,
                                        path_length_metric="Path Length from root"): # Only option supported
+        # type: (List, bool, bool, bool, str) -> Dict
         """
         Get ordered list of segments in specified groups
 
@@ -18106,6 +18133,38 @@ class Cell(BaseCell):
 
         return ord_segs
 
+    def get_segment_group(self, sg_id):
+        # type: (str) -> SegmentGroup
+        """Return the SegmentGroup object for the specified segment group id.
+
+        :param sg_id: id of segment group to find
+        :type sg_id: str
+        :returns: SegmentGroup object of specified ID
+        :raises Exception: if segment group is not found in cell
+        """
+        if sg_id:
+            for sg in self.morphology.segment_groups:
+                if sg.id == sg_id:
+                    return sg
+
+        raise Exception("Segment group with id "+str(sg_id)+" not found in cell "+str(self.id))
+
+    def get_segment_groups_by_substring(self, substring):
+        # type: (str) -> dict
+        """Get a dictionary of segment group IDs and the segment groups matching the specified substring
+
+        :param substring: substring to match
+        :type substring: str
+        :return: dictionary with segment group ID as key, and segment group as value
+        :raises Exception: if no segment groups are not found in cell
+        """
+        sgs = {}
+        for sg in self.morphology.segment_groups:
+            if substring in sg.id:
+                sgs[sg.id] = sg
+        if len(sgs) == 0:
+            raise Exception("Segment group with id matching "+str(substring)+" not found in cell "+str(self.id))
+        return sgs
 
 
     def summary(self):
