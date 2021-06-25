@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Jun 25 16:15:07 2021 by generateDS.py version 2.30.11.
+# Generated Fri Jun 25 16:21:11 2021 by generateDS.py version 2.30.11.
 # Python 2.7.18 (default, May 19 2021, 00:00:00)  [GCC 11.1.1 20210428 (Red Hat 11.1.1-1)]
 #
 # Command line options:
@@ -17855,7 +17855,7 @@ class Cell(BaseCell):
         """
         segments = {}
         if substring:
-            for segment in self.morphology.segments::
+            for segment in self.morphology.segments:
                 if substring in segment.id:
                     segments[segment.id] = segment
         if len(segments) == 0:
