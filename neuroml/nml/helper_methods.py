@@ -645,7 +645,7 @@ input_cell_ids = MethodSpec(name='input_cell_ids',
             return int(id_string.split('/')[2])
 
     def get_target_cell_id(self):
-    """Get ID of target cell.  """
+        """Get ID of target cell.  """
 
         return self._get_cell_id(self.target)
 
