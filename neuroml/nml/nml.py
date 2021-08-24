@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Jun 25 16:58:24 2021 by generateDS.py version 2.30.11.
+# Generated Tue Aug 24 12:06:28 2021 by generateDS.py version 2.30.11.
 # Python 2.7.18 (default, May 19 2021, 00:00:00)  [GCC 11.1.1 20210428 (Red Hat 11.1.1-1)]
 #
 # Command line options:
@@ -3496,6 +3496,13 @@ class Point3DWithDiam(GeneratedsSuper):
         return str(self)
 
     def distance_to(self, other_3d_point):
+        """Find the distance between this point and another.
+
+        :param other_3d_point: other 3D point to calculate distance to
+        :type other_3d_point: Point3DWithDiam
+        :returns: distance between the two points
+        :rtype: float
+        """
         a_x = self.x
         a_y = self.y
         a_z = self.z
@@ -5980,7 +5987,6 @@ class Instance(GeneratedsSuper):
             self.location = obj_
             obj_.original_tagname_ = 'location'
 
-
     def __str__(self):
 
         return "Instance "+str(self.id)+ (" at location: "+str(self.location) if self.location else "")
@@ -6333,14 +6339,22 @@ class ExplicitInput(GeneratedsSuper):
             return int(id_string.split('/')[2])
 
     def get_target_cell_id(self):
+    """Get ID of target cell.  """
 
         return self._get_cell_id(self.target)
 
     def get_segment_id(self):
+        """Get the ID of the segment.
 
+        Returns 0 if segment_id was not set.
+        """
         return int(self.segment_id) if self.segment_id else 0
 
     def get_fraction_along(self):
+        """Get fraction along.
+
+        Returns 0.5 is fraction_along was not set.
+        """
 
         return float(self.fraction_along) if self.fraction_along else 0.5
 
@@ -6529,14 +6543,22 @@ class Input(GeneratedsSuper):
             return int(id_string.split('/')[2])
 
     def get_target_cell_id(self):
+    """Get ID of target cell.  """
 
         return self._get_cell_id(self.target)
 
     def get_segment_id(self):
+        """Get the ID of the segment.
 
+        Returns 0 if segment_id was not set.
+        """
         return int(self.segment_id) if self.segment_id else 0
 
     def get_fraction_along(self):
+        """Get fraction along.
+
+        Returns 0.5 is fraction_along was not set.
+        """
 
         return float(self.fraction_along) if self.fraction_along else 0.5
 
@@ -6627,6 +6649,10 @@ class InputW(Input):
         pass
 
     def get_weight(self):
+        """Get weight.
+
+        If weight is not set, the default value of 1.0 is returned.
+        """
 
         return float(self.weight) if self.weight!=None else 1.0
 
@@ -7295,6 +7321,7 @@ class InputList(Base):
         super(InputList, self).buildChildren(child_, node, nodeName_, True)
 
     def exportHdf5(self, h5file, h5Group):
+        """Export to HDF5 file.  """
         #print("Exporting InputList: "+str(self.id)+" as HDF5")
         
 
@@ -7785,6 +7812,7 @@ class Population(Standalone):
         super(Population, self).buildChildren(child_, node, nodeName_, True)
 
     def exportHdf5(self, h5file, h5Group):
+        """Export to HDF5 file.  """
         #print("Exporting Population: "+str(self.id)+" as HDF5")
         
 
@@ -8284,6 +8312,12 @@ class Network(Standalone):
 
     warn_count = 0
     def get_by_id(self,id):
+        """Get a component by its ID
+
+        :param id: ID of component to find
+        :type id: str
+        :returns:  component with specified ID or None if no component with specified ID found
+        """
         all_ids = []
         for ms in self.member_data_items_:
             mlist = self.__getattribute__(ms.name)
@@ -8308,6 +8342,7 @@ class Network(Standalone):
 
     
     def exportHdf5(self, h5file, h5Group):
+        """Export to HDF5 file.  """
         #print("Exporting Network: "+str(self.id)+" as HDF5")
         
 
@@ -12390,6 +12425,11 @@ class Segment(BaseNonNegativeIntegerId):
         super(Segment, self).buildChildren(child_, node, nodeName_, True)
     @property
     def length(self):
+        """Get the length of the segment.
+
+        :returns: length of the segment
+        :rtype: float
+        """
 
         if self.proximal==None:
             raise Exception('Cannot get length of segment '+str(self.id)+' using the length property, since no proximal point is set on it (the proximal point comes from the parent segment). Use the method get_segment_length(segment_id) on the cell instead.')
@@ -12416,6 +12456,11 @@ class Segment(BaseNonNegativeIntegerId):
 
     @property
     def volume(self):
+        """Get the volume of the segment.
+
+        :returns: volume of segment
+        :rtype: float
+        """
 
         from math import pi
         if self.proximal==None:
@@ -12439,6 +12484,11 @@ class Segment(BaseNonNegativeIntegerId):
     
     @property
     def surface_area(self):
+        """Get the surface area of the segment.
+
+        :returns: surface area of segment
+        :rtype: float
+        """
         from math import pi
         from math import sqrt
 
@@ -12560,6 +12610,11 @@ class Morphology(Standalone):
         super(Morphology, self).buildChildren(child_, node, nodeName_, True)
     @property
     def num_segments(self):
+        """Get the number of segments included in this cell morphology.
+
+        :returns: number of segments
+        :rtype: int
+        """
         return len(self.segments)
 # end class Morphology
 
@@ -16099,6 +16154,11 @@ class NeuroMLDocument(Standalone):
 
 
     def summary(self, show_includes=True, show_non_network=True):
+        """Get a pretty-printed summary of the complete NeuroMLDocument.
+
+        This includes information on the various Components included in the
+        NeuroMLDocument: networks, cells, projections, synapses, and so on.
+        """
 
         import inspect
 
@@ -16225,6 +16285,12 @@ class NeuroMLDocument(Standalone):
     warn_count = 0
 
     def get_by_id(self,id):
+        """Get a component by specifying its ID.
+
+        :param id: id of Component to get
+        :type id: str
+        :returns: Component with given ID or None if no Component with provided ID was found
+        """
         if len(id)==0:
             import inspect
             callframe = inspect.getouterframes(inspect.currentframe(), 2)
@@ -16249,6 +16315,11 @@ class NeuroMLDocument(Standalone):
         return None
 
     def append(self,element):
+        """Append an element
+
+        :param element: element to append
+        :type element: Object
+        """
         from neuroml.utils import append_to_element
         append_to_element(self,element)
 
@@ -16591,6 +16662,7 @@ class ContinuousProjection(BaseProjection):
         super(ContinuousProjection, self).buildChildren(child_, node, nodeName_, True)
 
     def exportHdf5(self, h5file, h5Group):
+        """Export to HDF5 file.  """
         #print("Exporting ContinuousProjection: "+str(self.id)+" as HDF5")
         
 
@@ -16784,6 +16856,7 @@ class ElectricalProjection(BaseProjection):
         super(ElectricalProjection, self).buildChildren(child_, node, nodeName_, True)
 
     def exportHdf5(self, h5file, h5Group):
+        """Export to HDF5 file.  """
         #print("Exporting ElectricalProjection: "+str(self.id)+" as HDF5")
         
 
@@ -17301,6 +17374,7 @@ class Projection(BaseProjection):
         super(Projection, self).buildChildren(child_, node, nodeName_, True)
 
     def exportHdf5(self, h5file, h5Group):
+        """Export to HDF5 file.  """
         #print("Exporting Projection: "+str(self.id)+" as HDF5")
         
 
@@ -20714,27 +20788,41 @@ class ContinuousConnection(BaseConnectionNewFormat):
         return self._get_cell_id(self.post_cell)
 
     def get_pre_segment_id(self):
+        """Get the ID of the pre-synpatic segment
+
+        :returns: ID of pre-synaptic segment.
+        :rtype: str
+        """
 
         return int(self.pre_segment)
 
     def get_post_segment_id(self):
+        """Get the ID of the post-synpatic segment
+
+        :returns: ID of post-synaptic segment.
+        :rtype: str
+        """
 
         return int(self.post_segment)
 
     def get_pre_fraction_along(self):
+        """Get pre-synaptic fraction along information"""
 
         return float(self.pre_fraction_along)
 
     def get_post_fraction_along(self):
+        """Get post-synaptic fraction along information"""
 
         return float(self.post_fraction_along)
 
 
     def get_pre_info(self):
+        """Get pre-synaptic information summary"""
 
         return str(self.get_pre_cell_id())+(':'+str(self.get_pre_segment_id())+'('+ '%.5f'%self.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
 
     def get_post_info(self):
+        """Get post-synaptic information summary"""
 
         return str(self.get_post_cell_id())+(':'+str(self.get_post_segment_id())+'('+ '%.5f'%self.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
 
@@ -20843,10 +20931,20 @@ class ElectricalConnection(BaseConnectionNewFormat):
             return int(float(id_string))
 
     def get_pre_cell_id(self):
+        """Get the ID of the pre-synaptic cell
+
+        :returns: ID of pre-synaptic cell
+        :rtype: str
+        """
 
         return self._get_cell_id(self.pre_cell)
 
     def get_post_cell_id(self):
+        """Get the ID of the post-synaptic cell
+
+        :returns: ID of post-synaptic cell
+        :rtype: str
+        """
 
         return self._get_cell_id(self.post_cell)
 
@@ -20986,35 +21084,59 @@ class ConnectionWD(BaseConnectionOldFormat):
             return int(id_string.split('/')[2])
 
     def get_pre_cell_id(self):
+        """Get the ID of the pre-synaptic cell
+
+        :returns: ID of pre-synaptic cell
+        :rtype: str
+        """
 
         return self._get_cell_id(self.pre_cell_id)
 
     def get_post_cell_id(self):
+        """Get the ID of the post-synaptic cell
+
+        :returns: ID of post-synaptic cell
+        :rtype: str
+        """
 
         return self._get_cell_id(self.post_cell_id)
 
     def get_pre_segment_id(self):
+        """Get the ID of the pre-synpatic segment
+
+        :returns: ID of pre-synaptic segment.
+        :rtype: str
+        """
 
         return int(self.pre_segment_id)
 
     def get_post_segment_id(self):
+        """Get the ID of the post-synpatic segment
+
+        :returns: ID of post-synaptic segment.
+        :rtype: str
+        """
 
         return int(self.post_segment_id)
 
     def get_pre_fraction_along(self):
+        """Get pre-synaptic fraction along information"""
 
         return float(self.pre_fraction_along)
 
     def get_post_fraction_along(self):
+        """Get post-synaptic fraction along information"""
 
         return float(self.post_fraction_along)
 
 
     def get_pre_info(self):
+        """Get pre-synaptic information summary"""
 
         return str(self.get_pre_cell_id())+(':'+str(self.get_pre_segment_id())+'('+ '%.5f'%self.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
 
     def get_post_info(self):
+        """Get post-synaptic information summary"""
 
         return str(self.get_post_cell_id())+(':'+str(self.get_post_segment_id())+'('+ '%.5f'%self.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
 
@@ -21028,6 +21150,11 @@ class ConnectionWD(BaseConnectionOldFormat):
         return "Connection "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())+             ", weight: "+'%f' % (float(self.weight))+", delay: "+'%.5f' % (self.get_delay_in_ms())+" ms"
 
     def get_delay_in_ms(self):
+        """Get connection delay in milli seconds
+
+        :returns: connection delay in milli seconds
+        :rtype: float
+        """
         if 'ms' in self.delay:
             return float(self.delay[:-2].strip())
         elif 's' in self.delay:
@@ -21110,35 +21237,59 @@ class Connection(BaseConnectionOldFormat):
             return int(id_string.split('/')[2])
 
     def get_pre_cell_id(self):
+        """Get the ID of the pre-synaptic cell
+
+        :returns: ID of pre-synaptic cell
+        :rtype: str
+        """
 
         return self._get_cell_id(self.pre_cell_id)
 
     def get_post_cell_id(self):
+        """Get the ID of the post-synaptic cell
+
+        :returns: ID of post-synaptic cell
+        :rtype: str
+        """
 
         return self._get_cell_id(self.post_cell_id)
 
     def get_pre_segment_id(self):
+        """Get the ID of the pre-synpatic segment
+
+        :returns: ID of pre-synaptic segment.
+        :rtype: str
+        """
 
         return int(self.pre_segment_id)
 
     def get_post_segment_id(self):
+        """Get the ID of the post-synpatic segment
+
+        :returns: ID of post-synaptic segment.
+        :rtype: str
+        """
 
         return int(self.post_segment_id)
 
     def get_pre_fraction_along(self):
+        """Get pre-synaptic fraction along information"""
 
         return float(self.pre_fraction_along)
 
     def get_post_fraction_along(self):
+        """Get post-synaptic fraction along information"""
 
         return float(self.post_fraction_along)
 
 
     def get_pre_info(self):
+        """Get pre-synaptic information summary"""
 
         return str(self.get_pre_cell_id())+(':'+str(self.get_pre_segment_id())+'('+ '%.5f'%self.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
 
     def get_post_info(self):
+        """Get post-synaptic information summary"""
 
         return str(self.get_post_cell_id())+(':'+str(self.get_post_segment_id())+'('+ '%.5f'%self.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
 
@@ -23616,6 +23767,14 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
         pass
 
     def get_weight(self):
+        """Get the weight of the connection
+
+        If a weight is not set (or is set to None), returns the default value
+        of 1.0.
+
+        :returns: weight of connection or 1.0 if not set
+        :rtype: float
+        """
 
         return float(self.weight) if self.weight!=None else 1.0
 
