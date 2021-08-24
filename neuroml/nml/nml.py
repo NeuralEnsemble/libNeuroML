@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Aug 24 12:09:50 2021 by generateDS.py version 2.30.11.
+# Generated Tue Aug 24 12:16:12 2021 by generateDS.py version 2.30.11.
 # Python 2.7.18 (default, May 19 2021, 00:00:00)  [GCC 11.1.1 20210428 (Red Hat 11.1.1-1)]
 #
 # Command line options:
@@ -20780,10 +20780,20 @@ class ContinuousConnection(BaseConnectionNewFormat):
 
 
     def get_pre_cell_id(self):
+        """Get the ID of the pre-synaptic cell
+
+        :returns: ID of pre-synaptic cell
+        :rtype: str
+        """
 
         return self._get_cell_id(self.pre_cell)
 
     def get_post_cell_id(self):
+        """Get the ID of the post-synaptic cell
+
+        :returns: ID of post-synaptic cell
+        :rtype: str
+        """
 
         return self._get_cell_id(self.post_cell)
 
@@ -20949,27 +20959,41 @@ class ElectricalConnection(BaseConnectionNewFormat):
         return self._get_cell_id(self.post_cell)
 
     def get_pre_segment_id(self):
+        """Get the ID of the pre-synpatic segment
+
+        :returns: ID of pre-synaptic segment.
+        :rtype: str
+        """
 
         return int(self.pre_segment)
 
     def get_post_segment_id(self):
+        """Get the ID of the post-synpatic segment
+
+        :returns: ID of post-synaptic segment.
+        :rtype: str
+        """
 
         return int(self.post_segment)
 
     def get_pre_fraction_along(self):
+        """Get pre-synaptic fraction along information"""
 
         return float(self.pre_fraction_along)
 
     def get_post_fraction_along(self):
+        """Get post-synaptic fraction along information"""
 
         return float(self.post_fraction_along)
 
 
     def get_pre_info(self):
+        """Get pre-synaptic information summary"""
 
         return str(self.get_pre_cell_id())+(':'+str(self.get_pre_segment_id())+'('+ '%.5f'%self.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
 
     def get_post_info(self):
+        """Get post-synaptic information summary"""
 
         return str(self.get_post_cell_id())+(':'+str(self.get_post_segment_id())+'('+ '%.5f'%self.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
 
@@ -23675,6 +23699,10 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
         pass
 
     def get_weight(self):
+        """Get weight.
+
+        If weight is not set, the default value of 1.0 is returned.
+        """
 
         return float(self.weight) if self.weight!=None else 1.0
 
