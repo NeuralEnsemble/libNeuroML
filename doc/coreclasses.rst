@@ -35,8 +35,8 @@ Please also note that this module is also included in the top level of the `neur
 
 
 
-API documentation
-~~~~~~~~~~~~~~~~~
+Class documentation
+~~~~~~~~~~~~~~~~~~~~
 
 .. automodule:: neuroml.nml.nml
     :members:
