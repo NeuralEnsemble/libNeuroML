@@ -5,9 +5,9 @@ Utilities for checking generated code
 """
 import os.path
 import sys
+import inspect
 
 import neuroml
-import inspect
 
 
 def validate_neuroml2(file_name):
@@ -18,13 +18,9 @@ def validate_neuroml2(file_name):
     :type file_name: str
     """
     from lxml import etree
-    try:
-        from urllib2 import urlopen  # Python 2
-    except:
-        from urllib.request import urlopen # Python 3
-        
+
     xsd_file = os.path.join(os.path.dirname(__file__), 'nml/NeuroML_%s.xsd'%neuroml.current_neuroml_version)
-   
+
     with open(xsd_file) as schema_file:
         xmlschema = etree.XMLSchema(etree.parse(schema_file))
         print("Validating %s against %s" %(file_name, xsd_file))
@@ -34,7 +30,6 @@ def validate_neuroml2(file_name):
         print("It's valid!")
 
 
-# Return True if .nml file is valid else false
 def is_valid_neuroml2(file_name):
     # (str) -> Bool
     """Check if a file is valid NeuroML2.
@@ -45,10 +40,6 @@ def is_valid_neuroml2(file_name):
     :rtype: Boolean
     """
     from lxml import etree
-    try:
-        from urllib2 import urlopen  # Python 2
-    except:
-        from urllib.request import urlopen  # Python 3
 
     xsd_file = os.path.join(os.path.dirname(__file__), 'nml/NeuroML_%s.xsd' % neuroml.current_neuroml_version)
 
@@ -65,8 +56,8 @@ def print_summary(nml_file_name):
     :type nml_file_name: str
     """
     print(get_summary(nml_file_name))
-    
-    
+
+
 def get_summary(nml_file_name):
     # (str) -> str
     """Get a summary of the given NeuroML file.
@@ -78,10 +69,10 @@ def get_summary(nml_file_name):
     """
     from neuroml.loaders import read_neuroml2_file
     nml_doc = read_neuroml2_file(nml_file_name,include_includes=True, verbose=False, optimized=True)
-    
+
     return nml_doc.summary(show_includes=False)
 
-    
+
 def add_all_to_document(nml_doc_src, nml_doc_tgt, verbose=False):
     """Add all members of the source NeuroML document to the target NeuroML document.
 
@@ -101,7 +92,7 @@ def add_all_to_document(nml_doc_src, nml_doc_tgt, verbose=False):
                 and not memb[0].endswith('_'):
             for entry in memb[1]:
                 if memb[0] != 'includes':
-                    
+
                     added = False
                     for c in getattr(nml_doc_tgt, memb[0]):
                         if hasattr(c,'id') and c.id == entry.id:
@@ -111,10 +102,11 @@ def add_all_to_document(nml_doc_src, nml_doc_tgt, verbose=False):
                         #    %(entry.id if hasattr(entry,'id') else entry.name, memb[0]))
                         getattr(nml_doc_tgt, memb[0]).append(entry)
                         added = True
-                        
+
                     if not added:
                         raise Exception("Could not add %s from %s to %s"%(entry, nml_doc_src, nml_doc_tgt))
-                    
+
+
 def append_to_element(parent, child):
     """Append a child element to a parent Component
 
@@ -124,7 +116,6 @@ def append_to_element(parent, child):
     :type child: Object
     :raises Exception: when the child could not be added to the parent
     """
-    import inspect
     membs = inspect.getmembers(parent)
     #print("Adding %s to element %s"%(child, parent))
     mappings = {}
@@ -142,10 +133,11 @@ def append_to_element(parent, child):
                     getattr(parent, memb[0]).append(child)
                     #print("Adding %s to %s in %s?"%(child.__class__.__name__, memb[0], parent.__class__.__name__))
                     added = True
-                
+
     if not added:
         raise Exception("Could not add %s to %s"%(child, parent))
-        
+
+
 def has_segment_fraction_info(connections):
     """Check if connections include fraction information
 
@@ -165,14 +157,14 @@ def has_segment_fraction_info(connections):
     #print("Checked connections: [%s,...], no_seg_fract_info: %s"%(connections[0],no_seg_fract_info))
     return not no_seg_fract_info
 
-                
+
 def main():
     if len(sys.argv)!=2:
         print("Please specify the name of the NeuroML2 file...")
         exit(1)
-        
+
     print_summary(sys.argv[1])
+
 
 if __name__ == '__main__':
     main()
-
