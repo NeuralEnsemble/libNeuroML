@@ -446,27 +446,41 @@ elec_connection_cell_ids = MethodSpec(name='elec_connection_cell_ids',
         return self._get_cell_id(self.post_cell)
 
     def get_pre_segment_id(self):
+        """Get the ID of the pre-synpatic segment
+
+        :returns: ID of pre-synaptic segment.
+        :rtype: str
+        """
 
         return int(self.pre_segment)
 
     def get_post_segment_id(self):
+        """Get the ID of the post-synpatic segment
+
+        :returns: ID of post-synaptic segment.
+        :rtype: str
+        """
 
         return int(self.post_segment)
 
     def get_pre_fraction_along(self):
+        """Get pre-synaptic fraction along information"""
 
         return float(self.pre_fraction_along)
 
     def get_post_fraction_along(self):
+        """Get post-synaptic fraction along information"""
 
         return float(self.post_fraction_along)
 
 
     def get_pre_info(self):
+        """Get pre-synaptic information summary"""
 
         return str(self.get_pre_cell_id())+(':'+str(self.get_pre_segment_id())+'('+ 'PERCENTAGE.5f'PERCENTAGEself.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
 
     def get_post_info(self):
+        """Get post-synaptic information summary"""
 
         return str(self.get_post_cell_id())+(':'+str(self.get_post_segment_id())+'('+ 'PERCENTAGE.5f'PERCENTAGEself.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
 
@@ -509,6 +523,10 @@ cont_connection_instance_w = MethodSpec(name='cont_connection_instance_w',
     source='''\
 
     def get_weight(self):
+        """Get weight.
+
+        If weight is not set, the default value of 1.0 is returned.
+        """
 
         return float(self.weight) if self.weight!=None else 1.0
 
@@ -532,10 +550,20 @@ cont_connection_cell_ids = MethodSpec(name='cont_connection_cell_ids',
 
 
     def get_pre_cell_id(self):
+        """Get the ID of the pre-synaptic cell
+
+        :returns: ID of pre-synaptic cell
+        :rtype: str
+        """
 
         return self._get_cell_id(self.pre_cell)
 
     def get_post_cell_id(self):
+        """Get the ID of the post-synaptic cell
+
+        :returns: ID of post-synaptic cell
+        :rtype: str
+        """
 
         return self._get_cell_id(self.post_cell)
 
