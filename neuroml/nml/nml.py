@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Aug 24 12:06:28 2021 by generateDS.py version 2.30.11.
+# Generated Tue Aug 24 12:09:50 2021 by generateDS.py version 2.30.11.
 # Python 2.7.18 (default, May 19 2021, 00:00:00)  [GCC 11.1.1 20210428 (Red Hat 11.1.1-1)]
 #
 # Command line options:
@@ -6339,7 +6339,7 @@ class ExplicitInput(GeneratedsSuper):
             return int(id_string.split('/')[2])
 
     def get_target_cell_id(self):
-    """Get ID of target cell.  """
+        """Get ID of target cell.  """
 
         return self._get_cell_id(self.target)
 
@@ -6543,7 +6543,7 @@ class Input(GeneratedsSuper):
             return int(id_string.split('/')[2])
 
     def get_target_cell_id(self):
-    """Get ID of target cell.  """
+        """Get ID of target cell.  """
 
         return self._get_cell_id(self.target)
 
