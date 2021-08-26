@@ -29,6 +29,16 @@ If these are not included in the output, generateds_config.py has not run, and t
 
 ### Changelog
 
+#### August 26, 2021
+
+Author: @sanjayankur31
+
+Generate with Python 3.9, generateDS version 2.39.9
+
+- all tests pass
+- requires us to not use `--use-getter-setter=none`, which causes test failures.
+- requires us to manually patch one or two conversions to work around https://sourceforge.net/p/generateds/tickets/13/
+
 #### March 26, 2020
 
 Author: @sanjayankur31
