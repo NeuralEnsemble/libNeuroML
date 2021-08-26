@@ -11,12 +11,15 @@ import sys
 
 sys.setrecursionlimit(10000)
 
+
 def remove_curlies(string):
     return re.sub("{.*}","",string)
+
 
 def to_lowercase_with_underscores(string):
     s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', string)
     return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+
 
 def to_camelback(string):
     string_list = list(string)
@@ -29,6 +32,7 @@ def to_camelback(string):
     string = ''.join(string_list)
 
     return str(string)
+
 
 def traverse_doc(queue,rename):
     """Recursive function to traverse the nodes of a tree in
@@ -71,10 +75,10 @@ def _node_to_python(node):
 
 filename = variables['schema_name']
 
-import StringIO
+import io
 import process_includes
 
-outfile = StringIO.StringIO()
+outfile = io.StringIO()
 infile = open(filename, 'r')
 
 process_includes.process_include_files(infile, outfile,
@@ -140,12 +144,12 @@ print("NameTable is as follows:")
 print(NameTable)
 
 print("Saving NameTable to csv file")
-writer = csv.writer(open('name_table.csv', 'wb'))
-for key, value in NameTable.items():
-   writer.writerow([key, value])
+writer = csv.writer(open('name_table.csv', 'w'))
+for key, value in list(NameTable.items()):
+    writer.writerow([key, value])
 
-print ("Saving name changes table to csv file")
-changes_writer = csv.writer(open('changed_names.csv','wb'))
+print("Saving name changes table to csv file")
+changes_writer = csv.writer(open('changed_names.csv','w'))
 for key in NameTable:
     value = NameTable[key]
     if key != value:
