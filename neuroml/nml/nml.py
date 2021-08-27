@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Aug 26 17:22:09 2021 by generateDS.py version 2.39.9.
+# Generated Fri Aug 27 11:33:40 2021 by generateDS.py version 2.39.9.
 # Python 3.9.6 (default, Jul 16 2021, 00:00:00)  [GCC 11.1.1 20210531 (Red Hat 11.1.1-3)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
-#   ('--use-getter-setter', 'new')
+#   ('--use-getter-setter', 'none')
 #   ('--no-warnings', '')
 #   ('--silence', '')
 #   ('--user-methods', './helper_methods.py')
@@ -16,7 +16,7 @@
 #   NeuroML_v2.2.xsd
 #
 # Command line:
-#   /home/asinha/.virtualenvs/generateds-39/bin/generateDS.py -o "nml.py" --use-getter-setter="new" --no-warnings --silence --user-methods="./helper_methods.py" NeuroML_v2.2.xsd
+#   /home/asinha/.virtualenvs/generateds-39/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --no-warnings --silence --user-methods="./helper_methods.py" NeuroML_v2.2.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -1064,18 +1064,6 @@ class Property(GeneratedsSuper):
         else:
             return Property(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_tag(self):
-        return self.tag
-    def set_tag(self, tag):
-        self.tag = tag
-    def get_value(self):
-        return self.value
-    def set_value(self, value):
-        self.value = value
     def _hasContent(self):
         if (
 
@@ -1170,14 +1158,6 @@ class Annotation(GeneratedsSuper):
         else:
             return Annotation(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
     def _hasContent(self):
         if (
             self.anytypeobjs_
@@ -1235,7 +1215,7 @@ class Annotation(GeneratedsSuper):
         pass
     def _buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         content_ = self.gds_build_any(child_, 'Annotation')
-        self.add_anytypeobjs_(content_)
+        self.anytypeobjs_.append(content_)
 # end class Annotation
 
 
@@ -1316,92 +1296,6 @@ class ComponentType(GeneratedsSuper):
         else:
             return ComponentType(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_Property(self):
-        return self.Property
-    def set_Property(self, Property):
-        self.Property = Property
-    def add_Property(self, value):
-        self.Property.append(value)
-    def insert_Property_at(self, index, value):
-        self.Property.insert(index, value)
-    def replace_Property_at(self, index, value):
-        self.Property[index] = value
-    def get_Parameter(self):
-        return self.Parameter
-    def set_Parameter(self, Parameter):
-        self.Parameter = Parameter
-    def add_Parameter(self, value):
-        self.Parameter.append(value)
-    def insert_Parameter_at(self, index, value):
-        self.Parameter.insert(index, value)
-    def replace_Parameter_at(self, index, value):
-        self.Parameter[index] = value
-    def get_Constant(self):
-        return self.Constant
-    def set_Constant(self, Constant):
-        self.Constant = Constant
-    def add_Constant(self, value):
-        self.Constant.append(value)
-    def insert_Constant_at(self, index, value):
-        self.Constant.insert(index, value)
-    def replace_Constant_at(self, index, value):
-        self.Constant[index] = value
-    def get_Exposure(self):
-        return self.Exposure
-    def set_Exposure(self, Exposure):
-        self.Exposure = Exposure
-    def add_Exposure(self, value):
-        self.Exposure.append(value)
-    def insert_Exposure_at(self, index, value):
-        self.Exposure.insert(index, value)
-    def replace_Exposure_at(self, index, value):
-        self.Exposure[index] = value
-    def get_Requirement(self):
-        return self.Requirement
-    def set_Requirement(self, Requirement):
-        self.Requirement = Requirement
-    def add_Requirement(self, value):
-        self.Requirement.append(value)
-    def insert_Requirement_at(self, index, value):
-        self.Requirement.insert(index, value)
-    def replace_Requirement_at(self, index, value):
-        self.Requirement[index] = value
-    def get_InstanceRequirement(self):
-        return self.InstanceRequirement
-    def set_InstanceRequirement(self, InstanceRequirement):
-        self.InstanceRequirement = InstanceRequirement
-    def add_InstanceRequirement(self, value):
-        self.InstanceRequirement.append(value)
-    def insert_InstanceRequirement_at(self, index, value):
-        self.InstanceRequirement.insert(index, value)
-    def replace_InstanceRequirement_at(self, index, value):
-        self.InstanceRequirement[index] = value
-    def get_Dynamics(self):
-        return self.Dynamics
-    def set_Dynamics(self, Dynamics):
-        self.Dynamics = Dynamics
-    def add_Dynamics(self, value):
-        self.Dynamics.append(value)
-    def insert_Dynamics_at(self, index, value):
-        self.Dynamics.insert(index, value)
-    def replace_Dynamics_at(self, index, value):
-        self.Dynamics[index] = value
-    def get_name(self):
-        return self.name
-    def set_name(self, name):
-        self.name = name
-    def get_extends(self):
-        return self.extends
-    def set_extends(self, extends):
-        self.extends = extends
-    def get_description(self):
-        return self.description
-    def set_description(self, description):
-        self.description = description
     def _hasContent(self):
         if (
             self.Property or
@@ -1575,26 +1469,6 @@ class Constant(GeneratedsSuper):
         else:
             return Constant(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_name(self):
-        return self.name
-    def set_name(self, name):
-        self.name = name
-    def get_dimension(self):
-        return self.dimension
-    def set_dimension(self, dimension):
-        self.dimension = dimension
-    def get_value(self):
-        return self.value
-    def set_value(self, value):
-        self.value = value
-    def get_description(self):
-        return self.description
-    def set_description(self, description):
-        self.description = description
     def validate_Nml2Quantity(self, value):
         # Validate type Nml2Quantity, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -1719,22 +1593,6 @@ class Exposure(GeneratedsSuper):
         else:
             return Exposure(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_name(self):
-        return self.name
-    def set_name(self, name):
-        self.name = name
-    def get_dimension(self):
-        return self.dimension
-    def set_dimension(self, dimension):
-        self.dimension = dimension
-    def get_description(self):
-        return self.description
-    def set_description(self, description):
-        self.description = description
     def _hasContent(self):
         if (
 
@@ -1838,24 +1696,6 @@ class NamedDimensionalType(GeneratedsSuper):
         else:
             return NamedDimensionalType(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_name(self):
-        return self.name
-    def set_name(self, name):
-        self.name = name
-    def get_dimension(self):
-        return self.dimension
-    def set_dimension(self, dimension):
-        self.dimension = dimension
-    def get_description(self):
-        return self.description
-    def set_description(self, description):
-        self.description = description
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def _hasContent(self):
         if (
 
@@ -1974,28 +1814,6 @@ class NamedDimensionalVariable(GeneratedsSuper):
         else:
             return NamedDimensionalVariable(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_name(self):
-        return self.name
-    def set_name(self, name):
-        self.name = name
-    def get_dimension(self):
-        return self.dimension
-    def set_dimension(self, dimension):
-        self.dimension = dimension
-    def get_description(self):
-        return self.description
-    def set_description(self, description):
-        self.description = description
-    def get_exposure(self):
-        return self.exposure
-    def set_exposure(self, exposure):
-        self.exposure = exposure
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def _hasContent(self):
         if (
 
@@ -2109,10 +1927,6 @@ class Parameter(NamedDimensionalType):
         else:
             return Parameter(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
     def _hasContent(self):
         if (
             super(Parameter, self)._hasContent()
@@ -2193,14 +2007,6 @@ class LEMS_Property(NamedDimensionalType):
         else:
             return LEMS_Property(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_defaultValue(self):
-        return self.default_value
-    def set_defaultValue(self, default_value):
-        self.default_value = default_value
     def _hasContent(self):
         if (
             super(LEMS_Property, self)._hasContent()
@@ -2286,10 +2092,6 @@ class Requirement(NamedDimensionalType):
         else:
             return Requirement(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
     def _hasContent(self):
         if (
             super(Requirement, self)._hasContent()
@@ -2372,18 +2174,6 @@ class InstanceRequirement(GeneratedsSuper):
         else:
             return InstanceRequirement(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_name(self):
-        return self.name
-    def set_name(self, name):
-        self.name = name
-    def get_type(self):
-        return self.type
-    def set_type(self, type):
-        self.type = type
     def _hasContent(self):
         if (
 
@@ -2497,50 +2287,6 @@ class Dynamics(GeneratedsSuper):
         else:
             return Dynamics(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_StateVariable(self):
-        return self.StateVariable
-    def set_StateVariable(self, StateVariable):
-        self.StateVariable = StateVariable
-    def add_StateVariable(self, value):
-        self.StateVariable.append(value)
-    def insert_StateVariable_at(self, index, value):
-        self.StateVariable.insert(index, value)
-    def replace_StateVariable_at(self, index, value):
-        self.StateVariable[index] = value
-    def get_DerivedVariable(self):
-        return self.DerivedVariable
-    def set_DerivedVariable(self, DerivedVariable):
-        self.DerivedVariable = DerivedVariable
-    def add_DerivedVariable(self, value):
-        self.DerivedVariable.append(value)
-    def insert_DerivedVariable_at(self, index, value):
-        self.DerivedVariable.insert(index, value)
-    def replace_DerivedVariable_at(self, index, value):
-        self.DerivedVariable[index] = value
-    def get_ConditionalDerivedVariable(self):
-        return self.ConditionalDerivedVariable
-    def set_ConditionalDerivedVariable(self, ConditionalDerivedVariable):
-        self.ConditionalDerivedVariable = ConditionalDerivedVariable
-    def add_ConditionalDerivedVariable(self, value):
-        self.ConditionalDerivedVariable.append(value)
-    def insert_ConditionalDerivedVariable_at(self, index, value):
-        self.ConditionalDerivedVariable.insert(index, value)
-    def replace_ConditionalDerivedVariable_at(self, index, value):
-        self.ConditionalDerivedVariable[index] = value
-    def get_TimeDerivative(self):
-        return self.TimeDerivative
-    def set_TimeDerivative(self, TimeDerivative):
-        self.TimeDerivative = TimeDerivative
-    def add_TimeDerivative(self, value):
-        self.TimeDerivative.append(value)
-    def insert_TimeDerivative_at(self, index, value):
-        self.TimeDerivative.insert(index, value)
-    def replace_TimeDerivative_at(self, index, value):
-        self.TimeDerivative[index] = value
     def _hasContent(self):
         if (
             self.StateVariable or
@@ -2663,18 +2409,6 @@ class DerivedVariable(NamedDimensionalVariable):
         else:
             return DerivedVariable(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_value(self):
-        return self.value
-    def set_value(self, value):
-        self.value = value
-    def get_select(self):
-        return self.select
-    def set_select(self, select):
-        self.select = select
     def _hasContent(self):
         if (
             super(DerivedVariable, self)._hasContent()
@@ -2766,10 +2500,6 @@ class StateVariable(NamedDimensionalVariable):
         else:
             return StateVariable(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
     def _hasContent(self):
         if (
             super(StateVariable, self)._hasContent()
@@ -2856,20 +2586,6 @@ class ConditionalDerivedVariable(NamedDimensionalVariable):
         else:
             return ConditionalDerivedVariable(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_Case(self):
-        return self.Case
-    def set_Case(self, Case):
-        self.Case = Case
-    def add_Case(self, value):
-        self.Case.append(value)
-    def insert_Case_at(self, index, value):
-        self.Case.insert(index, value)
-    def replace_Case_at(self, index, value):
-        self.Case[index] = value
     def _hasContent(self):
         if (
             self.Case or
@@ -2964,18 +2680,6 @@ class Case(GeneratedsSuper):
         else:
             return Case(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_condition(self):
-        return self.condition
-    def set_condition(self, condition):
-        self.condition = condition
-    def get_value(self):
-        return self.value
-    def set_value(self, value):
-        self.value = value
     def _hasContent(self):
         if (
 
@@ -3068,18 +2772,6 @@ class TimeDerivative(GeneratedsSuper):
         else:
             return TimeDerivative(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_variable(self):
-        return self.variable
-    def set_variable(self, variable):
-        self.variable = variable
-    def get_value(self):
-        return self.value
-    def set_value(self, value):
-        self.value = value
     def _hasContent(self):
         if (
 
@@ -3169,14 +2861,6 @@ class IncludeType(GeneratedsSuper):
         else:
             return IncludeType(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_href(self):
-        return self.href
-    def set_href(self, href):
-        self.href = href
     def _hasContent(self):
         if (
 
@@ -3262,18 +2946,6 @@ class Q10ConductanceScaling(GeneratedsSuper):
         else:
             return Q10ConductanceScaling(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_q10Factor(self):
-        return self.q10_factor
-    def set_q10Factor(self, q10_factor):
-        self.q10_factor = q10_factor
-    def get_experimentalTemp(self):
-        return self.experimental_temp
-    def set_experimentalTemp(self, experimental_temp):
-        self.experimental_temp = experimental_temp
     def validate_Nml2Quantity_none(self, value):
         # Validate type Nml2Quantity_none, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -3396,26 +3068,6 @@ class Q10Settings(GeneratedsSuper):
         else:
             return Q10Settings(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_type(self):
-        return self.type
-    def set_type(self, type):
-        self.type = type
-    def get_fixedQ10(self):
-        return self.fixed_q10
-    def set_fixedQ10(self, fixed_q10):
-        self.fixed_q10 = fixed_q10
-    def get_q10Factor(self):
-        return self.q10_factor
-    def set_q10Factor(self, q10_factor):
-        self.q10_factor = q10_factor
-    def get_experimentalTemp(self):
-        return self.experimental_temp
-    def set_experimentalTemp(self, experimental_temp):
-        self.experimental_temp = experimental_temp
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -3565,26 +3217,6 @@ class HHRate(GeneratedsSuper):
         else:
             return HHRate(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_type(self):
-        return self.type
-    def set_type(self, type):
-        self.type = type
-    def get_rate(self):
-        return self.rate
-    def set_rate(self, rate):
-        self.rate = rate
-    def get_midpoint(self):
-        return self.midpoint
-    def set_midpoint(self, midpoint):
-        self.midpoint = midpoint
-    def get_scale(self):
-        return self.scale
-    def set_scale(self, scale):
-        self.scale = scale
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -3734,26 +3366,6 @@ class HHVariable(GeneratedsSuper):
         else:
             return HHVariable(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_type(self):
-        return self.type
-    def set_type(self, type):
-        self.type = type
-    def get_rate(self):
-        return self.rate
-    def set_rate(self, rate):
-        self.rate = rate
-    def get_midpoint(self):
-        return self.midpoint
-    def set_midpoint(self, midpoint):
-        self.midpoint = midpoint
-    def get_scale(self):
-        return self.scale
-    def set_scale(self, scale):
-        self.scale = scale
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -3895,30 +3507,6 @@ class HHTime(GeneratedsSuper):
         else:
             return HHTime(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_type(self):
-        return self.type
-    def set_type(self, type):
-        self.type = type
-    def get_rate(self):
-        return self.rate
-    def set_rate(self, rate):
-        self.rate = rate
-    def get_midpoint(self):
-        return self.midpoint
-    def set_midpoint(self, midpoint):
-        self.midpoint = midpoint
-    def get_scale(self):
-        return self.scale
-    def set_scale(self, scale):
-        self.scale = scale
-    def get_tau(self):
-        return self.tau
-    def set_tau(self, tau):
-        self.tau = tau
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -4079,30 +3667,6 @@ class BlockMechanism(GeneratedsSuper):
         else:
             return BlockMechanism(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_type(self):
-        return self.type
-    def set_type(self, type):
-        self.type = type
-    def get_species(self):
-        return self.species
-    def set_species(self, species):
-        self.species = species
-    def get_blockConcentration(self):
-        return self.block_concentration
-    def set_blockConcentration(self, block_concentration):
-        self.block_concentration = block_concentration
-    def get_scalingConc(self):
-        return self.scaling_conc
-    def set_scalingConc(self, scaling_conc):
-        self.scaling_conc = scaling_conc
-    def get_scalingVolt(self):
-        return self.scaling_volt
-    def set_scalingVolt(self, scaling_volt):
-        self.scaling_volt = scaling_volt
     def validate_BlockTypes(self, value):
         # Validate type BlockTypes, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -4273,26 +3837,6 @@ class PlasticityMechanism(GeneratedsSuper):
         else:
             return PlasticityMechanism(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_type(self):
-        return self.type
-    def set_type(self, type):
-        self.type = type
-    def get_initReleaseProb(self):
-        return self.init_release_prob
-    def set_initReleaseProb(self, init_release_prob):
-        self.init_release_prob = init_release_prob
-    def get_tauRec(self):
-        return self.tau_rec
-    def set_tauRec(self, tau_rec):
-        self.tau_rec = tau_rec
-    def get_tauFac(self):
-        return self.tau_fac
-    def set_tauFac(self, tau_fac):
-        self.tau_fac = tau_fac
     def validate_PlasticityTypes(self, value):
         # Validate type PlasticityTypes, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -4443,18 +3987,6 @@ class SegmentParent(GeneratedsSuper):
         else:
             return SegmentParent(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_segment(self):
-        return self.segments
-    def set_segment(self, segments):
-        self.segments = segments
-    def get_fractionAlong(self):
-        return self.fraction_along
-    def set_fractionAlong(self, fraction_along):
-        self.fraction_along = fraction_along
     def validate_NonNegativeInteger(self, value):
         # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -4584,26 +4116,6 @@ class Point3DWithDiam(GeneratedsSuper):
         else:
             return Point3DWithDiam(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_x(self):
-        return self.x
-    def set_x(self, x):
-        self.x = x
-    def get_y(self):
-        return self.y
-    def set_y(self, y):
-        self.y = y
-    def get_z(self):
-        return self.z
-    def set_z(self, z):
-        self.z = z
-    def get_diameter(self):
-        return self.diameter
-    def set_diameter(self, diameter):
-        self.diameter = diameter
     def validate_DoubleGreaterThanZero(self, value):
         # Validate type DoubleGreaterThanZero, a restriction on xs:double.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -4751,14 +4263,6 @@ class ProximalDetails(GeneratedsSuper):
         else:
             return ProximalDetails(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_translationStart(self):
-        return self.translation_start
-    def set_translationStart(self, translation_start):
-        self.translation_start = translation_start
     def _hasContent(self):
         if (
 
@@ -4842,14 +4346,6 @@ class DistalDetails(GeneratedsSuper):
         else:
             return DistalDetails(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_normalizationEnd(self):
-        return self.normalization_end
-    def set_normalizationEnd(self, normalization_end):
-        self.normalization_end = normalization_end
     def _hasContent(self):
         if (
 
@@ -4933,14 +4429,6 @@ class Member(GeneratedsSuper):
         else:
             return Member(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_segment(self):
-        return self.segments
-    def set_segment(self, segments):
-        self.segments = segments
     def validate_NonNegativeInteger(self, value):
         # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -5034,14 +4522,6 @@ class Include(GeneratedsSuper):
         else:
             return Include(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_segmentGroup(self):
-        return self.segment_groups
-    def set_segmentGroup(self, segment_groups):
-        self.segment_groups = segment_groups
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -5139,18 +4619,6 @@ class Path(GeneratedsSuper):
         else:
             return Path(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_from(self):
-        return self.from_
-    def set_from(self, from_):
-        self.from_ = from_
-    def get_to(self):
-        return self.to
-    def set_to(self, to):
-        self.to = to
     def _hasContent(self):
         if (
             self.from_ is not None or
@@ -5251,18 +4719,6 @@ class SubTree(GeneratedsSuper):
         else:
             return SubTree(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_from(self):
-        return self.from_
-    def set_from(self, from_):
-        self.from_ = from_
-    def get_to(self):
-        return self.to
-    def set_to(self, to):
-        self.to = to
     def _hasContent(self):
         if (
             self.from_ is not None or
@@ -5360,14 +4816,6 @@ class SegmentEndPoint(GeneratedsSuper):
         else:
             return SegmentEndPoint(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_segment(self):
-        return self.segments
-    def set_segment(self, segments):
-        self.segments = segments
     def validate_NonNegativeInteger(self, value):
         # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -5531,132 +4979,6 @@ class MembraneProperties(GeneratedsSuper):
         else:
             return MembraneProperties(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_channelPopulation(self):
-        return self.channel_populations
-    def set_channelPopulation(self, channel_populations):
-        self.channel_populations = channel_populations
-    def add_channelPopulation(self, value):
-        self.channel_populations.append(value)
-    def insert_channelPopulation_at(self, index, value):
-        self.channel_populations.insert(index, value)
-    def replace_channelPopulation_at(self, index, value):
-        self.channel_populations[index] = value
-    def get_channelDensity(self):
-        return self.channel_densities
-    def set_channelDensity(self, channel_densities):
-        self.channel_densities = channel_densities
-    def add_channelDensity(self, value):
-        self.channel_densities.append(value)
-    def insert_channelDensity_at(self, index, value):
-        self.channel_densities.insert(index, value)
-    def replace_channelDensity_at(self, index, value):
-        self.channel_densities[index] = value
-    def get_channelDensityVShift(self):
-        return self.channel_density_v_shifts
-    def set_channelDensityVShift(self, channel_density_v_shifts):
-        self.channel_density_v_shifts = channel_density_v_shifts
-    def add_channelDensityVShift(self, value):
-        self.channel_density_v_shifts.append(value)
-    def insert_channelDensityVShift_at(self, index, value):
-        self.channel_density_v_shifts.insert(index, value)
-    def replace_channelDensityVShift_at(self, index, value):
-        self.channel_density_v_shifts[index] = value
-    def get_channelDensityNernst(self):
-        return self.channel_density_nernsts
-    def set_channelDensityNernst(self, channel_density_nernsts):
-        self.channel_density_nernsts = channel_density_nernsts
-    def add_channelDensityNernst(self, value):
-        self.channel_density_nernsts.append(value)
-    def insert_channelDensityNernst_at(self, index, value):
-        self.channel_density_nernsts.insert(index, value)
-    def replace_channelDensityNernst_at(self, index, value):
-        self.channel_density_nernsts[index] = value
-    def get_channelDensityGHK(self):
-        return self.channel_density_ghks
-    def set_channelDensityGHK(self, channel_density_ghks):
-        self.channel_density_ghks = channel_density_ghks
-    def add_channelDensityGHK(self, value):
-        self.channel_density_ghks.append(value)
-    def insert_channelDensityGHK_at(self, index, value):
-        self.channel_density_ghks.insert(index, value)
-    def replace_channelDensityGHK_at(self, index, value):
-        self.channel_density_ghks[index] = value
-    def get_channelDensityGHK2(self):
-        return self.channel_density_ghk2s
-    def set_channelDensityGHK2(self, channel_density_ghk2s):
-        self.channel_density_ghk2s = channel_density_ghk2s
-    def add_channelDensityGHK2(self, value):
-        self.channel_density_ghk2s.append(value)
-    def insert_channelDensityGHK2_at(self, index, value):
-        self.channel_density_ghk2s.insert(index, value)
-    def replace_channelDensityGHK2_at(self, index, value):
-        self.channel_density_ghk2s[index] = value
-    def get_channelDensityNonUniform(self):
-        return self.channel_density_non_uniforms
-    def set_channelDensityNonUniform(self, channel_density_non_uniforms):
-        self.channel_density_non_uniforms = channel_density_non_uniforms
-    def add_channelDensityNonUniform(self, value):
-        self.channel_density_non_uniforms.append(value)
-    def insert_channelDensityNonUniform_at(self, index, value):
-        self.channel_density_non_uniforms.insert(index, value)
-    def replace_channelDensityNonUniform_at(self, index, value):
-        self.channel_density_non_uniforms[index] = value
-    def get_channelDensityNonUniformNernst(self):
-        return self.channel_density_non_uniform_nernsts
-    def set_channelDensityNonUniformNernst(self, channel_density_non_uniform_nernsts):
-        self.channel_density_non_uniform_nernsts = channel_density_non_uniform_nernsts
-    def add_channelDensityNonUniformNernst(self, value):
-        self.channel_density_non_uniform_nernsts.append(value)
-    def insert_channelDensityNonUniformNernst_at(self, index, value):
-        self.channel_density_non_uniform_nernsts.insert(index, value)
-    def replace_channelDensityNonUniformNernst_at(self, index, value):
-        self.channel_density_non_uniform_nernsts[index] = value
-    def get_channelDensityNonUniformGHK(self):
-        return self.channel_density_non_uniform_ghks
-    def set_channelDensityNonUniformGHK(self, channel_density_non_uniform_ghks):
-        self.channel_density_non_uniform_ghks = channel_density_non_uniform_ghks
-    def add_channelDensityNonUniformGHK(self, value):
-        self.channel_density_non_uniform_ghks.append(value)
-    def insert_channelDensityNonUniformGHK_at(self, index, value):
-        self.channel_density_non_uniform_ghks.insert(index, value)
-    def replace_channelDensityNonUniformGHK_at(self, index, value):
-        self.channel_density_non_uniform_ghks[index] = value
-    def get_spikeThresh(self):
-        return self.spike_threshes
-    def set_spikeThresh(self, spike_threshes):
-        self.spike_threshes = spike_threshes
-    def add_spikeThresh(self, value):
-        self.spike_threshes.append(value)
-    def insert_spikeThresh_at(self, index, value):
-        self.spike_threshes.insert(index, value)
-    def replace_spikeThresh_at(self, index, value):
-        self.spike_threshes[index] = value
-    def get_specificCapacitance(self):
-        return self.specific_capacitances
-    def set_specificCapacitance(self, specific_capacitances):
-        self.specific_capacitances = specific_capacitances
-    def add_specificCapacitance(self, value):
-        self.specific_capacitances.append(value)
-    def insert_specificCapacitance_at(self, index, value):
-        self.specific_capacitances.insert(index, value)
-    def replace_specificCapacitance_at(self, index, value):
-        self.specific_capacitances[index] = value
-    def get_initMembPotential(self):
-        return self.init_memb_potentials
-    def set_initMembPotential(self, init_memb_potentials):
-        self.init_memb_potentials = init_memb_potentials
-    def add_initMembPotential(self, value):
-        self.init_memb_potentials.append(value)
-    def insert_initMembPotential_at(self, index, value):
-        self.init_memb_potentials.insert(index, value)
-    def replace_initMembPotential_at(self, index, value):
-        self.init_memb_potentials[index] = value
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def _hasContent(self):
         if (
             self.channel_populations or
@@ -5861,20 +5183,6 @@ class MembraneProperties2CaPools(MembraneProperties):
         else:
             return MembraneProperties2CaPools(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_channelDensityNernstCa2(self):
-        return self.channel_density_nernst_ca2s
-    def set_channelDensityNernstCa2(self, channel_density_nernst_ca2s):
-        self.channel_density_nernst_ca2s = channel_density_nernst_ca2s
-    def add_channelDensityNernstCa2(self, value):
-        self.channel_density_nernst_ca2s.append(value)
-    def insert_channelDensityNernstCa2_at(self, index, value):
-        self.channel_density_nernst_ca2s.insert(index, value)
-    def replace_channelDensityNernstCa2_at(self, index, value):
-        self.channel_density_nernst_ca2s[index] = value
     def _hasContent(self):
         if (
             self.channel_density_nernst_ca2s or
@@ -5972,18 +5280,6 @@ class SpikeThresh(GeneratedsSuper):
         else:
             return SpikeThresh(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_value(self):
-        return self.value
-    def set_value(self, value):
-        self.value = value
-    def get_segmentGroup(self):
-        return self.segment_groups
-    def set_segmentGroup(self, segment_groups):
-        self.segment_groups = segment_groups
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -6103,18 +5399,6 @@ class SpecificCapacitance(GeneratedsSuper):
         else:
             return SpecificCapacitance(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_value(self):
-        return self.value
-    def set_value(self, value):
-        self.value = value
-    def get_segmentGroup(self):
-        return self.segment_groups
-    def set_segmentGroup(self, segment_groups):
-        self.segment_groups = segment_groups
     def validate_Nml2Quantity_specificCapacitance(self, value):
         # Validate type Nml2Quantity_specificCapacitance, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -6234,18 +5518,6 @@ class InitMembPotential(GeneratedsSuper):
         else:
             return InitMembPotential(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_value(self):
-        return self.value
-    def set_value(self, value):
-        self.value = value
-    def get_segmentGroup(self):
-        return self.segment_groups
-    def set_segmentGroup(self, segment_groups):
-        self.segment_groups = segment_groups
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -6365,18 +5637,6 @@ class Resistivity(GeneratedsSuper):
         else:
             return Resistivity(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_value(self):
-        return self.value
-    def set_value(self, value):
-        self.value = value
-    def get_segmentGroup(self):
-        return self.segment_groups
-    def set_segmentGroup(self, segment_groups):
-        self.segment_groups = segment_groups
     def validate_Nml2Quantity_resistivity(self, value):
         # Validate type Nml2Quantity_resistivity, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -6496,22 +5756,6 @@ class VariableParameter(GeneratedsSuper):
         else:
             return VariableParameter(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_inhomogeneousValue(self):
-        return self.inhomogeneous_value
-    def set_inhomogeneousValue(self, inhomogeneous_value):
-        self.inhomogeneous_value = inhomogeneous_value
-    def get_parameter(self):
-        return self.parameter
-    def set_parameter(self, parameter):
-        self.parameter = parameter
-    def get_segmentGroup(self):
-        return self.segment_groups
-    def set_segmentGroup(self, segment_groups):
-        self.segment_groups = segment_groups
     def _hasContent(self):
         if (
             self.inhomogeneous_value is not None
@@ -6615,18 +5859,6 @@ class InhomogeneousValue(GeneratedsSuper):
         else:
             return InhomogeneousValue(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_inhomogeneousParameter(self):
-        return self.inhomogeneous_parameters
-    def set_inhomogeneousParameter(self, inhomogeneous_parameters):
-        self.inhomogeneous_parameters = inhomogeneous_parameters
-    def get_value(self):
-        return self.value
-    def set_value(self, value):
-        self.value = value
     def _hasContent(self):
         if (
 
@@ -6735,34 +5967,6 @@ class Species(GeneratedsSuper):
         else:
             return Species(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_id(self):
-        return self.id
-    def set_id(self, id):
-        self.id = id
-    def get_concentrationModel(self):
-        return self.concentration_model
-    def set_concentrationModel(self, concentration_model):
-        self.concentration_model = concentration_model
-    def get_ion(self):
-        return self.ion
-    def set_ion(self, ion):
-        self.ion = ion
-    def get_initialConcentration(self):
-        return self.initial_concentration
-    def set_initialConcentration(self, initial_concentration):
-        self.initial_concentration = initial_concentration
-    def get_initialExtConcentration(self):
-        return self.initial_ext_concentration
-    def set_initialExtConcentration(self, initial_ext_concentration):
-        self.initial_ext_concentration = initial_ext_concentration
-    def get_segmentGroup(self):
-        return self.segment_groups
-    def set_segmentGroup(self, segment_groups):
-        self.segment_groups = segment_groups
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -6918,32 +6122,6 @@ class IntracellularProperties(GeneratedsSuper):
         else:
             return IntracellularProperties(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_species(self):
-        return self.species
-    def set_species(self, species):
-        self.species = species
-    def add_species(self, value):
-        self.species.append(value)
-    def insert_species_at(self, index, value):
-        self.species.insert(index, value)
-    def replace_species_at(self, index, value):
-        self.species[index] = value
-    def get_resistivity(self):
-        return self.resistivities
-    def set_resistivity(self, resistivities):
-        self.resistivities = resistivities
-    def add_resistivity(self, value):
-        self.resistivities.append(value)
-    def insert_resistivity_at(self, index, value):
-        self.resistivities.insert(index, value)
-    def replace_resistivity_at(self, index, value):
-        self.resistivities[index] = value
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def _hasContent(self):
         if (
             self.species or
@@ -7050,10 +6228,6 @@ class IntracellularProperties2CaPools(IntracellularProperties):
         else:
             return IntracellularProperties2CaPools(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
     def _hasContent(self):
         if (
             super(IntracellularProperties2CaPools, self)._hasContent()
@@ -7136,20 +6310,6 @@ class ExtracellularPropertiesLocal(GeneratedsSuper):
         else:
             return ExtracellularPropertiesLocal(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_species(self):
-        return self.species
-    def set_species(self, species):
-        self.species = species
-    def add_species(self, value):
-        self.species.append(value)
-    def insert_species_at(self, index, value):
-        self.species.insert(index, value)
-    def replace_species_at(self, index, value):
-        self.species[index] = value
     def _hasContent(self):
         if (
             self.species
@@ -7253,34 +6413,6 @@ class SpaceStructure(GeneratedsSuper):
         else:
             return SpaceStructure(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_xSpacing(self):
-        return self.x_spacing
-    def set_xSpacing(self, x_spacing):
-        self.x_spacing = x_spacing
-    def get_ySpacing(self):
-        return self.y_spacing
-    def set_ySpacing(self, y_spacing):
-        self.y_spacing = y_spacing
-    def get_zSpacing(self):
-        return self.z_spacing
-    def set_zSpacing(self, z_spacing):
-        self.z_spacing = z_spacing
-    def get_xStart(self):
-        return self.x_start
-    def set_xStart(self, x_start):
-        self.x_start = x_start
-    def get_yStart(self):
-        return self.y_start
-    def set_yStart(self, y_start):
-        self.y_start = y_start
-    def get_zStart(self):
-        return self.z_start
-    def set_zStart(self, z_start):
-        self.z_start = z_start
     def _hasContent(self):
         if (
 
@@ -7413,26 +6545,6 @@ class Layout(GeneratedsSuper):
         else:
             return Layout(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_random(self):
-        return self.random
-    def set_random(self, random):
-        self.random = random
-    def get_grid(self):
-        return self.grid
-    def set_grid(self, grid):
-        self.grid = grid
-    def get_unstructured(self):
-        return self.unstructured
-    def set_unstructured(self, unstructured):
-        self.unstructured = unstructured
-    def get_space(self):
-        return self.spaces
-    def set_space(self, spaces):
-        self.spaces = spaces
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -7556,14 +6668,6 @@ class UnstructuredLayout(GeneratedsSuper):
         else:
             return UnstructuredLayout(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_number(self):
-        return self.number
-    def set_number(self, number):
-        self.number = number
     def _hasContent(self):
         if (
 
@@ -7651,18 +6755,6 @@ class RandomLayout(GeneratedsSuper):
         else:
             return RandomLayout(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_number(self):
-        return self.number
-    def set_number(self, number):
-        self.number = number
-    def get_region(self):
-        return self.regions
-    def set_region(self, regions):
-        self.regions = regions
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -7772,22 +6864,6 @@ class GridLayout(GeneratedsSuper):
         else:
             return GridLayout(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_xSize(self):
-        return self.x_size
-    def set_xSize(self, x_size):
-        self.x_size = x_size
-    def get_ySize(self):
-        return self.y_size
-    def set_ySize(self, y_size):
-        self.y_size = y_size
-    def get_zSize(self):
-        return self.z_size
-    def set_zSize(self, z_size):
-        self.z_size = z_size
     def _hasContent(self):
         if (
 
@@ -7902,30 +6978,6 @@ class Instance(GeneratedsSuper):
         else:
             return Instance(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_location(self):
-        return self.location
-    def set_location(self, location):
-        self.location = location
-    def get_id(self):
-        return self.id
-    def set_id(self, id):
-        self.id = id
-    def get_i(self):
-        return self.i
-    def set_i(self, i):
-        self.i = i
-    def get_j(self):
-        return self.j
-    def set_j(self, j):
-        self.j = j
-    def get_k(self):
-        return self.k
-    def set_k(self, k):
-        self.k = k
     def _hasContent(self):
         if (
             self.location is not None
@@ -8063,22 +7115,6 @@ class Location(GeneratedsSuper):
         else:
             return Location(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_x(self):
-        return self.x
-    def set_x(self, x):
-        self.x = x
-    def get_y(self):
-        return self.y
-    def set_y(self, y):
-        self.y = y
-    def get_z(self):
-        return self.z
-    def set_z(self, z):
-        self.z = z
     def _hasContent(self):
         if (
 
@@ -8207,26 +7243,6 @@ class SynapticConnection(GeneratedsSuper):
         else:
             return SynapticConnection(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_from(self):
-        return self.from_
-    def set_from(self, from_):
-        self.from_ = from_
-    def get_to(self):
-        return self.to
-    def set_to(self, to):
-        self.to = to
-    def get_synapse(self):
-        return self.synapse
-    def set_synapse(self, synapse):
-        self.synapse = synapse
-    def get_destination(self):
-        return self.destination
-    def set_destination(self, destination):
-        self.destination = destination
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -8373,22 +7389,6 @@ class ExplicitInput(GeneratedsSuper):
         else:
             return ExplicitInput(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_target(self):
-        return self.target
-    def set_target(self, target):
-        self.target = target
-    def get_input(self):
-        return self.input
-    def set_input(self, input):
-        self.input = input
-    def get_destination(self):
-        return self.destination
-    def set_destination(self, destination):
-        self.destination = destination
     def _hasContent(self):
         if (
 
@@ -8553,32 +7553,6 @@ class Input(GeneratedsSuper):
         else:
             return Input(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_id(self):
-        return self.id
-    def set_id(self, id):
-        self.id = id
-    def get_target(self):
-        return self.target
-    def set_target(self, target):
-        self.target = target
-    def get_destination(self):
-        return self.destination
-    def set_destination(self, destination):
-        self.destination = destination
-    def get_segmentId(self):
-        return self.segment_id
-    def set_segmentId(self, segment_id):
-        self.segment_id = segment_id
-    def get_fractionAlong(self):
-        return self.fraction_along
-    def set_fractionAlong(self, fraction_along):
-        self.fraction_along = fraction_along
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_NonNegativeInteger(self, value):
         # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -8779,14 +7753,6 @@ class InputW(Input):
         else:
             return InputW(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_weight(self):
-        return self.weight
-    def set_weight(self, weight):
-        self.weight = weight
     def _hasContent(self):
         if (
             super(InputW, self)._hasContent()
@@ -8891,16 +7857,6 @@ class BaseWithoutId(GeneratedsSuper):
         else:
             return BaseWithoutId(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_neuroLexId(self):
-        return self.neuro_lex_id
-    def set_neuroLexId(self, neuro_lex_id):
-        self.neuro_lex_id = neuro_lex_id
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_NeuroLexId(self, value):
         # Validate type NeuroLexId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -9012,16 +7968,6 @@ class BaseNonNegativeIntegerId(BaseWithoutId):
         else:
             return BaseNonNegativeIntegerId(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_id(self):
-        return self.id
-    def set_id(self, id):
-        self.id = id
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_NonNegativeInteger(self, value):
         # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -9136,16 +8082,6 @@ class Base(BaseWithoutId):
         else:
             return Base(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_id(self):
-        return self.id
-    def set_id(self, id):
-        self.id = id
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -9274,34 +8210,6 @@ class Standalone(Base):
         else:
             return Standalone(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_notes(self):
-        return self.notes
-    def set_notes(self, notes):
-        self.notes = notes
-    def get_property(self):
-        return self.properties
-    def set_property(self, properties):
-        self.properties = properties
-    def add_property(self, value):
-        self.properties.append(value)
-    def insert_property_at(self, index, value):
-        self.properties.insert(index, value)
-    def replace_property_at(self, index, value):
-        self.properties[index] = value
-    def get_annotation(self):
-        return self.annotation
-    def set_annotation(self, annotation):
-        self.annotation = annotation
-    def get_metaid(self):
-        return self.metaid
-    def set_metaid(self, metaid):
-        self.metaid = metaid
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_Notes(self, value):
         result = True
         # Validate type Notes, a restriction on xs:string.
@@ -9463,22 +8371,6 @@ class SpikeSourcePoisson(Standalone):
         else:
             return SpikeSourcePoisson(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_start(self):
-        return self.start
-    def set_start(self, start):
-        self.start = start
-    def get_duration(self):
-        return self.duration
-    def set_duration(self, duration):
-        self.duration = duration
-    def get_rate(self):
-        return self.rate
-    def set_rate(self, rate):
-        self.rate = rate
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -9623,38 +8515,6 @@ class InputList(Base):
         else:
             return InputList(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_input(self):
-        return self.input
-    def set_input(self, input):
-        self.input = input
-    def add_input(self, value):
-        self.input.append(value)
-    def insert_input_at(self, index, value):
-        self.input.insert(index, value)
-    def replace_input_at(self, index, value):
-        self.input[index] = value
-    def get_inputW(self):
-        return self.input_ws
-    def set_inputW(self, input_ws):
-        self.input_ws = input_ws
-    def add_inputW(self, value):
-        self.input_ws.append(value)
-    def insert_inputW_at(self, index, value):
-        self.input_ws.insert(index, value)
-    def replace_inputW_at(self, index, value):
-        self.input_ws[index] = value
-    def get_population(self):
-        return self.populations
-    def set_population(self, populations):
-        self.populations = populations
-    def get_component(self):
-        return self.component
-    def set_component(self, component):
-        self.component = component
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -9842,12 +8702,6 @@ class BaseConnection(BaseNonNegativeIntegerId):
         else:
             return BaseConnection(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def _hasContent(self):
         if (
             super(BaseConnection, self)._hasContent()
@@ -9947,20 +8801,6 @@ class BaseProjection(Base):
         else:
             return BaseProjection(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_presynapticPopulation(self):
-        return self.presynaptic_population
-    def set_presynapticPopulation(self, presynaptic_population):
-        self.presynaptic_population = presynaptic_population
-    def get_postsynapticPopulation(self):
-        return self.postsynaptic_population
-    def set_postsynapticPopulation(self, postsynaptic_population):
-        self.postsynaptic_population = postsynaptic_population
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -10085,18 +8925,6 @@ class CellSet(Base):
         else:
             return CellSet(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
-    def get_select(self):
-        return self.select
-    def set_select(self, select):
-        self.select = select
     def _hasContent(self):
         if (
             self.anytypeobjs_ or
@@ -10163,7 +8991,7 @@ class CellSet(Base):
         super(CellSet, self)._buildAttributes(node, attrs, already_processed)
     def _buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         content_ = self.gds_build_any(child_, 'CellSet')
-        self.add_anytypeobjs_(content_)
+        self.anytypeobjs_.append(content_)
         super(CellSet, self)._buildChildren(child_, node, nodeName_, True)
 # end class CellSet
 
@@ -10213,40 +9041,6 @@ class Population(Standalone):
         else:
             return Population(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_layout(self):
-        return self.layout
-    def set_layout(self, layout):
-        self.layout = layout
-    def get_instance(self):
-        return self.instances
-    def set_instance(self, instances):
-        self.instances = instances
-    def add_instance(self, value):
-        self.instances.append(value)
-    def insert_instance_at(self, index, value):
-        self.instances.insert(index, value)
-    def replace_instance_at(self, index, value):
-        self.instances[index] = value
-    def get_component(self):
-        return self.component
-    def set_component(self, component):
-        self.component = component
-    def get_size(self):
-        return self.size
-    def set_size(self, size):
-        self.size = size
-    def get_type(self):
-        return self.type
-    def set_type(self, type):
-        self.type = type
-    def get_extracellularProperties(self):
-        return self.extracellular_properties
-    def set_extracellularProperties(self, extracellular_properties):
-        self.extracellular_properties = extracellular_properties
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -10466,18 +9260,6 @@ class Region(Base):
         else:
             return Region(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
-    def get_space(self):
-        return self.spaces
-    def set_space(self, spaces):
-        self.spaces = spaces
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -10556,7 +9338,7 @@ class Region(Base):
         super(Region, self)._buildAttributes(node, attrs, already_processed)
     def _buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         content_ = self.gds_build_any(child_, 'Region')
-        self.add_anytypeobjs_(content_)
+        self.anytypeobjs_.append(content_)
         super(Region, self)._buildChildren(child_, node, nodeName_, True)
 # end class Region
 
@@ -10591,18 +9373,6 @@ class Space(Base):
         else:
             return Space(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_structure(self):
-        return self.structure
-    def set_structure(self, structure):
-        self.structure = structure
-    def get_basedOn(self):
-        return self.based_on
-    def set_basedOn(self, based_on):
-        self.based_on = based_on
     def validate_allowedSpaces(self, value):
         # Validate type allowedSpaces, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -10785,128 +9555,6 @@ class Network(Standalone):
         else:
             return Network(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_space(self):
-        return self.spaces
-    def set_space(self, spaces):
-        self.spaces = spaces
-    def add_space(self, value):
-        self.spaces.append(value)
-    def insert_space_at(self, index, value):
-        self.spaces.insert(index, value)
-    def replace_space_at(self, index, value):
-        self.spaces[index] = value
-    def get_region(self):
-        return self.regions
-    def set_region(self, regions):
-        self.regions = regions
-    def add_region(self, value):
-        self.regions.append(value)
-    def insert_region_at(self, index, value):
-        self.regions.insert(index, value)
-    def replace_region_at(self, index, value):
-        self.regions[index] = value
-    def get_extracellularProperties(self):
-        return self.extracellular_properties
-    def set_extracellularProperties(self, extracellular_properties):
-        self.extracellular_properties = extracellular_properties
-    def add_extracellularProperties(self, value):
-        self.extracellular_properties.append(value)
-    def insert_extracellularProperties_at(self, index, value):
-        self.extracellular_properties.insert(index, value)
-    def replace_extracellularProperties_at(self, index, value):
-        self.extracellular_properties[index] = value
-    def get_population(self):
-        return self.populations
-    def set_population(self, populations):
-        self.populations = populations
-    def add_population(self, value):
-        self.populations.append(value)
-    def insert_population_at(self, index, value):
-        self.populations.insert(index, value)
-    def replace_population_at(self, index, value):
-        self.populations[index] = value
-    def get_cellSet(self):
-        return self.cell_sets
-    def set_cellSet(self, cell_sets):
-        self.cell_sets = cell_sets
-    def add_cellSet(self, value):
-        self.cell_sets.append(value)
-    def insert_cellSet_at(self, index, value):
-        self.cell_sets.insert(index, value)
-    def replace_cellSet_at(self, index, value):
-        self.cell_sets[index] = value
-    def get_synapticConnection(self):
-        return self.synaptic_connections
-    def set_synapticConnection(self, synaptic_connections):
-        self.synaptic_connections = synaptic_connections
-    def add_synapticConnection(self, value):
-        self.synaptic_connections.append(value)
-    def insert_synapticConnection_at(self, index, value):
-        self.synaptic_connections.insert(index, value)
-    def replace_synapticConnection_at(self, index, value):
-        self.synaptic_connections[index] = value
-    def get_projection(self):
-        return self.projections
-    def set_projection(self, projections):
-        self.projections = projections
-    def add_projection(self, value):
-        self.projections.append(value)
-    def insert_projection_at(self, index, value):
-        self.projections.insert(index, value)
-    def replace_projection_at(self, index, value):
-        self.projections[index] = value
-    def get_electricalProjection(self):
-        return self.electrical_projections
-    def set_electricalProjection(self, electrical_projections):
-        self.electrical_projections = electrical_projections
-    def add_electricalProjection(self, value):
-        self.electrical_projections.append(value)
-    def insert_electricalProjection_at(self, index, value):
-        self.electrical_projections.insert(index, value)
-    def replace_electricalProjection_at(self, index, value):
-        self.electrical_projections[index] = value
-    def get_continuousProjection(self):
-        return self.continuous_projections
-    def set_continuousProjection(self, continuous_projections):
-        self.continuous_projections = continuous_projections
-    def add_continuousProjection(self, value):
-        self.continuous_projections.append(value)
-    def insert_continuousProjection_at(self, index, value):
-        self.continuous_projections.insert(index, value)
-    def replace_continuousProjection_at(self, index, value):
-        self.continuous_projections[index] = value
-    def get_explicitInput(self):
-        return self.explicit_inputs
-    def set_explicitInput(self, explicit_inputs):
-        self.explicit_inputs = explicit_inputs
-    def add_explicitInput(self, value):
-        self.explicit_inputs.append(value)
-    def insert_explicitInput_at(self, index, value):
-        self.explicit_inputs.insert(index, value)
-    def replace_explicitInput_at(self, index, value):
-        self.explicit_inputs[index] = value
-    def get_inputList(self):
-        return self.input_lists
-    def set_inputList(self, input_lists):
-        self.input_lists = input_lists
-    def add_inputList(self, value):
-        self.input_lists.append(value)
-    def insert_inputList_at(self, index, value):
-        self.input_lists.insert(index, value)
-    def replace_inputList_at(self, index, value):
-        self.input_lists[index] = value
-    def get_type(self):
-        return self.type
-    def set_type(self, type):
-        self.type = type
-    def get_temperature(self):
-        return self.temperature
-    def set_temperature(self, temperature):
-        self.temperature = temperature
     def validate_networkTypes(self, value):
         # Validate type networkTypes, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -11208,30 +9856,6 @@ class TransientPoissonFiringSynapse(Standalone):
         else:
             return TransientPoissonFiringSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_averageRate(self):
-        return self.average_rate
-    def set_averageRate(self, average_rate):
-        self.average_rate = average_rate
-    def get_delay(self):
-        return self.delay
-    def set_delay(self, delay):
-        self.delay = delay
-    def get_duration(self):
-        return self.duration
-    def set_duration(self, duration):
-        self.duration = duration
-    def get_synapse(self):
-        return self.synapse
-    def set_synapse(self, synapse):
-        self.synapse = synapse
-    def get_spikeTarget(self):
-        return self.spike_target
-    def set_spikeTarget(self, spike_target):
-        self.spike_target = spike_target
     def validate_Nml2Quantity_pertime(self, value):
         # Validate type Nml2Quantity_pertime, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -11378,22 +10002,6 @@ class PoissonFiringSynapse(Standalone):
         else:
             return PoissonFiringSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_averageRate(self):
-        return self.average_rate
-    def set_averageRate(self, average_rate):
-        self.average_rate = average_rate
-    def get_synapse(self):
-        return self.synapse
-    def set_synapse(self, synapse):
-        self.synapse = synapse
-    def get_spikeTarget(self):
-        return self.spike_target
-    def set_spikeTarget(self, spike_target):
-        self.spike_target = spike_target
     def validate_Nml2Quantity_pertime(self, value):
         # Validate type Nml2Quantity_pertime, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -11508,16 +10116,6 @@ class SpikeGeneratorPoisson(Standalone):
         else:
             return SpikeGeneratorPoisson(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_averageRate(self):
-        return self.average_rate
-    def set_averageRate(self, average_rate):
-        self.average_rate = average_rate
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_Nml2Quantity_pertime(self, value):
         # Validate type Nml2Quantity_pertime, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -11632,18 +10230,6 @@ class SpikeGeneratorRandom(Standalone):
         else:
             return SpikeGeneratorRandom(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_maxISI(self):
-        return self.max_isi
-    def set_maxISI(self, max_isi):
-        self.max_isi = max_isi
-    def get_minISI(self):
-        return self.min_isi
-    def set_minISI(self, min_isi):
-        self.min_isi = min_isi
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -11751,14 +10337,6 @@ class SpikeGenerator(Standalone):
         else:
             return SpikeGenerator(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_period(self):
-        return self.period
-    def set_period(self, period):
-        self.period = period
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -11867,28 +10445,6 @@ class TimedSynapticInput(Standalone):
         else:
             return TimedSynapticInput(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_spike(self):
-        return self.spikes
-    def set_spike(self, spikes):
-        self.spikes = spikes
-    def add_spike(self, value):
-        self.spikes.append(value)
-    def insert_spike_at(self, index, value):
-        self.spikes.insert(index, value)
-    def replace_spike_at(self, index, value):
-        self.spikes[index] = value
-    def get_synapse(self):
-        return self.synapse
-    def set_synapse(self, synapse):
-        self.synapse = synapse
-    def get_spikeTarget(self):
-        return self.spike_target
-    def set_spikeTarget(self, spike_target):
-        self.spike_target = spike_target
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -12010,20 +10566,6 @@ class SpikeArray(Standalone):
         else:
             return SpikeArray(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_spike(self):
-        return self.spikes
-    def set_spike(self, spikes):
-        self.spikes = spikes
-    def add_spike(self, value):
-        self.spikes.append(value)
-    def insert_spike_at(self, index, value):
-        self.spikes.insert(index, value)
-    def replace_spike_at(self, index, value):
-        self.spikes[index] = value
     def _hasContent(self):
         if (
             self.spikes or
@@ -12116,14 +10658,6 @@ class Spike(BaseNonNegativeIntegerId):
         else:
             return Spike(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_time(self):
-        return self.time
-    def set_time(self, time):
-        self.time = time
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -12241,38 +10775,6 @@ class VoltageClampTriple(Standalone):
         else:
             return VoltageClampTriple(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_active(self):
-        return self.active
-    def set_active(self, active):
-        self.active = active
-    def get_delay(self):
-        return self.delay
-    def set_delay(self, delay):
-        self.delay = delay
-    def get_duration(self):
-        return self.duration
-    def set_duration(self, duration):
-        self.duration = duration
-    def get_conditioningVoltage(self):
-        return self.conditioning_voltage
-    def set_conditioningVoltage(self, conditioning_voltage):
-        self.conditioning_voltage = conditioning_voltage
-    def get_testingVoltage(self):
-        return self.testing_voltage
-    def set_testingVoltage(self, testing_voltage):
-        self.testing_voltage = testing_voltage
-    def get_returnVoltage(self):
-        return self.return_voltage
-    def set_returnVoltage(self, return_voltage):
-        self.return_voltage = return_voltage
-    def get_simpleSeriesResistance(self):
-        return self.simple_series_resistance
-    def set_simpleSeriesResistance(self, simple_series_resistance):
-        self.simple_series_resistance = simple_series_resistance
     def validate_ZeroOrOne(self, value):
         # Validate type ZeroOrOne, a restriction on xs:double.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -12465,26 +10967,6 @@ class VoltageClamp(Standalone):
         else:
             return VoltageClamp(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_delay(self):
-        return self.delay
-    def set_delay(self, delay):
-        self.delay = delay
-    def get_duration(self):
-        return self.duration
-    def set_duration(self, duration):
-        self.duration = duration
-    def get_targetVoltage(self):
-        return self.target_voltage
-    def set_targetVoltage(self, target_voltage):
-        self.target_voltage = target_voltage
-    def get_simpleSeriesResistance(self):
-        return self.simple_series_resistance
-    def set_simpleSeriesResistance(self, simple_series_resistance):
-        self.simple_series_resistance = simple_series_resistance
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -12645,40 +11127,6 @@ class CompoundInputDL(Standalone):
         else:
             return CompoundInputDL(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_pulseGeneratorDL(self):
-        return self.pulse_generator_dls
-    def set_pulseGeneratorDL(self, pulse_generator_dls):
-        self.pulse_generator_dls = pulse_generator_dls
-    def add_pulseGeneratorDL(self, value):
-        self.pulse_generator_dls.append(value)
-    def insert_pulseGeneratorDL_at(self, index, value):
-        self.pulse_generator_dls.insert(index, value)
-    def replace_pulseGeneratorDL_at(self, index, value):
-        self.pulse_generator_dls[index] = value
-    def get_sineGeneratorDL(self):
-        return self.sine_generator_dls
-    def set_sineGeneratorDL(self, sine_generator_dls):
-        self.sine_generator_dls = sine_generator_dls
-    def add_sineGeneratorDL(self, value):
-        self.sine_generator_dls.append(value)
-    def insert_sineGeneratorDL_at(self, index, value):
-        self.sine_generator_dls.insert(index, value)
-    def replace_sineGeneratorDL_at(self, index, value):
-        self.sine_generator_dls[index] = value
-    def get_rampGeneratorDL(self):
-        return self.ramp_generator_dls
-    def set_rampGeneratorDL(self, ramp_generator_dls):
-        self.ramp_generator_dls = ramp_generator_dls
-    def add_rampGeneratorDL(self, value):
-        self.ramp_generator_dls.append(value)
-    def insert_rampGeneratorDL_at(self, index, value):
-        self.ramp_generator_dls.insert(index, value)
-    def replace_rampGeneratorDL_at(self, index, value):
-        self.ramp_generator_dls[index] = value
     def _hasContent(self):
         if (
             self.pulse_generator_dls or
@@ -12804,40 +11252,6 @@ class CompoundInput(Standalone):
         else:
             return CompoundInput(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_pulseGenerator(self):
-        return self.pulse_generators
-    def set_pulseGenerator(self, pulse_generators):
-        self.pulse_generators = pulse_generators
-    def add_pulseGenerator(self, value):
-        self.pulse_generators.append(value)
-    def insert_pulseGenerator_at(self, index, value):
-        self.pulse_generators.insert(index, value)
-    def replace_pulseGenerator_at(self, index, value):
-        self.pulse_generators[index] = value
-    def get_sineGenerator(self):
-        return self.sine_generators
-    def set_sineGenerator(self, sine_generators):
-        self.sine_generators = sine_generators
-    def add_sineGenerator(self, value):
-        self.sine_generators.append(value)
-    def insert_sineGenerator_at(self, index, value):
-        self.sine_generators.insert(index, value)
-    def replace_sineGenerator_at(self, index, value):
-        self.sine_generators[index] = value
-    def get_rampGenerator(self):
-        return self.ramp_generators
-    def set_rampGenerator(self, ramp_generators):
-        self.ramp_generators = ramp_generators
-    def add_rampGenerator(self, value):
-        self.ramp_generators.append(value)
-    def insert_rampGenerator_at(self, index, value):
-        self.ramp_generators.insert(index, value)
-    def replace_rampGenerator_at(self, index, value):
-        self.ramp_generators[index] = value
     def _hasContent(self):
         if (
             self.pulse_generators or
@@ -12960,30 +11374,6 @@ class RampGeneratorDL(Standalone):
         else:
             return RampGeneratorDL(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_delay(self):
-        return self.delay
-    def set_delay(self, delay):
-        self.delay = delay
-    def get_duration(self):
-        return self.duration
-    def set_duration(self, duration):
-        self.duration = duration
-    def get_startAmplitude(self):
-        return self.start_amplitude
-    def set_startAmplitude(self, start_amplitude):
-        self.start_amplitude = start_amplitude
-    def get_finishAmplitude(self):
-        return self.finish_amplitude
-    def set_finishAmplitude(self, finish_amplitude):
-        self.finish_amplitude = finish_amplitude
-    def get_baselineAmplitude(self):
-        return self.baseline_amplitude
-    def set_baselineAmplitude(self, baseline_amplitude):
-        self.baseline_amplitude = baseline_amplitude
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -13138,30 +11528,6 @@ class RampGenerator(Standalone):
         else:
             return RampGenerator(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_delay(self):
-        return self.delay
-    def set_delay(self, delay):
-        self.delay = delay
-    def get_duration(self):
-        return self.duration
-    def set_duration(self, duration):
-        self.duration = duration
-    def get_startAmplitude(self):
-        return self.start_amplitude
-    def set_startAmplitude(self, start_amplitude):
-        self.start_amplitude = start_amplitude
-    def get_finishAmplitude(self):
-        return self.finish_amplitude
-    def set_finishAmplitude(self, finish_amplitude):
-        self.finish_amplitude = finish_amplitude
-    def get_baselineAmplitude(self):
-        return self.baseline_amplitude
-    def set_baselineAmplitude(self, baseline_amplitude):
-        self.baseline_amplitude = baseline_amplitude
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -13316,30 +11682,6 @@ class SineGeneratorDL(Standalone):
         else:
             return SineGeneratorDL(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_delay(self):
-        return self.delay
-    def set_delay(self, delay):
-        self.delay = delay
-    def get_phase(self):
-        return self.phase
-    def set_phase(self, phase):
-        self.phase = phase
-    def get_duration(self):
-        return self.duration
-    def set_duration(self, duration):
-        self.duration = duration
-    def get_amplitude(self):
-        return self.amplitude
-    def set_amplitude(self, amplitude):
-        self.amplitude = amplitude
-    def get_period(self):
-        return self.period
-    def set_period(self, period):
-        self.period = period
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -13494,30 +11836,6 @@ class SineGenerator(Standalone):
         else:
             return SineGenerator(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_delay(self):
-        return self.delay
-    def set_delay(self, delay):
-        self.delay = delay
-    def get_phase(self):
-        return self.phase
-    def set_phase(self, phase):
-        self.phase = phase
-    def get_duration(self):
-        return self.duration
-    def set_duration(self, duration):
-        self.duration = duration
-    def get_amplitude(self):
-        return self.amplitude
-    def set_amplitude(self, amplitude):
-        self.amplitude = amplitude
-    def get_period(self):
-        return self.period
-    def set_period(self, period):
-        self.period = period
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -13680,22 +11998,6 @@ class PulseGeneratorDL(Standalone):
         else:
             return PulseGeneratorDL(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_delay(self):
-        return self.delay
-    def set_delay(self, delay):
-        self.delay = delay
-    def get_duration(self):
-        return self.duration
-    def set_duration(self, duration):
-        self.duration = duration
-    def get_amplitude(self):
-        return self.amplitude
-    def set_amplitude(self, amplitude):
-        self.amplitude = amplitude
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -13831,22 +12133,6 @@ class PulseGenerator(Standalone):
         else:
             return PulseGenerator(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_delay(self):
-        return self.delay
-    def set_delay(self, delay):
-        self.delay = delay
-    def get_duration(self):
-        return self.duration
-    def set_duration(self, duration):
-        self.duration = duration
-    def get_amplitude(self):
-        return self.amplitude
-    def set_amplitude(self, amplitude):
-        self.amplitude = amplitude
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -13981,22 +12267,6 @@ class ReactionScheme(Base):
         else:
             return ReactionScheme(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
-    def get_source(self):
-        return self.source
-    def set_source(self, source):
-        self.source = source
-    def get_type(self):
-        return self.type
-    def set_type(self, type):
-        self.type = type
     def _hasContent(self):
         if (
             self.anytypeobjs_ or
@@ -14070,7 +12340,7 @@ class ReactionScheme(Base):
         super(ReactionScheme, self)._buildAttributes(node, attrs, already_processed)
     def _buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         content_ = self.gds_build_any(child_, 'ReactionScheme')
-        self.add_anytypeobjs_(content_)
+        self.anytypeobjs_.append(content_)
         super(ReactionScheme, self)._buildChildren(child_, node, nodeName_, True)
 # end class ReactionScheme
 
@@ -14105,20 +12375,6 @@ class ExtracellularProperties(Base):
         else:
             return ExtracellularProperties(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_species(self):
-        return self.species
-    def set_species(self, species):
-        self.species = species
-    def add_species(self, value):
-        self.species.append(value)
-    def insert_species_at(self, index, value):
-        self.species.insert(index, value)
-    def replace_species_at(self, index, value):
-        self.species[index] = value
     def _hasContent(self):
         if (
             self.species or
@@ -14231,30 +12487,6 @@ class ChannelDensityGHK2(Base):
         else:
             return ChannelDensityGHK2(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_ionChannel(self):
-        return self.ion_channel
-    def set_ionChannel(self, ion_channel):
-        self.ion_channel = ion_channel
-    def get_condDensity(self):
-        return self.cond_density
-    def set_condDensity(self, cond_density):
-        self.cond_density = cond_density
-    def get_segmentGroup(self):
-        return self.segment_groups
-    def set_segmentGroup(self, segment_groups):
-        self.segment_groups = segment_groups
-    def get_segment(self):
-        return self.segments
-    def set_segment(self, segments):
-        self.segments = segments
-    def get_ion(self):
-        return self.ion
-    def set_ion(self, ion):
-        self.ion = ion
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -14417,30 +12649,6 @@ class ChannelDensityGHK(Base):
         else:
             return ChannelDensityGHK(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_ionChannel(self):
-        return self.ion_channel
-    def set_ionChannel(self, ion_channel):
-        self.ion_channel = ion_channel
-    def get_permeability(self):
-        return self.permeability
-    def set_permeability(self, permeability):
-        self.permeability = permeability
-    def get_segmentGroup(self):
-        return self.segment_groups
-    def set_segmentGroup(self, segment_groups):
-        self.segment_groups = segment_groups
-    def get_segment(self):
-        return self.segments
-    def set_segment(self, segments):
-        self.segments = segments
-    def get_ion(self):
-        return self.ion
-    def set_ion(self, ion):
-        self.ion = ion
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -14610,42 +12818,6 @@ class ChannelDensityNernst(Base):
         else:
             return ChannelDensityNernst(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_variableParameter(self):
-        return self.variable_parameters
-    def set_variableParameter(self, variable_parameters):
-        self.variable_parameters = variable_parameters
-    def add_variableParameter(self, value):
-        self.variable_parameters.append(value)
-    def insert_variableParameter_at(self, index, value):
-        self.variable_parameters.insert(index, value)
-    def replace_variableParameter_at(self, index, value):
-        self.variable_parameters[index] = value
-    def get_ionChannel(self):
-        return self.ion_channel
-    def set_ionChannel(self, ion_channel):
-        self.ion_channel = ion_channel
-    def get_condDensity(self):
-        return self.cond_density
-    def set_condDensity(self, cond_density):
-        self.cond_density = cond_density
-    def get_segmentGroup(self):
-        return self.segment_groups
-    def set_segmentGroup(self, segment_groups):
-        self.segment_groups = segment_groups
-    def get_segment(self):
-        return self.segments
-    def set_segment(self, segments):
-        self.segments = segments
-    def get_ion(self):
-        return self.ion
-    def set_ion(self, ion):
-        self.ion = ion
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -14842,46 +13014,6 @@ class ChannelDensity(Base):
         else:
             return ChannelDensity(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_variableParameter(self):
-        return self.variable_parameters
-    def set_variableParameter(self, variable_parameters):
-        self.variable_parameters = variable_parameters
-    def add_variableParameter(self, value):
-        self.variable_parameters.append(value)
-    def insert_variableParameter_at(self, index, value):
-        self.variable_parameters.insert(index, value)
-    def replace_variableParameter_at(self, index, value):
-        self.variable_parameters[index] = value
-    def get_ionChannel(self):
-        return self.ion_channel
-    def set_ionChannel(self, ion_channel):
-        self.ion_channel = ion_channel
-    def get_condDensity(self):
-        return self.cond_density
-    def set_condDensity(self, cond_density):
-        self.cond_density = cond_density
-    def get_erev(self):
-        return self.erev
-    def set_erev(self, erev):
-        self.erev = erev
-    def get_segmentGroup(self):
-        return self.segment_groups
-    def set_segmentGroup(self, segment_groups):
-        self.segment_groups = segment_groups
-    def get_segment(self):
-        return self.segments
-    def set_segment(self, segments):
-        self.segments = segments
-    def get_ion(self):
-        return self.ion
-    def set_ion(self, ion):
-        self.ion = ion
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -15094,28 +13226,6 @@ class ChannelDensityNonUniformGHK(Base):
         else:
             return ChannelDensityNonUniformGHK(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_variableParameter(self):
-        return self.variable_parameters
-    def set_variableParameter(self, variable_parameters):
-        self.variable_parameters = variable_parameters
-    def add_variableParameter(self, value):
-        self.variable_parameters.append(value)
-    def insert_variableParameter_at(self, index, value):
-        self.variable_parameters.insert(index, value)
-    def replace_variableParameter_at(self, index, value):
-        self.variable_parameters[index] = value
-    def get_ionChannel(self):
-        return self.ion_channel
-    def set_ionChannel(self, ion_channel):
-        self.ion_channel = ion_channel
-    def get_ion(self):
-        return self.ion
-    def set_ion(self, ion):
-        self.ion = ion
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -15252,28 +13362,6 @@ class ChannelDensityNonUniformNernst(Base):
         else:
             return ChannelDensityNonUniformNernst(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_variableParameter(self):
-        return self.variable_parameters
-    def set_variableParameter(self, variable_parameters):
-        self.variable_parameters = variable_parameters
-    def add_variableParameter(self, value):
-        self.variable_parameters.append(value)
-    def insert_variableParameter_at(self, index, value):
-        self.variable_parameters.insert(index, value)
-    def replace_variableParameter_at(self, index, value):
-        self.variable_parameters[index] = value
-    def get_ionChannel(self):
-        return self.ion_channel
-    def set_ionChannel(self, ion_channel):
-        self.ion_channel = ion_channel
-    def get_ion(self):
-        return self.ion
-    def set_ion(self, ion):
-        self.ion = ion
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -15413,32 +13501,6 @@ class ChannelDensityNonUniform(Base):
         else:
             return ChannelDensityNonUniform(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_variableParameter(self):
-        return self.variable_parameters
-    def set_variableParameter(self, variable_parameters):
-        self.variable_parameters = variable_parameters
-    def add_variableParameter(self, value):
-        self.variable_parameters.append(value)
-    def insert_variableParameter_at(self, index, value):
-        self.variable_parameters.insert(index, value)
-    def replace_variableParameter_at(self, index, value):
-        self.variable_parameters[index] = value
-    def get_ionChannel(self):
-        return self.ion_channel
-    def set_ionChannel(self, ion_channel):
-        self.ion_channel = ion_channel
-    def get_erev(self):
-        return self.erev
-    def set_erev(self, erev):
-        self.erev = erev
-    def get_ion(self):
-        return self.ion
-    def set_ion(self, ion):
-        self.ion = ion
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -15606,44 +13668,6 @@ class ChannelPopulation(Base):
         else:
             return ChannelPopulation(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_variableParameter(self):
-        return self.variable_parameters
-    def set_variableParameter(self, variable_parameters):
-        self.variable_parameters = variable_parameters
-    def add_variableParameter(self, value):
-        self.variable_parameters.append(value)
-    def insert_variableParameter_at(self, index, value):
-        self.variable_parameters.insert(index, value)
-    def replace_variableParameter_at(self, index, value):
-        self.variable_parameters[index] = value
-    def get_ionChannel(self):
-        return self.ion_channel
-    def set_ionChannel(self, ion_channel):
-        self.ion_channel = ion_channel
-    def get_number(self):
-        return self.number
-    def set_number(self, number):
-        self.number = number
-    def get_erev(self):
-        return self.erev
-    def set_erev(self, erev):
-        self.erev = erev
-    def get_segmentGroup(self):
-        return self.segment_groups
-    def set_segmentGroup(self, segment_groups):
-        self.segment_groups = segment_groups
-    def get_segment(self):
-        return self.segments
-    def set_segment(self, segments):
-        self.segments = segments
-    def get_ion(self):
-        return self.ion
-    def set_ion(self, ion):
-        self.ion = ion
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -15828,22 +13852,6 @@ class BiophysicalProperties2CaPools(Standalone):
         else:
             return BiophysicalProperties2CaPools(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_membraneProperties2CaPools(self):
-        return self.membrane_properties2_ca_pools
-    def set_membraneProperties2CaPools(self, membrane_properties2_ca_pools):
-        self.membrane_properties2_ca_pools = membrane_properties2_ca_pools
-    def get_intracellularProperties2CaPools(self):
-        return self.intracellular_properties2_ca_pools
-    def set_intracellularProperties2CaPools(self, intracellular_properties2_ca_pools):
-        self.intracellular_properties2_ca_pools = intracellular_properties2_ca_pools
-    def get_extracellularProperties(self):
-        return self.extracellular_properties
-    def set_extracellularProperties(self, extracellular_properties):
-        self.extracellular_properties = extracellular_properties
     def _hasContent(self):
         if (
             self.membrane_properties2_ca_pools is not None or
@@ -15964,22 +13972,6 @@ class BiophysicalProperties(Standalone):
         else:
             return BiophysicalProperties(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_membraneProperties(self):
-        return self.membrane_properties
-    def set_membraneProperties(self, membrane_properties):
-        self.membrane_properties = membrane_properties
-    def get_intracellularProperties(self):
-        return self.intracellular_properties
-    def set_intracellularProperties(self, intracellular_properties):
-        self.intracellular_properties = intracellular_properties
-    def get_extracellularProperties(self):
-        return self.extracellular_properties
-    def set_extracellularProperties(self, extracellular_properties):
-        self.extracellular_properties = extracellular_properties
     def _hasContent(self):
         if (
             self.membrane_properties is not None or
@@ -16101,26 +14093,6 @@ class InhomogeneousParameter(Base):
         else:
             return InhomogeneousParameter(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_proximal(self):
-        return self.proximal
-    def set_proximal(self, proximal):
-        self.proximal = proximal
-    def get_distal(self):
-        return self.distal
-    def set_distal(self, distal):
-        self.distal = distal
-    def get_variable(self):
-        return self.variable
-    def set_variable(self, variable):
-        self.variable = variable
-    def get_metric(self):
-        return self.metric
-    def set_metric(self, metric):
-        self.metric = metric
     def validate_Metric(self, value):
         # Validate type Metric, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -16290,78 +14262,6 @@ class SegmentGroup(Base):
         else:
             return SegmentGroup(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_notes(self):
-        return self.notes
-    def set_notes(self, notes):
-        self.notes = notes
-    def get_property(self):
-        return self.properties
-    def set_property(self, properties):
-        self.properties = properties
-    def add_property(self, value):
-        self.properties.append(value)
-    def insert_property_at(self, index, value):
-        self.properties.insert(index, value)
-    def replace_property_at(self, index, value):
-        self.properties[index] = value
-    def get_annotation(self):
-        return self.annotation
-    def set_annotation(self, annotation):
-        self.annotation = annotation
-    def get_member(self):
-        return self.members
-    def set_member(self, members):
-        self.members = members
-    def add_member(self, value):
-        self.members.append(value)
-    def insert_member_at(self, index, value):
-        self.members.insert(index, value)
-    def replace_member_at(self, index, value):
-        self.members[index] = value
-    def get_include(self):
-        return self.includes
-    def set_include(self, includes):
-        self.includes = includes
-    def add_include(self, value):
-        self.includes.append(value)
-    def insert_include_at(self, index, value):
-        self.includes.insert(index, value)
-    def replace_include_at(self, index, value):
-        self.includes[index] = value
-    def get_path(self):
-        return self.paths
-    def set_path(self, paths):
-        self.paths = paths
-    def add_path(self, value):
-        self.paths.append(value)
-    def insert_path_at(self, index, value):
-        self.paths.insert(index, value)
-    def replace_path_at(self, index, value):
-        self.paths[index] = value
-    def get_subTree(self):
-        return self.sub_trees
-    def set_subTree(self, sub_trees):
-        self.sub_trees = sub_trees
-    def add_subTree(self, value):
-        self.sub_trees.append(value)
-    def insert_subTree_at(self, index, value):
-        self.sub_trees.insert(index, value)
-    def replace_subTree_at(self, index, value):
-        self.sub_trees[index] = value
-    def get_inhomogeneousParameter(self):
-        return self.inhomogeneous_parameters
-    def set_inhomogeneousParameter(self, inhomogeneous_parameters):
-        self.inhomogeneous_parameters = inhomogeneous_parameters
-    def add_inhomogeneousParameter(self, value):
-        self.inhomogeneous_parameters.append(value)
-    def insert_inhomogeneousParameter_at(self, index, value):
-        self.inhomogeneous_parameters.insert(index, value)
-    def replace_inhomogeneousParameter_at(self, index, value):
-        self.inhomogeneous_parameters[index] = value
     def validate_Notes(self, value):
         result = True
         # Validate type Notes, a restriction on xs:string.
@@ -16550,26 +14450,6 @@ class Segment(BaseNonNegativeIntegerId):
         else:
             return Segment(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_parent(self):
-        return self.parent
-    def set_parent(self, parent):
-        self.parent = parent
-    def get_proximal(self):
-        return self.proximal
-    def set_proximal(self, proximal):
-        self.proximal = proximal
-    def get_distal(self):
-        return self.distal
-    def set_distal(self, distal):
-        self.distal = distal
-    def get_name(self):
-        return self.name
-    def set_name(self, name):
-        self.name = name
     def _hasContent(self):
         if (
             self.parent is not None or
@@ -16787,30 +14667,6 @@ class Morphology(Standalone):
         else:
             return Morphology(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_segment(self):
-        return self.segments
-    def set_segment(self, segments):
-        self.segments = segments
-    def add_segment(self, value):
-        self.segments.append(value)
-    def insert_segment_at(self, index, value):
-        self.segments.insert(index, value)
-    def replace_segment_at(self, index, value):
-        self.segments[index] = value
-    def get_segmentGroup(self):
-        return self.segment_groups
-    def set_segmentGroup(self, segment_groups):
-        self.segment_groups = segment_groups
-    def add_segmentGroup(self, value):
-        self.segment_groups.append(value)
-    def insert_segmentGroup_at(self, index, value):
-        self.segment_groups.insert(index, value)
-    def replace_segmentGroup_at(self, index, value):
-        self.segment_groups[index] = value
     def _hasContent(self):
         if (
             self.segments or
@@ -16918,12 +14774,6 @@ class BaseCell(Standalone):
         else:
             return BaseCell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def _hasContent(self):
         if (
             super(BaseCell, self)._hasContent()
@@ -17014,12 +14864,6 @@ class BaseSynapse(Standalone):
         else:
             return BaseSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def _hasContent(self):
         if (
             super(BaseSynapse, self)._hasContent()
@@ -17124,26 +14968,6 @@ class FixedFactorConcentrationModel(Standalone):
         else:
             return FixedFactorConcentrationModel(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_ion(self):
-        return self.ion
-    def set_ion(self, ion):
-        self.ion = ion
-    def get_restingConc(self):
-        return self.resting_conc
-    def set_restingConc(self, resting_conc):
-        self.resting_conc = resting_conc
-    def get_decayConstant(self):
-        return self.decay_constant
-    def set_decayConstant(self, decay_constant):
-        self.decay_constant = decay_constant
-    def get_rho(self):
-        return self.rho
-    def set_rho(self, rho):
-        self.rho = rho
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -17313,28 +15137,6 @@ class DecayingPoolConcentrationModel(Standalone):
         else:
             return DecayingPoolConcentrationModel(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_ion(self):
-        return self.ion
-    def set_ion(self, ion):
-        self.ion = ion
-    def get_restingConc(self):
-        return self.resting_conc
-    def set_restingConc(self, resting_conc):
-        self.resting_conc = resting_conc
-    def get_decayConstant(self):
-        return self.decay_constant
-    def set_decayConstant(self, decay_constant):
-        self.decay_constant = decay_constant
-    def get_shellThickness(self):
-        return self.shell_thickness
-    def set_shellThickness(self, shell_thickness):
-        self.shell_thickness = shell_thickness
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -17516,30 +15318,6 @@ class GateFractionalSubgate(Base):
         else:
             return GateFractionalSubgate(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_notes(self):
-        return self.notes
-    def set_notes(self, notes):
-        self.notes = notes
-    def get_q10Settings(self):
-        return self.q10_settings
-    def set_q10Settings(self, q10_settings):
-        self.q10_settings = q10_settings
-    def get_steadyState(self):
-        return self.steady_state
-    def set_steadyState(self, steady_state):
-        self.steady_state = steady_state
-    def get_timeCourse(self):
-        return self.time_course
-    def set_timeCourse(self, time_course):
-        self.time_course = time_course
-    def get_fractionalConductance(self):
-        return self.fractional_conductance
-    def set_fractionalConductance(self, fractional_conductance):
-        self.fractional_conductance = fractional_conductance
     def validate_Notes(self, value):
         result = True
         # Validate type Notes, a restriction on xs:string.
@@ -17705,32 +15483,6 @@ class GateFractional(Base):
         else:
             return GateFractional(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_notes(self):
-        return self.notes
-    def set_notes(self, notes):
-        self.notes = notes
-    def get_q10Settings(self):
-        return self.q10_settings
-    def set_q10Settings(self, q10_settings):
-        self.q10_settings = q10_settings
-    def get_subGate(self):
-        return self.sub_gates
-    def set_subGate(self, sub_gates):
-        self.sub_gates = sub_gates
-    def add_subGate(self, value):
-        self.sub_gates.append(value)
-    def insert_subGate_at(self, index, value):
-        self.sub_gates.insert(index, value)
-    def replace_subGate_at(self, index, value):
-        self.sub_gates[index] = value
-    def get_instances(self):
-        return self.instances
-    def set_instances(self, instances):
-        self.instances = instances
     def validate_Notes(self, value):
         result = True
         # Validate type Notes, a restriction on xs:string.
@@ -17880,22 +15632,6 @@ class GateHHInstantaneous(Base):
         else:
             return GateHHInstantaneous(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_notes(self):
-        return self.notes
-    def set_notes(self, notes):
-        self.notes = notes
-    def get_steadyState(self):
-        return self.steady_state
-    def set_steadyState(self, steady_state):
-        self.steady_state = steady_state
-    def get_instances(self):
-        return self.instances
-    def set_instances(self, instances):
-        self.instances = instances
     def validate_Notes(self, value):
         result = True
         # Validate type Notes, a restriction on xs:string.
@@ -18045,34 +15781,6 @@ class GateHHRatesInf(Base):
         else:
             return GateHHRatesInf(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_notes(self):
-        return self.notes
-    def set_notes(self, notes):
-        self.notes = notes
-    def get_q10Settings(self):
-        return self.q10_settings
-    def set_q10Settings(self, q10_settings):
-        self.q10_settings = q10_settings
-    def get_forwardRate(self):
-        return self.forward_rate
-    def set_forwardRate(self, forward_rate):
-        self.forward_rate = forward_rate
-    def get_reverseRate(self):
-        return self.reverse_rate
-    def set_reverseRate(self, reverse_rate):
-        self.reverse_rate = reverse_rate
-    def get_steadyState(self):
-        return self.steady_state
-    def set_steadyState(self, steady_state):
-        self.steady_state = steady_state
-    def get_instances(self):
-        return self.instances
-    def set_instances(self, instances):
-        self.instances = instances
     def validate_Notes(self, value):
         result = True
         # Validate type Notes, a restriction on xs:string.
@@ -18249,34 +15957,6 @@ class GateHHRatesTau(Base):
         else:
             return GateHHRatesTau(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_notes(self):
-        return self.notes
-    def set_notes(self, notes):
-        self.notes = notes
-    def get_q10Settings(self):
-        return self.q10_settings
-    def set_q10Settings(self, q10_settings):
-        self.q10_settings = q10_settings
-    def get_forwardRate(self):
-        return self.forward_rate
-    def set_forwardRate(self, forward_rate):
-        self.forward_rate = forward_rate
-    def get_reverseRate(self):
-        return self.reverse_rate
-    def set_reverseRate(self, reverse_rate):
-        self.reverse_rate = reverse_rate
-    def get_timeCourse(self):
-        return self.time_course
-    def set_timeCourse(self, time_course):
-        self.time_course = time_course
-    def get_instances(self):
-        return self.instances
-    def set_instances(self, instances):
-        self.instances = instances
     def validate_Notes(self, value):
         result = True
         # Validate type Notes, a restriction on xs:string.
@@ -18456,38 +16136,6 @@ class GateHHRatesTauInf(Base):
         else:
             return GateHHRatesTauInf(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_notes(self):
-        return self.notes
-    def set_notes(self, notes):
-        self.notes = notes
-    def get_q10Settings(self):
-        return self.q10_settings
-    def set_q10Settings(self, q10_settings):
-        self.q10_settings = q10_settings
-    def get_forwardRate(self):
-        return self.forward_rate
-    def set_forwardRate(self, forward_rate):
-        self.forward_rate = forward_rate
-    def get_reverseRate(self):
-        return self.reverse_rate
-    def set_reverseRate(self, reverse_rate):
-        self.reverse_rate = reverse_rate
-    def get_timeCourse(self):
-        return self.time_course
-    def set_timeCourse(self, time_course):
-        self.time_course = time_course
-    def get_steadyState(self):
-        return self.steady_state
-    def set_steadyState(self, steady_state):
-        self.steady_state = steady_state
-    def get_instances(self):
-        return self.instances
-    def set_instances(self, instances):
-        self.instances = instances
     def validate_Notes(self, value):
         result = True
         # Validate type Notes, a restriction on xs:string.
@@ -18670,30 +16318,6 @@ class GateHHTauInf(Base):
         else:
             return GateHHTauInf(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_notes(self):
-        return self.notes
-    def set_notes(self, notes):
-        self.notes = notes
-    def get_q10Settings(self):
-        return self.q10_settings
-    def set_q10Settings(self, q10_settings):
-        self.q10_settings = q10_settings
-    def get_timeCourse(self):
-        return self.time_course
-    def set_timeCourse(self, time_course):
-        self.time_course = time_course
-    def get_steadyState(self):
-        return self.steady_state
-    def set_steadyState(self, steady_state):
-        self.steady_state = steady_state
-    def get_instances(self):
-        return self.instances
-    def set_instances(self, instances):
-        self.instances = instances
     def validate_Notes(self, value):
         result = True
         # Validate type Notes, a restriction on xs:string.
@@ -18858,30 +16482,6 @@ class GateHHRates(Base):
         else:
             return GateHHRates(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_notes(self):
-        return self.notes
-    def set_notes(self, notes):
-        self.notes = notes
-    def get_q10Settings(self):
-        return self.q10_settings
-    def set_q10Settings(self, q10_settings):
-        self.q10_settings = q10_settings
-    def get_forwardRate(self):
-        return self.forward_rate
-    def set_forwardRate(self, forward_rate):
-        self.forward_rate = forward_rate
-    def get_reverseRate(self):
-        return self.reverse_rate
-    def set_reverseRate(self, reverse_rate):
-        self.reverse_rate = reverse_rate
-    def get_instances(self):
-        return self.instances
-    def set_instances(self, instances):
-        self.instances = instances
     def validate_Notes(self, value):
         result = True
         # Validate type Notes, a restriction on xs:string.
@@ -19064,52 +16664,6 @@ class GateHHUndetermined(Base):
         else:
             return GateHHUndetermined(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_notes(self):
-        return self.notes
-    def set_notes(self, notes):
-        self.notes = notes
-    def get_q10Settings(self):
-        return self.q10_settings
-    def set_q10Settings(self, q10_settings):
-        self.q10_settings = q10_settings
-    def get_forwardRate(self):
-        return self.forward_rate
-    def set_forwardRate(self, forward_rate):
-        self.forward_rate = forward_rate
-    def get_reverseRate(self):
-        return self.reverse_rate
-    def set_reverseRate(self, reverse_rate):
-        self.reverse_rate = reverse_rate
-    def get_timeCourse(self):
-        return self.time_course
-    def set_timeCourse(self, time_course):
-        self.time_course = time_course
-    def get_steadyState(self):
-        return self.steady_state
-    def set_steadyState(self, steady_state):
-        self.steady_state = steady_state
-    def get_subGate(self):
-        return self.sub_gates
-    def set_subGate(self, sub_gates):
-        self.sub_gates = sub_gates
-    def add_subGate(self, value):
-        self.sub_gates.append(value)
-    def insert_subGate_at(self, index, value):
-        self.sub_gates.insert(index, value)
-    def replace_subGate_at(self, index, value):
-        self.sub_gates[index] = value
-    def get_instances(self):
-        return self.instances
-    def set_instances(self, instances):
-        self.instances = instances
-    def get_type(self):
-        return self.type
-    def set_type(self, type):
-        self.type = type
     def validate_Notes(self, value):
         result = True
         # Validate type Notes, a restriction on xs:string.
@@ -19346,72 +16900,6 @@ class GateKS(Base):
         else:
             return GateKS(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_notes(self):
-        return self.notes
-    def set_notes(self, notes):
-        self.notes = notes
-    def get_q10Settings(self):
-        return self.q10_settings
-    def set_q10Settings(self, q10_settings):
-        self.q10_settings = q10_settings
-    def get_closedState(self):
-        return self.closed_states
-    def set_closedState(self, closed_states):
-        self.closed_states = closed_states
-    def add_closedState(self, value):
-        self.closed_states.append(value)
-    def insert_closedState_at(self, index, value):
-        self.closed_states.insert(index, value)
-    def replace_closedState_at(self, index, value):
-        self.closed_states[index] = value
-    def get_openState(self):
-        return self.open_states
-    def set_openState(self, open_states):
-        self.open_states = open_states
-    def add_openState(self, value):
-        self.open_states.append(value)
-    def insert_openState_at(self, index, value):
-        self.open_states.insert(index, value)
-    def replace_openState_at(self, index, value):
-        self.open_states[index] = value
-    def get_forwardTransition(self):
-        return self.forward_transition
-    def set_forwardTransition(self, forward_transition):
-        self.forward_transition = forward_transition
-    def add_forwardTransition(self, value):
-        self.forward_transition.append(value)
-    def insert_forwardTransition_at(self, index, value):
-        self.forward_transition.insert(index, value)
-    def replace_forwardTransition_at(self, index, value):
-        self.forward_transition[index] = value
-    def get_reverseTransition(self):
-        return self.reverse_transition
-    def set_reverseTransition(self, reverse_transition):
-        self.reverse_transition = reverse_transition
-    def add_reverseTransition(self, value):
-        self.reverse_transition.append(value)
-    def insert_reverseTransition_at(self, index, value):
-        self.reverse_transition.insert(index, value)
-    def replace_reverseTransition_at(self, index, value):
-        self.reverse_transition[index] = value
-    def get_tauInfTransition(self):
-        return self.tau_inf_transition
-    def set_tauInfTransition(self, tau_inf_transition):
-        self.tau_inf_transition = tau_inf_transition
-    def add_tauInfTransition(self, value):
-        self.tau_inf_transition.append(value)
-    def insert_tauInfTransition_at(self, index, value):
-        self.tau_inf_transition.insert(index, value)
-    def replace_tauInfTransition_at(self, index, value):
-        self.tau_inf_transition[index] = value
-    def get_instances(self):
-        return self.instances
-    def set_instances(self, instances):
-        self.instances = instances
     def validate_Notes(self, value):
         result = True
         # Validate type Notes, a restriction on xs:string.
@@ -19599,26 +17087,6 @@ class TauInfTransition(Base):
         else:
             return TauInfTransition(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_steadyState(self):
-        return self.steady_state
-    def set_steadyState(self, steady_state):
-        self.steady_state = steady_state
-    def get_timeCourse(self):
-        return self.time_course
-    def set_timeCourse(self, time_course):
-        self.time_course = time_course
-    def get_from(self):
-        return self.from_
-    def set_from(self, from_):
-        self.from_ = from_
-    def get_to(self):
-        return self.to
-    def set_to(self, to):
-        self.to = to
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -19755,22 +17223,6 @@ class ReverseTransition(Base):
         else:
             return ReverseTransition(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
-    def get_from(self):
-        return self.from_
-    def set_from(self, from_):
-        self.from_ = from_
-    def get_to(self):
-        return self.to
-    def set_to(self, to):
-        self.to = to
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -19857,7 +17309,7 @@ class ReverseTransition(Base):
         super(ReverseTransition, self)._buildAttributes(node, attrs, already_processed)
     def _buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         content_ = self.gds_build_any(child_, 'ReverseTransition')
-        self.add_anytypeobjs_(content_)
+        self.anytypeobjs_.append(content_)
         super(ReverseTransition, self)._buildChildren(child_, node, nodeName_, True)
 # end class ReverseTransition
 
@@ -19897,22 +17349,6 @@ class ForwardTransition(Base):
         else:
             return ForwardTransition(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_anytypeobjs_(self): return self.anytypeobjs_
-    def set_anytypeobjs_(self, anytypeobjs_): self.anytypeobjs_ = anytypeobjs_
-    def add_anytypeobjs_(self, value): self.anytypeobjs_.append(value)
-    def insert_anytypeobjs_(self, index, value): self._anytypeobjs_[index] = value
-    def get_from(self):
-        return self.from_
-    def set_from(self, from_):
-        self.from_ = from_
-    def get_to(self):
-        return self.to
-    def set_to(self, to):
-        self.to = to
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -19999,7 +17435,7 @@ class ForwardTransition(Base):
         super(ForwardTransition, self)._buildAttributes(node, attrs, already_processed)
     def _buildChildren(self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None):
         content_ = self.gds_build_any(child_, 'ForwardTransition')
-        self.add_anytypeobjs_(content_)
+        self.anytypeobjs_.append(content_)
         super(ForwardTransition, self)._buildChildren(child_, node, nodeName_, True)
 # end class ForwardTransition
 
@@ -20028,10 +17464,6 @@ class OpenState(Base):
         else:
             return OpenState(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
     def _hasContent(self):
         if (
             super(OpenState, self)._hasContent()
@@ -20109,10 +17541,6 @@ class ClosedState(Base):
         else:
             return ClosedState(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
     def _hasContent(self):
         if (
             super(ClosedState, self)._hasContent()
@@ -20206,28 +17634,6 @@ class IonChannelKS(Standalone):
         else:
             return IonChannelKS(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_gateKS(self):
-        return self.gate_kses
-    def set_gateKS(self, gate_kses):
-        self.gate_kses = gate_kses
-    def add_gateKS(self, value):
-        self.gate_kses.append(value)
-    def insert_gateKS_at(self, index, value):
-        self.gate_kses.insert(index, value)
-    def replace_gateKS_at(self, index, value):
-        self.gate_kses[index] = value
-    def get_species(self):
-        return self.species
-    def set_species(self, species):
-        self.species = species
-    def get_conductance(self):
-        return self.conductance
-    def set_conductance(self, conductance):
-        self.conductance = conductance
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -20362,22 +17768,6 @@ class IonChannelScalable(Standalone):
         else:
             return IonChannelScalable(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_q10ConductanceScaling(self):
-        return self.q10_conductance_scalings
-    def set_q10ConductanceScaling(self, q10_conductance_scalings):
-        self.q10_conductance_scalings = q10_conductance_scalings
-    def add_q10ConductanceScaling(self, value):
-        self.q10_conductance_scalings.append(value)
-    def insert_q10ConductanceScaling_at(self, index, value):
-        self.q10_conductance_scalings.insert(index, value)
-    def replace_q10ConductanceScaling_at(self, index, value):
-        self.q10_conductance_scalings[index] = value
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def _hasContent(self):
         if (
             self.q10_conductance_scalings or
@@ -20881,680 +18271,6 @@ class NeuroMLDocument(Standalone):
         else:
             return NeuroMLDocument(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_include(self):
-        return self.includes
-    def set_include(self, includes):
-        self.includes = includes
-    def add_include(self, value):
-        self.includes.append(value)
-    def insert_include_at(self, index, value):
-        self.includes.insert(index, value)
-    def replace_include_at(self, index, value):
-        self.includes[index] = value
-    def get_extracellularProperties(self):
-        return self.extracellular_properties
-    def set_extracellularProperties(self, extracellular_properties):
-        self.extracellular_properties = extracellular_properties
-    def add_extracellularProperties(self, value):
-        self.extracellular_properties.append(value)
-    def insert_extracellularProperties_at(self, index, value):
-        self.extracellular_properties.insert(index, value)
-    def replace_extracellularProperties_at(self, index, value):
-        self.extracellular_properties[index] = value
-    def get_intracellularProperties(self):
-        return self.intracellular_properties
-    def set_intracellularProperties(self, intracellular_properties):
-        self.intracellular_properties = intracellular_properties
-    def add_intracellularProperties(self, value):
-        self.intracellular_properties.append(value)
-    def insert_intracellularProperties_at(self, index, value):
-        self.intracellular_properties.insert(index, value)
-    def replace_intracellularProperties_at(self, index, value):
-        self.intracellular_properties[index] = value
-    def get_morphology(self):
-        return self.morphology
-    def set_morphology(self, morphology):
-        self.morphology = morphology
-    def add_morphology(self, value):
-        self.morphology.append(value)
-    def insert_morphology_at(self, index, value):
-        self.morphology.insert(index, value)
-    def replace_morphology_at(self, index, value):
-        self.morphology[index] = value
-    def get_ionChannel(self):
-        return self.ion_channel
-    def set_ionChannel(self, ion_channel):
-        self.ion_channel = ion_channel
-    def add_ionChannel(self, value):
-        self.ion_channel.append(value)
-    def insert_ionChannel_at(self, index, value):
-        self.ion_channel.insert(index, value)
-    def replace_ionChannel_at(self, index, value):
-        self.ion_channel[index] = value
-    def get_ionChannelHH(self):
-        return self.ion_channel_hhs
-    def set_ionChannelHH(self, ion_channel_hhs):
-        self.ion_channel_hhs = ion_channel_hhs
-    def add_ionChannelHH(self, value):
-        self.ion_channel_hhs.append(value)
-    def insert_ionChannelHH_at(self, index, value):
-        self.ion_channel_hhs.insert(index, value)
-    def replace_ionChannelHH_at(self, index, value):
-        self.ion_channel_hhs[index] = value
-    def get_ionChannelVShift(self):
-        return self.ion_channel_v_shifts
-    def set_ionChannelVShift(self, ion_channel_v_shifts):
-        self.ion_channel_v_shifts = ion_channel_v_shifts
-    def add_ionChannelVShift(self, value):
-        self.ion_channel_v_shifts.append(value)
-    def insert_ionChannelVShift_at(self, index, value):
-        self.ion_channel_v_shifts.insert(index, value)
-    def replace_ionChannelVShift_at(self, index, value):
-        self.ion_channel_v_shifts[index] = value
-    def get_ionChannelKS(self):
-        return self.ion_channel_kses
-    def set_ionChannelKS(self, ion_channel_kses):
-        self.ion_channel_kses = ion_channel_kses
-    def add_ionChannelKS(self, value):
-        self.ion_channel_kses.append(value)
-    def insert_ionChannelKS_at(self, index, value):
-        self.ion_channel_kses.insert(index, value)
-    def replace_ionChannelKS_at(self, index, value):
-        self.ion_channel_kses[index] = value
-    def get_decayingPoolConcentrationModel(self):
-        return self.decaying_pool_concentration_models
-    def set_decayingPoolConcentrationModel(self, decaying_pool_concentration_models):
-        self.decaying_pool_concentration_models = decaying_pool_concentration_models
-    def add_decayingPoolConcentrationModel(self, value):
-        self.decaying_pool_concentration_models.append(value)
-    def insert_decayingPoolConcentrationModel_at(self, index, value):
-        self.decaying_pool_concentration_models.insert(index, value)
-    def replace_decayingPoolConcentrationModel_at(self, index, value):
-        self.decaying_pool_concentration_models[index] = value
-    def get_fixedFactorConcentrationModel(self):
-        return self.fixed_factor_concentration_models
-    def set_fixedFactorConcentrationModel(self, fixed_factor_concentration_models):
-        self.fixed_factor_concentration_models = fixed_factor_concentration_models
-    def add_fixedFactorConcentrationModel(self, value):
-        self.fixed_factor_concentration_models.append(value)
-    def insert_fixedFactorConcentrationModel_at(self, index, value):
-        self.fixed_factor_concentration_models.insert(index, value)
-    def replace_fixedFactorConcentrationModel_at(self, index, value):
-        self.fixed_factor_concentration_models[index] = value
-    def get_alphaCurrentSynapse(self):
-        return self.alpha_current_synapses
-    def set_alphaCurrentSynapse(self, alpha_current_synapses):
-        self.alpha_current_synapses = alpha_current_synapses
-    def add_alphaCurrentSynapse(self, value):
-        self.alpha_current_synapses.append(value)
-    def insert_alphaCurrentSynapse_at(self, index, value):
-        self.alpha_current_synapses.insert(index, value)
-    def replace_alphaCurrentSynapse_at(self, index, value):
-        self.alpha_current_synapses[index] = value
-    def get_alphaSynapse(self):
-        return self.alpha_synapses
-    def set_alphaSynapse(self, alpha_synapses):
-        self.alpha_synapses = alpha_synapses
-    def add_alphaSynapse(self, value):
-        self.alpha_synapses.append(value)
-    def insert_alphaSynapse_at(self, index, value):
-        self.alpha_synapses.insert(index, value)
-    def replace_alphaSynapse_at(self, index, value):
-        self.alpha_synapses[index] = value
-    def get_expOneSynapse(self):
-        return self.exp_one_synapses
-    def set_expOneSynapse(self, exp_one_synapses):
-        self.exp_one_synapses = exp_one_synapses
-    def add_expOneSynapse(self, value):
-        self.exp_one_synapses.append(value)
-    def insert_expOneSynapse_at(self, index, value):
-        self.exp_one_synapses.insert(index, value)
-    def replace_expOneSynapse_at(self, index, value):
-        self.exp_one_synapses[index] = value
-    def get_expTwoSynapse(self):
-        return self.exp_two_synapses
-    def set_expTwoSynapse(self, exp_two_synapses):
-        self.exp_two_synapses = exp_two_synapses
-    def add_expTwoSynapse(self, value):
-        self.exp_two_synapses.append(value)
-    def insert_expTwoSynapse_at(self, index, value):
-        self.exp_two_synapses.insert(index, value)
-    def replace_expTwoSynapse_at(self, index, value):
-        self.exp_two_synapses[index] = value
-    def get_expThreeSynapse(self):
-        return self.exp_three_synapses
-    def set_expThreeSynapse(self, exp_three_synapses):
-        self.exp_three_synapses = exp_three_synapses
-    def add_expThreeSynapse(self, value):
-        self.exp_three_synapses.append(value)
-    def insert_expThreeSynapse_at(self, index, value):
-        self.exp_three_synapses.insert(index, value)
-    def replace_expThreeSynapse_at(self, index, value):
-        self.exp_three_synapses[index] = value
-    def get_blockingPlasticSynapse(self):
-        return self.blocking_plastic_synapses
-    def set_blockingPlasticSynapse(self, blocking_plastic_synapses):
-        self.blocking_plastic_synapses = blocking_plastic_synapses
-    def add_blockingPlasticSynapse(self, value):
-        self.blocking_plastic_synapses.append(value)
-    def insert_blockingPlasticSynapse_at(self, index, value):
-        self.blocking_plastic_synapses.insert(index, value)
-    def replace_blockingPlasticSynapse_at(self, index, value):
-        self.blocking_plastic_synapses[index] = value
-    def get_doubleSynapse(self):
-        return self.double_synapses
-    def set_doubleSynapse(self, double_synapses):
-        self.double_synapses = double_synapses
-    def add_doubleSynapse(self, value):
-        self.double_synapses.append(value)
-    def insert_doubleSynapse_at(self, index, value):
-        self.double_synapses.insert(index, value)
-    def replace_doubleSynapse_at(self, index, value):
-        self.double_synapses[index] = value
-    def get_gapJunction(self):
-        return self.gap_junctions
-    def set_gapJunction(self, gap_junctions):
-        self.gap_junctions = gap_junctions
-    def add_gapJunction(self, value):
-        self.gap_junctions.append(value)
-    def insert_gapJunction_at(self, index, value):
-        self.gap_junctions.insert(index, value)
-    def replace_gapJunction_at(self, index, value):
-        self.gap_junctions[index] = value
-    def get_silentSynapse(self):
-        return self.silent_synapses
-    def set_silentSynapse(self, silent_synapses):
-        self.silent_synapses = silent_synapses
-    def add_silentSynapse(self, value):
-        self.silent_synapses.append(value)
-    def insert_silentSynapse_at(self, index, value):
-        self.silent_synapses.insert(index, value)
-    def replace_silentSynapse_at(self, index, value):
-        self.silent_synapses[index] = value
-    def get_linearGradedSynapse(self):
-        return self.linear_graded_synapses
-    def set_linearGradedSynapse(self, linear_graded_synapses):
-        self.linear_graded_synapses = linear_graded_synapses
-    def add_linearGradedSynapse(self, value):
-        self.linear_graded_synapses.append(value)
-    def insert_linearGradedSynapse_at(self, index, value):
-        self.linear_graded_synapses.insert(index, value)
-    def replace_linearGradedSynapse_at(self, index, value):
-        self.linear_graded_synapses[index] = value
-    def get_gradedSynapse(self):
-        return self.graded_synapses
-    def set_gradedSynapse(self, graded_synapses):
-        self.graded_synapses = graded_synapses
-    def add_gradedSynapse(self, value):
-        self.graded_synapses.append(value)
-    def insert_gradedSynapse_at(self, index, value):
-        self.graded_synapses.insert(index, value)
-    def replace_gradedSynapse_at(self, index, value):
-        self.graded_synapses[index] = value
-    def get_biophysicalProperties(self):
-        return self.biophysical_properties
-    def set_biophysicalProperties(self, biophysical_properties):
-        self.biophysical_properties = biophysical_properties
-    def add_biophysicalProperties(self, value):
-        self.biophysical_properties.append(value)
-    def insert_biophysicalProperties_at(self, index, value):
-        self.biophysical_properties.insert(index, value)
-    def replace_biophysicalProperties_at(self, index, value):
-        self.biophysical_properties[index] = value
-    def get_cell(self):
-        return self.cells
-    def set_cell(self, cells):
-        self.cells = cells
-    def add_cell(self, value):
-        self.cells.append(value)
-    def insert_cell_at(self, index, value):
-        self.cells.insert(index, value)
-    def replace_cell_at(self, index, value):
-        self.cells[index] = value
-    def get_cell2CaPools(self):
-        return self.cell2_ca_poolses
-    def set_cell2CaPools(self, cell2_ca_poolses):
-        self.cell2_ca_poolses = cell2_ca_poolses
-    def add_cell2CaPools(self, value):
-        self.cell2_ca_poolses.append(value)
-    def insert_cell2CaPools_at(self, index, value):
-        self.cell2_ca_poolses.insert(index, value)
-    def replace_cell2CaPools_at(self, index, value):
-        self.cell2_ca_poolses[index] = value
-    def get_baseCell(self):
-        return self.base_cells
-    def set_baseCell(self, base_cells):
-        self.base_cells = base_cells
-    def add_baseCell(self, value):
-        self.base_cells.append(value)
-    def insert_baseCell_at(self, index, value):
-        self.base_cells.insert(index, value)
-    def replace_baseCell_at(self, index, value):
-        self.base_cells[index] = value
-    def get_iafTauCell(self):
-        return self.iaf_tau_cells
-    def set_iafTauCell(self, iaf_tau_cells):
-        self.iaf_tau_cells = iaf_tau_cells
-    def add_iafTauCell(self, value):
-        self.iaf_tau_cells.append(value)
-    def insert_iafTauCell_at(self, index, value):
-        self.iaf_tau_cells.insert(index, value)
-    def replace_iafTauCell_at(self, index, value):
-        self.iaf_tau_cells[index] = value
-    def get_iafTauRefCell(self):
-        return self.iaf_tau_ref_cells
-    def set_iafTauRefCell(self, iaf_tau_ref_cells):
-        self.iaf_tau_ref_cells = iaf_tau_ref_cells
-    def add_iafTauRefCell(self, value):
-        self.iaf_tau_ref_cells.append(value)
-    def insert_iafTauRefCell_at(self, index, value):
-        self.iaf_tau_ref_cells.insert(index, value)
-    def replace_iafTauRefCell_at(self, index, value):
-        self.iaf_tau_ref_cells[index] = value
-    def get_iafCell(self):
-        return self.iaf_cells
-    def set_iafCell(self, iaf_cells):
-        self.iaf_cells = iaf_cells
-    def add_iafCell(self, value):
-        self.iaf_cells.append(value)
-    def insert_iafCell_at(self, index, value):
-        self.iaf_cells.insert(index, value)
-    def replace_iafCell_at(self, index, value):
-        self.iaf_cells[index] = value
-    def get_iafRefCell(self):
-        return self.iaf_ref_cells
-    def set_iafRefCell(self, iaf_ref_cells):
-        self.iaf_ref_cells = iaf_ref_cells
-    def add_iafRefCell(self, value):
-        self.iaf_ref_cells.append(value)
-    def insert_iafRefCell_at(self, index, value):
-        self.iaf_ref_cells.insert(index, value)
-    def replace_iafRefCell_at(self, index, value):
-        self.iaf_ref_cells[index] = value
-    def get_izhikevichCell(self):
-        return self.izhikevich_cells
-    def set_izhikevichCell(self, izhikevich_cells):
-        self.izhikevich_cells = izhikevich_cells
-    def add_izhikevichCell(self, value):
-        self.izhikevich_cells.append(value)
-    def insert_izhikevichCell_at(self, index, value):
-        self.izhikevich_cells.insert(index, value)
-    def replace_izhikevichCell_at(self, index, value):
-        self.izhikevich_cells[index] = value
-    def get_izhikevich2007Cell(self):
-        return self.izhikevich2007_cells
-    def set_izhikevich2007Cell(self, izhikevich2007_cells):
-        self.izhikevich2007_cells = izhikevich2007_cells
-    def add_izhikevich2007Cell(self, value):
-        self.izhikevich2007_cells.append(value)
-    def insert_izhikevich2007Cell_at(self, index, value):
-        self.izhikevich2007_cells.insert(index, value)
-    def replace_izhikevich2007Cell_at(self, index, value):
-        self.izhikevich2007_cells[index] = value
-    def get_adExIaFCell(self):
-        return self.ad_ex_ia_f_cells
-    def set_adExIaFCell(self, ad_ex_ia_f_cells):
-        self.ad_ex_ia_f_cells = ad_ex_ia_f_cells
-    def add_adExIaFCell(self, value):
-        self.ad_ex_ia_f_cells.append(value)
-    def insert_adExIaFCell_at(self, index, value):
-        self.ad_ex_ia_f_cells.insert(index, value)
-    def replace_adExIaFCell_at(self, index, value):
-        self.ad_ex_ia_f_cells[index] = value
-    def get_fitzHughNagumoCell(self):
-        return self.fitz_hugh_nagumo_cells
-    def set_fitzHughNagumoCell(self, fitz_hugh_nagumo_cells):
-        self.fitz_hugh_nagumo_cells = fitz_hugh_nagumo_cells
-    def add_fitzHughNagumoCell(self, value):
-        self.fitz_hugh_nagumo_cells.append(value)
-    def insert_fitzHughNagumoCell_at(self, index, value):
-        self.fitz_hugh_nagumo_cells.insert(index, value)
-    def replace_fitzHughNagumoCell_at(self, index, value):
-        self.fitz_hugh_nagumo_cells[index] = value
-    def get_fitzHughNagumo1969Cell(self):
-        return self.fitz_hugh_nagumo1969_cells
-    def set_fitzHughNagumo1969Cell(self, fitz_hugh_nagumo1969_cells):
-        self.fitz_hugh_nagumo1969_cells = fitz_hugh_nagumo1969_cells
-    def add_fitzHughNagumo1969Cell(self, value):
-        self.fitz_hugh_nagumo1969_cells.append(value)
-    def insert_fitzHughNagumo1969Cell_at(self, index, value):
-        self.fitz_hugh_nagumo1969_cells.insert(index, value)
-    def replace_fitzHughNagumo1969Cell_at(self, index, value):
-        self.fitz_hugh_nagumo1969_cells[index] = value
-    def get_pinskyRinzelCA3Cell(self):
-        return self.pinsky_rinzel_ca3_cells
-    def set_pinskyRinzelCA3Cell(self, pinsky_rinzel_ca3_cells):
-        self.pinsky_rinzel_ca3_cells = pinsky_rinzel_ca3_cells
-    def add_pinskyRinzelCA3Cell(self, value):
-        self.pinsky_rinzel_ca3_cells.append(value)
-    def insert_pinskyRinzelCA3Cell_at(self, index, value):
-        self.pinsky_rinzel_ca3_cells.insert(index, value)
-    def replace_pinskyRinzelCA3Cell_at(self, index, value):
-        self.pinsky_rinzel_ca3_cells[index] = value
-    def get_pulseGenerator(self):
-        return self.pulse_generators
-    def set_pulseGenerator(self, pulse_generators):
-        self.pulse_generators = pulse_generators
-    def add_pulseGenerator(self, value):
-        self.pulse_generators.append(value)
-    def insert_pulseGenerator_at(self, index, value):
-        self.pulse_generators.insert(index, value)
-    def replace_pulseGenerator_at(self, index, value):
-        self.pulse_generators[index] = value
-    def get_pulseGeneratorDL(self):
-        return self.pulse_generator_dls
-    def set_pulseGeneratorDL(self, pulse_generator_dls):
-        self.pulse_generator_dls = pulse_generator_dls
-    def add_pulseGeneratorDL(self, value):
-        self.pulse_generator_dls.append(value)
-    def insert_pulseGeneratorDL_at(self, index, value):
-        self.pulse_generator_dls.insert(index, value)
-    def replace_pulseGeneratorDL_at(self, index, value):
-        self.pulse_generator_dls[index] = value
-    def get_sineGenerator(self):
-        return self.sine_generators
-    def set_sineGenerator(self, sine_generators):
-        self.sine_generators = sine_generators
-    def add_sineGenerator(self, value):
-        self.sine_generators.append(value)
-    def insert_sineGenerator_at(self, index, value):
-        self.sine_generators.insert(index, value)
-    def replace_sineGenerator_at(self, index, value):
-        self.sine_generators[index] = value
-    def get_sineGeneratorDL(self):
-        return self.sine_generator_dls
-    def set_sineGeneratorDL(self, sine_generator_dls):
-        self.sine_generator_dls = sine_generator_dls
-    def add_sineGeneratorDL(self, value):
-        self.sine_generator_dls.append(value)
-    def insert_sineGeneratorDL_at(self, index, value):
-        self.sine_generator_dls.insert(index, value)
-    def replace_sineGeneratorDL_at(self, index, value):
-        self.sine_generator_dls[index] = value
-    def get_rampGenerator(self):
-        return self.ramp_generators
-    def set_rampGenerator(self, ramp_generators):
-        self.ramp_generators = ramp_generators
-    def add_rampGenerator(self, value):
-        self.ramp_generators.append(value)
-    def insert_rampGenerator_at(self, index, value):
-        self.ramp_generators.insert(index, value)
-    def replace_rampGenerator_at(self, index, value):
-        self.ramp_generators[index] = value
-    def get_rampGeneratorDL(self):
-        return self.ramp_generator_dls
-    def set_rampGeneratorDL(self, ramp_generator_dls):
-        self.ramp_generator_dls = ramp_generator_dls
-    def add_rampGeneratorDL(self, value):
-        self.ramp_generator_dls.append(value)
-    def insert_rampGeneratorDL_at(self, index, value):
-        self.ramp_generator_dls.insert(index, value)
-    def replace_rampGeneratorDL_at(self, index, value):
-        self.ramp_generator_dls[index] = value
-    def get_compoundInput(self):
-        return self.compound_inputs
-    def set_compoundInput(self, compound_inputs):
-        self.compound_inputs = compound_inputs
-    def add_compoundInput(self, value):
-        self.compound_inputs.append(value)
-    def insert_compoundInput_at(self, index, value):
-        self.compound_inputs.insert(index, value)
-    def replace_compoundInput_at(self, index, value):
-        self.compound_inputs[index] = value
-    def get_compoundInputDL(self):
-        return self.compound_input_dls
-    def set_compoundInputDL(self, compound_input_dls):
-        self.compound_input_dls = compound_input_dls
-    def add_compoundInputDL(self, value):
-        self.compound_input_dls.append(value)
-    def insert_compoundInputDL_at(self, index, value):
-        self.compound_input_dls.insert(index, value)
-    def replace_compoundInputDL_at(self, index, value):
-        self.compound_input_dls[index] = value
-    def get_voltageClamp(self):
-        return self.voltage_clamps
-    def set_voltageClamp(self, voltage_clamps):
-        self.voltage_clamps = voltage_clamps
-    def add_voltageClamp(self, value):
-        self.voltage_clamps.append(value)
-    def insert_voltageClamp_at(self, index, value):
-        self.voltage_clamps.insert(index, value)
-    def replace_voltageClamp_at(self, index, value):
-        self.voltage_clamps[index] = value
-    def get_voltageClampTriple(self):
-        return self.voltage_clamp_triples
-    def set_voltageClampTriple(self, voltage_clamp_triples):
-        self.voltage_clamp_triples = voltage_clamp_triples
-    def add_voltageClampTriple(self, value):
-        self.voltage_clamp_triples.append(value)
-    def insert_voltageClampTriple_at(self, index, value):
-        self.voltage_clamp_triples.insert(index, value)
-    def replace_voltageClampTriple_at(self, index, value):
-        self.voltage_clamp_triples[index] = value
-    def get_spikeArray(self):
-        return self.spike_arrays
-    def set_spikeArray(self, spike_arrays):
-        self.spike_arrays = spike_arrays
-    def add_spikeArray(self, value):
-        self.spike_arrays.append(value)
-    def insert_spikeArray_at(self, index, value):
-        self.spike_arrays.insert(index, value)
-    def replace_spikeArray_at(self, index, value):
-        self.spike_arrays[index] = value
-    def get_timedSynapticInput(self):
-        return self.timed_synaptic_inputs
-    def set_timedSynapticInput(self, timed_synaptic_inputs):
-        self.timed_synaptic_inputs = timed_synaptic_inputs
-    def add_timedSynapticInput(self, value):
-        self.timed_synaptic_inputs.append(value)
-    def insert_timedSynapticInput_at(self, index, value):
-        self.timed_synaptic_inputs.insert(index, value)
-    def replace_timedSynapticInput_at(self, index, value):
-        self.timed_synaptic_inputs[index] = value
-    def get_spikeGenerator(self):
-        return self.spike_generators
-    def set_spikeGenerator(self, spike_generators):
-        self.spike_generators = spike_generators
-    def add_spikeGenerator(self, value):
-        self.spike_generators.append(value)
-    def insert_spikeGenerator_at(self, index, value):
-        self.spike_generators.insert(index, value)
-    def replace_spikeGenerator_at(self, index, value):
-        self.spike_generators[index] = value
-    def get_spikeGeneratorRandom(self):
-        return self.spike_generator_randoms
-    def set_spikeGeneratorRandom(self, spike_generator_randoms):
-        self.spike_generator_randoms = spike_generator_randoms
-    def add_spikeGeneratorRandom(self, value):
-        self.spike_generator_randoms.append(value)
-    def insert_spikeGeneratorRandom_at(self, index, value):
-        self.spike_generator_randoms.insert(index, value)
-    def replace_spikeGeneratorRandom_at(self, index, value):
-        self.spike_generator_randoms[index] = value
-    def get_spikeGeneratorPoisson(self):
-        return self.spike_generator_poissons
-    def set_spikeGeneratorPoisson(self, spike_generator_poissons):
-        self.spike_generator_poissons = spike_generator_poissons
-    def add_spikeGeneratorPoisson(self, value):
-        self.spike_generator_poissons.append(value)
-    def insert_spikeGeneratorPoisson_at(self, index, value):
-        self.spike_generator_poissons.insert(index, value)
-    def replace_spikeGeneratorPoisson_at(self, index, value):
-        self.spike_generator_poissons[index] = value
-    def get_spikeGeneratorRefPoisson(self):
-        return self.spike_generator_ref_poissons
-    def set_spikeGeneratorRefPoisson(self, spike_generator_ref_poissons):
-        self.spike_generator_ref_poissons = spike_generator_ref_poissons
-    def add_spikeGeneratorRefPoisson(self, value):
-        self.spike_generator_ref_poissons.append(value)
-    def insert_spikeGeneratorRefPoisson_at(self, index, value):
-        self.spike_generator_ref_poissons.insert(index, value)
-    def replace_spikeGeneratorRefPoisson_at(self, index, value):
-        self.spike_generator_ref_poissons[index] = value
-    def get_poissonFiringSynapse(self):
-        return self.poisson_firing_synapses
-    def set_poissonFiringSynapse(self, poisson_firing_synapses):
-        self.poisson_firing_synapses = poisson_firing_synapses
-    def add_poissonFiringSynapse(self, value):
-        self.poisson_firing_synapses.append(value)
-    def insert_poissonFiringSynapse_at(self, index, value):
-        self.poisson_firing_synapses.insert(index, value)
-    def replace_poissonFiringSynapse_at(self, index, value):
-        self.poisson_firing_synapses[index] = value
-    def get_transientPoissonFiringSynapse(self):
-        return self.transient_poisson_firing_synapses
-    def set_transientPoissonFiringSynapse(self, transient_poisson_firing_synapses):
-        self.transient_poisson_firing_synapses = transient_poisson_firing_synapses
-    def add_transientPoissonFiringSynapse(self, value):
-        self.transient_poisson_firing_synapses.append(value)
-    def insert_transientPoissonFiringSynapse_at(self, index, value):
-        self.transient_poisson_firing_synapses.insert(index, value)
-    def replace_transientPoissonFiringSynapse_at(self, index, value):
-        self.transient_poisson_firing_synapses[index] = value
-    def get_IF_curr_alpha(self):
-        return self.IF_curr_alpha
-    def set_IF_curr_alpha(self, IF_curr_alpha):
-        self.IF_curr_alpha = IF_curr_alpha
-    def add_IF_curr_alpha(self, value):
-        self.IF_curr_alpha.append(value)
-    def insert_IF_curr_alpha_at(self, index, value):
-        self.IF_curr_alpha.insert(index, value)
-    def replace_IF_curr_alpha_at(self, index, value):
-        self.IF_curr_alpha[index] = value
-    def get_IF_curr_exp(self):
-        return self.IF_curr_exp
-    def set_IF_curr_exp(self, IF_curr_exp):
-        self.IF_curr_exp = IF_curr_exp
-    def add_IF_curr_exp(self, value):
-        self.IF_curr_exp.append(value)
-    def insert_IF_curr_exp_at(self, index, value):
-        self.IF_curr_exp.insert(index, value)
-    def replace_IF_curr_exp_at(self, index, value):
-        self.IF_curr_exp[index] = value
-    def get_IF_cond_alpha(self):
-        return self.IF_cond_alpha
-    def set_IF_cond_alpha(self, IF_cond_alpha):
-        self.IF_cond_alpha = IF_cond_alpha
-    def add_IF_cond_alpha(self, value):
-        self.IF_cond_alpha.append(value)
-    def insert_IF_cond_alpha_at(self, index, value):
-        self.IF_cond_alpha.insert(index, value)
-    def replace_IF_cond_alpha_at(self, index, value):
-        self.IF_cond_alpha[index] = value
-    def get_IF_cond_exp(self):
-        return self.IF_cond_exp
-    def set_IF_cond_exp(self, IF_cond_exp):
-        self.IF_cond_exp = IF_cond_exp
-    def add_IF_cond_exp(self, value):
-        self.IF_cond_exp.append(value)
-    def insert_IF_cond_exp_at(self, index, value):
-        self.IF_cond_exp.insert(index, value)
-    def replace_IF_cond_exp_at(self, index, value):
-        self.IF_cond_exp[index] = value
-    def get_EIF_cond_exp_isfa_ista(self):
-        return self.EIF_cond_exp_isfa_ista
-    def set_EIF_cond_exp_isfa_ista(self, EIF_cond_exp_isfa_ista):
-        self.EIF_cond_exp_isfa_ista = EIF_cond_exp_isfa_ista
-    def add_EIF_cond_exp_isfa_ista(self, value):
-        self.EIF_cond_exp_isfa_ista.append(value)
-    def insert_EIF_cond_exp_isfa_ista_at(self, index, value):
-        self.EIF_cond_exp_isfa_ista.insert(index, value)
-    def replace_EIF_cond_exp_isfa_ista_at(self, index, value):
-        self.EIF_cond_exp_isfa_ista[index] = value
-    def get_EIF_cond_alpha_isfa_ista(self):
-        return self.EIF_cond_alpha_isfa_ista
-    def set_EIF_cond_alpha_isfa_ista(self, EIF_cond_alpha_isfa_ista):
-        self.EIF_cond_alpha_isfa_ista = EIF_cond_alpha_isfa_ista
-    def add_EIF_cond_alpha_isfa_ista(self, value):
-        self.EIF_cond_alpha_isfa_ista.append(value)
-    def insert_EIF_cond_alpha_isfa_ista_at(self, index, value):
-        self.EIF_cond_alpha_isfa_ista.insert(index, value)
-    def replace_EIF_cond_alpha_isfa_ista_at(self, index, value):
-        self.EIF_cond_alpha_isfa_ista[index] = value
-    def get_HH_cond_exp(self):
-        return self.HH_cond_exp
-    def set_HH_cond_exp(self, HH_cond_exp):
-        self.HH_cond_exp = HH_cond_exp
-    def add_HH_cond_exp(self, value):
-        self.HH_cond_exp.append(value)
-    def insert_HH_cond_exp_at(self, index, value):
-        self.HH_cond_exp.insert(index, value)
-    def replace_HH_cond_exp_at(self, index, value):
-        self.HH_cond_exp[index] = value
-    def get_expCondSynapse(self):
-        return self.exp_cond_synapses
-    def set_expCondSynapse(self, exp_cond_synapses):
-        self.exp_cond_synapses = exp_cond_synapses
-    def add_expCondSynapse(self, value):
-        self.exp_cond_synapses.append(value)
-    def insert_expCondSynapse_at(self, index, value):
-        self.exp_cond_synapses.insert(index, value)
-    def replace_expCondSynapse_at(self, index, value):
-        self.exp_cond_synapses[index] = value
-    def get_alphaCondSynapse(self):
-        return self.alpha_cond_synapses
-    def set_alphaCondSynapse(self, alpha_cond_synapses):
-        self.alpha_cond_synapses = alpha_cond_synapses
-    def add_alphaCondSynapse(self, value):
-        self.alpha_cond_synapses.append(value)
-    def insert_alphaCondSynapse_at(self, index, value):
-        self.alpha_cond_synapses.insert(index, value)
-    def replace_alphaCondSynapse_at(self, index, value):
-        self.alpha_cond_synapses[index] = value
-    def get_expCurrSynapse(self):
-        return self.exp_curr_synapses
-    def set_expCurrSynapse(self, exp_curr_synapses):
-        self.exp_curr_synapses = exp_curr_synapses
-    def add_expCurrSynapse(self, value):
-        self.exp_curr_synapses.append(value)
-    def insert_expCurrSynapse_at(self, index, value):
-        self.exp_curr_synapses.insert(index, value)
-    def replace_expCurrSynapse_at(self, index, value):
-        self.exp_curr_synapses[index] = value
-    def get_alphaCurrSynapse(self):
-        return self.alpha_curr_synapses
-    def set_alphaCurrSynapse(self, alpha_curr_synapses):
-        self.alpha_curr_synapses = alpha_curr_synapses
-    def add_alphaCurrSynapse(self, value):
-        self.alpha_curr_synapses.append(value)
-    def insert_alphaCurrSynapse_at(self, index, value):
-        self.alpha_curr_synapses.insert(index, value)
-    def replace_alphaCurrSynapse_at(self, index, value):
-        self.alpha_curr_synapses[index] = value
-    def get_SpikeSourcePoisson(self):
-        return self.SpikeSourcePoisson
-    def set_SpikeSourcePoisson(self, SpikeSourcePoisson):
-        self.SpikeSourcePoisson = SpikeSourcePoisson
-    def add_SpikeSourcePoisson(self, value):
-        self.SpikeSourcePoisson.append(value)
-    def insert_SpikeSourcePoisson_at(self, index, value):
-        self.SpikeSourcePoisson.insert(index, value)
-    def replace_SpikeSourcePoisson_at(self, index, value):
-        self.SpikeSourcePoisson[index] = value
-    def get_network(self):
-        return self.networks
-    def set_network(self, networks):
-        self.networks = networks
-    def add_network(self, value):
-        self.networks.append(value)
-    def insert_network_at(self, index, value):
-        self.networks.insert(index, value)
-    def replace_network_at(self, index, value):
-        self.networks[index] = value
-    def get_ComponentType(self):
-        return self.ComponentType
-    def set_ComponentType(self, ComponentType):
-        self.ComponentType = ComponentType
-    def add_ComponentType(self, value):
-        self.ComponentType.append(value)
-    def insert_ComponentType_at(self, index, value):
-        self.ComponentType.insert(index, value)
-    def replace_ComponentType_at(self, index, value):
-        self.ComponentType[index] = value
     def _hasContent(self):
         if (
             self.includes or
@@ -22424,16 +19140,6 @@ class BasePynnSynapse(BaseSynapse):
         else:
             return BasePynnSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_tau_syn(self):
-        return self.tau_syn
-    def set_tau_syn(self, tau_syn):
-        self.tau_syn = tau_syn
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def _hasContent(self):
         if (
             super(BasePynnSynapse, self)._hasContent()
@@ -22547,32 +19253,6 @@ class basePyNNCell(BaseCell):
         else:
             return basePyNNCell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_cm(self):
-        return self.cm
-    def set_cm(self, cm):
-        self.cm = cm
-    def get_i_offset(self):
-        return self.i_offset
-    def set_i_offset(self, i_offset):
-        self.i_offset = i_offset
-    def get_tau_syn_E(self):
-        return self.tau_syn_E
-    def set_tau_syn_E(self, tau_syn_E):
-        self.tau_syn_E = tau_syn_E
-    def get_tau_syn_I(self):
-        return self.tau_syn_I
-    def set_tau_syn_I(self, tau_syn_I):
-        self.tau_syn_I = tau_syn_I
-    def get_v_init(self):
-        return self.v_init
-    def set_v_init(self, v_init):
-        self.v_init = v_init
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def _hasContent(self):
         if (
             super(basePyNNCell, self)._hasContent()
@@ -22723,40 +19403,6 @@ class ContinuousProjection(BaseProjection):
         else:
             return ContinuousProjection(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_continuousConnection(self):
-        return self.continuous_connections
-    def set_continuousConnection(self, continuous_connections):
-        self.continuous_connections = continuous_connections
-    def add_continuousConnection(self, value):
-        self.continuous_connections.append(value)
-    def insert_continuousConnection_at(self, index, value):
-        self.continuous_connections.insert(index, value)
-    def replace_continuousConnection_at(self, index, value):
-        self.continuous_connections[index] = value
-    def get_continuousConnectionInstance(self):
-        return self.continuous_connection_instances
-    def set_continuousConnectionInstance(self, continuous_connection_instances):
-        self.continuous_connection_instances = continuous_connection_instances
-    def add_continuousConnectionInstance(self, value):
-        self.continuous_connection_instances.append(value)
-    def insert_continuousConnectionInstance_at(self, index, value):
-        self.continuous_connection_instances.insert(index, value)
-    def replace_continuousConnectionInstance_at(self, index, value):
-        self.continuous_connection_instances[index] = value
-    def get_continuousConnectionInstanceW(self):
-        return self.continuous_connection_instance_ws
-    def set_continuousConnectionInstanceW(self, continuous_connection_instance_ws):
-        self.continuous_connection_instance_ws = continuous_connection_instance_ws
-    def add_continuousConnectionInstanceW(self, value):
-        self.continuous_connection_instance_ws.append(value)
-    def insert_continuousConnectionInstanceW_at(self, index, value):
-        self.continuous_connection_instance_ws.insert(index, value)
-    def replace_continuousConnectionInstanceW_at(self, index, value):
-        self.continuous_connection_instance_ws[index] = value
     def _hasContent(self):
         if (
             self.continuous_connections or
@@ -22968,40 +19614,6 @@ class ElectricalProjection(BaseProjection):
         else:
             return ElectricalProjection(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_electricalConnection(self):
-        return self.electrical_connections
-    def set_electricalConnection(self, electrical_connections):
-        self.electrical_connections = electrical_connections
-    def add_electricalConnection(self, value):
-        self.electrical_connections.append(value)
-    def insert_electricalConnection_at(self, index, value):
-        self.electrical_connections.insert(index, value)
-    def replace_electricalConnection_at(self, index, value):
-        self.electrical_connections[index] = value
-    def get_electricalConnectionInstance(self):
-        return self.electrical_connection_instances
-    def set_electricalConnectionInstance(self, electrical_connection_instances):
-        self.electrical_connection_instances = electrical_connection_instances
-    def add_electricalConnectionInstance(self, value):
-        self.electrical_connection_instances.append(value)
-    def insert_electricalConnectionInstance_at(self, index, value):
-        self.electrical_connection_instances.insert(index, value)
-    def replace_electricalConnectionInstance_at(self, index, value):
-        self.electrical_connection_instances[index] = value
-    def get_electricalConnectionInstanceW(self):
-        return self.electrical_connection_instance_ws
-    def set_electricalConnectionInstanceW(self, electrical_connection_instance_ws):
-        self.electrical_connection_instance_ws = electrical_connection_instance_ws
-    def add_electricalConnectionInstanceW(self, value):
-        self.electrical_connection_instance_ws.append(value)
-    def insert_electricalConnectionInstanceW_at(self, index, value):
-        self.electrical_connection_instance_ws.insert(index, value)
-    def replace_electricalConnectionInstanceW_at(self, index, value):
-        self.electrical_connection_instance_ws[index] = value
     def _hasContent(self):
         if (
             self.electrical_connections or
@@ -23210,36 +19822,6 @@ class BaseConnectionNewFormat(BaseConnection):
         else:
             return BaseConnectionNewFormat(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_preCell(self):
-        return self.pre_cell
-    def set_preCell(self, pre_cell):
-        self.pre_cell = pre_cell
-    def get_preSegment(self):
-        return self.pre_segment
-    def set_preSegment(self, pre_segment):
-        self.pre_segment = pre_segment
-    def get_preFractionAlong(self):
-        return self.pre_fraction_along
-    def set_preFractionAlong(self, pre_fraction_along):
-        self.pre_fraction_along = pre_fraction_along
-    def get_postCell(self):
-        return self.post_cell
-    def set_postCell(self, post_cell):
-        self.post_cell = post_cell
-    def get_postSegment(self):
-        return self.post_segment
-    def set_postSegment(self, post_segment):
-        self.post_segment = post_segment
-    def get_postFractionAlong(self):
-        return self.post_fraction_along
-    def set_postFractionAlong(self, post_fraction_along):
-        self.post_fraction_along = post_fraction_along
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_NonNegativeInteger(self, value):
         # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -23427,36 +20009,6 @@ class BaseConnectionOldFormat(BaseConnection):
         else:
             return BaseConnectionOldFormat(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_preCellId(self):
-        return self.pre_cell_id
-    def set_preCellId(self, pre_cell_id):
-        self.pre_cell_id = pre_cell_id
-    def get_preSegmentId(self):
-        return self.pre_segment_id
-    def set_preSegmentId(self, pre_segment_id):
-        self.pre_segment_id = pre_segment_id
-    def get_preFractionAlong(self):
-        return self.pre_fraction_along
-    def set_preFractionAlong(self, pre_fraction_along):
-        self.pre_fraction_along = pre_fraction_along
-    def get_postCellId(self):
-        return self.post_cell_id
-    def set_postCellId(self, post_cell_id):
-        self.post_cell_id = post_cell_id
-    def get_postSegmentId(self):
-        return self.post_segment_id
-    def set_postSegmentId(self, post_segment_id):
-        self.post_segment_id = post_segment_id
-    def get_postFractionAlong(self):
-        return self.post_fraction_along
-    def set_postFractionAlong(self, post_fraction_along):
-        self.post_fraction_along = post_fraction_along
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_NonNegativeInteger(self, value):
         # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -23639,34 +20191,6 @@ class Projection(BaseProjection):
         else:
             return Projection(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_connection(self):
-        return self.connections
-    def set_connection(self, connections):
-        self.connections = connections
-    def add_connection(self, value):
-        self.connections.append(value)
-    def insert_connection_at(self, index, value):
-        self.connections.insert(index, value)
-    def replace_connection_at(self, index, value):
-        self.connections[index] = value
-    def get_connectionWD(self):
-        return self.connection_wds
-    def set_connectionWD(self, connection_wds):
-        self.connection_wds = connection_wds
-    def add_connectionWD(self, value):
-        self.connection_wds.append(value)
-    def insert_connectionWD_at(self, index, value):
-        self.connection_wds.insert(index, value)
-    def replace_connectionWD_at(self, index, value):
-        self.connection_wds[index] = value
-    def get_synapse(self):
-        return self.synapse
-    def set_synapse(self, synapse):
-        self.synapse = synapse
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -23881,14 +20405,6 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
         else:
             return SpikeGeneratorRefPoisson(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_minimumISI(self):
-        return self.minimum_isi
-    def set_minimumISI(self, minimum_isi):
-        self.minimum_isi = minimum_isi
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -23988,14 +20504,6 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
         else:
             return ConcentrationModel_D(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_type(self):
-        return self.type
-    def set_type(self, type):
-        self.type = type
     def _hasContent(self):
         if (
             super(ConcentrationModel_D, self)._hasContent()
@@ -24080,10 +20588,6 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
         else:
             return ChannelDensityNernstCa2(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
     def _hasContent(self):
         if (
             super(ChannelDensityNernstCa2, self)._hasContent()
@@ -24164,14 +20668,6 @@ class ChannelDensityVShift(ChannelDensity):
         else:
             return ChannelDensityVShift(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_vShift(self):
-        return self.v_shift
-    def set_vShift(self, v_shift):
-        self.v_shift = v_shift
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -24288,28 +20784,6 @@ class Cell(BaseCell):
         else:
             return Cell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_morphology(self):
-        return self.morphology
-    def set_morphology(self, morphology):
-        self.morphology = morphology
-    def get_biophysicalProperties(self):
-        return self.biophysical_properties
-    def set_biophysicalProperties(self, biophysical_properties):
-        self.biophysical_properties = biophysical_properties
-    def get_morphology_attr(self):
-        return self.morphology_attr
-    def set_morphology_attr(self, morphology_attr):
-        self.morphology_attr = morphology_attr
-    def get_biophysical_properties_attr(self):
-        return self.biophysical_properties_attr
-    def set_biophysical_properties_attr(self, biophysical_properties_attr):
-        self.biophysical_properties_attr = biophysical_properties_attr
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -24862,94 +21336,6 @@ class PinskyRinzelCA3Cell(BaseCell):
         else:
             return PinskyRinzelCA3Cell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_iSoma(self):
-        return self.i_soma
-    def set_iSoma(self, i_soma):
-        self.i_soma = i_soma
-    def get_iDend(self):
-        return self.i_dend
-    def set_iDend(self, i_dend):
-        self.i_dend = i_dend
-    def get_gc(self):
-        return self.gc
-    def set_gc(self, gc):
-        self.gc = gc
-    def get_gLs(self):
-        return self.g_ls
-    def set_gLs(self, g_ls):
-        self.g_ls = g_ls
-    def get_gLd(self):
-        return self.g_ld
-    def set_gLd(self, g_ld):
-        self.g_ld = g_ld
-    def get_gNa(self):
-        return self.g_na
-    def set_gNa(self, g_na):
-        self.g_na = g_na
-    def get_gKdr(self):
-        return self.g_kdr
-    def set_gKdr(self, g_kdr):
-        self.g_kdr = g_kdr
-    def get_gCa(self):
-        return self.g_ca
-    def set_gCa(self, g_ca):
-        self.g_ca = g_ca
-    def get_gKahp(self):
-        return self.g_kahp
-    def set_gKahp(self, g_kahp):
-        self.g_kahp = g_kahp
-    def get_gKC(self):
-        return self.g_kc
-    def set_gKC(self, g_kc):
-        self.g_kc = g_kc
-    def get_gNmda(self):
-        return self.g_nmda
-    def set_gNmda(self, g_nmda):
-        self.g_nmda = g_nmda
-    def get_gAmpa(self):
-        return self.g_ampa
-    def set_gAmpa(self, g_ampa):
-        self.g_ampa = g_ampa
-    def get_eNa(self):
-        return self.e_na
-    def set_eNa(self, e_na):
-        self.e_na = e_na
-    def get_eCa(self):
-        return self.e_ca
-    def set_eCa(self, e_ca):
-        self.e_ca = e_ca
-    def get_eK(self):
-        return self.e_k
-    def set_eK(self, e_k):
-        self.e_k = e_k
-    def get_eL(self):
-        return self.e_l
-    def set_eL(self, e_l):
-        self.e_l = e_l
-    def get_qd0(self):
-        return self.qd0
-    def set_qd0(self, qd0):
-        self.qd0 = qd0
-    def get_pp(self):
-        return self.pp
-    def set_pp(self, pp):
-        self.pp = pp
-    def get_alphac(self):
-        return self.alphac
-    def set_alphac(self, alphac):
-        self.alphac = alphac
-    def get_betac(self):
-        return self.betac
-    def set_betac(self, betac):
-        self.betac = betac
-    def get_cm(self):
-        return self.cm
-    def set_cm(self, cm):
-        self.cm = cm
     def validate_Nml2Quantity_currentDensity(self, value):
         # Validate type Nml2Quantity_currentDensity, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -25268,34 +21654,6 @@ class FitzHughNagumo1969Cell(BaseCell):
         else:
             return FitzHughNagumo1969Cell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_a(self):
-        return self.a
-    def set_a(self, a):
-        self.a = a
-    def get_b(self):
-        return self.b
-    def set_b(self, b):
-        self.b = b
-    def get_I(self):
-        return self.I
-    def set_I(self, I):
-        self.I = I
-    def get_phi(self):
-        return self.phi
-    def set_phi(self, phi):
-        self.phi = phi
-    def get_V0(self):
-        return self.V0
-    def set_V0(self, V0):
-        self.V0 = V0
-    def get_W0(self):
-        return self.W0
-    def set_W0(self, W0):
-        self.W0 = W0
     def validate_Nml2Quantity_none(self, value):
         # Validate type Nml2Quantity_none, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -25435,14 +21793,6 @@ class FitzHughNagumoCell(BaseCell):
         else:
             return FitzHughNagumoCell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_I(self):
-        return self.I
-    def set_I(self, I):
-        self.I = I
     def validate_Nml2Quantity_none(self, value):
         # Validate type Nml2Quantity_none, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -25546,16 +21896,6 @@ class BaseCellMembPotCap(BaseCell):
         else:
             return BaseCellMembPotCap(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_C(self):
-        return self.C
-    def set_C(self, C):
-        self.C = C
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_Nml2Quantity_capacitance(self, value):
         # Validate type Nml2Quantity_capacitance, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -25682,34 +22022,6 @@ class IzhikevichCell(BaseCell):
         else:
             return IzhikevichCell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_v0(self):
-        return self.v0
-    def set_v0(self, v0):
-        self.v0 = v0
-    def get_thresh(self):
-        return self.thresh
-    def set_thresh(self, thresh):
-        self.thresh = thresh
-    def get_a(self):
-        return self.a
-    def set_a(self, a):
-        self.a = a
-    def get_b(self):
-        return self.b
-    def set_b(self, b):
-        self.b = b
-    def get_c(self):
-        return self.c
-    def set_c(self, c):
-        self.c = c
-    def get_d(self):
-        return self.d
-    def set_d(self, d):
-        self.d = d
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -25873,32 +22185,6 @@ class IafCell(BaseCell):
         else:
             return IafCell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_leakReversal(self):
-        return self.leak_reversal
-    def set_leakReversal(self, leak_reversal):
-        self.leak_reversal = leak_reversal
-    def get_thresh(self):
-        return self.thresh
-    def set_thresh(self, thresh):
-        self.thresh = thresh
-    def get_reset(self):
-        return self.reset
-    def set_reset(self, reset):
-        self.reset = reset
-    def get_C(self):
-        return self.C
-    def set_C(self, C):
-        self.C = C
-    def get_leakConductance(self):
-        return self.leak_conductance
-    def set_leakConductance(self, leak_conductance):
-        self.leak_conductance = leak_conductance
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -26074,28 +22360,6 @@ class IafTauCell(BaseCell):
         else:
             return IafTauCell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_leakReversal(self):
-        return self.leak_reversal
-    def set_leakReversal(self, leak_reversal):
-        self.leak_reversal = leak_reversal
-    def get_thresh(self):
-        return self.thresh
-    def set_thresh(self, thresh):
-        self.thresh = thresh
-    def get_reset(self):
-        return self.reset
-    def set_reset(self, reset):
-        self.reset = reset
-    def get_tau(self):
-        return self.tau
-    def set_tau(self, tau):
-        self.tau = tau
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -26257,30 +22521,6 @@ class GradedSynapse(BaseSynapse):
         else:
             return GradedSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_conductance(self):
-        return self.conductance
-    def set_conductance(self, conductance):
-        self.conductance = conductance
-    def get_delta(self):
-        return self.delta
-    def set_delta(self, delta):
-        self.delta = delta
-    def get_Vth(self):
-        return self.Vth
-    def set_Vth(self, Vth):
-        self.Vth = Vth
-    def get_k(self):
-        return self.k
-    def set_k(self, k):
-        self.k = k
-    def get_erev(self):
-        return self.erev
-    def set_erev(self, erev):
-        self.erev = erev
     def validate_Nml2Quantity_conductance(self, value):
         # Validate type Nml2Quantity_conductance, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -26437,14 +22677,6 @@ class LinearGradedSynapse(BaseSynapse):
         else:
             return LinearGradedSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_conductance(self):
-        return self.conductance
-    def set_conductance(self, conductance):
-        self.conductance = conductance
     def validate_Nml2Quantity_conductance(self, value):
         # Validate type Nml2Quantity_conductance, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -26544,10 +22776,6 @@ class SilentSynapse(BaseSynapse):
         else:
             return SilentSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
     def _hasContent(self):
         if (
             super(SilentSynapse, self)._hasContent()
@@ -26631,14 +22859,6 @@ class GapJunction(BaseSynapse):
         else:
             return GapJunction(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_conductance(self):
-        return self.conductance
-    def set_conductance(self, conductance):
-        self.conductance = conductance
     def validate_Nml2Quantity_conductance(self, value):
         # Validate type Nml2Quantity_conductance, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -26736,12 +22956,6 @@ class BaseCurrentBasedSynapse(BaseSynapse):
         else:
             return BaseCurrentBasedSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def _hasContent(self):
         if (
             super(BaseCurrentBasedSynapse, self)._hasContent()
@@ -26832,12 +23046,6 @@ class BaseVoltageDepSynapse(BaseSynapse):
         else:
             return BaseVoltageDepSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def _hasContent(self):
         if (
             super(BaseVoltageDepSynapse, self)._hasContent()
@@ -26989,104 +23197,6 @@ class IonChannel(IonChannelScalable):
         else:
             return IonChannel(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_gate(self):
-        return self.gates
-    def set_gate(self, gates):
-        self.gates = gates
-    def add_gate(self, value):
-        self.gates.append(value)
-    def insert_gate_at(self, index, value):
-        self.gates.insert(index, value)
-    def replace_gate_at(self, index, value):
-        self.gates[index] = value
-    def get_gateHHrates(self):
-        return self.gate_hh_rates
-    def set_gateHHrates(self, gate_hh_rates):
-        self.gate_hh_rates = gate_hh_rates
-    def add_gateHHrates(self, value):
-        self.gate_hh_rates.append(value)
-    def insert_gateHHrates_at(self, index, value):
-        self.gate_hh_rates.insert(index, value)
-    def replace_gateHHrates_at(self, index, value):
-        self.gate_hh_rates[index] = value
-    def get_gateHHratesTau(self):
-        return self.gate_h_hrates_taus
-    def set_gateHHratesTau(self, gate_h_hrates_taus):
-        self.gate_h_hrates_taus = gate_h_hrates_taus
-    def add_gateHHratesTau(self, value):
-        self.gate_h_hrates_taus.append(value)
-    def insert_gateHHratesTau_at(self, index, value):
-        self.gate_h_hrates_taus.insert(index, value)
-    def replace_gateHHratesTau_at(self, index, value):
-        self.gate_h_hrates_taus[index] = value
-    def get_gateHHtauInf(self):
-        return self.gate_hh_tau_infs
-    def set_gateHHtauInf(self, gate_hh_tau_infs):
-        self.gate_hh_tau_infs = gate_hh_tau_infs
-    def add_gateHHtauInf(self, value):
-        self.gate_hh_tau_infs.append(value)
-    def insert_gateHHtauInf_at(self, index, value):
-        self.gate_hh_tau_infs.insert(index, value)
-    def replace_gateHHtauInf_at(self, index, value):
-        self.gate_hh_tau_infs[index] = value
-    def get_gateHHratesInf(self):
-        return self.gate_h_hrates_infs
-    def set_gateHHratesInf(self, gate_h_hrates_infs):
-        self.gate_h_hrates_infs = gate_h_hrates_infs
-    def add_gateHHratesInf(self, value):
-        self.gate_h_hrates_infs.append(value)
-    def insert_gateHHratesInf_at(self, index, value):
-        self.gate_h_hrates_infs.insert(index, value)
-    def replace_gateHHratesInf_at(self, index, value):
-        self.gate_h_hrates_infs[index] = value
-    def get_gateHHratesTauInf(self):
-        return self.gate_h_hrates_tau_infs
-    def set_gateHHratesTauInf(self, gate_h_hrates_tau_infs):
-        self.gate_h_hrates_tau_infs = gate_h_hrates_tau_infs
-    def add_gateHHratesTauInf(self, value):
-        self.gate_h_hrates_tau_infs.append(value)
-    def insert_gateHHratesTauInf_at(self, index, value):
-        self.gate_h_hrates_tau_infs.insert(index, value)
-    def replace_gateHHratesTauInf_at(self, index, value):
-        self.gate_h_hrates_tau_infs[index] = value
-    def get_gateHHInstantaneous(self):
-        return self.gate_hh_instantaneouses
-    def set_gateHHInstantaneous(self, gate_hh_instantaneouses):
-        self.gate_hh_instantaneouses = gate_hh_instantaneouses
-    def add_gateHHInstantaneous(self, value):
-        self.gate_hh_instantaneouses.append(value)
-    def insert_gateHHInstantaneous_at(self, index, value):
-        self.gate_hh_instantaneouses.insert(index, value)
-    def replace_gateHHInstantaneous_at(self, index, value):
-        self.gate_hh_instantaneouses[index] = value
-    def get_gateFractional(self):
-        return self.gate_fractionals
-    def set_gateFractional(self, gate_fractionals):
-        self.gate_fractionals = gate_fractionals
-    def add_gateFractional(self, value):
-        self.gate_fractionals.append(value)
-    def insert_gateFractional_at(self, index, value):
-        self.gate_fractionals.insert(index, value)
-    def replace_gateFractional_at(self, index, value):
-        self.gate_fractionals[index] = value
-    def get_species(self):
-        return self.species
-    def set_species(self, species):
-        self.species = species
-    def get_type(self):
-        return self.type
-    def set_type(self, type):
-        self.type = type
-    def get_conductance(self):
-        return self.conductance
-    def set_conductance(self, conductance):
-        self.conductance = conductance
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -27310,10 +23420,6 @@ class AlphaCurrSynapse(BasePynnSynapse):
         else:
             return AlphaCurrSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
     def _hasContent(self):
         if (
             super(AlphaCurrSynapse, self)._hasContent()
@@ -27391,10 +23497,6 @@ class ExpCurrSynapse(BasePynnSynapse):
         else:
             return ExpCurrSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
     def _hasContent(self):
         if (
             super(ExpCurrSynapse, self)._hasContent()
@@ -27475,14 +23577,6 @@ class AlphaCondSynapse(BasePynnSynapse):
         else:
             return AlphaCondSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_e_rev(self):
-        return self.e_rev
-    def set_e_rev(self, e_rev):
-        self.e_rev = e_rev
     def _hasContent(self):
         if (
             super(AlphaCondSynapse, self)._hasContent()
@@ -27571,14 +23665,6 @@ class ExpCondSynapse(BasePynnSynapse):
         else:
             return ExpCondSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_e_rev(self):
-        return self.e_rev
-    def set_e_rev(self, e_rev):
-        self.e_rev = e_rev
     def _hasContent(self):
         if (
             super(ExpCondSynapse, self)._hasContent()
@@ -27691,46 +23777,6 @@ class HH_cond_exp(basePyNNCell):
         else:
             return HH_cond_exp(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_v_offset(self):
-        return self.v_offset
-    def set_v_offset(self, v_offset):
-        self.v_offset = v_offset
-    def get_e_rev_E(self):
-        return self.e_rev_E
-    def set_e_rev_E(self, e_rev_E):
-        self.e_rev_E = e_rev_E
-    def get_e_rev_I(self):
-        return self.e_rev_I
-    def set_e_rev_I(self, e_rev_I):
-        self.e_rev_I = e_rev_I
-    def get_e_rev_K(self):
-        return self.e_rev_K
-    def set_e_rev_K(self, e_rev_K):
-        self.e_rev_K = e_rev_K
-    def get_e_rev_Na(self):
-        return self.e_rev_Na
-    def set_e_rev_Na(self, e_rev_Na):
-        self.e_rev_Na = e_rev_Na
-    def get_e_rev_leak(self):
-        return self.e_rev_leak
-    def set_e_rev_leak(self, e_rev_leak):
-        self.e_rev_leak = e_rev_leak
-    def get_g_leak(self):
-        return self.g_leak
-    def set_g_leak(self, g_leak):
-        self.g_leak = g_leak
-    def get_gbar_K(self):
-        return self.gbar_K
-    def set_gbar_K(self, gbar_K):
-        self.gbar_K = gbar_K
-    def get_gbar_Na(self):
-        return self.gbar_Na
-    def set_gbar_Na(self, gbar_Na):
-        self.gbar_Na = gbar_Na
     def _hasContent(self):
         if (
             super(HH_cond_exp, self)._hasContent()
@@ -27896,32 +23942,6 @@ class basePyNNIaFCell(basePyNNCell):
         else:
             return basePyNNIaFCell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_tau_m(self):
-        return self.tau_m
-    def set_tau_m(self, tau_m):
-        self.tau_m = tau_m
-    def get_tau_refrac(self):
-        return self.tau_refrac
-    def set_tau_refrac(self, tau_refrac):
-        self.tau_refrac = tau_refrac
-    def get_v_reset(self):
-        return self.v_reset
-    def set_v_reset(self, v_reset):
-        self.v_reset = v_reset
-    def get_v_rest(self):
-        return self.v_rest
-    def set_v_rest(self, v_rest):
-        self.v_rest = v_rest
-    def get_v_thresh(self):
-        return self.v_thresh
-    def set_v_thresh(self, v_thresh):
-        self.v_thresh = v_thresh
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def _hasContent(self):
         if (
             super(basePyNNIaFCell, self)._hasContent()
@@ -28061,20 +24081,6 @@ class ContinuousConnection(BaseConnectionNewFormat):
         else:
             return ContinuousConnection(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_preComponent(self):
-        return self.pre_component
-    def set_preComponent(self, pre_component):
-        self.pre_component = pre_component
-    def get_postComponent(self):
-        return self.post_component
-    def set_postComponent(self, post_component):
-        self.post_component = post_component
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -28266,16 +24272,6 @@ class ElectricalConnection(BaseConnectionNewFormat):
         else:
             return ElectricalConnection(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_synapse(self):
-        return self.synapse
-    def set_synapse(self, synapse):
-        self.synapse = synapse
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -28460,18 +24456,6 @@ class ConnectionWD(BaseConnectionOldFormat):
         else:
             return ConnectionWD(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_weight(self):
-        return self.weight
-    def set_weight(self, weight):
-        self.weight = weight
-    def get_delay(self):
-        return self.delay
-    def set_delay(self, delay):
-        self.delay = delay
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -28663,10 +24647,6 @@ class Connection(BaseConnectionOldFormat):
         else:
             return Connection(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
     def _hasContent(self):
         if (
             super(Connection, self)._hasContent()
@@ -28815,14 +24795,6 @@ class Cell2CaPools(Cell):
         else:
             return Cell2CaPools(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_biophysicalProperties2CaPools(self):
-        return self.biophysical_properties2_ca_pools
-    def set_biophysicalProperties2CaPools(self, biophysical_properties2_ca_pools):
-        self.biophysical_properties2_ca_pools = biophysical_properties2_ca_pools
     def _hasContent(self):
         if (
             self.biophysical_properties2_ca_pools is not None or
@@ -28942,50 +24914,6 @@ class AdExIaFCell(BaseCellMembPotCap):
         else:
             return AdExIaFCell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_gL(self):
-        return self.g_l
-    def set_gL(self, g_l):
-        self.g_l = g_l
-    def get_EL(self):
-        return self.EL
-    def set_EL(self, EL):
-        self.EL = EL
-    def get_reset(self):
-        return self.reset
-    def set_reset(self, reset):
-        self.reset = reset
-    def get_VT(self):
-        return self.VT
-    def set_VT(self, VT):
-        self.VT = VT
-    def get_thresh(self):
-        return self.thresh
-    def set_thresh(self, thresh):
-        self.thresh = thresh
-    def get_delT(self):
-        return self.del_t
-    def set_delT(self, del_t):
-        self.del_t = del_t
-    def get_tauw(self):
-        return self.tauw
-    def set_tauw(self, tauw):
-        self.tauw = tauw
-    def get_refract(self):
-        return self.refract
-    def set_refract(self, refract):
-        self.refract = refract
-    def get_a(self):
-        return self.a
-    def set_a(self, a):
-        self.a = a
-    def get_b(self):
-        return self.b
-    def set_b(self, b):
-        self.b = b
     def validate_Nml2Quantity_conductance(self, value):
         # Validate type Nml2Quantity_conductance, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -29214,46 +25142,6 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
         else:
             return Izhikevich2007Cell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_v0(self):
-        return self.v0
-    def set_v0(self, v0):
-        self.v0 = v0
-    def get_k(self):
-        return self.k
-    def set_k(self, k):
-        self.k = k
-    def get_vr(self):
-        return self.vr
-    def set_vr(self, vr):
-        self.vr = vr
-    def get_vt(self):
-        return self.vt
-    def set_vt(self, vt):
-        self.vt = vt
-    def get_vpeak(self):
-        return self.vpeak
-    def set_vpeak(self, vpeak):
-        self.vpeak = vpeak
-    def get_a(self):
-        return self.a
-    def set_a(self, a):
-        self.a = a
-    def get_b(self):
-        return self.b
-    def set_b(self, b):
-        self.b = b
-    def get_c(self):
-        return self.c
-    def set_c(self, c):
-        self.c = c
-    def get_d(self):
-        return self.d
-    def set_d(self, d):
-        self.d = d
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -29461,14 +25349,6 @@ class IafRefCell(IafCell):
         else:
             return IafRefCell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_refract(self):
-        return self.refract
-    def set_refract(self, refract):
-        self.refract = refract
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -29568,14 +25448,6 @@ class IafTauRefCell(IafTauCell):
         else:
             return IafTauRefCell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_refract(self):
-        return self.refract
-    def set_refract(self, refract):
-        self.refract = refract
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -29684,26 +25556,6 @@ class DoubleSynapse(BaseVoltageDepSynapse):
         else:
             return DoubleSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_synapse1(self):
-        return self.synapse1
-    def set_synapse1(self, synapse1):
-        self.synapse1 = synapse1
-    def get_synapse2(self):
-        return self.synapse2
-    def set_synapse2(self, synapse2):
-        self.synapse2 = synapse2
-    def get_synapse1Path(self):
-        return self.synapse1_path
-    def set_synapse1Path(self, synapse1_path):
-        self.synapse1_path = synapse1_path
-    def get_synapse2Path(self):
-        return self.synapse2_path
-    def set_synapse2Path(self, synapse2_path):
-        self.synapse2_path = synapse2_path
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -29828,18 +25680,6 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
         else:
             return AlphaCurrentSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_tau(self):
-        return self.tau
-    def set_tau(self, tau):
-        self.tau = tau
-    def get_ibase(self):
-        return self.ibase
-    def set_ibase(self, ibase):
-        self.ibase = ibase
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -29965,24 +25805,6 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
         else:
             return BaseConductanceBasedSynapseTwo(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_gbase1(self):
-        return self.gbase1
-    def set_gbase1(self, gbase1):
-        self.gbase1 = gbase1
-    def get_gbase2(self):
-        return self.gbase2
-    def set_gbase2(self, gbase2):
-        self.gbase2 = gbase2
-    def get_erev(self):
-        return self.erev
-    def set_erev(self, erev):
-        self.erev = erev
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_Nml2Quantity_conductance(self, value):
         # Validate type Nml2Quantity_conductance, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -30125,20 +25947,6 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
         else:
             return BaseConductanceBasedSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_gbase(self):
-        return self.gbase
-    def set_gbase(self, gbase):
-        self.gbase = gbase
-    def get_erev(self):
-        return self.erev
-    def set_erev(self, erev):
-        self.erev = erev
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_Nml2Quantity_conductance(self, value):
         # Validate type Nml2Quantity_conductance, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -30272,14 +26080,6 @@ class IonChannelVShift(IonChannel):
         else:
             return IonChannelVShift(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_vShift(self):
-        return self.v_shift
-    def set_vShift(self, v_shift):
-        self.v_shift = v_shift
     def validate_Nml2Quantity_voltage(self, value):
         # Validate type Nml2Quantity_voltage, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -30380,10 +26180,6 @@ class IonChannelHH(IonChannel):
         else:
             return IonChannelHH(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
     def _hasContent(self):
         if (
             super(IonChannelHH, self)._hasContent()
@@ -30461,10 +26257,6 @@ class IF_curr_exp(basePyNNIaFCell):
         else:
             return IF_curr_exp(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
     def _hasContent(self):
         if (
             super(IF_curr_exp, self)._hasContent()
@@ -30542,10 +26334,6 @@ class IF_curr_alpha(basePyNNIaFCell):
         else:
             return IF_curr_alpha(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
     def _hasContent(self):
         if (
             super(IF_curr_alpha, self)._hasContent()
@@ -30630,20 +26418,6 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
         else:
             return basePyNNIaFCondCell(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_e_rev_E(self):
-        return self.e_rev_E
-    def set_e_rev_E(self, e_rev_E):
-        self.e_rev_E = e_rev_E
-    def get_e_rev_I(self):
-        return self.e_rev_I
-    def set_e_rev_I(self, e_rev_I):
-        self.e_rev_I = e_rev_I
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def _hasContent(self):
         if (
             super(basePyNNIaFCondCell, self)._hasContent()
@@ -30753,12 +26527,6 @@ class ContinuousConnectionInstance(ContinuousConnection):
         else:
             return ContinuousConnectionInstance(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def _hasContent(self):
         if (
             super(ContinuousConnectionInstance, self)._hasContent()
@@ -30865,12 +26633,6 @@ class ElectricalConnectionInstance(ElectricalConnection):
         else:
             return ElectricalConnectionInstance(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def _hasContent(self):
         if (
             super(ElectricalConnectionInstance, self)._hasContent()
@@ -30981,22 +26743,6 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
         else:
             return ExpThreeSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_tauDecay1(self):
-        return self.tau_decay1
-    def set_tauDecay1(self, tau_decay1):
-        self.tau_decay1 = tau_decay1
-    def get_tauDecay2(self):
-        return self.tau_decay2
-    def set_tauDecay2(self, tau_decay2):
-        self.tau_decay2 = tau_decay2
-    def get_tauRise(self):
-        return self.tau_rise
-    def set_tauRise(self, tau_rise):
-        self.tau_rise = tau_rise
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -31116,20 +26862,6 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
         else:
             return ExpTwoSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_tauDecay(self):
-        return self.tau_decay
-    def set_tauDecay(self, tau_decay):
-        self.tau_decay = tau_decay
-    def get_tauRise(self):
-        return self.tau_rise
-    def set_tauRise(self, tau_rise):
-        self.tau_rise = tau_rise
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -31249,14 +26981,6 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
         else:
             return ExpOneSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_tauDecay(self):
-        return self.tau_decay
-    def set_tauDecay(self, tau_decay):
-        self.tau_decay = tau_decay
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -31356,14 +27080,6 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
         else:
             return AlphaSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_tau(self):
-        return self.tau
-    def set_tau(self, tau):
-        self.tau = tau
     def validate_Nml2Quantity_time(self, value):
         # Validate type Nml2Quantity_time, a restriction on xs:string.
         if value is not None and Validate_simpletypes_ and self.gds_collector_ is not None:
@@ -31476,32 +27192,6 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
         else:
             return EIF_cond_exp_isfa_ista(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_a(self):
-        return self.a
-    def set_a(self, a):
-        self.a = a
-    def get_b(self):
-        return self.b
-    def set_b(self, b):
-        self.b = b
-    def get_delta_T(self):
-        return self.delta_T
-    def set_delta_T(self, delta_T):
-        self.delta_T = delta_T
-    def get_tau_w(self):
-        return self.tau_w
-    def set_tau_w(self, tau_w):
-        self.tau_w = tau_w
-    def get_v_spike(self):
-        return self.v_spike
-    def set_v_spike(self, v_spike):
-        self.v_spike = v_spike
-    def get_extensiontype_(self): return self.extensiontype_
-    def set_extensiontype_(self, extensiontype_): self.extensiontype_ = extensiontype_
     def _hasContent(self):
         if (
             super(EIF_cond_exp_isfa_ista, self)._hasContent()
@@ -31631,10 +27321,6 @@ class IF_cond_exp(basePyNNIaFCondCell):
         else:
             return IF_cond_exp(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
     def _hasContent(self):
         if (
             super(IF_cond_exp, self)._hasContent()
@@ -31712,10 +27398,6 @@ class IF_cond_alpha(basePyNNIaFCondCell):
         else:
             return IF_cond_alpha(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
     def _hasContent(self):
         if (
             super(IF_cond_alpha, self)._hasContent()
@@ -31799,14 +27481,6 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
         else:
             return ContinuousConnectionInstanceW(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_weight(self):
-        return self.weight
-    def set_weight(self, weight):
-        self.weight = weight
     def _hasContent(self):
         if (
             super(ContinuousConnectionInstanceW, self)._hasContent()
@@ -31912,14 +27586,6 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
         else:
             return ElectricalConnectionInstanceW(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_weight(self):
-        return self.weight
-    def set_weight(self, weight):
-        self.weight = weight
     def _hasContent(self):
         if (
             super(ElectricalConnectionInstanceW, self)._hasContent()
@@ -32028,18 +27694,6 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
         else:
             return BlockingPlasticSynapse(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
-    def get_plasticityMechanism(self):
-        return self.plasticity_mechanism
-    def set_plasticityMechanism(self, plasticity_mechanism):
-        self.plasticity_mechanism = plasticity_mechanism
-    def get_blockMechanism(self):
-        return self.block_mechanism
-    def set_blockMechanism(self, block_mechanism):
-        self.block_mechanism = block_mechanism
     def _hasContent(self):
         if (
             self.plasticity_mechanism is not None or
@@ -32138,10 +27792,6 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
         else:
             return EIF_cond_alpha_isfa_ista(*args_, **kwargs_)
     factory = staticmethod(factory)
-    def get_ns_prefix_(self):
-        return self.ns_prefix_
-    def set_ns_prefix_(self, ns_prefix):
-        self.ns_prefix_ = ns_prefix
     def _hasContent(self):
         if (
             super(EIF_cond_alpha_isfa_ista, self)._hasContent()
