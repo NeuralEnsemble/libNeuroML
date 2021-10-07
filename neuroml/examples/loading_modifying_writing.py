@@ -7,54 +7,56 @@ import neuroml
 import neuroml.loaders as loaders
 import neuroml.writers as writers
 
-fn = './test_files/Purk2M9s.nml'
+fn = "./test_files/Purk2M9s.nml"
 doc = loaders.NeuroMLLoader.load(fn)
-print("Loaded morphology file from: "+fn)
+print("Loaded morphology file from: " + fn)
 
-#get the parent segment:
+# get the parent segment:
 parent_segment = doc.cells[0].morphology.segments[0]
 
 parent = neuroml.SegmentParent(segments=parent_segment.id)
 
-#make an axon:
-seg_id = 5000 # need a way to get a unique id from a morphology
+# make an axon:
+seg_id = 5000  # need a way to get a unique id from a morphology
 axon_segments = []
 for i in range(10):
-    p = neuroml.Point3DWithDiam(x=parent_segment.distal.x,
-                                y=parent_segment.distal.y,
-                                z=parent_segment.distal.z,
-                                diameter=0.1)
+    p = neuroml.Point3DWithDiam(
+        x=parent_segment.distal.x,
+        y=parent_segment.distal.y,
+        z=parent_segment.distal.z,
+        diameter=0.1,
+    )
 
-    d = neuroml.Point3DWithDiam(x=parent_segment.distal.x+10,
-                                y=parent_segment.distal.y,
-                                z=parent_segment.distal.z,
-                                diameter=0.1)
+    d = neuroml.Point3DWithDiam(
+        x=parent_segment.distal.x + 10,
+        y=parent_segment.distal.y,
+        z=parent_segment.distal.z,
+        diameter=0.1,
+    )
 
-    axon_segment = neuroml.Segment(proximal = p, 
-                                   distal = d, 
-                                   parent = parent)
+    axon_segment = neuroml.Segment(proximal=p, distal=d, parent=parent)
 
     axon_segment.id = seg_id
-    
-    axon_segment.name = 'axon_segment_' + str(axon_segment.id)
 
-    #now reset everything:
+    axon_segment.name = "axon_segment_" + str(axon_segment.id)
+
+    # now reset everything:
     parent = neuroml.SegmentParent(segments=axon_segment.id)
     parent_segment = axon_segment
-    seg_id += 1 
+    seg_id += 1
 
     axon_segments.append(axon_segment)
 
 doc.cells[0].morphology.segments += axon_segments
 
-nml_file = './tmp/modified_morphology.nml'
+nml_file = "./tmp/modified_morphology.nml"
 
-writers.NeuroMLWriter.write(doc,nml_file)
+writers.NeuroMLWriter.write(doc, nml_file)
 
-print("Saved modified morphology file to: "+nml_file)
+print("Saved modified morphology file to: " + nml_file)
 
 
-###### Validate the NeuroML ######    
+###### Validate the NeuroML ######
 
 from neuroml.utils import validate_neuroml2
 

@@ -6,8 +6,7 @@ import re
 #   your method specification file.
 #
 class MethodSpec(object):
-    def __init__(self, name='', source='', class_names='',
-            class_names_compiled=None):
+    def __init__(self, name="", source="", class_names="", class_names_compiled=None):
         """MethodSpec -- A specification of a method.
         Member variables:
             name -- The method name
@@ -21,55 +20,68 @@ class MethodSpec(object):
         self.name = name
         self.source = source
         self.class_names = class_names
-        '''
+        """
         if class_names is None:
             self.class_names = ('.*', )
         else:
         if class_names_compiled is None:
             self.class_names_compiled = re.compile(self.class_names)
         else:
-            self.class_names_compiled = class_names_compiled'''
+            self.class_names_compiled = class_names_compiled"""
+
     def get_name(self):
         return self.name
+
     def set_name(self, name):
         self.name = name
+
     def get_source(self):
         return self.source
+
     def set_source(self, source):
         self.source = source
+
     def get_class_names(self):
         return self.class_names
+
     def set_class_names(self, class_names):
         self.class_names = class_names
         self.class_names_compiled = re.compile(class_names)
+
     def get_class_names_compiled(self):
         return self.class_names_compiled
+
     def set_class_names_compiled(self, class_names_compiled):
         self.class_names_compiled = class_names_compiled
+
     def match_name(self, class_name):
         """Match against the name of the class currently being generated.
         If this method returns True, the method will be inserted in
           the generated class.
         """
 
-        if self.class_names == class_name or (isinstance(self.class_names,list) and class_name in self.class_names):
+        if self.class_names == class_name or (
+            isinstance(self.class_names, list) and class_name in self.class_names
+        ):
             return True
         else:
             return False
+
     def get_interpolated_source(self, values_dict):
         """Get the method source code, interpolating values from values_dict
         into it.  The source returned by this method is inserted into
         the generated class.
         """
         source = self.source % values_dict
-        source = source.replace('PERCENTAGE','%')
+        source = source.replace("PERCENTAGE", "%")
         return source
+
     def show(self):
-        print('specification:')
-        print('    name: %s' % (self.name, ))
+        print("specification:")
+        print("    name: %s" % (self.name,))
         print(self.source)
-        print('    class_names: %s' % (self.class_names, ))
-        print('    names pat  : %s' % (self.class_names_compiled.pattern, ))
+        print("    class_names: %s" % (self.class_names,))
+        print("    names pat  : %s" % (self.class_names_compiled.pattern,))
 
 
 #
@@ -81,7 +93,8 @@ class MethodSpec(object):
 #   generated superclass file and also section "User Methods" in
 #   the documentation, as well as the examples below.
 
-num_segments = MethodSpec(name='num_segments',
+num_segments = MethodSpec(
+    name="num_segments",
     source='''\
     @property
     def num_segments(self):
@@ -92,11 +105,12 @@ num_segments = MethodSpec(name='num_segments',
         """
         return len(self.segments)
 ''',
-    class_names=("Morphology")
-    )
+    class_names=("Morphology"),
+)
 
 
-length = MethodSpec(name='length',
+length = MethodSpec(
+    name="length",
     source='''\
     @property
     def length(self):
@@ -130,10 +144,11 @@ length = MethodSpec(name='length',
         return str(self)
 
 ''',
-    class_names=("Segment")
-    )
+    class_names=("Segment"),
+)
 
-volume = MethodSpec(name='volume',
+volume = MethodSpec(
+    name="volume",
     source='''\
     @property
     def volume(self):
@@ -165,11 +180,12 @@ volume = MethodSpec(name='volume',
 
         return volume
     ''',
-    class_names=("Segment")
-    )
+    class_names=("Segment"),
+)
 
 
-surface_area = MethodSpec(name='surface_area',
+surface_area = MethodSpec(
+    name="surface_area",
     source='''\
 
     @property
@@ -203,23 +219,24 @@ surface_area = MethodSpec(name='surface_area',
 
         return surface_area
     ''',
-    class_names=("Segment")
-    )
+    class_names=("Segment"),
+)
 
 #
 # Provide a list of your method specifications.
 #   This list of specifications must be named METHOD_SPECS.
 #
-METHOD_SPECS=(length,
-              volume,
-              surface_area,
-              num_segments,
-             )
+METHOD_SPECS = (
+    length,
+    volume,
+    surface_area,
+    num_segments,
+)
 
 
-
-seg_grp = MethodSpec(name='SegmentGroup',
-    source='''\
+seg_grp = MethodSpec(
+    name="SegmentGroup",
+    source="""\
 
 
     def __str__(self):
@@ -230,13 +247,14 @@ seg_grp = MethodSpec(name='SegmentGroup',
 
         return str(self)
 
-''',
-    class_names=("SegmentGroup")
-    )
+""",
+    class_names=("SegmentGroup"),
+)
 
-METHOD_SPECS+=(seg_grp,)
+METHOD_SPECS += (seg_grp,)
 
-seg_grp = MethodSpec(name='Point3DWithDiam',
+seg_grp = MethodSpec(
+    name="Point3DWithDiam",
     source='''\
 
     def __str__(self):
@@ -267,13 +285,14 @@ seg_grp = MethodSpec(name='Point3DWithDiam',
         return distance
 
 ''',
-    class_names=("Point3DWithDiam")
-    )
+    class_names=("Point3DWithDiam"),
+)
 
-METHOD_SPECS+=(seg_grp,)
+METHOD_SPECS += (seg_grp,)
 
 
-connection_cell_ids = MethodSpec(name='connection_cell_ids',
+connection_cell_ids = MethodSpec(
+    name="connection_cell_ids",
     source='''\
 
     def _get_cell_id(self, id_string):
@@ -344,12 +363,13 @@ connection_cell_ids = MethodSpec(name='connection_cell_ids',
         return "Connection "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())
 
     ''',
-    class_names=(["Connection","ConnectionWD"])
-    )
+    class_names=(["Connection", "ConnectionWD"]),
+)
 
-METHOD_SPECS+=(connection_cell_ids,)
+METHOD_SPECS += (connection_cell_ids,)
 
-connection_wd_cell_ids = MethodSpec(name='connection_wd_cell_ids',
+connection_wd_cell_ids = MethodSpec(
+    name="connection_wd_cell_ids",
     source='''\
 
     def __str__(self):
@@ -369,13 +389,14 @@ connection_wd_cell_ids = MethodSpec(name='connection_wd_cell_ids',
             return float(self.delay[:-1].strip())*1000.0
 
     ''',
-    class_names=("ConnectionWD")
-    )
+    class_names=("ConnectionWD"),
+)
 
-METHOD_SPECS+=(connection_wd_cell_ids,)
+METHOD_SPECS += (connection_wd_cell_ids,)
 
-elec_connection_instance_cell_ids = MethodSpec(name='elec_connection_instance_cell_ids',
-    source='''\
+elec_connection_instance_cell_ids = MethodSpec(
+    name="elec_connection_instance_cell_ids",
+    source="""\
 
     def _get_cell_id(self, id_string):
         if '[' in id_string:
@@ -389,13 +410,14 @@ elec_connection_instance_cell_ids = MethodSpec(name='elec_connection_instance_ce
             ", synapse: "+str(self.synapse)
 
 
-    ''',
-    class_names=("ElectricalConnectionInstance")
-    )
+    """,
+    class_names=("ElectricalConnectionInstance"),
+)
 
-METHOD_SPECS+=(elec_connection_instance_cell_ids,)
+METHOD_SPECS += (elec_connection_instance_cell_ids,)
 
-elec_connection_instance_w = MethodSpec(name='elec_connection_instance_w',
+elec_connection_instance_w = MethodSpec(
+    name="elec_connection_instance_w",
     source='''\
 
     def get_weight(self):
@@ -416,12 +438,13 @@ elec_connection_instance_w = MethodSpec(name='elec_connection_instance_w',
             ", synapse: "+str(self.synapse) + ", weight: "+'PERCENTAGE.6f'PERCENTAGEself.get_weight()
 
     ''',
-    class_names=("ElectricalConnectionInstanceW")
-    )
+    class_names=("ElectricalConnectionInstanceW"),
+)
 
-METHOD_SPECS+=(elec_connection_instance_w,)
+METHOD_SPECS += (elec_connection_instance_w,)
 
-elec_connection_cell_ids = MethodSpec(name='elec_connection_cell_ids',
+elec_connection_cell_ids = MethodSpec(
+    name="elec_connection_cell_ids",
     source='''\
 
     def _get_cell_id(self, id_string):
@@ -492,13 +515,14 @@ elec_connection_cell_ids = MethodSpec(name='elec_connection_cell_ids',
 
 
     ''',
-    class_names=("ElectricalConnection")
-    )
+    class_names=("ElectricalConnection"),
+)
 
-METHOD_SPECS+=(elec_connection_cell_ids,)
+METHOD_SPECS += (elec_connection_cell_ids,)
 
-cont_connection_instance_cell_ids = MethodSpec(name='cont_connection_instance_cell_ids',
-    source='''\
+cont_connection_instance_cell_ids = MethodSpec(
+    name="cont_connection_instance_cell_ids",
+    source="""\
 
     def _get_cell_id(self, id_string):
         if '[' in id_string:
@@ -513,13 +537,14 @@ cont_connection_instance_cell_ids = MethodSpec(name='cont_connection_instance_ce
             ", pre comp: "+str(self.pre_component)+", post comp: "+str(self.post_component)
 
 
-    ''',
-    class_names=("ContinuousConnectionInstance")
-    )
+    """,
+    class_names=("ContinuousConnectionInstance"),
+)
 
-METHOD_SPECS+=(cont_connection_instance_cell_ids,)
+METHOD_SPECS += (cont_connection_instance_cell_ids,)
 
-cont_connection_instance_w = MethodSpec(name='cont_connection_instance_w',
+cont_connection_instance_w = MethodSpec(
+    name="cont_connection_instance_w",
     source='''\
 
     def get_weight(self):
@@ -537,12 +562,13 @@ cont_connection_instance_w = MethodSpec(name='cont_connection_instance_w',
 
 
     ''',
-    class_names=("ContinuousConnectionInstanceW")
-    )
+    class_names=("ContinuousConnectionInstanceW"),
+)
 
-METHOD_SPECS+=(cont_connection_instance_w,)
+METHOD_SPECS += (cont_connection_instance_w,)
 
-cont_connection_cell_ids = MethodSpec(name='cont_connection_cell_ids',
+cont_connection_cell_ids = MethodSpec(
+    name="cont_connection_cell_ids",
     source='''\
 
     def _get_cell_id(self, id_string):
@@ -614,14 +640,15 @@ cont_connection_cell_ids = MethodSpec(name='cont_connection_cell_ids',
 
 
     ''',
-    class_names=("ContinuousConnection")
-    )
+    class_names=("ContinuousConnection"),
+)
 
-METHOD_SPECS+=(cont_connection_cell_ids,)
+METHOD_SPECS += (cont_connection_cell_ids,)
 
 
-instance = MethodSpec(name='instance',
-    source='''\
+instance = MethodSpec(
+    name="instance",
+    source="""\
 
     def __str__(self):
 
@@ -631,14 +658,15 @@ instance = MethodSpec(name='instance',
 
         return str(self)
 
-''',
-    class_names=("Instance")
-    )
-METHOD_SPECS+=(instance,)
+""",
+    class_names=("Instance"),
+)
+METHOD_SPECS += (instance,)
 
 
-location = MethodSpec(name='location',
-    source='''\
+location = MethodSpec(
+    name="location",
+    source="""\
 
     def _format(self,value):
 
@@ -655,15 +683,14 @@ location = MethodSpec(name='location',
 
         return str(self)
 
-''',
-    class_names=("Location")
-    )
-METHOD_SPECS+=(location,)
+""",
+    class_names=("Location"),
+)
+METHOD_SPECS += (location,)
 
 
-
-
-input_cell_ids = MethodSpec(name='input_cell_ids',
+input_cell_ids = MethodSpec(
+    name="input_cell_ids",
     source='''\
 
     def _get_cell_id(self, id_string):
@@ -697,13 +724,14 @@ input_cell_ids = MethodSpec(name='input_cell_ids',
         return "Input "+str(self.id)+": "+str(self.get_target_cell_id())+":"+str(self.get_segment_id())+"("+'PERCENTAGE.6f'PERCENTAGEself.get_fraction_along()+")"
 
     ''',
-    class_names=(["Input","ExplicitInput"])
-    )
+    class_names=(["Input", "ExplicitInput"]),
+)
 
-METHOD_SPECS+=(input_cell_ids,)
+METHOD_SPECS += (input_cell_ids,)
 
 
-input_w = MethodSpec(name='input_w',
+input_w = MethodSpec(
+    name="input_w",
     source='''\
 
     def get_weight(self):
@@ -719,13 +747,14 @@ input_w = MethodSpec(name='input_w',
         return "Input (weight) "+str(self.id)+": "+str(self.get_target_cell_id())+":"+str(self.get_segment_id())+"("+'PERCENTAGE.6f'PERCENTAGEself.get_fraction_along()+"), weight: "+'PERCENTAGE.6f'PERCENTAGEself.get_weight()
 
     ''',
-    class_names=(["InputW"])
-    )
+    class_names=(["InputW"]),
+)
 
-METHOD_SPECS+=(input_w,)
+METHOD_SPECS += (input_w,)
 
 
-nml_doc_summary = MethodSpec(name='summary',
+nml_doc_summary = MethodSpec(
+    name="summary",
     source='''\
 
 
@@ -900,12 +929,13 @@ nml_doc_summary = MethodSpec(name='summary',
         append_to_element(self,element)
 
     ''',
-    class_names=("NeuroMLDocument")
-    )
+    class_names=("NeuroMLDocument"),
+)
 
-METHOD_SPECS+=(nml_doc_summary,)
+METHOD_SPECS += (nml_doc_summary,)
 
-network_get_by_id = MethodSpec(name='get_by_id',
+network_get_by_id = MethodSpec(
+    name="get_by_id",
     source='''\
 
     warn_count = 0
@@ -939,13 +969,14 @@ network_get_by_id = MethodSpec(name='get_by_id',
         return "Network "+str(self.id)+" with "+str(len(self.populations))+" population(s)"
 
     ''',
-    class_names=("Network")
-    )
+    class_names=("Network"),
+)
 
-METHOD_SPECS+=(network_get_by_id,)
+METHOD_SPECS += (network_get_by_id,)
 
 
-cell_methods = MethodSpec(name='cell_methods',
+cell_methods = MethodSpec(
+    name="cell_methods",
     source='''\
 
 
@@ -1300,15 +1331,17 @@ cell_methods = MethodSpec(name='cell_methods',
         print("*******************************************************")
 
     ''',
-    class_names=("Cell")
-    )
+    class_names=("Cell"),
+)
 
-METHOD_SPECS+=(cell_methods,)
+METHOD_SPECS += (cell_methods,)
 
 
-inserts  = {}
+inserts = {}
 
-inserts['Network'] = '''
+inserts[
+    "Network"
+] = """
 
         import numpy
 
@@ -1339,9 +1372,11 @@ inserts['Network'] = '''
         for il in self.input_lists:
             il.exportHdf5(h5file, netGroup)
 
-'''
+"""
 
-inserts['Population'] = '''
+inserts[
+    "Population"
+] = """
 
         import numpy
 
@@ -1383,9 +1418,11 @@ inserts['Population'] = '''
 
         return "Population: "+str(self.id)+" with "+str( self.get_size() )+" components of type "+(self.component if self.component else "???")
 
-'''
+"""
 
-inserts['Projection'] = '''
+inserts[
+    "Projection"
+] = """
 
         import numpy
 
@@ -1474,9 +1511,11 @@ inserts['Projection'] = '''
 
 
 
-'''
+"""
 
-inserts['ElectricalProjection'] = '''
+inserts[
+    "ElectricalProjection"
+] = """
 
         import numpy
 
@@ -1548,11 +1587,12 @@ inserts['ElectricalProjection'] = '''
         for col in extra_cols.keys():
             array._f_setattr(col,extra_cols[col])
 
-'''
+"""
 
 
-
-inserts['ContinuousProjection'] = '''
+inserts[
+    "ContinuousProjection"
+] = """
 
         import numpy
 
@@ -1630,10 +1670,12 @@ inserts['ContinuousProjection'] = '''
             array._f_setattr(k, extra_cols[k])
 
 
-'''
+"""
 
 
-inserts['InputList'] = '''
+inserts[
+    "InputList"
+] = """
 
         import numpy
 
@@ -1685,25 +1727,27 @@ inserts['InputList'] = '''
 
         return "Input list: "+self.id+" to "+self.populations+", component "+self.component
 
-'''
-
+"""
 
 
 for insert in inserts.keys():
-    ms = MethodSpec(name='exportHdf5',
-    source='''\
+    ms = MethodSpec(
+        name="exportHdf5",
+        source='''\
 
     def exportHdf5(self, h5file, h5Group):
         """Export to HDF5 file.  """
         #print("Exporting %s: "+str(self.id)+" as HDF5")
         %s
-    '''%(insert,inserts[insert]),
-    class_names=(insert)
+    '''
+        % (insert, inserts[insert]),
+        class_names=(insert),
     )
-    METHOD_SPECS+=(ms,)
+    METHOD_SPECS += (ms,)
 
 
-synaptic_connections = MethodSpec(name='synaptic_connections',
+synaptic_connections = MethodSpec(
+    name="synaptic_connections",
     source='''\
 
     def _get_cell_id(self,ref):
@@ -1728,12 +1772,13 @@ synaptic_connections = MethodSpec(name='synaptic_connections',
 
 
     ''',
-    class_names=("SynapticConnection")
-    )
+    class_names=("SynapticConnection"),
+)
 
-METHOD_SPECS+=(synaptic_connections,)
+METHOD_SPECS += (synaptic_connections,)
 
-explicit_inputs = MethodSpec(name='explicit_inputs',
+explicit_inputs = MethodSpec(
+    name="explicit_inputs",
     source='''\
 
     def get_target_cell_id(self,):
@@ -1758,18 +1803,20 @@ explicit_inputs = MethodSpec(name='explicit_inputs',
 
 
     ''',
-    class_names=("ExplicitInput")
-    )
+    class_names=("ExplicitInput"),
+)
 
-METHOD_SPECS+=(explicit_inputs,)
+METHOD_SPECS += (explicit_inputs,)
+
 
 def test():
     for spec in METHOD_SPECS:
         spec.show()
 
+
 def main():
     test()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
