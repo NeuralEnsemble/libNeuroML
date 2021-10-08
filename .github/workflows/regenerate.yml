@@ -31,7 +31,7 @@ jobs:
 
     - name: Rebuild nml.py
       run: |
-        cd neuroml/nml && rm -f nml.py && ./rebuild-nml.sh
+        cd neuroml/nml && rm -f nml.py && ./regenerate-nml.sh -a
 
     - name: Build package
       run: |
