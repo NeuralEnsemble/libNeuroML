@@ -25,7 +25,10 @@ class NeuroMLLoader(object):
     @classmethod
     def load(cls, src):
         doc = cls.__nml2_doc(src)
-        return doc
+        if isinstance(doc, neuroml.nml.nml.NeuroMLDocument):
+            return doc
+        else:
+            raise TypeError("{} does not appear to be a NeuroML Document.".format(src))
 
     @classmethod
     def __nml2_doc(cls, file_name):
