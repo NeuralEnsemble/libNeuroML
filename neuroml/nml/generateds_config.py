@@ -5,9 +5,17 @@
 import lxml
 from lxml import objectify
 import re
-from config import variables
 import csv
 import sys
+import process_includes
+
+# In Python 3, it's io
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
+from config import variables
+
 
 sys.setrecursionlimit(10000)
 
@@ -80,10 +88,7 @@ def _node_to_python(node):
 
 filename = variables["schema_name"]
 
-import io
-import process_includes
-
-outfile = io.StringIO()
+outfile = StringIO()
 infile = open(filename, "r")
 
 process_includes.process_include_files(infile, outfile, inpath=filename)
@@ -148,8 +153,8 @@ print("NameTable is as follows:")
 print(NameTable)
 
 print("Saving NameTable to csv file")
-writer = csv.writer(open("name_table.csv", "w"))
-for key, value in list(NameTable.items()):
+writer = csv.writer(open("name_table.csv", "wb"))
+for key, value in NameTable.items():
     writer.writerow([key, value])
 
 print("Saving name changes table to csv file")
