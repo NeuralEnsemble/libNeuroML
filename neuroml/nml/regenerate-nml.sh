@@ -39,7 +39,7 @@ regenerate () {
 }
 
 reformat () {
-    if command -v generateDS > /dev/null 2>&1
+    if command -v black > /dev/null 2>&1
     then
         echo "Formatting new nml.py with black"
         black nml.py
