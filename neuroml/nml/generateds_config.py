@@ -153,7 +153,7 @@ print("NameTable is as follows:")
 print(NameTable)
 
 print("Saving NameTable to csv file")
-writer = csv.writer(open("name_table.csv", "wb"))
+writer = csv.writer(open("name_table.csv", "w"))
 for key, value in NameTable.items():
     writer.writerow([key, value])
 
