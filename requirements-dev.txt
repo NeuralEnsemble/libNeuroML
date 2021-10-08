@@ -1,3 +1,5 @@
-generateds
-pytest
 wheel
+generateds
+cython
+flake8
+pytest
