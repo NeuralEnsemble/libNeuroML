@@ -146,56 +146,6 @@ class SWCLoader(object):
         )
 
 
-class JSONLoader(object):
-    @classmethod
-    def load(cls, file):
-
-        from jsonpickle import decode as json_decode
-
-        if isinstance(file, str):
-            fileh = open(file, "r")
-        else:
-            fileh = file
-
-        json_string = fileh.read()
-        unpickled = json_decode(json_string)
-        fileh.close()
-        return unpickled
-
-    @classmethod
-    def load_from_mongodb(cls, db, id, host=None, port=None):
-
-        from pymongo import MongoClient
-
-        try:
-            import simplejson as json
-        except ImportError:
-            import json
-
-        from jsonpickle import decode as json_decode
-
-        if host == None:
-            host = "localhost"
-        if port == None:
-            port = 27017
-
-        client = MongoClient(host, port)
-
-        db = client[db]
-
-        collection = db[id]
-
-        doc = collection.find_one()
-
-        del doc["_id"]
-
-        doc = json.dumps(doc)
-
-        document = json_decode(doc)
-
-        return document
-
-
 class ArrayMorphLoader(object):
     @classmethod
     def __extract_morphology(cls, node):
