@@ -1,6 +1,7 @@
 wheel
-generateds
+generateds >= 2.20a
 cython
 flake8
 pytest
 numpy
+black
