@@ -17,7 +17,7 @@ then
     generateDS --version
 
     rm -f nml.py
-    export PYTHONPATH="$PYTHONPATH:." && generateDS -o nml.py --use-getter-setter=none --silence --user-methods=helper_methods.py $SCHEMA_FILE
+    PYTHONPATH="$PYTHONPATH:." generateDS -o nml.py --use-getter-setter=none --user-methods=helper_methods.py $SCHEMA_FILE
 
     echo "Formatting new nml.py with black"
     black nml.py
