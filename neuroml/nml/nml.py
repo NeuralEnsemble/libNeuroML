@@ -2,21 +2,19 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Aug 27 11:33:40 2021 by generateDS.py version 2.39.9.
-# Python 3.9.6 (default, Jul 16 2021, 00:00:00)  [GCC 11.1.1 20210531 (Red Hat 11.1.1-3)]
+# Generated Fri Oct  8 15:17:16 2021 by generateDS.py version 2.40.3.
+# Python 3.10.0rc2 (default, Sep  8 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
 #   ('--use-getter-setter', 'none')
-#   ('--no-warnings', '')
-#   ('--silence', '')
-#   ('--user-methods', './helper_methods.py')
+#   ('--user-methods', 'helper_methods.py')
 #
 # Command line arguments:
 #   NeuroML_v2.2.xsd
 #
 # Command line:
-#   /home/asinha/.virtualenvs/generateds-39/bin/generateDS.py -o "nml.py" --use-getter-setter="none" --no-warnings --silence --user-methods="./helper_methods.py" NeuroML_v2.2.xsd
+#   /home/asinha/.local/share/virtualenvs/generateds-310/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" NeuroML_v2.2.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -202,6 +200,32 @@ except ModulenotfoundExp_ as exp:
             def dst(self, dt):
                 return None
 
+        def __str__(self):
+            settings = {
+                "str_pretty_print": True,
+                "str_indent_level": 0,
+                "str_namespaceprefix": "",
+                "str_name": None,
+                "str_namespacedefs": "",
+            }
+            for n in settings:
+                if hasattr(self, n):
+                    setattr(settings[n], self[n])
+            from io import StringIO
+
+            output = StringIO()
+            self.export(
+                output,
+                settings["str_indent_level"],
+                pretty_print=settings["str_pretty_print"],
+                namespaceprefix_=settings["str_namespaceprefix"],
+                name_=settings["str_name"],
+                namespacedef_=settings["str_namespacedefs"],
+            )
+            strval = output.getvalue()
+            output.close()
+            return strval
+
         def gds_format_string(self, input_data, input_name=""):
             return input_data
 
@@ -215,7 +239,7 @@ except ModulenotfoundExp_ as exp:
                 return input_data
 
         def gds_format_base64(self, input_data, input_name=""):
-            return base64.b64encode(input_data)
+            return base64.b64encode(input_data).decode("ascii")
 
         def gds_validate_base64(self, input_data, node=None, input_name=""):
             return input_data
@@ -56675,12 +56699,11 @@ def parse(inFileName, silence=False, print_warnings=True):
     if not SaveElementTreeNode:
         doc = None
         rootNode = None
-    ##     if not silence:
-    ##         sys.stdout.write('<?xml version="1.0" ?>\n')
-    ##         rootObj.export(
-    ##             sys.stdout, 0, name_=rootTag,
-    ##             namespacedef_=namespacedefs,
-    ##             pretty_print=True)
+    if not silence:
+        sys.stdout.write('<?xml version="1.0" ?>\n')
+        rootObj.export(
+            sys.stdout, 0, name_=rootTag, namespacedef_=namespacedefs, pretty_print=True
+        )
     if print_warnings and len(gds_collector.get_messages()) > 0:
         separator = ("-" * 50) + "\n"
         sys.stderr.write(separator)
@@ -56728,12 +56751,12 @@ def parseEtree(
     if not SaveElementTreeNode:
         doc = None
         rootNode = None
-    ##     if not silence:
-    ##         content = etree_.tostring(
-    ##             rootElement, pretty_print=True,
-    ##             xml_declaration=True, encoding="utf-8")
-    ##         sys.stdout.write(str(content))
-    ##         sys.stdout.write('\n')
+    if not silence:
+        content = etree_.tostring(
+            rootElement, pretty_print=True, xml_declaration=True, encoding="utf-8"
+        )
+        sys.stdout.write(str(content))
+        sys.stdout.write("\n")
     if print_warnings and len(gds_collector.get_messages()) > 0:
         separator = ("-" * 50) + "\n"
         sys.stderr.write(separator)
@@ -56767,11 +56790,9 @@ def parseString(inString, silence=False, print_warnings=True):
     rootObj.build(rootNode, gds_collector_=gds_collector)
     if not SaveElementTreeNode:
         rootNode = None
-    ##     if not silence:
-    ##         sys.stdout.write('<?xml version="1.0" ?>\n')
-    ##         rootObj.export(
-    ##             sys.stdout, 0, name_=rootTag,
-    ##             namespacedef_='')
+    if not silence:
+        sys.stdout.write('<?xml version="1.0" ?>\n')
+        rootObj.export(sys.stdout, 0, name_=rootTag, namespacedef_="")
     if print_warnings and len(gds_collector.get_messages()) > 0:
         separator = ("-" * 50) + "\n"
         sys.stderr.write(separator)
@@ -56800,12 +56821,12 @@ def parseLiteral(inFileName, silence=False, print_warnings=True):
     if not SaveElementTreeNode:
         doc = None
         rootNode = None
-    ##     if not silence:
-    ##         sys.stdout.write('#from nml import *\n\n')
-    ##         sys.stdout.write('import nml as model_\n\n')
-    ##         sys.stdout.write('rootObj = model_.rootClass(\n')
-    ##         rootObj.exportLiteral(sys.stdout, 0, name_=rootTag)
-    ##         sys.stdout.write(')\n')
+    if not silence:
+        sys.stdout.write("#from nml import *\n\n")
+        sys.stdout.write("import nml as model_\n\n")
+        sys.stdout.write("rootObj = model_.rootClass(\n")
+        rootObj.exportLiteral(sys.stdout, 0, name_=rootTag)
+        sys.stdout.write(")\n")
     if print_warnings and len(gds_collector.get_messages()) > 0:
         separator = ("-" * 50) + "\n"
         sys.stderr.write(separator)
