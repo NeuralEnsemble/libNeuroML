@@ -23,7 +23,7 @@ regenerate () {
         # The version of generateDS for Python 2.7 has a slightly different
         # style for arguments. You do not give helper_methods.py, just
         # helper_methods
-        if [ $PYTHON_VERSION =~ "2.7" ]
+        if [[ $PYTHON_VERSION =~ "2.7" ]]
         then
             PYTHONPATH="$PYTHONPATH:." generateDS -o nml.py --use-getter-setter=none --user-methods=helper_methods $SCHEMA_FILE
         else
