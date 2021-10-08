@@ -9,7 +9,7 @@ echo "Note(1): Please remember to update the schema from the NeuroML2 repository
 echo "Note(2): Must be run in neuroml/nml/"
 NEUROML_VERSION=$(grep -E 'current_neuroml_version.*' ../__init__.py | cut -d '=' -f 2 | tr -d '"' | tr -d ' ')
 SCHEMA_FILE=NeuroML_${NEUROML_VERSION}.xsd
-PYTHON_VERSION=$(python --version)
+PYTHON_VERSION=$(python --version 2>&1)
 
 regenerate () {
     if command -v generateDS > /dev/null 2>&1
@@ -17,13 +17,15 @@ regenerate () {
         echo "Rebuilding nml.py from ${SCHEMA_FILE} (Version: ${NEUROML_VERSION})"
         echo "generateds version:"
         generateDS --version
+        echo "Python version: $PYTHON_VERSION"
 
         rm -f nml.py
+
 
         # The version of generateDS for Python 2.7 has a slightly different
         # style for arguments. You do not give helper_methods.py, just
         # helper_methods
-        if [[ $PYTHON_VERSION =~ "2.7" ]]
+        if [[ "$PYTHON_VERSION" =~ "2.7" ]]
         then
             PYTHONPATH="$PYTHONPATH:." generateDS -o nml.py --use-getter-setter=none --user-methods=helper_methods $SCHEMA_FILE
         else
