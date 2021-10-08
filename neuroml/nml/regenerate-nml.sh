@@ -34,7 +34,6 @@ regenerate () {
     else
         echo "GenerateDS not installed"
         echo "Run: pip install generateds"
-        exit 1
     fi
 }
 
@@ -43,11 +42,9 @@ reformat () {
     then
         echo "Formatting new nml.py with black"
         black nml.py
-        exit 0
     else
         echo "black is not installed"
         echo "Run: pip install black"
-        exit 1
     fi
 }
 
