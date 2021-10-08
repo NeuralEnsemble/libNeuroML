@@ -34,6 +34,7 @@ regenerate () {
     else
         echo "GenerateDS not installed"
         echo "Run: pip install generateds"
+        exit 1
     fi
 }
 
