@@ -27,6 +27,17 @@ class TestNeuroMLLoader(unittest.TestCase):
         f.close()
         print("Finished test")
 
+    def test_non_neuroml_file(self):
+        """Test an non-NeuroML document."""
+        root_dir = os.path.dirname(neuroml.__file__)
+        test_file_path = os.path.join(root_dir, "examples/test_files/sbml-example.xml")
+        print("test file path is: " + test_file_path)
+
+        try:
+            loaders.NeuroMLLoader.load(test_file_path)
+        except TypeError:
+            print("Exception raised. Test passes.")
+
 
 if __name__ == "__main__":
     t = TestNeuroMLLoader()
