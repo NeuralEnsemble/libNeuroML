@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Oct 13 13:33:32 2021 by generateDS.py version 2.40.3.
+# Generated Wed Oct 13 13:47:40 2021 by generateDS.py version 2.40.3.
 # Python 3.10.0 (default, Oct  4 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
 #
 # Command line options:
@@ -14501,12 +14501,7 @@ class BaseWithoutId(GeneratedsSuper):
                             vars(self)[member.get_name()] = obj
                         else:
                             raise Exception(
-                                """{} has already been assigned.
-                            Use `force=True` to overwrite. Hint: you can make
-                            changes to the already added object as required
-                            without needing to re-add it because only
-                            references to the objects are added, not their
-                            values.""".format(
+                                """{} has already been assigned.  Use `force=True` to overwrite. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
                                     member.get_name()
                                 )
                             )
@@ -14520,12 +14515,7 @@ class BaseWithoutId(GeneratedsSuper):
                             vars(self)[member.get_name()].append(obj)
                         else:
                             raise Exception(
-                                """{} already exists in {}. Use
-                            `force=True` to force readdition. Hint: you can
-                            make changes to the already added object as
-                            required without needing to re-add it because only
-                            references to the objects are added, not their
-                            values.""".format(
+                                """{} already exists in {}. Use `force=True` to force readdition. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
                                     obj.id, member.get_name()
                                 )
                             )

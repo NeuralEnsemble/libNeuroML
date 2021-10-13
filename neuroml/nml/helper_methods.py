@@ -251,12 +251,7 @@ generic_add = MethodSpec(
                         if force:
                             vars(self)[member.get_name()] = obj
                         else:
-                            raise Exception("""{} has already been assigned.
-                            Use `force=True` to overwrite. Hint: you can make
-                            changes to the already added object as required
-                            without needing to re-add it because only
-                            references to the objects are added, not their
-                            values.""".format(member.get_name()))
+                            raise Exception("""{} has already been assigned.  Use `force=True` to overwrite. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(member.get_name()))
                     else:
                         vars(self)[member.get_name()] = obj
                         print("Added {} to {}".format(obj, member.get_name()))
@@ -266,12 +261,7 @@ generic_add = MethodSpec(
                         if force:
                             vars(self)[member.get_name()].append(obj)
                         else:
-                            raise Exception("""{} already exists in {}. Use
-                            `force=True` to force readdition. Hint: you can
-                            make changes to the already added object as
-                            required without needing to re-add it because only
-                            references to the objects are added, not their
-                            values.""".format(obj.id, member.get_name()))
+                            raise Exception("""{} already exists in {}. Use `force=True` to force readdition. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(obj.id, member.get_name()))
                     else:
                         vars(self)[member.get_name()].append(obj)
                 found = True
