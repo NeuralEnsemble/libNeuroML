@@ -294,14 +294,19 @@ generic_list = MethodSpec(
 
         :param show_contents: also prints out the contents of the members
         :type show_contents: bool
+
+        :returns: the string (for testing purposes)
         """
 
+        info_str = ""
         for member in self.member_data_items_:
-            print("{} (class: {})".format(member.name, member.data_type))
+            info_str += ("{} (class: {})\\n".format(member.name, member.data_type))
             if show_contents:
                 contents = getattr(self, member.get_name())
-                print("Contents: {}".format(contents))
+                info_str += ("Contents: {}\\n\\n".format(contents))
 
+        print(info_str)
+        return info_str
     ''',
     class_names=("BaseWithoutId"),
 )
