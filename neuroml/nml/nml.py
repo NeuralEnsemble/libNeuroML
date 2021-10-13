@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Oct  8 15:17:16 2021 by generateDS.py version 2.40.3.
-# Python 3.10.0rc2 (default, Sep  8 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
+# Generated Wed Oct 13 13:33:32 2021 by generateDS.py version 2.40.3.
+# Python 3.10.0 (default, Oct  4 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -14475,8 +14475,97 @@ class BaseWithoutId(GeneratedsSuper):
     ):
         pass
 
+    def add(self, obj, force=False):
+        """Generic function to allow easy addition of a new member to a NeuroML object.
 
-# end class BaseWithoutId
+        :param obj: object member to add
+        :type obj: any NeuroML Type defined by the API
+        :param force: boolean to force addition when an obj has already been added previously
+        :type force: bool
+
+        :raises Exception: if a member compatible to obj could not be found
+        :raises Exception: if a member that takes a single value is already set (and force is not set to True)
+        :raises Exception: if a member that takes a list already includes obj (and force is not set to True)
+        """
+        # getattr only returns the value of the provided member but one cannot
+        # then use this to modify the member. Using `vars` also allows us to
+        # modify the value
+        found = False
+        for member in self.member_data_items_:
+            # get_data_type() returns the type as a string, e.g.: 'IncludeType'
+            if member.get_data_type() == type(obj).__name__:
+                # A single value, not a list:
+                if member.get_container() == 0:
+                    if vars(self)[member.get_name()]:
+                        if force:
+                            vars(self)[member.get_name()] = obj
+                        else:
+                            raise Exception(
+                                """{} has already been assigned.
+                            Use `force=True` to overwrite. Hint: you can make
+                            changes to the already added object as required
+                            without needing to re-add it because only
+                            references to the objects are added, not their
+                            values.""".format(
+                                    member.get_name()
+                                )
+                            )
+                    else:
+                        vars(self)[member.get_name()] = obj
+                        print("Added {} to {}".format(obj, member.get_name()))
+                # List
+                else:
+                    if obj in vars(self)[member.get_name()]:
+                        if force:
+                            vars(self)[member.get_name()].append(obj)
+                        else:
+                            raise Exception(
+                                """{} already exists in {}. Use
+                            `force=True` to force readdition. Hint: you can
+                            make changes to the already added object as
+                            required without needing to re-add it because only
+                            references to the objects are added, not their
+                            values.""".format(
+                                    obj.id, member.get_name()
+                                )
+                            )
+                    else:
+                        vars(self)[member.get_name()].append(obj)
+                found = True
+                break
+        if not found:
+            e = Exception(
+                """A member object of {} type could not be found in this class.
+            Please check the NeuroML schema at https://docs.neuroml.org to
+            confirm that this member belongs to this NeuroML element.""".format(
+                    type(obj).__name__
+                )
+            )
+            raise e
+
+    def get_members_info(self, show_contents=False):
+        """A helper function to get a list of members of this class.
+
+        This is useful to quickly check what members can go into a particular
+        NeuroML class (which will match the Schema definitions). It lists these
+        members and notes whether they are "single" type elements (Child
+        elements) or "List" elements (Children elements). It will also note
+        whether a member is optional or required.
+
+        See http://www.davekuhlman.org/generateDS.html#user-methods for more
+        information on the MemberSpec_ class that generateDS uses.
+
+        :param show_contents: also prints out the contents of the members
+        :type show_contents: bool
+        """
+
+        for member in self.member_data_items_:
+            print("{} (class: {})".format(member.name, member.data_type))
+            if show_contents:
+                contents = getattr(self, member.get_name())
+                print("Contents: {}".format(contents))
+
+    # end class BaseWithoutId
 
 
 class BaseNonNegativeIntegerId(BaseWithoutId):
