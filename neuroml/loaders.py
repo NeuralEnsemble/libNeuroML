@@ -28,7 +28,11 @@ class NeuroMLLoader(object):
         if isinstance(doc, neuroml.nml.nml.NeuroMLDocument):
             return doc
         else:
-            raise TypeError("{} does not appear to be a NeuroML Document. NeuroML documents must be contained in a <neuroml> tag.".format(src))
+            raise TypeError(
+                "{} does not appear to be a NeuroML Document. NeuroML documents must be contained in a <neuroml> tag.".format(
+                    src
+                )
+            )
 
     @classmethod
     def __nml2_doc(cls, file_name):
