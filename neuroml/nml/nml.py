@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Oct 26 17:40:52 2021 by generateDS.py version 2.40.3.
+# Generated Tue Oct 26 17:59:14 2021 by generateDS.py version 2.40.3.
 # Python 3.10.0 (default, Oct  4 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
 #
 # Command line options:
@@ -14568,6 +14568,7 @@ class BaseWithoutId(GeneratedsSuper):
                 contents = getattr(self, member.get_name())
                 info_str += "Contents: {}\n\n".format(contents)
 
+        info_str += "Please see the schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information."
         print(info_str)
         return info_str
 
