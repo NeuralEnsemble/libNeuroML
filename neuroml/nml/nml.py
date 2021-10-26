@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Oct 13 15:25:38 2021 by generateDS.py version 2.40.3.
+# Generated Tue Oct 26 17:40:52 2021 by generateDS.py version 2.40.3.
 # Python 3.10.0 (default, Oct  4 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
 #
 # Command line options:
@@ -14475,8 +14475,14 @@ class BaseWithoutId(GeneratedsSuper):
     ):
         pass
 
-    def add(self, obj, force=False):
+    def add(self, obj=None, force=False):
         """Generic function to allow easy addition of a new member to a NeuroML object.
+
+        Without arguments, when `obj=None`, it simply calls the `info()` method
+        to provide the list of valid member types for the NeuroML class.
+
+        Use `info(show_contents=True)` to see the valid members of this class,
+        and their current contents.
 
         :param obj: object member to add
         :type obj: any NeuroML Type defined by the API
@@ -14487,6 +14493,10 @@ class BaseWithoutId(GeneratedsSuper):
         :raises Exception: if a member that takes a single value is already set (and force is not set to True)
         :raises Exception: if a member that takes a list already includes obj (and force is not set to True)
         """
+        if not obj:
+            self.info()
+            return
+
         # getattr only returns the value of the provided member but one cannot
         # then use this to modify the member. Using `vars` also allows us to
         # modify the value
@@ -14525,15 +14535,15 @@ class BaseWithoutId(GeneratedsSuper):
                 break
         if not found:
             e = Exception(
-                """A member object of {} type could not be found in this class.
-            Please check the NeuroML schema at https://docs.neuroml.org to
-            confirm that this member belongs to this NeuroML element.""".format(
+                """A member object of {} type could not be found in this class.\n
+            {}.""".format(
                     type(obj).__name__
-                )
+                ),
+                self.info(),
             )
             raise e
 
-    def get_members_info(self, show_contents=False):
+    def info(self, show_contents=False):
         """A helper function to get a list of members of this class.
 
         This is useful to quickly check what members can go into a particular
@@ -14551,7 +14561,7 @@ class BaseWithoutId(GeneratedsSuper):
         :returns: the string (for testing purposes)
         """
 
-        info_str = ""
+        info_str = "Valid members for {} are:\n".format(self.__class__.__name__)
         for member in self.member_data_items_:
             info_str += "{} (class: {})\n".format(member.name, member.data_type)
             if show_contents:
