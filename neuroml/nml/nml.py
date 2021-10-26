@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Oct 26 17:59:14 2021 by generateDS.py version 2.40.3.
+# Generated Tue Oct 26 18:13:56 2021 by generateDS.py version 2.40.3.
 # Python 3.10.0 (default, Oct  4 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
 #
 # Command line options:
@@ -14535,11 +14535,10 @@ class BaseWithoutId(GeneratedsSuper):
                 break
         if not found:
             e = Exception(
-                """A member object of {} type could not be found in this class.\n
-            {}.""".format(
-                    type(obj).__name__
-                ),
-                self.info(),
+                """A member object of {} type could not be found in NeuroML class {}.\n{}
+            """.format(
+                    type(obj).__name__, type(self).__name__, self.info()
+                )
             )
             raise e
 
@@ -14563,12 +14562,12 @@ class BaseWithoutId(GeneratedsSuper):
 
         info_str = "Valid members for {} are:\n".format(self.__class__.__name__)
         for member in self.member_data_items_:
-            info_str += "{} (class: {})\n".format(member.name, member.data_type)
+            info_str += "* {} (class: {})\n".format(member.name, member.data_type)
             if show_contents:
                 contents = getattr(self, member.get_name())
-                info_str += "Contents: {}\n\n".format(contents)
+                info_str += "	* Contents: {}\n\n".format(contents)
 
-        info_str += "Please see the schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information."
+        info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information."
         print(info_str)
         return info_str
 
