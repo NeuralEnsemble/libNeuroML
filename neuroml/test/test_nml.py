@@ -55,10 +55,10 @@ class TestNML(unittest.TestCase):
         with self.assertRaises(Exception):
             biprop.add(net)
 
-    def test_member_info(self):
+    def test_info(self):
         """Test getting member info."""
         cell = neuroml.Cell(id="testcell")
-        info = cell.get_members_info()
+        info = cell.info()
         self.assertRegex(info, 'morphology')
         self.assertRegex(info, 'biophysical_properties')
         self.assertNotRegex(info, 'network')
