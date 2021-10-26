@@ -268,19 +268,18 @@ generic_add = MethodSpec(
                 break
         if not found:
             e = Exception(
-            """A member object of {} type could not be found in this class.
-            Please check the NeuroML schema at https://docs.neuroml.org to
-            confirm that this member belongs to this NeuroML element.""".format(type(obj).__name__))
+            """A member object of {} type could not be found in this class.\\n
+            {}.""".format(type(obj).__name__), self.info())
             raise e
     ''',
     class_names=("BaseWithoutId"),
 )
 
 generic_list = MethodSpec(
-    name="get_members_info",
+    name="info",
     source='''\
 
-    def get_members_info(self, show_contents=False):
+    def info(self, show_contents=False):
         """A helper function to get a list of members of this class.
 
         This is useful to quickly check what members can go into a particular
