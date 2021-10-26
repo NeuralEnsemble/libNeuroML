@@ -226,8 +226,14 @@ generic_add = MethodSpec(
     name="add",
     source='''\
 
-    def add(self, obj, force=False):
+    def add(self, obj=None, force=False):
         """Generic function to allow easy addition of a new member to a NeuroML object.
+
+        Without arguments, when `obj=None`, it simply calls the `info()` method
+        to provide the list of valid member types for the NeuroML class.
+
+        Use `info(show_contents=True)` to see the valid members of this class,
+        and their current contents.
 
         :param obj: object member to add
         :type obj: any NeuroML Type defined by the API
@@ -238,6 +244,10 @@ generic_add = MethodSpec(
         :raises Exception: if a member that takes a single value is already set (and force is not set to True)
         :raises Exception: if a member that takes a list already includes obj (and force is not set to True)
         """
+        if not obj:
+            self.info()
+            return
+
         # getattr only returns the value of the provided member but one cannot
         # then use this to modify the member. Using `vars` also allows us to
         # modify the value
