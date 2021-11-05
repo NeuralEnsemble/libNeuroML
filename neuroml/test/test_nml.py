@@ -20,11 +20,24 @@ class TestNML(unittest.TestCase):
 
     """Tests related to nml.py"""
 
-    def test_generic_add(self):
-        """Test the generic add function.
-        :returns: TODO
+    def test_get_members(self):
+        """Test get_members()"""
+        example_base = neuroml.Base(id="examplebase")
+        base_members = example_base.get_members()
 
-        """
+        member_names = []
+        for m in base_members:
+            member_names.append(m.get_name())
+
+        # From parent: baseWithoutId
+        self.assertIn("neuro_lex_id", member_names)
+        # From itself
+        self.assertIn("id", member_names)
+        # Not in here:
+        self.assertNotIn("cell", member_names)
+
+    def test_generic_add_single(self):
+        """Test the generic add function for single addition."""
         doc = neuroml.NeuroMLDocument(id="testdoc")
         cell = neuroml.Cell(id="testcell")
         cell1 = neuroml.Cell(id="testcell1")
@@ -54,6 +67,38 @@ class TestNML(unittest.TestCase):
             cell.add(net)
         with self.assertRaises(Exception):
             biprop.add(net)
+
+    def test_generic_add_multiple(self):
+        """Test add() when an object may belong to multiple members.
+
+        From our example on the docs.
+        """
+        na_channel = neuroml.IonChannelHH(id="na_channel", notes="Sodium channel for HH cell", conductance="10pS", species="na")
+        gate_m = neuroml.GateHHRates(id="na_m", instances="3", notes="m gate for na channel")
+
+        m_forward_rate = neuroml.HHRate(type="HHExpLinearRate", rate="1per_ms", midpoint="-40mV", scale="10mV")
+        m_reverse_rate = neuroml.HHRate(type="HHExpRate", rate="4per_ms", midpoint="-65mV", scale="-18mV")
+
+        with self.assertRaises(Exception):
+            gate_m.add(m_forward_rate)
+        with self.assertRaises(Exception):
+            gate_m.add(m_reverse_rate)
+
+        gate_m.add(m_forward_rate, hint="forward_rate")
+        gate_m.add(m_reverse_rate, hint="reverse_rate")
+
+        na_channel.gate_hh_rates.append(gate_m)
+
+        gate_h = neuroml.GateHHRates(id="na_h", instances="1", notes="h gate for na channel")
+        h_forward_rate = neuroml.HHRate(type="HHExpRate", rate="0.07per_ms", midpoint="-65mV", scale="-20mV")
+        h_reverse_rate = neuroml.HHRate(type="HHSigmoidRate", rate="1per_ms", midpoint="-35mV", scale="10mV")
+
+        with self.assertRaises(Exception):
+            gate_h.add(h_forward_rate)
+        with self.assertRaises(Exception):
+            gate_h.add(h_reverse_rate)
+        gate_h.add(h_forward_rate, hint="forward_rate")
+        gate_h.add(h_reverse_rate, hint="reverse_rate")
 
     def test_info(self):
         """Test getting member info."""
