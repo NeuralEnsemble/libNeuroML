@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Oct 26 18:13:56 2021 by generateDS.py version 2.40.3.
+# Generated Fri Nov  5 14:54:35 2021 by generateDS.py version 2.40.3.
 # Python 3.10.0 (default, Oct  4 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
 #
 # Command line options:
@@ -14475,7 +14475,7 @@ class BaseWithoutId(GeneratedsSuper):
     ):
         pass
 
-    def add(self, obj=None, force=False):
+    def add(self, obj=None, hint=None, force=False):
         """Generic function to allow easy addition of a new member to a NeuroML object.
 
         Without arguments, when `obj=None`, it simply calls the `info()` method
@@ -14486,12 +14486,13 @@ class BaseWithoutId(GeneratedsSuper):
 
         :param obj: object member to add
         :type obj: any NeuroML Type defined by the API
+        :param hint: member name to add to when there are multiple members that `obj` can be added to
+        :type hint: string
         :param force: boolean to force addition when an obj has already been added previously
         :type force: bool
 
         :raises Exception: if a member compatible to obj could not be found
-        :raises Exception: if a member that takes a single value is already set (and force is not set to True)
-        :raises Exception: if a member that takes a list already includes obj (and force is not set to True)
+        :raises Exception: if multiple members can accept the object and no hint is provided.
         """
         if not obj:
             self.info()
@@ -14500,40 +14501,15 @@ class BaseWithoutId(GeneratedsSuper):
         # getattr only returns the value of the provided member but one cannot
         # then use this to modify the member. Using `vars` also allows us to
         # modify the value
-        found = False
-        for member in self.member_data_items_:
+        targets = []
+        all_members = self.get_members()
+        for member in all_members:
             # get_data_type() returns the type as a string, e.g.: 'IncludeType'
             if member.get_data_type() == type(obj).__name__:
-                # A single value, not a list:
-                if member.get_container() == 0:
-                    if vars(self)[member.get_name()]:
-                        if force:
-                            vars(self)[member.get_name()] = obj
-                        else:
-                            raise Exception(
-                                """{} has already been assigned.  Use `force=True` to overwrite. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
-                                    member.get_name()
-                                )
-                            )
-                    else:
-                        vars(self)[member.get_name()] = obj
-                        print("Added {} to {}".format(obj, member.get_name()))
-                # List
-                else:
-                    if obj in vars(self)[member.get_name()]:
-                        if force:
-                            vars(self)[member.get_name()].append(obj)
-                        else:
-                            raise Exception(
-                                """{} already exists in {}. Use `force=True` to force readdition. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
-                                    obj.id, member.get_name()
-                                )
-                            )
-                    else:
-                        vars(self)[member.get_name()].append(obj)
-                found = True
-                break
-        if not found:
+                targets.append(member)
+
+        if len(targets) == 0:
+            # no targets found
             e = Exception(
                 """A member object of {} type could not be found in NeuroML class {}.\n{}
             """.format(
@@ -14541,6 +14517,91 @@ class BaseWithoutId(GeneratedsSuper):
                 )
             )
             raise e
+        elif len(targets) == 1:
+            # good, just add it
+            self.__add(obj, targets[0], force)
+        else:
+            # more than one target
+            if not hint:
+                err_string = """Multiple members can accept {}. Please provide the name of the variable using the `hint` argument to specify which member to add to:\n""".format(
+                    type(obj).__name__
+                )
+                for t in targets:
+                    err_string += "- {}\n".format(t.get_name())
+                raise Exception(err_string)
+
+            # use hint to figure out which target to use
+            for t in targets:
+                if hint == t.get_name():
+                    self.__add(obj, t, force)
+                    break
+
+    def __add(self, obj, member, force=False):
+        """Private method to add new member to a specified variable in a NeuroML object.
+
+        :param obj: object member to add
+        :type obj: any NeuroML Type defined by the API
+        :param member: member variable name to add to when there are multiple members that `obj` can be added to
+        :type member: MemberSpec_
+        :param force: boolean to force addition when an obj has already been added previously
+        :type force: bool
+
+        :raises Exception: if a member that takes a single value is already set (and force is not set to True)
+        :raises Exception: if a member that takes a list already includes obj (and force is not set to True)
+        """
+        # A single value, not a list:
+        if member.get_container() == 0:
+            if vars(self)[member.get_name()]:
+                if force:
+                    vars(self)[member.get_name()] = obj
+                else:
+                    raise Exception(
+                        """{} has already been assigned.  Use `force=True` to overwrite. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
+                            member.get_name()
+                        )
+                    )
+            else:
+                vars(self)[member.get_name()] = obj
+                print("Added {} to {}".format(obj, member.get_name()))
+        # List
+        else:
+            if obj in vars(self)[member.get_name()]:
+                if force:
+                    vars(self)[member.get_name()].append(obj)
+                else:
+                    raise Exception(
+                        """{} already exists in {}. Use `force=True` to force readdition. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
+                            type(obj).__class__, member.get_name()
+                        )
+                    )
+            else:
+                vars(self)[member.get_name()].append(obj)
+
+    def get_members(self):
+        """Get member data items, also from ancestors.
+
+        This function is required because generateDS does not include inherited
+        members in the member_data_items list for a derived class. So, for
+        example, while IonChannelHH has `gate_hh_rates` which it inherits from
+        IonChannel, IonChannelHH's `member_data_items_` is empty. It relies on
+        the IonChannel classes' `member_data_items_` list.
+
+        :returns: list of members, including ones inherited from ancestors.
+        """
+        all_members = self.member_data_items_
+        for c in type(self).__mro__:
+            try:
+                all_members.extend(c.member_data_items_)
+            except AttributeError:
+                pass
+            except TypeError:
+                pass
+
+        # deduplicate
+        # TODO where are the duplicates coming from given that we're not
+        # calling this recursively?
+        all_members = list(set(all_members))
+        return all_members
 
     def info(self, show_contents=False):
         """A helper function to get a list of members of this class.
