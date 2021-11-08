@@ -331,7 +331,11 @@ generic_add = MethodSpec(
 
         :returns: list of members, including ones inherited from ancestors.
         """
-        all_members = self.member_data_items_
+        import copy
+        # create a copy by value
+        # if copied by reference (=), the member_data_items_ object variable is
+        # modified to a large list, greatly increasing the memory usage.
+        all_members = copy.copy(self.member_data_items_)
         for c in type(self).__mro__:
             try:
                 all_members.extend(c.member_data_items_)
