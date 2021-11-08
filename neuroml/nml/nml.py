@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Nov  5 14:54:35 2021 by generateDS.py version 2.40.3.
+# Generated Mon Nov  8 21:00:41 2021 by generateDS.py version 2.40.3.
 # Python 3.10.0 (default, Oct  4 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
 #
 # Command line options:
@@ -14546,36 +14546,39 @@ class BaseWithoutId(GeneratedsSuper):
         :param force: boolean to force addition when an obj has already been added previously
         :type force: bool
 
-        :raises Exception: if a member that takes a single value is already set (and force is not set to True)
-        :raises Exception: if a member that takes a list already includes obj (and force is not set to True)
         """
+        import warnings
+
         # A single value, not a list:
         if member.get_container() == 0:
-            if vars(self)[member.get_name()]:
-                if force:
-                    vars(self)[member.get_name()] = obj
-                else:
-                    raise Exception(
+            if force:
+                vars(self)[member.get_name()] = obj
+            else:
+                if vars(self)[member.get_name()]:
+                    warnings.warn(
                         """{} has already been assigned.  Use `force=True` to overwrite. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
                             member.get_name()
                         )
                     )
-            else:
-                vars(self)[member.get_name()] = obj
-                print("Added {} to {}".format(obj, member.get_name()))
+                else:
+                    vars(self)[member.get_name()] = obj
         # List
         else:
-            if obj in vars(self)[member.get_name()]:
-                if force:
-                    vars(self)[member.get_name()].append(obj)
-                else:
-                    raise Exception(
+            # Do not use 'obj in ..' for membership check because it also
+            # returns true if an element with the same value exists in the
+            # container
+            # https://docs.python.org/3/reference/expressions.html#membership-test-operations
+            if force:
+                vars(self)[member.get_name()].append(obj)
+            else:
+                if any(obj is e for e in vars(self)[member.get_name()]):
+                    warnings.warn(
                         """{} already exists in {}. Use `force=True` to force readdition. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
-                            type(obj).__class__, member.get_name()
+                            obj, member.get_name()
                         )
                     )
-            else:
-                vars(self)[member.get_name()].append(obj)
+                else:
+                    vars(self)[member.get_name()].append(obj)
 
     def get_members(self):
         """Get member data items, also from ancestors.
@@ -14588,7 +14591,12 @@ class BaseWithoutId(GeneratedsSuper):
 
         :returns: list of members, including ones inherited from ancestors.
         """
-        all_members = self.member_data_items_
+        import copy
+
+        # create a copy by value
+        # if copied by reference (=), the member_data_items_ object variable is
+        # modified to a large list, greatly increasing the memory usage.
+        all_members = copy.copy(self.member_data_items_)
         for c in type(self).__mro__:
             try:
                 all_members.extend(c.member_data_items_)
@@ -38770,9 +38778,7 @@ class NeuroMLDocument(Standalone):
         :param element: element to append
         :type element: Object
         """
-        from neuroml.utils import append_to_element
-
-        append_to_element(self, element)
+        self.add(element)
 
     # end class NeuroMLDocument
 
