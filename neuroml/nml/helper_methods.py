@@ -1087,14 +1087,13 @@ nml_doc_summary = MethodSpec(
             print_(" - Suppressing further warnings about id not found...")
         return None
 
-    def append(self,element):
+    def append(self, element):
         """Append an element
 
         :param element: element to append
         :type element: Object
         """
-        from neuroml.utils import append_to_element
-        append_to_element(self,element)
+        self.add(element)
 
     ''',
     class_names=("NeuroMLDocument"),
