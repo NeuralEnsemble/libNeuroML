@@ -48,7 +48,7 @@ class TestNML(unittest.TestCase):
         self.assertIsNone(doc.add(cell))
 
         # Already added, so throw exception
-        with self.assertRaises(Exception):
+        with self.assertWarns(UserWarning):
             doc.add(cell)
 
         # Success
