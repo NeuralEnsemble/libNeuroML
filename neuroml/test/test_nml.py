@@ -79,6 +79,8 @@ class TestNML(unittest.TestCase):
         m_forward_rate = neuroml.HHRate(type="HHExpLinearRate", rate="1per_ms", midpoint="-40mV", scale="10mV")
         m_reverse_rate = neuroml.HHRate(type="HHExpRate", rate="4per_ms", midpoint="-65mV", scale="-18mV")
 
+        # HHRate can go to two different members, so an exception is thrown
+        # needs hint, as done below
         with self.assertRaises(Exception):
             gate_m.add(m_forward_rate)
         with self.assertRaises(Exception):
@@ -93,10 +95,13 @@ class TestNML(unittest.TestCase):
         h_forward_rate = neuroml.HHRate(type="HHExpRate", rate="0.07per_ms", midpoint="-65mV", scale="-20mV")
         h_reverse_rate = neuroml.HHRate(type="HHSigmoidRate", rate="1per_ms", midpoint="-35mV", scale="10mV")
 
+        # HHRate can go to two different members, so an exception is thrown
+        # needs hint, as done below
         with self.assertRaises(Exception):
             gate_h.add(h_forward_rate)
         with self.assertRaises(Exception):
             gate_h.add(h_reverse_rate)
+
         gate_h.add(h_forward_rate, hint="forward_rate")
         gate_h.add(h_reverse_rate, hint="reverse_rate")
 
