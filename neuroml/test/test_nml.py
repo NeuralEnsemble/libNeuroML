@@ -10,6 +10,7 @@ Author: Ankur Sinha <sanjay DOT ankur AT gmail DOT com>
 
 
 import neuroml
+
 try:
     import unittest2 as unittest
 except ImportError:
@@ -73,11 +74,22 @@ class TestNML(unittest.TestCase):
 
         From our example on the docs.
         """
-        na_channel = neuroml.IonChannelHH(id="na_channel", notes="Sodium channel for HH cell", conductance="10pS", species="na")
-        gate_m = neuroml.GateHHRates(id="na_m", instances="3", notes="m gate for na channel")
+        na_channel = neuroml.IonChannelHH(
+            id="na_channel",
+            notes="Sodium channel for HH cell",
+            conductance="10pS",
+            species="na",
+        )
+        gate_m = neuroml.GateHHRates(
+            id="na_m", instances="3", notes="m gate for na channel"
+        )
 
-        m_forward_rate = neuroml.HHRate(type="HHExpLinearRate", rate="1per_ms", midpoint="-40mV", scale="10mV")
-        m_reverse_rate = neuroml.HHRate(type="HHExpRate", rate="4per_ms", midpoint="-65mV", scale="-18mV")
+        m_forward_rate = neuroml.HHRate(
+            type="HHExpLinearRate", rate="1per_ms", midpoint="-40mV", scale="10mV"
+        )
+        m_reverse_rate = neuroml.HHRate(
+            type="HHExpRate", rate="4per_ms", midpoint="-65mV", scale="-18mV"
+        )
 
         # HHRate can go to two different members, so an exception is thrown
         # needs hint, as done below
@@ -91,9 +103,15 @@ class TestNML(unittest.TestCase):
 
         na_channel.gate_hh_rates.append(gate_m)
 
-        gate_h = neuroml.GateHHRates(id="na_h", instances="1", notes="h gate for na channel")
-        h_forward_rate = neuroml.HHRate(type="HHExpRate", rate="0.07per_ms", midpoint="-65mV", scale="-20mV")
-        h_reverse_rate = neuroml.HHRate(type="HHSigmoidRate", rate="1per_ms", midpoint="-35mV", scale="10mV")
+        gate_h = neuroml.GateHHRates(
+            id="na_h", instances="1", notes="h gate for na channel"
+        )
+        h_forward_rate = neuroml.HHRate(
+            type="HHExpRate", rate="0.07per_ms", midpoint="-65mV", scale="-20mV"
+        )
+        h_reverse_rate = neuroml.HHRate(
+            type="HHSigmoidRate", rate="1per_ms", midpoint="-35mV", scale="10mV"
+        )
 
         # HHRate can go to two different members, so an exception is thrown
         # needs hint, as done below
@@ -106,7 +124,7 @@ class TestNML(unittest.TestCase):
         gate_h.add(h_reverse_rate, hint="reverse_rate")
 
     def test_add_to_container(self):
-        """Test adding multiple objects to a container class. """
+        """Test adding multiple objects to a container class."""
         network = neuroml.Network()
         # They have the same id, but they are unique objects as far as Python
         # is concerned
@@ -133,6 +151,6 @@ class TestNML(unittest.TestCase):
         """Test getting member info."""
         cell = neuroml.Cell(id="testcell")
         info = cell.info()
-        self.assertRegex(info, 'morphology')
-        self.assertRegex(info, 'biophysical_properties')
-        self.assertNotRegex(info, 'network')
+        self.assertRegex(info, "morphology")
+        self.assertRegex(info, "biophysical_properties")
+        self.assertNotRegex(info, "network")

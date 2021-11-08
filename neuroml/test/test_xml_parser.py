@@ -14,10 +14,17 @@ import os
 import pytest
 
 
-@pytest.mark.parametrize("f", ["simplenet.nml", "testh5.nml",
-                               "pyr_4_sym.cell.nml", "MediumNet.net.nml",
-                               "complete.nml"])
-class TestNeuroMLXMLParser():
+@pytest.mark.parametrize(
+    "f",
+    [
+        "simplenet.nml",
+        "testh5.nml",
+        "pyr_4_sym.cell.nml",
+        "MediumNet.net.nml",
+        "complete.nml",
+    ],
+)
+class TestNeuroMLXMLParser:
     def test_parse(self, f):
         base_dir = os.path.dirname(__file__)
         file_name = base_dir + "/../examples/test_files/" + f

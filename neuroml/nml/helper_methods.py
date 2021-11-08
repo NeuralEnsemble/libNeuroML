@@ -392,14 +392,7 @@ generic_list = MethodSpec(
 # Provide a list of your method specifications.
 #   This list of specifications must be named METHOD_SPECS.
 #
-METHOD_SPECS = (
-    length,
-    volume,
-    surface_area,
-    num_segments,
-    generic_add,
-    generic_list
-)
+METHOD_SPECS = (length, volume, surface_area, num_segments, generic_add, generic_list)
 
 
 seg_grp = MethodSpec(

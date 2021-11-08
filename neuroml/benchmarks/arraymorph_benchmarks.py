@@ -243,7 +243,6 @@ def benchmark_arraymorph_writer():
 
     #    plt.show()
 
-
     plt.title(
         "ArrayMorph write to disk benchmarks for HDF5 and NeuroML serialization formats"
     )
