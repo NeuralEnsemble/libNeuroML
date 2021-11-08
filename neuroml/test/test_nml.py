@@ -105,6 +105,30 @@ class TestNML(unittest.TestCase):
         gate_h.add(h_forward_rate, hint="forward_rate")
         gate_h.add(h_reverse_rate, hint="reverse_rate")
 
+    def test_add_to_container(self):
+        """Test adding multiple objects to a container class. """
+        network = neuroml.Network()
+        # They have the same id, but they are unique objects as far as Python
+        # is concerned
+        pop0 = neuroml.Population()
+        pop1 = neuroml.Population()
+        pop2 = neuroml.Population()
+
+        network.add(pop0)
+        network.add(pop1)
+        network.add(pop2)
+
+        pop3 = neuroml.Population(id="unique")
+        network.add(pop3)
+        # warning because this is already added
+        with self.assertWarns(UserWarning):
+            network.add(pop3)
+
+        # Note that for Python, this is a new object
+        # So we can add it again
+        pop4 = neuroml.Population(id="unique")
+        network.add(pop4)
+
     def test_info(self):
         """Test getting member info."""
         cell = neuroml.Cell(id="testcell")
