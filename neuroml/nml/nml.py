@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Nov  8 21:00:41 2021 by generateDS.py version 2.40.3.
+# Generated Wed Nov 17 11:10:33 2021 by generateDS.py version 2.40.3.
 # Python 3.10.0 (default, Oct  4 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
 #
 # Command line options:
@@ -1204,7 +1204,7 @@ class populationTypes(str, Enum):
 
 
 class Property(GeneratedsSuper):
-    """Property -- Generic property with a tag and value"""
+    """Property -- A property ( a **tag**  and **value**  pair ), which can be on any  **baseStandalone**  either as a direct child, or within an  **Annotation** . Generally something which helps the visual display or facilitates simulation of a Component, but is not a core physiological property. Common examples include: **numberInternalDivisions,**  equivalent of nseg in NEURON; **radius,**  for a radius to use in graphical displays for abstract cells ( i. e. without defined morphologies ); **color,**  the color to use for a  **Population**  or  **populationList**  of cells; **recommended_dt_ms,**  the recommended timestep to use for simulating a  **Network** , **recommended_duration_ms**  the recommended duration to use when running a  **Network**"""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -1360,7 +1360,7 @@ class Property(GeneratedsSuper):
 
 
 class Annotation(GeneratedsSuper):
-    """Annotation -- Placeholder for MIRIAM related metadata, among others."""
+    """Annotation -- A structured annotation containing metadata, specifically RDF or  **property**  elements"""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -4770,6 +4770,8 @@ class IncludeType(GeneratedsSuper):
 
 
 class Q10ConductanceScaling(GeneratedsSuper):
+    """Q10ConductanceScaling -- A value for the conductance scaling which varies as a standard function of the difference between the current temperature, **temperature,**  and the temperature at which the conductance was originally determined, **experimentalTemp**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -7213,7 +7215,7 @@ class SegmentParent(GeneratedsSuper):
 
 
 class Point3DWithDiam(GeneratedsSuper):
-    """Point3DWithDiam -- A 3D point with diameter."""
+    """Point3DWithDiam -- Base type for ComponentTypes which specify an ( **x,**  **y,**  **z**  ) coordinate along with a **diameter.**  Note: no dimension used in the attributes for these coordinates! These are assumed to have dimension micrometer ( 10^-6 m ). This is due to micrometers being the default option for the majority of neuronal morphology formats, and dimensions are omitted here to facilitate reading and writing of morphologies in NeuroML."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -7754,6 +7756,8 @@ class DistalDetails(GeneratedsSuper):
 
 
 class Member(GeneratedsSuper):
+    """Member -- A single identified **segment**  which is part of the  **segmentGroup**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -7915,6 +7919,8 @@ class Member(GeneratedsSuper):
 
 
 class Include(GeneratedsSuper):
+    """Include -- Include all members of another  **segmentGroup**  in this group"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -8092,6 +8098,8 @@ class Include(GeneratedsSuper):
 
 
 class Path(GeneratedsSuper):
+    """Path -- Include all the  **segment** s between those specified by  **from**  and  **to** , inclusive"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -8273,6 +8281,8 @@ class Path(GeneratedsSuper):
 
 
 class SubTree(GeneratedsSuper):
+    """SubTree -- Include all the  **segment** s distal to that specified by  **from**  in the  **segmentGroup**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -8620,6 +8630,8 @@ class SegmentEndPoint(GeneratedsSuper):
 
 
 class MembraneProperties(GeneratedsSuper):
+    """MembraneProperties -- Properties specific to the membrane, such as the **populations**  of channels, **channelDensities,**  **specificCapacitance,**  etc."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -9251,6 +9263,8 @@ class MembraneProperties(GeneratedsSuper):
 
 
 class MembraneProperties2CaPools(MembraneProperties):
+    """MembraneProperties2CaPools -- Variant of membraneProperties with 2 independent Ca pools"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -9477,7 +9491,7 @@ class MembraneProperties2CaPools(MembraneProperties):
 
 
 class SpikeThresh(GeneratedsSuper):
-    """SpikeThresh -- Membrane potential at which to emit a spiking event. Note, usually the spiking event will not be emitted again until the membrane potential has fallen below this value and rises again to cross it in a positive direction."""
+    """SpikeThresh -- Membrane potential at which to emit a spiking event. Note, usually the spiking event will not be emitted again until the membrane potential has fallen below this value and rises again to cross it in a positive direction"""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -10451,6 +10465,8 @@ class Resistivity(GeneratedsSuper):
 
 
 class VariableParameter(GeneratedsSuper):
+    """VariableParameter -- Specifies a **parameter**  ( e. g. condDensity ) which can vary its value across a **segmentGroup.**  The value is calculated from **value**  attribute of the  **inhomogeneousValue**  subelement. This element is normally a child of  **channelDensityNonUniform** ,  **channelDensityNonUniformNernst**  or  **channelDensityNonUniformGHK**  and is used to calculate the value of the conductance, etc. which will vary on different parts of the cell. The **segmentGroup**  specified here needs to define an  **inhomogeneousParameter**  ( referenced from **inhomogeneousParameter**  in the  **inhomogeneousValue**  ), which calculates a **variable**  ( e. g. p ) varying across the cell ( e. g. based on the path length from soma ), which is then used in the **value**  attribute of the  **inhomogeneousValue**  ( so for example condDensity = f( p ) )"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -10670,6 +10686,8 @@ class VariableParameter(GeneratedsSuper):
 
 
 class InhomogeneousValue(GeneratedsSuper):
+    """InhomogeneousValue -- Specifies the **value**  of an **inhomogeneousParameter.**  For usage see  **variableParameter**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -10851,6 +10869,8 @@ class InhomogeneousValue(GeneratedsSuper):
 class Species(GeneratedsSuper):
     """ion -- Specifying the ion here again is redundant, the ion name should be the same as id. Kept for now
     until LEMS implementation can select by id. TODO: remove.
+
+    * Species -- Description of a chemical species identified by **ion,**  which has internal, **concentration,**  and external, **extConcentration**  values for its concentration
 
     """
 
@@ -11200,6 +11220,8 @@ class Species(GeneratedsSuper):
 
 
 class IntracellularProperties(GeneratedsSuper):
+    """IntracellularProperties -- Biophysical properties related to the intracellular space within the  **cell** , such as the  **resistivity**  and the list of ionic  **species**  present. **caConc**  and **caConcExt**  are explicitly exposed here to facilitate accessing these values from other Components, even though **caConcExt**  is clearly not an intracellular property"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -11431,6 +11453,8 @@ class IntracellularProperties(GeneratedsSuper):
 
 
 class IntracellularProperties2CaPools(IntracellularProperties):
+    """IntracellularProperties2CaPools -- Variant of intracellularProperties with 2 independent Ca pools"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
     subclass = None
@@ -12783,6 +12807,8 @@ class GridLayout(GeneratedsSuper):
 
 
 class Instance(GeneratedsSuper):
+    """Instance -- Specifies a single instance of a component in a  **population**  ( placed at  **location**  )."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -13007,6 +13033,8 @@ class Instance(GeneratedsSuper):
 
 
 class Location(GeneratedsSuper):
+    """Location -- Specifies the ( x, y, z ) location of a single  **instance**  of a component in a  **population**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("x", "xs:float", 0, 0, {"use": "required", "name": "x"}),
@@ -13181,10 +13209,7 @@ class Location(GeneratedsSuper):
 
 
 class SynapticConnection(GeneratedsSuper):
-    """SynapticConnection -- Single explicit connection. Introduced to test connections in LEMS. Will probably be removed in favour of
-    connections wrapped in projection element
-
-    """
+    """SynapticConnection -- Explicit event connection between named components, which gets processed via a new instance of a **synapse**  component which is created on the target component"""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -13463,10 +13488,7 @@ class SynapticConnection(GeneratedsSuper):
 
 
 class ExplicitInput(GeneratedsSuper):
-    """ExplicitInput -- Single explicit input. Introduced to test inputs in LEMS. Will probably be removed in favour of
-    inputs wrapped in inputList element
-
-    """
+    """ExplicitInput -- An explicit input ( anything which extends  **basePointCurrent**  ) to a target cell in a population"""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -13723,7 +13745,7 @@ class ExplicitInput(GeneratedsSuper):
 
 
 class Input(GeneratedsSuper):
-    """Input -- Individual input to the cell specified by target"""
+    """Input -- Specifies a single input to a **target,**  optionally giving the **segmentId**  ( default 0 ) and **fractionAlong**  the segment ( default 0. 5 )."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -14098,7 +14120,7 @@ class Input(GeneratedsSuper):
 
 
 class InputW(Input):
-    """InputW -- Individual input to the cell specified by target. Includes setting of _weight for the connection"""
+    """InputW -- Specifies input lists. Can set **weight**  to scale individual inputs."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -14280,7 +14302,10 @@ class InputW(Input):
 
 
 class BaseWithoutId(GeneratedsSuper):
-    """BaseWithoutId -- Base element without ID specified *yet*, e.g. for an element with a particular requirement on its id which does not comply with NmlId (e.g. Segment needs nonNegativeInteger)."""
+    """BaseWithoutId -- Base element w
+    ithout ID specified *yet*, e.g. for an element with a particular requirement on its id which does not comply with NmlId (e.g. Segment needs nonNegativeInteger).
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -15420,6 +15445,8 @@ class Standalone(Base):
 
 
 class SpikeSourcePoisson(Standalone):
+    """SpikeSourcePoisson -- Spike source, generating spikes according to a Poisson process."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -15723,7 +15750,7 @@ class SpikeSourcePoisson(Standalone):
 
 
 class InputList(Base):
-    """InputList -- List of inputs to a population. Currents will be provided by the specified component."""
+    """InputList -- An explicit list of  **input** s to a **population.**"""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -16687,6 +16714,8 @@ class CellSet(Base):
 
 
 class Population(Standalone):
+    """Population -- A population of components, with just one parameter for the **size,**  i. e. number of components to create. Note: quite often this is used with type= **populationList**  which means the size is determined by the number of  **instance** s ( with  **location** s ) in the list. The **size**  attribute is still set, and there will be a validation error if this does not match the number in the list."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -17130,6 +17159,8 @@ class Population(Standalone):
 
 
 class Region(Base):
+    """Region -- Initial attempt to specify 3D region for placing cells. Work in progress. . ."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("spaces", "NmlId", 0, 1, {"use": "optional", "name": "spaces"}),
@@ -17572,6 +17603,8 @@ class Space(Base):
 
 
 class Network(Standalone):
+    """Network -- Network containing:  **population** s ( potentially of type  **populationList** , and so specifying a list of cell  **location** s );  **projection** s ( with lists of  **connection** s ) and/or  **explicitConnection** s; and  **inputList** s ( with lists of  **input** s ) and/or  **explicitInput** s. Note: often in NeuroML this will be of type  **networkWithTemperature**  if there are temperature dependent elements ( e. g. ion channels )."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("type", "networkTypes", 0, 1, {"use": "optional", "name": "type"}),
@@ -18328,6 +18361,8 @@ class Network(Standalone):
 
 
 class TransientPoissonFiringSynapse(Standalone):
+    """TransientPoissonFiringSynapse -- Poisson spike generator firing at **averageRate**  after a **delay**  and for a **duration,**  connected to single **synapse**  that is triggered every time a spike is generated, providing an input current. Similar to ComponentType  **poissonFiringSynapse** ."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -18690,6 +18725,8 @@ class TransientPoissonFiringSynapse(Standalone):
 
 
 class PoissonFiringSynapse(Standalone):
+    """PoissonFiringSynapse -- Poisson spike generator firing at **averageRate,**  which is connected to single **synapse**  that is triggered every time a spike is generated, producing an input current. See also  **transientPoissonFiringSynapse** ."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -18961,6 +18998,8 @@ class PoissonFiringSynapse(Standalone):
 
 
 class SpikeGeneratorPoisson(Standalone):
+    """SpikeGeneratorPoisson -- Generator of spikes whose ISI is distributed according to an exponential PDF with scale: 1 / **averageRate**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -19209,6 +19248,8 @@ class SpikeGeneratorPoisson(Standalone):
 
 
 class SpikeGeneratorRandom(Standalone):
+    """SpikeGeneratorRandom -- Generator of spikes with a random interspike interval of at least **minISI**  and at most **maxISI**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -19453,6 +19494,8 @@ class SpikeGeneratorRandom(Standalone):
 
 
 class SpikeGenerator(Standalone):
+    """SpikeGenerator -- Simple generator of spikes at a regular interval set by **period**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -19660,6 +19703,8 @@ class SpikeGenerator(Standalone):
 
 
 class TimedSynapticInput(Standalone):
+    """TimedSynapticInput -- Spike array connected to a single **synapse,**  producing a current triggered by each  **spike**  in the array."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("synapse", "NmlId", 0, 0, {"use": "required", "name": "synapse"}),
@@ -19938,6 +19983,8 @@ class TimedSynapticInput(Standalone):
 
 
 class SpikeArray(Standalone):
+    """SpikeArray -- Set of spike ComponentTypes, each emitting one spike at a certain time. Can be used to feed a predetermined spike train into a cell"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -20124,6 +20171,8 @@ class SpikeArray(Standalone):
 
 
 class Spike(BaseNonNegativeIntegerId):
+    """Spike -- Emits a single spike at the specified **time**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -20315,6 +20364,8 @@ class Spike(BaseNonNegativeIntegerId):
 
 
 class VoltageClampTriple(Standalone):
+    """VoltageClampTriple -- Voltage clamp with 3 clamp levels. Applies a variable current **i**  ( through **simpleSeriesResistance**  ) to try to keep parent cell at **conditioningVoltage**  until time **delay,**  **testingVoltage**  until **delay**  + **duration,**  and **returnVoltage**  afterwards. Only enabled if **active**  = 1."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("active", "ZeroOrOne", 0, 0, {"use": "required", "name": "active"}),
@@ -20800,6 +20851,8 @@ class VoltageClampTriple(Standalone):
 
 
 class VoltageClamp(Standalone):
+    """VoltageClamp -- Voltage clamp. Applies a variable current **i**  to try to keep parent at **targetVoltage.**  Not yet fully tested!!! Consider using voltageClampTriple!!"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -21166,6 +21219,8 @@ class VoltageClamp(Standalone):
 
 
 class CompoundInputDL(Standalone):
+    """CompoundInputDL -- Generates a current which is the sum of all its child  **basePointCurrentDL**  elements, e. g. can be a combination of  **pulseGeneratorDL** ,  **sineGeneratorDL**  elements producing a single **i.**  Scaled by **weight,**  if set"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -21438,6 +21493,8 @@ class CompoundInputDL(Standalone):
 
 
 class CompoundInput(Standalone):
+    """CompoundInput -- Generates a current which is the sum of all its child  **basePointCurrent**  element, e. g. can be a combination of  **pulseGenerator** ,  **sineGenerator**  elements producing a single **i.**  Scaled by **weight,**  if set"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -21710,6 +21767,8 @@ class CompoundInput(Standalone):
 
 
 class RampGeneratorDL(Standalone):
+    """RampGeneratorDL -- Dimensionless equivalent of  **rampGenerator** . Generates a ramping current after a time **delay,**  for a fixed **duration.**  During this time the dimensionless current steadily changes from **startAmplitude**  to **finishAmplitude.**  Scaled by **weight,**  if set"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -22077,6 +22136,8 @@ class RampGeneratorDL(Standalone):
 
 
 class RampGenerator(Standalone):
+    """RampGenerator -- Generates a ramping current after a time **delay,**  for a fixed **duration.**  During this time the current steadily changes from **startAmplitude**  to **finishAmplitude.**  Scaled by **weight,**  if set"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -22444,6 +22505,8 @@ class RampGenerator(Standalone):
 
 
 class SineGeneratorDL(Standalone):
+    """SineGeneratorDL -- Dimensionless equivalent of  **sineGenerator** . Generates a sinusoidally varying current after a time **delay,**  for a fixed **duration.**  The **period**  and maximum **amplitude**  of the current can be set as well as the **phase**  at which to start. Scaled by **weight,**  if set"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -22791,6 +22854,8 @@ class SineGeneratorDL(Standalone):
 
 
 class SineGenerator(Standalone):
+    """SineGenerator -- Generates a sinusoidally varying current after a time **delay,**  for a fixed **duration.**  The **period**  and maximum **amplitude**  of the current can be set as well as the **phase**  at which to start. Scaled by **weight,**  if set"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -23170,7 +23235,7 @@ class SineGenerator(Standalone):
 
 
 class PulseGeneratorDL(Standalone):
-    """PulseGeneratorDL -- Generates a constant current pulse of a certain amplitude (non dimensional) for a specified duration after a delay."""
+    """PulseGeneratorDL -- Dimensionless equivalent of  **pulseGenerator** . Generates a constant current pulse of a certain **amplitude**  for a specified **duration**  after a **delay.**  Scaled by **weight,**  if set"""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -23477,7 +23542,7 @@ class PulseGeneratorDL(Standalone):
 
 
 class PulseGenerator(Standalone):
-    """PulseGenerator -- Generates a constant current pulse of a certain amplitude (with dimensions for current) for a specified duration after a delay."""
+    """PulseGenerator -- Generates a constant current pulse of a certain **amplitude**  for a specified **duration**  after a **delay.**  Scaled by **weight,**  if set"""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -24188,6 +24253,8 @@ class ChannelDensityGHK2(Base):
     It should be removed in the longer term, due to possible inconsistencies in this value and that in the ionChannel
     element. TODO: remove.
 
+    * ChannelDensityGHK2 -- Time varying conductance density, **gDensity,**  which is distributed on an area of the cell, producing a current density **iDensity.**  Modified version of Jaffe et al. 1994 ( used also in Lawrence et al. 2006 ). See https://github. com/OpenSourceBrain/ghk-nernst.
+
     """
 
     __hash__ = GeneratedsSuper.__hash__
@@ -24536,6 +24603,8 @@ class ChannelDensityGHK(Base):
     It should be removed in the longer term, due to possible inconsistencies in this value and that in the ionChannel
     element. TODO: remove.
 
+    * ChannelDensityGHK -- Specifies a time varying conductance density, **gDensity,**  which is distributed on an area of the cell, producing a current density **iDensity**  and whose reversal potential is calculated from the Goldman Hodgkin Katz equation. Hard coded for Ca only! See https://github. com/OpenSourceBrain/ghk-nernst.
+
     """
 
     __hash__ = GeneratedsSuper.__hash__
@@ -24666,7 +24735,7 @@ class ChannelDensityGHK(Base):
 
     validate_Nml2Quantity_permeability_patterns_ = [
         [
-            "^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(m_per_s|                        um_per_ms|cm_per_s|cm_per_ms))$"
+            "^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(m_per_s|um_per_ms|cm_per_s|cm_per_ms))$"
         ]
     ]
 
@@ -24881,6 +24950,8 @@ class ChannelDensityNernst(Base):
     Currently a required attribute.
     It should be removed in the longer term, due to possible inconsistencies in this value and that in the ionChannel
     element. TODO: remove.
+
+    * ChannelDensityNernst -- Specifies a time varying conductance density, **gDensity,**  which is distributed on an area of the **cell,**  producing a current density **iDensity**  and whose reversal potential is calculated from the Nernst equation. Hard coded for Ca only! See https://github. com/OpenSourceBrain/ghk-nernst.
 
     """
 
@@ -25290,6 +25361,8 @@ class ChannelDensity(Base):
     Currently a required attribute.
     It should be removed in the longer term, due to possible inconsistencies in this value and that in the ionChannel
     element. TODO: remove.
+
+    * ChannelDensity -- Specifies a time varying ohmic conductance density, **gDensity,**  which is distributed on an area of the **cell**  ( specified in  **membraneProperties**  ) with fixed reversal potential **erev**  producing a current density **iDensity**
 
     """
 
@@ -25768,6 +25841,8 @@ class ChannelDensityNonUniformGHK(Base):
     It should be removed in the longer term, due to possible inconsistencies in this value and that in the ionChannel
     element. TODO: remove.
 
+    * ChannelDensityNonUniformGHK -- Specifies a time varying conductance density, which is distributed on a region of the **cell,**  and whose current is calculated from the Goldman-Hodgkin-Katz equation. Hard coded for Ca only!. The conductance density of the channel is not uniform, but is set using the  **variableParameter** . Note, there is no dynamical description of this in LEMS yet, as this type only makes sense for multicompartmental cells. A ComponentType for this needs to be present to enable export of NeuroML 2 multicompartmental cells via LEMS/jNeuroML to NEURON
+
     """
 
     __hash__ = GeneratedsSuper.__hash__
@@ -26055,6 +26130,8 @@ class ChannelDensityNonUniformNernst(Base):
     Currently a required attribute.
     It should be removed in the longer term, due to possible inconsistencies in this value and that in the ionChannel
     element. TODO: remove.
+
+    * ChannelDensityNonUniformNernst -- Specifies a time varying conductance density, which is distributed on a region of the **cell,**  and whose reversal potential is calculated from the Nernst equation. Hard coded for Ca only!. The conductance density of the channel is not uniform, but is set using the  **variableParameter** . Note, there is no dynamical description of this in LEMS yet, as this type only makes sense for multicompartmental cells. A ComponentType for this needs to be present to enable export of NeuroML 2 multicompartmental cells via LEMS/jNeuroML to NEURON
 
     """
 
@@ -26345,6 +26422,8 @@ class ChannelDensityNonUniform(Base):
     Currently a required attribute.
     It should be removed in the longer term, due to possible inconsistencies in this value and that in the ionChannel
     element. TODO: remove.
+
+    * ChannelDensityNonUniform -- Specifies a time varying ohmic conductance density, which is distributed on a region of the **cell.**  The conductance density of the channel is not uniform, but is set using the  **variableParameter** . Note, there is no dynamical description of this in LEMS yet, as this type only makes sense for multicompartmental cells. A ComponentType for this needs to be present to enable export of NeuroML 2 multicompartmental cells via LEMS/jNeuroML to NEURON
 
     """
 
@@ -26687,6 +26766,8 @@ class ChannelPopulation(Base):
     Currently a required attribute.
     It should be removed in the longer term, due to possible inconsistencies in this value and that in the ionChannel
     element. TODO: remove.
+
+    * ChannelPopulation -- Population of a **number**  of ohmic ion channels. These each produce a conductance **channelg**  across a reversal potential **erev,**  giving a total current **i.**  Note that active membrane currents are more frequently specified as a density over an area of the  **cell**  using  **channelDensity**
 
     """
 
@@ -27106,10 +27187,7 @@ class ChannelPopulation(Base):
 
 
 class BiophysicalProperties2CaPools(Standalone):
-    """BiophysicalProperties2CaPools -- Standalone element which is usually inside a single cell, but could be outside and
-    referenced by id.
-
-    """
+    """BiophysicalProperties2CaPools -- The biophysical properties of the  **cell** , including the  **membraneProperties2CaPools**  and the  **intracellularProperties2CaPools**  for a cell with two Ca pools"""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -27389,10 +27467,7 @@ class BiophysicalProperties2CaPools(Standalone):
 
 
 class BiophysicalProperties(Standalone):
-    """BiophysicalProperties -- Standalone element which is usually inside a single cell, but could be outside and
-    referenced by id.
-
-    """
+    """BiophysicalProperties -- The biophysical properties of the  **cell** , including the  **membraneProperties**  and the  **intracellularProperties**"""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -27664,6 +27739,8 @@ class BiophysicalProperties(Standalone):
 
 
 class InhomogeneousParameter(Base):
+    """InhomogeneousParameter -- An inhomogeneous parameter specified across the  **segmentGroup**  ( see  **variableParameter**  for usage )."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -27961,6 +28038,8 @@ class InhomogeneousParameter(Base):
 
 
 class SegmentGroup(Base):
+    """SegmentGroup -- A method to describe a group of  **segment** s in a  **morphology** , e. g. soma_group, dendrite_group, axon_group. While a name is useful to describe the group, the **neuroLexId**  attribute can be used to explicitly specify the meaning of the group, e. g. sao1044911821 for 'Neuronal Cell Body', sao1211023249 for 'Dendrite'. The  **segment** s in this group can be specified as: a list of individual  **member**  segments; a  **path** , all of the segments along which should be included; a  **subTree**  of the  **cell**  to include; other segmentGroups to  **include**  ( so all segments from those get included here ). An  **inhomogeneousParameter**  can be defined on the region of the cell specified by this group ( see  **variableParameter**  for usage )."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -28453,6 +28532,8 @@ class SegmentGroup(Base):
 
 
 class Segment(BaseNonNegativeIntegerId):
+    """Segment -- A segment defines the smallest unit within a possibly branching structure (  **morphology**  ), such as a dendrite or axon. Its **id**  should be a nonnegative integer ( usually soma/root = 0 ). Its end points are given by the  **proximal**  and  **distal**  points. The  **proximal**  point can be omitted, usually because it is the same as a point on the  **parent**  segment, see  **proximal**  for details.  **parent**  specifies the parent segment. The first segment of a  **cell**  ( with no  **parent**  ) usually represents the soma. The shape is normally a cylinder ( radii of the  **proximal**  and  **distal**  equal, but positions different ) or a conical frustum ( radii and positions different ). If the x, y, x positions of the  **proximal**  and  **distal**  are equal, the segment can be interpreted as a sphere, and in this case the radii of these points must be equal. NOTE: LEMS does not yet support multicompartmental modelling, so the Dynamics here is only appropriate for single compartment modelling."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("name", "xs:string", 0, 1, {"use": "optional", "name": "name"}),
@@ -28837,10 +28918,7 @@ class Segment(BaseNonNegativeIntegerId):
 
 
 class Morphology(Standalone):
-    """Morphology -- Standalone element which is usually inside a single cell, but could be outside and
-    referenced by id.
-
-    """
+    """Morphology -- The collection of  **segment** s which specify the 3D structure of the cell, along with a number of  **segmentGroup** s"""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -29074,6 +29152,8 @@ class Morphology(Standalone):
 
 
 class BaseCell(Standalone):
+    """BaseCell -- Base type of any cell ( e. g. point neuron like  **izhikevich2007Cell** , or a morphologically detailed  **Cell**  with  **segment** s ) which can be used in a  **population**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
     subclass = None
@@ -29243,6 +29323,8 @@ class BaseCell(Standalone):
 
 
 class BaseSynapse(Standalone):
+    """BaseSynapse -- Base type for all synapses, i. e. ComponentTypes which produce a current ( dimension current ) and change Dynamics in response to an incoming event. cno_0000009"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
     subclass = None
@@ -29417,7 +29499,10 @@ class BaseSynapse(Standalone):
 
 
 class FixedFactorConcentrationModel(Standalone):
-    """ion -- Should not be required, as it's present on the species element!"""
+    """ion -- Should not be required, as it's present on the species element!
+    FixedFactorConcentrationModel -- Model of buffering of concentration of an ion ( currently hard coded to be calcium, due to requirement for **iCa**  ) which has a baseline level **restingConc**  and tends to this value with time course **decayConstant.**  A fixed factor **rho**  is used to scale the incoming current *independently of the size of the compartment* to produce a concentration change.
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -29818,7 +29903,10 @@ class FixedFactorConcentrationModel(Standalone):
 
 
 class DecayingPoolConcentrationModel(Standalone):
-    """ion -- Should not be required, as it's present on the species element!"""
+    """ion -- Should not be required, as it's present on the species element!
+    DecayingPoolConcentrationModel -- Model of an intracellular buffering mechanism for **ion**  ( currently hard Coded to be calcium, due to requirement for **iCa**  ) which has a baseline level **restingConc**  and tends to this value with time course **decayConstant.**  The ion is assumed to occupy a shell inside the membrane of thickness **shellThickness.**
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -30637,6 +30725,8 @@ class GateFractionalSubgate(Base):
 
 
 class GateFractional(Base):
+    """GateFractional -- Gate composed of subgates contributing with fractional conductance"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -30964,6 +31054,8 @@ class GateFractional(Base):
 
 
 class GateHHInstantaneous(Base):
+    """GateHHInstantaneous -- Gate which follows the general Hodgkin Huxley formalism but is instantaneous, so tau = 0 and gate follows exactly inf value"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -31264,6 +31356,8 @@ class GateHHInstantaneous(Base):
 
 
 class GateHHRatesInf(Base):
+    """GateHHRatesInf -- Gate which follows the general Hodgkin Huxley formalism"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -31645,6 +31739,8 @@ class GateHHRatesInf(Base):
 
 
 class GateHHRatesTau(Base):
+    """GateHHRatesTau -- Gate which follows the general Hodgkin Huxley formalism"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -32026,6 +32122,8 @@ class GateHHRatesTau(Base):
 
 
 class GateHHRatesTauInf(Base):
+    """GateHHRatesTauInf -- Gate which follows the general Hodgkin Huxley formalism"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -32446,6 +32544,8 @@ class GateHHRatesTauInf(Base):
 
 
 class GateHHTauInf(Base):
+    """GateHHTauInf -- Gate which follows the general Hodgkin Huxley formalism"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -32794,6 +32894,8 @@ class GateHHTauInf(Base):
 
 
 class GateHHRates(Base):
+    """GateHHRates -- Gate which follows the general Hodgkin Huxley formalism"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -33662,6 +33764,8 @@ class GateHHUndetermined(Base):
 
 
 class GateKS(Base):
+    """GateKS -- A gate which consists of multiple  **KSState** s and  **KSTransition** s giving the rates of transition between them"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -34123,6 +34227,8 @@ class GateKS(Base):
 
 
 class TauInfTransition(Base):
+    """TauInfTransition -- KS Transition specified in terms of time constant  **tau**  and steady state  **inf**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("from_", "NmlId", 0, 0, {"use": "required", "name": "from_"}),
@@ -34414,6 +34520,8 @@ class TauInfTransition(Base):
 
 
 class ReverseTransition(Base):
+    """ReverseTransition -- A reverse only  **KSTransition**  for a  **gateKS**  which specifies a **rate**  ( type  **baseHHRate**  ) which follows one of the standard Hodgkin Huxley forms ( e. g.  **HHExpRate** ,  **HHSigmoidRate** ,  **HHExpLinearRate**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("from_", "NmlId", 0, 0, {"use": "required", "name": "from_"}),
@@ -34661,6 +34769,8 @@ class ReverseTransition(Base):
 
 
 class ForwardTransition(Base):
+    """ForwardTransition -- A forward only  **KSTransition**  for a  **gateKS**  which specifies a **rate**  ( type  **baseHHRate**  ) which follows one of the standard Hodgkin Huxley forms ( e. g.  **HHExpRate** ,  **HHSigmoidRate** ,  **HHExpLinearRate**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("from_", "NmlId", 0, 0, {"use": "required", "name": "from_"}),
@@ -34908,6 +35018,8 @@ class ForwardTransition(Base):
 
 
 class OpenState(Base):
+    """OpenState -- A  **KSState**  with **relativeConductance**  of 1"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
     subclass = None
@@ -35040,6 +35152,8 @@ class OpenState(Base):
 
 
 class ClosedState(Base):
+    """ClosedState -- A  **KSState**  with **relativeConductance**  of 0"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
     subclass = None
@@ -35177,8 +35291,8 @@ class ClosedState(Base):
 
 
 class IonChannelKS(Standalone):
-    """Kinetic scheme based ion channel.
-    IonChannelKS -- Kinetic scheme based ion channel.
+    """A kinetic scheme based ion channel with multiple  **gateKS** s, each of which consists of multiple  **KSState** s and  **KSTransition** s giving the rates of transition between them
+    IonChannelKS -- A kinetic scheme based ion channel with multiple  **gateKS** s, each of which consists of multiple  **KSState** s and  **KSTransition** s giving the rates of transition between them
 
     """
 
@@ -38784,6 +38898,8 @@ class NeuroMLDocument(Standalone):
 
 
 class BasePynnSynapse(BaseSynapse):
+    """BasePynnSynapse -- Base type for all PyNN synapses. Note, the current **I**  produced is dimensionless, but it requires a membrane potential **v**  with dimension voltage"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -38976,6 +39092,8 @@ class BasePynnSynapse(BaseSynapse):
 
 
 class basePyNNCell(BaseCell):
+    """basePyNNCell -- Base type of any PyNN standard cell model. Note: membrane potential **v**  has dimensions voltage, but all other parameters are dimensionless. This is to facilitate translation to and from PyNN scripts in Python, where these parameters have implicit units, see http://neuralensemble. org/trac/PyNN/wiki/StandardModels"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("cm", "xs:float", 0, 0, {"use": "required", "name": "cm"}),
@@ -39228,7 +39346,7 @@ class basePyNNCell(BaseCell):
 
 
 class ContinuousProjection(BaseProjection):
-    """ContinuousProjection -- Projection between two populations consisting of analog connections (e.g. graded synapses)"""
+    """ContinuousProjection -- A projection between **presynapticPopulation**  and **postsynapticPopulation**  through components **preComponent**  at the start and **postComponent**  at the end of a  **continuousConnection**  or  **continuousConnectionInstance** . Can be used for analog synapses."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -39606,7 +39724,7 @@ class ContinuousProjection(BaseProjection):
 
 
 class ElectricalProjection(BaseProjection):
-    """ElectricalProjection -- Projection between two populations consisting of electrical connections (gap junctions)"""
+    """ElectricalProjection -- A projection between **presynapticPopulation**  to another **postsynapticPopulation**  through gap junctions."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -40748,7 +40866,7 @@ class BaseConnectionOldFormat(BaseConnection):
 
 
 class Projection(BaseProjection):
-    """Projection -- Projection (set of synaptic connections) between two populations. Chemical/event based synaptic transmission"""
+    """Projection -- Projection from one population, **presynapticPopulation**  to another, **postsynapticPopulation,**  through **synapse.**  Contains lists of  **connection**  or  **connectionWD**  elements."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -41128,6 +41246,8 @@ class Projection(BaseProjection):
 
 
 class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
+    """SpikeGeneratorRefPoisson -- Generator of spikes whose ISI distribution is the maximum entropy distribution over [ **minimumISI,**  +infinity ) with mean: 1 / **averageRate**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -41557,6 +41677,8 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
 
 
 class ChannelDensityNernstCa2(ChannelDensityNernst):
+    """ChannelDensityNernstCa2 -- This component is similar to the original component type  **channelDensityNernst**  but it is changed in order to have a reversal potential that depends on a second independent Ca++ pool ( ca2 ). See https://github. com/OpenSourceBrain/ghk-nernst."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
     subclass = None
@@ -41730,6 +41852,8 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
 
 
 class ChannelDensityVShift(ChannelDensity):
+    """ChannelDensityVShift -- Same as  **channelDensity** , but with a **vShift**  parameter to change voltage activation of gates. The exact usage of **vShift**  in expressions for rates is determined by the individual gates."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -41970,6 +42094,8 @@ class Cell(BaseCell):
 
     * biophysicalProperties -- Should only be used if biophysicalProperties element is outside the cell.
       This points to the id of the biophysicalProperties
+
+    * Cell -- Cell with  **segment** s specified in a  **morphology**  element along with details on its  **biophysicalProperties** . NOTE: this can only be correctly simulated using jLEMS when there is a single segment in the cell, and **v**  of this cell represents the membrane potential in that isopotential segment.
 
     """
 
@@ -42688,6 +42814,8 @@ class Cell(BaseCell):
 
 
 class PinskyRinzelCA3Cell(BaseCell):
+    """PinskyRinzelCA3Cell -- Reduced CA3 cell model from Pinsky and Rinzel 1994. See https://github. com/OpenSourceBrain/PinskyRinzelModel"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -43573,6 +43701,8 @@ class PinskyRinzelCA3Cell(BaseCell):
 
 
 class FitzHughNagumo1969Cell(BaseCell):
+    """FitzHughNagumo1969Cell -- The Fitzhugh Nagumo model is a two-dimensional simplification of the Hodgkin-Huxley model of spike generation in squid giant axons. This system was suggested by FitzHugh ( FitzHugh R. [1961]: Impulses and physiological states in theoretical models of nerve membrane. Biophysical J. 1:445-466 ), who called it " Bonhoeffer-van der Pol model ", and the equivalent circuit by Nagumo et al. ( Nagumo J. , Arimoto S. , and Yoshizawa S. [1962] An active pulse transmission line simulating nerve axon. Proc IRE. 50:2061-2070. 1962 ). This version corresponds to the one described in FitzHugh R. [1969]: Mathematical models of excitation and propagation in nerve. Chapter 1 ( pp. 1-85 in H. P. Schwan, ed. Biological Engineering, McGraw-Hill Book Co. , N. Y. )"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("a", "Nml2Quantity_none", 0, 0, {"use": "required", "name": "a"}),
@@ -43885,6 +44015,8 @@ class FitzHughNagumo1969Cell(BaseCell):
 
 
 class FitzHughNagumoCell(BaseCell):
+    """FitzHughNagumoCell -- Simple dimensionless model of spiking cell from FitzHugh and Nagumo. Superseded by **fitzHughNagumo1969Cell**  ( See https://github. com/NeuroML/NeuroML2/issues/42 )"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("I", "Nml2Quantity_none", 0, 0, {"use": "required", "name": "I"}),
@@ -44096,7 +44228,10 @@ class FitzHughNagumoCell(BaseCell):
 
 
 class BaseCellMembPotCap(BaseCell):
-    """C -- This is to prevent it conflicting with attribute c (lowercase) e.g. in izhikevichCell2007"""
+    """C -- This is to prevent it conflicting with attribute c (lowercase) e.g. in izhikevichCell2007
+    BaseCellMembPotCap -- Any cell with a membrane potential **v**  with voltage units and a membrane capacitance **C.**  Also defines exposed value **iSyn**  for current due to external synapses and **iMemb**  for total transmembrane current ( usually channel currents plus **iSyn**  )
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -44338,6 +44473,8 @@ class BaseCellMembPotCap(BaseCell):
 
 
 class IzhikevichCell(BaseCell):
+    """IzhikevichCell -- Cell based on the 2003 model of Izhikevich, see http://izhikevich. org/publications/spikes. htm"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -44680,6 +44817,8 @@ class IzhikevichCell(BaseCell):
 
 
 class IafCell(BaseCell):
+    """IafCell -- Integrate and fire cell with capacitance **C,**  **leakConductance**  and **leakReversal**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -45085,6 +45224,8 @@ class IafCell(BaseCell):
 
 
 class IafTauCell(BaseCell):
+    """IafTauCell -- Integrate and fire cell which returns to its leak reversal potential of **leakReversal**  with a time constant **tau**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -45423,7 +45564,10 @@ class IafTauCell(BaseCell):
 
 
 class GradedSynapse(BaseSynapse):
-    """GradedSynapse -- Based on synapse in Methods of http://www.nature.com/neuro/journal/v7/n12/abs/nn1352.html."""
+    """GradedSynapse -- Based on synapse in Methods of http://www.nature.com/neuro/journal/v7/n12/abs/nn1352.html.
+    Graded/analog synapse. Based on synapse in Methods of http://www. nature. com/neuro/journal/v7/n12/abs/nn1352. html
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -45796,7 +45940,10 @@ class GradedSynapse(BaseSynapse):
 
 
 class LinearGradedSynapse(BaseSynapse):
-    """LinearGradedSynapse -- Behaves just like a one way gap junction."""
+    """LinearGradedSynapse -- Behaves just like a one way gap junction.
+    Behaves just like a one way gap junction.
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -46021,7 +46168,10 @@ class LinearGradedSynapse(BaseSynapse):
 
 
 class SilentSynapse(BaseSynapse):
-    """SilentSynapse -- Dummy synapse which emits no current. Used as presynaptic endpoint for analog synaptic connection (continuousConnection)."""
+    """SilentSynapse -- Dummy synapse which emits no current. Used as presynaptic endpoint for analog synaptic connection (continuousConnection).
+    Dummy synapse which emits no current. Used as presynaptic endpoint for analog synaptic connection.
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
@@ -46172,7 +46322,10 @@ class SilentSynapse(BaseSynapse):
 
 
 class GapJunction(BaseSynapse):
-    """GapJunction -- Gap junction/single electrical connection"""
+    """GapJunction -- Gap junction/single electrical connection
+    Gap junction/single electrical connection
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -46385,6 +46538,8 @@ class GapJunction(BaseSynapse):
 
 
 class BaseCurrentBasedSynapse(BaseSynapse):
+    """BaseCurrentBasedSynapse -- Synapse model which produces a synaptic current."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
     subclass = None
@@ -46573,6 +46728,8 @@ class BaseCurrentBasedSynapse(BaseSynapse):
 
 
 class BaseVoltageDepSynapse(BaseSynapse):
+    """BaseVoltageDepSynapse -- Base type for synapses with a dependence on membrane potential"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
     subclass = None
@@ -46759,10 +46916,7 @@ class BaseVoltageDepSynapse(BaseSynapse):
 
 
 class IonChannel(IonChannelScalable):
-    """IonChannel -- Note ionChannel and ionChannelHH are currently functionally identical. This is needed since many existing examples use ionChannel, some use ionChannelHH.
-    One of these should be removed, probably ionChannelHH.
-
-    """
+    """IonChannel -- Note  **ionChannel**  and  **ionChannelHH**  are currently functionally identical. This is needed since many existing examples use ionChannel, some use ionChannelHH. NeuroML v2beta4 should remove one of these, probably ionChannelHH."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -47413,6 +47567,8 @@ class IonChannel(IonChannelScalable):
 
 
 class AlphaCurrSynapse(BasePynnSynapse):
+    """AlphaCurrSynapse -- Alpha synapse: rise time and decay time are both tau_syn. Current based synapse."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
     subclass = None
@@ -47571,6 +47727,8 @@ class AlphaCurrSynapse(BasePynnSynapse):
 
 
 class ExpCurrSynapse(BasePynnSynapse):
+    """ExpCurrSynapse -- Current based synapse with instantaneous rise and single exponential decay ( with time constant tau_syn )"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
     subclass = None
@@ -47721,6 +47879,8 @@ class ExpCurrSynapse(BasePynnSynapse):
 
 
 class AlphaCondSynapse(BasePynnSynapse):
+    """AlphaCondSynapse -- Alpha synapse: rise time and decay time are both tau_syn. Conductance based synapse."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("e_rev", "xs:float", 0, 0, {"use": "required", "name": "e_rev"}),
@@ -47894,6 +48054,8 @@ class AlphaCondSynapse(BasePynnSynapse):
 
 
 class ExpCondSynapse(BasePynnSynapse):
+    """ExpCondSynapse -- Conductance based synapse with instantaneous rise and single exponential decay ( with time constant tau_syn )"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("e_rev", "xs:float", 0, 0, {"use": "required", "name": "e_rev"}),
@@ -48059,6 +48221,8 @@ class ExpCondSynapse(BasePynnSynapse):
 
 
 class HH_cond_exp(basePyNNCell):
+    """HH_cond_exp -- Single-compartment Hodgkin-Huxley-type neuron with transient sodium and delayed-rectifier potassium currents using the ion channel models from Traub."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -48372,6 +48536,8 @@ class HH_cond_exp(basePyNNCell):
 
 
 class basePyNNIaFCell(basePyNNCell):
+    """basePyNNIaFCell -- Base type of any PyNN standard integrate and fire model"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("tau_m", "xs:float", 0, 0, {"use": "required", "name": "tau_m"}),
@@ -48636,7 +48802,7 @@ class basePyNNIaFCell(basePyNNCell):
 
 
 class ContinuousConnection(BaseConnectionNewFormat):
-    """ContinuousConnection -- Individual continuous/analog synaptic connection"""
+    """ContinuousConnection -- An instance of a connection in a  **continuousProjection**  between **presynapticPopulation**  to another **postsynapticPopulation**  through a **preComponent**  at the start and **postComponent**  at the end. Can be used for analog synapses."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -49002,7 +49168,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
 
 
 class ElectricalConnection(BaseConnectionNewFormat):
-    """ElectricalConnection -- Individual electrical synaptic connection"""
+    """ElectricalConnection -- To enable connections between populations through gap junctions."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -49333,7 +49499,7 @@ class ElectricalConnection(BaseConnectionNewFormat):
 
 
 class ConnectionWD(BaseConnectionOldFormat):
-    """ConnectionWD -- Individual synaptic connection with weight and delay"""
+    """ConnectionWD -- Event connection between named components, which gets processed via a new instance of a synapse component which is created on the target component, includes setting of **weight**  and **delay**  for the synaptic connection"""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -49681,7 +49847,7 @@ class ConnectionWD(BaseConnectionOldFormat):
 
 
 class Connection(BaseConnectionOldFormat):
-    """Connection -- Individual chemical (event based) synaptic connection, weight==1 and no delay"""
+    """Connection -- Event connection directly between named components, which gets processed via a new instance of a **synapse**  component which is created on the target component. Normally contained inside a  **projection**  element."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
@@ -49925,6 +50091,8 @@ class Connection(BaseConnectionOldFormat):
 
 
 class Cell2CaPools(Cell):
+    """Cell2CaPools -- Variant of cell with two independent Ca2+ pools. Cell with  **segment** s specified in a  **morphology**  element along with details on its  **biophysicalProperties** . NOTE: this can only be correctly simulated using jLEMS when there is a single segment in the cell, and **v**  of this cell represents the membrane potential in that isopotential segment."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -50129,6 +50297,8 @@ class Cell2CaPools(Cell):
 
 
 class AdExIaFCell(BaseCellMembPotCap):
+    """AdExIaFCell -- Model based on Brette R and Gerstner W ( 2005 ) Adaptive Exponential Integrate-and-Fire Model as an Effective Description of Neuronal Activity. J Neurophysiol 94:3637-3642"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -50652,6 +50822,8 @@ class AdExIaFCell(BaseCellMembPotCap):
 
 
 class Izhikevich2007Cell(BaseCellMembPotCap):
+    """Izhikevich2007Cell -- Cell based on the modified Izhikevich model in Izhikevich 2007, Dynamical systems in neuroscience, MIT Press"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -51186,6 +51358,8 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
 
 
 class IafRefCell(IafCell):
+    """IafRefCell -- Integrate and fire cell with capacitance **C,**  **leakConductance,**  **leakReversal**  and refractory period **refract**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -51404,6 +51578,8 @@ class IafRefCell(IafCell):
 
 
 class IafTauRefCell(IafTauCell):
+    """IafTauRefCell -- Integrate and fire cell which returns to its leak reversal potential of **leakReversal**  with a time course **tau.**  It has a refractory period of **refract**  after spiking"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -51625,6 +51801,8 @@ class IafTauRefCell(IafTauCell):
 
 
 class DoubleSynapse(BaseVoltageDepSynapse):
+    """DoubleSynapse -- Synapse consisting of two independent synaptic mechanisms ( e. g. AMPA-R and NMDA-R ), which can be easily colocated in connections"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("synapse1", "NmlId", 0, 0, {"use": "required", "name": "synapse1"}),
@@ -51899,6 +52077,8 @@ class DoubleSynapse(BaseVoltageDepSynapse):
 
 
 class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
+    """AlphaCurrentSynapse -- Alpha current synapse: rise time and decay time are both **tau.**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -52171,6 +52351,8 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
 
 
 class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
+    """BaseConductanceBasedSynapseTwo -- Synapse model suited for a sum of two expTwoSynapses which exposes a conductance **g**  in addition to producing a current. Not necessarily ohmic!! cno_0000027"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -52512,6 +52694,8 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
 
 
 class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
+    """BaseConductanceBasedSynapse -- Synapse model which exposes a conductance **g**  in addition to producing a current. Not necessarily ohmic!! cno_0000027"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -52822,7 +53006,7 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
 
 
 class IonChannelVShift(IonChannel):
-    """IonChannelVShift -- Same as ionChannel, but with a vShift parameter to change voltage activation of gates. The exact usage of vShift in expressions for rates is determined by the individual gates."""
+    """IonChannelVShift -- Same as  **ionChannel** , but with a **vShift**  parameter to change voltage activation of gates. The exact usage of **vShift**  in expressions for rates is determined by the individual gates."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -53073,10 +53257,7 @@ class IonChannelVShift(IonChannel):
 
 
 class IonChannelHH(IonChannel):
-    """IonChannelHH -- Note ionChannel and ionChannelHH are currently functionally identical. This is needed since many existing examples use ionChannel, some use ionChannelHH.
-    One of these should be removed, probably ionChannelHH.
-
-    """
+    """IonChannelHH -- Note  **ionChannel**  and  **ionChannelHH**  are currently functionally identical. This is needed since many existing examples use ionChannel, some use ionChannelHH. NeuroML v2beta4 should remove one of these, probably ionChannelHH."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
@@ -53257,6 +53438,8 @@ class IonChannelHH(IonChannel):
 
 
 class IF_curr_exp(basePyNNIaFCell):
+    """IF_curr_exp -- Leaky integrate and fire model with fixed threshold and decaying-exponential post-synaptic current"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
     subclass = None
@@ -53432,6 +53615,8 @@ class IF_curr_exp(basePyNNIaFCell):
 
 
 class IF_curr_alpha(basePyNNIaFCell):
+    """IF_curr_alpha -- Leaky integrate and fire model with fixed threshold and alpha-function-shaped post-synaptic current"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
     subclass = None
@@ -53607,6 +53792,8 @@ class IF_curr_alpha(basePyNNIaFCell):
 
 
 class basePyNNIaFCondCell(basePyNNIaFCell):
+    """basePyNNIaFCondCell -- Base type of conductance based PyNN IaF cell models"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -53848,7 +54035,7 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
 
 
 class ContinuousConnectionInstance(ContinuousConnection):
-    """ContinuousConnectionInstance -- Individual continuous/analog synaptic connection - instance based"""
+    """ContinuousConnectionInstance -- An instance of a connection in a  **continuousProjection**  between **presynapticPopulation**  to another **postsynapticPopulation**  through a **preComponent**  at the start and **postComponent**  at the end. Populations need to be of type  **populationList**  and contain  **instance**  and  **location**  elements. Can be used for analog synapses."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
@@ -54069,7 +54256,7 @@ class ContinuousConnectionInstance(ContinuousConnection):
 
 
 class ElectricalConnectionInstance(ElectricalConnection):
-    """ElectricalConnectionInstance -- Projection between two populations consisting of analog connections (e.g. graded synapses)"""
+    """ElectricalConnectionInstance -- To enable connections between populations through gap junctions. Populations need to be of type  **populationList**  and contain  **instance**  and  **location**  elements."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
@@ -54286,6 +54473,8 @@ class ElectricalConnectionInstance(ElectricalConnection):
 
 
 class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
+    """ExpThreeSynapse -- Ohmic synapse similar to expTwoSynapse but consisting of two components that can differ in decay times and max conductances but share the same rise time."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -54567,6 +54756,8 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
 
 
 class ExpTwoSynapse(BaseConductanceBasedSynapse):
+    """ExpTwoSynapse -- Ohmic synapse model whose conductance waveform on receiving an event has a rise time of **tauRise**  and a decay time of **tauDecay.**  Max conductance reached during this time ( assuming zero conductance before ) is **gbase**  * **weight.**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -54836,6 +55027,8 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
 
 
 class ExpOneSynapse(BaseConductanceBasedSynapse):
+    """ExpOneSynapse -- Ohmic synapse model whose conductance rises instantaneously by ( **gbase**  * **weight**  ) on receiving an event, and which decays exponentially to zero with time course **tauDecay**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -55057,6 +55250,8 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
 
 
 class AlphaSynapse(BaseConductanceBasedSynapse):
+    """AlphaSynapse -- Ohmic synapse model where rise time and decay time are both **tau.**  Max conductance reached during this time ( assuming zero conductance before ) is **gbase**  * **weight.**"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -55270,6 +55465,8 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
 
 
 class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
+    """EIF_cond_exp_isfa_ista -- Adaptive exponential integrate and fire neuron according to Brette R and Gerstner W ( 2005 ) with exponentially-decaying post-synaptic conductance"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("a", "xs:float", 0, 0, {"use": "required", "name": "a"}),
@@ -55555,6 +55752,8 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
 
 
 class IF_cond_exp(basePyNNIaFCondCell):
+    """IF_cond_exp -- Leaky integrate and fire model with fixed threshold and exponentially-decaying post-synaptic conductance"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
     subclass = None
@@ -55734,6 +55933,8 @@ class IF_cond_exp(basePyNNIaFCondCell):
 
 
 class IF_cond_alpha(basePyNNIaFCondCell):
+    """IF_cond_alpha -- Leaky integrate and fire model with fixed threshold and alpha-function-shaped post-synaptic conductance"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
     subclass = None
@@ -55913,7 +56114,7 @@ class IF_cond_alpha(basePyNNIaFCondCell):
 
 
 class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
-    """ContinuousConnectionInstanceW -- Individual continuous/analog synaptic connection - instance based. Includes setting of _weight for the connection"""
+    """ContinuousConnectionInstanceW -- An instance of a connection in a  **continuousProjection**  between **presynapticPopulation**  to another **postsynapticPopulation**  through a **preComponent**  at the start and **postComponent**  at the end. Populations need to be of type  **populationList**  and contain  **instance**  and  **location**  elements. Can be used for analog synapses. Includes setting of **weight**  for the connection"""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -56134,7 +56335,7 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
 
 
 class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
-    """ElectricalConnectionInstanceW -- Projection between two populations consisting of analog connections (e.g. graded synapses). Includes setting of weight for the connection"""
+    """ElectricalConnectionInstanceW -- To enable connections between populations through gap junctions. Populations need to be of type  **populationList**  and contain  **instance**  and  **location**  elements. Includes setting of **weight**  for the connection"""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -56355,6 +56556,8 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
 
 
 class BlockingPlasticSynapse(ExpTwoSynapse):
+    """BlockingPlasticSynapse -- Biexponential synapse that allows for optional block and plasticity mechanisms, which can be expressed as child elements."""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -56604,6 +56807,8 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
 
 
 class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
+    """EIF_cond_alpha_isfa_ista -- Adaptive exponential integrate and fire neuron according to Brette R and Gerstner W ( 2005 ) with alpha-function-shaped post-synaptic conductance"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
     subclass = None
