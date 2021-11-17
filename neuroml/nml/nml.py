@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Oct  8 15:17:16 2021 by generateDS.py version 2.40.3.
-# Python 3.10.0rc2 (default, Sep  8 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
+# Generated Mon Nov  8 21:00:41 2021 by generateDS.py version 2.40.3.
+# Python 3.10.0 (default, Oct  4 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -14475,8 +14475,172 @@ class BaseWithoutId(GeneratedsSuper):
     ):
         pass
 
+    def add(self, obj=None, hint=None, force=False):
+        """Generic function to allow easy addition of a new member to a NeuroML object.
 
-# end class BaseWithoutId
+        Without arguments, when `obj=None`, it simply calls the `info()` method
+        to provide the list of valid member types for the NeuroML class.
+
+        Use `info(show_contents=True)` to see the valid members of this class,
+        and their current contents.
+
+        :param obj: object member to add
+        :type obj: any NeuroML Type defined by the API
+        :param hint: member name to add to when there are multiple members that `obj` can be added to
+        :type hint: string
+        :param force: boolean to force addition when an obj has already been added previously
+        :type force: bool
+
+        :raises Exception: if a member compatible to obj could not be found
+        :raises Exception: if multiple members can accept the object and no hint is provided.
+        """
+        if not obj:
+            self.info()
+            return
+
+        # getattr only returns the value of the provided member but one cannot
+        # then use this to modify the member. Using `vars` also allows us to
+        # modify the value
+        targets = []
+        all_members = self.get_members()
+        for member in all_members:
+            # get_data_type() returns the type as a string, e.g.: 'IncludeType'
+            if member.get_data_type() == type(obj).__name__:
+                targets.append(member)
+
+        if len(targets) == 0:
+            # no targets found
+            e = Exception(
+                """A member object of {} type could not be found in NeuroML class {}.\n{}
+            """.format(
+                    type(obj).__name__, type(self).__name__, self.info()
+                )
+            )
+            raise e
+        elif len(targets) == 1:
+            # good, just add it
+            self.__add(obj, targets[0], force)
+        else:
+            # more than one target
+            if not hint:
+                err_string = """Multiple members can accept {}. Please provide the name of the variable using the `hint` argument to specify which member to add to:\n""".format(
+                    type(obj).__name__
+                )
+                for t in targets:
+                    err_string += "- {}\n".format(t.get_name())
+                raise Exception(err_string)
+
+            # use hint to figure out which target to use
+            for t in targets:
+                if hint == t.get_name():
+                    self.__add(obj, t, force)
+                    break
+
+    def __add(self, obj, member, force=False):
+        """Private method to add new member to a specified variable in a NeuroML object.
+
+        :param obj: object member to add
+        :type obj: any NeuroML Type defined by the API
+        :param member: member variable name to add to when there are multiple members that `obj` can be added to
+        :type member: MemberSpec_
+        :param force: boolean to force addition when an obj has already been added previously
+        :type force: bool
+
+        """
+        import warnings
+
+        # A single value, not a list:
+        if member.get_container() == 0:
+            if force:
+                vars(self)[member.get_name()] = obj
+            else:
+                if vars(self)[member.get_name()]:
+                    warnings.warn(
+                        """{} has already been assigned.  Use `force=True` to overwrite. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
+                            member.get_name()
+                        )
+                    )
+                else:
+                    vars(self)[member.get_name()] = obj
+        # List
+        else:
+            # Do not use 'obj in ..' for membership check because it also
+            # returns true if an element with the same value exists in the
+            # container
+            # https://docs.python.org/3/reference/expressions.html#membership-test-operations
+            if force:
+                vars(self)[member.get_name()].append(obj)
+            else:
+                if any(obj is e for e in vars(self)[member.get_name()]):
+                    warnings.warn(
+                        """{} already exists in {}. Use `force=True` to force readdition. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
+                            obj, member.get_name()
+                        )
+                    )
+                else:
+                    vars(self)[member.get_name()].append(obj)
+
+    def get_members(self):
+        """Get member data items, also from ancestors.
+
+        This function is required because generateDS does not include inherited
+        members in the member_data_items list for a derived class. So, for
+        example, while IonChannelHH has `gate_hh_rates` which it inherits from
+        IonChannel, IonChannelHH's `member_data_items_` is empty. It relies on
+        the IonChannel classes' `member_data_items_` list.
+
+        :returns: list of members, including ones inherited from ancestors.
+        """
+        import copy
+
+        # create a copy by value
+        # if copied by reference (=), the member_data_items_ object variable is
+        # modified to a large list, greatly increasing the memory usage.
+        all_members = copy.copy(self.member_data_items_)
+        for c in type(self).__mro__:
+            try:
+                all_members.extend(c.member_data_items_)
+            except AttributeError:
+                pass
+            except TypeError:
+                pass
+
+        # deduplicate
+        # TODO where are the duplicates coming from given that we're not
+        # calling this recursively?
+        all_members = list(set(all_members))
+        return all_members
+
+    def info(self, show_contents=False):
+        """A helper function to get a list of members of this class.
+
+        This is useful to quickly check what members can go into a particular
+        NeuroML class (which will match the Schema definitions). It lists these
+        members and notes whether they are "single" type elements (Child
+        elements) or "List" elements (Children elements). It will also note
+        whether a member is optional or required.
+
+        See http://www.davekuhlman.org/generateDS.html#user-methods for more
+        information on the MemberSpec_ class that generateDS uses.
+
+        :param show_contents: also prints out the contents of the members
+        :type show_contents: bool
+
+        :returns: the string (for testing purposes)
+        """
+
+        info_str = "Valid members for {} are:\n".format(self.__class__.__name__)
+        for member in self.member_data_items_:
+            info_str += "* {} (class: {})\n".format(member.name, member.data_type)
+            if show_contents:
+                contents = getattr(self, member.get_name())
+                info_str += "	* Contents: {}\n\n".format(contents)
+
+        info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information."
+        print(info_str)
+        return info_str
+
+    # end class BaseWithoutId
 
 
 class BaseNonNegativeIntegerId(BaseWithoutId):
@@ -38614,9 +38778,7 @@ class NeuroMLDocument(Standalone):
         :param element: element to append
         :type element: Object
         """
-        from neuroml.utils import append_to_element
-
-        append_to_element(self, element)
+        self.add(element)
 
     # end class NeuroMLDocument
 
