@@ -22,7 +22,7 @@ with open("../../neuroml/nml/nml.py", 'r') as file:
         if line.startswith("class"):
             # get the class signature
             aclass = line[len("class "):]
-            aclass = aclass.split('(')[0].split(':')[0]
+            aclass = aclass.split('(')[0]
             if aclass not in excluded_classes:
                 classes.append(aclass)
 
@@ -40,6 +40,7 @@ with open("../userdocs/coreclasses_list.txt", 'w') as fwrite:
             .. autoclass:: neuroml.nml.nml.{}
                :members:
                :undoc-members:
+               :show-inheritance:
 
             """.format(
                 aclass, "#" * len(aclass), aclass,
