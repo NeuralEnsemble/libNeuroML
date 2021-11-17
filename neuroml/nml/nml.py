@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Nov 17 15:09:41 2021 by generateDS.py version 2.40.3.
+# Generated Wed Nov 17 17:20:08 2021 by generateDS.py version 2.40.3.
 # Python 3.10.0 (default, Oct  4 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
 #
 # Command line options:
@@ -4770,7 +4770,12 @@ class IncludeType(GeneratedsSuper):
 
 
 class Q10ConductanceScaling(GeneratedsSuper):
-    """Q10ConductanceScaling -- A value for the conductance scaling which varies as a standard function of the difference between the current temperature, **temperature,**  and the temperature at which the conductance was originally determined, **experimentalTemp**"""
+    """Q10ConductanceScaling -- A value for the conductance scaling which varies as a standard function of the difference between the current temperature, **temperature,**  and the temperature at which the conductance was originally determined, **experimentalTemp**
+
+    * q10Factor -- (dimension: none)
+    * experimentalTemp -- (dimension: temperature)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -7215,7 +7220,14 @@ class SegmentParent(GeneratedsSuper):
 
 
 class Point3DWithDiam(GeneratedsSuper):
-    """Point3DWithDiam -- Base type for ComponentTypes which specify an ( **x,**  **y,**  **z**  ) coordinate along with a **diameter.**  Note: no dimension used in the attributes for these coordinates! These are assumed to have dimension micrometer ( 10^-6 m ). This is due to micrometers being the default option for the majority of neuronal morphology formats, and dimensions are omitted here to facilitate reading and writing of morphologies in NeuroML."""
+    """Point3DWithDiam -- Base type for ComponentTypes which specify an ( **x,**  **y,**  **z**  ) coordinate along with a **diameter.**  Note: no dimension used in the attributes for these coordinates! These are assumed to have dimension micrometer ( 10^-6 m ). This is due to micrometers being the default option for the majority of neuronal morphology formats, and dimensions are omitted here to facilitate reading and writing of morphologies in NeuroML.
+
+    * x -- (dimension: none): x coordinate of the point. Note: no dimension used, see description of  **point3DWithDiam**  for details.
+    * y -- (dimension: none): y coordinate of the ppoint. Note: no dimension used, see description of  **point3DWithDiam**  for details.
+    * z -- (dimension: none): z coordinate of the ppoint. Note: no dimension used, see description of  **point3DWithDiam**  for details.
+    * diameter -- (dimension: none): Diameter of the ppoint. Note: no dimension used, see description of  **point3DWithDiam**  for details.
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -9491,7 +9503,11 @@ class MembraneProperties2CaPools(MembraneProperties):
 
 
 class SpikeThresh(GeneratedsSuper):
-    """SpikeThresh -- Membrane potential at which to emit a spiking event. Note, usually the spiking event will not be emitted again until the membrane potential has fallen below this value and rises again to cross it in a positive direction"""
+    """SpikeThresh -- Membrane potential at which to emit a spiking event. Note, usually the spiking event will not be emitted again until the membrane potential has fallen below this value and rises again to cross it in a positive direction
+
+    * value -- (dimension: voltage)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -9730,7 +9746,11 @@ class SpikeThresh(GeneratedsSuper):
 
 
 class SpecificCapacitance(GeneratedsSuper):
-    """SpecificCapacitance -- Capacitance per unit area"""
+    """SpecificCapacitance -- Capacitance per unit area
+
+    * value -- (dimension: specificCapacitance)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -9979,7 +9999,11 @@ class SpecificCapacitance(GeneratedsSuper):
 
 
 class InitMembPotential(GeneratedsSuper):
-    """InitMembPotential -- Explicitly set initial membrane potential for the cell"""
+    """InitMembPotential -- Explicitly set initial membrane potential for the cell
+
+    * value -- (dimension: voltage)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -10222,7 +10246,11 @@ class InitMembPotential(GeneratedsSuper):
 
 
 class Resistivity(GeneratedsSuper):
-    """Resistivity -- The resistivity, or specific axial resistance, of the cytoplasm"""
+    """Resistivity -- The resistivity, or specific axial resistance, of the cytoplasm
+
+    * value -- (dimension: resistivity)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -10871,6 +10899,9 @@ class Species(GeneratedsSuper):
 
     * ion -- Specifying the ion here again is redundant, the ion name should be the same as id. Kept for now
       until LEMS implementation can select by id. TODO: remove.
+
+    * initialConcentration -- (dimension: concentration)
+    * initialExtConcentration -- (dimension: concentration)
 
     """
 
@@ -13033,7 +13064,13 @@ class Instance(GeneratedsSuper):
 
 
 class Location(GeneratedsSuper):
-    """Location -- Specifies the ( x, y, z ) location of a single  **instance**  of a component in a  **population**"""
+    """Location -- Specifies the ( x, y, z ) location of a single  **instance**  of a component in a  **population**
+
+    * x -- (dimension: none)
+    * y -- (dimension: none)
+    * z -- (dimension: none)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -14120,7 +14157,11 @@ class Input(GeneratedsSuper):
 
 
 class InputW(Input):
-    """InputW -- Specifies input lists. Can set **weight**  to scale individual inputs."""
+    """InputW -- Specifies input lists. Can set **weight**  to scale individual inputs.
+
+    * weight -- (dimension: none)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -15442,7 +15483,13 @@ class Standalone(Base):
 
 
 class SpikeSourcePoisson(Standalone):
-    """SpikeSourcePoisson -- Spike source, generating spikes according to a Poisson process."""
+    """SpikeSourcePoisson -- Spike source, generating spikes according to a Poisson process.
+
+    * start -- (dimension: time)
+    * duration -- (dimension: time)
+    * rate -- (dimension: per_time)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -16711,7 +16758,11 @@ class CellSet(Base):
 
 
 class Population(Standalone):
-    """Population -- A population of components, with just one parameter for the **size,**  i. e. number of components to create. Note: quite often this is used with type= **populationList**  which means the size is determined by the number of  **instance** s ( with  **location** s ) in the list. The **size**  attribute is still set, and there will be a validation error if this does not match the number in the list."""
+    """Population -- A population of components, with just one parameter for the **size,**  i. e. number of components to create. Note: quite often this is used with type= **populationList**  which means the size is determined by the number of  **instance** s ( with  **location** s ) in the list. The **size**  attribute is still set, and there will be a validation error if this does not match the number in the list.
+
+    * size -- (dimension: none): Number of instances of this Component to create when the population is instantiated
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -18358,7 +18409,13 @@ class Network(Standalone):
 
 
 class TransientPoissonFiringSynapse(Standalone):
-    """TransientPoissonFiringSynapse -- Poisson spike generator firing at **averageRate**  after a **delay**  and for a **duration,**  connected to single **synapse**  that is triggered every time a spike is generated, providing an input current. Similar to ComponentType  **poissonFiringSynapse** ."""
+    """TransientPoissonFiringSynapse -- Poisson spike generator firing at **averageRate**  after a **delay**  and for a **duration,**  connected to single **synapse**  that is triggered every time a spike is generated, providing an input current. Similar to ComponentType  **poissonFiringSynapse** .
+
+    * averageRate -- (dimension: per_time)
+    * delay -- (dimension: time)
+    * duration -- (dimension: time)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -18722,7 +18779,11 @@ class TransientPoissonFiringSynapse(Standalone):
 
 
 class PoissonFiringSynapse(Standalone):
-    """PoissonFiringSynapse -- Poisson spike generator firing at **averageRate,**  which is connected to single **synapse**  that is triggered every time a spike is generated, producing an input current. See also  **transientPoissonFiringSynapse** ."""
+    """PoissonFiringSynapse -- Poisson spike generator firing at **averageRate,**  which is connected to single **synapse**  that is triggered every time a spike is generated, producing an input current. See also  **transientPoissonFiringSynapse** .
+
+    * averageRate -- (dimension: per_time): The average rate at which spikes are emitted
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -18995,7 +19056,11 @@ class PoissonFiringSynapse(Standalone):
 
 
 class SpikeGeneratorPoisson(Standalone):
-    """SpikeGeneratorPoisson -- Generator of spikes whose ISI is distributed according to an exponential PDF with scale: 1 / **averageRate**"""
+    """SpikeGeneratorPoisson -- Generator of spikes whose ISI is distributed according to an exponential PDF with scale: 1 / **averageRate**
+
+    * averageRate -- (dimension: per_time): The average rate at which spikes are emitted
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -19245,7 +19310,12 @@ class SpikeGeneratorPoisson(Standalone):
 
 
 class SpikeGeneratorRandom(Standalone):
-    """SpikeGeneratorRandom -- Generator of spikes with a random interspike interval of at least **minISI**  and at most **maxISI**"""
+    """SpikeGeneratorRandom -- Generator of spikes with a random interspike interval of at least **minISI**  and at most **maxISI**
+
+    * maxISI -- (dimension: time): Maximum interspike interval
+    * minISI -- (dimension: time): Minimum interspike interval
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -19491,7 +19561,11 @@ class SpikeGeneratorRandom(Standalone):
 
 
 class SpikeGenerator(Standalone):
-    """SpikeGenerator -- Simple generator of spikes at a regular interval set by **period**"""
+    """SpikeGenerator -- Simple generator of spikes at a regular interval set by **period**
+
+    * period -- (dimension: time): Time between spikes. The first spike will be emitted after this time.
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -20168,7 +20242,11 @@ class SpikeArray(Standalone):
 
 
 class Spike(BaseNonNegativeIntegerId):
-    """Spike -- Emits a single spike at the specified **time**"""
+    """Spike -- Emits a single spike at the specified **time**
+
+    * time -- (dimension: time): Time at which to emit one spike event
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -20361,7 +20439,17 @@ class Spike(BaseNonNegativeIntegerId):
 
 
 class VoltageClampTriple(Standalone):
-    """VoltageClampTriple -- Voltage clamp with 3 clamp levels. Applies a variable current **i**  ( through **simpleSeriesResistance**  ) to try to keep parent cell at **conditioningVoltage**  until time **delay,**  **testingVoltage**  until **delay**  + **duration,**  and **returnVoltage**  afterwards. Only enabled if **active**  = 1."""
+    """VoltageClampTriple -- Voltage clamp with 3 clamp levels. Applies a variable current **i**  ( through **simpleSeriesResistance**  ) to try to keep parent cell at **conditioningVoltage**  until time **delay,**  **testingVoltage**  until **delay**  + **duration,**  and **returnVoltage**  afterwards. Only enabled if **active**  = 1.
+
+    * active -- (dimension: none): Whether the voltage clamp is active ( 1 ) or inactive ( 0 ).
+    * delay -- (dimension: time): Delay before switching from conditioningVoltage to testingVoltage.
+    * duration -- (dimension: time): Duration to hold at testingVoltage.
+    * conditioningVoltage -- (dimension: voltage): Target voltage before time delay
+    * testingVoltage -- (dimension: voltage): Target voltage between times delay and delay + duration
+    * returnVoltage -- (dimension: voltage): Target voltage after time duration
+    * simpleSeriesResistance -- (dimension: resistance): Current will be calculated by the difference in voltage between the target and parent, divided by this value
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -20848,7 +20936,14 @@ class VoltageClampTriple(Standalone):
 
 
 class VoltageClamp(Standalone):
-    """VoltageClamp -- Voltage clamp. Applies a variable current **i**  to try to keep parent at **targetVoltage.**  Not yet fully tested!!! Consider using voltageClampTriple!!"""
+    """VoltageClamp -- Voltage clamp. Applies a variable current **i**  to try to keep parent at **targetVoltage.**  Not yet fully tested!!! Consider using voltageClampTriple!!
+
+    * delay -- (dimension: time): Delay before change in current. Current is zero prior to this.
+    * duration -- (dimension: time): Duration for attempting to keep parent at targetVoltage. Current is zero after delay + duration.
+    * targetVoltage -- (dimension: voltage): Current will be applied to try to get parent to this target voltage
+    * simpleSeriesResistance -- (dimension: resistance): Current will be calculated by the difference in voltage between the target and parent, divided by this value
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -21764,7 +21859,15 @@ class CompoundInput(Standalone):
 
 
 class RampGeneratorDL(Standalone):
-    """RampGeneratorDL -- Dimensionless equivalent of  **rampGenerator** . Generates a ramping current after a time **delay,**  for a fixed **duration.**  During this time the dimensionless current steadily changes from **startAmplitude**  to **finishAmplitude.**  Scaled by **weight,**  if set"""
+    """RampGeneratorDL -- Dimensionless equivalent of  **rampGenerator** . Generates a ramping current after a time **delay,**  for a fixed **duration.**  During this time the dimensionless current steadily changes from **startAmplitude**  to **finishAmplitude.**  Scaled by **weight,**  if set
+
+    * delay -- (dimension: time): Delay before change in current. Current is baselineAmplitude prior to this.
+    * duration -- (dimension: time): Duration for holding current at amplitude. Current is baselineAmplitude after delay + duration.
+    * startAmplitude -- (dimension: none): Amplitude of linearly varying current at time delay
+    * finishAmplitude -- (dimension: none): Amplitude of linearly varying current at time delay + duration
+    * baselineAmplitude -- (dimension: none): Amplitude of current before time delay, and after time delay + duration
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -22133,7 +22236,15 @@ class RampGeneratorDL(Standalone):
 
 
 class RampGenerator(Standalone):
-    """RampGenerator -- Generates a ramping current after a time **delay,**  for a fixed **duration.**  During this time the current steadily changes from **startAmplitude**  to **finishAmplitude.**  Scaled by **weight,**  if set"""
+    """RampGenerator -- Generates a ramping current after a time **delay,**  for a fixed **duration.**  During this time the current steadily changes from **startAmplitude**  to **finishAmplitude.**  Scaled by **weight,**  if set
+
+    * delay -- (dimension: time): Delay before change in current. Current is baselineAmplitude prior to this.
+    * duration -- (dimension: time): Duration for holding current at amplitude. Current is baselineAmplitude after delay + duration.
+    * startAmplitude -- (dimension: current): Amplitude of linearly varying current at time delay
+    * finishAmplitude -- (dimension: current): Amplitude of linearly varying current at time delay + duration
+    * baselineAmplitude -- (dimension: current): Amplitude of current before time delay, and after time delay + duration
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -22502,7 +22613,15 @@ class RampGenerator(Standalone):
 
 
 class SineGeneratorDL(Standalone):
-    """SineGeneratorDL -- Dimensionless equivalent of  **sineGenerator** . Generates a sinusoidally varying current after a time **delay,**  for a fixed **duration.**  The **period**  and maximum **amplitude**  of the current can be set as well as the **phase**  at which to start. Scaled by **weight,**  if set"""
+    """SineGeneratorDL -- Dimensionless equivalent of  **sineGenerator** . Generates a sinusoidally varying current after a time **delay,**  for a fixed **duration.**  The **period**  and maximum **amplitude**  of the current can be set as well as the **phase**  at which to start. Scaled by **weight,**  if set
+
+    * delay -- (dimension: time): Delay before change in current. Current is zero prior to this.
+    * phase -- (dimension: none): Phase ( between 0 and 2*pi ) at which to start the varying current ( i. e. at time given by delay )
+    * duration -- (dimension: time): Duration for holding current at amplitude. Current is zero after delay + duration.
+    * amplitude -- (dimension: none): Maximum amplitude of current
+    * period -- (dimension: time): Time period of oscillation
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -22851,7 +22970,15 @@ class SineGeneratorDL(Standalone):
 
 
 class SineGenerator(Standalone):
-    """SineGenerator -- Generates a sinusoidally varying current after a time **delay,**  for a fixed **duration.**  The **period**  and maximum **amplitude**  of the current can be set as well as the **phase**  at which to start. Scaled by **weight,**  if set"""
+    """SineGenerator -- Generates a sinusoidally varying current after a time **delay,**  for a fixed **duration.**  The **period**  and maximum **amplitude**  of the current can be set as well as the **phase**  at which to start. Scaled by **weight,**  if set
+
+    * delay -- (dimension: time): Delay before change in current. Current is zero prior to this.
+    * phase -- (dimension: none): Phase ( between 0 and 2*pi ) at which to start the varying current ( i. e. at time given by delay )
+    * duration -- (dimension: time): Duration for holding current at amplitude. Current is zero after delay + duration.
+    * amplitude -- (dimension: current): Maximum amplitude of current
+    * period -- (dimension: time): Time period of oscillation
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -23232,7 +23359,13 @@ class SineGenerator(Standalone):
 
 
 class PulseGeneratorDL(Standalone):
-    """PulseGeneratorDL -- Dimensionless equivalent of  **pulseGenerator** . Generates a constant current pulse of a certain **amplitude**  for a specified **duration**  after a **delay.**  Scaled by **weight,**  if set"""
+    """PulseGeneratorDL -- Dimensionless equivalent of  **pulseGenerator** . Generates a constant current pulse of a certain **amplitude**  for a specified **duration**  after a **delay.**  Scaled by **weight,**  if set
+
+    * delay -- (dimension: time): Delay before change in current. Current is zero prior to this.
+    * duration -- (dimension: time): Duration for holding current at amplitude. Current is zero after delay + duration.
+    * amplitude -- (dimension: none): Amplitude of current pulse
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -23539,7 +23672,13 @@ class PulseGeneratorDL(Standalone):
 
 
 class PulseGenerator(Standalone):
-    """PulseGenerator -- Generates a constant current pulse of a certain **amplitude**  for a specified **duration**  after a **delay.**  Scaled by **weight,**  if set"""
+    """PulseGenerator -- Generates a constant current pulse of a certain **amplitude**  for a specified **duration**  after a **delay.**  Scaled by **weight,**  if set
+
+    * delay -- (dimension: time): Delay before change in current. Current is zero prior to this.
+    * duration -- (dimension: time): Duration for holding current at amplitude. Current is zero after delay + duration.
+    * amplitude -- (dimension: current): Amplitude of current pulse
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -24595,6 +24734,7 @@ class ChannelDensityGHK2(Base):
 class ChannelDensityGHK(Base):
     """ChannelDensityGHK -- Specifies a time varying conductance density, **gDensity,**  which is distributed on an area of the cell, producing a current density **iDensity**  and whose reversal potential is calculated from the Goldman Hodgkin Katz equation. Hard coded for Ca only! See https://github. com/OpenSourceBrain/ghk-nernst.
 
+    * permeability -- (dimension: permeability)
     * ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
       TEMPORARILY since selecting all ca or na conducting channel populations/densities in a cell would be difficult otherwise.
       Also, it will make it easier to set the correct native simulator value for erev (e.g. ek for ion = k in NEURON).
@@ -25354,6 +25494,7 @@ class ChannelDensityNernst(Base):
 class ChannelDensity(Base):
     """ChannelDensity -- Specifies a time varying ohmic conductance density, **gDensity,**  which is distributed on an area of the **cell**  ( specified in  **membraneProperties**  ) with fixed reversal potential **erev**  producing a current density **iDensity**
 
+    * erev -- (dimension: voltage): The reversal potential of the current produced
     * ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
       TEMPORARILY since selecting all ca or na conducting channel populations/densities in a cell would be difficult otherwise.
       Also, it will make it easier to set the correct native simulator value for erev (e.g. ek for ion = k in NEURON).
@@ -26415,6 +26556,7 @@ class ChannelDensityNonUniformNernst(Base):
 class ChannelDensityNonUniform(Base):
     """ChannelDensityNonUniform -- Specifies a time varying ohmic conductance density, which is distributed on a region of the **cell.**  The conductance density of the channel is not uniform, but is set using the  **variableParameter** . Note, there is no dynamical description of this in LEMS yet, as this type only makes sense for multicompartmental cells. A ComponentType for this needs to be present to enable export of NeuroML 2 multicompartmental cells via LEMS/jNeuroML to NEURON
 
+    * erev -- (dimension: voltage): The reversal potential of the current produced
     * ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
       TEMPORARILY since selecting all ca or na conducting channel populations/densities in a cell would be difficult otherwise.
       Also, it will make it easier to set the correct native simulator value for erev (e.g. ek for ion = k in NEURON).
@@ -26759,6 +26901,8 @@ class ChannelDensityNonUniform(Base):
 class ChannelPopulation(Base):
     """ChannelPopulation -- Population of a **number**  of ohmic ion channels. These each produce a conductance **channelg**  across a reversal potential **erev,**  giving a total current **i.**  Note that active membrane currents are more frequently specified as a density over an area of the  **cell**  using  **channelDensity**
 
+    * number -- (dimension: none): The number of channels present. This will be multiplied by the time varying conductance of the individual ion channel ( which extends  **baseIonChannel**  ) to produce the total conductance
+    * erev -- (dimension: voltage): The reversal potential of the current produced
     * ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
       TEMPORARILY since selecting all ca or na conducting channel populations/densities in a cell would be difficult otherwise.
       Also, it will make it easier to set the correct native simulator value for erev (e.g. ek for ion = k in NEURON).
@@ -29499,6 +29643,9 @@ class FixedFactorConcentrationModel(Standalone):
     """FixedFactorConcentrationModel -- Model of buffering of concentration of an ion ( currently hard coded to be calcium, due to requirement for **iCa**  ) which has a baseline level **restingConc**  and tends to this value with time course **decayConstant.**  A fixed factor **rho**  is used to scale the incoming current *independently of the size of the compartment* to produce a concentration change.
 
     * ion -- Should not be required, as it's present on the species element!
+    * restingConc -- (dimension: concentration)
+    * decayConstant -- (dimension: time)
+    * rho -- (dimension: rho_factor)
 
     """
 
@@ -29901,9 +30048,13 @@ class FixedFactorConcentrationModel(Standalone):
 
 
 class DecayingPoolConcentrationModel(Standalone):
-    """DecayingPoolConcentrationModel -- Model of an intracellular buffering mechanism for **ion**  ( currently hard Coded to be calcium, due to requirement for **iCa**  ) which has a baseline level **restingConc**  and tends to this value with time course **decayConstant.**  The ion is assumed to occupy a shell inside the membrane of thickness **shellThickness.**
+    """DecayingPoolConcentrationModel -- Model of an intracellular buffering mechanism for **ion**  ( currently hard Coded to be calcium, due to requirement for **iCa**  ) which has a baseline level **restingConc**  and tends to this value with time course *
+    *decayConstant.**  The ion is assumed to occupy a shell inside the membrane of thickness **shellThickness.**
 
     * ion -- Should not be required, as it's present on the species element!
+    * restingConc -- (dimension: concentration)
+    * decayConstant -- (dimension: time)
+    * shellThickness -- (dimension: length)
 
     """
 
@@ -38897,7 +39048,11 @@ class NeuroMLDocument(Standalone):
 
 
 class BasePynnSynapse(BaseSynapse):
-    """BasePynnSynapse -- Base type for all PyNN synapses. Note, the current **I**  produced is dimensionless, but it requires a membrane potential **v**  with dimension voltage"""
+    """BasePynnSynapse -- Base type for all PyNN synapses. Note, the current **I**  produced is dimensionless, but it requires a membrane potential **v**  with dimension voltage
+
+    * tau_syn -- (dimension: none)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -39091,7 +39246,15 @@ class BasePynnSynapse(BaseSynapse):
 
 
 class basePyNNCell(BaseCell):
-    """basePyNNCell -- Base type of any PyNN standard cell model. Note: membrane potential **v**  has dimensions voltage, but all other parameters are dimensionless. This is to facilitate translation to and from PyNN scripts in Python, where these parameters have implicit units, see http://neuralensemble. org/trac/PyNN/wiki/StandardModels"""
+    """basePyNNCell -- Base type of any PyNN standard cell model. Note: membrane potential **v**  has dimensions voltage, but all other parameters are dimensionless. This is to facilitate translation to and from PyNN scripts in Python, where these parameters have implicit units, see http://neuralensemble. org/trac/PyNN/wiki/StandardModels
+
+    * cm -- (dimension: none)
+    * i_offset -- (dimension: none)
+    * tau_syn_E -- (dimension: none): This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
+    * tau_syn_I -- (dimension: none): This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
+    * v_init -- (dimension: none)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -41245,7 +41408,11 @@ class Projection(BaseProjection):
 
 
 class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
-    """SpikeGeneratorRefPoisson -- Generator of spikes whose ISI distribution is the maximum entropy distribution over [ **minimumISI,**  +infinity ) with mean: 1 / **averageRate**"""
+    """SpikeGeneratorRefPoisson -- Generator of spikes whose ISI distribution is the maximum entropy distribution over [ **minimumISI,**  +infinity ) with mean: 1 / **averageRate**
+
+    * minimumISI -- (dimension: time): The minimum interspike interval
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -41676,10 +41843,7 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
 
 
 class ChannelDensityNernstCa2(ChannelDensityNernst):
-    """ChannelDensityNernstCa2 -- This component is similar to the original compon
-    ent type  **channelDensityNernst**  but it is changed in order to have a reversal potential that depends on a second independent Ca++ pool ( ca2 ). See https://github. com/OpenSourceBrain/ghk-nernst.
-
-    """
+    """ChannelDensityNernstCa2 -- This component is similar to the original component type  **channelDensityNernst**  but it is changed in order to have a reversal potential that depends on a second independent Ca++ pool ( ca2 ). See https://github. com/OpenSourceBrain/ghk-nernst."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
@@ -41854,7 +42018,11 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
 
 
 class ChannelDensityVShift(ChannelDensity):
-    """ChannelDensityVShift -- Same as  **channelDensity** , but with a **vShift**  parameter to change voltage activation of gates. The exact usage of **vShift**  in expressions for rates is determined by the individual gates."""
+    """ChannelDensityVShift -- Same as  **channelDensity** , but with a **vShift**  parameter to change voltage activation of gates. The exact usage of **vShift**  in expressions for rates is determined by the individual gates.
+
+    * vShift -- (dimension: voltage)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -42816,7 +42984,31 @@ class Cell(BaseCell):
 
 
 class PinskyRinzelCA3Cell(BaseCell):
-    """PinskyRinzelCA3Cell -- Reduced CA3 cell model from Pinsky and Rinzel 1994. See https://github. com/OpenSourceBrain/PinskyRinzelModel"""
+    """PinskyRinzelCA3Cell -- Reduced CA3 cell model from Pinsky and Rinzel 1994. See https://github. com/OpenSourceBrain/PinskyRinzelModel
+
+    * iSoma -- (dimension: currentDensity)
+    * iDend -- (dimension: currentDensity)
+    * gc -- (dimension: conductanceDensity)
+    * gLs -- (dimension: conductanceDensity)
+    * gLd -- (dimension: conductanceDensity)
+    * gNa -- (dimension: conductanceDensity)
+    * gKdr -- (dimension: conductanceDensity)
+    * gCa -- (dimension: conductanceDensity)
+    * gKahp -- (dimension: conductanceDensity)
+    * gKC -- (dimension: conductanceDensity)
+    * gNmda -- (dimension: conductanceDensity)
+    * gAmpa -- (dimension: conductanceDensity)
+    * eNa -- (dimension: voltage)
+    * eCa -- (dimension: voltage)
+    * eK -- (dimension: voltage)
+    * eL -- (dimension: voltage)
+    * qd0 -- (dimension: none)
+    * pp -- (dimension: none)
+    * alphac -- (dimension: none)
+    * betac -- (dimension: none)
+    * cm -- (dimension: specificCapacitance)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -43703,7 +43895,16 @@ class PinskyRinzelCA3Cell(BaseCell):
 
 
 class FitzHughNagumo1969Cell(BaseCell):
-    """FitzHughNagumo1969Cell -- The Fitzhugh Nagumo model is a two-dimensional simplification of the Hodgkin-Huxley model of spike generation in squid giant axons. This system was suggested by FitzHugh ( FitzHugh R. [1961]: Impulses and physiological states in theoretical models of nerve membrane. Biophysical J. 1:445-466 ), who called it " Bonhoeffer-van der Pol model ", and the equivalent circuit by Nagumo et al. ( Nagumo J. , Arimoto S. , and Yoshizawa S. [1962] An active pulse transmission line simulating nerve axon. Proc IRE. 50:2061-2070. 1962 ). This version corresponds to the one described in FitzHugh R. [1969]: Mathematical models of excitation and propagation in nerve. Chapter 1 ( pp. 1-85 in H. P. Schwan, ed. Biological Engineering, McGraw-Hill Book Co. , N. Y. )"""
+    """FitzHughNagumo1969Cell -- The Fitzhugh Nagumo model is a two-dimensional simplification of the Hodgkin-Huxley model of spike generation in squid giant axons. This system was suggested by FitzHugh ( FitzHugh R. [1961]: Impulses and physiological states in theoretical models of nerve membrane. Biophysical J. 1:445-466 ), who called it " Bonhoeffer-van der Pol model ", and the equivalent circuit by Nagumo et al. ( Nagumo J. , Arimoto S. , and Yoshizawa S. [1962] An active pulse transmission line simulating nerve axon. Proc IRE. 50:2061-2070. 1962 ). This version corresponds to the one described in FitzHugh R. [1969]: Mathematical models of excitation and propagation in nerve. Chapter 1 ( pp. 1-85 in H. P. Schwan, ed. Biological Engineering, McGraw-Hill Book Co. , N. Y. )
+
+    * a -- (dimension: none)
+    * b -- (dimension: none)
+    * I -- (dimension: none): plays the role of an external injected current
+    * phi -- (dimension: none)
+    * V0 -- (dimension: none)
+    * W0 -- (dimension: none)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -44017,7 +44218,11 @@ class FitzHughNagumo1969Cell(BaseCell):
 
 
 class FitzHughNagumoCell(BaseCell):
-    """FitzHughNagumoCell -- Simple dimensionless model of spiking cell from FitzHugh and Nagumo. Superseded by **fitzHughNagumo1969Cell**  ( See https://github. com/NeuroML/NeuroML2/issues/42 )"""
+    """FitzHughNagumoCell -- Simple dimensionless model of spiking cell from FitzHugh and Nagumo. Superseded by **fitzHughNagumo1969Cell**  ( See https://github. com/NeuroML/NeuroML2/issues/42 )
+
+    * I -- (dimension: none)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -44232,7 +44437,7 @@ class FitzHughNagumoCell(BaseCell):
 class BaseCellMembPotCap(BaseCell):
     """BaseCellMembPotCap -- Any cell with a membrane potential **v**  with voltage units and a membrane capacitance **C.**  Also defines exposed value **iSyn**  for current due to external synapses and **iMemb**  for total transmembrane current ( usually channel currents plus **iSyn**  )
 
-    * C -- This is to prevent it conflicting with attribute c (lowercase) e.g. in izhikevichCell2007
+    * C -- (dimension: capacitance): Total capacitance of the cell membrane
 
     """
 
@@ -44476,7 +44681,16 @@ class BaseCellMembPotCap(BaseCell):
 
 
 class IzhikevichCell(BaseCell):
-    """IzhikevichCell -- Cell based on the 2003 model of Izhikevich, see http://izhikevich. org/publications/spikes. htm"""
+    """IzhikevichCell -- Cell based on the 2003 model of Izhikevich, see http://izhikevich. org/publications/spikes. htm
+
+    * v0 -- (dimension: voltage): Initial membrane potential
+    * thresh -- (dimension: voltage): Spike threshold
+    * a -- (dimension: none): Time scale of the recovery variable U
+    * b -- (dimension: none): Sensitivity of U to the subthreshold fluctuations of the membrane potential v
+    * c -- (dimension: none): After-spike reset value of v
+    * d -- (dimension: none): After-spike reset of u
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -44820,7 +45034,12 @@ class IzhikevichCell(BaseCell):
 
 
 class IafCell(BaseCell):
-    """IafCell -- Integrate and fire cell with capacitance **C,**  **leakConductance**  and **leakReversal**"""
+    """IafCell -- Integrate and fire cell with capacitance **C,**  **leakConductance**  and **leakReversal**
+
+    * leakReversal -- (dimension: voltage)
+    * leakConductance -- (dimension: conductance)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -45227,7 +45446,12 @@ class IafCell(BaseCell):
 
 
 class IafTauCell(BaseCell):
-    """IafTauCell -- Integrate and fire cell which returns to its leak reversal potential of **leakReversal**  with a time constant **tau**"""
+    """IafTauCell -- Integrate and fire cell which returns to its leak reversal potential of **leakReversal**  with a time constant **tau**
+
+    * leakReversal -- (dimension: voltage)
+    * tau -- (dimension: time)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -45569,6 +45793,11 @@ class IafTauCell(BaseCell):
 class GradedSynapse(BaseSynapse):
     """GradedSynapse -- Graded/analog synapse. Based on synapse in Methods of http://www. nature. com/neuro/journal/v7/n12/abs/nn1352. html
     Based on synapse in Methods of http://www.nature.com/neuro/journal/v7/n12/abs/nn1352.html.
+    conductance -- (dimension: conductance)
+    delta -- (dimension: voltage): Slope of the activation curve
+    Vth -- (dimension: voltage): The half-activation voltage of the synapse
+    k -- (dimension: per_time): Rate constant for transmitter-receptor dissociation rate
+    erev -- (dimension: voltage): The reversal potential of the synapse
 
     """
 
@@ -45945,6 +46174,7 @@ class GradedSynapse(BaseSynapse):
 class LinearGradedSynapse(BaseSynapse):
     """LinearGradedSynapse -- Behaves just like a one way gap junction.
     Behaves just like a one way gap junction.
+    conductance -- (dimension: conductance)
 
     """
 
@@ -46327,6 +46557,7 @@ class SilentSynapse(BaseSynapse):
 class GapJunction(BaseSynapse):
     """GapJunction -- Gap junction/single electrical connection
     Gap junction/single electrical connection
+    conductance -- (dimension: conductance)
 
     """
 
@@ -47882,7 +48113,11 @@ class ExpCurrSynapse(BasePynnSynapse):
 
 
 class AlphaCondSynapse(BasePynnSynapse):
-    """AlphaCondSynapse -- Alpha synapse: rise time and decay time are both tau_syn. Conductance based synapse."""
+    """AlphaCondSynapse -- Alpha synapse: rise time and decay time are both tau_syn. Conductance based synapse.
+
+    * e_rev -- (dimension: none)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -48057,7 +48292,11 @@ class AlphaCondSynapse(BasePynnSynapse):
 
 
 class ExpCondSynapse(BasePynnSynapse):
-    """ExpCondSynapse -- Conductance based synapse with instantaneous rise and single exponential decay ( with time constant tau_syn )"""
+    """ExpCondSynapse -- Conductance based synapse with instantaneous rise and single exponential decay ( with time constant tau_syn )
+
+    * e_rev -- (dimension: none)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -48224,7 +48463,19 @@ class ExpCondSynapse(BasePynnSynapse):
 
 
 class HH_cond_exp(basePyNNCell):
-    """HH_cond_exp -- Single-compartment Hodgkin-Huxley-type neuron with transient sodium and delayed-rectifier potassium currents using the ion channel models from Traub."""
+    """HH_cond_exp -- Single-compartment Hodgkin-Huxley-type neuron with transient sodium and delayed-rectifier potassium currents using the ion channel models from Traub.
+
+    * v_offset -- (dimension: none)
+    * e_rev_E -- (dimension: none)
+    * e_rev_I -- (dimension: none)
+    * e_rev_K -- (dimension: none)
+    * e_rev_Na -- (dimension: none)
+    * e_rev_leak -- (dimension: none)
+    * g_leak -- (dimension: none)
+    * gbar_K -- (dimension: none)
+    * gbar_Na -- (dimension: none)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -48539,7 +48790,15 @@ class HH_cond_exp(basePyNNCell):
 
 
 class basePyNNIaFCell(basePyNNCell):
-    """basePyNNIaFCell -- Base type of any PyNN standard integrate and fire model"""
+    """basePyNNIaFCell -- Base type of any PyNN standard integrate and fire model
+
+    * tau_m -- (dimension: none)
+    * tau_refrac -- (dimension: none)
+    * v_reset -- (dimension: none)
+    * v_rest -- (dimension: none)
+    * v_thresh -- (dimension: none)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -49502,7 +49761,12 @@ class ElectricalConnection(BaseConnectionNewFormat):
 
 
 class ConnectionWD(BaseConnectionOldFormat):
-    """ConnectionWD -- Event connection between named components, which gets processed via a new instance of a synapse component which is created on the target component, includes setting of **weight**  and **delay**  for the synaptic connection"""
+    """ConnectionWD -- Event connection between named components, which gets processed via a new instance of a synapse component which is created on the target component, includes setting of **weight**  and **delay**  for the synaptic connection
+
+    * weight -- (dimension: none)
+    * delay -- (dimension: time)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -50300,7 +50564,20 @@ class Cell2CaPools(Cell):
 
 
 class AdExIaFCell(BaseCellMembPotCap):
-    """AdExIaFCell -- Model based on Brette R and Gerstner W ( 2005 ) Adaptive Exponential Integrate-and-Fire Model as an Effective Description of Neuronal Activity. J Neurophysiol 94:3637-3642"""
+    """AdExIaFCell -- Model based on Brette R and Gerstner W ( 2005 ) Adaptive Exponential Integrate-and-Fire Model as an Effective Description of Neuronal Activity. J Neurophysiol 94:3637-3642
+
+    * gL -- (dimension: conductance)
+    * EL -- (dimension: voltage)
+    * reset -- (dimension: voltage)
+    * VT -- (dimension: voltage)
+    * thresh -- (dimension: voltage)
+    * delT -- (dimension: voltage)
+    * tauw -- (dimension: time)
+    * refract -- (dimension: time)
+    * a -- (dimension: conductance)
+    * b -- (dimension: current)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -50825,7 +51102,19 @@ class AdExIaFCell(BaseCellMembPotCap):
 
 
 class Izhikevich2007Cell(BaseCellMembPotCap):
-    """Izhikevich2007Cell -- Cell based on the modified Izhikevich model in Izhikevich 2007, Dynamical systems in neuroscience, MIT Press"""
+    """Izhikevich2007Cell -- Cell based on the modified Izhikevich model in Izhikevich 2007, Dynamical systems in neuroscience, MIT Press
+
+    * v0 -- (dimension: voltage)
+    * k -- (dimension: conductance_per_voltage)
+    * vr -- (dimension: voltage)
+    * vt -- (dimension: voltage)
+    * vpeak -- (dimension: voltage)
+    * a -- (dimension: per_time)
+    * b -- (dimension: conductance)
+    * c -- (dimension: voltage)
+    * d -- (dimension: current)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -51361,7 +51650,11 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
 
 
 class IafRefCell(IafCell):
-    """IafRefCell -- Integrate and fire cell with capacitance **C,**  **leakConductance,**  **leakReversal**  and refractory period **refract**"""
+    """IafRefCell -- Integrate and fire cell with capacitance **C,**  **leakConductance,**  **leakReversal**  and refractory period **refract**
+
+    * refract -- (dimension: time)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -51581,7 +51874,11 @@ class IafRefCell(IafCell):
 
 
 class IafTauRefCell(IafTauCell):
-    """IafTauRefCell -- Integrate and fire cell which returns to its leak reversal potential of **leakReversal**  with a time course **tau.**  It has a refractory period of **refract**  after spiking"""
+    """IafTauRefCell -- Integrate and fire cell which returns to its leak reversal potential of **leakReversal**  with a time course **tau.**  It has a refractory period of **refract**  after spiking
+
+    * refract -- (dimension: time)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -52080,7 +52377,12 @@ class DoubleSynapse(BaseVoltageDepSynapse):
 
 
 class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
-    """AlphaCurrentSynapse -- Alpha current synapse: rise time and decay time are both **tau.**"""
+    """AlphaCurrentSynapse -- Alpha current synapse: rise time and decay time are both **tau.**
+
+    * tau -- (dimension: time): Time course for rise and decay
+    * ibase -- (dimension: current): Baseline current increase after receiving a spike
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -52354,7 +52656,13 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
 
 
 class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
-    """BaseConductanceBasedSynapseTwo -- Synapse model suited for a sum of two expTwoSynapses which exposes a conductance **g**  in addition to producing a current. Not necessarily ohmic!! cno_0000027"""
+    """BaseConductanceBasedSynapseTwo -- Synapse model suited for a sum of two expTwoSynapses which exposes a conductance **g**  in addition to producing a current. Not necessarily ohmic!! cno_0000027
+
+    * gbase1 -- (dimension: conductance): Baseline conductance 1
+    * gbase2 -- (dimension: conductance): Baseline conductance 2
+    * erev -- (dimension: voltage): Reversal potential of the synapse
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -52697,7 +53005,12 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
 
 
 class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
-    """BaseConductanceBasedSynapse -- Synapse model which exposes a conductance **g**  in addition to producing a current. Not necessarily ohmic!! cno_0000027"""
+    """BaseConductanceBasedSynapse -- Synapse model which exposes a conductance **g**  in addition to producing a current. Not necessarily ohmic!! cno_0000027
+
+    * gbase -- (dimension: conductance): Baseline conductance, generally the maximum conductance following a single spike
+    * erev -- (dimension: voltage): Reversal potential of the synapse
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -53009,7 +53322,11 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
 
 
 class IonChannelVShift(IonChannel):
-    """IonChannelVShift -- Same as  **ionChannel** , but with a **vShift**  parameter to change voltage activation of gates. The exact usage of **vShift**  in expressions for rates is determined by the individual gates."""
+    """IonChannelVShift -- Same as  **ionChannel** , but with a **vShift**  parameter to change voltage activation of gates. The exact usage of **vShift**  in expressions for rates is determined by the individual gates.
+
+    * vShift -- (dimension: voltage)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -53795,7 +54112,12 @@ class IF_curr_alpha(basePyNNIaFCell):
 
 
 class basePyNNIaFCondCell(basePyNNIaFCell):
-    """basePyNNIaFCondCell -- Base type of conductance based PyNN IaF cell models"""
+    """basePyNNIaFCondCell -- Base type of conductance based PyNN IaF cell models
+
+    * e_rev_E -- (dimension: none): This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
+    * e_rev_I -- (dimension: none): This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -54476,7 +54798,13 @@ class ElectricalConnectionInstance(ElectricalConnection):
 
 
 class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
-    """ExpThreeSynapse -- Ohmic synapse similar to expTwoSynapse but consisting of two components that can differ in decay times and max conductances but share the same rise time."""
+    """ExpThreeSynapse -- Ohmic synapse similar to expTwoSynapse but consisting of two components that can differ in decay times and max conductances but share the same rise time.
+
+    * tauDecay1 -- (dimension: time)
+    * tauDecay2 -- (dimension: time)
+    * tauRise -- (dimension: time)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -54759,7 +55087,12 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
 
 
 class ExpTwoSynapse(BaseConductanceBasedSynapse):
-    """ExpTwoSynapse -- Ohmic synapse model whose conductance waveform on receiving an event has a rise time of **tauRise**  and a decay time of **tauDecay.**  Max conductance reached during this time ( assuming zero conductance before ) is **gbase**  * **weight.**"""
+    """ExpTwoSynapse -- Ohmic synapse model whose conductance waveform on receiving an event has a rise time of **tauRise**  and a decay time of **tauDecay.**  Max conductance reached during this time ( assuming zero conductance before ) is **gbase**  * **weight.**
+
+    * tauDecay -- (dimension: time)
+    * tauRise -- (dimension: time)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -55030,7 +55363,11 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
 
 
 class ExpOneSynapse(BaseConductanceBasedSynapse):
-    """ExpOneSynapse -- Ohmic synapse model whose conductance rises instantaneously by ( **gbase**  * **weight**  ) on receiving an event, and which decays exponentially to zero with time course **tauDecay**"""
+    """ExpOneSynapse -- Ohmic synapse model whose conductance rises instantaneously by ( **gbase**  * **weight**  ) on receiving an event, and which decays exponentially to zero with time course **tauDecay**
+
+    * tauDecay -- (dimension: time): Time course of decay
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -55253,7 +55590,11 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
 
 
 class AlphaSynapse(BaseConductanceBasedSynapse):
-    """AlphaSynapse -- Ohmic synapse model where rise time and decay time are both **tau.**  Max conductance reached during this time ( assuming zero conductance before ) is **gbase**  * **weight.**"""
+    """AlphaSynapse -- Ohmic synapse model where rise time and decay time are both **tau.**  Max conductance reached during this time ( assuming zero conductance before ) is **gbase**  * **weight.**
+
+    * tau -- (dimension: time): Time course of rise/decay
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -55468,7 +55809,15 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
 
 
 class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
-    """EIF_cond_exp_isfa_ista -- Adaptive exponential integrate and fire neuron according to Brette R and Gerstner W ( 2005 ) with exponentially-decaying post-synaptic conductance"""
+    """EIF_cond_exp_isfa_ista -- Adaptive exponential integrate and fire neuron according to Brette R and Gerstner W ( 2005 ) with exponentially-decaying post-synaptic conductance
+
+    * a -- (dimension: none)
+    * b -- (dimension: none)
+    * delta_T -- (dimension: none)
+    * tau_w -- (dimension: none)
+    * v_spike -- (dimension: none)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -56117,7 +56466,11 @@ class IF_cond_alpha(basePyNNIaFCondCell):
 
 
 class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
-    """ContinuousConnectionInstanceW -- An instance of a connection in a  **continuousProjection**  between **presynapticPopulation**  to another **postsynapticPopulation**  through a **preComponent**  at the start and **postComponent**  at the end. Populations need to be of type  **populationList**  and contain  **instance**  and  **location**  elements. Can be used for analog synapses. Includes setting of **weight**  for the connection"""
+    """ContinuousConnectionInstanceW -- An instance of a connection in a  **continuousProjection**  between **presynapticPopulation**  to another **postsynapticPopulation**  through a **preComponent**  at the start and **postComponent**  at the end. Populations need to be of type  **populationList**  and contain  **instance**  and  **location**  elements. Can be used for analog synapses. Includes setting of **weight**  for the connection
+
+    * weight -- (dimension: none)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -56338,7 +56691,11 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
 
 
 class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
-    """ElectricalConnectionInstanceW -- To enable connections between populations through gap junctions. Populations need to be of type  **populationList**  and contain  **instance**  and  **location**  elements. Includes setting of **weight**  for the connection"""
+    """ElectricalConnectionInstanceW -- To enable connections between populations through gap junctions. Populations need to be of type  **populationList**  and contain  **instance**  and  **location**  elements. Includes setting of **weight**  for the connection
+
+    * weight -- (dimension: none)
+
+    """
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
