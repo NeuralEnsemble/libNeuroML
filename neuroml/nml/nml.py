@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Nov 17 11:10:33 2021 by generateDS.py version 2.40.3.
+# Generated Wed Nov 17 14:27:36 2021 by generateDS.py version 2.40.3.
 # Python 3.10.0 (default, Oct  4 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
 #
 # Command line options:
@@ -10867,10 +10867,9 @@ class InhomogeneousValue(GeneratedsSuper):
 
 
 class Species(GeneratedsSuper):
-    """ion -- Specifying the ion here again is redundant, the ion name should be the same as id. Kept for now
+    """Species -- Description of a chemical species identified by **ion,**  which has internal, **concentration,**  and external, **extConcentration**  values for its concentration
+    ion -- Specifying the ion here again is redundant, the ion name should be the same as id. Kept for now
     until LEMS implementation can select by id. TODO: remove.
-
-    * Species -- Description of a chemical species identified by **ion,**  which has internal, **concentration,**  and external, **extConcentration**  values for its concentration
 
     """
 
@@ -14302,10 +14301,7 @@ class InputW(Input):
 
 
 class BaseWithoutId(GeneratedsSuper):
-    """BaseWithoutId -- Base element w
-    ithout ID specified *yet*, e.g. for an element with a particular requirement on its id which does not comply with NmlId (e.g. Segment needs nonNegativeInteger).
-
-    """
+    """BaseWithoutId -- Base element without ID specified *yet*, e.g. for an element with a particular requirement on its id which does not comply with NmlId (e.g. Segment needs nonNegativeInteger)."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -24246,14 +24242,13 @@ class ExtracellularProperties(Base):
 
 
 class ChannelDensityGHK2(Base):
-    """ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
+    """ChannelDensityGHK2 -- Time varying conductance density, **gDensity,**  which is distributed on an area of the cell, producing a current density **iDensity.**  Modified version of Jaffe et al. 1994 ( used also in Lawrence et al. 2006 ). See https://github. com/OpenSourceBrain/ghk-nernst.
+    ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
     TEMPORARILY since selecting all ca or na conducting channel populations/densities in a cell would be difficult otherwise.
     Also, it will make it easier to set the correct native simulator value for erev (e.g. ek for ion = k in NEURON).
     Currently a required attribute.
     It should be removed in the longer term, due to possible inconsistencies in this value and that in the ionChannel
     element. TODO: remove.
-
-    * ChannelDensityGHK2 -- Time varying conductance density, **gDensity,**  which is distributed on an area of the cell, producing a current density **iDensity.**  Modified version of Jaffe et al. 1994 ( used also in Lawrence et al. 2006 ). See https://github. com/OpenSourceBrain/ghk-nernst.
 
     """
 
@@ -24596,14 +24591,13 @@ class ChannelDensityGHK2(Base):
 
 
 class ChannelDensityGHK(Base):
-    """ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
+    """ChannelDensityGHK -- Specifies a time varying conductance density, **gDensity,**  which is distributed on an area of the cell, producing a current density **iDensity**  and whose reversal potential is calculated from the Goldman Hodgkin Katz equation. Hard coded for Ca only! See https://github. com/OpenSourceBrain/ghk-nernst.
+    ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
     TEMPORARILY since selecting all ca or na conducting channel populations/densities in a cell would be difficult otherwise.
     Also, it will make it easier to set the correct native simulator value for erev (e.g. ek for ion = k in NEURON).
     Currently a required attribute.
     It should be removed in the longer term, due to possible inconsistencies in this value and that in the ionChannel
     element. TODO: remove.
-
-    * ChannelDensityGHK -- Specifies a time varying conductance density, **gDensity,**  which is distributed on an area of the cell, producing a current density **iDensity**  and whose reversal potential is calculated from the Goldman Hodgkin Katz equation. Hard coded for Ca only! See https://github. com/OpenSourceBrain/ghk-nernst.
 
     """
 
@@ -24944,14 +24938,13 @@ class ChannelDensityGHK(Base):
 
 
 class ChannelDensityNernst(Base):
-    """ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
+    """ChannelDensityNernst -- Specifies a time varying conductance density, **gDensity,**  which is distributed on an area of the **cell,**  producing a current density **iDensity**  and whose reversal potential is calculated from the Nernst equation. Hard coded for Ca only! See https://github. com/OpenSourceBrain/ghk-nernst.
+    ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
     TEMPORARILY since selecting all ca or na conducting channel populations/densities in a cell would be difficult otherwise.
     Also, it will make it easier to set the correct native simulator value for erev (e.g. ek for ion = k in NEURON).
     Currently a required attribute.
     It should be removed in the longer term, due to possible inconsistencies in this value and that in the ionChannel
     element. TODO: remove.
-
-    * ChannelDensityNernst -- Specifies a time varying conductance density, **gDensity,**  which is distributed on an area of the **cell,**  producing a current density **iDensity**  and whose reversal potential is calculated from the Nernst equation. Hard coded for Ca only! See https://github. com/OpenSourceBrain/ghk-nernst.
 
     """
 
@@ -25355,14 +25348,13 @@ class ChannelDensityNernst(Base):
 
 
 class ChannelDensity(Base):
-    """ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
+    """ChannelDensity -- Specifies a time varying ohmic conductance density, **gDensity,**  which is distributed on an area of the **cell**  ( specified in  **membraneProperties**  ) with fixed reversal potential **erev**  producing a current density **iDensity**
+    ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
     TEMPORARILY since selecting all ca or na conducting channel populations/densities in a cell would be difficult otherwise.
     Also, it will make it easier to set the correct native simulator value for erev (e.g. ek for ion = k in NEURON).
     Currently a required attribute.
     It should be removed in the longer term, due to possible inconsistencies in this value and that in the ionChannel
     element. TODO: remove.
-
-    * ChannelDensity -- Specifies a time varying ohmic conductance density, **gDensity,**  which is distributed on an area of the **cell**  ( specified in  **membraneProperties**  ) with fixed reversal potential **erev**  producing a current density **iDensity**
 
     """
 
@@ -25834,14 +25826,13 @@ class ChannelDensity(Base):
 
 
 class ChannelDensityNonUniformGHK(Base):
-    """ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
+    """ChannelDensityNonUniformGHK -- Specifies a time varying conductance density, which is distributed on a region of the **cell,**  and whose current is calculated from the Goldman-Hodgkin-Katz equation. Hard coded for Ca only!. The conductance density of the channel is not uniform, but is set using the  **variableParameter** . Note, there is no dynamical description of this in LEMS yet, as this type only makes sense for multicompartmental cells. A ComponentType for this needs to be present to enable export of NeuroML 2 multicompartmental cells via LEMS/jNeuroML to NEURON
+    ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
     TEMPORARILY since selecting all ca or na conducting channel populations/densities in a cell would be difficult otherwise.
     Also, it will make it easier to set the correct native simulator value for erev (e.g. ek for ion = k in NEURON).
     Currently a required attribute.
     It should be removed in the longer term, due to possible inconsistencies in this value and that in the ionChannel
     element. TODO: remove.
-
-    * ChannelDensityNonUniformGHK -- Specifies a time varying conductance density, which is distributed on a region of the **cell,**  and whose current is calculated from the Goldman-Hodgkin-Katz equation. Hard coded for Ca only!. The conductance density of the channel is not uniform, but is set using the  **variableParameter** . Note, there is no dynamical description of this in LEMS yet, as this type only makes sense for multicompartmental cells. A ComponentType for this needs to be present to enable export of NeuroML 2 multicompartmental cells via LEMS/jNeuroML to NEURON
 
     """
 
@@ -26124,14 +26115,13 @@ class ChannelDensityNonUniformGHK(Base):
 
 
 class ChannelDensityNonUniformNernst(Base):
-    """ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
+    """ChannelDensityNonUniformNernst -- Specifies a time varying conductance density, which is distributed on a region of the **cell,**  and whose reversal potential is calculated from the Nernst equation. Hard coded for Ca only!. The conductance density of the channel is not uniform, but is set using the  **variableParameter** . Note, there is no dynamical description of this in LEMS yet, as this type only makes sense for multicompartmental cells. A ComponentType for this needs to be present to enable export of NeuroML 2 multicompartmental cells via LEMS/jNeuroML to NEURON
+    ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
     TEMPORARILY since selecting all ca or na conducting channel populations/densities in a cell would be difficult otherwise.
     Also, it will make it easier to set the correct native simulator value for erev (e.g. ek for ion = k in NEURON).
     Currently a required attribute.
     It should be removed in the longer term, due to possible inconsistencies in this value and that in the ionChannel
     element. TODO: remove.
-
-    * ChannelDensityNonUniformNernst -- Specifies a time varying conductance density, which is distributed on a region of the **cell,**  and whose reversal potential is calculated from the Nernst equation. Hard coded for Ca only!. The conductance density of the channel is not uniform, but is set using the  **variableParameter** . Note, there is no dynamical description of this in LEMS yet, as this type only makes sense for multicompartmental cells. A ComponentType for this needs to be present to enable export of NeuroML 2 multicompartmental cells via LEMS/jNeuroML to NEURON
 
     """
 
@@ -26416,14 +26406,13 @@ class ChannelDensityNonUniformNernst(Base):
 
 
 class ChannelDensityNonUniform(Base):
-    """ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
+    """ChannelDensityNonUniform -- Specifies a time varying ohmic conductance density, which is distributed on a region of the **cell.**  The conductance density of the channel is not uniform, but is set using the  **variableParameter** . Note, there is no dynamical description of this in LEMS yet, as this type only makes sense for multicompartmental cells. A ComponentType for this needs to be present to enable export of NeuroML 2 multicompartmental cells via LEMS/jNeuroML to NEURON
+    ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
     TEMPORARILY since selecting all ca or na conducting channel populations/densities in a cell would be difficult otherwise.
     Also, it will make it easier to set the correct native simulator value for erev (e.g. ek for ion = k in NEURON).
     Currently a required attribute.
     It should be removed in the longer term, due to possible inconsistencies in this value and that in the ionChannel
     element. TODO: remove.
-
-    * ChannelDensityNonUniform -- Specifies a time varying ohmic conductance density, which is distributed on a region of the **cell.**  The conductance density of the channel is not uniform, but is set using the  **variableParameter** . Note, there is no dynamical description of this in LEMS yet, as this type only makes sense for multicompartmental cells. A ComponentType for this needs to be present to enable export of NeuroML 2 multicompartmental cells via LEMS/jNeuroML to NEURON
 
     """
 
@@ -26760,14 +26749,13 @@ class ChannelDensityNonUniform(Base):
 
 
 class ChannelPopulation(Base):
-    """ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
+    """ChannelPopulation -- Population of a **number**  of ohmic ion channels. These each produce a conductance **channelg**  across a reversal potential **erev,**  giving a total current **i.**  Note that active membrane currents are more frequently specified as a density over an area of the  **cell**  using  **channelDensity**
+    ion -- Specifying the ion here again is redundant, this will be set in ionChannel definition. It is added here
     TEMPORARILY since selecting all ca or na conducting channel populations/densities in a cell would be difficult otherwise.
     Also, it will make it easier to set the correct native simulator value for erev (e.g. ek for ion = k in NEURON).
     Currently a required attribute.
     It should be removed in the longer term, due to possible inconsistencies in this value and that in the ionChannel
     element. TODO: remove.
-
-    * ChannelPopulation -- Population of a **number**  of ohmic ion channels. These each produce a conductance **channelg**  across a reversal potential **erev,**  giving a total current **i.**  Note that active membrane currents are more frequently specified as a density over an area of the  **cell**  using  **channelDensity**
 
     """
 
@@ -29499,8 +29487,9 @@ class BaseSynapse(Standalone):
 
 
 class FixedFactorConcentrationModel(Standalone):
-    """ion -- Should not be required, as it's present on the species element!
-    FixedFactorConcentrationModel -- Model of buffering of concentration of an ion ( currently hard coded to be calcium, due to requirement for **iCa**  ) which has a baseline level **restingConc**  and tends to this value with time course **decayConstant.**  A fixed factor **rho**  is used to scale the incoming current *independently of the size of the compartment* to produce a concentration change.
+    """FixedFactorConcentrationModel -- Model of buffering of concentration of an ion ( currently hard coded to be calcium, due to requirement for **iCa**  ) which has a baseline level **restingConc**  and tends to this value with time course *
+    *decayConstant.**  A fixed factor **rho**  is used to scale the incoming current *independently of the size of the compartment* to produce a concentration change.
+    ion -- Should not be required, as it's present on the species element!
 
     """
 
@@ -29903,8 +29892,8 @@ class FixedFactorConcentrationModel(Standalone):
 
 
 class DecayingPoolConcentrationModel(Standalone):
-    """ion -- Should not be required, as it's present on the species element!
-    DecayingPoolConcentrationModel -- Model of an intracellular buffering mechanism for **ion**  ( currently hard Coded to be calcium, due to requirement for **iCa**  ) which has a baseline level **restingConc**  and tends to this value with time course **decayConstant.**  The ion is assumed to occupy a shell inside the membrane of thickness **shellThickness.**
+    """DecayingPoolConcentrationModel -- Model of an intracellular buffering mechanism for **ion**  ( currently hard Coded to be calcium, due to requirement for **iCa**  ) which has a baseline level **restingConc**  and tends to this value with time course **decayConstant.**  The ion is assumed to occupy a shell inside the membrane of thickness **shellThickness.**
+    ion -- Should not be required, as it's present on the species element!
 
     """
 
@@ -42089,13 +42078,12 @@ class ChannelDensityVShift(ChannelDensity):
 
 
 class Cell(BaseCell):
-    """morphology -- Should only be used if morphology element is outside the cell.
+    """Cell -- Cell with  **segment** s specified in a  **morphology**  element along with details on its  **biophysicalProperties** . NOTE: this can only be correctly simulated using jLEMS when there is a single segment in the cell, and **v**  of this cell represents the membrane potential in that isopotential segment.
+    morphology -- Should only be used if morphology element is outside the cell.
     This points to the id of the morphology
 
     * biophysicalProperties -- Should only be used if biophysicalProperties element is outside the cell.
       This points to the id of the biophysicalProperties
-
-    * Cell -- Cell with  **segment** s specified in a  **morphology**  element along with details on its  **biophysicalProperties** . NOTE: this can only be correctly simulated using jLEMS when there is a single segment in the cell, and **v**  of this cell represents the membrane potential in that isopotential segment.
 
     """
 
@@ -44228,8 +44216,8 @@ class FitzHughNagumoCell(BaseCell):
 
 
 class BaseCellMembPotCap(BaseCell):
-    """C -- This is to prevent it conflicting with attribute c (lowercase) e.g. in izhikevichCell2007
-    BaseCellMembPotCap -- Any cell with a membrane potential **v**  with voltage units and a membrane capacitance **C.**  Also defines exposed value **iSyn**  for current due to external synapses and **iMemb**  for total transmembrane current ( usually channel currents plus **iSyn**  )
+    """BaseCellMembPotCap -- Any cell with a membrane potential **v**  with voltage units and a membrane capacitance **C.**  Also defines exposed value **iSyn**  for current due to external synapses and **iMemb**  for total transmembrane current ( usually channel currents plus **iSyn**  )
+    C -- This is to prevent it conflicting with attribute c (lowercase) e.g. in izhikevichCell2007
 
     """
 
@@ -45564,8 +45552,8 @@ class IafTauCell(BaseCell):
 
 
 class GradedSynapse(BaseSynapse):
-    """GradedSynapse -- Based on synapse in Methods of http://www.nature.com/neuro/journal/v7/n12/abs/nn1352.html.
-    Graded/analog synapse. Based on synapse in Methods of http://www. nature. com/neuro/journal/v7/n12/abs/nn1352. html
+    """GradedSynapse -- Graded/analog synapse. Based on synapse in Methods of http://www. nature. com/neuro/journal/v7/n12/abs/nn1352. html
+    Based on synapse in Methods of http://www.nature.com/neuro/journal/v7/n12/abs/nn1352.html.
 
     """
 
@@ -46168,8 +46156,8 @@ class LinearGradedSynapse(BaseSynapse):
 
 
 class SilentSynapse(BaseSynapse):
-    """SilentSynapse -- Dummy synapse which emits no current. Used as presynaptic endpoint for analog synaptic connection (continuousConnection).
-    Dummy synapse which emits no current. Used as presynaptic endpoint for analog synaptic connection.
+    """SilentSynapse -- Dummy synapse which emits no current. Used as presynaptic endpoint for analog synaptic connection.
+    Dummy synapse which emits no current. Used as presynaptic endpoint for analog synaptic connection (continuousConnection).
 
     """
 
