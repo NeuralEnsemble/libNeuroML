@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Nov 18 10:42:12 2021 by generateDS.py version 2.40.3.
+# Generated Thu Nov 18 18:20:14 2021 by generateDS.py version 2.40.3.
 # Python 3.10.0 (default, Oct  4 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
 #
 # Command line options:
@@ -10905,10 +10905,10 @@ class InhomogeneousValue(GeneratedsSuper):
 
 
 class Species(GeneratedsSuper):
-    """Species -- Description of a chemical sp
-    ecies identified by **ion,**  which has internal, **concentration,**  and external, **extConcentration**  values for its concentration
+    """Species -- Description of a chemical species identified by **ion,**  which has internal, **concentration,**  and external, **extConcentration**  values for its concentration
     \n
-    :param initialConcentration:
+    :param initialConcentration
+    :
     :type initialConcentration: concentration
     :param initialExtConcentration:
     :type initialExtConcentration: concentration
@@ -24927,7 +24927,7 @@ class ChannelDensityGHK(Base):
 
     validate_Nml2Quantity_permeability_patterns_ = [
         [
-            "^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(m_per_s|                        um_per_ms|cm_per_s|cm_per_ms))$"
+            "^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(m_per_s|um_per_ms|cm_per_s|cm_per_ms))$"
         ]
     ]
 
@@ -44804,11 +44804,11 @@ class IzhikevichCell(BaseCell):
     :type v0: voltage
     :param a: Time scale of the recovery variable U
     :type a: none
-    :param b: Sensitivity of U to the subthreshold fluctuations of the membrane potential v
+    :param b: Sensitivity of U to the subthreshold fluctuations of the membrane potential V
     :type b: none
-    :param c: After-spike reset value of v
+    :param c: After-spike reset value of V
     :type c: none
-    :param d: After-spike reset of u
+    :param d: After-spike increase to U
     :type d: none
     :param thresh: Spike threshold
     :type thresh: voltage
@@ -48650,10 +48650,10 @@ class HH_cond_exp(basePyNNCell):
     :param i_offset:
     :type i_offset: none
     :param tau_syn_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
-    :type
-    tau_syn_E: none
+    :type tau_syn_E: none
     :param tau_syn_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
-    :type tau_syn_I: none
+    :type tau
+    _syn_I: none
     :param v_init:
     :type v_init: none
 
