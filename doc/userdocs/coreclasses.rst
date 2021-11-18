@@ -38,4 +38,8 @@ Please also note that this module is also included in the top level of the `neur
 List of Component classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+This documentation is auto-generated from the `NeuroML schema <https://docs.neuroml.org/Userdocs/NeuroMLv2.html>`__.
+In case of issues, please refer to the schema documentation for clarifications.
+If the schema documentation does not resolve the issue, please `contact us <https://docs.neuroml.org/NeuroMLOrg/CommunicationChannels.html>`__.
+
 .. include:: coreclasses_list.txt
