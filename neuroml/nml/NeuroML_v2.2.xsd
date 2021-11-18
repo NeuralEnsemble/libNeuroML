@@ -63,7 +63,7 @@
   </xs:simpleType>
   <xs:simpleType name="Nml2Quantity_permeability">
     <xs:restriction base="xs:string">
-      <xs:pattern value="-?([0-9]*(\.[0-9]+)?)([eE]-?[0-9]+)?[\s]*(m_per_s|                        um_per_ms|cm_per_s|cm_per_ms)"/>
+      <xs:pattern value="-?([0-9]*(\.[0-9]+)?)([eE]-?[0-9]+)?[\s]*(m_per_s|um_per_ms|cm_per_s|cm_per_ms)"/>
       <!-- Based on set of defined Units in NeuroMLCoreDimensions.xml -->
     </xs:restriction>
   </xs:simpleType>
@@ -959,7 +959,7 @@
       <xs:extension base="Standalone">
         <xs:attribute name="ion" type="NmlId" use="required">
           <xs:annotation>
-                        </xs:annotation>
+            </xs:annotation>
         </xs:attribute>
         <xs:attribute name="restingConc" type="Nml2Quantity_concentration" use="required"/>
         <xs:attribute name="decayConstant" type="Nml2Quantity_time" use="required"/>
@@ -984,7 +984,7 @@
       <xs:extension base="Standalone">
         <xs:attribute name="ion" type="NmlId" use="required">
           <xs:annotation>
-                        </xs:annotation>
+            </xs:annotation>
         </xs:attribute>
         <xs:attribute name="restingConc" type="Nml2Quantity_concentration" use="required"/>
         <xs:attribute name="decayConstant" type="Nml2Quantity_time" use="required"/>
@@ -1422,11 +1422,11 @@
 :type v0: voltage
 :param a: Time scale of the recovery variable U
 :type a: none
-:param b: Sensitivity of U to the subthreshold fluctuations of the membrane potential v
+:param b: Sensitivity of U to the subthreshold fluctuations of the membrane potential V
 :type b: none
-:param c: After-spike reset value of v
+:param c: After-spike reset value of V
 :type c: none
-:param d: After-spike reset of u
+:param d: After-spike increase to U
 :type d: none
 :param thresh: Spike threshold
 :type thresh: voltage
@@ -1683,11 +1683,11 @@
         </xs:sequence>
         <xs:attribute name="morphology" type="NmlId" use="optional">
           <xs:annotation>
-                        </xs:annotation>
+            </xs:annotation>
         </xs:attribute>
         <xs:attribute name="biophysicalProperties" type="NmlId" use="optional">
           <xs:annotation>
-                        </xs:annotation>
+            </xs:annotation>
         </xs:attribute>
       </xs:extension>
     </xs:complexContent>
@@ -1988,7 +1988,7 @@
         <xs:attribute name="segment" type="NonNegativeInteger" use="optional"/>
         <xs:attribute name="ion" type="NmlId" use="required">
           <xs:annotation>
-                        </xs:annotation>
+            </xs:annotation>
         </xs:attribute>
       </xs:extension>
     </xs:complexContent>
@@ -2011,7 +2011,7 @@
         <xs:attribute name="erev" type="Nml2Quantity_voltage" use="required"/>
         <xs:attribute name="ion" type="NmlId" use="required">
           <xs:annotation>
-                        </xs:annotation>
+            </xs:annotation>
         </xs:attribute>
       </xs:extension>
     </xs:complexContent>
@@ -2029,7 +2029,7 @@
         <xs:attribute name="ionChannel" type="NmlId" use="required"/>
         <xs:attribute name="ion" type="NmlId" use="required">
           <xs:annotation>
-                        </xs:annotation>
+            </xs:annotation>
         </xs:attribute>
       </xs:extension>
     </xs:complexContent>
@@ -2047,7 +2047,7 @@
         <xs:attribute name="ionChannel" type="NmlId" use="required"/>
         <xs:attribute name="ion" type="NmlId" use="required">
           <xs:annotation>
-                        </xs:annotation>
+            </xs:annotation>
         </xs:attribute>
       </xs:extension>
     </xs:complexContent>
@@ -2076,7 +2076,7 @@
         <xs:attribute name="segment" type="NonNegativeInteger" use="optional"/>
         <xs:attribute name="ion" type="NmlId" use="required">
           <xs:annotation>
-                        </xs:annotation>
+            </xs:annotation>
         </xs:attribute>
       </xs:extension>
     </xs:complexContent>
@@ -2121,7 +2121,7 @@
         <xs:attribute name="segment" type="NmlId" use="optional"/>
         <xs:attribute name="ion" type="NmlId" use="required">
           <xs:annotation>
-                        </xs:annotation>
+            </xs:annotation>
         </xs:attribute>
       </xs:extension>
     </xs:complexContent>
@@ -2159,7 +2159,7 @@
         <xs:attribute name="segment" type="NmlId" use="optional"/>
         <xs:attribute name="ion" type="NmlId" use="required">
           <xs:annotation>
-                        </xs:annotation>
+            </xs:annotation>
         </xs:attribute>
       </xs:extension>
     </xs:complexContent>
@@ -2185,7 +2185,7 @@
         <xs:attribute name="segment" type="NmlId" use="optional"/>
         <xs:attribute name="ion" type="NmlId" use="required">
           <xs:annotation>
-                        </xs:annotation>
+            </xs:annotation>
         </xs:attribute>
       </xs:extension>
     </xs:complexContent>
@@ -2234,7 +2234,7 @@
     <xs:attribute name="concentrationModel" type="NmlId" use="required"/>
     <xs:attribute name="ion" type="NmlId" use="optional">
       <xs:annotation>
-                </xs:annotation>
+        </xs:annotation>
     </xs:attribute>
     <xs:attribute name="initialConcentration" type="Nml2Quantity_concentration" use="required"/>
     <xs:attribute name="initialExtConcentration" type="Nml2Quantity_concentration" use="required"/>
