@@ -159,6 +159,7 @@ class TestNML(unittest.TestCase):
         """Test getting member info."""
         cell = neuroml.Cell(id="testcell")
         info = cell.info()
-        self.assertRegex(info, "morphology")
-        self.assertRegex(info, "biophysical_properties")
-        self.assertNotRegex(info, "network")
+        if int(platform.python_version_tuple()[0]) > 2:
+            self.assertRegex(info, "morphology")
+            self.assertRegex(info, "biophysical_properties")
+            self.assertNotRegex(info, "network")
