@@ -211,8 +211,10 @@ except ModulenotfoundExp_ as exp:
             for n in settings:
                 if hasattr(self, n):
                     setattr(settings[n], self[n])
-            from io import StringIO
-
+            if sys.version_info.major == 2:
+                from io import BytesIO as StringIO
+            else:
+                from io import StringIO
             output = StringIO()
             self.export(
                 output,
