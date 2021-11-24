@@ -6,6 +6,7 @@ Utilities for checking generated code
 import os.path
 import sys
 import inspect
+import warnings
 
 import neuroml
 
@@ -129,6 +130,7 @@ def append_to_element(parent, child):
     :type child: Object
     :raises Exception: when the child could not be added to the parent
     """
+    warnings.warn("This method is deprecated and will be removed in future releases. Please use the `add` methods provided in each NeuroML ComponentType object", FutureWarning, stacklevel=2)
     membs = inspect.getmembers(parent)
     # print("Adding %s to element %s"%(child, parent))
     mappings = {}

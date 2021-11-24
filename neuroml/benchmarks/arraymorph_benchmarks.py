@@ -72,28 +72,8 @@ class AMWriteBenchmark(object):
         self.test_write_big_arraymorph_neuroml()
 
     @timeit
-    def run_json(self):
-        self.test_write_big_arraymorph_json()
-
-    @timeit
     def run_hdf5(self):
         self.test_write_big_arraymorph_hdf5()
-
-    def test_write_big_arraymorph_json(self):
-        writer_method = neuroml.writers.JSONWriter.write
-        fh, filename = tempfile.mkstemp()
-
-        try:
-            writer_method(self.test_doc, filename)
-        except:
-            self.fail("Exception raised!")
-
-        print("JSON Number of segments:")
-        print(self.num_segments)
-        print("JSON size in bytes:")
-        print(self.file_size(filename))
-
-        os.close(fh)
 
     def test_write_big_arraymorph_neuroml(self):
         writer_method = neuroml.writers.NeuroMLWriter.write
@@ -185,16 +165,13 @@ def benchmark_arraymorph_writer():
     """
     num_tests = 10
 
-    json_results = []
     neuroml_results = []
     hdf5_results = []
 
     for i in range(num_tests):
-        json_runtimes = []
         hdf5_runtimes = []
         neuroml_runtimes = []
 
-        json_num_segments_list = []
         hdf5_num_segments_list = []
         neuroml_num_segments_list = []
 
@@ -202,47 +179,36 @@ def benchmark_arraymorph_writer():
             print("test %d" % (i))
 
             neuroml_num_segments_factor = 4e2
-            json_num_segments_factor = 4e2
             hdf5_num_segments_factor = 4e2
 
             neuroml_num_segments = i * neuroml_num_segments_factor
-            json_num_segments = i * json_num_segments_factor
             hdf5_num_segments = i * hdf5_num_segments_factor
 
             neuroml_benchmark = AMWriteBenchmark(num_segments=neuroml_num_segments)
-            json_benchmark = AMWriteBenchmark(num_segments=json_num_segments)
             hdf5_benchmark = AMWriteBenchmark(num_segments=hdf5_num_segments)
 
             write_time_neuroml = neuroml_benchmark.run_neuroml()
-            write_time_json = json_benchmark.run_json()
             write_time_hdf5 = hdf5_benchmark.run_hdf5()
 
             neuroml_runtimes.append(write_time_neuroml)
-            json_runtimes.append(write_time_json)
             hdf5_runtimes.append(write_time_hdf5)
 
             neuroml_num_segments_list.append(neuroml_num_segments)
-            json_num_segments_list.append(json_num_segments)
             hdf5_num_segments_list.append(hdf5_num_segments)
 
         neuroml_results.append(neuroml_runtimes)
-        json_results.append(json_runtimes)
         hdf5_results.append(hdf5_runtimes)
 
         np.savetxt("neuroml_results.csv", neuroml_results, delimiter=",")
-        np.savetxt("json_results.csv", json_results, delimiter=",")
         np.savetxt("hdf5_results.csv", hdf5_results, delimiter=",")
 
     neuroml_runtimes_averaged = np.mean(neuroml_results, axis=0)
-    json_runtimes_averaged = np.mean(json_results, axis=0)
     hdf5_runtimes_averaged = np.mean(hdf5_results, axis=0)
 
     hdf5_errors = np.std(hdf5_results, axis=0)
-    json_errors = np.std(json_results, axis=0)
     neuroml_errors = np.std(neuroml_results, axis=0)
 
     neuroml_num_segments_list = np.array(neuroml_num_segments_list)
-    json_num_segments_list = np.array(json_num_segments_list)
     hdf5_num_segments_list = np.array(hdf5_num_segments_list)
 
     plt_neuroml = plt.errorbar(
@@ -277,27 +243,15 @@ def benchmark_arraymorph_writer():
 
     #    plt.show()
 
-    plt_json = plt.errorbar(
-        json_num_segments_list,
-        json_runtimes_averaged,
-        yerr=json_errors,
-        marker="o",
-        color="k",
-        ecolor="k",
-        markerfacecolor="b",
-        label="series 2",
-        capsize=5,
-    )
-
     plt.title(
-        "ArrayMorph write to disk benchmarks for JSON, HDF5 and NeuroML serialization formats"
+        "ArrayMorph write to disk benchmarks for HDF5 and NeuroML serialization formats"
     )
     plt.xlabel("Number of segments in morphology")
     plt.ylabel("Time to write to disk (s)")
 
     plt.legend(
-        [plt_json, plt_hdf5, plt_neuroml],
-        ["JSON serialization", "HDF5 serialization", "NeuroML serialization"],
+        [plt_hdf5, plt_neuroml],
+        ["HDF5 serialization", "NeuroML serialization"],
     )
 
     plt.yscale("log")

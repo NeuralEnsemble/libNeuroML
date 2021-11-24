@@ -45,6 +45,10 @@ See https://docs.neuroml.org/ for an overview of the various NeuroML libraries.
 ### version 0.2.57 (dev)
 
 - Enable Python 3.10 support
+- Regenerate nml.py with generateDS using Python 3
+- Add generic `add` method to all NeuroML ComponentType classes that allows users to easily construct their NeuroML documents.
+- Improve unit tests
+- DEPRECATION notice: `append_to_element` will be deprecated in future releases, please use the `add` method instead
 
 ### version 0.2.56
 

@@ -42,160 +42,160 @@
             </instance>
         </population>
         <projection id="Proj" presynapticPopulation="Pop_x" postsynapticPopulation="Pop_x" synapse="syn0">
-            <connectionWD id="0" preCellId="../Pop_x/0/iaf0" preFractionAlong="0.9111505480903207" postCellId="../Pop_x/1/iaf0" postFractionAlong="0.5734080856809272" weight="0.265321705261563" delay="8.378376441951344ms"/>
-            <connectionWD id="1" preCellId="../Pop_x/0/iaf0" preFractionAlong="0.3982381514678992" postCellId="../Pop_x/4/iaf0" postFractionAlong="0.7692790899139238" weight="0.512752133864065" delay="6.84837218661006ms"/>
-            <connectionWD id="2" preCellId="../Pop_x/0/iaf0" preFractionAlong="0.03184130674110186" postCellId="../Pop_x/5/iaf0" postFractionAlong="0.7541731718588721" weight="0.181464915915041" delay="8.201901844338309ms"/>
-            <connectionWD id="3" preCellId="../Pop_x/0/iaf0" preFractionAlong="0.4567670702014537" postCellId="../Pop_x/6/iaf0" postFractionAlong="0.5731685145105314" weight="0.336106099309834" delay="1.8906186957807647ms"/>
-            <connectionWD id="4" preCellId="../Pop_x/1/iaf0" preFractionAlong="0.48381148264314666" postCellId="../Pop_x/7/iaf0" postFractionAlong="0.17758973057390504" weight="0.991957772794217" delay="4.444999201490742ms"/>
-            <connectionWD id="5" preCellId="../Pop_x/2/iaf0" preFractionAlong="0.2719298523267516" postCellId="../Pop_x/0/iaf0" postFractionAlong="0.43426858361265375" weight="0.420357316735054" delay="1.0862083448160165ms"/>
-            <connectionWD id="6" preCellId="../Pop_x/2/iaf0" preFractionAlong="0.694205914699235" postCellId="../Pop_x/3/iaf0" postFractionAlong="0.40420726708424737" weight="0.985348174888327" delay="2.6254001971904994ms"/>
-            <connectionWD id="7" preCellId="../Pop_x/2/iaf0" preFractionAlong="0.7177179073521607" postCellId="../Pop_x/6/iaf0" postFractionAlong="0.6790519516466869" weight="0.372109619295305" delay="2.3496343749846513ms"/>
-            <connectionWD id="8" preCellId="../Pop_x/2/iaf0" preFractionAlong="0.6559317169521112" postCellId="../Pop_x/7/iaf0" postFractionAlong="0.9158231935739135" weight="0.776132969824037" delay="3.8925926661855117ms"/>
-            <connectionWD id="9" preCellId="../Pop_x/3/iaf0" preFractionAlong="0.06205576465547391" postCellId="../Pop_x/0/iaf0" postFractionAlong="0.1360157911087615" weight="0.668447137032541" delay="3.495396856198003ms"/>
-            <connectionWD id="10" preCellId="../Pop_x/3/iaf0" preFractionAlong="0.5215907717112922" postCellId="../Pop_x/2/iaf0" postFractionAlong="0.8713946678999259" weight="0.514719140206116" delay="1.3737149792589898ms"/>
-            <connectionWD id="11" preCellId="../Pop_x/3/iaf0" preFractionAlong="0.5063014868143146" postCellId="../Pop_x/4/iaf0" postFractionAlong="0.20327205126356085" weight="0.322057226781164" delay="3.9817018093932175ms"/>
-            <connectionWD id="12" preCellId="../Pop_x/3/iaf0" preFractionAlong="0.5646244900742771" postCellId="../Pop_x/6/iaf0" postFractionAlong="0.08510002940969075" weight="0.317028202740408" delay="3.4114424552421796ms"/>
-            <connectionWD id="13" preCellId="../Pop_x/3/iaf0" preFractionAlong="0.7305603280541011" postCellId="../Pop_x/7/iaf0" postFractionAlong="0.7769544424729391" weight="0.256851738048816" delay="8.327770443873531ms"/>
-            <connectionWD id="14" preCellId="../Pop_x/4/iaf0" preFractionAlong="0.6347827539292025" postCellId="../Pop_x/0/iaf0" postFractionAlong="0.898268251074767" weight="0.790526029476503" delay="6.091577855523774ms"/>
-            <connectionWD id="15" preCellId="../Pop_x/4/iaf0" preFractionAlong="0.6689472932800722" postCellId="../Pop_x/1/iaf0" postFractionAlong="0.4207616695426898" weight="0.358670556668895" delay="7.702859673578057ms"/>
-            <connectionWD id="16" preCellId="../Pop_x/4/iaf0" preFractionAlong="0.41472735535603067" postCellId="../Pop_x/2/iaf0" postFractionAlong="0.5004747976770939" weight="0.829357735249606" delay="1.7487867814549418ms"/>
-            <connectionWD id="17" preCellId="../Pop_x/4/iaf0" preFractionAlong="0.9442210523827754" postCellId="../Pop_x/5/iaf0" postFractionAlong="0.05160391767299877" weight="0.388418155152456" delay="1.0746590394935085ms"/>
-            <connectionWD id="18" preCellId="../Pop_x/4/iaf0" preFractionAlong="0.571521105945508" postCellId="../Pop_x/6/iaf0" postFractionAlong="0.2484133090733609" weight="0.690468269999967" delay="5.00995811633457ms"/>
-            <connectionWD id="19" preCellId="../Pop_x/5/iaf0" preFractionAlong="0.04276007019212802" postCellId="../Pop_x/1/iaf0" postFractionAlong="0.9981342296444798" weight="0.141551757796414" delay="8.70467255784429ms"/>
-            <connectionWD id="20" preCellId="../Pop_x/5/iaf0" preFractionAlong="0.5801048271426202" postCellId="../Pop_x/4/iaf0" postFractionAlong="0.9813135565365696" weight="0.320623366012009" delay="3.865008743671855ms"/>
-            <connectionWD id="21" preCellId="../Pop_x/5/iaf0" preFractionAlong="0.6070585475338274" postCellId="../Pop_x/6/iaf0" postFractionAlong="0.49680968876011555" weight="0.164769539223915" delay="0.46621071319652985ms"/>
-            <connectionWD id="22" preCellId="../Pop_x/6/iaf0" preFractionAlong="0.2824470291123572" postCellId="../Pop_x/0/iaf0" postFractionAlong="0.09215872811695913" weight="0.442712415850619" delay="5.449613597795614ms"/>
-            <connectionWD id="23" preCellId="../Pop_x/6/iaf0" preFractionAlong="0.7915177900236534" postCellId="../Pop_x/1/iaf0" postFractionAlong="0.11094804898017563" weight="0.570007640366697" delay="7.61696224317614ms"/>
-            <connectionWD id="24" preCellId="../Pop_x/6/iaf0" preFractionAlong="0.03755665752648618" postCellId="../Pop_x/2/iaf0" postFractionAlong="0.9100241304052978" weight="0.073439921465894" delay="9.271381201286816ms"/>
-            <connectionWD id="25" preCellId="../Pop_x/6/iaf0" preFractionAlong="0.29138316904878636" postCellId="../Pop_x/5/iaf0" postFractionAlong="0.18592795211214297" weight="0.1127194932293" delay="6.709498512970625ms"/>
-            <connectionWD id="26" preCellId="../Pop_x/6/iaf0" preFractionAlong="0.22204968713636175" postCellId="../Pop_x/7/iaf0" postFractionAlong="0.6624214121703437" weight="0.43460320972408" delay="5.604854687225679ms"/>
-            <connectionWD id="27" preCellId="../Pop_x/7/iaf0" preFractionAlong="0.46010439043098517" postCellId="../Pop_x/2/iaf0" postFractionAlong="0.862150865442184" weight="0.551800210882795" delay="0.17422567643458176ms"/>
-            <connectionWD id="28" preCellId="../Pop_x/7/iaf0" preFractionAlong="0.08277047261975956" postCellId="../Pop_x/6/iaf0" postFractionAlong="0.6687451541867189" weight="0.959225746872153" delay="1.7979665412597146ms"/>
+            <connectionWD id="0" preCellId="../Pop_x/0/iaf0" preFractionAlong="0.911150548090321" postCellId="../Pop_x/1/iaf0" postFractionAlong="0.573408085680927" weight="0.265321705261563" delay="8.378376441951344ms"/>
+            <connectionWD id="1" preCellId="../Pop_x/0/iaf0" preFractionAlong="0.398238151467899" postCellId="../Pop_x/4/iaf0" postFractionAlong="0.769279089913924" weight="0.512752133864065" delay="6.84837218661006ms"/>
+            <connectionWD id="2" preCellId="../Pop_x/0/iaf0" preFractionAlong="0.031841306741102" postCellId="../Pop_x/5/iaf0" postFractionAlong="0.754173171858872" weight="0.181464915915041" delay="8.201901844338309ms"/>
+            <connectionWD id="3" preCellId="../Pop_x/0/iaf0" preFractionAlong="0.456767070201454" postCellId="../Pop_x/6/iaf0" postFractionAlong="0.573168514510531" weight="0.336106099309834" delay="1.8906186957807647ms"/>
+            <connectionWD id="4" preCellId="../Pop_x/1/iaf0" preFractionAlong="0.483811482643147" postCellId="../Pop_x/7/iaf0" postFractionAlong="0.177589730573905" weight="0.991957772794217" delay="4.444999201490742ms"/>
+            <connectionWD id="5" preCellId="../Pop_x/2/iaf0" preFractionAlong="0.271929852326752" postCellId="../Pop_x/0/iaf0" postFractionAlong="0.434268583612654" weight="0.420357316735054" delay="1.0862083448160165ms"/>
+            <connectionWD id="6" preCellId="../Pop_x/2/iaf0" preFractionAlong="0.694205914699235" postCellId="../Pop_x/3/iaf0" postFractionAlong="0.404207267084247" weight="0.985348174888327" delay="2.6254001971904994ms"/>
+            <connectionWD id="7" preCellId="../Pop_x/2/iaf0" preFractionAlong="0.717717907352161" postCellId="../Pop_x/6/iaf0" postFractionAlong="0.679051951646687" weight="0.372109619295305" delay="2.3496343749846513ms"/>
+            <connectionWD id="8" preCellId="../Pop_x/2/iaf0" preFractionAlong="0.655931716952111" postCellId="../Pop_x/7/iaf0" postFractionAlong="0.915823193573914" weight="0.776132969824037" delay="3.8925926661855117ms"/>
+            <connectionWD id="9" preCellId="../Pop_x/3/iaf0" preFractionAlong="0.062055764655474" postCellId="../Pop_x/0/iaf0" postFractionAlong="0.136015791108761" weight="0.668447137032541" delay="3.495396856198003ms"/>
+            <connectionWD id="10" preCellId="../Pop_x/3/iaf0" preFractionAlong="0.521590771711292" postCellId="../Pop_x/2/iaf0" postFractionAlong="0.871394667899926" weight="0.514719140206116" delay="1.3737149792589898ms"/>
+            <connectionWD id="11" preCellId="../Pop_x/3/iaf0" preFractionAlong="0.506301486814315" postCellId="../Pop_x/4/iaf0" postFractionAlong="0.203272051263561" weight="0.322057226781164" delay="3.9817018093932175ms"/>
+            <connectionWD id="12" preCellId="../Pop_x/3/iaf0" preFractionAlong="0.564624490074277" postCellId="../Pop_x/6/iaf0" postFractionAlong="0.085100029409691" weight="0.317028202740408" delay="3.4114424552421796ms"/>
+            <connectionWD id="13" preCellId="../Pop_x/3/iaf0" preFractionAlong="0.730560328054101" postCellId="../Pop_x/7/iaf0" postFractionAlong="0.776954442472939" weight="0.256851738048816" delay="8.327770443873531ms"/>
+            <connectionWD id="14" preCellId="../Pop_x/4/iaf0" preFractionAlong="0.634782753929202" postCellId="../Pop_x/0/iaf0" postFractionAlong="0.898268251074767" weight="0.790526029476503" delay="6.091577855523774ms"/>
+            <connectionWD id="15" preCellId="../Pop_x/4/iaf0" preFractionAlong="0.668947293280072" postCellId="../Pop_x/1/iaf0" postFractionAlong="0.42076166954269" weight="0.358670556668895" delay="7.702859673578057ms"/>
+            <connectionWD id="16" preCellId="../Pop_x/4/iaf0" preFractionAlong="0.414727355356031" postCellId="../Pop_x/2/iaf0" postFractionAlong="0.500474797677094" weight="0.829357735249606" delay="1.7487867814549418ms"/>
+            <connectionWD id="17" preCellId="../Pop_x/4/iaf0" preFractionAlong="0.944221052382775" postCellId="../Pop_x/5/iaf0" postFractionAlong="0.051603917672999" weight="0.388418155152456" delay="1.0746590394935085ms"/>
+            <connectionWD id="18" preCellId="../Pop_x/4/iaf0" preFractionAlong="0.571521105945508" postCellId="../Pop_x/6/iaf0" postFractionAlong="0.248413309073361" weight="0.690468269999967" delay="5.00995811633457ms"/>
+            <connectionWD id="19" preCellId="../Pop_x/5/iaf0" preFractionAlong="0.042760070192128" postCellId="../Pop_x/1/iaf0" postFractionAlong="0.99813422964448" weight="0.141551757796414" delay="8.70467255784429ms"/>
+            <connectionWD id="20" preCellId="../Pop_x/5/iaf0" preFractionAlong="0.58010482714262" postCellId="../Pop_x/4/iaf0" postFractionAlong="0.98131355653657" weight="0.320623366012009" delay="3.865008743671855ms"/>
+            <connectionWD id="21" preCellId="../Pop_x/5/iaf0" preFractionAlong="0.607058547533827" postCellId="../Pop_x/6/iaf0" postFractionAlong="0.496809688760116" weight="0.164769539223915" delay="0.46621071319652985ms"/>
+            <connectionWD id="22" preCellId="../Pop_x/6/iaf0" preFractionAlong="0.282447029112357" postCellId="../Pop_x/0/iaf0" postFractionAlong="0.092158728116959" weight="0.442712415850619" delay="5.449613597795614ms"/>
+            <connectionWD id="23" preCellId="../Pop_x/6/iaf0" preFractionAlong="0.791517790023653" postCellId="../Pop_x/1/iaf0" postFractionAlong="0.110948048980176" weight="0.570007640366697" delay="7.61696224317614ms"/>
+            <connectionWD id="24" preCellId="../Pop_x/6/iaf0" preFractionAlong="0.037556657526486" postCellId="../Pop_x/2/iaf0" postFractionAlong="0.910024130405298" weight="0.073439921465894" delay="9.271381201286816ms"/>
+            <connectionWD id="25" preCellId="../Pop_x/6/iaf0" preFractionAlong="0.291383169048786" postCellId="../Pop_x/5/iaf0" postFractionAlong="0.185927952112143" weight="0.1127194932293" delay="6.709498512970625ms"/>
+            <connectionWD id="26" preCellId="../Pop_x/6/iaf0" preFractionAlong="0.222049687136362" postCellId="../Pop_x/7/iaf0" postFractionAlong="0.662421412170344" weight="0.43460320972408" delay="5.604854687225679ms"/>
+            <connectionWD id="27" preCellId="../Pop_x/7/iaf0" preFractionAlong="0.460104390430985" postCellId="../Pop_x/2/iaf0" postFractionAlong="0.862150865442184" weight="0.551800210882795" delay="0.17422567643458176ms"/>
+            <connectionWD id="28" preCellId="../Pop_x/7/iaf0" preFractionAlong="0.08277047261976" postCellId="../Pop_x/6/iaf0" postFractionAlong="0.668745154186719" weight="0.959225746872153" delay="1.7979665412597146ms"/>
         </projection>
         <projection id="ProjEmpty" presynapticPopulation="IafPop0" postsynapticPopulation="IafPop1" synapse="syn0"/>
         <projection id="ProjConnection" presynapticPopulation="IafPop0" postsynapticPopulation="IafPop1" synapse="syn1">
-            <connection id="0" preCellId="../IafPop0[9]" preFractionAlong="0.5497428483636986" postCellId="../IafPop1[9]" postFractionAlong="0.9913272921358579"/>
+            <connection id="0" preCellId="../IafPop0[9]" preFractionAlong="0.549742848363699" postCellId="../IafPop1[9]" postFractionAlong="0.991327292135858"/>
         </projection>
         <electricalProjection id="ElectProj" presynapticPopulation="Pop_x" postsynapticPopulation="Pop_x">
-            <electricalConnectionInstance id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.7687947474799836" postCell="../Pop_x/1/iaf0" postFractionAlong="0.3434621581559646" synapse="gj1"/>
-            <electricalConnectionInstance id="1" preCell="../Pop_x/0/iaf0" preFractionAlong="0.6383532643054988" postCell="../Pop_x/4/iaf0" postFractionAlong="0.666657631073181" synapse="gj1"/>
-            <electricalConnectionInstance id="2" preCell="../Pop_x/0/iaf0" preFractionAlong="0.9136459118642296" postCell="../Pop_x/5/iaf0" postFractionAlong="0.6580741574010793" synapse="gj1"/>
-            <electricalConnectionInstance id="3" preCell="../Pop_x/0/iaf0" preFractionAlong="0.08815729492607605" postCell="../Pop_x/6/iaf0" postFractionAlong="0.6283175227307927" synapse="gj1"/>
-            <electricalConnectionInstance id="4" preCell="../Pop_x/1/iaf0" preFractionAlong="0.7516501580275301" postCell="../Pop_x/7/iaf0" postFractionAlong="0.044129856006443924" synapse="gj1"/>
-            <electricalConnectionInstance id="5" preCell="../Pop_x/2/iaf0" preFractionAlong="0.06260877482831684" postCell="../Pop_x/0/iaf0" postFractionAlong="0.3550614469278791" synapse="gj1"/>
-            <electricalConnectionInstance id="6" preCell="../Pop_x/2/iaf0" preFractionAlong="0.47251074040704333" postCell="../Pop_x/3/iaf0" postFractionAlong="0.7508149412392692" synapse="gj1"/>
-            <electricalConnectionInstance id="7" preCell="../Pop_x/2/iaf0" preFractionAlong="0.07837647814122528" postCell="../Pop_x/6/iaf0" postFractionAlong="0.8789089368844193" synapse="gj1"/>
-            <electricalConnectionInstance id="8" preCell="../Pop_x/2/iaf0" preFractionAlong="0.1264699588337581" postCell="../Pop_x/7/iaf0" postFractionAlong="0.974929566217395" synapse="gj1"/>
-            <electricalConnectionInstance id="9" preCell="../Pop_x/3/iaf0" preFractionAlong="0.8710772077623383" postCell="../Pop_x/0/iaf0" postFractionAlong="0.7401645088205959" synapse="gj1"/>
-            <electricalConnectionInstance id="10" preCell="../Pop_x/3/iaf0" preFractionAlong="0.5001225106774085" postCell="../Pop_x/2/iaf0" postFractionAlong="0.5454577410692435" synapse="gj1"/>
-            <electricalConnectionInstance id="11" preCell="../Pop_x/3/iaf0" preFractionAlong="0.938262488697077" postCell="../Pop_x/4/iaf0" postFractionAlong="0.08036181297992573" synapse="gj1"/>
-            <electricalConnectionInstance id="12" preCell="../Pop_x/3/iaf0" preFractionAlong="0.5376819978167684" postCell="../Pop_x/6/iaf0" postFractionAlong="0.9293743214794234" synapse="gj1"/>
-            <electricalConnectionInstance id="13" preCell="../Pop_x/3/iaf0" preFractionAlong="0.5779441734191155" postCell="../Pop_x/7/iaf0" postFractionAlong="0.4861199583152066" synapse="gj1"/>
-            <electricalConnectionInstance id="14" preCell="../Pop_x/4/iaf0" preFractionAlong="0.49447442101981154" postCell="../Pop_x/0/iaf0" postFractionAlong="0.6957821740554558" synapse="gj1"/>
-            <electricalConnectionInstance id="15" preCell="../Pop_x/4/iaf0" preFractionAlong="0.3430332825441691" postCell="../Pop_x/1/iaf0" postFractionAlong="0.7537139593993878" synapse="gj1"/>
-            <electricalConnectionInstance id="16" preCell="../Pop_x/4/iaf0" preFractionAlong="0.5590304685861194" postCell="../Pop_x/2/iaf0" postFractionAlong="0.3685171907332482" synapse="gj1"/>
-            <electricalConnectionInstance id="17" preCell="../Pop_x/4/iaf0" preFractionAlong="0.5735303220569729" postCell="../Pop_x/5/iaf0" postFractionAlong="0.9631245784933979" synapse="gj1"/>
-            <electricalConnectionInstance id="18" preCell="../Pop_x/4/iaf0" preFractionAlong="0.9054631957637249" postCell="../Pop_x/6/iaf0" postFractionAlong="0.27502127242966223" synapse="gj1"/>
-            <electricalConnectionInstance id="19" preCell="../Pop_x/5/iaf0" preFractionAlong="0.8915326292942939" postCell="../Pop_x/1/iaf0" postFractionAlong="0.22085700629420923" synapse="gj1"/>
-            <electricalConnectionInstance id="20" preCell="../Pop_x/5/iaf0" preFractionAlong="0.6879893085936124" postCell="../Pop_x/4/iaf0" postFractionAlong="0.06263564431359725" synapse="gj1"/>
-            <electricalConnectionInstance id="21" preCell="../Pop_x/5/iaf0" preFractionAlong="0.5247721982443964" postCell="../Pop_x/6/iaf0" postFractionAlong="0.7638566846893943" synapse="gj1"/>
-            <electricalConnectionInstance id="22" preCell="../Pop_x/6/iaf0" preFractionAlong="0.27929936950932854" postCell="../Pop_x/0/iaf0" postFractionAlong="0.19529882461359027" synapse="gj1"/>
-            <electricalConnectionInstance id="23" preCell="../Pop_x/6/iaf0" preFractionAlong="0.4360117280281445" postCell="../Pop_x/1/iaf0" postFractionAlong="0.35646624232715174" synapse="gj1"/>
-            <electricalConnectionInstance id="24" preCell="../Pop_x/6/iaf0" preFractionAlong="0.010956133993142214" postCell="../Pop_x/2/iaf0" postFractionAlong="0.6562134498500771" synapse="gj1"/>
-            <electricalConnectionInstance id="25" preCell="../Pop_x/6/iaf0" preFractionAlong="0.8217967921854112" postCell="../Pop_x/5/iaf0" postFractionAlong="0.21201111015301333" synapse="gj1"/>
-            <electricalConnectionInstance id="26" preCell="../Pop_x/6/iaf0" preFractionAlong="0.3900868227859483" postCell="../Pop_x/7/iaf0" postFractionAlong="0.9836708374629459" synapse="gj1"/>
-            <electricalConnectionInstance id="27" preCell="../Pop_x/7/iaf0" preFractionAlong="0.520872260279999" postCell="../Pop_x/2/iaf0" postFractionAlong="0.28875658186370823" synapse="gj1"/>
-            <electricalConnectionInstance id="28" preCell="../Pop_x/7/iaf0" preFractionAlong="0.12614697125801966" postCell="../Pop_x/6/iaf0" postFractionAlong="0.4751641611797546" synapse="gj1"/>
+            <electricalConnectionInstance id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.768794747479984" postCell="../Pop_x/1/iaf0" postFractionAlong="0.343462158155965" synapse="gj1"/>
+            <electricalConnectionInstance id="1" preCell="../Pop_x/0/iaf0" preFractionAlong="0.638353264305499" postCell="../Pop_x/4/iaf0" postFractionAlong="0.666657631073181" synapse="gj1"/>
+            <electricalConnectionInstance id="2" preCell="../Pop_x/0/iaf0" preFractionAlong="0.91364591186423" postCell="../Pop_x/5/iaf0" postFractionAlong="0.658074157401079" synapse="gj1"/>
+            <electricalConnectionInstance id="3" preCell="../Pop_x/0/iaf0" preFractionAlong="0.088157294926076" postCell="../Pop_x/6/iaf0" postFractionAlong="0.628317522730793" synapse="gj1"/>
+            <electricalConnectionInstance id="4" preCell="../Pop_x/1/iaf0" preFractionAlong="0.75165015802753" postCell="../Pop_x/7/iaf0" postFractionAlong="0.044129856006444" synapse="gj1"/>
+            <electricalConnectionInstance id="5" preCell="../Pop_x/2/iaf0" preFractionAlong="0.062608774828317" postCell="../Pop_x/0/iaf0" postFractionAlong="0.355061446927879" synapse="gj1"/>
+            <electricalConnectionInstance id="6" preCell="../Pop_x/2/iaf0" preFractionAlong="0.472510740407043" postCell="../Pop_x/3/iaf0" postFractionAlong="0.750814941239269" synapse="gj1"/>
+            <electricalConnectionInstance id="7" preCell="../Pop_x/2/iaf0" preFractionAlong="0.078376478141225" postCell="../Pop_x/6/iaf0" postFractionAlong="0.878908936884419" synapse="gj1"/>
+            <electricalConnectionInstance id="8" preCell="../Pop_x/2/iaf0" preFractionAlong="0.126469958833758" postCell="../Pop_x/7/iaf0" postFractionAlong="0.974929566217395" synapse="gj1"/>
+            <electricalConnectionInstance id="9" preCell="../Pop_x/3/iaf0" preFractionAlong="0.871077207762338" postCell="../Pop_x/0/iaf0" postFractionAlong="0.740164508820596" synapse="gj1"/>
+            <electricalConnectionInstance id="10" preCell="../Pop_x/3/iaf0" preFractionAlong="0.500122510677409" postCell="../Pop_x/2/iaf0" postFractionAlong="0.545457741069243" synapse="gj1"/>
+            <electricalConnectionInstance id="11" preCell="../Pop_x/3/iaf0" preFractionAlong="0.938262488697077" postCell="../Pop_x/4/iaf0" postFractionAlong="0.080361812979926" synapse="gj1"/>
+            <electricalConnectionInstance id="12" preCell="../Pop_x/3/iaf0" preFractionAlong="0.537681997816768" postCell="../Pop_x/6/iaf0" postFractionAlong="0.929374321479423" synapse="gj1"/>
+            <electricalConnectionInstance id="13" preCell="../Pop_x/3/iaf0" preFractionAlong="0.577944173419116" postCell="../Pop_x/7/iaf0" postFractionAlong="0.486119958315207" synapse="gj1"/>
+            <electricalConnectionInstance id="14" preCell="../Pop_x/4/iaf0" preFractionAlong="0.494474421019812" postCell="../Pop_x/0/iaf0" postFractionAlong="0.695782174055456" synapse="gj1"/>
+            <electricalConnectionInstance id="15" preCell="../Pop_x/4/iaf0" preFractionAlong="0.343033282544169" postCell="../Pop_x/1/iaf0" postFractionAlong="0.753713959399388" synapse="gj1"/>
+            <electricalConnectionInstance id="16" preCell="../Pop_x/4/iaf0" preFractionAlong="0.559030468586119" postCell="../Pop_x/2/iaf0" postFractionAlong="0.368517190733248" synapse="gj1"/>
+            <electricalConnectionInstance id="17" preCell="../Pop_x/4/iaf0" preFractionAlong="0.573530322056973" postCell="../Pop_x/5/iaf0" postFractionAlong="0.963124578493398" synapse="gj1"/>
+            <electricalConnectionInstance id="18" preCell="../Pop_x/4/iaf0" preFractionAlong="0.905463195763725" postCell="../Pop_x/6/iaf0" postFractionAlong="0.275021272429662" synapse="gj1"/>
+            <electricalConnectionInstance id="19" preCell="../Pop_x/5/iaf0" preFractionAlong="0.891532629294294" postCell="../Pop_x/1/iaf0" postFractionAlong="0.220857006294209" synapse="gj1"/>
+            <electricalConnectionInstance id="20" preCell="../Pop_x/5/iaf0" preFractionAlong="0.687989308593612" postCell="../Pop_x/4/iaf0" postFractionAlong="0.062635644313597" synapse="gj1"/>
+            <electricalConnectionInstance id="21" preCell="../Pop_x/5/iaf0" preFractionAlong="0.524772198244396" postCell="../Pop_x/6/iaf0" postFractionAlong="0.763856684689394" synapse="gj1"/>
+            <electricalConnectionInstance id="22" preCell="../Pop_x/6/iaf0" preFractionAlong="0.279299369509329" postCell="../Pop_x/0/iaf0" postFractionAlong="0.19529882461359" synapse="gj1"/>
+            <electricalConnectionInstance id="23" preCell="../Pop_x/6/iaf0" preFractionAlong="0.436011728028144" postCell="../Pop_x/1/iaf0" postFractionAlong="0.356466242327152" synapse="gj1"/>
+            <electricalConnectionInstance id="24" preCell="../Pop_x/6/iaf0" preFractionAlong="0.010956133993142" postCell="../Pop_x/2/iaf0" postFractionAlong="0.656213449850077" synapse="gj1"/>
+            <electricalConnectionInstance id="25" preCell="../Pop_x/6/iaf0" preFractionAlong="0.821796792185411" postCell="../Pop_x/5/iaf0" postFractionAlong="0.212011110153013" synapse="gj1"/>
+            <electricalConnectionInstance id="26" preCell="../Pop_x/6/iaf0" preFractionAlong="0.390086822785948" postCell="../Pop_x/7/iaf0" postFractionAlong="0.983670837462946" synapse="gj1"/>
+            <electricalConnectionInstance id="27" preCell="../Pop_x/7/iaf0" preFractionAlong="0.520872260279999" postCell="../Pop_x/2/iaf0" postFractionAlong="0.288756581863708" synapse="gj1"/>
+            <electricalConnectionInstance id="28" preCell="../Pop_x/7/iaf0" preFractionAlong="0.12614697125802" postCell="../Pop_x/6/iaf0" postFractionAlong="0.475164161179755" synapse="gj1"/>
         </electricalProjection>
         <electricalProjection id="ElectProjW" presynapticPopulation="Pop_x" postsynapticPopulation="Pop_x">
-            <electricalConnectionInstanceW id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.801496591292033" postCell="../Pop_x/1/iaf0" postFractionAlong="0.2068624706661114" synapse="gj1" weight="0.608902526190553"/>
-            <electricalConnectionInstanceW id="1" preCell="../Pop_x/0/iaf0" preFractionAlong="0.8900985705369023" postCell="../Pop_x/4/iaf0" postFractionAlong="0.486136470143564" synapse="gj1" weight="0.668470221903147"/>
-            <electricalConnectionInstanceW id="2" preCell="../Pop_x/0/iaf0" preFractionAlong="0.17012688767090822" postCell="../Pop_x/5/iaf0" postFractionAlong="0.33691615279170617" synapse="gj1" weight="0.391193307071303"/>
-            <electricalConnectionInstanceW id="3" preCell="../Pop_x/0/iaf0" preFractionAlong="0.01282910925261338" postCell="../Pop_x/6/iaf0" postFractionAlong="0.35191368309820115" synapse="gj1" weight="0.229129764480284"/>
-            <electricalConnectionInstanceW id="4" preCell="../Pop_x/1/iaf0" preFractionAlong="0.13472760063663358" postCell="../Pop_x/7/iaf0" postFractionAlong="0.19317697004235368" synapse="gj1" weight="0.256362347296543"/>
-            <electricalConnectionInstanceW id="5" preCell="../Pop_x/2/iaf0" preFractionAlong="0.08878890486736224" postCell="../Pop_x/0/iaf0" postFractionAlong="0.4332003138771612" synapse="gj1" weight="0.008561214772869"/>
-            <electricalConnectionInstanceW id="6" preCell="../Pop_x/2/iaf0" preFractionAlong="0.3348305405234663" postCell="../Pop_x/3/iaf0" postFractionAlong="0.34836702066505143" synapse="gj1" weight="0.639127937228113"/>
-            <electricalConnectionInstanceW id="7" preCell="../Pop_x/2/iaf0" preFractionAlong="0.05715921340929664" postCell="../Pop_x/6/iaf0" postFractionAlong="0.5186961247564001" synapse="gj1" weight="0.537536377505688"/>
-            <electricalConnectionInstanceW id="8" preCell="../Pop_x/2/iaf0" preFractionAlong="0.5171034866539107" postCell="../Pop_x/7/iaf0" postFractionAlong="0.6296176252275832" synapse="gj1" weight="0.802276645521038"/>
-            <electricalConnectionInstanceW id="9" preCell="../Pop_x/3/iaf0" preFractionAlong="0.9804391466902661" postCell="../Pop_x/0/iaf0" postFractionAlong="0.66883435436449" synapse="gj1" weight="0.303805779136783"/>
-            <electricalConnectionInstanceW id="10" preCell="../Pop_x/3/iaf0" preFractionAlong="0.3690005483098646" postCell="../Pop_x/2/iaf0" postFractionAlong="0.8934335602088669" synapse="gj1" weight="0.340080850518174"/>
-            <electricalConnectionInstanceW id="11" preCell="../Pop_x/3/iaf0" preFractionAlong="0.19709486890681838" postCell="../Pop_x/4/iaf0" postFractionAlong="0.199499344513678" synapse="gj1" weight="0.995265013658"/>
-            <electricalConnectionInstanceW id="12" preCell="../Pop_x/3/iaf0" preFractionAlong="0.8090194309909363" postCell="../Pop_x/6/iaf0" postFractionAlong="0.5341834137994497" synapse="gj1" weight="0.786080054207838"/>
-            <electricalConnectionInstanceW id="13" preCell="../Pop_x/3/iaf0" preFractionAlong="0.39581331546975873" postCell="../Pop_x/7/iaf0" postFractionAlong="0.22414980709806243" synapse="gj1" weight="0.501257553137533"/>
-            <electricalConnectionInstanceW id="14" preCell="../Pop_x/4/iaf0" preFractionAlong="0.12231632092050937" postCell="../Pop_x/0/iaf0" postFractionAlong="0.05243537098650408" synapse="gj1" weight="0.861647072887134"/>
-            <electricalConnectionInstanceW id="15" preCell="../Pop_x/4/iaf0" preFractionAlong="0.8204781263847865" postCell="../Pop_x/1/iaf0" postFractionAlong="0.18067605333309233" synapse="gj1" weight="0.97723044310576"/>
-            <electricalConnectionInstanceW id="16" preCell="../Pop_x/4/iaf0" preFractionAlong="0.921682844280444" postCell="../Pop_x/2/iaf0" postFractionAlong="0.12232679060259966" synapse="gj1" weight="0.265416067114693"/>
-            <electricalConnectionInstanceW id="17" preCell="../Pop_x/4/iaf0" preFractionAlong="0.32469513448083587" postCell="../Pop_x/5/iaf0" postFractionAlong="0.6468358371065772" synapse="gj1" weight="0.265914319759977"/>
-            <electricalConnectionInstanceW id="18" preCell="../Pop_x/4/iaf0" preFractionAlong="0.9548546302971884" postCell="../Pop_x/6/iaf0" postFractionAlong="0.18220583441361304" synapse="gj1" weight="0.019912223727405"/>
-            <electricalConnectionInstanceW id="19" preCell="../Pop_x/5/iaf0" preFractionAlong="0.8639390172969831" postCell="../Pop_x/1/iaf0" postFractionAlong="0.46340632069197485" synapse="gj1" weight="0.899582526901429"/>
-            <electricalConnectionInstanceW id="20" preCell="../Pop_x/5/iaf0" preFractionAlong="0.25336194995859596" postCell="../Pop_x/4/iaf0" postFractionAlong="0.168020375038908" synapse="gj1" weight="0.41605671016593"/>
-            <electricalConnectionInstanceW id="21" preCell="../Pop_x/5/iaf0" preFractionAlong="0.9268939013125862" postCell="../Pop_x/6/iaf0" postFractionAlong="0.8396383240376201" synapse="gj1" weight="0.302752804009905"/>
-            <electricalConnectionInstanceW id="22" preCell="../Pop_x/6/iaf0" preFractionAlong="0.9408904680768644" postCell="../Pop_x/0/iaf0" postFractionAlong="0.06777491893982879" synapse="gj1" weight="0.939392256680005"/>
-            <electricalConnectionInstanceW id="23" preCell="../Pop_x/6/iaf0" preFractionAlong="0.4932188103687801" postCell="../Pop_x/1/iaf0" postFractionAlong="0.1944599146366902" synapse="gj1" weight="0.211630053646445"/>
-            <electricalConnectionInstanceW id="24" preCell="../Pop_x/6/iaf0" preFractionAlong="0.5469276311244807" postCell="../Pop_x/2/iaf0" postFractionAlong="0.04184170011186694" synapse="gj1" weight="0.941466772902992"/>
-            <electricalConnectionInstanceW id="25" preCell="../Pop_x/6/iaf0" preFractionAlong="0.02596629223721869" postCell="../Pop_x/5/iaf0" postFractionAlong="0.3615328132068878" synapse="gj1" weight="0.152874674393948"/>
-            <electricalConnectionInstanceW id="26" preCell="../Pop_x/6/iaf0" preFractionAlong="0.4969333772990141" postCell="../Pop_x/7/iaf0" postFractionAlong="0.042594606330884965" synapse="gj1" weight="0.139222655263883"/>
-            <electricalConnectionInstanceW id="27" preCell="../Pop_x/7/iaf0" preFractionAlong="0.21337344788451662" postCell="../Pop_x/2/iaf0" postFractionAlong="0.9366176653447409" synapse="gj1" weight="0.105726946208775"/>
-            <electricalConnectionInstanceW id="28" preCell="../Pop_x/7/iaf0" preFractionAlong="0.8513572280315563" postCell="../Pop_x/6/iaf0" postFractionAlong="0.005315297563120658" synapse="gj1" weight="0.788833698585788"/>
+            <electricalConnectionInstanceW id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.801496591292033" postCell="../Pop_x/1/iaf0" postFractionAlong="0.206862470666111" synapse="gj1" weight="0.608902526190553"/>
+            <electricalConnectionInstanceW id="1" preCell="../Pop_x/0/iaf0" preFractionAlong="0.890098570536902" postCell="../Pop_x/4/iaf0" postFractionAlong="0.486136470143564" synapse="gj1" weight="0.668470221903147"/>
+            <electricalConnectionInstanceW id="2" preCell="../Pop_x/0/iaf0" preFractionAlong="0.170126887670908" postCell="../Pop_x/5/iaf0" postFractionAlong="0.336916152791706" synapse="gj1" weight="0.391193307071303"/>
+            <electricalConnectionInstanceW id="3" preCell="../Pop_x/0/iaf0" preFractionAlong="0.012829109252613" postCell="../Pop_x/6/iaf0" postFractionAlong="0.351913683098201" synapse="gj1" weight="0.229129764480284"/>
+            <electricalConnectionInstanceW id="4" preCell="../Pop_x/1/iaf0" preFractionAlong="0.134727600636634" postCell="../Pop_x/7/iaf0" postFractionAlong="0.193176970042354" synapse="gj1" weight="0.256362347296543"/>
+            <electricalConnectionInstanceW id="5" preCell="../Pop_x/2/iaf0" preFractionAlong="0.088788904867362" postCell="../Pop_x/0/iaf0" postFractionAlong="0.433200313877161" synapse="gj1" weight="0.008561214772869"/>
+            <electricalConnectionInstanceW id="6" preCell="../Pop_x/2/iaf0" preFractionAlong="0.334830540523466" postCell="../Pop_x/3/iaf0" postFractionAlong="0.348367020665051" synapse="gj1" weight="0.639127937228113"/>
+            <electricalConnectionInstanceW id="7" preCell="../Pop_x/2/iaf0" preFractionAlong="0.057159213409297" postCell="../Pop_x/6/iaf0" postFractionAlong="0.5186961247564" synapse="gj1" weight="0.537536377505688"/>
+            <electricalConnectionInstanceW id="8" preCell="../Pop_x/2/iaf0" preFractionAlong="0.517103486653911" postCell="../Pop_x/7/iaf0" postFractionAlong="0.629617625227583" synapse="gj1" weight="0.802276645521038"/>
+            <electricalConnectionInstanceW id="9" preCell="../Pop_x/3/iaf0" preFractionAlong="0.980439146690266" postCell="../Pop_x/0/iaf0" postFractionAlong="0.66883435436449" synapse="gj1" weight="0.303805779136783"/>
+            <electricalConnectionInstanceW id="10" preCell="../Pop_x/3/iaf0" preFractionAlong="0.369000548309865" postCell="../Pop_x/2/iaf0" postFractionAlong="0.893433560208867" synapse="gj1" weight="0.340080850518174"/>
+            <electricalConnectionInstanceW id="11" preCell="../Pop_x/3/iaf0" preFractionAlong="0.197094868906818" postCell="../Pop_x/4/iaf0" postFractionAlong="0.199499344513678" synapse="gj1" weight="0.995265013658"/>
+            <electricalConnectionInstanceW id="12" preCell="../Pop_x/3/iaf0" preFractionAlong="0.809019430990936" postCell="../Pop_x/6/iaf0" postFractionAlong="0.53418341379945" synapse="gj1" weight="0.786080054207838"/>
+            <electricalConnectionInstanceW id="13" preCell="../Pop_x/3/iaf0" preFractionAlong="0.395813315469759" postCell="../Pop_x/7/iaf0" postFractionAlong="0.224149807098062" synapse="gj1" weight="0.501257553137533"/>
+            <electricalConnectionInstanceW id="14" preCell="../Pop_x/4/iaf0" preFractionAlong="0.122316320920509" postCell="../Pop_x/0/iaf0" postFractionAlong="0.052435370986504" synapse="gj1" weight="0.861647072887134"/>
+            <electricalConnectionInstanceW id="15" preCell="../Pop_x/4/iaf0" preFractionAlong="0.820478126384786" postCell="../Pop_x/1/iaf0" postFractionAlong="0.180676053333092" synapse="gj1" weight="0.97723044310576"/>
+            <electricalConnectionInstanceW id="16" preCell="../Pop_x/4/iaf0" preFractionAlong="0.921682844280444" postCell="../Pop_x/2/iaf0" postFractionAlong="0.1223267906026" synapse="gj1" weight="0.265416067114693"/>
+            <electricalConnectionInstanceW id="17" preCell="../Pop_x/4/iaf0" preFractionAlong="0.324695134480836" postCell="../Pop_x/5/iaf0" postFractionAlong="0.646835837106577" synapse="gj1" weight="0.265914319759977"/>
+            <electricalConnectionInstanceW id="18" preCell="../Pop_x/4/iaf0" preFractionAlong="0.954854630297188" postCell="../Pop_x/6/iaf0" postFractionAlong="0.182205834413613" synapse="gj1" weight="0.019912223727405"/>
+            <electricalConnectionInstanceW id="19" preCell="../Pop_x/5/iaf0" preFractionAlong="0.863939017296983" postCell="../Pop_x/1/iaf0" postFractionAlong="0.463406320691975" synapse="gj1" weight="0.899582526901429"/>
+            <electricalConnectionInstanceW id="20" preCell="../Pop_x/5/iaf0" preFractionAlong="0.253361949958596" postCell="../Pop_x/4/iaf0" postFractionAlong="0.168020375038908" synapse="gj1" weight="0.41605671016593"/>
+            <electricalConnectionInstanceW id="21" preCell="../Pop_x/5/iaf0" preFractionAlong="0.926893901312586" postCell="../Pop_x/6/iaf0" postFractionAlong="0.83963832403762" synapse="gj1" weight="0.302752804009905"/>
+            <electricalConnectionInstanceW id="22" preCell="../Pop_x/6/iaf0" preFractionAlong="0.940890468076864" postCell="../Pop_x/0/iaf0" postFractionAlong="0.067774918939829" synapse="gj1" weight="0.939392256680005"/>
+            <electricalConnectionInstanceW id="23" preCell="../Pop_x/6/iaf0" preFractionAlong="0.49321881036878" postCell="../Pop_x/1/iaf0" postFractionAlong="0.19445991463669" synapse="gj1" weight="0.211630053646445"/>
+            <electricalConnectionInstanceW id="24" preCell="../Pop_x/6/iaf0" preFractionAlong="0.546927631124481" postCell="../Pop_x/2/iaf0" postFractionAlong="0.041841700111867" synapse="gj1" weight="0.941466772902992"/>
+            <electricalConnectionInstanceW id="25" preCell="../Pop_x/6/iaf0" preFractionAlong="0.025966292237219" postCell="../Pop_x/5/iaf0" postFractionAlong="0.361532813206888" synapse="gj1" weight="0.152874674393948"/>
+            <electricalConnectionInstanceW id="26" preCell="../Pop_x/6/iaf0" preFractionAlong="0.496933377299014" postCell="../Pop_x/7/iaf0" postFractionAlong="0.042594606330885" synapse="gj1" weight="0.139222655263883"/>
+            <electricalConnectionInstanceW id="27" preCell="../Pop_x/7/iaf0" preFractionAlong="0.213373447884517" postCell="../Pop_x/2/iaf0" postFractionAlong="0.936617665344741" synapse="gj1" weight="0.105726946208775"/>
+            <electricalConnectionInstanceW id="28" preCell="../Pop_x/7/iaf0" preFractionAlong="0.851357228031556" postCell="../Pop_x/6/iaf0" postFractionAlong="0.005315297563121" synapse="gj1" weight="0.788833698585788"/>
         </electricalProjection>
         <electricalProjection id="ElectProj0" presynapticPopulation="IafPop0" postsynapticPopulation="IafPop1">
-            <electricalConnection id="0" preCell="0" preFractionAlong="0.03229110016086212" postCell="1" postFractionAlong="0.14640918537283643" synapse="gj1"/>
-            <electricalConnection id="1" preCell="0" preFractionAlong="0.9369600355686324" postCell="2" postFractionAlong="0.6613056317319405" synapse="gj1"/>
-            <electricalConnection id="2" preCell="0" preFractionAlong="0.15169746513952687" postCell="3" postFractionAlong="0.46133459132683863" synapse="gj1"/>
-            <electricalConnection id="3" preCell="0" preFractionAlong="0.668349609085757" postCell="4" postFractionAlong="0.35893291562403995" synapse="gj1"/>
-            <electricalConnection id="4" preCell="0" preFractionAlong="0.4313008512665134" postCell="8" postFractionAlong="0.6715860079452881" synapse="gj1"/>
-            <electricalConnection id="5" preCell="0" preFractionAlong="0.009541469005388659" postCell="9" postFractionAlong="0.32738193623091594" synapse="gj1"/>
-            <electricalConnection id="6" preCell="1" preFractionAlong="0.7868923263915081" postCell="0" postFractionAlong="0.8146521975165233" synapse="gj1"/>
-            <electricalConnection id="7" preCell="1" preFractionAlong="0.06460294954723267" postCell="2" postFractionAlong="0.9247776214009266" synapse="gj1"/>
-            <electricalConnection id="8" preCell="1" preFractionAlong="0.1251144152681204" postCell="3" postFractionAlong="0.7926237136185504" synapse="gj1"/>
-            <electricalConnection id="9" preCell="1" preFractionAlong="0.4208720324673456" postCell="9" postFractionAlong="0.984445136451577" synapse="gj1"/>
-            <electricalConnection id="10" preCell="2" preFractionAlong="0.626088627653204" postCell="0" postFractionAlong="0.8465031416480706" synapse="gj1"/>
-            <electricalConnection id="11" preCell="2" preFractionAlong="0.6902319553617339" postCell="4" postFractionAlong="0.003286539021672197" synapse="gj1"/>
-            <electricalConnection id="12" preCell="2" preFractionAlong="0.7588516101457095" postCell="5" postFractionAlong="0.6466040409664432" synapse="gj1"/>
-            <electricalConnection id="13" preCell="2" preFractionAlong="0.7196193276618658" postCell="6" postFractionAlong="0.6100094417157729" synapse="gj1"/>
-            <electricalConnection id="14" preCell="2" preFractionAlong="0.104618212084711" postCell="7" postFractionAlong="0.5963298302632736" synapse="gj1"/>
-            <electricalConnection id="15" preCell="2" preFractionAlong="0.6349055519579295" postCell="9" postFractionAlong="0.07060848319291968" synapse="gj1"/>
-            <electricalConnection id="16" preCell="3" preFractionAlong="0.3582671689046272" postCell="0" postFractionAlong="0.7780205941264775" synapse="gj1"/>
-            <electricalConnection id="17" preCell="3" preFractionAlong="0.8903160955967432" postCell="1" postFractionAlong="0.9830979223897819" synapse="gj1"/>
-            <electricalConnection id="18" preCell="3" preFractionAlong="0.02671482607993625" postCell="2" postFractionAlong="0.7287206950121947" synapse="gj1"/>
-            <electricalConnection id="19" preCell="3" preFractionAlong="0.10081332278536825" postCell="8" postFractionAlong="0.9999133401695608" synapse="gj1"/>
-            <electricalConnection id="20" preCell="4" preFractionAlong="0.8927630924752599" postCell="0" postFractionAlong="0.07359212905995738" synapse="gj1"/>
-            <electricalConnection id="21" preCell="4" preFractionAlong="0.2548510682668663" postCell="1" postFractionAlong="0.1300911773150547" synapse="gj1"/>
-            <electricalConnection id="22" preCell="4" preFractionAlong="0.6210782696305431" postCell="2" postFractionAlong="0.5194195120962015" synapse="gj1"/>
-            <electricalConnection id="23" preCell="4" preFractionAlong="0.5349347004365425" postCell="5" postFractionAlong="0.9751611718264387" synapse="gj1"/>
-            <electricalConnection id="24" preCell="4" preFractionAlong="0.799247419841678" postCell="6" postFractionAlong="0.6379859959069121" synapse="gj1"/>
-            <electricalConnection id="25" preCell="4" preFractionAlong="0.23497705910616173" postCell="9" postFractionAlong="0.09356901674573537" synapse="gj1"/>
-            <electricalConnection id="26" preCell="5" preFractionAlong="0.10092621246200106" postCell="0" postFractionAlong="0.7673499393533436" synapse="gj1"/>
-            <electricalConnection id="27" preCell="5" preFractionAlong="0.6740881292543922" postCell="4" postFractionAlong="0.8202799551517206" synapse="gj1"/>
-            <electricalConnection id="28" preCell="5" preFractionAlong="0.0003483996939619427" postCell="6" postFractionAlong="0.20965584546314464" synapse="gj1"/>
-            <electricalConnection id="29" preCell="5" preFractionAlong="0.8471740639497004" postCell="9" postFractionAlong="0.1746517385253863" synapse="gj1"/>
-            <electricalConnection id="30" preCell="6" preFractionAlong="0.1681480316623465" postCell="0" postFractionAlong="0.8839396565417388" synapse="gj1"/>
-            <electricalConnection id="31" preCell="6" preFractionAlong="0.023827367439984704" postCell="2" postFractionAlong="0.7912337077331346" synapse="gj1"/>
-            <electricalConnection id="32" preCell="6" preFractionAlong="0.5684227872905153" postCell="3" postFractionAlong="0.6381097784247525" synapse="gj1"/>
-            <electricalConnection id="33" preCell="6" preFractionAlong="0.31033247196231784" postCell="5" postFractionAlong="0.5974464233771214" synapse="gj1"/>
-            <electricalConnection id="34" preCell="6" preFractionAlong="0.022660848986971183" postCell="8" postFractionAlong="0.14526651284183534" synapse="gj1"/>
-            <electricalConnection id="35" preCell="6" preFractionAlong="0.9611734092232899" postCell="9" postFractionAlong="0.42697587022160943" synapse="gj1"/>
-            <electricalConnection id="36" preCell="7" preFractionAlong="0.42272207934902795" postCell="0" postFractionAlong="0.866101464622899" synapse="gj1"/>
-            <electricalConnection id="37" preCell="7" preFractionAlong="0.6660731959890057" postCell="2" postFractionAlong="0.5498796717999626" synapse="gj1"/>
-            <electricalConnection id="38" preCell="7" preFractionAlong="0.5782904398820602" postCell="4" postFractionAlong="0.18981954008876312" synapse="gj1"/>
-            <electricalConnection id="39" preCell="7" preFractionAlong="0.5347987185338463" postCell="8" postFractionAlong="0.3651275714829998" synapse="gj1"/>
-            <electricalConnection id="40" preCell="8" preFractionAlong="0.042731731675003104" postCell="1" postFractionAlong="0.534933208866548" synapse="gj1"/>
-            <electricalConnection id="41" preCell="8" preFractionAlong="0.031235286654776373" postCell="2" postFractionAlong="0.6752073469432877" synapse="gj1"/>
-            <electricalConnection id="42" preCell="8" preFractionAlong="0.6438237095275975" postCell="3" postFractionAlong="0.0986115856333376" synapse="gj1"/>
-            <electricalConnection id="43" preCell="9" preFractionAlong="0.18244040491373792" postCell="0" postFractionAlong="0.6578525483958738" synapse="gj1"/>
-            <electricalConnection id="44" preCell="9" preFractionAlong="0.043505208313409205" postCell="3" postFractionAlong="0.15223660809184625" synapse="gj1"/>
-            <electricalConnection id="45" preCell="9" preFractionAlong="0.7059250076213834" postCell="5" postFractionAlong="0.5837294034806095" synapse="gj1"/>
-            <electricalConnection id="46" preCell="9" preFractionAlong="0.4208016001119559" postCell="6" postFractionAlong="0.2631937584554567" synapse="gj1"/>
-            <electricalConnection id="47" preCell="9" preFractionAlong="0.18402860711150026" postCell="7" postFractionAlong="0.5291398528603198" synapse="gj1"/>
+            <electricalConnection id="0" preCell="0" preFractionAlong="0.032291100160862" postCell="1" postFractionAlong="0.146409185372836" synapse="gj1"/>
+            <electricalConnection id="1" preCell="0" preFractionAlong="0.936960035568632" postCell="2" postFractionAlong="0.66130563173194" synapse="gj1"/>
+            <electricalConnection id="2" preCell="0" preFractionAlong="0.151697465139527" postCell="3" postFractionAlong="0.461334591326839" synapse="gj1"/>
+            <electricalConnection id="3" preCell="0" preFractionAlong="0.668349609085757" postCell="4" postFractionAlong="0.35893291562404" synapse="gj1"/>
+            <electricalConnection id="4" preCell="0" preFractionAlong="0.431300851266513" postCell="8" postFractionAlong="0.671586007945288" synapse="gj1"/>
+            <electricalConnection id="5" preCell="0" preFractionAlong="0.009541469005389" postCell="9" postFractionAlong="0.327381936230916" synapse="gj1"/>
+            <electricalConnection id="6" preCell="1" preFractionAlong="0.786892326391508" postCell="0" postFractionAlong="0.814652197516523" synapse="gj1"/>
+            <electricalConnection id="7" preCell="1" preFractionAlong="0.064602949547233" postCell="2" postFractionAlong="0.924777621400927" synapse="gj1"/>
+            <electricalConnection id="8" preCell="1" preFractionAlong="0.12511441526812" postCell="3" postFractionAlong="0.79262371361855" synapse="gj1"/>
+            <electricalConnection id="9" preCell="1" preFractionAlong="0.420872032467346" postCell="9" postFractionAlong="0.984445136451577" synapse="gj1"/>
+            <electricalConnection id="10" preCell="2" preFractionAlong="0.626088627653204" postCell="0" postFractionAlong="0.846503141648071" synapse="gj1"/>
+            <electricalConnection id="11" preCell="2" preFractionAlong="0.690231955361734" postCell="4" postFractionAlong="0.003286539021672" synapse="gj1"/>
+            <electricalConnection id="12" preCell="2" preFractionAlong="0.758851610145709" postCell="5" postFractionAlong="0.646604040966443" synapse="gj1"/>
+            <electricalConnection id="13" preCell="2" preFractionAlong="0.719619327661866" postCell="6" postFractionAlong="0.610009441715773" synapse="gj1"/>
+            <electricalConnection id="14" preCell="2" preFractionAlong="0.104618212084711" postCell="7" postFractionAlong="0.596329830263274" synapse="gj1"/>
+            <electricalConnection id="15" preCell="2" preFractionAlong="0.63490555195793" postCell="9" postFractionAlong="0.07060848319292" synapse="gj1"/>
+            <electricalConnection id="16" preCell="3" preFractionAlong="0.358267168904627" postCell="0" postFractionAlong="0.778020594126478" synapse="gj1"/>
+            <electricalConnection id="17" preCell="3" preFractionAlong="0.890316095596743" postCell="1" postFractionAlong="0.983097922389782" synapse="gj1"/>
+            <electricalConnection id="18" preCell="3" preFractionAlong="0.026714826079936" postCell="2" postFractionAlong="0.728720695012195" synapse="gj1"/>
+            <electricalConnection id="19" preCell="3" preFractionAlong="0.100813322785368" postCell="8" postFractionAlong="0.999913340169561" synapse="gj1"/>
+            <electricalConnection id="20" preCell="4" preFractionAlong="0.89276309247526" postCell="0" postFractionAlong="0.073592129059957" synapse="gj1"/>
+            <electricalConnection id="21" preCell="4" preFractionAlong="0.254851068266866" postCell="1" postFractionAlong="0.130091177315055" synapse="gj1"/>
+            <electricalConnection id="22" preCell="4" preFractionAlong="0.621078269630543" postCell="2" postFractionAlong="0.519419512096202" synapse="gj1"/>
+            <electricalConnection id="23" preCell="4" preFractionAlong="0.534934700436542" postCell="5" postFractionAlong="0.975161171826439" synapse="gj1"/>
+            <electricalConnection id="24" preCell="4" preFractionAlong="0.799247419841678" postCell="6" postFractionAlong="0.637985995906912" synapse="gj1"/>
+            <electricalConnection id="25" preCell="4" preFractionAlong="0.234977059106162" postCell="9" postFractionAlong="0.093569016745735" synapse="gj1"/>
+            <electricalConnection id="26" preCell="5" preFractionAlong="0.100926212462001" postCell="0" postFractionAlong="0.767349939353344" synapse="gj1"/>
+            <electricalConnection id="27" preCell="5" preFractionAlong="0.674088129254392" postCell="4" postFractionAlong="0.820279955151721" synapse="gj1"/>
+            <electricalConnection id="28" preCell="5" preFractionAlong="0.000348399693962" postCell="6" postFractionAlong="0.209655845463145" synapse="gj1"/>
+            <electricalConnection id="29" preCell="5" preFractionAlong="0.8471740639497" postCell="9" postFractionAlong="0.174651738525386" synapse="gj1"/>
+            <electricalConnection id="30" preCell="6" preFractionAlong="0.168148031662346" postCell="0" postFractionAlong="0.883939656541739" synapse="gj1"/>
+            <electricalConnection id="31" preCell="6" preFractionAlong="0.023827367439985" postCell="2" postFractionAlong="0.791233707733135" synapse="gj1"/>
+            <electricalConnection id="32" preCell="6" preFractionAlong="0.568422787290515" postCell="3" postFractionAlong="0.638109778424752" synapse="gj1"/>
+            <electricalConnection id="33" preCell="6" preFractionAlong="0.310332471962318" postCell="5" postFractionAlong="0.597446423377121" synapse="gj1"/>
+            <electricalConnection id="34" preCell="6" preFractionAlong="0.022660848986971" postCell="8" postFractionAlong="0.145266512841835" synapse="gj1"/>
+            <electricalConnection id="35" preCell="6" preFractionAlong="0.96117340922329" postCell="9" postFractionAlong="0.426975870221609" synapse="gj1"/>
+            <electricalConnection id="36" preCell="7" preFractionAlong="0.422722079349028" postCell="0" postFractionAlong="0.866101464622899" synapse="gj1"/>
+            <electricalConnection id="37" preCell="7" preFractionAlong="0.666073195989006" postCell="2" postFractionAlong="0.549879671799963" synapse="gj1"/>
+            <electricalConnection id="38" preCell="7" preFractionAlong="0.57829043988206" postCell="4" postFractionAlong="0.189819540088763" synapse="gj1"/>
+            <electricalConnection id="39" preCell="7" preFractionAlong="0.534798718533846" postCell="8" postFractionAlong="0.365127571483" synapse="gj1"/>
+            <electricalConnection id="40" preCell="8" preFractionAlong="0.042731731675003" postCell="1" postFractionAlong="0.534933208866548" synapse="gj1"/>
+            <electricalConnection id="41" preCell="8" preFractionAlong="0.031235286654776" postCell="2" postFractionAlong="0.675207346943288" synapse="gj1"/>
+            <electricalConnection id="42" preCell="8" preFractionAlong="0.643823709527597" postCell="3" postFractionAlong="0.098611585633338" synapse="gj1"/>
+            <electricalConnection id="43" preCell="9" preFractionAlong="0.182440404913738" postCell="0" postFractionAlong="0.657852548395874" synapse="gj1"/>
+            <electricalConnection id="44" preCell="9" preFractionAlong="0.043505208313409" postCell="3" postFractionAlong="0.152236608091846" synapse="gj1"/>
+            <electricalConnection id="45" preCell="9" preFractionAlong="0.705925007621383" postCell="5" postFractionAlong="0.58372940348061" synapse="gj1"/>
+            <electricalConnection id="46" preCell="9" preFractionAlong="0.420801600111956" postCell="6" postFractionAlong="0.263193758455457" synapse="gj1"/>
+            <electricalConnection id="47" preCell="9" preFractionAlong="0.1840286071115" postCell="7" postFractionAlong="0.52913985286032" synapse="gj1"/>
         </electricalProjection>
         <continuousProjection id="ProjCC" presynapticPopulation="IafPop0" postsynapticPopulation="IafPop1">
             <continuousConnection id="0" preCell="0" postCell="0" preComponent="silent1" postComponent="gs1"/>
         </continuousProjection>
         <continuousProjection id="ProjCCI" presynapticPopulation="Pop_x" postsynapticPopulation="IafPop1">
-            <continuousConnectionInstance id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.9250386730013339" postCell="../IafPop1[0]" postFractionAlong="0.8902810110177584" preComponent="silent1" postComponent="gs1"/>
+            <continuousConnectionInstance id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.925038673001334" postCell="../IafPop1[0]" postFractionAlong="0.890281011017758" preComponent="silent1" postComponent="gs1"/>
         </continuousProjection>
         <continuousProjection id="ProjCCIW" presynapticPopulation="Pop_x" postsynapticPopulation="IafPop1">
-            <continuousConnectionInstanceW id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.6039072402510415" postCell="../IafPop1[0]" postFractionAlong="0.14402590334225063" preComponent="silent1" postComponent="gs1" weight="5."/>
+            <continuousConnectionInstanceW id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.603907240251041" postCell="../IafPop1[0]" postFractionAlong="0.144025903342251" preComponent="silent1" postComponent="gs1" weight="5."/>
         </continuousProjection>
         <inputList id="il" population="Pop_x" component="pfs">
             <input id="0" target="../Pop_x/0/iaf0" destination="synapses"/>

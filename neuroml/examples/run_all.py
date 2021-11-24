@@ -13,7 +13,6 @@ run_example("build_network.py")
 run_example("build_network2.py")
 run_example("build_complete.py")
 run_example("ion_channel_generation.py")
-run_example("json_serialization.py")
 run_example("loading_modifying_writing.py")
 # This next one takes a while to run but all of its functionality is covered in loading_modifying_writing.py
 # run_example("loading_modifying_writing_large.py")

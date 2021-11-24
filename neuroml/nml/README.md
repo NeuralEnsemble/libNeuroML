@@ -1,33 +1,71 @@
 ## Autogeneration of API, using generateds_config.py to ensure correct naming conventions.
 
-This requires [generateDS.py](http://www.davekuhlman.org/generateDS.html), version >= 2.20a.
+Please regenerate nml.py in a new branch and open a pull request against the `development` branch.
 
-You can get it from [PyPi](http://pypi.python.org/pypi/generateDS/) or [Source Forge](https://sourceforge.net/projects/generateds/).
+Please **do not** regenerate nml.py and push directly to the `master` branch because regeneration of `nml.py` may change the libNeuroML API, and so this could be a backwards incompatible change which must not be pushed to master without a corresponding release and sufficient testing.
 
-All that is needed is the Schema - as long as generateds_config.py and helper_methods are present, nml.py should be generated correctly.
+### Requirements
 
-Unit tests should be run to confirm this.
+- the Schema (XSD) file
+- `generateds_config.py`: this includes the correct naming conventions
+- `helper_methods.py`: this includes additional helper methods that we want to add to the API
 
-generateDS.py should be invoked in this folder (so that generateds_config.py can be located) with the following command (namespace def here will be mended when it's become stable)
+The following packages are required.
 
-    generateDS.py -o nml.py --use-getter-setter=none --silence --user-methods=helper_methods NeuroML_v2.2.xsd
+- generateds
+- black
 
-You may have to add the current folder to your PYTHONPATH, i.e.
+They can be installed using the `requirements-dev.txt` file in the root directory:
+
+```
+pip install -r requirements-dev.txt
+```
+
+### Regenerating nml.py
+
+- Run the `regenerate-nml.sh` script in the `neuroml/nml` folder.
+- This will use the API version defined in `neuroml/__init__.py` to find the right schema XSD file and run generateds to regenerate the `nml.py` file.
+- It will also run `black` on the newly generated file to reformat it.
+
+The generateDS command that is invoked is of this form:
+
+    generateDS.py -o nml.py --use-getter-setter=none --silence --user-methods=helper_methods.py NeuroML_v2.2.xsd
+
+You will need to add the current folder to your PYTHONPATH so that the required files can be imported by generateDS.
 
     export PYTHONPATH=$PYTHONPATH:.
 
 
-Note that generateDS.py will import the generateds_config.py file and run it.
-Your output should, therefore, include lines of the form:
+Your output should include lines of the form:
 
     generateds_config.py is being processed
     Saving NameTable to csv file: name_table.csv
     Saving name changes table to csv file: changed_names.csv
 
 
-If these are not included in the output, generateds_config.py has not run, and the generated nml.py file will be incorrect.
+If these are not included in the output, generateDS has not run correctly, and the generated nml.py file will be incorrect.
+
+### Testing
+
+Please remember to:
+
+- rebuild libNeuroML after regenerating `nml.py`
+- run all unit tests
+- run all examples
+
+The CI on GitHub will always run these.
 
 ### Changelog
+
+#### August 26, 2021
+
+Author: @sanjayankur31
+
+Generate with Python 3.9, generateDS version 2.39.9
+
+- all tests pass
+- `--use-getter-setter=none`, which causes test failures because of probable generateDS bug. See: https://sourceforge.net/p/generateds/tickets/20/
+- also requires us to manually patch one or two conversions to work around https://sourceforge.net/p/generateds/tickets/13/
 
 #### March 26, 2020
 

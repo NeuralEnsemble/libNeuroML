@@ -71,8 +71,8 @@ for aline in open("../neuroml/__init__.py"):
 # The full version, including alpha/beta/rc tags.
 release = version
 
-# autodoc_class_signature = "separated"
-autoclass_content = "both"
+autodoc_class_signature = "mixed"
+autoclass_content = "class"
 
 # gds specific members to exclude from nml.py doc
 autodoc_default_options = {
