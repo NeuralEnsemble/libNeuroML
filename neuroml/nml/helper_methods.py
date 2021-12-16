@@ -6,8 +6,7 @@ import re
 #   your method specification file.
 #
 class MethodSpec(object):
-    def __init__(self, name='', source='', class_names='',
-            class_names_compiled=None):
+    def __init__(self, name="", source="", class_names="", class_names_compiled=None):
         """MethodSpec -- A specification of a method.
         Member variables:
             name -- The method name
@@ -21,55 +20,68 @@ class MethodSpec(object):
         self.name = name
         self.source = source
         self.class_names = class_names
-        '''
+        """
         if class_names is None:
             self.class_names = ('.*', )
         else:
         if class_names_compiled is None:
             self.class_names_compiled = re.compile(self.class_names)
         else:
-            self.class_names_compiled = class_names_compiled'''
+            self.class_names_compiled = class_names_compiled"""
+
     def get_name(self):
         return self.name
+
     def set_name(self, name):
         self.name = name
+
     def get_source(self):
         return self.source
+
     def set_source(self, source):
         self.source = source
+
     def get_class_names(self):
         return self.class_names
+
     def set_class_names(self, class_names):
         self.class_names = class_names
         self.class_names_compiled = re.compile(class_names)
+
     def get_class_names_compiled(self):
         return self.class_names_compiled
+
     def set_class_names_compiled(self, class_names_compiled):
         self.class_names_compiled = class_names_compiled
+
     def match_name(self, class_name):
         """Match against the name of the class currently being generated.
         If this method returns True, the method will be inserted in
           the generated class.
         """
 
-        if self.class_names == class_name or (isinstance(self.class_names,list) and class_name in self.class_names):
+        if self.class_names == class_name or (
+            isinstance(self.class_names, list) and class_name in self.class_names
+        ):
             return True
         else:
             return False
+
     def get_interpolated_source(self, values_dict):
         """Get the method source code, interpolating values from values_dict
         into it.  The source returned by this method is inserted into
         the generated class.
         """
         source = self.source % values_dict
-        source = source.replace('PERCENTAGE','%')
+        source = source.replace("PERCENTAGE", "%")
         return source
+
     def show(self):
-        print('specification:')
-        print('    name: %s' % (self.name, ))
+        print("specification:")
+        print("    name: %s" % (self.name,))
         print(self.source)
-        print('    class_names: %s' % (self.class_names, ))
-        print('    names pat  : %s' % (self.class_names_compiled.pattern, ))
+        print("    class_names: %s" % (self.class_names,))
+        print("    names pat  : %s" % (self.class_names_compiled.pattern,))
 
 
 #
@@ -81,20 +93,32 @@ class MethodSpec(object):
 #   generated superclass file and also section "User Methods" in
 #   the documentation, as well as the examples below.
 
-num_segments = MethodSpec(name='num_segments',
+num_segments = MethodSpec(
+    name="num_segments",
     source='''\
     @property
     def num_segments(self):
+        """Get the number of segments included in this cell morphology.
+
+        :returns: number of segments
+        :rtype: int
+        """
         return len(self.segments)
 ''',
-    class_names=("Morphology")
-    )
+    class_names=("Morphology"),
+)
 
 
-length = MethodSpec(name='length',
+length = MethodSpec(
+    name="length",
     source='''\
     @property
     def length(self):
+        """Get the length of the segment.
+
+        :returns: length of the segment
+        :rtype: float
+        """
 
         if self.proximal==None:
             raise Exception('Cannot get length of segment '+str(self.id)+' using the length property, since no proximal point is set on it (the proximal point comes from the parent segment). Use the method get_segment_length(segment_id) on the cell instead.')
@@ -120,13 +144,19 @@ length = MethodSpec(name='length',
         return str(self)
 
 ''',
-    class_names=("Segment")
-    )
+    class_names=("Segment"),
+)
 
-volume = MethodSpec(name='volume',
+volume = MethodSpec(
+    name="volume",
     source='''\
     @property
     def volume(self):
+        """Get the volume of the segment.
+
+        :returns: volume of segment
+        :rtype: float
+        """
 
         from math import pi
         if self.proximal==None:
@@ -150,15 +180,21 @@ volume = MethodSpec(name='volume',
 
         return volume
     ''',
-    class_names=("Segment")
-    )
+    class_names=("Segment"),
+)
 
 
-surface_area = MethodSpec(name='surface_area',
+surface_area = MethodSpec(
+    name="surface_area",
     source='''\
 
     @property
     def surface_area(self):
+        """Get the surface area of the segment.
+
+        :returns: surface area of segment
+        :rtype: float
+        """
         from math import pi
         from math import sqrt
 
@@ -183,23 +219,185 @@ surface_area = MethodSpec(name='surface_area',
 
         return surface_area
     ''',
-    class_names=("Segment")
-    )
+    class_names=("Segment"),
+)
 
+generic_add = MethodSpec(
+    name="add",
+    source='''\
+
+    def add(self, obj=None, hint=None, force=False):
+        """Generic function to allow easy addition of a new member to a NeuroML object.
+
+        Without arguments, when `obj=None`, it simply calls the `info()` method
+        to provide the list of valid member types for the NeuroML class.
+
+        Use `info(show_contents=True)` to see the valid members of this class,
+        and their current contents.
+
+        :param obj: object member to add
+        :type obj: any NeuroML Type defined by the API
+        :param hint: member name to add to when there are multiple members that `obj` can be added to
+        :type hint: string
+        :param force: boolean to force addition when an obj has already been added previously
+        :type force: bool
+
+        :raises Exception: if a member compatible to obj could not be found
+        :raises Exception: if multiple members can accept the object and no hint is provided.
+        """
+        if not obj:
+            self.info()
+            return
+
+        # getattr only returns the value of the provided member but one cannot
+        # then use this to modify the member. Using `vars` also allows us to
+        # modify the value
+        targets = []
+        all_members = self.get_members()
+        for member in all_members:
+            # get_data_type() returns the type as a string, e.g.: 'IncludeType'
+            if member.get_data_type() == type(obj).__name__:
+                targets.append(member)
+
+
+        if len(targets) == 0:
+            # no targets found
+            e = Exception(
+            """A member object of {} type could not be found in NeuroML class {}.\\n{}
+            """.format(type(obj).__name__, type(self).__name__, self.info()))
+            raise e
+        elif len(targets) == 1:
+            # good, just add it
+            self.__add(obj, targets[0], force)
+        else:
+            # more than one target
+            if not hint:
+                err_string = """Multiple members can accept {}. Please provide the name of the variable using the `hint` argument to specify which member to add to:\\n""".format(type(obj).__name__)
+                for t in targets:
+                    err_string += "- {}\\n".format(t.get_name())
+                raise Exception(err_string)
+
+            # use hint to figure out which target to use
+            for t in targets:
+                if hint == t.get_name():
+                    self.__add(obj, t, force)
+                    break
+
+
+    def __add(self, obj, member, force=False):
+        """Private method to add new member to a specified variable in a NeuroML object.
+
+        :param obj: object member to add
+        :type obj: any NeuroML Type defined by the API
+        :param member: member variable name to add to when there are multiple members that `obj` can be added to
+        :type member: MemberSpec_
+        :param force: boolean to force addition when an obj has already been added previously
+        :type force: bool
+
+        """
+        import warnings
+
+        # A single value, not a list:
+        if member.get_container() == 0:
+            if force:
+                vars(self)[member.get_name()] = obj
+            else:
+                if vars(self)[member.get_name()]:
+                    warnings.warn("""{} has already been assigned.  Use `force=True` to overwrite. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(member.get_name()))
+                else:
+                    vars(self)[member.get_name()] = obj
+        # List
+        else:
+            # Do not use 'obj in ..' for membership check because it also
+            # returns true if an element with the same value exists in the
+            # container
+            # https://docs.python.org/3/reference/expressions.html#membership-test-operations
+            if force:
+                vars(self)[member.get_name()].append(obj)
+            else:
+                if any(obj is e for e in vars(self)[member.get_name()]):
+                    warnings.warn("""{} already exists in {}. Use `force=True` to force readdition. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(obj, member.get_name()))
+                else:
+                    vars(self)[member.get_name()].append(obj)
+
+    def get_members(self):
+        """Get member data items, also from ancestors.
+
+        This function is required because generateDS does not include inherited
+        members in the member_data_items list for a derived class. So, for
+        example, while IonChannelHH has `gate_hh_rates` which it inherits from
+        IonChannel, IonChannelHH's `member_data_items_` is empty. It relies on
+        the IonChannel classes' `member_data_items_` list.
+
+        :returns: list of members, including ones inherited from ancestors.
+        """
+        import copy
+        # create a copy by value
+        # if copied by reference (=), the member_data_items_ object variable is
+        # modified to a large list, greatly increasing the memory usage.
+        all_members = copy.copy(self.member_data_items_)
+        for c in type(self).__mro__:
+            try:
+                all_members.extend(c.member_data_items_)
+            except AttributeError:
+                pass
+            except TypeError:
+                pass
+
+        # deduplicate
+        # TODO where are the duplicates coming from given that we're not
+        # calling this recursively?
+        all_members = list(set(all_members))
+        return all_members
+    ''',
+    class_names=("BaseWithoutId"),
+)
+
+generic_list = MethodSpec(
+    name="info",
+    source='''\
+
+    def info(self, show_contents=False):
+        """A helper function to get a list of members of this class.
+
+        This is useful to quickly check what members can go into a particular
+        NeuroML class (which will match the Schema definitions). It lists these
+        members and notes whether they are "single" type elements (Child
+        elements) or "List" elements (Children elements). It will also note
+        whether a member is optional or required.
+
+        See http://www.davekuhlman.org/generateDS.html#user-methods for more
+        information on the MemberSpec_ class that generateDS uses.
+
+        :param show_contents: also prints out the contents of the members
+        :type show_contents: bool
+
+        :returns: the string (for testing purposes)
+        """
+
+        info_str = "Valid members for {} are:\\n".format(self.__class__.__name__)
+        for member in self.member_data_items_:
+            info_str += ("* {} (class: {})\\n".format(member.name, member.data_type))
+            if show_contents:
+                contents = getattr(self, member.get_name())
+                info_str += ("\t* Contents: {}\\n\\n".format(contents))
+
+        info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information."
+        print(info_str)
+        return info_str
+    ''',
+    class_names=("BaseWithoutId"),
+)
 #
 # Provide a list of your method specifications.
 #   This list of specifications must be named METHOD_SPECS.
 #
-METHOD_SPECS=(length,
-              volume,
-              surface_area,
-              num_segments,
-             )
+METHOD_SPECS = (length, volume, surface_area, num_segments, generic_add, generic_list)
 
 
-
-seg_grp = MethodSpec(name='SegmentGroup',
-    source='''\
+seg_grp = MethodSpec(
+    name="SegmentGroup",
+    source="""\
 
 
     def __str__(self):
@@ -210,13 +408,14 @@ seg_grp = MethodSpec(name='SegmentGroup',
 
         return str(self)
 
-''',
-    class_names=("SegmentGroup")
-    )
+""",
+    class_names=("SegmentGroup"),
+)
 
-METHOD_SPECS+=(seg_grp,)
+METHOD_SPECS += (seg_grp,)
 
-seg_grp = MethodSpec(name='Point3DWithDiam',
+seg_grp = MethodSpec(
+    name="Point3DWithDiam",
     source='''\
 
     def __str__(self):
@@ -228,6 +427,13 @@ seg_grp = MethodSpec(name='Point3DWithDiam',
         return str(self)
 
     def distance_to(self, other_3d_point):
+        """Find the distance between this point and another.
+
+        :param other_3d_point: other 3D point to calculate distance to
+        :type other_3d_point: Point3DWithDiam
+        :returns: distance between the two points
+        :rtype: float
+        """
         a_x = self.x
         a_y = self.y
         a_z = self.z
@@ -240,13 +446,14 @@ seg_grp = MethodSpec(name='Point3DWithDiam',
         return distance
 
 ''',
-    class_names=("Point3DWithDiam")
-    )
+    class_names=("Point3DWithDiam"),
+)
 
-METHOD_SPECS+=(seg_grp,)
+METHOD_SPECS += (seg_grp,)
 
 
-connection_cell_ids = MethodSpec(name='connection_cell_ids',
+connection_cell_ids = MethodSpec(
+    name="connection_cell_ids",
     source='''\
 
     def _get_cell_id(self, id_string):
@@ -256,35 +463,59 @@ connection_cell_ids = MethodSpec(name='connection_cell_ids',
             return int(id_string.split('/')[2])
 
     def get_pre_cell_id(self):
+        """Get the ID of the pre-synaptic cell
+
+        :returns: ID of pre-synaptic cell
+        :rtype: str
+        """
 
         return self._get_cell_id(self.pre_cell_id)
 
     def get_post_cell_id(self):
+        """Get the ID of the post-synaptic cell
+
+        :returns: ID of post-synaptic cell
+        :rtype: str
+        """
 
         return self._get_cell_id(self.post_cell_id)
 
     def get_pre_segment_id(self):
+        """Get the ID of the pre-synpatic segment
+
+        :returns: ID of pre-synaptic segment.
+        :rtype: str
+        """
 
         return int(self.pre_segment_id)
 
     def get_post_segment_id(self):
+        """Get the ID of the post-synpatic segment
+
+        :returns: ID of post-synaptic segment.
+        :rtype: str
+        """
 
         return int(self.post_segment_id)
 
     def get_pre_fraction_along(self):
+        """Get pre-synaptic fraction along information"""
 
         return float(self.pre_fraction_along)
 
     def get_post_fraction_along(self):
+        """Get post-synaptic fraction along information"""
 
         return float(self.post_fraction_along)
 
 
     def get_pre_info(self):
+        """Get pre-synaptic information summary"""
 
         return str(self.get_pre_cell_id())+(':'+str(self.get_pre_segment_id())+'('+ 'PERCENTAGE.5f'PERCENTAGEself.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
 
     def get_post_info(self):
+        """Get post-synaptic information summary"""
 
         return str(self.get_post_cell_id())+(':'+str(self.get_post_segment_id())+'('+ 'PERCENTAGE.5f'PERCENTAGEself.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
 
@@ -293,12 +524,13 @@ connection_cell_ids = MethodSpec(name='connection_cell_ids',
         return "Connection "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())
 
     ''',
-    class_names=(["Connection","ConnectionWD"])
-    )
+    class_names=(["Connection", "ConnectionWD"]),
+)
 
-METHOD_SPECS+=(connection_cell_ids,)
+METHOD_SPECS += (connection_cell_ids,)
 
-connection_wd_cell_ids = MethodSpec(name='connection_wd_cell_ids',
+connection_wd_cell_ids = MethodSpec(
+    name="connection_wd_cell_ids",
     source='''\
 
     def __str__(self):
@@ -307,19 +539,25 @@ connection_wd_cell_ids = MethodSpec(name='connection_wd_cell_ids',
             ", weight: "+'PERCENTAGEf' PERCENTAGE (float(self.weight))+", delay: "+'PERCENTAGE.5f' PERCENTAGE (self.get_delay_in_ms())+" ms"
 
     def get_delay_in_ms(self):
+        """Get connection delay in milli seconds
+
+        :returns: connection delay in milli seconds
+        :rtype: float
+        """
         if 'ms' in self.delay:
             return float(self.delay[:-2].strip())
         elif 's' in self.delay:
             return float(self.delay[:-1].strip())*1000.0
 
     ''',
-    class_names=("ConnectionWD")
-    )
+    class_names=("ConnectionWD"),
+)
 
-METHOD_SPECS+=(connection_wd_cell_ids,)
+METHOD_SPECS += (connection_wd_cell_ids,)
 
-elec_connection_instance_cell_ids = MethodSpec(name='elec_connection_instance_cell_ids',
-    source='''\
+elec_connection_instance_cell_ids = MethodSpec(
+    name="elec_connection_instance_cell_ids",
+    source="""\
 
     def _get_cell_id(self, id_string):
         if '[' in id_string:
@@ -333,16 +571,25 @@ elec_connection_instance_cell_ids = MethodSpec(name='elec_connection_instance_ce
             ", synapse: "+str(self.synapse)
 
 
-    ''',
-    class_names=("ElectricalConnectionInstance")
-    )
+    """,
+    class_names=("ElectricalConnectionInstance"),
+)
 
-METHOD_SPECS+=(elec_connection_instance_cell_ids,)
+METHOD_SPECS += (elec_connection_instance_cell_ids,)
 
-elec_connection_instance_w = MethodSpec(name='elec_connection_instance_w',
+elec_connection_instance_w = MethodSpec(
+    name="elec_connection_instance_w",
     source='''\
 
     def get_weight(self):
+        """Get the weight of the connection
+
+        If a weight is not set (or is set to None), returns the default value
+        of 1.0.
+
+        :returns: weight of connection or 1.0 if not set
+        :rtype: float
+        """
 
         return float(self.weight) if self.weight!=None else 1.0
 
@@ -352,47 +599,72 @@ elec_connection_instance_w = MethodSpec(name='elec_connection_instance_w',
             ", synapse: "+str(self.synapse) + ", weight: "+'PERCENTAGE.6f'PERCENTAGEself.get_weight()
 
     ''',
-    class_names=("ElectricalConnectionInstanceW")
-    )
+    class_names=("ElectricalConnectionInstanceW"),
+)
 
-METHOD_SPECS+=(elec_connection_instance_w,)
+METHOD_SPECS += (elec_connection_instance_w,)
 
-elec_connection_cell_ids = MethodSpec(name='elec_connection_cell_ids',
+elec_connection_cell_ids = MethodSpec(
+    name="elec_connection_cell_ids",
     source='''\
 
     def _get_cell_id(self, id_string):
             return int(float(id_string))
 
     def get_pre_cell_id(self):
+        """Get the ID of the pre-synaptic cell
+
+        :returns: ID of pre-synaptic cell
+        :rtype: str
+        """
 
         return self._get_cell_id(self.pre_cell)
 
     def get_post_cell_id(self):
+        """Get the ID of the post-synaptic cell
+
+        :returns: ID of post-synaptic cell
+        :rtype: str
+        """
 
         return self._get_cell_id(self.post_cell)
 
     def get_pre_segment_id(self):
+        """Get the ID of the pre-synpatic segment
+
+        :returns: ID of pre-synaptic segment.
+        :rtype: str
+        """
 
         return int(self.pre_segment)
 
     def get_post_segment_id(self):
+        """Get the ID of the post-synpatic segment
+
+        :returns: ID of post-synaptic segment.
+        :rtype: str
+        """
 
         return int(self.post_segment)
 
     def get_pre_fraction_along(self):
+        """Get pre-synaptic fraction along information"""
 
         return float(self.pre_fraction_along)
 
     def get_post_fraction_along(self):
+        """Get post-synaptic fraction along information"""
 
         return float(self.post_fraction_along)
 
 
     def get_pre_info(self):
+        """Get pre-synaptic information summary"""
 
         return str(self.get_pre_cell_id())+(':'+str(self.get_pre_segment_id())+'('+ 'PERCENTAGE.5f'PERCENTAGEself.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
 
     def get_post_info(self):
+        """Get post-synaptic information summary"""
 
         return str(self.get_post_cell_id())+(':'+str(self.get_post_segment_id())+'('+ 'PERCENTAGE.5f'PERCENTAGEself.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
 
@@ -404,13 +676,14 @@ elec_connection_cell_ids = MethodSpec(name='elec_connection_cell_ids',
 
 
     ''',
-    class_names=("ElectricalConnection")
-    )
+    class_names=("ElectricalConnection"),
+)
 
-METHOD_SPECS+=(elec_connection_cell_ids,)
+METHOD_SPECS += (elec_connection_cell_ids,)
 
-cont_connection_instance_cell_ids = MethodSpec(name='cont_connection_instance_cell_ids',
-    source='''\
+cont_connection_instance_cell_ids = MethodSpec(
+    name="cont_connection_instance_cell_ids",
+    source="""\
 
     def _get_cell_id(self, id_string):
         if '[' in id_string:
@@ -425,16 +698,21 @@ cont_connection_instance_cell_ids = MethodSpec(name='cont_connection_instance_ce
             ", pre comp: "+str(self.pre_component)+", post comp: "+str(self.post_component)
 
 
-    ''',
-    class_names=("ContinuousConnectionInstance")
-    )
+    """,
+    class_names=("ContinuousConnectionInstance"),
+)
 
-METHOD_SPECS+=(cont_connection_instance_cell_ids,)
+METHOD_SPECS += (cont_connection_instance_cell_ids,)
 
-cont_connection_instance_w = MethodSpec(name='cont_connection_instance_w',
+cont_connection_instance_w = MethodSpec(
+    name="cont_connection_instance_w",
     source='''\
 
     def get_weight(self):
+        """Get weight.
+
+        If weight is not set, the default value of 1.0 is returned.
+        """
 
         return float(self.weight) if self.weight!=None else 1.0
 
@@ -445,12 +723,13 @@ cont_connection_instance_w = MethodSpec(name='cont_connection_instance_w',
 
 
     ''',
-    class_names=("ContinuousConnectionInstanceW")
-    )
+    class_names=("ContinuousConnectionInstanceW"),
+)
 
-METHOD_SPECS+=(cont_connection_instance_w,)
+METHOD_SPECS += (cont_connection_instance_w,)
 
-cont_connection_cell_ids = MethodSpec(name='cont_connection_cell_ids',
+cont_connection_cell_ids = MethodSpec(
+    name="cont_connection_cell_ids",
     source='''\
 
     def _get_cell_id(self, id_string):
@@ -458,35 +737,59 @@ cont_connection_cell_ids = MethodSpec(name='cont_connection_cell_ids',
 
 
     def get_pre_cell_id(self):
+        """Get the ID of the pre-synaptic cell
+
+        :returns: ID of pre-synaptic cell
+        :rtype: str
+        """
 
         return self._get_cell_id(self.pre_cell)
 
     def get_post_cell_id(self):
+        """Get the ID of the post-synaptic cell
+
+        :returns: ID of post-synaptic cell
+        :rtype: str
+        """
 
         return self._get_cell_id(self.post_cell)
 
     def get_pre_segment_id(self):
+        """Get the ID of the pre-synpatic segment
+
+        :returns: ID of pre-synaptic segment.
+        :rtype: str
+        """
 
         return int(self.pre_segment)
 
     def get_post_segment_id(self):
+        """Get the ID of the post-synpatic segment
+
+        :returns: ID of post-synaptic segment.
+        :rtype: str
+        """
 
         return int(self.post_segment)
 
     def get_pre_fraction_along(self):
+        """Get pre-synaptic fraction along information"""
 
         return float(self.pre_fraction_along)
 
     def get_post_fraction_along(self):
+        """Get post-synaptic fraction along information"""
 
         return float(self.post_fraction_along)
 
 
     def get_pre_info(self):
+        """Get pre-synaptic information summary"""
 
         return str(self.get_pre_cell_id())+(':'+str(self.get_pre_segment_id())+'('+ 'PERCENTAGE.5f'PERCENTAGEself.get_pre_fraction_along()+')' if self.get_pre_segment_id()!=0 or self.get_pre_fraction_along()!=0.5 else '')
 
     def get_post_info(self):
+        """Get post-synaptic information summary"""
 
         return str(self.get_post_cell_id())+(':'+str(self.get_post_segment_id())+'('+ 'PERCENTAGE.5f'PERCENTAGEself.get_post_fraction_along()+')' if self.get_post_segment_id()!=0 or self.get_post_fraction_along()!=0.5 else '')
 
@@ -498,15 +801,15 @@ cont_connection_cell_ids = MethodSpec(name='cont_connection_cell_ids',
 
 
     ''',
-    class_names=("ContinuousConnection")
-    )
+    class_names=("ContinuousConnection"),
+)
 
-METHOD_SPECS+=(cont_connection_cell_ids,)
+METHOD_SPECS += (cont_connection_cell_ids,)
 
 
-instance = MethodSpec(name='instance',
-    source='''\
-
+instance = MethodSpec(
+    name="instance",
+    source="""\
 
     def __str__(self):
 
@@ -516,14 +819,15 @@ instance = MethodSpec(name='instance',
 
         return str(self)
 
-''',
-    class_names=("Instance")
-    )
-METHOD_SPECS+=(instance,)
+""",
+    class_names=("Instance"),
+)
+METHOD_SPECS += (instance,)
 
 
-location = MethodSpec(name='location',
-    source='''\
+location = MethodSpec(
+    name="location",
+    source="""\
 
     def _format(self,value):
 
@@ -540,15 +844,14 @@ location = MethodSpec(name='location',
 
         return str(self)
 
-''',
-    class_names=("Location")
-    )
-METHOD_SPECS+=(location,)
+""",
+    class_names=("Location"),
+)
+METHOD_SPECS += (location,)
 
 
-
-
-input_cell_ids = MethodSpec(name='input_cell_ids',
+input_cell_ids = MethodSpec(
+    name="input_cell_ids",
     source='''\
 
     def _get_cell_id(self, id_string):
@@ -558,14 +861,22 @@ input_cell_ids = MethodSpec(name='input_cell_ids',
             return int(id_string.split('/')[2])
 
     def get_target_cell_id(self):
+        """Get ID of target cell.  """
 
         return self._get_cell_id(self.target)
 
     def get_segment_id(self):
+        """Get the ID of the segment.
 
+        Returns 0 if segment_id was not set.
+        """
         return int(self.segment_id) if self.segment_id else 0
 
     def get_fraction_along(self):
+        """Get fraction along.
+
+        Returns 0.5 is fraction_along was not set.
+        """
 
         return float(self.fraction_along) if self.fraction_along else 0.5
 
@@ -574,16 +885,21 @@ input_cell_ids = MethodSpec(name='input_cell_ids',
         return "Input "+str(self.id)+": "+str(self.get_target_cell_id())+":"+str(self.get_segment_id())+"("+'PERCENTAGE.6f'PERCENTAGEself.get_fraction_along()+")"
 
     ''',
-    class_names=(["Input","ExplicitInput"])
-    )
+    class_names=(["Input", "ExplicitInput"]),
+)
 
-METHOD_SPECS+=(input_cell_ids,)
+METHOD_SPECS += (input_cell_ids,)
 
 
-input_w = MethodSpec(name='input_w',
+input_w = MethodSpec(
+    name="input_w",
     source='''\
 
     def get_weight(self):
+        """Get weight.
+
+        If weight is not set, the default value of 1.0 is returned.
+        """
 
         return float(self.weight) if self.weight!=None else 1.0
 
@@ -592,17 +908,23 @@ input_w = MethodSpec(name='input_w',
         return "Input (weight) "+str(self.id)+": "+str(self.get_target_cell_id())+":"+str(self.get_segment_id())+"("+'PERCENTAGE.6f'PERCENTAGEself.get_fraction_along()+"), weight: "+'PERCENTAGE.6f'PERCENTAGEself.get_weight()
 
     ''',
-    class_names=(["InputW"])
-    )
+    class_names=(["InputW"]),
+)
 
-METHOD_SPECS+=(input_w,)
+METHOD_SPECS += (input_w,)
 
 
-nml_doc_summary = MethodSpec(name='summary',
+nml_doc_summary = MethodSpec(
+    name="summary",
     source='''\
 
 
     def summary(self, show_includes=True, show_non_network=True):
+        """Get a pretty-printed summary of the complete NeuroMLDocument.
+
+        This includes information on the various Components included in the
+        NeuroMLDocument: networks, cells, projections, synapses, and so on.
+        """
 
         import inspect
 
@@ -729,6 +1051,12 @@ nml_doc_summary = MethodSpec(name='summary',
     warn_count = 0
 
     def get_by_id(self,id):
+        """Get a component by specifying its ID.
+
+        :param id: id of Component to get
+        :type id: str
+        :returns: Component with given ID or None if no Component with provided ID was found
+        """
         if len(id)==0:
             import inspect
             callframe = inspect.getouterframes(inspect.currentframe(), 2)
@@ -752,21 +1080,32 @@ nml_doc_summary = MethodSpec(name='summary',
             print_(" - Suppressing further warnings about id not found...")
         return None
 
-    def append(self,element):
-        from neuroml.utils import append_to_element
-        append_to_element(self,element)
+    def append(self, element):
+        """Append an element
+
+        :param element: element to append
+        :type element: Object
+        """
+        self.add(element)
 
     ''',
-    class_names=("NeuroMLDocument")
-    )
+    class_names=("NeuroMLDocument"),
+)
 
-METHOD_SPECS+=(nml_doc_summary,)
+METHOD_SPECS += (nml_doc_summary,)
 
-network_get_by_id = MethodSpec(name='get_by_id',
+network_get_by_id = MethodSpec(
+    name="get_by_id",
     source='''\
 
     warn_count = 0
     def get_by_id(self,id):
+        """Get a component by its ID
+
+        :param id: ID of component to find
+        :type id: str
+        :returns:  component with specified ID or None if no component with specified ID found
+        """
         all_ids = []
         for ms in self.member_data_items_:
             mlist = self.__getattribute__(ms.name)
@@ -790,18 +1129,20 @@ network_get_by_id = MethodSpec(name='get_by_id',
         return "Network "+str(self.id)+" with "+str(len(self.populations))+" population(s)"
 
     ''',
-    class_names=("Network")
-    )
+    class_names=("Network"),
+)
 
-METHOD_SPECS+=(network_get_by_id,)
+METHOD_SPECS += (network_get_by_id,)
 
 
-cell_methods = MethodSpec(name='cell_methods',
+cell_methods = MethodSpec(
+    name="cell_methods",
     source='''\
 
 
     # Get segment object by its id
     def get_segment(self, segment_id):
+        # type: (str) -> Segment
         """Get segment object by its id
 
         :param segment_id: ID of segment
@@ -816,10 +1157,30 @@ cell_methods = MethodSpec(name='cell_methods',
 
         raise Exception("Segment with id "+str(segment_id)+" not found in cell "+str(self.id))
 
+    def get_segments_by_substring(self, substring):
+        # type: (str) -> dict
+        """Get a dictionary of segment IDs and the segment matching the specified substring
+
+        :param substring: substring to match
+        :type substring: str
+        :return: dictionary with segment ID as key, and segment as value
+        :raises Exception: if no segments are found
+
+        """
+        segments = {}
+        if substring:
+            for segment in self.morphology.segments:
+                if substring in segment.id:
+                    segments[segment.id] = segment
+        if len(segments) == 0:
+            raise Exception("Segments with id matching "+str(substring)+" not found in cell "+str(self.id))
+        return segments
+
+
     # Get the proximal point of a segment, even the proximal field is None and
     # so the proximal point is on the parent (at a point set by fraction_along)
     def get_actual_proximal(self, segment_id):
-
+        # type: (str) -> Point3DWithDiam
         """Get the proximal point of a segment.
 
         Get the proximal point of a segment, even the proximal field is None
@@ -849,6 +1210,7 @@ cell_methods = MethodSpec(name='cell_methods',
             return p
 
     def get_segment_length(self, segment_id):
+        # type: (str) -> float
         """Get the length of the segment.
 
         :param segment_id: ID of segment
@@ -866,6 +1228,7 @@ cell_methods = MethodSpec(name='cell_methods',
             return length
 
     def get_segment_surface_area(self, segment_id):
+        # type: (str) -> float
         """Get the surface area of the segment.
 
         :param segment_id: ID of the segment
@@ -883,6 +1246,7 @@ cell_methods = MethodSpec(name='cell_methods',
             return temp_seg.surface_area
 
     def get_segment_volume(self, segment_id):
+        # type: (str) -> float
         """Get volume of segment
 
         :param segment_id: ID of the segment
@@ -899,6 +1263,7 @@ cell_methods = MethodSpec(name='cell_methods',
             return temp_seg.volume
 
     def get_segment_ids_vs_segments(self):
+        # type: () -> Dict
         """Get a dictionary of segment IDs and the segments in the cell.
 
         :return: dictionary with segment ID as key, and segment as value
@@ -913,6 +1278,7 @@ cell_methods = MethodSpec(name='cell_methods',
     def get_all_segments_in_group(self,
                                   segment_group,
                                   assume_all_means_all=True):
+        # type: (SegmentGroup, bool) -> List[Segment]
         """Get all the segments in a segment group of the cell.
 
         :param segment_group: segment group to get all segments of
@@ -959,6 +1325,7 @@ cell_methods = MethodSpec(name='cell_methods',
                                        include_cumulative_lengths=False,
                                        include_path_lengths=False,
                                        path_length_metric="Path Length from root"): # Only option supported
+        # type: (List, bool, bool, bool, str) -> Dict
         """
         Get ordered list of segments in specified groups
 
@@ -1080,6 +1447,38 @@ cell_methods = MethodSpec(name='cell_methods',
 
         return ord_segs
 
+    def get_segment_group(self, sg_id):
+        # type: (str) -> SegmentGroup
+        """Return the SegmentGroup object for the specified segment group id.
+
+        :param sg_id: id of segment group to find
+        :type sg_id: str
+        :returns: SegmentGroup object of specified ID
+        :raises Exception: if segment group is not found in cell
+        """
+        if sg_id:
+            for sg in self.morphology.segment_groups:
+                if sg.id == sg_id:
+                    return sg
+
+        raise Exception("Segment group with id "+str(sg_id)+" not found in cell "+str(self.id))
+
+    def get_segment_groups_by_substring(self, substring):
+        # type: (str) -> dict
+        """Get a dictionary of segment group IDs and the segment groups matching the specified substring
+
+        :param substring: substring to match
+        :type substring: str
+        :return: dictionary with segment group ID as key, and segment group as value
+        :raises Exception: if no segment groups are not found in cell
+        """
+        sgs = {}
+        for sg in self.morphology.segment_groups:
+            if substring in sg.id:
+                sgs[sg.id] = sg
+        if len(sgs) == 0:
+            raise Exception("Segment group with id matching "+str(substring)+" not found in cell "+str(self.id))
+        return sgs
 
 
     def summary(self):
@@ -1092,15 +1491,17 @@ cell_methods = MethodSpec(name='cell_methods',
         print("*******************************************************")
 
     ''',
-    class_names=("Cell")
-    )
+    class_names=("Cell"),
+)
 
-METHOD_SPECS+=(cell_methods,)
+METHOD_SPECS += (cell_methods,)
 
 
-inserts  = {}
+inserts = {}
 
-inserts['Network'] = '''
+inserts[
+    "Network"
+] = """
 
         import numpy
 
@@ -1131,9 +1532,11 @@ inserts['Network'] = '''
         for il in self.input_lists:
             il.exportHdf5(h5file, netGroup)
 
-'''
+"""
 
-inserts['Population'] = '''
+inserts[
+    "Population"
+] = """
 
         import numpy
 
@@ -1175,9 +1578,11 @@ inserts['Population'] = '''
 
         return "Population: "+str(self.id)+" with "+str( self.get_size() )+" components of type "+(self.component if self.component else "???")
 
-'''
+"""
 
-inserts['Projection'] = '''
+inserts[
+    "Projection"
+] = """
 
         import numpy
 
@@ -1266,9 +1671,11 @@ inserts['Projection'] = '''
 
 
 
-'''
+"""
 
-inserts['ElectricalProjection'] = '''
+inserts[
+    "ElectricalProjection"
+] = """
 
         import numpy
 
@@ -1340,11 +1747,12 @@ inserts['ElectricalProjection'] = '''
         for col in extra_cols.keys():
             array._f_setattr(col,extra_cols[col])
 
-'''
+"""
 
 
-
-inserts['ContinuousProjection'] = '''
+inserts[
+    "ContinuousProjection"
+] = """
 
         import numpy
 
@@ -1422,10 +1830,12 @@ inserts['ContinuousProjection'] = '''
             array._f_setattr(k, extra_cols[k])
 
 
-'''
+"""
 
 
-inserts['InputList'] = '''
+inserts[
+    "InputList"
+] = """
 
         import numpy
 
@@ -1477,24 +1887,27 @@ inserts['InputList'] = '''
 
         return "Input list: "+self.id+" to "+self.populations+", component "+self.component
 
-'''
-
+"""
 
 
 for insert in inserts.keys():
-    ms = MethodSpec(name='exportHdf5',
-    source='''\
+    ms = MethodSpec(
+        name="exportHdf5",
+        source='''\
 
     def exportHdf5(self, h5file, h5Group):
+        """Export to HDF5 file.  """
         #print("Exporting %s: "+str(self.id)+" as HDF5")
         %s
-    '''%(insert,inserts[insert]),
-    class_names=(insert)
+    '''
+        % (insert, inserts[insert]),
+        class_names=(insert),
     )
-    METHOD_SPECS+=(ms,)
+    METHOD_SPECS += (ms,)
 
 
-synaptic_connections = MethodSpec(name='synaptic_connections',
+synaptic_connections = MethodSpec(
+    name="synaptic_connections",
     source='''\
 
     def _get_cell_id(self,ref):
@@ -1519,12 +1932,13 @@ synaptic_connections = MethodSpec(name='synaptic_connections',
 
 
     ''',
-    class_names=("SynapticConnection")
-    )
+    class_names=("SynapticConnection"),
+)
 
-METHOD_SPECS+=(synaptic_connections,)
+METHOD_SPECS += (synaptic_connections,)
 
-explicit_inputs = MethodSpec(name='explicit_inputs',
+explicit_inputs = MethodSpec(
+    name="explicit_inputs",
     source='''\
 
     def get_target_cell_id(self,):
@@ -1549,18 +1963,20 @@ explicit_inputs = MethodSpec(name='explicit_inputs',
 
 
     ''',
-    class_names=("ExplicitInput")
-    )
+    class_names=("ExplicitInput"),
+)
 
-METHOD_SPECS+=(explicit_inputs,)
+METHOD_SPECS += (explicit_inputs,)
+
 
 def test():
     for spec in METHOD_SPECS:
         spec.show()
 
+
 def main():
     test()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -50,3 +50,5 @@ neuroml/test/*.h5
 /mongoo
 
 .venv
+/data
+.mypy_cache/
