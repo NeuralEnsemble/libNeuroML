@@ -23,7 +23,6 @@ regenerate () {
 
 
         PYTHONPATH="$PYTHONPATH:." generateDS -o nml.py --use-getter-setter=none --user-methods=helper_methods.py $SCHEMA_FILE
-        fi
     else
         echo "GenerateDS not installed"
         echo "Run: pip install generateds"
