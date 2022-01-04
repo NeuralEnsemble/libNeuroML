@@ -24,7 +24,7 @@ Serialisations
 The XML serialisation will be the "natural" serialisation and will follow closely the NeuroML object model.
 The format of the XML will be specified by the XML Schema definition (XSD file).
 
-Other serialisations have been developed (HDF5, JSON, SWC).
+Other serialisations have also been developed (HDF5, SWC).
 Please see :cite:t:`Vella2014` for more details.
 
 
