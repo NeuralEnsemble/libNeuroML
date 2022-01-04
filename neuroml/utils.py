@@ -11,8 +11,7 @@ import warnings
 import neuroml
 
 
-def validate_neuroml2(file_name):
-    # (str) -> None
+def validate_neuroml2(file_name: str) -> None:
     """Validate a NeuroML document against the NeuroML schema specification.
 
     :param file_name: name of NeuroML file to validate.
@@ -36,8 +35,7 @@ def validate_neuroml2(file_name):
         print("It's valid!")
 
 
-def is_valid_neuroml2(file_name):
-    # (str) -> Bool
+def is_valid_neuroml2(file_name: str) -> None:
     """Check if a file is valid NeuroML2.
 
     :param file_name: name of NeuroML file to check
@@ -58,7 +56,7 @@ def is_valid_neuroml2(file_name):
     return False
 
 
-def print_summary(nml_file_name):
+def print_summary(nml_file_name: str) -> None:
     """Print a summary of the NeuroML model in the given file.
 
     :param nml_file_name: name of NeuroML file to print summary of
@@ -67,8 +65,7 @@ def print_summary(nml_file_name):
     print(get_summary(nml_file_name))
 
 
-def get_summary(nml_file_name):
-    # (str) -> str
+def get_summary(nml_file_name: str) -> str:
     """Get a summary of the given NeuroML file.
 
     :param nml_file_name: name of NeuroML file to get summary of
@@ -85,7 +82,8 @@ def get_summary(nml_file_name):
     return nml_doc.summary(show_includes=False)
 
 
-def add_all_to_document(nml_doc_src, nml_doc_tgt, verbose=False):
+def add_all_to_document(nml_doc_src: neuroml.NeuroMLDocument, nml_doc_tgt:
+                        neuroml.NeuroMLDocument, verbose: bool = False) -> None:
     """Add all members of the source NeuroML document to the target NeuroML document.
 
     :param nml_doc_src: source NeuroML document to copy from
@@ -153,7 +151,7 @@ def append_to_element(parent, child):
         raise Exception("Could not add %s to %s" % (child, parent))
 
 
-def has_segment_fraction_info(connections):
+def has_segment_fraction_info(connections: list) -> bool:
     """Check if connections include fraction information
 
     :param connections: list of connection objects
