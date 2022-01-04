@@ -2,6 +2,5 @@ six
 lxml
 numpy
 numexpr ; python_version >= '3'
-numexpr<2.8 ; python_version < '3'
 git+git://github.com/PyTables/PyTables/@master#egg=tables ; python_version >= '3.10'
 tables>=3.3.0 ; python_version < '3.10'

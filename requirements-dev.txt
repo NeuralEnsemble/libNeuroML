@@ -1,6 +1,5 @@
 wheel
 generateds >= 2.20a; python_version >= '3.0'
-generateds == 2.30.11; python_version == '2.7'
 cython
 flake8
 pytest
