@@ -1,7 +1,6 @@
 six
 lxml
 numpy
-pymongo
 numexpr ; python_version >= '3'
 numexpr<2.8 ; python_version < '3'
 simplejson; python_version < '3.5'

@@ -24,7 +24,6 @@ setup(
         "full": [
             "cython",
             "numpy",
-            "pymongo",
             "numexpr",
             "simplejson; python_version < '3.5'",
             "tables>=3.3.0",

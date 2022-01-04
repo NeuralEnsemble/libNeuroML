@@ -101,11 +101,4 @@ You can also use PyTest to run tests.
     pytest -v --strict -W all
 
 
-To ignore some tests, like the MongoDB test which requires a MongoDB setup, run:
-
-::
-
-    pytest -v -k "not mongodb" --strict -W all
-
-
 .. _Git: https://git-scm.com
