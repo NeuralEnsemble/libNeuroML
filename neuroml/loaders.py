@@ -42,7 +42,7 @@ class NeuroMLLoader(object):
 
             if supressGeneratedsWarnings:
                 warnings.simplefilter("ignore")
-            nml2_doc = nmlparse(file_name)
+            nml2_doc = nmlparse(file_name, silence=True)
             if supressGeneratedsWarnings:
                 warnings.resetwarnings()
         except Exception as e:
@@ -323,6 +323,7 @@ def _read_neuroml2(
 
 
 if __name__ == "__main__":
-
-    nml_doc = read_neuroml2_file(sys.argv[1])
+    f = sys.argv[1]
+    nml_doc = read_neuroml2_file(f)
+    print("Read in %s"%f)
     print(nml_doc.summary())
