@@ -22,15 +22,7 @@ regenerate () {
         rm -f nml.py
 
 
-        # The version of generateDS for Python 2.7 has a slightly different
-        # style for arguments. You do not give helper_methods.py, just
-        # helper_methods
-        if [[ "$PYTHON_VERSION" =~ "2.7" ]]
-        then
-            PYTHONPATH="$PYTHONPATH:." generateDS -o nml.py --use-getter-setter=none --user-methods=helper_methods $SCHEMA_FILE
-        else
-            PYTHONPATH="$PYTHONPATH:." generateDS -o nml.py --use-getter-setter=none --user-methods=helper_methods.py $SCHEMA_FILE
-        fi
+        PYTHONPATH="$PYTHONPATH:." generateDS -o nml.py --use-getter-setter=none --user-methods=helper_methods.py $SCHEMA_FILE
     else
         echo "GenerateDS not installed"
         echo "Run: pip install generateds"
