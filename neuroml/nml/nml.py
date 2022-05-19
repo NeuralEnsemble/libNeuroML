@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Nov 19 11:14:04 2021 by generateDS.py version 2.40.5.
-# Python 3.10.0 (default, Oct  4 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
+# Generated Thu May 19 11:01:22 2022 by generateDS.py version 2.40.13.
+# Python 3.7.7 (default, May  7 2020, 21:25:33)  [GCC 7.3.0]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -11,10 +11,10 @@
 #   ('--user-methods', 'helper_methods.py')
 #
 # Command line arguments:
-#   NeuroML_v2.2.xsd
+#   NeuroML_v2.3.xsd
 #
 # Command line:
-#   /home/asinha/.local/share/virtualenvs/generateds-310/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" NeuroML_v2.2.xsd
+#   /home/padraig/anaconda2/envs/py37//bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" NeuroML_v2.3.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -37,6 +37,7 @@ from lxml import etree as etree_
 
 Validate_simpletypes_ = True
 SaveElementTreeNode = True
+TagNamePrefix = ""
 if sys.version_info.major == 2:
     BaseStrType_ = basestring
 else:
@@ -205,17 +206,16 @@ except ModulenotfoundExp_ as exp:
                 "str_pretty_print": True,
                 "str_indent_level": 0,
                 "str_namespaceprefix": "",
-                "str_name": None,
+                "str_name": self.__class__.__name__,
                 "str_namespacedefs": "",
             }
             for n in settings:
                 if hasattr(self, n):
-                    setattr(settings[n], self[n])
+                    settings[n] = getattr(self, n)
             if sys.version_info.major == 2:
                 from StringIO import StringIO
             else:
                 from io import StringIO
-
             output = StringIO()
             self.export(
                 output,
@@ -382,6 +382,7 @@ except ModulenotfoundExp_ as exp:
             return ("%s" % input_data).lower()
 
         def gds_parse_boolean(self, input_data, node=None, input_name=""):
+            input_data = input_data.strip()
             if input_data in ("true", "1"):
                 bval = True
             elif input_data in ("false", "0"):
@@ -579,6 +580,7 @@ except ModulenotfoundExp_ as exp:
             # The target value must match at least one of the patterns
             # in order for the test to succeed.
             found1 = True
+            target = str(target)
             for patterns1 in patterns:
                 found2 = False
                 for patterns2 in patterns1:
@@ -863,6 +865,7 @@ def quote_attrib(inStr):
     s1 = s1.replace("&", "&amp;")
     s1 = s1.replace("<", "&lt;")
     s1 = s1.replace(">", "&gt;")
+    s1 = s1.replace("\n", "&#10;")
     if '"' in s1:
         if "'" in s1:
             s1 = '"%s"' % s1.replace('"', "&quot;")
@@ -1478,7 +1481,7 @@ class Annotation(GeneratedsSuper):
         if not fromsubclass_:
             for obj_ in self.anytypeobjs_:
                 showIndent(outfile, level, pretty_print)
-                outfile.write(obj_)
+                outfile.write(str(obj_))
                 outfile.write("\n")
 
     def build(self, node, gds_collector_=None):
@@ -16744,7 +16747,7 @@ class CellSet(Base):
         if not fromsubclass_:
             for obj_ in self.anytypeobjs_:
                 showIndent(outfile, level, pretty_print)
-                outfile.write(obj_)
+                outfile.write(str(obj_))
                 outfile.write("\n")
 
     def build(self, node, gds_collector_=None):
@@ -17408,7 +17411,7 @@ class Region(Base):
         if not fromsubclass_:
             for obj_ in self.anytypeobjs_:
                 showIndent(outfile, level, pretty_print)
-                outfile.write(obj_)
+                outfile.write(str(obj_))
                 outfile.write("\n")
 
     def build(self, node, gds_collector_=None):
@@ -24215,7 +24218,7 @@ class ReactionScheme(Base):
         if not fromsubclass_:
             for obj_ in self.anytypeobjs_:
                 showIndent(outfile, level, pretty_print)
-                outfile.write(obj_)
+                outfile.write(str(obj_))
                 outfile.write("\n")
 
     def build(self, node, gds_collector_=None):
@@ -29026,12 +29029,12 @@ class Segment(BaseNonNegativeIntegerId):
                     + ". The (x,y,z) coordinates of the proximal and distal points match (i.e. it is a sphere), but the diameters of these points are different, making the volume calculation ambiguous."
                 )
 
-            return 4.0 / 3 * pi * prox_rad ** 3
+            return 4.0 / 3 * pi * prox_rad**3
 
         length = self.length
 
         volume = (
-            (pi / 3) * length * (prox_rad ** 2 + dist_rad ** 2 + prox_rad * dist_rad)
+            (pi / 3) * length * (prox_rad**2 + dist_rad**2 + prox_rad * dist_rad)
         )
 
         return volume
@@ -29069,12 +29072,12 @@ class Segment(BaseNonNegativeIntegerId):
                     + ". The (x,y,z) coordinates of the proximal and distal points match (i.e. it is a sphere), but the diameters of these points are different, making the surface area calculation ambiguous."
                 )
 
-            return 4.0 * pi * prox_rad ** 2
+            return 4.0 * pi * prox_rad**2
 
         length = self.length
 
         surface_area = (
-            pi * (prox_rad + dist_rad) * sqrt((prox_rad - dist_rad) ** 2 + length ** 2)
+            pi * (prox_rad + dist_rad) * sqrt((prox_rad - dist_rad) ** 2 + length**2)
         )
 
         return surface_area
@@ -34946,7 +34949,7 @@ class ReverseTransition(Base):
         if not fromsubclass_:
             for obj_ in self.anytypeobjs_:
                 showIndent(outfile, level, pretty_print)
-                outfile.write(obj_)
+                outfile.write(str(obj_))
                 outfile.write("\n")
 
     def build(self, node, gds_collector_=None):
@@ -35195,7 +35198,7 @@ class ForwardTransition(Base):
         if not fromsubclass_:
             for obj_ in self.anytypeobjs_:
                 showIndent(outfile, level, pretty_print)
-                outfile.write(obj_)
+                outfile.write(str(obj_))
                 outfile.write("\n")
 
     def build(self, node, gds_collector_=None):
@@ -57874,9 +57877,10 @@ def usage():
 
 def get_root_tag(node):
     tag = Tag_pattern_.match(node.tag).groups()[-1]
-    rootClass = GDSClassesMapping.get(tag)
+    prefix_tag = TagNamePrefix + tag
+    rootClass = GDSClassesMapping.get(prefix_tag)
     if rootClass is None:
-        rootClass = globals().get(tag)
+        rootClass = globals().get(prefix_tag)
     return tag, rootClass
 
 
@@ -58073,231 +58077,231 @@ RenameMappings_ = {}
 # simpleTypes are marked "ST" and complexTypes "CT".
 NamespaceToDefMappings_ = {
     "http://www.neuroml.org/schema/neuroml2": [
-        ("NmlId", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_none", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_voltage", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_length", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_resistance", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_resistivity", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_conductance", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_conductanceDensity", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_permeability", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_time", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_pertime", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_capacitance", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_specificCapacitance", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_concentration", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_current", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_currentDensity", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_temperature", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_rhoFactor", "NeuroML_v2.2.xsd", "ST"),
-        ("Nml2Quantity_conductancePerVoltage", "NeuroML_v2.2.xsd", "ST"),
-        ("MetaId", "NeuroML_v2.2.xsd", "ST"),
-        ("NeuroLexId", "NeuroML_v2.2.xsd", "ST"),
-        ("NonNegativeInteger", "NeuroML_v2.2.xsd", "ST"),
-        ("PositiveInteger", "NeuroML_v2.2.xsd", "ST"),
-        ("DoubleGreaterThanZero", "NeuroML_v2.2.xsd", "ST"),
-        ("ZeroOrOne", "NeuroML_v2.2.xsd", "ST"),
-        ("Notes", "NeuroML_v2.2.xsd", "ST"),
-        ("ZeroToOne", "NeuroML_v2.2.xsd", "ST"),
-        ("channelTypes", "NeuroML_v2.2.xsd", "ST"),
-        ("gateTypes", "NeuroML_v2.2.xsd", "ST"),
-        ("BlockTypes", "NeuroML_v2.2.xsd", "ST"),
-        ("PlasticityTypes", "NeuroML_v2.2.xsd", "ST"),
-        ("Metric", "NeuroML_v2.2.xsd", "ST"),
-        ("networkTypes", "NeuroML_v2.2.xsd", "ST"),
-        ("allowedSpaces", "NeuroML_v2.2.xsd", "ST"),
-        ("populationTypes", "NeuroML_v2.2.xsd", "ST"),
-        ("Property", "NeuroML_v2.2.xsd", "CT"),
-        ("Annotation", "NeuroML_v2.2.xsd", "CT"),
-        ("ComponentType", "NeuroML_v2.2.xsd", "CT"),
-        ("Constant", "NeuroML_v2.2.xsd", "CT"),
-        ("Exposure", "NeuroML_v2.2.xsd", "CT"),
-        ("NamedDimensionalType", "NeuroML_v2.2.xsd", "CT"),
-        ("NamedDimensionalVariable", "NeuroML_v2.2.xsd", "CT"),
-        ("Parameter", "NeuroML_v2.2.xsd", "CT"),
-        ("LEMS_Property", "NeuroML_v2.2.xsd", "CT"),
-        ("Requirement", "NeuroML_v2.2.xsd", "CT"),
-        ("InstanceRequirement", "NeuroML_v2.2.xsd", "CT"),
-        ("Dynamics", "NeuroML_v2.2.xsd", "CT"),
-        ("DerivedVariable", "NeuroML_v2.2.xsd", "CT"),
-        ("StateVariable", "NeuroML_v2.2.xsd", "CT"),
-        ("ConditionalDerivedVariable", "NeuroML_v2.2.xsd", "CT"),
-        ("Case", "NeuroML_v2.2.xsd", "CT"),
-        ("TimeDerivative", "NeuroML_v2.2.xsd", "CT"),
-        ("NeuroMLDocument", "NeuroML_v2.2.xsd", "CT"),
-        ("IncludeType", "NeuroML_v2.2.xsd", "CT"),
-        ("IonChannelScalable", "NeuroML_v2.2.xsd", "CT"),
-        ("IonChannelKS", "NeuroML_v2.2.xsd", "CT"),
-        ("IonChannel", "NeuroML_v2.2.xsd", "CT"),
-        ("IonChannelHH", "NeuroML_v2.2.xsd", "CT"),
-        ("IonChannelVShift", "NeuroML_v2.2.xsd", "CT"),
-        ("Q10ConductanceScaling", "NeuroML_v2.2.xsd", "CT"),
-        ("ClosedState", "NeuroML_v2.2.xsd", "CT"),
-        ("OpenState", "NeuroML_v2.2.xsd", "CT"),
-        ("ForwardTransition", "NeuroML_v2.2.xsd", "CT"),
-        ("ReverseTransition", "NeuroML_v2.2.xsd", "CT"),
-        ("TauInfTransition", "NeuroML_v2.2.xsd", "CT"),
-        ("GateKS", "NeuroML_v2.2.xsd", "CT"),
-        ("GateHHUndetermined", "NeuroML_v2.2.xsd", "CT"),
-        ("GateHHRates", "NeuroML_v2.2.xsd", "CT"),
-        ("GateHHTauInf", "NeuroML_v2.2.xsd", "CT"),
-        ("GateHHRatesTauInf", "NeuroML_v2.2.xsd", "CT"),
-        ("GateHHRatesTau", "NeuroML_v2.2.xsd", "CT"),
-        ("GateHHRatesInf", "NeuroML_v2.2.xsd", "CT"),
-        ("GateHHInstantaneous", "NeuroML_v2.2.xsd", "CT"),
-        ("GateFractional", "NeuroML_v2.2.xsd", "CT"),
-        ("GateFractionalSubgate", "NeuroML_v2.2.xsd", "CT"),
-        ("Q10Settings", "NeuroML_v2.2.xsd", "CT"),
-        ("HHRate", "NeuroML_v2.2.xsd", "CT"),
-        ("HHVariable", "NeuroML_v2.2.xsd", "CT"),
-        ("HHTime", "NeuroML_v2.2.xsd", "CT"),
-        ("DecayingPoolConcentrationModel", "NeuroML_v2.2.xsd", "CT"),
-        ("FixedFactorConcentrationModel", "NeuroML_v2.2.xsd", "CT"),
-        ("BaseSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("BaseVoltageDepSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("BaseCurrentBasedSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("BaseConductanceBasedSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("BaseConductanceBasedSynapseTwo", "NeuroML_v2.2.xsd", "CT"),
-        ("GapJunction", "NeuroML_v2.2.xsd", "CT"),
-        ("SilentSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("LinearGradedSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("GradedSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("AlphaCurrentSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("AlphaSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("ExpOneSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("ExpTwoSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("ExpThreeSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("DoubleSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("BlockingPlasticSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("BlockMechanism", "NeuroML_v2.2.xsd", "CT"),
-        ("PlasticityMechanism", "NeuroML_v2.2.xsd", "CT"),
-        ("BaseCell", "NeuroML_v2.2.xsd", "CT"),
-        ("IafTauCell", "NeuroML_v2.2.xsd", "CT"),
-        ("IafTauRefCell", "NeuroML_v2.2.xsd", "CT"),
-        ("IafCell", "NeuroML_v2.2.xsd", "CT"),
-        ("IafRefCell", "NeuroML_v2.2.xsd", "CT"),
-        ("IzhikevichCell", "NeuroML_v2.2.xsd", "CT"),
-        ("BaseCellMembPotCap", "NeuroML_v2.2.xsd", "CT"),
-        ("Izhikevich2007Cell", "NeuroML_v2.2.xsd", "CT"),
-        ("AdExIaFCell", "NeuroML_v2.2.xsd", "CT"),
-        ("FitzHughNagumoCell", "NeuroML_v2.2.xsd", "CT"),
-        ("FitzHughNagumo1969Cell", "NeuroML_v2.2.xsd", "CT"),
-        ("PinskyRinzelCA3Cell", "NeuroML_v2.2.xsd", "CT"),
-        ("Cell", "NeuroML_v2.2.xsd", "CT"),
-        ("Cell2CaPools", "NeuroML_v2.2.xsd", "CT"),
-        ("Morphology", "NeuroML_v2.2.xsd", "CT"),
-        ("Segment", "NeuroML_v2.2.xsd", "CT"),
-        ("SegmentParent", "NeuroML_v2.2.xsd", "CT"),
-        ("Point3DWithDiam", "NeuroML_v2.2.xsd", "CT"),
-        ("SegmentGroup", "NeuroML_v2.2.xsd", "CT"),
-        ("InhomogeneousParameter", "NeuroML_v2.2.xsd", "CT"),
-        ("ProximalDetails", "NeuroML_v2.2.xsd", "CT"),
-        ("DistalDetails", "NeuroML_v2.2.xsd", "CT"),
-        ("Member", "NeuroML_v2.2.xsd", "CT"),
-        ("Include", "NeuroML_v2.2.xsd", "CT"),
-        ("Path", "NeuroML_v2.2.xsd", "CT"),
-        ("SubTree", "NeuroML_v2.2.xsd", "CT"),
-        ("SegmentEndPoint", "NeuroML_v2.2.xsd", "CT"),
-        ("BiophysicalProperties", "NeuroML_v2.2.xsd", "CT"),
-        ("BiophysicalProperties2CaPools", "NeuroML_v2.2.xsd", "CT"),
-        ("MembraneProperties", "NeuroML_v2.2.xsd", "CT"),
-        ("MembraneProperties2CaPools", "NeuroML_v2.2.xsd", "CT"),
-        ("SpikeThresh", "NeuroML_v2.2.xsd", "CT"),
-        ("SpecificCapacitance", "NeuroML_v2.2.xsd", "CT"),
-        ("InitMembPotential", "NeuroML_v2.2.xsd", "CT"),
-        ("Resistivity", "NeuroML_v2.2.xsd", "CT"),
-        ("ChannelPopulation", "NeuroML_v2.2.xsd", "CT"),
-        ("ChannelDensityNonUniform", "NeuroML_v2.2.xsd", "CT"),
-        ("ChannelDensityNonUniformNernst", "NeuroML_v2.2.xsd", "CT"),
-        ("ChannelDensityNonUniformGHK", "NeuroML_v2.2.xsd", "CT"),
-        ("ChannelDensity", "NeuroML_v2.2.xsd", "CT"),
-        ("ChannelDensityVShift", "NeuroML_v2.2.xsd", "CT"),
-        ("ChannelDensityNernst", "NeuroML_v2.2.xsd", "CT"),
-        ("ChannelDensityNernstCa2", "NeuroML_v2.2.xsd", "CT"),
-        ("ChannelDensityGHK", "NeuroML_v2.2.xsd", "CT"),
-        ("ChannelDensityGHK2", "NeuroML_v2.2.xsd", "CT"),
-        ("VariableParameter", "NeuroML_v2.2.xsd", "CT"),
-        ("InhomogeneousValue", "NeuroML_v2.2.xsd", "CT"),
-        ("Species", "NeuroML_v2.2.xsd", "CT"),
-        ("ConcentrationModel_D", "NeuroML_v2.2.xsd", "CT"),
-        ("IntracellularProperties", "NeuroML_v2.2.xsd", "CT"),
-        ("IntracellularProperties2CaPools", "NeuroML_v2.2.xsd", "CT"),
-        ("ExtracellularProperties", "NeuroML_v2.2.xsd", "CT"),
-        ("ExtracellularPropertiesLocal", "NeuroML_v2.2.xsd", "CT"),
-        ("ReactionScheme", "NeuroML_v2.2.xsd", "CT"),
-        ("PulseGenerator", "NeuroML_v2.2.xsd", "CT"),
-        ("PulseGeneratorDL", "NeuroML_v2.2.xsd", "CT"),
-        ("SineGenerator", "NeuroML_v2.2.xsd", "CT"),
-        ("SineGeneratorDL", "NeuroML_v2.2.xsd", "CT"),
-        ("RampGenerator", "NeuroML_v2.2.xsd", "CT"),
-        ("RampGeneratorDL", "NeuroML_v2.2.xsd", "CT"),
-        ("CompoundInput", "NeuroML_v2.2.xsd", "CT"),
-        ("CompoundInputDL", "NeuroML_v2.2.xsd", "CT"),
-        ("VoltageClamp", "NeuroML_v2.2.xsd", "CT"),
-        ("VoltageClampTriple", "NeuroML_v2.2.xsd", "CT"),
-        ("Spike", "NeuroML_v2.2.xsd", "CT"),
-        ("SpikeArray", "NeuroML_v2.2.xsd", "CT"),
-        ("TimedSynapticInput", "NeuroML_v2.2.xsd", "CT"),
-        ("SpikeGenerator", "NeuroML_v2.2.xsd", "CT"),
-        ("SpikeGeneratorRandom", "NeuroML_v2.2.xsd", "CT"),
-        ("SpikeGeneratorPoisson", "NeuroML_v2.2.xsd", "CT"),
-        ("SpikeGeneratorRefPoisson", "NeuroML_v2.2.xsd", "CT"),
-        ("PoissonFiringSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("TransientPoissonFiringSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("Network", "NeuroML_v2.2.xsd", "CT"),
-        ("Space", "NeuroML_v2.2.xsd", "CT"),
-        ("SpaceStructure", "NeuroML_v2.2.xsd", "CT"),
-        ("Region", "NeuroML_v2.2.xsd", "CT"),
-        ("Population", "NeuroML_v2.2.xsd", "CT"),
-        ("Layout", "NeuroML_v2.2.xsd", "CT"),
-        ("UnstructuredLayout", "NeuroML_v2.2.xsd", "CT"),
-        ("RandomLayout", "NeuroML_v2.2.xsd", "CT"),
-        ("GridLayout", "NeuroML_v2.2.xsd", "CT"),
-        ("Instance", "NeuroML_v2.2.xsd", "CT"),
-        ("Location", "NeuroML_v2.2.xsd", "CT"),
-        ("CellSet", "NeuroML_v2.2.xsd", "CT"),
-        ("SynapticConnection", "NeuroML_v2.2.xsd", "CT"),
-        ("BaseProjection", "NeuroML_v2.2.xsd", "CT"),
-        ("Projection", "NeuroML_v2.2.xsd", "CT"),
-        ("BaseConnection", "NeuroML_v2.2.xsd", "CT"),
-        ("BaseConnectionOldFormat", "NeuroML_v2.2.xsd", "CT"),
-        ("BaseConnectionNewFormat", "NeuroML_v2.2.xsd", "CT"),
-        ("Connection", "NeuroML_v2.2.xsd", "CT"),
-        ("ConnectionWD", "NeuroML_v2.2.xsd", "CT"),
-        ("ElectricalProjection", "NeuroML_v2.2.xsd", "CT"),
-        ("ElectricalConnection", "NeuroML_v2.2.xsd", "CT"),
-        ("ElectricalConnectionInstance", "NeuroML_v2.2.xsd", "CT"),
-        ("ElectricalConnectionInstanceW", "NeuroML_v2.2.xsd", "CT"),
-        ("ContinuousProjection", "NeuroML_v2.2.xsd", "CT"),
-        ("ContinuousConnection", "NeuroML_v2.2.xsd", "CT"),
-        ("ContinuousConnectionInstance", "NeuroML_v2.2.xsd", "CT"),
-        ("ContinuousConnectionInstanceW", "NeuroML_v2.2.xsd", "CT"),
-        ("ExplicitInput", "NeuroML_v2.2.xsd", "CT"),
-        ("InputList", "NeuroML_v2.2.xsd", "CT"),
-        ("Input", "NeuroML_v2.2.xsd", "CT"),
-        ("InputW", "NeuroML_v2.2.xsd", "CT"),
-        ("basePyNNCell", "NeuroML_v2.2.xsd", "CT"),
-        ("basePyNNIaFCell", "NeuroML_v2.2.xsd", "CT"),
-        ("basePyNNIaFCondCell", "NeuroML_v2.2.xsd", "CT"),
-        ("IF_curr_alpha", "NeuroML_v2.2.xsd", "CT"),
-        ("IF_curr_exp", "NeuroML_v2.2.xsd", "CT"),
-        ("IF_cond_alpha", "NeuroML_v2.2.xsd", "CT"),
-        ("IF_cond_exp", "NeuroML_v2.2.xsd", "CT"),
-        ("EIF_cond_exp_isfa_ista", "NeuroML_v2.2.xsd", "CT"),
-        ("EIF_cond_alpha_isfa_ista", "NeuroML_v2.2.xsd", "CT"),
-        ("HH_cond_exp", "NeuroML_v2.2.xsd", "CT"),
-        ("BasePynnSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("ExpCondSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("AlphaCondSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("ExpCurrSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("AlphaCurrSynapse", "NeuroML_v2.2.xsd", "CT"),
-        ("SpikeSourcePoisson", "NeuroML_v2.2.xsd", "CT"),
-        ("BaseWithoutId", "NeuroML_v2.2.xsd", "CT"),
-        ("BaseNonNegativeIntegerId", "NeuroML_v2.2.xsd", "CT"),
-        ("Base", "NeuroML_v2.2.xsd", "CT"),
-        ("Standalone", "NeuroML_v2.2.xsd", "CT"),
+        ("NmlId", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_none", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_voltage", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_length", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_resistance", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_resistivity", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_conductance", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_conductanceDensity", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_permeability", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_time", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_pertime", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_capacitance", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_specificCapacitance", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_concentration", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_current", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_currentDensity", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_temperature", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_rhoFactor", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2Quantity_conductancePerVoltage", "NeuroML_v2.3.xsd", "ST"),
+        ("MetaId", "NeuroML_v2.3.xsd", "ST"),
+        ("NeuroLexId", "NeuroML_v2.3.xsd", "ST"),
+        ("NonNegativeInteger", "NeuroML_v2.3.xsd", "ST"),
+        ("PositiveInteger", "NeuroML_v2.3.xsd", "ST"),
+        ("DoubleGreaterThanZero", "NeuroML_v2.3.xsd", "ST"),
+        ("ZeroOrOne", "NeuroML_v2.3.xsd", "ST"),
+        ("Notes", "NeuroML_v2.3.xsd", "ST"),
+        ("ZeroToOne", "NeuroML_v2.3.xsd", "ST"),
+        ("channelTypes", "NeuroML_v2.3.xsd", "ST"),
+        ("gateTypes", "NeuroML_v2.3.xsd", "ST"),
+        ("BlockTypes", "NeuroML_v2.3.xsd", "ST"),
+        ("PlasticityTypes", "NeuroML_v2.3.xsd", "ST"),
+        ("Metric", "NeuroML_v2.3.xsd", "ST"),
+        ("networkTypes", "NeuroML_v2.3.xsd", "ST"),
+        ("allowedSpaces", "NeuroML_v2.3.xsd", "ST"),
+        ("populationTypes", "NeuroML_v2.3.xsd", "ST"),
+        ("Property", "NeuroML_v2.3.xsd", "CT"),
+        ("Annotation", "NeuroML_v2.3.xsd", "CT"),
+        ("ComponentType", "NeuroML_v2.3.xsd", "CT"),
+        ("Constant", "NeuroML_v2.3.xsd", "CT"),
+        ("Exposure", "NeuroML_v2.3.xsd", "CT"),
+        ("NamedDimensionalType", "NeuroML_v2.3.xsd", "CT"),
+        ("NamedDimensionalVariable", "NeuroML_v2.3.xsd", "CT"),
+        ("Parameter", "NeuroML_v2.3.xsd", "CT"),
+        ("LEMS_Property", "NeuroML_v2.3.xsd", "CT"),
+        ("Requirement", "NeuroML_v2.3.xsd", "CT"),
+        ("InstanceRequirement", "NeuroML_v2.3.xsd", "CT"),
+        ("Dynamics", "NeuroML_v2.3.xsd", "CT"),
+        ("DerivedVariable", "NeuroML_v2.3.xsd", "CT"),
+        ("StateVariable", "NeuroML_v2.3.xsd", "CT"),
+        ("ConditionalDerivedVariable", "NeuroML_v2.3.xsd", "CT"),
+        ("Case", "NeuroML_v2.3.xsd", "CT"),
+        ("TimeDerivative", "NeuroML_v2.3.xsd", "CT"),
+        ("NeuroMLDocument", "NeuroML_v2.3.xsd", "CT"),
+        ("IncludeType", "NeuroML_v2.3.xsd", "CT"),
+        ("IonChannelScalable", "NeuroML_v2.3.xsd", "CT"),
+        ("IonChannelKS", "NeuroML_v2.3.xsd", "CT"),
+        ("IonChannel", "NeuroML_v2.3.xsd", "CT"),
+        ("IonChannelHH", "NeuroML_v2.3.xsd", "CT"),
+        ("IonChannelVShift", "NeuroML_v2.3.xsd", "CT"),
+        ("Q10ConductanceScaling", "NeuroML_v2.3.xsd", "CT"),
+        ("ClosedState", "NeuroML_v2.3.xsd", "CT"),
+        ("OpenState", "NeuroML_v2.3.xsd", "CT"),
+        ("ForwardTransition", "NeuroML_v2.3.xsd", "CT"),
+        ("ReverseTransition", "NeuroML_v2.3.xsd", "CT"),
+        ("TauInfTransition", "NeuroML_v2.3.xsd", "CT"),
+        ("GateKS", "NeuroML_v2.3.xsd", "CT"),
+        ("GateHHUndetermined", "NeuroML_v2.3.xsd", "CT"),
+        ("GateHHRates", "NeuroML_v2.3.xsd", "CT"),
+        ("GateHHTauInf", "NeuroML_v2.3.xsd", "CT"),
+        ("GateHHRatesTauInf", "NeuroML_v2.3.xsd", "CT"),
+        ("GateHHRatesTau", "NeuroML_v2.3.xsd", "CT"),
+        ("GateHHRatesInf", "NeuroML_v2.3.xsd", "CT"),
+        ("GateHHInstantaneous", "NeuroML_v2.3.xsd", "CT"),
+        ("GateFractional", "NeuroML_v2.3.xsd", "CT"),
+        ("GateFractionalSubgate", "NeuroML_v2.3.xsd", "CT"),
+        ("Q10Settings", "NeuroML_v2.3.xsd", "CT"),
+        ("HHRate", "NeuroML_v2.3.xsd", "CT"),
+        ("HHVariable", "NeuroML_v2.3.xsd", "CT"),
+        ("HHTime", "NeuroML_v2.3.xsd", "CT"),
+        ("DecayingPoolConcentrationModel", "NeuroML_v2.3.xsd", "CT"),
+        ("FixedFactorConcentrationModel", "NeuroML_v2.3.xsd", "CT"),
+        ("BaseSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("BaseVoltageDepSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("BaseCurrentBasedSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("BaseConductanceBasedSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("BaseConductanceBasedSynapseTwo", "NeuroML_v2.3.xsd", "CT"),
+        ("GapJunction", "NeuroML_v2.3.xsd", "CT"),
+        ("SilentSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("LinearGradedSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("GradedSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("AlphaCurrentSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("AlphaSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("ExpOneSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("ExpTwoSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("ExpThreeSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("DoubleSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("BlockingPlasticSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("BlockMechanism", "NeuroML_v2.3.xsd", "CT"),
+        ("PlasticityMechanism", "NeuroML_v2.3.xsd", "CT"),
+        ("BaseCell", "NeuroML_v2.3.xsd", "CT"),
+        ("IafTauCell", "NeuroML_v2.3.xsd", "CT"),
+        ("IafTauRefCell", "NeuroML_v2.3.xsd", "CT"),
+        ("IafCell", "NeuroML_v2.3.xsd", "CT"),
+        ("IafRefCell", "NeuroML_v2.3.xsd", "CT"),
+        ("IzhikevichCell", "NeuroML_v2.3.xsd", "CT"),
+        ("BaseCellMembPotCap", "NeuroML_v2.3.xsd", "CT"),
+        ("Izhikevich2007Cell", "NeuroML_v2.3.xsd", "CT"),
+        ("AdExIaFCell", "NeuroML_v2.3.xsd", "CT"),
+        ("FitzHughNagumoCell", "NeuroML_v2.3.xsd", "CT"),
+        ("FitzHughNagumo1969Cell", "NeuroML_v2.3.xsd", "CT"),
+        ("PinskyRinzelCA3Cell", "NeuroML_v2.3.xsd", "CT"),
+        ("Cell", "NeuroML_v2.3.xsd", "CT"),
+        ("Cell2CaPools", "NeuroML_v2.3.xsd", "CT"),
+        ("Morphology", "NeuroML_v2.3.xsd", "CT"),
+        ("Segment", "NeuroML_v2.3.xsd", "CT"),
+        ("SegmentParent", "NeuroML_v2.3.xsd", "CT"),
+        ("Point3DWithDiam", "NeuroML_v2.3.xsd", "CT"),
+        ("SegmentGroup", "NeuroML_v2.3.xsd", "CT"),
+        ("InhomogeneousParameter", "NeuroML_v2.3.xsd", "CT"),
+        ("ProximalDetails", "NeuroML_v2.3.xsd", "CT"),
+        ("DistalDetails", "NeuroML_v2.3.xsd", "CT"),
+        ("Member", "NeuroML_v2.3.xsd", "CT"),
+        ("Include", "NeuroML_v2.3.xsd", "CT"),
+        ("Path", "NeuroML_v2.3.xsd", "CT"),
+        ("SubTree", "NeuroML_v2.3.xsd", "CT"),
+        ("SegmentEndPoint", "NeuroML_v2.3.xsd", "CT"),
+        ("BiophysicalProperties", "NeuroML_v2.3.xsd", "CT"),
+        ("BiophysicalProperties2CaPools", "NeuroML_v2.3.xsd", "CT"),
+        ("MembraneProperties", "NeuroML_v2.3.xsd", "CT"),
+        ("MembraneProperties2CaPools", "NeuroML_v2.3.xsd", "CT"),
+        ("SpikeThresh", "NeuroML_v2.3.xsd", "CT"),
+        ("SpecificCapacitance", "NeuroML_v2.3.xsd", "CT"),
+        ("InitMembPotential", "NeuroML_v2.3.xsd", "CT"),
+        ("Resistivity", "NeuroML_v2.3.xsd", "CT"),
+        ("ChannelPopulation", "NeuroML_v2.3.xsd", "CT"),
+        ("ChannelDensityNonUniform", "NeuroML_v2.3.xsd", "CT"),
+        ("ChannelDensityNonUniformNernst", "NeuroML_v2.3.xsd", "CT"),
+        ("ChannelDensityNonUniformGHK", "NeuroML_v2.3.xsd", "CT"),
+        ("ChannelDensity", "NeuroML_v2.3.xsd", "CT"),
+        ("ChannelDensityVShift", "NeuroML_v2.3.xsd", "CT"),
+        ("ChannelDensityNernst", "NeuroML_v2.3.xsd", "CT"),
+        ("ChannelDensityNernstCa2", "NeuroML_v2.3.xsd", "CT"),
+        ("ChannelDensityGHK", "NeuroML_v2.3.xsd", "CT"),
+        ("ChannelDensityGHK2", "NeuroML_v2.3.xsd", "CT"),
+        ("VariableParameter", "NeuroML_v2.3.xsd", "CT"),
+        ("InhomogeneousValue", "NeuroML_v2.3.xsd", "CT"),
+        ("Species", "NeuroML_v2.3.xsd", "CT"),
+        ("ConcentrationModel_D", "NeuroML_v2.3.xsd", "CT"),
+        ("IntracellularProperties", "NeuroML_v2.3.xsd", "CT"),
+        ("IntracellularProperties2CaPools", "NeuroML_v2.3.xsd", "CT"),
+        ("ExtracellularProperties", "NeuroML_v2.3.xsd", "CT"),
+        ("ExtracellularPropertiesLocal", "NeuroML_v2.3.xsd", "CT"),
+        ("ReactionScheme", "NeuroML_v2.3.xsd", "CT"),
+        ("PulseGenerator", "NeuroML_v2.3.xsd", "CT"),
+        ("PulseGeneratorDL", "NeuroML_v2.3.xsd", "CT"),
+        ("SineGenerator", "NeuroML_v2.3.xsd", "CT"),
+        ("SineGeneratorDL", "NeuroML_v2.3.xsd", "CT"),
+        ("RampGenerator", "NeuroML_v2.3.xsd", "CT"),
+        ("RampGeneratorDL", "NeuroML_v2.3.xsd", "CT"),
+        ("CompoundInput", "NeuroML_v2.3.xsd", "CT"),
+        ("CompoundInputDL", "NeuroML_v2.3.xsd", "CT"),
+        ("VoltageClamp", "NeuroML_v2.3.xsd", "CT"),
+        ("VoltageClampTriple", "NeuroML_v2.3.xsd", "CT"),
+        ("Spike", "NeuroML_v2.3.xsd", "CT"),
+        ("SpikeArray", "NeuroML_v2.3.xsd", "CT"),
+        ("TimedSynapticInput", "NeuroML_v2.3.xsd", "CT"),
+        ("SpikeGenerator", "NeuroML_v2.3.xsd", "CT"),
+        ("SpikeGeneratorRandom", "NeuroML_v2.3.xsd", "CT"),
+        ("SpikeGeneratorPoisson", "NeuroML_v2.3.xsd", "CT"),
+        ("SpikeGeneratorRefPoisson", "NeuroML_v2.3.xsd", "CT"),
+        ("PoissonFiringSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("TransientPoissonFiringSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("Network", "NeuroML_v2.3.xsd", "CT"),
+        ("Space", "NeuroML_v2.3.xsd", "CT"),
+        ("SpaceStructure", "NeuroML_v2.3.xsd", "CT"),
+        ("Region", "NeuroML_v2.3.xsd", "CT"),
+        ("Population", "NeuroML_v2.3.xsd", "CT"),
+        ("Layout", "NeuroML_v2.3.xsd", "CT"),
+        ("UnstructuredLayout", "NeuroML_v2.3.xsd", "CT"),
+        ("RandomLayout", "NeuroML_v2.3.xsd", "CT"),
+        ("GridLayout", "NeuroML_v2.3.xsd", "CT"),
+        ("Instance", "NeuroML_v2.3.xsd", "CT"),
+        ("Location", "NeuroML_v2.3.xsd", "CT"),
+        ("CellSet", "NeuroML_v2.3.xsd", "CT"),
+        ("SynapticConnection", "NeuroML_v2.3.xsd", "CT"),
+        ("BaseProjection", "NeuroML_v2.3.xsd", "CT"),
+        ("Projection", "NeuroML_v2.3.xsd", "CT"),
+        ("BaseConnection", "NeuroML_v2.3.xsd", "CT"),
+        ("BaseConnectionOldFormat", "NeuroML_v2.3.xsd", "CT"),
+        ("BaseConnectionNewFormat", "NeuroML_v2.3.xsd", "CT"),
+        ("Connection", "NeuroML_v2.3.xsd", "CT"),
+        ("ConnectionWD", "NeuroML_v2.3.xsd", "CT"),
+        ("ElectricalProjection", "NeuroML_v2.3.xsd", "CT"),
+        ("ElectricalConnection", "NeuroML_v2.3.xsd", "CT"),
+        ("ElectricalConnectionInstance", "NeuroML_v2.3.xsd", "CT"),
+        ("ElectricalConnectionInstanceW", "NeuroML_v2.3.xsd", "CT"),
+        ("ContinuousProjection", "NeuroML_v2.3.xsd", "CT"),
+        ("ContinuousConnection", "NeuroML_v2.3.xsd", "CT"),
+        ("ContinuousConnectionInstance", "NeuroML_v2.3.xsd", "CT"),
+        ("ContinuousConnectionInstanceW", "NeuroML_v2.3.xsd", "CT"),
+        ("ExplicitInput", "NeuroML_v2.3.xsd", "CT"),
+        ("InputList", "NeuroML_v2.3.xsd", "CT"),
+        ("Input", "NeuroML_v2.3.xsd", "CT"),
+        ("InputW", "NeuroML_v2.3.xsd", "CT"),
+        ("basePyNNCell", "NeuroML_v2.3.xsd", "CT"),
+        ("basePyNNIaFCell", "NeuroML_v2.3.xsd", "CT"),
+        ("basePyNNIaFCondCell", "NeuroML_v2.3.xsd", "CT"),
+        ("IF_curr_alpha", "NeuroML_v2.3.xsd", "CT"),
+        ("IF_curr_exp", "NeuroML_v2.3.xsd", "CT"),
+        ("IF_cond_alpha", "NeuroML_v2.3.xsd", "CT"),
+        ("IF_cond_exp", "NeuroML_v2.3.xsd", "CT"),
+        ("EIF_cond_exp_isfa_ista", "NeuroML_v2.3.xsd", "CT"),
+        ("EIF_cond_alpha_isfa_ista", "NeuroML_v2.3.xsd", "CT"),
+        ("HH_cond_exp", "NeuroML_v2.3.xsd", "CT"),
+        ("BasePynnSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("ExpCondSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("AlphaCondSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("ExpCurrSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("AlphaCurrSynapse", "NeuroML_v2.3.xsd", "CT"),
+        ("SpikeSourcePoisson", "NeuroML_v2.3.xsd", "CT"),
+        ("BaseWithoutId", "NeuroML_v2.3.xsd", "CT"),
+        ("BaseNonNegativeIntegerId", "NeuroML_v2.3.xsd", "CT"),
+        ("Base", "NeuroML_v2.3.xsd", "CT"),
+        ("Standalone", "NeuroML_v2.3.xsd", "CT"),
     ]
 }
 
