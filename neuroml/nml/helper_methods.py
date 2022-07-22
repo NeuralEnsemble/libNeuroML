@@ -369,14 +369,14 @@ generic_list = MethodSpec(
         By default, this will only show the members, and not their contents.
         To see contents that have been set, use `show_contents=True`. This will
         not show empty/unset contents. To see all contents, set
-        `show_all_contents=True`.
+        `show_all_contents=True`, it implies `show_contents`.
 
         See http://www.davekuhlman.org/generateDS.html#user-methods for more
         information on the MemberSpec_ class that generateDS uses.
 
         :param show_contents: print out the contents of the members, but only those that have been set
         :type show_contents: bool
-        :param show_all_contents: prints out the contents of the members, even those that have not been set.
+        :param show_all_contents: prints out the contents of the members, even those that have not been set. Implies `show_contents`.
         :type show_all_contents: bool
 
         :returns: the string (for testing purposes)
