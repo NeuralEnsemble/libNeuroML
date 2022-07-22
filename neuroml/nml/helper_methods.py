@@ -375,7 +375,9 @@ generic_list = MethodSpec(
         :returns: the string (for testing purposes)
         """
 
-        info_str = "{}\\n".format(self.__class__.__doc__)
+        # do not show parameters here, they are indicated by members below
+        info_str = "{}\\n\\n".format(self.__class__.__doc__.split(":param")[0].strip())
+        info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information.\\n\\n"
         info_str += "Valid members for {} are:\\n".format(self.__class__.__name__)
         for member in self.member_data_items_:
             info_str += ("* {} (class: {})\\n".format(member.name, member.data_type))
@@ -388,9 +390,11 @@ generic_list = MethodSpec(
                             contents_id.append(c.id)
                         else:
                             contents_id.append(c)
-                    info_str += ("\t* Contents (ids where available): {}\\n\\n".format(contents_id))
+                    info_str += ("\t* Contents (ids): {}\\n\\n".format(contents_id))
+                else:
+                    # will print "None"
+                    info_str += ("\t* Contents: {}\\n\\n".format(contents))
 
-        info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information."
         print(info_str)
         return info_str
     ''',
