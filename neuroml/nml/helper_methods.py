@@ -357,7 +357,7 @@ generic_list = MethodSpec(
     name="info",
     source='''\
 
-    def info(self, show_contents=False):
+    def info(self, show_contents=False, show_all_contents=False):
         """A helper function to get a list of members of this class.
 
         This is useful to quickly check what members can go into a particular
@@ -366,14 +366,25 @@ generic_list = MethodSpec(
         elements) or "List" elements (Children elements). It will also note
         whether a member is optional or required.
 
+        By default, this will only show the members, and not their contents.
+        To see contents that have been set, use `show_contents=True`. This will
+        not show empty/unset contents. To see all contents, set
+        `show_all_contents=True`.
+
         See http://www.davekuhlman.org/generateDS.html#user-methods for more
         information on the MemberSpec_ class that generateDS uses.
 
-        :param show_contents: also prints out the contents of the members
+        :param show_contents: print out the contents of the members, but only those that have been set
         :type show_contents: bool
+        :param show_all_contents: prints out the contents of the members, even those that have not been set.
+        :type show_all_contents: bool
 
         :returns: the string (for testing purposes)
         """
+
+        # If show_all_contents is set, show_contents is also implied.
+        if show_all_contents:
+            show_contents = True
 
         # do not show parameters here, they are indicated by members below
         info_str = "{}\\n\\n".format(self.__class__.__doc__.split(":param")[0].strip())
@@ -383,17 +394,28 @@ generic_list = MethodSpec(
             info_str += ("* {} (class: {})\\n".format(member.name, member.data_type))
             if show_contents:
                 contents = getattr(self, member.get_name())
-                if contents is not None:
-                    contents_id = []
-                    for c in contents:
-                        if hasattr(c, 'id'):
-                            contents_id.append(c.id)
-                        else:
-                            contents_id.append(c)
-                    info_str += ("\t* Contents (ids): {}\\n\\n".format(contents_id))
+                # check if the member is set to None
+                # if it's a container (list), it will not be set to None, it
+                # will be empty, []
+                # if it's a scalar, it will be set to None or to a non
+                # container value
+                if contents is None or (isinstance(contents, list) and len(contents) == 0):
+                    if show_all_contents:
+                        info_str += ("\t* Contents: {}\\n\\n".format(contents))
                 else:
-                    # will print "None"
-                    info_str += ("\t* Contents: {}\\n\\n".format(contents))
+                    contents_id = None
+                    # if list, iterate to get ids
+                    if isinstance(contents, list):
+                        contents_id = []
+                        for c in contents:
+                            if hasattr(c, 'id'):
+                                contents_id.append(c.id)
+                            else:
+                                contents_id.append(c)
+                    # not a list, a scalar, just use contents
+                    else:
+                        contents_id = contents
+                    info_str += ("\t* Contents (ids): {}\\n\\n".format(contents_id))
 
         print(info_str)
         return info_str
