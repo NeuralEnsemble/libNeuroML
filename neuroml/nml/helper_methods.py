@@ -375,13 +375,14 @@ generic_list = MethodSpec(
         :returns: the string (for testing purposes)
         """
 
-        info_str = "NeuroML class: {}:\n{}\\n".format(self.__class__.__name__, self.__class__.__doc__)
+        info_str = "NeuroML class: {}:\\n{}\\n".format(self.__class__.__name__, self.__class__.__doc__)
         info_str += "Valid members for {} are:\\n".format(self.__class__.__name__)
         for member in self.member_data_items_:
             info_str += ("* {} (class: {})\\n".format(member.name, member.data_type))
             if show_contents:
                 contents = getattr(self, member.get_name())
-                info_str += ("\t* Contents: {}\\n\\n".format(contents))
+                contents_for_humans = [c.id if hasattr(c, 'id') for c in contents]
+                info_str += ("\t* Contents: {}\\n\\n".format(contents_for_humans))
 
         info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information."
         print(info_str)
