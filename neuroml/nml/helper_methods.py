@@ -391,7 +391,7 @@ generic_list = MethodSpec(
         info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information.\\n\\n"
         info_str += "Valid members for {} are:\\n".format(self.__class__.__name__)
         for member in self.member_data_items_:
-            info_str += ("* {} (class: {})\\n".format(member.name, member.data_type))
+            info_str += ("* {} (class: {}, {})\\n".format(member.get_name(), member.get_data_type(), "Optional" if member.get_optional() else "Required"))
             if show_contents:
                 contents = getattr(self, member.get_name())
                 # check if the member is set to None
