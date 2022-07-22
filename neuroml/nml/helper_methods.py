@@ -381,8 +381,14 @@ generic_list = MethodSpec(
             info_str += ("* {} (class: {})\\n".format(member.name, member.data_type))
             if show_contents:
                 contents = getattr(self, member.get_name())
-                contents_for_humans = [c.id if hasattr(c, 'id') for c in contents]
-                info_str += ("\t* Contents: {}\\n\\n".format(contents_for_humans))
+                if contents is not None:
+                    contents_id = []
+                    for c in contents:
+                        if hasattr(c, 'id'):
+                            contents_id.append(c.id)
+                        else:
+                            contents_id.append(c)
+                    info_str += ("\t* Contents (ids where available): {}\\n\\n".format(contents_id))
 
         info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information."
         print(info_str)
