@@ -375,7 +375,7 @@ generic_list = MethodSpec(
         :returns: the string (for testing purposes)
         """
 
-        info_str = "NeuroML class: {}:\\n{}\\n".format(self.__class__.__name__, self.__class__.__doc__)
+        info_str = "{}\\n".format(self.__class__.__doc__)
         info_str += "Valid members for {} are:\\n".format(self.__class__.__name__)
         for member in self.member_data_items_:
             info_str += ("* {} (class: {})\\n".format(member.name, member.data_type))
