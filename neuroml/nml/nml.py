@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu May 19 11:01:22 2022 by generateDS.py version 2.40.13.
-# Python 3.7.7 (default, May  7 2020, 21:25:33)  [GCC 7.3.0]
+# Generated Fri Jul 22 21:20:11 2022 by generateDS.py version 2.40.13.
+# Python 3.10.5 (main, Jun  9 2022, 00:00:00) [GCC 12.1.1 20220507 (Red Hat 12.1.1-1)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -14,7 +14,7 @@
 #   NeuroML_v2.3.xsd
 #
 # Command line:
-#   /home/padraig/anaconda2/envs/py37//bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" NeuroML_v2.3.xsd
+#   /home/asinha/.local/share/virtualenvs/generateds-310/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" NeuroML_v2.3.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -14694,7 +14694,7 @@ class BaseWithoutId(GeneratedsSuper):
         all_members = list(set(all_members))
         return all_members
 
-    def info(self, show_contents=False):
+    def info(self, show_contents=False, show_all_contents=False):
         """A helper function to get a list of members of this class.
 
         This is useful to quickly check what members can go into a particular
@@ -14703,23 +14703,63 @@ class BaseWithoutId(GeneratedsSuper):
         elements) or "List" elements (Children elements). It will also note
         whether a member is optional or required.
 
+        By default, this will only show the members, and not their contents.
+        To see contents that have been set, use `show_contents=True`. This will
+        not show empty/unset contents. To see all contents, set
+        `show_all_contents=True`, it implies `show_contents`.
+
         See http://www.davekuhlman.org/generateDS.html#user-methods for more
         information on the MemberSpec_ class that generateDS uses.
 
-        :param show_contents: also prints out the contents of the members
+        :param show_contents: print out the contents of the members, but only those that have been set
         :type show_contents: bool
+        :param show_all_contents: prints out the contents of the members, even those that have not been set. Implies `show_contents`.
+        :type show_all_contents: bool
 
         :returns: the string (for testing purposes)
         """
 
-        info_str = "Valid members for {} are:\n".format(self.__class__.__name__)
+        # If show_all_contents is set, show_contents is also implied.
+        if show_all_contents:
+            show_contents = True
+
+        # do not show parameters here, they are indicated by members below
+        info_str = "{}\n\n".format(self.__class__.__doc__.split(":param")[0].strip())
+        info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information.\n\n"
+        info_str += "Valid members for {} are:\n".format(self.__class__.__name__)
         for member in self.member_data_items_:
-            info_str += "* {} (class: {})\n".format(member.name, member.data_type)
+            info_str += "* {} (class: {}, {})\n".format(
+                member.get_name(),
+                member.get_data_type(),
+                "Optional" if member.get_optional() else "Required",
+            )
             if show_contents:
                 contents = getattr(self, member.get_name())
-                info_str += "	* Contents: {}\n\n".format(contents)
+                # check if the member is set to None
+                # if it's a container (list), it will not be set to None, it
+                # will be empty, []
+                # if it's a scalar, it will be set to None or to a non
+                # container value
+                if contents is None or (
+                    isinstance(contents, list) and len(contents) == 0
+                ):
+                    if show_all_contents:
+                        info_str += "	* Contents: {}\n\n".format(contents)
+                else:
+                    contents_id = None
+                    # if list, iterate to get ids
+                    if isinstance(contents, list):
+                        contents_id = []
+                        for c in contents:
+                            if hasattr(c, "id"):
+                                contents_id.append(c.id)
+                            else:
+                                contents_id.append(c)
+                    # not a list, a scalar, just use contents
+                    else:
+                        contents_id = contents
+                    info_str += "	* Contents (ids): {}\n\n".format(contents_id)
 
-        info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information."
         print(info_str)
         return info_str
 
