@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Jul 22 21:20:11 2022 by generateDS.py version 2.40.13.
+# Generated Tue Jul 26 10:24:41 2022 by generateDS.py version 2.40.13.
 # Python 3.10.5 (main, Jun  9 2022, 00:00:00) [GCC 12.1.1 20220507 (Red Hat 12.1.1-1)]
 #
 # Command line options:
@@ -14694,7 +14694,7 @@ class BaseWithoutId(GeneratedsSuper):
         all_members = list(set(all_members))
         return all_members
 
-    def info(self, show_contents=False, show_all_contents=False):
+    def info(self, show_contents=False):
         """A helper function to get a list of members of this class.
 
         This is useful to quickly check what members can go into a particular
@@ -14706,22 +14706,16 @@ class BaseWithoutId(GeneratedsSuper):
         By default, this will only show the members, and not their contents.
         To see contents that have been set, use `show_contents=True`. This will
         not show empty/unset contents. To see all contents, set
-        `show_all_contents=True`, it implies `show_contents`.
+        `show_contents=all`.
 
         See http://www.davekuhlman.org/generateDS.html#user-methods for more
         information on the MemberSpec_ class that generateDS uses.
 
-        :param show_contents: print out the contents of the members, but only those that have been set
-        :type show_contents: bool
-        :param show_all_contents: prints out the contents of the members, even those that have not been set. Implies `show_contents`.
-        :type show_all_contents: bool
+        :param show_contents: toggle to print out the contents of the members
+        :type show_contents: bool or str
 
         :returns: the string (for testing purposes)
         """
-
-        # If show_all_contents is set, show_contents is also implied.
-        if show_all_contents:
-            show_contents = True
 
         # do not show parameters here, they are indicated by members below
         info_str = "{}\n\n".format(self.__class__.__doc__.split(":param")[0].strip())
@@ -14743,7 +14737,7 @@ class BaseWithoutId(GeneratedsSuper):
                 if contents is None or (
                     isinstance(contents, list) and len(contents) == 0
                 ):
-                    if show_all_contents:
+                    if show_contents == "all":
                         info_str += "	* Contents: {}\n\n".format(contents)
                 else:
                     contents_id = None
