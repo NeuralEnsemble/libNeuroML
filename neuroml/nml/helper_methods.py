@@ -357,7 +357,7 @@ generic_list = MethodSpec(
     name="info",
     source='''\
 
-    def info(self, show_contents=False, show_all_contents=False):
+    def info(self, show_contents=False):
         """A helper function to get a list of members of this class.
 
         This is useful to quickly check what members can go into a particular
@@ -369,22 +369,16 @@ generic_list = MethodSpec(
         By default, this will only show the members, and not their contents.
         To see contents that have been set, use `show_contents=True`. This will
         not show empty/unset contents. To see all contents, set
-        `show_all_contents=True`, it implies `show_contents`.
+        `show_contents=all`.
 
         See http://www.davekuhlman.org/generateDS.html#user-methods for more
         information on the MemberSpec_ class that generateDS uses.
 
-        :param show_contents: print out the contents of the members, but only those that have been set
-        :type show_contents: bool
-        :param show_all_contents: prints out the contents of the members, even those that have not been set. Implies `show_contents`.
-        :type show_all_contents: bool
+        :param show_contents: toggle to print out the contents of the members
+        :type show_contents: bool or str
 
         :returns: the string (for testing purposes)
         """
-
-        # If show_all_contents is set, show_contents is also implied.
-        if show_all_contents:
-            show_contents = True
 
         # do not show parameters here, they are indicated by members below
         info_str = "{}\\n\\n".format(self.__class__.__doc__.split(":param")[0].strip())
@@ -400,7 +394,7 @@ generic_list = MethodSpec(
                 # if it's a scalar, it will be set to None or to a non
                 # container value
                 if contents is None or (isinstance(contents, list) and len(contents) == 0):
-                    if show_all_contents:
+                    if show_contents == "all":
                         info_str += ("\t* Contents: {}\\n\\n".format(contents))
                 else:
                     contents_id = None
