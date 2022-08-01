@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Jul 26 10:24:41 2022 by generateDS.py version 2.40.13.
+# Generated Mon Aug  1 18:00:09 2022 by generateDS.py version 2.40.13.
 # Python 3.10.5 (main, Jun  9 2022, 00:00:00) [GCC 12.1.1 20220507 (Red Hat 12.1.1-1)]
 #
 # Command line options:
@@ -6298,387 +6298,6 @@ class HHTime(GeneratedsSuper):
 # end class HHTime
 
 
-class BlockMechanism(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("type", "BlockTypes", 0, 0, {"use": "required", "name": "type"}),
-        MemberSpec_("species", "NmlId", 0, 0, {"use": "required", "name": "species"}),
-        MemberSpec_(
-            "block_concentration",
-            "Nml2Quantity_concentration",
-            0,
-            0,
-            {"use": "required", "name": "block_concentration"},
-        ),
-        MemberSpec_(
-            "scaling_conc",
-            "Nml2Quantity_concentration",
-            0,
-            0,
-            {"use": "required", "name": "scaling_conc"},
-        ),
-        MemberSpec_(
-            "scaling_volt",
-            "Nml2Quantity_voltage",
-            0,
-            0,
-            {"use": "required", "name": "scaling_volt"},
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self,
-        type=None,
-        species=None,
-        block_concentration=None,
-        scaling_conc=None,
-        scaling_volt=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.type = _cast(None, type)
-        self.type_nsprefix_ = None
-        self.species = _cast(None, species)
-        self.species_nsprefix_ = None
-        self.block_concentration = _cast(None, block_concentration)
-        self.block_concentration_nsprefix_ = None
-        self.scaling_conc = _cast(None, scaling_conc)
-        self.scaling_conc_nsprefix_ = None
-        self.scaling_volt = _cast(None, scaling_volt)
-        self.scaling_volt_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, BlockMechanism)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if BlockMechanism.subclass:
-            return BlockMechanism.subclass(*args_, **kwargs_)
-        else:
-            return BlockMechanism(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_BlockTypes(self, value):
-        # Validate type BlockTypes, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            value = value
-            enumerations = ["voltageConcDepBlockMechanism"]
-            if value not in enumerations:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s does not match xsd enumeration restriction on BlockTypes'
-                    % {"value": encode_str_2_3(value), "lineno": lineno}
-                )
-                result = False
-
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NmlId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NmlId_patterns_,
-                    )
-                )
-
-    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
-
-    def validate_Nml2Quantity_concentration(self, value):
-        # Validate type Nml2Quantity_concentration, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_concentration_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_concentration_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_concentration_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM))$"]
-    ]
-
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_voltage_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_voltage_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_voltage_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
-    ]
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="BlockMechanism",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("BlockMechanism")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "BlockMechanism":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="BlockMechanism"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="BlockMechanism",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="BlockMechanism",
-    ):
-        if self.type is not None and "type" not in already_processed:
-            already_processed.add("type")
-            outfile.write(
-                " type=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.type), input_name="type"
-                        )
-                    ),
-                )
-            )
-        if self.species is not None and "species" not in already_processed:
-            already_processed.add("species")
-            outfile.write(
-                " species=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.species), input_name="species"
-                        )
-                    ),
-                )
-            )
-        if (
-            self.block_concentration is not None
-            and "block_concentration" not in already_processed
-        ):
-            already_processed.add("block_concentration")
-            outfile.write(
-                " blockConcentration=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.block_concentration),
-                            input_name="blockConcentration",
-                        )
-                    ),
-                )
-            )
-        if self.scaling_conc is not None and "scaling_conc" not in already_processed:
-            already_processed.add("scaling_conc")
-            outfile.write(
-                " scalingConc=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.scaling_conc), input_name="scalingConc"
-                        )
-                    ),
-                )
-            )
-        if self.scaling_volt is not None and "scaling_volt" not in already_processed:
-            already_processed.add("scaling_volt")
-            outfile.write(
-                " scalingVolt=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.scaling_volt), input_name="scalingVolt"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="BlockMechanism",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("type", node)
-        if value is not None and "type" not in already_processed:
-            already_processed.add("type")
-            self.type = value
-            self.validate_BlockTypes(self.type)  # validate type BlockTypes
-        value = find_attr_value_("species", node)
-        if value is not None and "species" not in already_processed:
-            already_processed.add("species")
-            self.species = value
-            self.validate_NmlId(self.species)  # validate type NmlId
-        value = find_attr_value_("blockConcentration", node)
-        if value is not None and "blockConcentration" not in already_processed:
-            already_processed.add("blockConcentration")
-            self.block_concentration = value
-            self.validate_Nml2Quantity_concentration(
-                self.block_concentration
-            )  # validate type Nml2Quantity_concentration
-        value = find_attr_value_("scalingConc", node)
-        if value is not None and "scalingConc" not in already_processed:
-            already_processed.add("scalingConc")
-            self.scaling_conc = value
-            self.validate_Nml2Quantity_concentration(
-                self.scaling_conc
-            )  # validate type Nml2Quantity_concentration
-        value = find_attr_value_("scalingVolt", node)
-        if value is not None and "scalingVolt" not in already_processed:
-            already_processed.add("scalingVolt")
-            self.scaling_volt = value
-            self.validate_Nml2Quantity_voltage(
-                self.scaling_volt
-            )  # validate type Nml2Quantity_voltage
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class BlockMechanism
-
-
 class PlasticityMechanism(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -8653,1861 +8272,6 @@ class SegmentEndPoint(GeneratedsSuper):
 # end class SegmentEndPoint
 
 
-class MembraneProperties(GeneratedsSuper):
-    """MembraneProperties -- Properties specific to the membrane, such as the **populations**  of channels, **channelDensities,**  **specificCapacitance,**  etc."""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "channel_populations",
-            "ChannelPopulation",
-            1,
-            1,
-            {
-                "maxOccurs": "unbounded",
-                "minOccurs": "0",
-                "name": "channelPopulation",
-                "type": "ChannelPopulation",
-            },
-            None,
-        ),
-        MemberSpec_(
-            "channel_densities",
-            "ChannelDensity",
-            1,
-            1,
-            {
-                "maxOccurs": "unbounded",
-                "minOccurs": "0",
-                "name": "channelDensity",
-                "type": "ChannelDensity",
-            },
-            None,
-        ),
-        MemberSpec_(
-            "channel_density_v_shifts",
-            "ChannelDensityVShift",
-            1,
-            1,
-            {
-                "maxOccurs": "unbounded",
-                "minOccurs": "0",
-                "name": "channelDensityVShift",
-                "type": "ChannelDensityVShift",
-            },
-            None,
-        ),
-        MemberSpec_(
-            "channel_density_nernsts",
-            "ChannelDensityNernst",
-            1,
-            1,
-            {
-                "maxOccurs": "unbounded",
-                "minOccurs": "0",
-                "name": "channelDensityNernst",
-                "type": "ChannelDensityNernst",
-            },
-            None,
-        ),
-        MemberSpec_(
-            "channel_density_ghks",
-            "ChannelDensityGHK",
-            1,
-            1,
-            {
-                "maxOccurs": "unbounded",
-                "minOccurs": "0",
-                "name": "channelDensityGHK",
-                "type": "ChannelDensityGHK",
-            },
-            None,
-        ),
-        MemberSpec_(
-            "channel_density_ghk2s",
-            "ChannelDensityGHK2",
-            1,
-            1,
-            {
-                "maxOccurs": "unbounded",
-                "minOccurs": "0",
-                "name": "channelDensityGHK2",
-                "type": "ChannelDensityGHK2",
-            },
-            None,
-        ),
-        MemberSpec_(
-            "channel_density_non_uniforms",
-            "ChannelDensityNonUniform",
-            1,
-            1,
-            {
-                "maxOccurs": "unbounded",
-                "minOccurs": "0",
-                "name": "channelDensityNonUniform",
-                "type": "ChannelDensityNonUniform",
-            },
-            None,
-        ),
-        MemberSpec_(
-            "channel_density_non_uniform_nernsts",
-            "ChannelDensityNonUniformNernst",
-            1,
-            1,
-            {
-                "maxOccurs": "unbounded",
-                "minOccurs": "0",
-                "name": "channelDensityNonUniformNernst",
-                "type": "ChannelDensityNonUniformNernst",
-            },
-            None,
-        ),
-        MemberSpec_(
-            "channel_density_non_uniform_ghks",
-            "ChannelDensityNonUniformGHK",
-            1,
-            1,
-            {
-                "maxOccurs": "unbounded",
-                "minOccurs": "0",
-                "name": "channelDensityNonUniformGHK",
-                "type": "ChannelDensityNonUniformGHK",
-            },
-            None,
-        ),
-        MemberSpec_(
-            "spike_threshes",
-            "SpikeThresh",
-            1,
-            1,
-            {
-                "maxOccurs": "unbounded",
-                "minOccurs": "0",
-                "name": "spikeThresh",
-                "type": "SpikeThresh",
-            },
-            None,
-        ),
-        MemberSpec_(
-            "specific_capacitances",
-            "SpecificCapacitance",
-            1,
-            1,
-            {
-                "maxOccurs": "unbounded",
-                "minOccurs": "0",
-                "name": "specificCapacitance",
-                "type": "SpecificCapacitance",
-            },
-            None,
-        ),
-        MemberSpec_(
-            "init_memb_potentials",
-            "InitMembPotential",
-            1,
-            1,
-            {
-                "maxOccurs": "unbounded",
-                "minOccurs": "0",
-                "name": "initMembPotential",
-                "type": "InitMembPotential",
-            },
-            None,
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self,
-        channel_populations=None,
-        channel_densities=None,
-        channel_density_v_shifts=None,
-        channel_density_nernsts=None,
-        channel_density_ghks=None,
-        channel_density_ghk2s=None,
-        channel_density_non_uniforms=None,
-        channel_density_non_uniform_nernsts=None,
-        channel_density_non_uniform_ghks=None,
-        spike_threshes=None,
-        specific_capacitances=None,
-        init_memb_potentials=None,
-        extensiontype_=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        if channel_populations is None:
-            self.channel_populations = []
-        else:
-            self.channel_populations = channel_populations
-        self.channel_populations_nsprefix_ = None
-        if channel_densities is None:
-            self.channel_densities = []
-        else:
-            self.channel_densities = channel_densities
-        self.channel_densities_nsprefix_ = None
-        if channel_density_v_shifts is None:
-            self.channel_density_v_shifts = []
-        else:
-            self.channel_density_v_shifts = channel_density_v_shifts
-        self.channel_density_v_shifts_nsprefix_ = None
-        if channel_density_nernsts is None:
-            self.channel_density_nernsts = []
-        else:
-            self.channel_density_nernsts = channel_density_nernsts
-        self.channel_density_nernsts_nsprefix_ = None
-        if channel_density_ghks is None:
-            self.channel_density_ghks = []
-        else:
-            self.channel_density_ghks = channel_density_ghks
-        self.channel_density_ghks_nsprefix_ = None
-        if channel_density_ghk2s is None:
-            self.channel_density_ghk2s = []
-        else:
-            self.channel_density_ghk2s = channel_density_ghk2s
-        self.channel_density_ghk2s_nsprefix_ = None
-        if channel_density_non_uniforms is None:
-            self.channel_density_non_uniforms = []
-        else:
-            self.channel_density_non_uniforms = channel_density_non_uniforms
-        self.channel_density_non_uniforms_nsprefix_ = None
-        if channel_density_non_uniform_nernsts is None:
-            self.channel_density_non_uniform_nernsts = []
-        else:
-            self.channel_density_non_uniform_nernsts = (
-                channel_density_non_uniform_nernsts
-            )
-        self.channel_density_non_uniform_nernsts_nsprefix_ = None
-        if channel_density_non_uniform_ghks is None:
-            self.channel_density_non_uniform_ghks = []
-        else:
-            self.channel_density_non_uniform_ghks = channel_density_non_uniform_ghks
-        self.channel_density_non_uniform_ghks_nsprefix_ = None
-        if spike_threshes is None:
-            self.spike_threshes = []
-        else:
-            self.spike_threshes = spike_threshes
-        self.spike_threshes_nsprefix_ = None
-        if specific_capacitances is None:
-            self.specific_capacitances = []
-        else:
-            self.specific_capacitances = specific_capacitances
-        self.specific_capacitances_nsprefix_ = None
-        if init_memb_potentials is None:
-            self.init_memb_potentials = []
-        else:
-            self.init_memb_potentials = init_memb_potentials
-        self.init_memb_potentials_nsprefix_ = None
-        self.extensiontype_ = extensiontype_
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, MembraneProperties
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if MembraneProperties.subclass:
-            return MembraneProperties.subclass(*args_, **kwargs_)
-        else:
-            return MembraneProperties(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if (
-            self.channel_populations
-            or self.channel_densities
-            or self.channel_density_v_shifts
-            or self.channel_density_nernsts
-            or self.channel_density_ghks
-            or self.channel_density_ghk2s
-            or self.channel_density_non_uniforms
-            or self.channel_density_non_uniform_nernsts
-            or self.channel_density_non_uniform_ghks
-            or self.spike_threshes
-            or self.specific_capacitances
-            or self.init_memb_potentials
-        ):
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="MembraneProperties",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("MembraneProperties")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "MembraneProperties":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="MembraneProperties",
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="MembraneProperties",
-                pretty_print=pretty_print,
-            )
-            showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="MembraneProperties",
-    ):
-        if self.extensiontype_ is not None and "xsi:type" not in already_processed:
-            already_processed.add("xsi:type")
-            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
-            if ":" not in self.extensiontype_:
-                imported_ns_type_prefix_ = GenerateDSNamespaceTypePrefixes_.get(
-                    self.extensiontype_, ""
-                )
-                outfile.write(
-                    ' xsi:type="%s%s"' % (imported_ns_type_prefix_, self.extensiontype_)
-                )
-            else:
-                outfile.write(' xsi:type="%s"' % self.extensiontype_)
-        pass
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="MembraneProperties",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        for channelPopulation_ in self.channel_populations:
-            namespaceprefix_ = (
-                self.channel_populations_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.channel_populations_nsprefix_)
-                else ""
-            )
-            channelPopulation_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="channelPopulation",
-                pretty_print=pretty_print,
-            )
-        for channelDensity_ in self.channel_densities:
-            namespaceprefix_ = (
-                self.channel_densities_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.channel_densities_nsprefix_)
-                else ""
-            )
-            channelDensity_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="channelDensity",
-                pretty_print=pretty_print,
-            )
-        for channelDensityVShift_ in self.channel_density_v_shifts:
-            namespaceprefix_ = (
-                self.channel_density_v_shifts_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.channel_density_v_shifts_nsprefix_)
-                else ""
-            )
-            channelDensityVShift_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="channelDensityVShift",
-                pretty_print=pretty_print,
-            )
-        for channelDensityNernst_ in self.channel_density_nernsts:
-            namespaceprefix_ = (
-                self.channel_density_nernsts_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.channel_density_nernsts_nsprefix_)
-                else ""
-            )
-            channelDensityNernst_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="channelDensityNernst",
-                pretty_print=pretty_print,
-            )
-        for channelDensityGHK_ in self.channel_density_ghks:
-            namespaceprefix_ = (
-                self.channel_density_ghks_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.channel_density_ghks_nsprefix_)
-                else ""
-            )
-            channelDensityGHK_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="channelDensityGHK",
-                pretty_print=pretty_print,
-            )
-        for channelDensityGHK2_ in self.channel_density_ghk2s:
-            namespaceprefix_ = (
-                self.channel_density_ghk2s_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.channel_density_ghk2s_nsprefix_)
-                else ""
-            )
-            channelDensityGHK2_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="channelDensityGHK2",
-                pretty_print=pretty_print,
-            )
-        for channelDensityNonUniform_ in self.channel_density_non_uniforms:
-            namespaceprefix_ = (
-                self.channel_density_non_uniforms_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.channel_density_non_uniforms_nsprefix_)
-                else ""
-            )
-            channelDensityNonUniform_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="channelDensityNonUniform",
-                pretty_print=pretty_print,
-            )
-        for channelDensityNonUniformNernst_ in self.channel_density_non_uniform_nernsts:
-            namespaceprefix_ = (
-                self.channel_density_non_uniform_nernsts_nsprefix_ + ":"
-                if (
-                    UseCapturedNS_
-                    and self.channel_density_non_uniform_nernsts_nsprefix_
-                )
-                else ""
-            )
-            channelDensityNonUniformNernst_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="channelDensityNonUniformNernst",
-                pretty_print=pretty_print,
-            )
-        for channelDensityNonUniformGHK_ in self.channel_density_non_uniform_ghks:
-            namespaceprefix_ = (
-                self.channel_density_non_uniform_ghks_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.channel_density_non_uniform_ghks_nsprefix_)
-                else ""
-            )
-            channelDensityNonUniformGHK_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="channelDensityNonUniformGHK",
-                pretty_print=pretty_print,
-            )
-        for spikeThresh_ in self.spike_threshes:
-            namespaceprefix_ = (
-                self.spike_threshes_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.spike_threshes_nsprefix_)
-                else ""
-            )
-            spikeThresh_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="spikeThresh",
-                pretty_print=pretty_print,
-            )
-        for specificCapacitance_ in self.specific_capacitances:
-            namespaceprefix_ = (
-                self.specific_capacitances_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.specific_capacitances_nsprefix_)
-                else ""
-            )
-            specificCapacitance_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="specificCapacitance",
-                pretty_print=pretty_print,
-            )
-        for initMembPotential_ in self.init_memb_potentials:
-            namespaceprefix_ = (
-                self.init_memb_potentials_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.init_memb_potentials_nsprefix_)
-                else ""
-            )
-            initMembPotential_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="initMembPotential",
-                pretty_print=pretty_print,
-            )
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("xsi:type", node)
-        if value is not None and "xsi:type" not in already_processed:
-            already_processed.add("xsi:type")
-            self.extensiontype_ = value
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        if nodeName_ == "channelPopulation":
-            obj_ = ChannelPopulation.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.channel_populations.append(obj_)
-            obj_.original_tagname_ = "channelPopulation"
-        elif nodeName_ == "channelDensity":
-            class_obj_ = self.get_class_obj_(child_, ChannelDensity)
-            obj_ = class_obj_.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.channel_densities.append(obj_)
-            obj_.original_tagname_ = "channelDensity"
-        elif nodeName_ == "channelDensityVShift":
-            obj_ = ChannelDensityVShift.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.channel_density_v_shifts.append(obj_)
-            obj_.original_tagname_ = "channelDensityVShift"
-        elif nodeName_ == "channelDensityNernst":
-            class_obj_ = self.get_class_obj_(child_, ChannelDensityNernst)
-            obj_ = class_obj_.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.channel_density_nernsts.append(obj_)
-            obj_.original_tagname_ = "channelDensityNernst"
-        elif nodeName_ == "channelDensityGHK":
-            obj_ = ChannelDensityGHK.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.channel_density_ghks.append(obj_)
-            obj_.original_tagname_ = "channelDensityGHK"
-        elif nodeName_ == "channelDensityGHK2":
-            obj_ = ChannelDensityGHK2.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.channel_density_ghk2s.append(obj_)
-            obj_.original_tagname_ = "channelDensityGHK2"
-        elif nodeName_ == "channelDensityNonUniform":
-            obj_ = ChannelDensityNonUniform.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.channel_density_non_uniforms.append(obj_)
-            obj_.original_tagname_ = "channelDensityNonUniform"
-        elif nodeName_ == "channelDensityNonUniformNernst":
-            obj_ = ChannelDensityNonUniformNernst.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.channel_density_non_uniform_nernsts.append(obj_)
-            obj_.original_tagname_ = "channelDensityNonUniformNernst"
-        elif nodeName_ == "channelDensityNonUniformGHK":
-            obj_ = ChannelDensityNonUniformGHK.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.channel_density_non_uniform_ghks.append(obj_)
-            obj_.original_tagname_ = "channelDensityNonUniformGHK"
-        elif nodeName_ == "spikeThresh":
-            obj_ = SpikeThresh.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.spike_threshes.append(obj_)
-            obj_.original_tagname_ = "spikeThresh"
-        elif nodeName_ == "specificCapacitance":
-            obj_ = SpecificCapacitance.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.specific_capacitances.append(obj_)
-            obj_.original_tagname_ = "specificCapacitance"
-        elif nodeName_ == "initMembPotential":
-            obj_ = InitMembPotential.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.init_memb_potentials.append(obj_)
-            obj_.original_tagname_ = "initMembPotential"
-
-
-# end class MembraneProperties
-
-
-class MembraneProperties2CaPools(MembraneProperties):
-    """MembraneProperties2CaPools -- Variant of membraneProperties with 2 independent Ca pools"""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "channel_density_nernst_ca2s",
-            "ChannelDensityNernstCa2",
-            1,
-            1,
-            {
-                "maxOccurs": "unbounded",
-                "minOccurs": "0",
-                "name": "channelDensityNernstCa2",
-                "type": "ChannelDensityNernstCa2",
-            },
-            None,
-        ),
-    ]
-    subclass = None
-    superclass = MembraneProperties
-
-    def __init__(
-        self,
-        channel_populations=None,
-        channel_densities=None,
-        channel_density_v_shifts=None,
-        channel_density_nernsts=None,
-        channel_density_ghks=None,
-        channel_density_ghk2s=None,
-        channel_density_non_uniforms=None,
-        channel_density_non_uniform_nernsts=None,
-        channel_density_non_uniform_ghks=None,
-        spike_threshes=None,
-        specific_capacitances=None,
-        init_memb_potentials=None,
-        channel_density_nernst_ca2s=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        super(globals().get("MembraneProperties2CaPools"), self).__init__(
-            channel_populations,
-            channel_densities,
-            channel_density_v_shifts,
-            channel_density_nernsts,
-            channel_density_ghks,
-            channel_density_ghk2s,
-            channel_density_non_uniforms,
-            channel_density_non_uniform_nernsts,
-            channel_density_non_uniform_ghks,
-            spike_threshes,
-            specific_capacitances,
-            init_memb_potentials,
-            **kwargs_
-        )
-        if channel_density_nernst_ca2s is None:
-            self.channel_density_nernst_ca2s = []
-        else:
-            self.channel_density_nernst_ca2s = channel_density_nernst_ca2s
-        self.channel_density_nernst_ca2s_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, MembraneProperties2CaPools
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if MembraneProperties2CaPools.subclass:
-            return MembraneProperties2CaPools.subclass(*args_, **kwargs_)
-        else:
-            return MembraneProperties2CaPools(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if (
-            self.channel_density_nernst_ca2s
-            or super(MembraneProperties2CaPools, self)._hasContent()
-        ):
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="MembraneProperties2CaPools",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("MembraneProperties2CaPools")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "MembraneProperties2CaPools":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="MembraneProperties2CaPools",
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="MembraneProperties2CaPools",
-                pretty_print=pretty_print,
-            )
-            showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="MembraneProperties2CaPools",
-    ):
-        super(MembraneProperties2CaPools, self)._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="MembraneProperties2CaPools",
-        )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="MembraneProperties2CaPools",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        super(MembraneProperties2CaPools, self)._exportChildren(
-            outfile,
-            level,
-            namespaceprefix_,
-            namespacedef_,
-            name_,
-            True,
-            pretty_print=pretty_print,
-        )
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        for channelDensityNernstCa2_ in self.channel_density_nernst_ca2s:
-            namespaceprefix_ = (
-                self.channel_density_nernst_ca2s_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.channel_density_nernst_ca2s_nsprefix_)
-                else ""
-            )
-            channelDensityNernstCa2_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="channelDensityNernstCa2",
-                pretty_print=pretty_print,
-            )
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        super(MembraneProperties2CaPools, self)._buildAttributes(
-            node, attrs, already_processed
-        )
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        if nodeName_ == "channelDensityNernstCa2":
-            obj_ = ChannelDensityNernstCa2.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.channel_density_nernst_ca2s.append(obj_)
-            obj_.original_tagname_ = "channelDensityNernstCa2"
-        super(MembraneProperties2CaPools, self)._buildChildren(
-            child_, node, nodeName_, True
-        )
-
-
-# end class MembraneProperties2CaPools
-
-
-class SpikeThresh(GeneratedsSuper):
-    """SpikeThresh -- Membrane potential at which to emit a spiking event. Note, usually the spiking event will not be emitted again until the membrane potential has fallen below this value and rises again to cross it in a positive direction
-    \n
-    :param value:
-    :type value: voltage
-
-    """
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "value", "Nml2Quantity_voltage", 0, 0, {"use": "required", "name": "value"}
-        ),
-        MemberSpec_(
-            "segment_groups",
-            "NmlId",
-            0,
-            1,
-            {"use": "optional", "name": "segment_groups"},
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self, value=None, segment_groups="all", gds_collector_=None, **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.value = _cast(None, value)
-        self.value_nsprefix_ = None
-        self.segment_groups = _cast(None, segment_groups)
-        self.segment_groups_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, SpikeThresh)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if SpikeThresh.subclass:
-            return SpikeThresh.subclass(*args_, **kwargs_)
-        else:
-            return SpikeThresh(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_voltage_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_voltage_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_voltage_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
-    ]
-
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NmlId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NmlId_patterns_,
-                    )
-                )
-
-    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="SpikeThresh",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("SpikeThresh")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "SpikeThresh":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="SpikeThresh"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="SpikeThresh",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="SpikeThresh",
-    ):
-        if self.value is not None and "value" not in already_processed:
-            already_processed.add("value")
-            outfile.write(
-                " value=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.value), input_name="value"
-                        )
-                    ),
-                )
-            )
-        if self.segment_groups != "all" and "segment_groups" not in already_processed:
-            already_processed.add("segment_groups")
-            outfile.write(
-                " segmentGroup=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.segment_groups), input_name="segmentGroup"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="SpikeThresh",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("value", node)
-        if value is not None and "value" not in already_processed:
-            already_processed.add("value")
-            self.value = value
-            self.validate_Nml2Quantity_voltage(
-                self.value
-            )  # validate type Nml2Quantity_voltage
-        value = find_attr_value_("segmentGroup", node)
-        if value is not None and "segmentGroup" not in already_processed:
-            already_processed.add("segmentGroup")
-            self.segment_groups = value
-            self.validate_NmlId(self.segment_groups)  # validate type NmlId
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class SpikeThresh
-
-
-class SpecificCapacitance(GeneratedsSuper):
-    """SpecificCapacitance -- Capacitance per unit area
-    \n
-    :param value:
-    :type value: specificCapacitance
-
-    """
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "value",
-            "Nml2Quantity_specificCapacitance",
-            0,
-            0,
-            {"use": "required", "name": "value"},
-        ),
-        MemberSpec_(
-            "segment_groups",
-            "NmlId",
-            0,
-            1,
-            {"use": "optional", "name": "segment_groups"},
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self, value=None, segment_groups="all", gds_collector_=None, **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.value = _cast(None, value)
-        self.value_nsprefix_ = None
-        self.segment_groups = _cast(None, segment_groups)
-        self.segment_groups_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, SpecificCapacitance
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if SpecificCapacitance.subclass:
-            return SpecificCapacitance.subclass(*args_, **kwargs_)
-        else:
-            return SpecificCapacitance(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_Nml2Quantity_specificCapacitance(self, value):
-        # Validate type Nml2Quantity_specificCapacitance, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_specificCapacitance_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_specificCapacitance_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_specificCapacitance_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(F_per_m2|uF_per_cm2))$"]
-    ]
-
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NmlId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NmlId_patterns_,
-                    )
-                )
-
-    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="SpecificCapacitance",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("SpecificCapacitance")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "SpecificCapacitance":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="SpecificCapacitance",
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="SpecificCapacitance",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="SpecificCapacitance",
-    ):
-        if self.value is not None and "value" not in already_processed:
-            already_processed.add("value")
-            outfile.write(
-                " value=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.value), input_name="value"
-                        )
-                    ),
-                )
-            )
-        if self.segment_groups != "all" and "segment_groups" not in already_processed:
-            already_processed.add("segment_groups")
-            outfile.write(
-                " segmentGroup=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.segment_groups), input_name="segmentGroup"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="SpecificCapacitance",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("value", node)
-        if value is not None and "value" not in already_processed:
-            already_processed.add("value")
-            self.value = value
-            self.validate_Nml2Quantity_specificCapacitance(
-                self.value
-            )  # validate type Nml2Quantity_specificCapacitance
-        value = find_attr_value_("segmentGroup", node)
-        if value is not None and "segmentGroup" not in already_processed:
-            already_processed.add("segmentGroup")
-            self.segment_groups = value
-            self.validate_NmlId(self.segment_groups)  # validate type NmlId
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class SpecificCapacitance
-
-
-class InitMembPotential(GeneratedsSuper):
-    """InitMembPotential -- Explicitly set initial membrane potential for the cell
-    \n
-    :param value:
-    :type value: voltage
-
-    """
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "value", "Nml2Quantity_voltage", 0, 0, {"use": "required", "name": "value"}
-        ),
-        MemberSpec_(
-            "segment_groups",
-            "NmlId",
-            0,
-            1,
-            {"use": "optional", "name": "segment_groups"},
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self, value=None, segment_groups="all", gds_collector_=None, **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.value = _cast(None, value)
-        self.value_nsprefix_ = None
-        self.segment_groups = _cast(None, segment_groups)
-        self.segment_groups_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, InitMembPotential)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if InitMembPotential.subclass:
-            return InitMembPotential.subclass(*args_, **kwargs_)
-        else:
-            return InitMembPotential(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_voltage_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_voltage_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_voltage_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
-    ]
-
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NmlId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NmlId_patterns_,
-                    )
-                )
-
-    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="InitMembPotential",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("InitMembPotential")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "InitMembPotential":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="InitMembPotential",
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="InitMembPotential",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="InitMembPotential",
-    ):
-        if self.value is not None and "value" not in already_processed:
-            already_processed.add("value")
-            outfile.write(
-                " value=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.value), input_name="value"
-                        )
-                    ),
-                )
-            )
-        if self.segment_groups != "all" and "segment_groups" not in already_processed:
-            already_processed.add("segment_groups")
-            outfile.write(
-                " segmentGroup=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.segment_groups), input_name="segmentGroup"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="InitMembPotential",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("value", node)
-        if value is not None and "value" not in already_processed:
-            already_processed.add("value")
-            self.value = value
-            self.validate_Nml2Quantity_voltage(
-                self.value
-            )  # validate type Nml2Quantity_voltage
-        value = find_attr_value_("segmentGroup", node)
-        if value is not None and "segmentGroup" not in already_processed:
-            already_processed.add("segmentGroup")
-            self.segment_groups = value
-            self.validate_NmlId(self.segment_groups)  # validate type NmlId
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class InitMembPotential
-
-
-class Resistivity(GeneratedsSuper):
-    """Resistivity -- The resistivity, or specific axial resistance, of the cytoplasm
-    \n
-    :param value:
-    :type value: resistivity
-
-    """
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "value",
-            "Nml2Quantity_resistivity",
-            0,
-            0,
-            {"use": "required", "name": "value"},
-        ),
-        MemberSpec_(
-            "segment_groups",
-            "NmlId",
-            0,
-            1,
-            {"use": "optional", "name": "segment_groups"},
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self, value=None, segment_groups="all", gds_collector_=None, **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.value = _cast(None, value)
-        self.value_nsprefix_ = None
-        self.segment_groups = _cast(None, segment_groups)
-        self.segment_groups_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Resistivity)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Resistivity.subclass:
-            return Resistivity.subclass(*args_, **kwargs_)
-        else:
-            return Resistivity(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_Nml2Quantity_resistivity(self, value):
-        # Validate type Nml2Quantity_resistivity, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_resistivity_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_resistivity_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_resistivity_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(ohm_cm|kohm_cm|ohm_m))$"]
-    ]
-
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NmlId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NmlId_patterns_,
-                    )
-                )
-
-    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Resistivity",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Resistivity")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Resistivity":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Resistivity"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Resistivity",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="Resistivity",
-    ):
-        if self.value is not None and "value" not in already_processed:
-            already_processed.add("value")
-            outfile.write(
-                " value=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.value), input_name="value"
-                        )
-                    ),
-                )
-            )
-        if self.segment_groups != "all" and "segment_groups" not in already_processed:
-            already_processed.add("segment_groups")
-            outfile.write(
-                " segmentGroup=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.segment_groups), input_name="segmentGroup"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Resistivity",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("value", node)
-        if value is not None and "value" not in already_processed:
-            already_processed.add("value")
-            self.value = value
-            self.validate_Nml2Quantity_resistivity(
-                self.value
-            )  # validate type Nml2Quantity_resistivity
-        value = find_attr_value_("segmentGroup", node)
-        if value is not None and "segmentGroup" not in already_processed:
-            already_processed.add("segmentGroup")
-            self.segment_groups = value
-            self.validate_NmlId(self.segment_groups)  # validate type NmlId
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class Resistivity
-
-
 class VariableParameter(GeneratedsSuper):
     """VariableParameter -- Specifies a **parameter**  ( e. g. condDensity ) which can vary its value across a **segmentGroup.**  The value is calculated from **value**  attribute of the  **inhomogeneousValue**  subelement. This element is normally a child of  **channelDensityNonUniform** ,  **channelDensityNonUniformNernst**  or  **channelDensityNonUniformGHK**  and is used to calculate the value of the conductance, etc. which will vary on different parts of the cell. The **segmentGroup**  specified here needs to define an  **inhomogeneousParameter**  ( referenced from **inhomogeneousParameter**  in the  **inhomogeneousValue**  ), which calculates a **variable**  ( e. g. p ) varying across the cell ( e. g. based on the path length from soma ), which is then used in the **value**  attribute of the  **inhomogeneousValue**  ( so for example condDensity = f( p ) )"""
 
@@ -10913,8 +8677,7 @@ class InhomogeneousValue(GeneratedsSuper):
 class Species(GeneratedsSuper):
     """Species -- Description of a chemical species identified by **ion,**  which has internal, **concentration,**  and external, **extConcentration**  values for its concentration
     \n
-    :param initialConcentration
-    :
+    :param initialConcentration:
     :type initialConcentration: concentration
     :param initialExtConcentration:
     :type initialExtConcentration: concentration
@@ -13262,285 +11025,6 @@ class Location(GeneratedsSuper):
 
 
 # end class Location
-
-
-class SynapticConnection(GeneratedsSuper):
-    """SynapticConnection -- Explicit event connection between named components, which gets processed via a new instance of a **synapse**  component which is created on the target component"""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("from_", "xs:string", 0, 0, {"use": "required", "name": "from_"}),
-        MemberSpec_("to", "xs:string", 0, 0, {"use": "required", "name": "to"}),
-        MemberSpec_(
-            "synapse", "xs:string", 0, 0, {"use": "required", "name": "synapse"}
-        ),
-        MemberSpec_(
-            "destination", "NmlId", 0, 1, {"use": "optional", "name": "destination"}
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self,
-        from_=None,
-        to=None,
-        synapse=None,
-        destination=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.from_ = _cast(None, from_)
-        self.from__nsprefix_ = None
-        self.to = _cast(None, to)
-        self.to_nsprefix_ = None
-        self.synapse = _cast(None, synapse)
-        self.synapse_nsprefix_ = None
-        self.destination = _cast(None, destination)
-        self.destination_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, SynapticConnection
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if SynapticConnection.subclass:
-            return SynapticConnection.subclass(*args_, **kwargs_)
-        else:
-            return SynapticConnection(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NmlId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NmlId_patterns_,
-                    )
-                )
-
-    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="SynapticConnection",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("SynapticConnection")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "SynapticConnection":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="SynapticConnection",
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="SynapticConnection",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="SynapticConnection",
-    ):
-        if self.from_ is not None and "from_" not in already_processed:
-            already_processed.add("from_")
-            outfile.write(
-                " from=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.from_), input_name="from"
-                        )
-                    ),
-                )
-            )
-        if self.to is not None and "to" not in already_processed:
-            already_processed.add("to")
-            outfile.write(
-                " to=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(quote_attrib(self.to), input_name="to")
-                    ),
-                )
-            )
-        if self.synapse is not None and "synapse" not in already_processed:
-            already_processed.add("synapse")
-            outfile.write(
-                " synapse=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.synapse), input_name="synapse"
-                        )
-                    ),
-                )
-            )
-        if self.destination is not None and "destination" not in already_processed:
-            already_processed.add("destination")
-            outfile.write(
-                " destination=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.destination), input_name="destination"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="SynapticConnection",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("from", node)
-        if value is not None and "from" not in already_processed:
-            already_processed.add("from")
-            self.from_ = value
-        value = find_attr_value_("to", node)
-        if value is not None and "to" not in already_processed:
-            already_processed.add("to")
-            self.to = value
-        value = find_attr_value_("synapse", node)
-        if value is not None and "synapse" not in already_processed:
-            already_processed.add("synapse")
-            self.synapse = value
-        value = find_attr_value_("destination", node)
-        if value is not None and "destination" not in already_processed:
-            already_processed.add("destination")
-            self.destination = value
-            self.validate_NmlId(self.destination)  # validate type NmlId
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-    def _get_cell_id(self, ref):
-        """Get cell ID"""
-        if "[" in ref:
-            return int(ref.split("[")[1].split("]")[0])
-        else:
-            return int(ref.split("/")[2])
-
-    def _get_population(self, ref):
-        """Get population"""
-        if "[" in ref:
-            return ref.split("[")[0]
-        else:
-            return ref.split("/")[0]
-
-    def __str__(self):
-
-        dest = self.destination if self.destination else "unspecified"
-        return (
-            "Synaptic connection from "
-            + str(self._get_population(self.from_))
-            + "(cell "
-            + str(self._get_cell_id(self.from_))
-            + ") -> "
-            + str(self._get_population(self.to))
-            + "(cell "
-            + str(self._get_cell_id(self.to))
-            + "), syn: "
-            + self.synapse
-            + ", destination: "
-            + dest
-        )
-
-    # end class SynapticConnection
 
 
 class ExplicitInput(GeneratedsSuper):
@@ -16630,6 +14114,307 @@ class BaseProjection(Base):
 
 
 # end class BaseProjection
+
+
+class SynapticConnection(BaseWithoutId):
+    """SynapticConnection -- Explicit event connection between named components, which gets processed via a new instance of a **synapse**  component which is created on the target component"""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("from_", "xs:string", 0, 0, {"use": "required", "name": "from_"}),
+        MemberSpec_("to", "xs:string", 0, 0, {"use": "required", "name": "to"}),
+        MemberSpec_(
+            "synapse", "xs:string", 0, 0, {"use": "required", "name": "synapse"}
+        ),
+        MemberSpec_(
+            "destination", "NmlId", 0, 1, {"use": "optional", "name": "destination"}
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        neuro_lex_id=None,
+        from_=None,
+        to=None,
+        synapse=None,
+        destination=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("SynapticConnection"), self).__init__(
+            neuro_lex_id, **kwargs_
+        )
+        self.from_ = _cast(None, from_)
+        self.from__nsprefix_ = None
+        self.to = _cast(None, to)
+        self.to_nsprefix_ = None
+        self.synapse = _cast(None, synapse)
+        self.synapse_nsprefix_ = None
+        self.destination = _cast(None, destination)
+        self.destination_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, SynapticConnection
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if SynapticConnection.subclass:
+            return SynapticConnection.subclass(*args_, **kwargs_)
+        else:
+            return SynapticConnection(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NmlId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NmlId_patterns_,
+                    )
+                )
+
+    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
+
+    def _hasContent(self):
+        if super(SynapticConnection, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="SynapticConnection",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("SynapticConnection")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "SynapticConnection":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="SynapticConnection",
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="SynapticConnection",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="SynapticConnection",
+    ):
+        super(SynapticConnection, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="SynapticConnection",
+        )
+        if self.from_ is not None and "from_" not in already_processed:
+            already_processed.add("from_")
+            outfile.write(
+                " from=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.from_), input_name="from"
+                        )
+                    ),
+                )
+            )
+        if self.to is not None and "to" not in already_processed:
+            already_processed.add("to")
+            outfile.write(
+                " to=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(quote_attrib(self.to), input_name="to")
+                    ),
+                )
+            )
+        if self.synapse is not None and "synapse" not in already_processed:
+            already_processed.add("synapse")
+            outfile.write(
+                " synapse=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.synapse), input_name="synapse"
+                        )
+                    ),
+                )
+            )
+        if self.destination is not None and "destination" not in already_processed:
+            already_processed.add("destination")
+            outfile.write(
+                " destination=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.destination), input_name="destination"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="SynapticConnection",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(SynapticConnection, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("from", node)
+        if value is not None and "from" not in already_processed:
+            already_processed.add("from")
+            self.from_ = value
+        value = find_attr_value_("to", node)
+        if value is not None and "to" not in already_processed:
+            already_processed.add("to")
+            self.to = value
+        value = find_attr_value_("synapse", node)
+        if value is not None and "synapse" not in already_processed:
+            already_processed.add("synapse")
+            self.synapse = value
+        value = find_attr_value_("destination", node)
+        if value is not None and "destination" not in already_processed:
+            already_processed.add("destination")
+            self.destination = value
+            self.validate_NmlId(self.destination)  # validate type NmlId
+        super(SynapticConnection, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(SynapticConnection, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+    def _get_cell_id(self, ref):
+        """Get cell ID"""
+        if "[" in ref:
+            return int(ref.split("[")[1].split("]")[0])
+        else:
+            return int(ref.split("/")[2])
+
+    def _get_population(self, ref):
+        """Get population"""
+        if "[" in ref:
+            return ref.split("[")[0]
+        else:
+            return ref.split("/")[0]
+
+    def __str__(self):
+
+        dest = self.destination if self.destination else "unspecified"
+        return (
+            "Synaptic connection from "
+            + str(self._get_population(self.from_))
+            + "(cell "
+            + str(self._get_cell_id(self.from_))
+            + ") -> "
+            + str(self._get_population(self.to))
+            + "(cell "
+            + str(self._get_cell_id(self.to))
+            + "), syn: "
+            + self.synapse
+            + ", destination: "
+            + dest
+        )
+
+    # end class SynapticConnection
 
 
 class CellSet(Base):
@@ -27388,6 +25173,1749 @@ class ChannelPopulation(Base):
 # end class ChannelPopulation
 
 
+class Resistivity(BaseWithoutId):
+    """Resistivity -- The resistivity, or specific axial resistance, of the cytoplasm
+    \n
+    :param value:
+    :type value: resistivity
+
+    """
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "value",
+            "Nml2Quantity_resistivity",
+            0,
+            0,
+            {"use": "required", "name": "value"},
+        ),
+        MemberSpec_(
+            "segment_groups",
+            "NmlId",
+            0,
+            1,
+            {"use": "optional", "name": "segment_groups"},
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        neuro_lex_id=None,
+        value=None,
+        segment_groups="all",
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Resistivity"), self).__init__(neuro_lex_id, **kwargs_)
+        self.value = _cast(None, value)
+        self.value_nsprefix_ = None
+        self.segment_groups = _cast(None, segment_groups)
+        self.segment_groups_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Resistivity)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Resistivity.subclass:
+            return Resistivity.subclass(*args_, **kwargs_)
+        else:
+            return Resistivity(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_Nml2Quantity_resistivity(self, value):
+        # Validate type Nml2Quantity_resistivity, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_resistivity_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_resistivity_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_resistivity_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(ohm_cm|kohm_cm|ohm_m))$"]
+    ]
+
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NmlId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NmlId_patterns_,
+                    )
+                )
+
+    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
+
+    def _hasContent(self):
+        if super(Resistivity, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Resistivity",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Resistivity")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Resistivity":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Resistivity"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Resistivity",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="Resistivity",
+    ):
+        super(Resistivity, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Resistivity"
+        )
+        if self.value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            outfile.write(
+                " value=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.value), input_name="value"
+                        )
+                    ),
+                )
+            )
+        if self.segment_groups != "all" and "segment_groups" not in already_processed:
+            already_processed.add("segment_groups")
+            outfile.write(
+                " segmentGroup=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.segment_groups), input_name="segmentGroup"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Resistivity",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Resistivity, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("value", node)
+        if value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            self.value = value
+            self.validate_Nml2Quantity_resistivity(
+                self.value
+            )  # validate type Nml2Quantity_resistivity
+        value = find_attr_value_("segmentGroup", node)
+        if value is not None and "segmentGroup" not in already_processed:
+            already_processed.add("segmentGroup")
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)  # validate type NmlId
+        super(Resistivity, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(Resistivity, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class Resistivity
+
+
+class InitMembPotential(BaseWithoutId):
+    """InitMembPotential -- Explicitly set initial membrane potential for the cell
+    \n
+    :param value:
+    :type value: voltage
+
+    """
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "value", "Nml2Quantity_voltage", 0, 0, {"use": "required", "name": "value"}
+        ),
+        MemberSpec_(
+            "segment_groups",
+            "NmlId",
+            0,
+            1,
+            {"use": "optional", "name": "segment_groups"},
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        neuro_lex_id=None,
+        value=None,
+        segment_groups="all",
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("InitMembPotential"), self).__init__(
+            neuro_lex_id, **kwargs_
+        )
+        self.value = _cast(None, value)
+        self.value_nsprefix_ = None
+        self.segment_groups = _cast(None, segment_groups)
+        self.segment_groups_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, InitMembPotential)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if InitMembPotential.subclass:
+            return InitMembPotential.subclass(*args_, **kwargs_)
+        else:
+            return InitMembPotential(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_voltage_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_voltage_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_voltage_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
+    ]
+
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NmlId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NmlId_patterns_,
+                    )
+                )
+
+    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
+
+    def _hasContent(self):
+        if super(InitMembPotential, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="InitMembPotential",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("InitMembPotential")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "InitMembPotential":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="InitMembPotential",
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="InitMembPotential",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="InitMembPotential",
+    ):
+        super(InitMembPotential, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="InitMembPotential",
+        )
+        if self.value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            outfile.write(
+                " value=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.value), input_name="value"
+                        )
+                    ),
+                )
+            )
+        if self.segment_groups != "all" and "segment_groups" not in already_processed:
+            already_processed.add("segment_groups")
+            outfile.write(
+                " segmentGroup=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.segment_groups), input_name="segmentGroup"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="InitMembPotential",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(InitMembPotential, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("value", node)
+        if value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            self.value = value
+            self.validate_Nml2Quantity_voltage(
+                self.value
+            )  # validate type Nml2Quantity_voltage
+        value = find_attr_value_("segmentGroup", node)
+        if value is not None and "segmentGroup" not in already_processed:
+            already_processed.add("segmentGroup")
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)  # validate type NmlId
+        super(InitMembPotential, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(InitMembPotential, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class InitMembPotential
+
+
+class SpecificCapacitance(BaseWithoutId):
+    """SpecificCapacitance -- Capacitance per unit area
+    \n
+    :param value:
+    :type value: specificCapacitance
+
+    """
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "value",
+            "Nml2Quantity_specificCapacitance",
+            0,
+            0,
+            {"use": "required", "name": "value"},
+        ),
+        MemberSpec_(
+            "segment_groups",
+            "NmlId",
+            0,
+            1,
+            {"use": "optional", "name": "segment_groups"},
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        neuro_lex_id=None,
+        value=None,
+        segment_groups="all",
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("SpecificCapacitance"), self).__init__(
+            neuro_lex_id, **kwargs_
+        )
+        self.value = _cast(None, value)
+        self.value_nsprefix_ = None
+        self.segment_groups = _cast(None, segment_groups)
+        self.segment_groups_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, SpecificCapacitance
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if SpecificCapacitance.subclass:
+            return SpecificCapacitance.subclass(*args_, **kwargs_)
+        else:
+            return SpecificCapacitance(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_Nml2Quantity_specificCapacitance(self, value):
+        # Validate type Nml2Quantity_specificCapacitance, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_specificCapacitance_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_specificCapacitance_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_specificCapacitance_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(F_per_m2|uF_per_cm2))$"]
+    ]
+
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NmlId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NmlId_patterns_,
+                    )
+                )
+
+    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
+
+    def _hasContent(self):
+        if super(SpecificCapacitance, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="SpecificCapacitance",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("SpecificCapacitance")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "SpecificCapacitance":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="SpecificCapacitance",
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="SpecificCapacitance",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="SpecificCapacitance",
+    ):
+        super(SpecificCapacitance, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="SpecificCapacitance",
+        )
+        if self.value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            outfile.write(
+                " value=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.value), input_name="value"
+                        )
+                    ),
+                )
+            )
+        if self.segment_groups != "all" and "segment_groups" not in already_processed:
+            already_processed.add("segment_groups")
+            outfile.write(
+                " segmentGroup=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.segment_groups), input_name="segmentGroup"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="SpecificCapacitance",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(SpecificCapacitance, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("value", node)
+        if value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            self.value = value
+            self.validate_Nml2Quantity_specificCapacitance(
+                self.value
+            )  # validate type Nml2Quantity_specificCapacitance
+        value = find_attr_value_("segmentGroup", node)
+        if value is not None and "segmentGroup" not in already_processed:
+            already_processed.add("segmentGroup")
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)  # validate type NmlId
+        super(SpecificCapacitance, self)._buildAttributes(
+            node, attrs, already_processed
+        )
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(SpecificCapacitance, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class SpecificCapacitance
+
+
+class SpikeThresh(BaseWithoutId):
+    """SpikeThresh -- Membrane potential at which to emit a spiking event. Note, usually the spiking event will not be emitted again until the membrane potential has fallen below this value and rises again to cross it in a positive direction
+    \n
+    :param value:
+    :type value: voltage
+
+    """
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "value", "Nml2Quantity_voltage", 0, 0, {"use": "required", "name": "value"}
+        ),
+        MemberSpec_(
+            "segment_groups",
+            "NmlId",
+            0,
+            1,
+            {"use": "optional", "name": "segment_groups"},
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        neuro_lex_id=None,
+        value=None,
+        segment_groups="all",
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("SpikeThresh"), self).__init__(neuro_lex_id, **kwargs_)
+        self.value = _cast(None, value)
+        self.value_nsprefix_ = None
+        self.segment_groups = _cast(None, segment_groups)
+        self.segment_groups_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, SpikeThresh)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if SpikeThresh.subclass:
+            return SpikeThresh.subclass(*args_, **kwargs_)
+        else:
+            return SpikeThresh(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_voltage_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_voltage_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_voltage_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
+    ]
+
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NmlId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NmlId_patterns_,
+                    )
+                )
+
+    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
+
+    def _hasContent(self):
+        if super(SpikeThresh, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="SpikeThresh",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("SpikeThresh")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "SpikeThresh":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="SpikeThresh"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="SpikeThresh",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="SpikeThresh",
+    ):
+        super(SpikeThresh, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="SpikeThresh"
+        )
+        if self.value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            outfile.write(
+                " value=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.value), input_name="value"
+                        )
+                    ),
+                )
+            )
+        if self.segment_groups != "all" and "segment_groups" not in already_processed:
+            already_processed.add("segment_groups")
+            outfile.write(
+                " segmentGroup=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.segment_groups), input_name="segmentGroup"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="SpikeThresh",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(SpikeThresh, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("value", node)
+        if value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            self.value = value
+            self.validate_Nml2Quantity_voltage(
+                self.value
+            )  # validate type Nml2Quantity_voltage
+        value = find_attr_value_("segmentGroup", node)
+        if value is not None and "segmentGroup" not in already_processed:
+            already_processed.add("segmentGroup")
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)  # validate type NmlId
+        super(SpikeThresh, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(SpikeThresh, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class SpikeThresh
+
+
+class MembraneProperties(BaseWithoutId):
+    """MembraneProperties -- Properties specific to the membrane, such as the **populations**  of channels, **channelDensities,**  **specificCapacitance,**  etc."""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "channel_populations",
+            "ChannelPopulation",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "channelPopulation",
+                "type": "ChannelPopulation",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "channel_densities",
+            "ChannelDensity",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "channelDensity",
+                "type": "ChannelDensity",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "channel_density_v_shifts",
+            "ChannelDensityVShift",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "channelDensityVShift",
+                "type": "ChannelDensityVShift",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "channel_density_nernsts",
+            "ChannelDensityNernst",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "channelDensityNernst",
+                "type": "ChannelDensityNernst",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "channel_density_ghks",
+            "ChannelDensityGHK",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "channelDensityGHK",
+                "type": "ChannelDensityGHK",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "channel_density_ghk2s",
+            "ChannelDensityGHK2",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "channelDensityGHK2",
+                "type": "ChannelDensityGHK2",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "channel_density_non_uniforms",
+            "ChannelDensityNonUniform",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "channelDensityNonUniform",
+                "type": "ChannelDensityNonUniform",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "channel_density_non_uniform_nernsts",
+            "ChannelDensityNonUniformNernst",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "channelDensityNonUniformNernst",
+                "type": "ChannelDensityNonUniformNernst",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "channel_density_non_uniform_ghks",
+            "ChannelDensityNonUniformGHK",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "channelDensityNonUniformGHK",
+                "type": "ChannelDensityNonUniformGHK",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "spike_threshes",
+            "SpikeThresh",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "spikeThresh",
+                "type": "SpikeThresh",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "specific_capacitances",
+            "SpecificCapacitance",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "specificCapacitance",
+                "type": "SpecificCapacitance",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "init_memb_potentials",
+            "InitMembPotential",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "initMembPotential",
+                "type": "InitMembPotential",
+            },
+            None,
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        neuro_lex_id=None,
+        channel_populations=None,
+        channel_densities=None,
+        channel_density_v_shifts=None,
+        channel_density_nernsts=None,
+        channel_density_ghks=None,
+        channel_density_ghk2s=None,
+        channel_density_non_uniforms=None,
+        channel_density_non_uniform_nernsts=None,
+        channel_density_non_uniform_ghks=None,
+        spike_threshes=None,
+        specific_capacitances=None,
+        init_memb_potentials=None,
+        extensiontype_=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("MembraneProperties"), self).__init__(
+            neuro_lex_id, extensiontype_, **kwargs_
+        )
+        if channel_populations is None:
+            self.channel_populations = []
+        else:
+            self.channel_populations = channel_populations
+        self.channel_populations_nsprefix_ = None
+        if channel_densities is None:
+            self.channel_densities = []
+        else:
+            self.channel_densities = channel_densities
+        self.channel_densities_nsprefix_ = None
+        if channel_density_v_shifts is None:
+            self.channel_density_v_shifts = []
+        else:
+            self.channel_density_v_shifts = channel_density_v_shifts
+        self.channel_density_v_shifts_nsprefix_ = None
+        if channel_density_nernsts is None:
+            self.channel_density_nernsts = []
+        else:
+            self.channel_density_nernsts = channel_density_nernsts
+        self.channel_density_nernsts_nsprefix_ = None
+        if channel_density_ghks is None:
+            self.channel_density_ghks = []
+        else:
+            self.channel_density_ghks = channel_density_ghks
+        self.channel_density_ghks_nsprefix_ = None
+        if channel_density_ghk2s is None:
+            self.channel_density_ghk2s = []
+        else:
+            self.channel_density_ghk2s = channel_density_ghk2s
+        self.channel_density_ghk2s_nsprefix_ = None
+        if channel_density_non_uniforms is None:
+            self.channel_density_non_uniforms = []
+        else:
+            self.channel_density_non_uniforms = channel_density_non_uniforms
+        self.channel_density_non_uniforms_nsprefix_ = None
+        if channel_density_non_uniform_nernsts is None:
+            self.channel_density_non_uniform_nernsts = []
+        else:
+            self.channel_density_non_uniform_nernsts = (
+                channel_density_non_uniform_nernsts
+            )
+        self.channel_density_non_uniform_nernsts_nsprefix_ = None
+        if channel_density_non_uniform_ghks is None:
+            self.channel_density_non_uniform_ghks = []
+        else:
+            self.channel_density_non_uniform_ghks = channel_density_non_uniform_ghks
+        self.channel_density_non_uniform_ghks_nsprefix_ = None
+        if spike_threshes is None:
+            self.spike_threshes = []
+        else:
+            self.spike_threshes = spike_threshes
+        self.spike_threshes_nsprefix_ = None
+        if specific_capacitances is None:
+            self.specific_capacitances = []
+        else:
+            self.specific_capacitances = specific_capacitances
+        self.specific_capacitances_nsprefix_ = None
+        if init_memb_potentials is None:
+            self.init_memb_potentials = []
+        else:
+            self.init_memb_potentials = init_memb_potentials
+        self.init_memb_potentials_nsprefix_ = None
+        self.extensiontype_ = extensiontype_
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, MembraneProperties
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if MembraneProperties.subclass:
+            return MembraneProperties.subclass(*args_, **kwargs_)
+        else:
+            return MembraneProperties(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if (
+            self.channel_populations
+            or self.channel_densities
+            or self.channel_density_v_shifts
+            or self.channel_density_nernsts
+            or self.channel_density_ghks
+            or self.channel_density_ghk2s
+            or self.channel_density_non_uniforms
+            or self.channel_density_non_uniform_nernsts
+            or self.channel_density_non_uniform_ghks
+            or self.spike_threshes
+            or self.specific_capacitances
+            or self.init_memb_potentials
+            or super(MembraneProperties, self)._hasContent()
+        ):
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="MembraneProperties",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("MembraneProperties")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "MembraneProperties":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="MembraneProperties",
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="MembraneProperties",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="MembraneProperties",
+    ):
+        super(MembraneProperties, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="MembraneProperties",
+        )
+        if self.extensiontype_ is not None and "xsi:type" not in already_processed:
+            already_processed.add("xsi:type")
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            if ":" not in self.extensiontype_:
+                imported_ns_type_prefix_ = GenerateDSNamespaceTypePrefixes_.get(
+                    self.extensiontype_, ""
+                )
+                outfile.write(
+                    ' xsi:type="%s%s"' % (imported_ns_type_prefix_, self.extensiontype_)
+                )
+            else:
+                outfile.write(' xsi:type="%s"' % self.extensiontype_)
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="MembraneProperties",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(MembraneProperties, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        for channelPopulation_ in self.channel_populations:
+            namespaceprefix_ = (
+                self.channel_populations_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.channel_populations_nsprefix_)
+                else ""
+            )
+            channelPopulation_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="channelPopulation",
+                pretty_print=pretty_print,
+            )
+        for channelDensity_ in self.channel_densities:
+            namespaceprefix_ = (
+                self.channel_densities_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.channel_densities_nsprefix_)
+                else ""
+            )
+            channelDensity_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="channelDensity",
+                pretty_print=pretty_print,
+            )
+        for channelDensityVShift_ in self.channel_density_v_shifts:
+            namespaceprefix_ = (
+                self.channel_density_v_shifts_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.channel_density_v_shifts_nsprefix_)
+                else ""
+            )
+            channelDensityVShift_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="channelDensityVShift",
+                pretty_print=pretty_print,
+            )
+        for channelDensityNernst_ in self.channel_density_nernsts:
+            namespaceprefix_ = (
+                self.channel_density_nernsts_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.channel_density_nernsts_nsprefix_)
+                else ""
+            )
+            channelDensityNernst_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="channelDensityNernst",
+                pretty_print=pretty_print,
+            )
+        for channelDensityGHK_ in self.channel_density_ghks:
+            namespaceprefix_ = (
+                self.channel_density_ghks_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.channel_density_ghks_nsprefix_)
+                else ""
+            )
+            channelDensityGHK_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="channelDensityGHK",
+                pretty_print=pretty_print,
+            )
+        for channelDensityGHK2_ in self.channel_density_ghk2s:
+            namespaceprefix_ = (
+                self.channel_density_ghk2s_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.channel_density_ghk2s_nsprefix_)
+                else ""
+            )
+            channelDensityGHK2_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="channelDensityGHK2",
+                pretty_print=pretty_print,
+            )
+        for channelDensityNonUniform_ in self.channel_density_non_uniforms:
+            namespaceprefix_ = (
+                self.channel_density_non_uniforms_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.channel_density_non_uniforms_nsprefix_)
+                else ""
+            )
+            channelDensityNonUniform_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="channelDensityNonUniform",
+                pretty_print=pretty_print,
+            )
+        for channelDensityNonUniformNernst_ in self.channel_density_non_uniform_nernsts:
+            namespaceprefix_ = (
+                self.channel_density_non_uniform_nernsts_nsprefix_ + ":"
+                if (
+                    UseCapturedNS_
+                    and self.channel_density_non_uniform_nernsts_nsprefix_
+                )
+                else ""
+            )
+            channelDensityNonUniformNernst_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="channelDensityNonUniformNernst",
+                pretty_print=pretty_print,
+            )
+        for channelDensityNonUniformGHK_ in self.channel_density_non_uniform_ghks:
+            namespaceprefix_ = (
+                self.channel_density_non_uniform_ghks_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.channel_density_non_uniform_ghks_nsprefix_)
+                else ""
+            )
+            channelDensityNonUniformGHK_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="channelDensityNonUniformGHK",
+                pretty_print=pretty_print,
+            )
+        for spikeThresh_ in self.spike_threshes:
+            namespaceprefix_ = (
+                self.spike_threshes_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.spike_threshes_nsprefix_)
+                else ""
+            )
+            spikeThresh_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="spikeThresh",
+                pretty_print=pretty_print,
+            )
+        for specificCapacitance_ in self.specific_capacitances:
+            namespaceprefix_ = (
+                self.specific_capacitances_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.specific_capacitances_nsprefix_)
+                else ""
+            )
+            specificCapacitance_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="specificCapacitance",
+                pretty_print=pretty_print,
+            )
+        for initMembPotential_ in self.init_memb_potentials:
+            namespaceprefix_ = (
+                self.init_memb_potentials_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.init_memb_potentials_nsprefix_)
+                else ""
+            )
+            initMembPotential_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="initMembPotential",
+                pretty_print=pretty_print,
+            )
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("xsi:type", node)
+        if value is not None and "xsi:type" not in already_processed:
+            already_processed.add("xsi:type")
+            self.extensiontype_ = value
+        super(MembraneProperties, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        if nodeName_ == "channelPopulation":
+            obj_ = ChannelPopulation.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.channel_populations.append(obj_)
+            obj_.original_tagname_ = "channelPopulation"
+        elif nodeName_ == "channelDensity":
+            class_obj_ = self.get_class_obj_(child_, ChannelDensity)
+            obj_ = class_obj_.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.channel_densities.append(obj_)
+            obj_.original_tagname_ = "channelDensity"
+        elif nodeName_ == "channelDensityVShift":
+            obj_ = ChannelDensityVShift.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.channel_density_v_shifts.append(obj_)
+            obj_.original_tagname_ = "channelDensityVShift"
+        elif nodeName_ == "channelDensityNernst":
+            class_obj_ = self.get_class_obj_(child_, ChannelDensityNernst)
+            obj_ = class_obj_.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.channel_density_nernsts.append(obj_)
+            obj_.original_tagname_ = "channelDensityNernst"
+        elif nodeName_ == "channelDensityGHK":
+            obj_ = ChannelDensityGHK.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.channel_density_ghks.append(obj_)
+            obj_.original_tagname_ = "channelDensityGHK"
+        elif nodeName_ == "channelDensityGHK2":
+            obj_ = ChannelDensityGHK2.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.channel_density_ghk2s.append(obj_)
+            obj_.original_tagname_ = "channelDensityGHK2"
+        elif nodeName_ == "channelDensityNonUniform":
+            obj_ = ChannelDensityNonUniform.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.channel_density_non_uniforms.append(obj_)
+            obj_.original_tagname_ = "channelDensityNonUniform"
+        elif nodeName_ == "channelDensityNonUniformNernst":
+            obj_ = ChannelDensityNonUniformNernst.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.channel_density_non_uniform_nernsts.append(obj_)
+            obj_.original_tagname_ = "channelDensityNonUniformNernst"
+        elif nodeName_ == "channelDensityNonUniformGHK":
+            obj_ = ChannelDensityNonUniformGHK.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.channel_density_non_uniform_ghks.append(obj_)
+            obj_.original_tagname_ = "channelDensityNonUniformGHK"
+        elif nodeName_ == "spikeThresh":
+            obj_ = SpikeThresh.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.spike_threshes.append(obj_)
+            obj_.original_tagname_ = "spikeThresh"
+        elif nodeName_ == "specificCapacitance":
+            obj_ = SpecificCapacitance.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.specific_capacitances.append(obj_)
+            obj_.original_tagname_ = "specificCapacitance"
+        elif nodeName_ == "initMembPotential":
+            obj_ = InitMembPotential.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.init_memb_potentials.append(obj_)
+            obj_.original_tagname_ = "initMembPotential"
+        super(MembraneProperties, self)._buildChildren(child_, node, nodeName_, True)
+
+
+# end class MembraneProperties
+
+
 class BiophysicalProperties2CaPools(Standalone):
     """BiophysicalProperties2CaPools -- The biophysical properties of the  **cell** , including the  **membraneProperties2CaPools**  and the  **intracellularProperties2CaPools**  for a cell with two Ca pools"""
 
@@ -29522,6 +29050,403 @@ class BaseCell(Standalone):
 
 
 # end class BaseCell
+
+
+class BlockMechanism(BaseWithoutId):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("type", "BlockTypes", 0, 0, {"use": "required", "name": "type"}),
+        MemberSpec_("species", "NmlId", 0, 0, {"use": "required", "name": "species"}),
+        MemberSpec_(
+            "block_concentration",
+            "Nml2Quantity_concentration",
+            0,
+            0,
+            {"use": "required", "name": "block_concentration"},
+        ),
+        MemberSpec_(
+            "scaling_conc",
+            "Nml2Quantity_concentration",
+            0,
+            0,
+            {"use": "required", "name": "scaling_conc"},
+        ),
+        MemberSpec_(
+            "scaling_volt",
+            "Nml2Quantity_voltage",
+            0,
+            0,
+            {"use": "required", "name": "scaling_volt"},
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        neuro_lex_id=None,
+        type=None,
+        species=None,
+        block_concentration=None,
+        scaling_conc=None,
+        scaling_volt=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("BlockMechanism"), self).__init__(neuro_lex_id, **kwargs_)
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
+        self.species = _cast(None, species)
+        self.species_nsprefix_ = None
+        self.block_concentration = _cast(None, block_concentration)
+        self.block_concentration_nsprefix_ = None
+        self.scaling_conc = _cast(None, scaling_conc)
+        self.scaling_conc_nsprefix_ = None
+        self.scaling_volt = _cast(None, scaling_volt)
+        self.scaling_volt_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, BlockMechanism)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if BlockMechanism.subclass:
+            return BlockMechanism.subclass(*args_, **kwargs_)
+        else:
+            return BlockMechanism(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_BlockTypes(self, value):
+        # Validate type BlockTypes, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            value = value
+            enumerations = ["voltageConcDepBlockMechanism"]
+            if value not in enumerations:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s does not match xsd enumeration restriction on BlockTypes'
+                    % {"value": encode_str_2_3(value), "lineno": lineno}
+                )
+                result = False
+
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NmlId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NmlId_patterns_,
+                    )
+                )
+
+    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
+
+    def validate_Nml2Quantity_concentration(self, value):
+        # Validate type Nml2Quantity_concentration, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_concentration_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_concentration_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_concentration_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM))$"]
+    ]
+
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_voltage_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_voltage_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_voltage_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
+    ]
+
+    def _hasContent(self):
+        if super(BlockMechanism, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="BlockMechanism",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("BlockMechanism")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "BlockMechanism":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="BlockMechanism"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="BlockMechanism",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="BlockMechanism",
+    ):
+        super(BlockMechanism, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="BlockMechanism"
+        )
+        if self.type is not None and "type" not in already_processed:
+            already_processed.add("type")
+            outfile.write(
+                " type=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.type), input_name="type"
+                        )
+                    ),
+                )
+            )
+        if self.species is not None and "species" not in already_processed:
+            already_processed.add("species")
+            outfile.write(
+                " species=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.species), input_name="species"
+                        )
+                    ),
+                )
+            )
+        if (
+            self.block_concentration is not None
+            and "block_concentration" not in already_processed
+        ):
+            already_processed.add("block_concentration")
+            outfile.write(
+                " blockConcentration=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.block_concentration),
+                            input_name="blockConcentration",
+                        )
+                    ),
+                )
+            )
+        if self.scaling_conc is not None and "scaling_conc" not in already_processed:
+            already_processed.add("scaling_conc")
+            outfile.write(
+                " scalingConc=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.scaling_conc), input_name="scalingConc"
+                        )
+                    ),
+                )
+            )
+        if self.scaling_volt is not None and "scaling_volt" not in already_processed:
+            already_processed.add("scaling_volt")
+            outfile.write(
+                " scalingVolt=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.scaling_volt), input_name="scalingVolt"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="BlockMechanism",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(BlockMechanism, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("type", node)
+        if value is not None and "type" not in already_processed:
+            already_processed.add("type")
+            self.type = value
+            self.validate_BlockTypes(self.type)  # validate type BlockTypes
+        value = find_attr_value_("species", node)
+        if value is not None and "species" not in already_processed:
+            already_processed.add("species")
+            self.species = value
+            self.validate_NmlId(self.species)  # validate type NmlId
+        value = find_attr_value_("blockConcentration", node)
+        if value is not None and "blockConcentration" not in already_processed:
+            already_processed.add("blockConcentration")
+            self.block_concentration = value
+            self.validate_Nml2Quantity_concentration(
+                self.block_concentration
+            )  # validate type Nml2Quantity_concentration
+        value = find_attr_value_("scalingConc", node)
+        if value is not None and "scalingConc" not in already_processed:
+            already_processed.add("scalingConc")
+            self.scaling_conc = value
+            self.validate_Nml2Quantity_concentration(
+                self.scaling_conc
+            )  # validate type Nml2Quantity_concentration
+        value = find_attr_value_("scalingVolt", node)
+        if value is not None and "scalingVolt" not in already_processed:
+            already_processed.add("scalingVolt")
+            self.scaling_volt = value
+            self.validate_Nml2Quantity_voltage(
+                self.scaling_volt
+            )  # validate type Nml2Quantity_voltage
+        super(BlockMechanism, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(BlockMechanism, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class BlockMechanism
 
 
 class BaseSynapse(Standalone):
@@ -42394,6 +42319,236 @@ class ChannelDensityVShift(ChannelDensity):
 # end class ChannelDensityVShift
 
 
+class MembraneProperties2CaPools(MembraneProperties):
+    """MembraneProperties2CaPools -- Variant of membraneProperties with 2 independent Ca pools"""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "channel_density_nernst_ca2s",
+            "ChannelDensityNernstCa2",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "channelDensityNernstCa2",
+                "type": "ChannelDensityNernstCa2",
+            },
+            None,
+        ),
+    ]
+    subclass = None
+    superclass = MembraneProperties
+
+    def __init__(
+        self,
+        neuro_lex_id=None,
+        channel_populations=None,
+        channel_densities=None,
+        channel_density_v_shifts=None,
+        channel_density_nernsts=None,
+        channel_density_ghks=None,
+        channel_density_ghk2s=None,
+        channel_density_non_uniforms=None,
+        channel_density_non_uniform_nernsts=None,
+        channel_density_non_uniform_ghks=None,
+        spike_threshes=None,
+        specific_capacitances=None,
+        init_memb_potentials=None,
+        channel_density_nernst_ca2s=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("MembraneProperties2CaPools"), self).__init__(
+            neuro_lex_id,
+            channel_populations,
+            channel_densities,
+            channel_density_v_shifts,
+            channel_density_nernsts,
+            channel_density_ghks,
+            channel_density_ghk2s,
+            channel_density_non_uniforms,
+            channel_density_non_uniform_nernsts,
+            channel_density_non_uniform_ghks,
+            spike_threshes,
+            specific_capacitances,
+            init_memb_potentials,
+            **kwargs_
+        )
+        if channel_density_nernst_ca2s is None:
+            self.channel_density_nernst_ca2s = []
+        else:
+            self.channel_density_nernst_ca2s = channel_density_nernst_ca2s
+        self.channel_density_nernst_ca2s_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, MembraneProperties2CaPools
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if MembraneProperties2CaPools.subclass:
+            return MembraneProperties2CaPools.subclass(*args_, **kwargs_)
+        else:
+            return MembraneProperties2CaPools(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if (
+            self.channel_density_nernst_ca2s
+            or super(MembraneProperties2CaPools, self)._hasContent()
+        ):
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="MembraneProperties2CaPools",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("MembraneProperties2CaPools")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "MembraneProperties2CaPools":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="MembraneProperties2CaPools",
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="MembraneProperties2CaPools",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="MembraneProperties2CaPools",
+    ):
+        super(MembraneProperties2CaPools, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="MembraneProperties2CaPools",
+        )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="MembraneProperties2CaPools",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(MembraneProperties2CaPools, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        for channelDensityNernstCa2_ in self.channel_density_nernst_ca2s:
+            namespaceprefix_ = (
+                self.channel_density_nernst_ca2s_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.channel_density_nernst_ca2s_nsprefix_)
+                else ""
+            )
+            channelDensityNernstCa2_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="channelDensityNernstCa2",
+                pretty_print=pretty_print,
+            )
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        super(MembraneProperties2CaPools, self)._buildAttributes(
+            node, attrs, already_processed
+        )
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        if nodeName_ == "channelDensityNernstCa2":
+            obj_ = ChannelDensityNernstCa2.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.channel_density_nernst_ca2s.append(obj_)
+            obj_.original_tagname_ = "channelDensityNernstCa2"
+        super(MembraneProperties2CaPools, self)._buildChildren(
+            child_, node, nodeName_, True
+        )
+
+
+# end class MembraneProperties2CaPools
+
+
 class Cell(BaseCell):
     """Cell -- Cell with  **segment** s specified in a  **morphology**  element along with details on its  **biophysicalProperties** . NOTE: this can only be correctly simulated using jLEMS when there is a single segment in the cell, and **v**  of this cell represents the membrane potential in that isopotential segment."""
 
@@ -48692,8 +48847,7 @@ class HH_cond_exp(basePyNNCell):
     :param tau_syn_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type tau_syn_E: none
     :param tau_syn_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
-    :type tau
-    _syn_I: none
+    :type tau_syn_I: none
     :param v_init:
     :type v_init: none
 
