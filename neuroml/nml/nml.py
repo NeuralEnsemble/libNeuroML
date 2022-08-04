@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Aug  1 18:00:09 2022 by generateDS.py version 2.40.13.
+# Generated Thu Aug  4 17:21:54 2022 by generateDS.py version 2.40.13.
 # Python 3.10.5 (main, Jun  9 2022, 00:00:00) [GCC 12.1.1 20220507 (Red Hat 12.1.1-1)]
 #
 # Command line options:
@@ -9027,401 +9027,6 @@ class Species(GeneratedsSuper):
 
 
 # end class Species
-
-
-class IntracellularProperties(GeneratedsSuper):
-    """IntracellularProperties -- Biophysical properties related to the intracellular space within the  **cell** , such as the  **resistivity**  and the list of ionic  **species**  present. **caConc**  and **caConcExt**  are explicitly exposed here to facilitate accessing these values from other Components, even though **caConcExt**  is clearly not an intracellular property"""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "species",
-            "Species",
-            1,
-            1,
-            {
-                "maxOccurs": "unbounded",
-                "minOccurs": "0",
-                "name": "species",
-                "type": "Species",
-            },
-            None,
-        ),
-        MemberSpec_(
-            "resistivities",
-            "Resistivity",
-            1,
-            1,
-            {
-                "maxOccurs": "unbounded",
-                "minOccurs": "0",
-                "name": "resistivity",
-                "type": "Resistivity",
-            },
-            None,
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self,
-        species=None,
-        resistivities=None,
-        extensiontype_=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        if species is None:
-            self.species = []
-        else:
-            self.species = species
-        self.species_nsprefix_ = None
-        if resistivities is None:
-            self.resistivities = []
-        else:
-            self.resistivities = resistivities
-        self.resistivities_nsprefix_ = None
-        self.extensiontype_ = extensiontype_
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, IntracellularProperties
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if IntracellularProperties.subclass:
-            return IntracellularProperties.subclass(*args_, **kwargs_)
-        else:
-            return IntracellularProperties(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if self.species or self.resistivities:
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="IntracellularProperties",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("IntracellularProperties")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "IntracellularProperties":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="IntracellularProperties",
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="IntracellularProperties",
-                pretty_print=pretty_print,
-            )
-            showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="IntracellularProperties",
-    ):
-        if self.extensiontype_ is not None and "xsi:type" not in already_processed:
-            already_processed.add("xsi:type")
-            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
-            if ":" not in self.extensiontype_:
-                imported_ns_type_prefix_ = GenerateDSNamespaceTypePrefixes_.get(
-                    self.extensiontype_, ""
-                )
-                outfile.write(
-                    ' xsi:type="%s%s"' % (imported_ns_type_prefix_, self.extensiontype_)
-                )
-            else:
-                outfile.write(' xsi:type="%s"' % self.extensiontype_)
-        pass
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="IntracellularProperties",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        for species_ in self.species:
-            namespaceprefix_ = (
-                self.species_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.species_nsprefix_)
-                else ""
-            )
-            species_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="species",
-                pretty_print=pretty_print,
-            )
-        for resistivity_ in self.resistivities:
-            namespaceprefix_ = (
-                self.resistivities_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.resistivities_nsprefix_)
-                else ""
-            )
-            resistivity_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="resistivity",
-                pretty_print=pretty_print,
-            )
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("xsi:type", node)
-        if value is not None and "xsi:type" not in already_processed:
-            already_processed.add("xsi:type")
-            self.extensiontype_ = value
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        if nodeName_ == "species":
-            obj_ = Species.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.species.append(obj_)
-            obj_.original_tagname_ = "species"
-        elif nodeName_ == "resistivity":
-            obj_ = Resistivity.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.resistivities.append(obj_)
-            obj_.original_tagname_ = "resistivity"
-
-
-# end class IntracellularProperties
-
-
-class IntracellularProperties2CaPools(IntracellularProperties):
-    """IntracellularProperties2CaPools -- Variant of intracellularProperties with 2 independent Ca pools"""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = []
-    subclass = None
-    superclass = IntracellularProperties
-
-    def __init__(
-        self, species=None, resistivities=None, gds_collector_=None, **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        super(globals().get("IntracellularProperties2CaPools"), self).__init__(
-            species, resistivities, **kwargs_
-        )
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, IntracellularProperties2CaPools
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if IntracellularProperties2CaPools.subclass:
-            return IntracellularProperties2CaPools.subclass(*args_, **kwargs_)
-        else:
-            return IntracellularProperties2CaPools(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if super(IntracellularProperties2CaPools, self)._hasContent():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="IntracellularProperties2CaPools",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get(
-            "IntracellularProperties2CaPools"
-        )
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if (
-            self.original_tagname_ is not None
-            and name_ == "IntracellularProperties2CaPools"
-        ):
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="IntracellularProperties2CaPools",
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="IntracellularProperties2CaPools",
-                pretty_print=pretty_print,
-            )
-            showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="IntracellularProperties2CaPools",
-    ):
-        super(IntracellularProperties2CaPools, self)._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="IntracellularProperties2CaPools",
-        )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="IntracellularProperties2CaPools",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        super(IntracellularProperties2CaPools, self)._exportChildren(
-            outfile,
-            level,
-            namespaceprefix_,
-            namespacedef_,
-            name_,
-            True,
-            pretty_print=pretty_print,
-        )
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        super(IntracellularProperties2CaPools, self)._buildAttributes(
-            node, attrs, already_processed
-        )
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        super(IntracellularProperties2CaPools, self)._buildChildren(
-            child_, node, nodeName_, True
-        )
-        pass
-
-
-# end class IntracellularProperties2CaPools
 
 
 class ExtracellularPropertiesLocal(GeneratedsSuper):
@@ -22268,6 +21873,268 @@ class ExtracellularProperties(Base):
 
 
 # end class ExtracellularProperties
+
+
+class IntracellularProperties(BaseWithoutId):
+    """IntracellularProperties -- Biophysical properties related to the intracellular space within the  **cell** , such as the  **resistivity**  and the list of ionic  **species**  present. **caConc**  and **caConcExt**  are explicitly exposed here to facilitate accessing these values from other Components, even though **caConcExt**  is clearly not an intracellular property"""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "species",
+            "Species",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "species",
+                "type": "Species",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "resistivities",
+            "Resistivity",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "resistivity",
+                "type": "Resistivity",
+            },
+            None,
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        neuro_lex_id=None,
+        species=None,
+        resistivities=None,
+        extensiontype_=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("IntracellularProperties"), self).__init__(
+            neuro_lex_id, extensiontype_, **kwargs_
+        )
+        if species is None:
+            self.species = []
+        else:
+            self.species = species
+        self.species_nsprefix_ = None
+        if resistivities is None:
+            self.resistivities = []
+        else:
+            self.resistivities = resistivities
+        self.resistivities_nsprefix_ = None
+        self.extensiontype_ = extensiontype_
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, IntracellularProperties
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if IntracellularProperties.subclass:
+            return IntracellularProperties.subclass(*args_, **kwargs_)
+        else:
+            return IntracellularProperties(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if (
+            self.species
+            or self.resistivities
+            or super(IntracellularProperties, self)._hasContent()
+        ):
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="IntracellularProperties",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("IntracellularProperties")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "IntracellularProperties":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="IntracellularProperties",
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="IntracellularProperties",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="IntracellularProperties",
+    ):
+        super(IntracellularProperties, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="IntracellularProperties",
+        )
+        if self.extensiontype_ is not None and "xsi:type" not in already_processed:
+            already_processed.add("xsi:type")
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            if ":" not in self.extensiontype_:
+                imported_ns_type_prefix_ = GenerateDSNamespaceTypePrefixes_.get(
+                    self.extensiontype_, ""
+                )
+                outfile.write(
+                    ' xsi:type="%s%s"' % (imported_ns_type_prefix_, self.extensiontype_)
+                )
+            else:
+                outfile.write(' xsi:type="%s"' % self.extensiontype_)
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="IntracellularProperties",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(IntracellularProperties, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        for species_ in self.species:
+            namespaceprefix_ = (
+                self.species_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.species_nsprefix_)
+                else ""
+            )
+            species_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="species",
+                pretty_print=pretty_print,
+            )
+        for resistivity_ in self.resistivities:
+            namespaceprefix_ = (
+                self.resistivities_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.resistivities_nsprefix_)
+                else ""
+            )
+            resistivity_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="resistivity",
+                pretty_print=pretty_print,
+            )
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("xsi:type", node)
+        if value is not None and "xsi:type" not in already_processed:
+            already_processed.add("xsi:type")
+            self.extensiontype_ = value
+        super(IntracellularProperties, self)._buildAttributes(
+            node, attrs, already_processed
+        )
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        if nodeName_ == "species":
+            obj_ = Species.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.species.append(obj_)
+            obj_.original_tagname_ = "species"
+        elif nodeName_ == "resistivity":
+            obj_ = Resistivity.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.resistivities.append(obj_)
+            obj_.original_tagname_ = "resistivity"
+        super(IntracellularProperties, self)._buildChildren(
+            child_, node, nodeName_, True
+        )
+
+
+# end class IntracellularProperties
 
 
 class ChannelDensityGHK2(Base):
@@ -41695,6 +41562,173 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
 
 
 # end class SpikeGeneratorRefPoisson
+
+
+class IntracellularProperties2CaPools(IntracellularProperties):
+    """IntracellularProperties2CaPools -- Variant of intracellularProperties with 2 independent Ca pools"""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = []
+    subclass = None
+    superclass = IntracellularProperties
+
+    def __init__(
+        self,
+        neuro_lex_id=None,
+        species=None,
+        resistivities=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("IntracellularProperties2CaPools"), self).__init__(
+            neuro_lex_id, species, resistivities, **kwargs_
+        )
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, IntracellularProperties2CaPools
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if IntracellularProperties2CaPools.subclass:
+            return IntracellularProperties2CaPools.subclass(*args_, **kwargs_)
+        else:
+            return IntracellularProperties2CaPools(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(IntracellularProperties2CaPools, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="IntracellularProperties2CaPools",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get(
+            "IntracellularProperties2CaPools"
+        )
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if (
+            self.original_tagname_ is not None
+            and name_ == "IntracellularProperties2CaPools"
+        ):
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="IntracellularProperties2CaPools",
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="IntracellularProperties2CaPools",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="IntracellularProperties2CaPools",
+    ):
+        super(IntracellularProperties2CaPools, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="IntracellularProperties2CaPools",
+        )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="IntracellularProperties2CaPools",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(IntracellularProperties2CaPools, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        super(IntracellularProperties2CaPools, self)._buildAttributes(
+            node, attrs, already_processed
+        )
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(IntracellularProperties2CaPools, self)._buildChildren(
+            child_, node, nodeName_, True
+        )
+        pass
+
+
+# end class IntracellularProperties2CaPools
 
 
 class ConcentrationModel_D(DecayingPoolConcentrationModel):
