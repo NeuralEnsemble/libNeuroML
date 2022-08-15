@@ -129,22 +129,22 @@ class TestCell(unittest.TestCase):
 
         sg1 = SegmentGroup(id="all")
         for seg in [seg0, seg1, seg2, seg3]:
-            sg1.members.append(Member(seg.id))
+            sg1.members.append(Member(segments=seg.id))
         cell.morphology.segment_groups.append(sg1)
 
         sg2 = SegmentGroup(id="soma_group")
         for seg in [seg0]:
-            sg2.members.append(Member(seg.id))
+            sg2.members.append(Member(segments=seg.id))
         cell.morphology.segment_groups.append(sg2)
 
         sg3 = SegmentGroup(id="dend_group")
         for seg in [seg1, seg2, seg3]:
-            sg3.members.append(Member(seg.id))
+            sg3.members.append(Member(segments=seg.id))
         cell.morphology.segment_groups.append(sg3)
 
         sg4 = SegmentGroup(id="soma_dends")
         for sg in [sg2, sg3]:
-            sg4.includes.append(Include(sg.id))
+            sg4.includes.append(Include(segment_groups=sg.id))
         cell.morphology.segment_groups.append(sg4)
 
         expected = {sg1.id: 4, sg2.id: 1, sg3.id: 3, sg4.id: 4}
