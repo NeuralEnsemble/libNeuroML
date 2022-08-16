@@ -1232,7 +1232,7 @@ cell_methods = MethodSpec(
         else:
             pd = parent.distal
             pp = self.get_actual_proximal(segment.parent.segments)
-            p = Point3DWithDiam((1-fract)*pp.x+fract*pd.x, (1-fract)*pp.y+fract*pd.y, (1-fract)*pp.z+fract*pd.z)
+            p = Point3DWithDiam(x=(1-fract)*pp.x+fract*pd.x, y=(1-fract)*pp.y+fract*pd.y, z=(1-fract)*pp.z+fract*pd.z)
             p.diameter = (1-fract)*pp.diameter+fract*pd.diameter
 
             return p
