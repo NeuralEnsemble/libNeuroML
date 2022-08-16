@@ -158,7 +158,9 @@ class TestHelperProperties(unittest.TestCase):
 
         d2 = Point3DWithDiam(x=20, y=0, z=0, diameter=diam)
 
-        seg2 = Segment(id=2, proximal=d1, distal=d2, parent=SegmentParent(segments=seg1.id))
+        seg2 = Segment(
+            id=2, proximal=d1, distal=d2, parent=SegmentParent(segments=seg1.id)
+        )
         cell.morphology.segments.append(seg2)
 
         d3 = Point3DWithDiam(x=15, y=10, z=0, diameter=diam)
