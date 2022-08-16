@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Aug 15 17:51:49 2022 by generateDS.py version 2.40.13.
+# Generated Tue Aug 16 12:13:41 2022 by generateDS.py version 2.40.13.
 # Python 3.10.6 (main, Aug  2 2022, 00:00:00) [GCC 12.1.1 20220507 (Red Hat 12.1.1-1)]
 #
 # Command line options:
@@ -14,7 +14,7 @@
 #   NeuroML_v2.3.xsd
 #
 # Command line:
-#   /home/asinha/.local/share/virtualenvs/generateds-310/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" NeuroML_v2.3.xsd
+#   /home/asinha/.local/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" NeuroML_v2.3.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -42567,9 +42567,9 @@ class Cell(BaseCell):
             pd = parent.distal
             pp = self.get_actual_proximal(segment.parent.segments)
             p = Point3DWithDiam(
-                (1 - fract) * pp.x + fract * pd.x,
-                (1 - fract) * pp.y + fract * pd.y,
-                (1 - fract) * pp.z + fract * pd.z,
+                x=(1 - fract) * pp.x + fract * pd.x,
+                y=(1 - fract) * pp.y + fract * pd.y,
+                z=(1 - fract) * pp.z + fract * pd.z,
             )
             p.diameter = (1 - fract) * pp.diameter + fract * pd.diameter
 
@@ -42697,11 +42697,17 @@ class Cell(BaseCell):
         """
         Get ordered list of segments in specified groups
 
-        :param group_list: list of groups to get segments from
+        :param group_list: a group id or list of groups to get segments from
+        :type group_list: str or list
         :param check_parentage: verify parentage
+        :type check_parentage: bool
         :param include_commulative_lengths: also include cummulative lengths
+        :type include_cumulative_lengths: bool
         :param include_path_lengths: also include path lengths
-        :param path_length_metric:
+        :type include_path_lengths: bool
+        :param path_length_metric: metric to use for path length ("Path Length
+            from root" is currently the only supported option, and the default)
+        :type path_length_metric: str
 
         :return: dictionary of segments with additional information depending
             on what parameters were used:
@@ -42712,12 +42718,19 @@ class Cell(BaseCell):
         unord_segs = {}
         other_segs = {}
 
+        # convert to list if a single segment group ID has been provided
         if isinstance(group_list, str):
             group_list = [group_list]
 
+        # get a dict of all segments in the cell, with their ids as keys
         segments = self.get_segment_ids_vs_segments()
 
+        # get list of segments in all segment groups
+        # and store this information in two dicts:
+        # - unord_segs: for segment groups in group_list
+        # - other_segs: for segment groups not in group_list
         for sg in self.morphology.segment_groups:
+            # get all segments in a segment group
             all_segs_here = self.get_all_segments_in_group(sg)
 
             if sg.id in group_list:
@@ -42727,6 +42740,7 @@ class Cell(BaseCell):
 
         ord_segs = {}
 
+        # sort unord_segs by id to get an ordered list in ord_segs
         from operator import attrgetter
 
         for key in unord_segs.keys():
