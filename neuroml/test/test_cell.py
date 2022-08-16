@@ -114,17 +114,18 @@ class TestCell(unittest.TestCase):
         cell.morphology = Morphology()
         cell.morphology.segments.append(seg0)
 
-        seg1 = Segment(id=1, distal=d1, parent=SegmentParent(0))
+        seg1 = Segment(id=1, distal=d1, parent=SegmentParent(segments=0))
         cell.morphology.segments.append(seg1)
 
         d2 = Point3DWithDiam(x=20, y=0, z=0, diameter=diam)
 
-        seg2 = Segment(id=2, proximal=d1, distal=d2, parent=SegmentParent(seg1.id))
+        seg2 = Segment(id=2, proximal=d1, distal=d2,
+                       parent=SegmentParent(segments=seg1.id))
         cell.morphology.segments.append(seg2)
 
         d3 = Point3DWithDiam(x=20, y=10, z=0, diameter=diam)
 
-        seg3 = Segment(id=3, distal=d3, parent=SegmentParent(seg2.id, fraction_along=1))
+        seg3 = Segment(id=3, distal=d3, parent=SegmentParent(segments=seg2.id, fraction_along=1))
         cell.morphology.segments.append(seg3)
 
         sg1 = SegmentGroup(id="all")
