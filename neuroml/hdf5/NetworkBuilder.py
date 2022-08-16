@@ -81,7 +81,7 @@ class NetworkBuilder(DefaultNetworkHandler):
         self.populations[population_id] = pop
         self.network.populations.append(pop)
         for p in properties:
-            pop.properties.append(neuroml.Property(p, properties[p]))
+            pop.properties.append(neuroml.Property(tag=p, value=properties[p]))
 
         comp_obj_info = " (%s)" % type(component_obj) if component_obj else ""
 
