@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Aug 16 12:13:41 2022 by generateDS.py version 2.40.13.
+# Generated Wed Aug 17 15:53:40 2022 by generateDS.py version 2.40.13.
 # Python 3.10.6 (main, Aug  2 2022, 00:00:00) [GCC 12.1.1 20220507 (Red Hat 12.1.1-1)]
 #
 # Command line options:
@@ -14,7 +14,7 @@
 #   NeuroML_v2.3.xsd
 #
 # Command line:
-#   /home/asinha/.local/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" NeuroML_v2.3.xsd
+#   /home/asinha/.local/share/virtualenvs/libneuroml-new/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" NeuroML_v2.3.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -3153,28 +3153,16 @@ class BaseWithoutId(GeneratedsSuper):
     """BaseWithoutId -- Base element without ID specified *yet*, e.g. for an element with a particular requirement on its id which does not comply with NmlId (e.g. Segment needs nonNegativeInteger)."""
 
     __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "neuro_lex_id",
-            "NeuroLexId",
-            0,
-            1,
-            {"use": "optional", "name": "neuro_lex_id"},
-        ),
-    ]
+    member_data_items_ = []
     subclass = None
     superclass = None
 
-    def __init__(
-        self, neuro_lex_id=None, extensiontype_=None, gds_collector_=None, **kwargs_
-    ):
+    def __init__(self, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        self.neuro_lex_id = _cast(None, neuro_lex_id)
-        self.neuro_lex_id_nsprefix_ = None
         self.extensiontype_ = extensiontype_
 
     def factory(*args_, **kwargs_):
@@ -3188,36 +3176,6 @@ class BaseWithoutId(GeneratedsSuper):
             return BaseWithoutId(*args_, **kwargs_)
 
     factory = staticmethod(factory)
-
-    def validate_NeuroLexId(self, value):
-        # Validate type NeuroLexId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NeuroLexId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NeuroLexId_patterns_,
-                    )
-                )
-
-    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if ():
@@ -3280,18 +3238,6 @@ class BaseWithoutId(GeneratedsSuper):
         namespaceprefix_="",
         name_="BaseWithoutId",
     ):
-        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
-            already_processed.add("neuro_lex_id")
-            outfile.write(
-                " neuroLexId=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
-                        )
-                    ),
-                )
-            )
         if self.extensiontype_ is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -3304,6 +3250,7 @@ class BaseWithoutId(GeneratedsSuper):
                 )
             else:
                 outfile.write(' xsi:type="%s"' % self.extensiontype_)
+        pass
 
     def _exportChildren(
         self,
@@ -3330,11 +3277,6 @@ class BaseWithoutId(GeneratedsSuper):
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("neuroLexId", node)
-        if value is not None and "neuroLexId" not in already_processed:
-            already_processed.add("neuroLexId")
-            self.neuro_lex_id = value
-            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         value = find_attr_value_("xsi:type", node)
         if value is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
@@ -3559,21 +3501,14 @@ class BaseNonNegativeIntegerId(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(
-        self,
-        neuro_lex_id=None,
-        id=None,
-        extensiontype_=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
+    def __init__(self, id=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseNonNegativeIntegerId"), self).__init__(
-            neuro_lex_id, extensiontype_, **kwargs_
+            extensiontype_, **kwargs_
         )
         self.id = _cast(int, id)
         self.id_nsprefix_ = None
@@ -3775,22 +3710,13 @@ class Base(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(
-        self,
-        neuro_lex_id=None,
-        id=None,
-        extensiontype_=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
+    def __init__(self, id=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Base"), self).__init__(
-            neuro_lex_id, extensiontype_, **kwargs_
-        )
+        super(globals().get("Base"), self).__init__(extensiontype_, **kwargs_)
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
         self.extensiontype_ = extensiontype_
@@ -4015,7 +3941,6 @@ class Standalone(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -4030,9 +3955,7 @@ class Standalone(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Standalone"), self).__init__(
-            neuro_lex_id, id, extensiontype_, **kwargs_
-        )
+        super(globals().get("Standalone"), self).__init__(id, extensiontype_, **kwargs_)
         self.metaid = _cast(None, metaid)
         self.metaid_nsprefix_ = None
         self.notes = notes
@@ -4356,7 +4279,6 @@ class SpikeSourcePoisson(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -4374,7 +4296,7 @@ class SpikeSourcePoisson(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeSourcePoisson"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.start = _cast(None, start)
         self.start_nsprefix_ = None
@@ -4666,7 +4588,6 @@ class Input(BaseNonNegativeIntegerId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         target=None,
         destination=None,
@@ -4681,9 +4602,7 @@ class Input(BaseNonNegativeIntegerId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Input"), self).__init__(
-            neuro_lex_id, id, extensiontype_, **kwargs_
-        )
+        super(globals().get("Input"), self).__init__(id, extensiontype_, **kwargs_)
         self.target = _cast(None, target)
         self.target_nsprefix_ = None
         self.destination = _cast(None, destination)
@@ -5054,7 +4973,6 @@ class InputList(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         populations=None,
         component=None,
@@ -5068,7 +4986,7 @@ class InputList(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("InputList"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("InputList"), self).__init__(id, **kwargs_)
         self.populations = _cast(None, populations)
         self.populations_nsprefix_ = None
         self.component = _cast(None, component)
@@ -5385,20 +5303,14 @@ class ExplicitInput(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        target=None,
-        input=None,
-        destination=None,
-        gds_collector_=None,
-        **kwargs_
+        self, target=None, input=None, destination=None, gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ExplicitInput"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("ExplicitInput"), self).__init__(**kwargs_)
         self.target = _cast(None, target)
         self.target_nsprefix_ = None
         self.input = _cast(None, input)
@@ -5652,14 +5564,22 @@ class BaseConnection(BaseNonNegativeIntegerId):
     """BaseConnection -- Base of all synaptic connections (chemical/electrical/analog, etc.) inside projections"""
 
     __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = []
+    member_data_items_ = [
+        MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
+    ]
     subclass = None
     superclass = BaseNonNegativeIntegerId
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -5670,8 +5590,10 @@ class BaseConnection(BaseNonNegativeIntegerId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConnection"), self).__init__(
-            neuro_lex_id, id, extensiontype_, **kwargs_
+            id, extensiontype_, **kwargs_
         )
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         self.extensiontype_ = extensiontype_
 
     def factory(*args_, **kwargs_):
@@ -5685,6 +5607,36 @@ class BaseConnection(BaseNonNegativeIntegerId):
             return BaseConnection(*args_, **kwargs_)
 
     factory = staticmethod(factory)
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if super(BaseConnection, self)._hasContent():
@@ -5750,6 +5702,18 @@ class BaseConnection(BaseNonNegativeIntegerId):
         super(BaseConnection, self)._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="BaseConnection"
         )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
+                        )
+                    ),
+                )
+            )
         if self.extensiontype_ is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -5797,6 +5761,11 @@ class BaseConnection(BaseNonNegativeIntegerId):
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         value = find_attr_value_("xsi:type", node)
         if value is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
@@ -5838,7 +5807,6 @@ class BaseProjection(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         presynaptic_population=None,
         postsynaptic_population=None,
@@ -5852,7 +5820,7 @@ class BaseProjection(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseProjection"), self).__init__(
-            neuro_lex_id, id, extensiontype_, **kwargs_
+            id, extensiontype_, **kwargs_
         )
         self.presynaptic_population = _cast(None, presynaptic_population)
         self.presynaptic_population_nsprefix_ = None
@@ -6076,6 +6044,13 @@ class SynapticConnection(BaseWithoutId):
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
+        MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
         MemberSpec_("from_", "xs:string", 0, 0, {"use": "required", "name": "from_"}),
         MemberSpec_("to", "xs:string", 0, 0, {"use": "required", "name": "to"}),
         MemberSpec_(
@@ -6103,9 +6078,9 @@ class SynapticConnection(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SynapticConnection"), self).__init__(
-            neuro_lex_id, **kwargs_
-        )
+        super(globals().get("SynapticConnection"), self).__init__(**kwargs_)
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
         self.to = _cast(None, to)
@@ -6128,6 +6103,36 @@ class SynapticConnection(BaseWithoutId):
             return SynapticConnection(*args_, **kwargs_)
 
     factory = staticmethod(factory)
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
@@ -6231,6 +6236,18 @@ class SynapticConnection(BaseWithoutId):
             namespaceprefix_,
             name_="SynapticConnection",
         )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
+                        )
+                    ),
+                )
+            )
         if self.from_ is not None and "from_" not in already_processed:
             already_processed.add("from_")
             outfile.write(
@@ -6312,6 +6329,11 @@ class SynapticConnection(BaseWithoutId):
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         value = find_attr_value_("from", node)
         if value is not None and "from" not in already_processed:
             already_processed.add("from")
@@ -6389,20 +6411,14 @@ class CellSet(Base):
     superclass = Base
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        id=None,
-        select=None,
-        anytypeobjs_=None,
-        gds_collector_=None,
-        **kwargs_
+        self, id=None, select=None, anytypeobjs_=None, gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("CellSet"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("CellSet"), self).__init__(id, **kwargs_)
         self.select = _cast(None, select)
         self.select_nsprefix_ = None
         if anytypeobjs_ is None:
@@ -6575,15 +6591,13 @@ class Location(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(
-        self, neuro_lex_id=None, x=None, y=None, z=None, gds_collector_=None, **kwargs_
-    ):
+    def __init__(self, x=None, y=None, z=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Location"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("Location"), self).__init__(**kwargs_)
         self.x = _cast(float, x)
         self.x_nsprefix_ = None
         self.y = _cast(float, y)
@@ -6782,7 +6796,6 @@ class Instance(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         i=None,
         j=None,
@@ -6796,7 +6809,7 @@ class Instance(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Instance"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("Instance"), self).__init__(**kwargs_)
         self.id = _cast(int, id)
         self.id_nsprefix_ = None
         self.i = _cast(int, i)
@@ -7027,20 +7040,14 @@ class GridLayout(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        x_size=None,
-        y_size=None,
-        z_size=None,
-        gds_collector_=None,
-        **kwargs_
+        self, x_size=None, y_size=None, z_size=None, gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GridLayout"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("GridLayout"), self).__init__(**kwargs_)
         self.x_size = _cast(int, x_size)
         self.x_size_nsprefix_ = None
         self.y_size = _cast(int, y_size)
@@ -7214,20 +7221,13 @@ class RandomLayout(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(
-        self,
-        neuro_lex_id=None,
-        number=None,
-        regions=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
+    def __init__(self, number=None, regions=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("RandomLayout"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("RandomLayout"), self).__init__(**kwargs_)
         self.number = _cast(int, number)
         self.number_nsprefix_ = None
         self.regions = _cast(None, regions)
@@ -7429,15 +7429,13 @@ class UnstructuredLayout(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(self, neuro_lex_id=None, number=None, gds_collector_=None, **kwargs_):
+    def __init__(self, number=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("UnstructuredLayout"), self).__init__(
-            neuro_lex_id, **kwargs_
-        )
+        super(globals().get("UnstructuredLayout"), self).__init__(**kwargs_)
         self.number = _cast(int, number)
         self.number_nsprefix_ = None
 
@@ -7615,7 +7613,6 @@ class Layout(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         spaces=None,
         random=None,
         grid=None,
@@ -7628,7 +7625,7 @@ class Layout(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Layout"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("Layout"), self).__init__(**kwargs_)
         self.spaces = _cast(None, spaces)
         self.spaces_nsprefix_ = None
         self.random = random
@@ -7895,6 +7892,13 @@ class Population(Standalone):
             {"use": "optional", "name": "extracellular_properties"},
         ),
         MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
+        MemberSpec_(
             "layout",
             "Layout",
             0,
@@ -7916,7 +7920,6 @@ class Population(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -7926,6 +7929,7 @@ class Population(Standalone):
         size=None,
         type=None,
         extracellular_properties=None,
+        neuro_lex_id=None,
         layout=None,
         instances=None,
         gds_collector_=None,
@@ -7937,7 +7941,7 @@ class Population(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Population"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.component = _cast(None, component)
         self.component_nsprefix_ = None
@@ -7947,6 +7951,8 @@ class Population(Standalone):
         self.type_nsprefix_ = None
         self.extracellular_properties = _cast(None, extracellular_properties)
         self.extracellular_properties_nsprefix_ = None
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         self.layout = layout
         self.layout_nsprefix_ = None
         if instances is None:
@@ -8042,6 +8048,36 @@ class Population(Standalone):
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
                 result = False
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if (
@@ -8152,6 +8188,18 @@ class Population(Standalone):
                     ),
                 )
             )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
+                        )
+                    ),
+                )
+            )
 
     def _exportChildren(
         self,
@@ -8242,6 +8290,11 @@ class Population(Standalone):
             already_processed.add("extracellularProperties")
             self.extracellular_properties = value
             self.validate_NmlId(self.extracellular_properties)  # validate type NmlId
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         super(Population, self)._buildAttributes(node, attrs, already_processed)
 
     def _buildChildren(
@@ -8337,20 +8390,14 @@ class Region(Base):
     superclass = Base
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        id=None,
-        spaces=None,
-        anytypeobjs_=None,
-        gds_collector_=None,
-        **kwargs_
+        self, id=None, spaces=None, anytypeobjs_=None, gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Region"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("Region"), self).__init__(id, **kwargs_)
         self.spaces = _cast(None, spaces)
         self.spaces_nsprefix_ = None
         if anytypeobjs_ is None:
@@ -8560,7 +8607,6 @@ class SpaceStructure(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         x_spacing=None,
         y_spacing=None,
         z_spacing=None,
@@ -8575,7 +8621,7 @@ class SpaceStructure(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SpaceStructure"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("SpaceStructure"), self).__init__(**kwargs_)
         self.x_spacing = _cast(float, x_spacing)
         self.x_spacing_nsprefix_ = None
         self.y_spacing = _cast(float, y_spacing)
@@ -8797,20 +8843,14 @@ class Space(Base):
     superclass = Base
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        id=None,
-        based_on=None,
-        structure=None,
-        gds_collector_=None,
-        **kwargs_
+        self, id=None, based_on=None, structure=None, gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Space"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("Space"), self).__init__(id, **kwargs_)
         self.based_on = _cast(None, based_on)
         self.based_on_nsprefix_ = None
         self.structure = structure
@@ -9012,6 +9052,13 @@ class Network(Standalone):
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
+        MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
         MemberSpec_("type", "networkTypes", 0, 1, {"use": "optional", "name": "type"}),
         MemberSpec_(
             "temperature",
@@ -9164,12 +9211,12 @@ class Network(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         type=None,
         temperature=None,
         spaces=None,
@@ -9192,8 +9239,10 @@ class Network(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Network"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.temperature = _cast(None, temperature)
@@ -9265,6 +9314,36 @@ class Network(Standalone):
             return Network(*args_, **kwargs_)
 
     factory = staticmethod(factory)
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def validate_networkTypes(self, value):
         # Validate type networkTypes, a restriction on xs:string.
@@ -9398,6 +9477,18 @@ class Network(Standalone):
         super(Network, self)._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Network"
         )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
+                        )
+                    ),
+                )
+            )
         if self.type is not None and "type" not in already_processed:
             already_processed.add("type")
             outfile.write(
@@ -9614,6 +9705,11 @@ class Network(Standalone):
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         value = find_attr_value_("type", node)
         if value is not None and "type" not in already_processed:
             already_processed.add("type")
@@ -9812,7 +9908,6 @@ class TransientPoissonFiringSynapse(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -9832,7 +9927,7 @@ class TransientPoissonFiringSynapse(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("TransientPoissonFiringSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.average_rate = _cast(None, average_rate)
         self.average_rate_nsprefix_ = None
@@ -10171,7 +10266,6 @@ class PoissonFiringSynapse(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -10189,7 +10283,7 @@ class PoissonFiringSynapse(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("PoissonFiringSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.average_rate = _cast(None, average_rate)
         self.average_rate_nsprefix_ = None
@@ -10439,7 +10533,6 @@ class SpikeGeneratorPoisson(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -10456,14 +10549,7 @@ class SpikeGeneratorPoisson(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeGeneratorPoisson"), self).__init__(
-            neuro_lex_id,
-            id,
-            metaid,
-            notes,
-            properties,
-            annotation,
-            extensiontype_,
-            **kwargs_
+            id, metaid, notes, properties, annotation, extensiontype_, **kwargs_
         )
         self.average_rate = _cast(None, average_rate)
         self.average_rate_nsprefix_ = None
@@ -10695,7 +10781,6 @@ class SpikeGeneratorRandom(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -10712,7 +10797,7 @@ class SpikeGeneratorRandom(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeGeneratorRandom"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.max_isi = _cast(None, max_isi)
         self.max_isi_nsprefix_ = None
@@ -10943,7 +11028,6 @@ class SpikeGenerator(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -10959,7 +11043,7 @@ class SpikeGenerator(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeGenerator"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.period = _cast(None, period)
         self.period_nsprefix_ = None
@@ -11170,7 +11254,6 @@ class TimedSynapticInput(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -11188,7 +11271,7 @@ class TimedSynapticInput(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("TimedSynapticInput"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.synapse = _cast(None, synapse)
         self.synapse_nsprefix_ = None
@@ -11442,7 +11525,6 @@ class SpikeArray(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -11458,7 +11540,7 @@ class SpikeArray(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeArray"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         if spikes is None:
             self.spikes = []
@@ -11623,15 +11705,13 @@ class Spike(BaseNonNegativeIntegerId):
     subclass = None
     superclass = BaseNonNegativeIntegerId
 
-    def __init__(
-        self, neuro_lex_id=None, id=None, time=None, gds_collector_=None, **kwargs_
-    ):
+    def __init__(self, id=None, time=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Spike"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("Spike"), self).__init__(id, **kwargs_)
         self.time = _cast(None, time)
         self.time_nsprefix_ = None
 
@@ -11871,7 +11951,6 @@ class VoltageClampTriple(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -11893,7 +11972,7 @@ class VoltageClampTriple(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("VoltageClampTriple"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.active = _cast(float, active)
         self.active_nsprefix_ = None
@@ -12354,7 +12433,6 @@ class VoltageClamp(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -12373,7 +12451,7 @@ class VoltageClamp(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("VoltageClamp"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -12737,7 +12815,6 @@ class CompoundInputDL(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -12755,7 +12832,7 @@ class CompoundInputDL(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("CompoundInputDL"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         if pulse_generator_dls is None:
             self.pulse_generator_dls = []
@@ -13011,7 +13088,6 @@ class CompoundInput(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -13029,7 +13105,7 @@ class CompoundInput(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("CompoundInput"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         if pulse_generators is None:
             self.pulse_generators = []
@@ -13290,7 +13366,6 @@ class RampGeneratorDL(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -13310,7 +13385,7 @@ class RampGeneratorDL(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("RampGeneratorDL"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -13672,7 +13747,6 @@ class RampGenerator(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -13692,7 +13766,7 @@ class RampGenerator(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("RampGenerator"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -14046,7 +14120,6 @@ class SineGeneratorDL(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -14066,7 +14139,7 @@ class SineGeneratorDL(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SineGeneratorDL"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -14408,7 +14481,6 @@ class SineGenerator(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -14428,7 +14500,7 @@ class SineGenerator(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SineGenerator"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -14792,7 +14864,6 @@ class PulseGeneratorDL(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -14810,7 +14881,7 @@ class PulseGeneratorDL(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("PulseGeneratorDL"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -15108,7 +15179,6 @@ class PulseGenerator(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -15126,7 +15196,7 @@ class PulseGenerator(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("PulseGenerator"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -15398,7 +15468,6 @@ class ReactionScheme(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         source=None,
         type=None,
@@ -15411,9 +15480,7 @@ class ReactionScheme(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ReactionScheme"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("ReactionScheme"), self).__init__(id, **kwargs_)
         self.source = _cast(None, source)
         self.source_nsprefix_ = None
         self.type = _cast(None, type)
@@ -15608,16 +15675,14 @@ class ExtracellularPropertiesLocal(Base):
     subclass = None
     superclass = Base
 
-    def __init__(
-        self, neuro_lex_id=None, id=None, species=None, gds_collector_=None, **kwargs_
-    ):
+    def __init__(self, id=None, species=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExtracellularPropertiesLocal"), self).__init__(
-            neuro_lex_id, id, **kwargs_
+            id, **kwargs_
         )
         if species is None:
             self.species = []
@@ -15807,17 +15872,13 @@ class ExtracellularProperties(Base):
     subclass = None
     superclass = Base
 
-    def __init__(
-        self, neuro_lex_id=None, id=None, species=None, gds_collector_=None, **kwargs_
-    ):
+    def __init__(self, id=None, species=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ExtracellularProperties"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("ExtracellularProperties"), self).__init__(id, **kwargs_)
         if species is None:
             self.species = []
         else:
@@ -16020,7 +16081,6 @@ class IntracellularProperties(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         species=None,
         resistivities=None,
         extensiontype_=None,
@@ -16033,7 +16093,7 @@ class IntracellularProperties(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IntracellularProperties"), self).__init__(
-            neuro_lex_id, extensiontype_, **kwargs_
+            extensiontype_, **kwargs_
         )
         if species is None:
             self.species = []
@@ -16292,7 +16352,6 @@ class Species(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         concentration_model=None,
         ion=None,
@@ -16307,7 +16366,7 @@ class Species(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Species"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("Species"), self).__init__(id, **kwargs_)
         self.concentration_model = _cast(None, concentration_model)
         self.concentration_model_nsprefix_ = None
         self.ion = _cast(None, ion)
@@ -16616,21 +16675,14 @@ class InhomogeneousValue(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        inhomogeneous_parameters=None,
-        value=None,
-        gds_collector_=None,
-        **kwargs_
+        self, inhomogeneous_parameters=None, value=None, gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("InhomogeneousValue"), self).__init__(
-            neuro_lex_id, **kwargs_
-        )
+        super(globals().get("InhomogeneousValue"), self).__init__(**kwargs_)
         self.inhomogeneous_parameters = _cast(None, inhomogeneous_parameters)
         self.inhomogeneous_parameters_nsprefix_ = None
         self.value = _cast(None, value)
@@ -16840,7 +16892,6 @@ class ChannelDensityGHK2(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         cond_density=None,
@@ -16855,9 +16906,7 @@ class ChannelDensityGHK2(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ChannelDensityGHK2"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("ChannelDensityGHK2"), self).__init__(id, **kwargs_)
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.cond_density = _cast(None, cond_density)
@@ -17186,7 +17235,6 @@ class ChannelDensityGHK(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         permeability=None,
@@ -17201,9 +17249,7 @@ class ChannelDensityGHK(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ChannelDensityGHK"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("ChannelDensityGHK"), self).__init__(id, **kwargs_)
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.permeability = _cast(None, permeability)
@@ -17543,7 +17589,6 @@ class ChannelDensityNernst(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         cond_density=None,
@@ -17561,7 +17606,7 @@ class ChannelDensityNernst(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityNernst"), self).__init__(
-            neuro_lex_id, id, extensiontype_, **kwargs_
+            id, extensiontype_, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -17961,7 +18006,6 @@ class ChannelDensity(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         cond_density=None,
@@ -17980,7 +18024,7 @@ class ChannelDensity(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensity"), self).__init__(
-            neuro_lex_id, id, extensiontype_, **kwargs_
+            id, extensiontype_, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -18407,7 +18451,6 @@ class ChannelDensityNonUniformGHK(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         ion=None,
@@ -18421,7 +18464,7 @@ class ChannelDensityNonUniformGHK(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityNonUniformGHK"), self).__init__(
-            neuro_lex_id, id, **kwargs_
+            id, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -18688,7 +18731,6 @@ class ChannelDensityNonUniformNernst(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         ion=None,
@@ -18702,7 +18744,7 @@ class ChannelDensityNonUniformNernst(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityNonUniformNernst"), self).__init__(
-            neuro_lex_id, id, **kwargs_
+            id, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -18979,7 +19021,6 @@ class ChannelDensityNonUniform(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         erev=None,
@@ -18993,9 +19034,7 @@ class ChannelDensityNonUniform(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ChannelDensityNonUniform"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("ChannelDensityNonUniform"), self).__init__(id, **kwargs_)
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.erev = _cast(None, erev)
@@ -19338,7 +19377,6 @@ class ChannelPopulation(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         number=None,
@@ -19355,9 +19393,7 @@ class ChannelPopulation(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ChannelPopulation"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("ChannelPopulation"), self).__init__(id, **kwargs_)
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.number = _cast(int, number)
@@ -19737,19 +19773,14 @@ class Resistivity(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        value=None,
-        segment_groups="all",
-        gds_collector_=None,
-        **kwargs_
+        self, value=None, segment_groups="all", gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Resistivity"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("Resistivity"), self).__init__(**kwargs_)
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.segment_groups = _cast(None, segment_groups)
@@ -20001,21 +20032,14 @@ class InitMembPotential(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        value=None,
-        segment_groups="all",
-        gds_collector_=None,
-        **kwargs_
+        self, value=None, segment_groups="all", gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("InitMembPotential"), self).__init__(
-            neuro_lex_id, **kwargs_
-        )
+        super(globals().get("InitMembPotential"), self).__init__(**kwargs_)
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.segment_groups = _cast(None, segment_groups)
@@ -20279,21 +20303,14 @@ class SpecificCapacitance(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        value=None,
-        segment_groups="all",
-        gds_collector_=None,
-        **kwargs_
+        self, value=None, segment_groups="all", gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SpecificCapacitance"), self).__init__(
-            neuro_lex_id, **kwargs_
-        )
+        super(globals().get("SpecificCapacitance"), self).__init__(**kwargs_)
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.segment_groups = _cast(None, segment_groups)
@@ -20557,19 +20574,14 @@ class SpikeThresh(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        value=None,
-        segment_groups="all",
-        gds_collector_=None,
-        **kwargs_
+        self, value=None, segment_groups="all", gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SpikeThresh"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("SpikeThresh"), self).__init__(**kwargs_)
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.segment_groups = _cast(None, segment_groups)
@@ -20963,7 +20975,6 @@ class MembraneProperties(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         channel_populations=None,
         channel_densities=None,
         channel_density_v_shifts=None,
@@ -20986,7 +20997,7 @@ class MembraneProperties(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("MembraneProperties"), self).__init__(
-            neuro_lex_id, extensiontype_, **kwargs_
+            extensiontype_, **kwargs_
         )
         if channel_populations is None:
             self.channel_populations = []
@@ -21497,7 +21508,6 @@ class BiophysicalProperties2CaPools(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -21515,7 +21525,7 @@ class BiophysicalProperties2CaPools(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BiophysicalProperties2CaPools"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.membrane_properties2_ca_pools = membrane_properties2_ca_pools
         self.membrane_properties2_ca_pools_nsprefix_ = None
@@ -21774,7 +21784,6 @@ class BiophysicalProperties(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -21792,7 +21801,7 @@ class BiophysicalProperties(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BiophysicalProperties"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.membrane_properties = membrane_properties
         self.membrane_properties_nsprefix_ = None
@@ -22017,15 +22026,13 @@ class SegmentEndPoint(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(
-        self, neuro_lex_id=None, segments=None, gds_collector_=None, **kwargs_
-    ):
+    def __init__(self, segments=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SegmentEndPoint"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("SegmentEndPoint"), self).__init__(**kwargs_)
         self.segments = _cast(int, segments)
         self.segments_nsprefix_ = None
 
@@ -22211,15 +22218,13 @@ class SubTree(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(
-        self, neuro_lex_id=None, from_=None, to=None, gds_collector_=None, **kwargs_
-    ):
+    def __init__(self, from_=None, to=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SubTree"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("SubTree"), self).__init__(**kwargs_)
         self.from_ = from_
         self.from__nsprefix_ = None
         self.to = to
@@ -22413,15 +22418,13 @@ class Path(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(
-        self, neuro_lex_id=None, from_=None, to=None, gds_collector_=None, **kwargs_
-    ):
+    def __init__(self, from_=None, to=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Path"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("Path"), self).__init__(**kwargs_)
         self.from_ = from_
         self.from__nsprefix_ = None
         self.to = to
@@ -22606,15 +22609,13 @@ class Include(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(
-        self, neuro_lex_id=None, segment_groups=None, gds_collector_=None, **kwargs_
-    ):
+    def __init__(self, segment_groups=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Include"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("Include"), self).__init__(**kwargs_)
         self.segment_groups = _cast(None, segment_groups)
         self.segment_groups_nsprefix_ = None
 
@@ -22802,15 +22803,13 @@ class Member(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(
-        self, neuro_lex_id=None, segments=None, gds_collector_=None, **kwargs_
-    ):
+    def __init__(self, segments=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Member"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("Member"), self).__init__(**kwargs_)
         self.segments = _cast(int, segments)
         self.segments_nsprefix_ = None
 
@@ -22980,15 +22979,13 @@ class DistalDetails(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(
-        self, neuro_lex_id=None, normalization_end=None, gds_collector_=None, **kwargs_
-    ):
+    def __init__(self, normalization_end=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("DistalDetails"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("DistalDetails"), self).__init__(**kwargs_)
         self.normalization_end = _cast(float, normalization_end)
         self.normalization_end_nsprefix_ = None
 
@@ -23145,15 +23142,13 @@ class ProximalDetails(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(
-        self, neuro_lex_id=None, translation_start=None, gds_collector_=None, **kwargs_
-    ):
+    def __init__(self, translation_start=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ProximalDetails"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("ProximalDetails"), self).__init__(**kwargs_)
         self.translation_start = _cast(float, translation_start)
         self.translation_start_nsprefix_ = None
 
@@ -23327,7 +23322,6 @@ class InhomogeneousParameter(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         variable=None,
         metric=None,
@@ -23341,9 +23335,7 @@ class InhomogeneousParameter(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("InhomogeneousParameter"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("InhomogeneousParameter"), self).__init__(id, **kwargs_)
         self.variable = _cast(None, variable)
         self.variable_nsprefix_ = None
         self.metric = _cast(None, metric)
@@ -23601,6 +23593,13 @@ class SegmentGroup(Base):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
+        MemberSpec_(
             "notes",
             ["Notes", "xs:string"],
             0,
@@ -23700,8 +23699,8 @@ class SegmentGroup(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         notes=None,
         properties=None,
         annotation=None,
@@ -23718,7 +23717,9 @@ class SegmentGroup(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SegmentGroup"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("SegmentGroup"), self).__init__(id, **kwargs_)
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         self.notes = notes
         self.validate_Notes(self.notes)
         self.notes_nsprefix_ = None
@@ -23787,6 +23788,36 @@ class SegmentGroup(Base):
                 return False
             pass
         return result
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if (
@@ -23863,6 +23894,18 @@ class SegmentGroup(Base):
         super(SegmentGroup, self)._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="SegmentGroup"
         )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
+                        )
+                    ),
+                )
+            )
 
     def _exportChildren(
         self,
@@ -24019,6 +24062,11 @@ class SegmentGroup(Base):
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         super(SegmentGroup, self)._buildAttributes(node, attrs, already_processed)
 
     def _buildChildren(
@@ -24120,21 +24168,14 @@ class Point3DWithDiam(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        x=None,
-        y=None,
-        z=None,
-        diameter=None,
-        gds_collector_=None,
-        **kwargs_
+        self, x=None, y=None, z=None, diameter=None, gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Point3DWithDiam"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("Point3DWithDiam"), self).__init__(**kwargs_)
         self.x = _cast(float, x)
         self.x_nsprefix_ = None
         self.y = _cast(float, y)
@@ -24389,19 +24430,14 @@ class SegmentParent(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        segments=None,
-        fraction_along="1",
-        gds_collector_=None,
-        **kwargs_
+        self, segments=None, fraction_along="1", gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SegmentParent"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("SegmentParent"), self).__init__(**kwargs_)
         self.segments = _cast(int, segments)
         self.segments_nsprefix_ = None
         self.fraction_along = _cast(float, fraction_along)
@@ -24615,6 +24651,13 @@ class Segment(BaseNonNegativeIntegerId):
     member_data_items_ = [
         MemberSpec_("name", "xs:string", 0, 1, {"use": "optional", "name": "name"}),
         MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
+        MemberSpec_(
             "parent",
             "SegmentParent",
             0,
@@ -24644,9 +24687,9 @@ class Segment(BaseNonNegativeIntegerId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         name=None,
+        neuro_lex_id=None,
         parent=None,
         proximal=None,
         distal=None,
@@ -24658,9 +24701,11 @@ class Segment(BaseNonNegativeIntegerId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Segment"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("Segment"), self).__init__(id, **kwargs_)
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         self.parent = parent
         self.parent_nsprefix_ = None
         self.proximal = proximal
@@ -24679,6 +24724,36 @@ class Segment(BaseNonNegativeIntegerId):
             return Segment(*args_, **kwargs_)
 
     factory = staticmethod(factory)
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if (
@@ -24753,6 +24828,18 @@ class Segment(BaseNonNegativeIntegerId):
                     self.gds_encode(
                         self.gds_format_string(
                             quote_attrib(self.name), input_name="name"
+                        )
+                    ),
+                )
+            )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
                         )
                     ),
                 )
@@ -24841,6 +24928,11 @@ class Segment(BaseNonNegativeIntegerId):
         if value is not None and "name" not in already_processed:
             already_processed.add("name")
             self.name = value
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         super(Segment, self)._buildAttributes(node, attrs, already_processed)
 
     def _buildChildren(
@@ -25026,7 +25118,6 @@ class Morphology(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -25043,7 +25134,7 @@ class Morphology(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Morphology"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         if segments is None:
             self.segments = []
@@ -25232,18 +25323,26 @@ class BaseCell(Standalone):
     """BaseCell -- Base type of any cell ( e. g. point neuron like  **izhikevich2007Cell** , or a morphologically detailed  **Cell**  with  **segment** s ) which can be used in a  **population**"""
 
     __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = []
+    member_data_items_ = [
+        MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
+    ]
     subclass = None
     superclass = Standalone
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -25254,15 +25353,10 @@ class BaseCell(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseCell"), self).__init__(
-            neuro_lex_id,
-            id,
-            metaid,
-            notes,
-            properties,
-            annotation,
-            extensiontype_,
-            **kwargs_
+            id, metaid, notes, properties, annotation, extensiontype_, **kwargs_
         )
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         self.extensiontype_ = extensiontype_
 
     def factory(*args_, **kwargs_):
@@ -25276,6 +25370,36 @@ class BaseCell(Standalone):
             return BaseCell(*args_, **kwargs_)
 
     factory = staticmethod(factory)
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if super(BaseCell, self)._hasContent():
@@ -25337,6 +25461,18 @@ class BaseCell(Standalone):
         super(BaseCell, self)._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="BaseCell"
         )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
+                        )
+                    ),
+                )
+            )
         if self.extensiontype_ is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -25383,6 +25519,11 @@ class BaseCell(Standalone):
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         value = find_attr_value_("xsi:type", node)
         if value is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
@@ -25424,7 +25565,6 @@ class PlasticityMechanism(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         type=None,
         init_release_prob=None,
         tau_rec=None,
@@ -25437,9 +25577,7 @@ class PlasticityMechanism(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("PlasticityMechanism"), self).__init__(
-            neuro_lex_id, **kwargs_
-        )
+        super(globals().get("PlasticityMechanism"), self).__init__(**kwargs_)
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.init_release_prob = _cast(float, init_release_prob)
@@ -25782,7 +25920,6 @@ class BlockMechanism(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         type=None,
         species=None,
         block_concentration=None,
@@ -25796,7 +25933,7 @@ class BlockMechanism(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("BlockMechanism"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("BlockMechanism"), self).__init__(**kwargs_)
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.species = _cast(None, species)
@@ -26151,18 +26288,26 @@ class BaseSynapse(Standalone):
     """BaseSynapse -- Base type for all synapses, i. e. ComponentTypes which produce a current ( dimension current ) and change Dynamics in response to an incoming event. cno_0000009"""
 
     __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = []
+    member_data_items_ = [
+        MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
+    ]
     subclass = None
     superclass = Standalone
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -26173,15 +26318,10 @@ class BaseSynapse(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseSynapse"), self).__init__(
-            neuro_lex_id,
-            id,
-            metaid,
-            notes,
-            properties,
-            annotation,
-            extensiontype_,
-            **kwargs_
+            id, metaid, notes, properties, annotation, extensiontype_, **kwargs_
         )
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         self.extensiontype_ = extensiontype_
 
     def factory(*args_, **kwargs_):
@@ -26195,6 +26335,36 @@ class BaseSynapse(Standalone):
             return BaseSynapse(*args_, **kwargs_)
 
     factory = staticmethod(factory)
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if super(BaseSynapse, self)._hasContent():
@@ -26261,6 +26431,18 @@ class BaseSynapse(Standalone):
         super(BaseSynapse, self)._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="BaseSynapse"
         )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
+                        )
+                    ),
+                )
+            )
         if self.extensiontype_ is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -26307,6 +26489,11 @@ class BaseSynapse(Standalone):
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         value = find_attr_value_("xsi:type", node)
         if value is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
@@ -26361,7 +26548,6 @@ class FixedFactorConcentrationModel(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -26380,7 +26566,7 @@ class FixedFactorConcentrationModel(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("FixedFactorConcentrationModel"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
@@ -26775,7 +26961,6 @@ class DecayingPoolConcentrationModel(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -26795,14 +26980,7 @@ class DecayingPoolConcentrationModel(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("DecayingPoolConcentrationModel"), self).__init__(
-            neuro_lex_id,
-            id,
-            metaid,
-            notes,
-            properties,
-            annotation,
-            extensiontype_,
-            **kwargs_
+            id, metaid, notes, properties, annotation, extensiontype_, **kwargs_
         )
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
@@ -27204,7 +27382,6 @@ class HHTime(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         type=None,
         rate=None,
         midpoint=None,
@@ -27218,7 +27395,7 @@ class HHTime(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("HHTime"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("HHTime"), self).__init__(**kwargs_)
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.rate = _cast(None, rate)
@@ -27552,7 +27729,6 @@ class HHVariable(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         type=None,
         rate=None,
         midpoint=None,
@@ -27565,7 +27741,7 @@ class HHVariable(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("HHVariable"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("HHVariable"), self).__init__(**kwargs_)
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.rate = _cast(float, rate)
@@ -27843,7 +28019,6 @@ class HHRate(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         type=None,
         rate=None,
         midpoint=None,
@@ -27856,7 +28031,7 @@ class HHRate(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("HHRate"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("HHRate"), self).__init__(**kwargs_)
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.rate = _cast(None, rate)
@@ -28200,7 +28375,6 @@ class GateFractionalSubgate(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         fractional_conductance=None,
         notes=None,
@@ -28215,9 +28389,7 @@ class GateFractionalSubgate(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateFractionalSubgate"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("GateFractionalSubgate"), self).__init__(id, **kwargs_)
         self.fractional_conductance = _cast(None, fractional_conductance)
         self.fractional_conductance_nsprefix_ = None
         self.notes = notes
@@ -28587,7 +28759,6 @@ class GateFractional(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         notes=None,
@@ -28601,9 +28772,7 @@ class GateFractional(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateFractional"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("GateFractional"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -28908,7 +29077,6 @@ class GateHHInstantaneous(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         notes=None,
@@ -28921,9 +29089,7 @@ class GateHHInstantaneous(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHInstantaneous"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("GateHHInstantaneous"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -29239,7 +29405,6 @@ class GateHHRatesInf(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         notes=None,
@@ -29255,9 +29420,7 @@ class GateHHRatesInf(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHRatesInf"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("GateHHRatesInf"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -29627,7 +29790,6 @@ class GateHHRatesTau(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         notes=None,
@@ -29643,9 +29805,7 @@ class GateHHRatesTau(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHRatesTau"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("GateHHRatesTau"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -30023,7 +30183,6 @@ class GateHHRatesTauInf(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         notes=None,
@@ -30040,9 +30199,7 @@ class GateHHRatesTauInf(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHRatesTauInf"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("GateHHRatesTauInf"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -30434,7 +30591,6 @@ class GateHHTauInf(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         notes=None,
@@ -30449,7 +30605,7 @@ class GateHHTauInf(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHTauInf"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("GateHHTauInf"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -30789,7 +30945,6 @@ class GateHHRates(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         notes=None,
@@ -30804,7 +30959,7 @@ class GateHHRates(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHRates"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("GateHHRates"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -31169,7 +31324,6 @@ class GateHHUndetermined(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         type=None,
@@ -31188,9 +31342,7 @@ class GateHHUndetermined(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHUndetermined"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("GateHHUndetermined"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.type = _cast(None, type)
@@ -31698,7 +31850,6 @@ class GateKS(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         notes=None,
@@ -31716,7 +31867,7 @@ class GateKS(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateKS"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("GateKS"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -32106,7 +32257,6 @@ class TauInfTransition(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         from_=None,
         to=None,
@@ -32120,9 +32270,7 @@ class TauInfTransition(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("TauInfTransition"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("TauInfTransition"), self).__init__(id, **kwargs_)
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
         self.to = _cast(None, to)
@@ -32391,7 +32539,6 @@ class ReverseTransition(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         from_=None,
         to=None,
@@ -32404,9 +32551,7 @@ class ReverseTransition(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ReverseTransition"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("ReverseTransition"), self).__init__(id, **kwargs_)
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
         self.to = _cast(None, to)
@@ -32640,7 +32785,6 @@ class ForwardTransition(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         from_=None,
         to=None,
@@ -32653,9 +32797,7 @@ class ForwardTransition(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ForwardTransition"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("ForwardTransition"), self).__init__(id, **kwargs_)
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
         self.to = _cast(None, to)
@@ -32881,13 +33023,13 @@ class OpenState(Base):
     subclass = None
     superclass = Base
 
-    def __init__(self, neuro_lex_id=None, id=None, gds_collector_=None, **kwargs_):
+    def __init__(self, id=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("OpenState"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("OpenState"), self).__init__(id, **kwargs_)
 
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -33020,13 +33162,13 @@ class ClosedState(Base):
     subclass = None
     superclass = Base
 
-    def __init__(self, neuro_lex_id=None, id=None, gds_collector_=None, **kwargs_):
+    def __init__(self, id=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ClosedState"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("ClosedState"), self).__init__(id, **kwargs_)
 
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -33182,21 +33324,14 @@ class Q10ConductanceScaling(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        q10_factor=None,
-        experimental_temp=None,
-        gds_collector_=None,
-        **kwargs_
+        self, q10_factor=None, experimental_temp=None, gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Q10ConductanceScaling"), self).__init__(
-            neuro_lex_id, **kwargs_
-        )
+        super(globals().get("Q10ConductanceScaling"), self).__init__(**kwargs_)
         self.q10_factor = _cast(None, q10_factor)
         self.q10_factor_nsprefix_ = None
         self.experimental_temp = _cast(None, experimental_temp)
@@ -33463,6 +33598,13 @@ class IonChannelKS(Standalone):
             {"use": "optional", "name": "conductance"},
         ),
         MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
+        MemberSpec_(
             "gate_kses",
             "GateKS",
             1,
@@ -33481,7 +33623,6 @@ class IonChannelKS(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -33489,6 +33630,7 @@ class IonChannelKS(Standalone):
         annotation=None,
         species=None,
         conductance=None,
+        neuro_lex_id=None,
         gate_kses=None,
         gds_collector_=None,
         **kwargs_
@@ -33499,12 +33641,14 @@ class IonChannelKS(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannelKS"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.species = _cast(None, species)
         self.species_nsprefix_ = None
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         if gate_kses is None:
             self.gate_kses = []
         else:
@@ -33584,6 +33728,36 @@ class IonChannelKS(Standalone):
     validate_Nml2Quantity_conductance_patterns_ = [
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS))$"]
     ]
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if self.gate_kses or super(IonChannelKS, self)._hasContent():
@@ -33674,6 +33848,18 @@ class IonChannelKS(Standalone):
                     ),
                 )
             )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
+                        )
+                    ),
+                )
+            )
 
     def _exportChildren(
         self,
@@ -33738,6 +33924,11 @@ class IonChannelKS(Standalone):
             self.validate_Nml2Quantity_conductance(
                 self.conductance
             )  # validate type Nml2Quantity_conductance
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         super(IonChannelKS, self)._buildAttributes(node, attrs, already_processed)
 
     def _buildChildren(
@@ -33758,6 +33949,13 @@ class IonChannelScalable(Standalone):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
+        MemberSpec_(
             "q10_conductance_scalings",
             "Q10ConductanceScaling",
             1,
@@ -33776,12 +33974,12 @@ class IonChannelScalable(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         q10_conductance_scalings=None,
         extensiontype_=None,
         gds_collector_=None,
@@ -33793,15 +33991,10 @@ class IonChannelScalable(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannelScalable"), self).__init__(
-            neuro_lex_id,
-            id,
-            metaid,
-            notes,
-            properties,
-            annotation,
-            extensiontype_,
-            **kwargs_
+            id, metaid, notes, properties, annotation, extensiontype_, **kwargs_
         )
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         if q10_conductance_scalings is None:
             self.q10_conductance_scalings = []
         else:
@@ -33822,6 +34015,36 @@ class IonChannelScalable(Standalone):
             return IonChannelScalable(*args_, **kwargs_)
 
     factory = staticmethod(factory)
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if (
@@ -33899,6 +34122,18 @@ class IonChannelScalable(Standalone):
             namespaceprefix_,
             name_="IonChannelScalable",
         )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
+                        )
+                    ),
+                )
+            )
         if self.extensiontype_ is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -33963,6 +34198,11 @@ class IonChannelScalable(Standalone):
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         value = find_attr_value_("xsi:type", node)
         if value is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
@@ -34863,7 +35103,6 @@ class NeuroMLDocument(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -34945,7 +35184,7 @@ class NeuroMLDocument(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("NeuroMLDocument"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         if includes is None:
             self.includes = []
@@ -37072,7 +37311,6 @@ class NamedDimensionalVariable(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         name=None,
         dimension=None,
         description=None,
@@ -37087,7 +37325,7 @@ class NamedDimensionalVariable(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("NamedDimensionalVariable"), self).__init__(
-            neuro_lex_id, extensiontype_, **kwargs_
+            extensiontype_, **kwargs_
         )
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
@@ -37332,7 +37570,6 @@ class NamedDimensionalType(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         name=None,
         dimension=None,
         description=None,
@@ -37346,7 +37583,7 @@ class NamedDimensionalType(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("NamedDimensionalType"), self).__init__(
-            neuro_lex_id, extensiontype_, **kwargs_
+            extensiontype_, **kwargs_
         )
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
@@ -37573,7 +37810,6 @@ class Exposure(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         name=None,
         dimension=None,
         description=None,
@@ -37585,7 +37821,7 @@ class Exposure(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Exposure"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("Exposure"), self).__init__(**kwargs_)
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
         self.dimension = _cast(None, dimension)
@@ -37780,7 +38016,6 @@ class Constant(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         name=None,
         dimension=None,
         value=None,
@@ -37793,7 +38028,7 @@ class Constant(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Constant"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("Constant"), self).__init__(**kwargs_)
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
         self.dimension = _cast(None, dimension)
@@ -38035,15 +38270,13 @@ class Annotation(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(
-        self, neuro_lex_id=None, anytypeobjs_=None, gds_collector_=None, **kwargs_
-    ):
+    def __init__(self, anytypeobjs_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Annotation"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("Annotation"), self).__init__(**kwargs_)
         if anytypeobjs_ is None:
             self.anytypeobjs_ = []
         else:
@@ -38188,15 +38421,13 @@ class Property(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(
-        self, neuro_lex_id=None, tag=None, value=None, gds_collector_=None, **kwargs_
-    ):
+    def __init__(self, tag=None, value=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Property"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("Property"), self).__init__(**kwargs_)
         self.tag = _cast(None, tag)
         self.tag_nsprefix_ = None
         self.value = _cast(None, value)
@@ -38369,12 +38600,12 @@ class BasePynnSynapse(BaseSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         tau_syn=None,
         extensiontype_=None,
         gds_collector_=None,
@@ -38386,12 +38617,12 @@ class BasePynnSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BasePynnSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -38584,12 +38815,12 @@ class basePyNNCell(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -38605,12 +38836,12 @@ class basePyNNCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("basePyNNCell"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -38833,7 +39064,6 @@ class InputW(Input):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         target=None,
         destination=None,
@@ -38849,7 +39079,7 @@ class InputW(Input):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("InputW"), self).__init__(
-            neuro_lex_id, id, target, destination, segment_id, fraction_along, **kwargs_
+            id, target, destination, segment_id, fraction_along, **kwargs_
         )
         self.weight = _cast(float, weight)
         self.weight_nsprefix_ = None
@@ -39054,7 +39284,6 @@ class ContinuousProjection(BaseProjection):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         presynaptic_population=None,
         postsynaptic_population=None,
@@ -39070,7 +39299,7 @@ class ContinuousProjection(BaseProjection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ContinuousProjection"), self).__init__(
-            neuro_lex_id, id, presynaptic_population, postsynaptic_population, **kwargs_
+            id, presynaptic_population, postsynaptic_population, **kwargs_
         )
         if continuous_connections is None:
             self.continuous_connections = []
@@ -39432,7 +39661,6 @@ class ElectricalProjection(BaseProjection):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         presynaptic_population=None,
         postsynaptic_population=None,
@@ -39448,7 +39676,7 @@ class ElectricalProjection(BaseProjection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ElectricalProjection"), self).__init__(
-            neuro_lex_id, id, presynaptic_population, postsynaptic_population, **kwargs_
+            id, presynaptic_population, postsynaptic_population, **kwargs_
         )
         if electrical_connections is None:
             self.electrical_connections = []
@@ -39800,8 +40028,8 @@ class BaseConnectionNewFormat(BaseConnection):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell=None,
         pre_segment="0",
         pre_fraction_along="0.5",
@@ -39818,7 +40046,7 @@ class BaseConnectionNewFormat(BaseConnection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConnectionNewFormat"), self).__init__(
-            neuro_lex_id, id, extensiontype_, **kwargs_
+            id, neuro_lex_id, extensiontype_, **kwargs_
         )
         self.pre_cell = _cast(None, pre_cell)
         self.pre_cell_nsprefix_ = None
@@ -40186,8 +40414,8 @@ class BaseConnectionOldFormat(BaseConnection):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell_id=None,
         pre_segment_id="0",
         pre_fraction_along="0.5",
@@ -40204,7 +40432,7 @@ class BaseConnectionOldFormat(BaseConnection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConnectionOldFormat"), self).__init__(
-            neuro_lex_id, id, extensiontype_, **kwargs_
+            id, neuro_lex_id, extensiontype_, **kwargs_
         )
         self.pre_cell_id = _cast(None, pre_cell_id)
         self.pre_cell_id_nsprefix_ = None
@@ -40562,7 +40790,6 @@ class Projection(BaseProjection):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         presynaptic_population=None,
         postsynaptic_population=None,
@@ -40578,7 +40805,7 @@ class Projection(BaseProjection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Projection"), self).__init__(
-            neuro_lex_id, id, presynaptic_population, postsynaptic_population, **kwargs_
+            id, presynaptic_population, postsynaptic_population, **kwargs_
         )
         self.synapse = _cast(None, synapse)
         self.synapse_nsprefix_ = None
@@ -40929,7 +41156,6 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -40946,14 +41172,7 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeGeneratorRefPoisson"), self).__init__(
-            neuro_lex_id,
-            id,
-            metaid,
-            notes,
-            properties,
-            annotation,
-            average_rate,
-            **kwargs_
+            id, metaid, notes, properties, annotation, average_rate, **kwargs_
         )
         self.minimum_isi = _cast(None, minimum_isi)
         self.minimum_isi_nsprefix_ = None
@@ -41155,12 +41374,7 @@ class IntracellularProperties2CaPools(IntracellularProperties):
     superclass = IntracellularProperties
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        species=None,
-        resistivities=None,
-        gds_collector_=None,
-        **kwargs_
+        self, species=None, resistivities=None, gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -41168,7 +41382,7 @@ class IntracellularProperties2CaPools(IntracellularProperties):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IntracellularProperties2CaPools"), self).__init__(
-            neuro_lex_id, species, resistivities, **kwargs_
+            species, resistivities, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -41323,7 +41537,6 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -41343,7 +41556,6 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ConcentrationModel_D"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
@@ -41524,7 +41736,6 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         cond_density=None,
@@ -41541,7 +41752,6 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityNernstCa2"), self).__init__(
-            neuro_lex_id,
             id,
             ion_channel,
             cond_density,
@@ -41716,7 +41926,6 @@ class ChannelDensityVShift(ChannelDensity):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         cond_density=None,
@@ -41735,7 +41944,6 @@ class ChannelDensityVShift(ChannelDensity):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityVShift"), self).__init__(
-            neuro_lex_id,
             id,
             ion_channel,
             cond_density,
@@ -41959,7 +42167,6 @@ class MembraneProperties2CaPools(MembraneProperties):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         channel_populations=None,
         channel_densities=None,
         channel_density_v_shifts=None,
@@ -41982,7 +42189,6 @@ class MembraneProperties2CaPools(MembraneProperties):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("MembraneProperties2CaPools"), self).__init__(
-            neuro_lex_id,
             channel_populations,
             channel_densities,
             channel_density_v_shifts,
@@ -42210,12 +42416,12 @@ class Cell(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         morphology_attr=None,
         biophysical_properties_attr=None,
         morphology=None,
@@ -42230,12 +42436,12 @@ class Cell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Cell"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -43065,12 +43271,12 @@ class PinskyRinzelCA3Cell(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         i_soma=None,
         i_dend=None,
         gc=None,
@@ -43101,7 +43307,7 @@ class PinskyRinzelCA3Cell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("PinskyRinzelCA3Cell"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.i_soma = _cast(None, i_soma)
         self.i_soma_nsprefix_ = None
@@ -43862,12 +44068,12 @@ class FitzHughNagumo1969Cell(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         a=None,
         b=None,
         I=None,
@@ -43883,7 +44089,7 @@ class FitzHughNagumo1969Cell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("FitzHughNagumo1969Cell"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.a = _cast(None, a)
         self.a_nsprefix_ = None
@@ -44174,12 +44380,12 @@ class FitzHughNagumoCell(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         I=None,
         gds_collector_=None,
         **kwargs_
@@ -44190,7 +44396,7 @@ class FitzHughNagumoCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("FitzHughNagumoCell"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.I = _cast(None, I)
         self.I_nsprefix_ = None
@@ -44394,12 +44600,12 @@ class BaseCellMembPotCap(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         C=None,
         extensiontype_=None,
         gds_collector_=None,
@@ -44411,12 +44617,12 @@ class BaseCellMembPotCap(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseCellMembPotCap"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -44662,12 +44868,12 @@ class IzhikevichCell(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         v0=None,
         thresh=None,
         a=None,
@@ -44683,7 +44889,7 @@ class IzhikevichCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IzhikevichCell"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.v0 = _cast(None, v0)
         self.v0_nsprefix_ = None
@@ -45032,12 +45238,12 @@ class IafCell(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         leak_reversal=None,
         thresh=None,
         reset=None,
@@ -45053,12 +45259,12 @@ class IafCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IafCell"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -45443,12 +45649,12 @@ class IafTauCell(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         leak_reversal=None,
         thresh=None,
         reset=None,
@@ -45463,12 +45669,12 @@ class IafTauCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IafTauCell"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -45795,12 +46001,12 @@ class GradedSynapse(BaseSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         conductance=None,
         delta=None,
         Vth=None,
@@ -45815,7 +46021,7 @@ class GradedSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("GradedSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
@@ -46161,12 +46367,12 @@ class LinearGradedSynapse(BaseSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         conductance=None,
         gds_collector_=None,
         **kwargs_
@@ -46177,7 +46383,7 @@ class LinearGradedSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("LinearGradedSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
@@ -46378,12 +46584,12 @@ class SilentSynapse(BaseSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -46393,7 +46599,7 @@ class SilentSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SilentSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -46542,12 +46748,12 @@ class GapJunction(BaseSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         conductance=None,
         gds_collector_=None,
         **kwargs_
@@ -46558,7 +46764,7 @@ class GapJunction(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("GapJunction"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
@@ -46747,12 +46953,12 @@ class BaseCurrentBasedSynapse(BaseSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -46763,12 +46969,12 @@ class BaseCurrentBasedSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseCurrentBasedSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -46937,12 +47143,12 @@ class BaseVoltageDepSynapse(BaseSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -46953,12 +47159,12 @@ class BaseVoltageDepSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseVoltageDepSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -47244,12 +47450,12 @@ class IonChannel(IonChannelScalable):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         q10_conductance_scalings=None,
         species=None,
         type=None,
@@ -47272,12 +47478,12 @@ class IonChannel(IonChannelScalable):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannel"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             q10_conductance_scalings,
             extensiontype_,
             **kwargs_
@@ -47795,7 +48001,6 @@ class ConditionalDerivedVariable(NamedDimensionalVariable):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         name=None,
         dimension=None,
         description=None,
@@ -47810,7 +48015,7 @@ class ConditionalDerivedVariable(NamedDimensionalVariable):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ConditionalDerivedVariable"), self).__init__(
-            neuro_lex_id, name, dimension, description, exposure, **kwargs_
+            name, dimension, description, exposure, **kwargs_
         )
         if Case is None:
             self.Case = []
@@ -47985,7 +48190,6 @@ class StateVariable(NamedDimensionalVariable):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         name=None,
         dimension=None,
         description=None,
@@ -47999,7 +48203,7 @@ class StateVariable(NamedDimensionalVariable):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("StateVariable"), self).__init__(
-            neuro_lex_id, name, dimension, description, exposure, **kwargs_
+            name, dimension, description, exposure, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -48138,7 +48342,6 @@ class DerivedVariable(NamedDimensionalVariable):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         name=None,
         dimension=None,
         description=None,
@@ -48154,7 +48357,7 @@ class DerivedVariable(NamedDimensionalVariable):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("DerivedVariable"), self).__init__(
-            neuro_lex_id, name, dimension, description, exposure, **kwargs_
+            name, dimension, description, exposure, **kwargs_
         )
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
@@ -48324,7 +48527,6 @@ class Requirement(NamedDimensionalType):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         name=None,
         dimension=None,
         description=None,
@@ -48337,7 +48539,7 @@ class Requirement(NamedDimensionalType):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Requirement"), self).__init__(
-            neuro_lex_id, name, dimension, description, **kwargs_
+            name, dimension, description, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -48479,7 +48681,6 @@ class LEMS_Property(NamedDimensionalType):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         name=None,
         dimension=None,
         description=None,
@@ -48493,7 +48694,7 @@ class LEMS_Property(NamedDimensionalType):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("LEMS_Property"), self).__init__(
-            neuro_lex_id, name, dimension, description, **kwargs_
+            name, dimension, description, **kwargs_
         )
         self.default_value = _cast(float, default_value)
         self.default_value_nsprefix_ = None
@@ -48640,7 +48841,6 @@ class Parameter(NamedDimensionalType):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         name=None,
         dimension=None,
         description=None,
@@ -48653,7 +48853,7 @@ class Parameter(NamedDimensionalType):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Parameter"), self).__init__(
-            neuro_lex_id, name, dimension, description, **kwargs_
+            name, dimension, description, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -48789,12 +48989,12 @@ class AlphaCurrSynapse(BasePynnSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         tau_syn=None,
         gds_collector_=None,
         **kwargs_
@@ -48805,7 +49005,7 @@ class AlphaCurrSynapse(BasePynnSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AlphaCurrSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, tau_syn, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -48954,12 +49154,12 @@ class ExpCurrSynapse(BasePynnSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         tau_syn=None,
         gds_collector_=None,
         **kwargs_
@@ -48970,7 +49170,7 @@ class ExpCurrSynapse(BasePynnSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpCurrSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, tau_syn, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -49115,12 +49315,12 @@ class AlphaCondSynapse(BasePynnSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         tau_syn=None,
         e_rev=None,
         gds_collector_=None,
@@ -49132,7 +49332,7 @@ class AlphaCondSynapse(BasePynnSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AlphaCondSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, tau_syn, **kwargs_
         )
         self.e_rev = _cast(float, e_rev)
         self.e_rev_nsprefix_ = None
@@ -49297,12 +49497,12 @@ class ExpCondSynapse(BasePynnSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         tau_syn=None,
         e_rev=None,
         gds_collector_=None,
@@ -49314,7 +49514,7 @@ class ExpCondSynapse(BasePynnSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpCondSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, tau_syn, **kwargs_
         )
         self.e_rev = _cast(float, e_rev)
         self.e_rev_nsprefix_ = None
@@ -49517,12 +49717,12 @@ class HH_cond_exp(basePyNNCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -49546,12 +49746,12 @@ class HH_cond_exp(basePyNNCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("HH_cond_exp"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,
@@ -49843,12 +50043,12 @@ class basePyNNIaFCell(basePyNNCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -49869,12 +50069,12 @@ class basePyNNIaFCell(basePyNNCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("basePyNNIaFCell"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,
@@ -50108,8 +50308,8 @@ class ContinuousConnection(BaseConnectionNewFormat):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell=None,
         pre_segment="0",
         pre_fraction_along="0.5",
@@ -50128,8 +50328,8 @@ class ContinuousConnection(BaseConnectionNewFormat):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ContinuousConnection"), self).__init__(
-            neuro_lex_id,
             id,
+            neuro_lex_id,
             pre_cell,
             pre_segment,
             pre_fraction_along,
@@ -50465,8 +50665,8 @@ class ElectricalConnection(BaseConnectionNewFormat):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell=None,
         pre_segment="0",
         pre_fraction_along="0.5",
@@ -50484,8 +50684,8 @@ class ElectricalConnection(BaseConnectionNewFormat):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ElectricalConnection"), self).__init__(
-            neuro_lex_id,
             id,
+            neuro_lex_id,
             pre_cell,
             pre_segment,
             pre_fraction_along,
@@ -50806,8 +51006,8 @@ class ConnectionWD(BaseConnectionOldFormat):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell_id=None,
         pre_segment_id="0",
         pre_fraction_along="0.5",
@@ -50825,8 +51025,8 @@ class ConnectionWD(BaseConnectionOldFormat):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ConnectionWD"), self).__init__(
-            neuro_lex_id,
             id,
+            neuro_lex_id,
             pre_cell_id,
             pre_segment_id,
             pre_fraction_along,
@@ -51149,8 +51349,8 @@ class Connection(BaseConnectionOldFormat):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell_id=None,
         pre_segment_id="0",
         pre_fraction_along="0.5",
@@ -51166,8 +51366,8 @@ class Connection(BaseConnectionOldFormat):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Connection"), self).__init__(
-            neuro_lex_id,
             id,
+            neuro_lex_id,
             pre_cell_id,
             pre_segment_id,
             pre_fraction_along,
@@ -51406,12 +51606,12 @@ class Cell2CaPools(Cell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         morphology_attr=None,
         biophysical_properties_attr=None,
         morphology=None,
@@ -51426,12 +51626,12 @@ class Cell2CaPools(Cell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Cell2CaPools"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             morphology_attr,
             biophysical_properties_attr,
             morphology,
@@ -51659,12 +51859,12 @@ class AdExIaFCell(BaseCellMembPotCap):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         C=None,
         g_l=None,
         EL=None,
@@ -51685,7 +51885,7 @@ class AdExIaFCell(BaseCellMembPotCap):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AdExIaFCell"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, C, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, C, **kwargs_
         )
         self.g_l = _cast(None, g_l)
         self.g_l_nsprefix_ = None
@@ -52204,12 +52404,12 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         C=None,
         v0=None,
         k=None,
@@ -52229,7 +52429,7 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Izhikevich2007Cell"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, C, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, C, **kwargs_
         )
         self.v0 = _cast(None, v0)
         self.v0_nsprefix_ = None
@@ -52727,12 +52927,12 @@ class IafRefCell(IafCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         leak_reversal=None,
         thresh=None,
         reset=None,
@@ -52748,12 +52948,12 @@ class IafRefCell(IafCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IafRefCell"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             leak_reversal,
             thresh,
             reset,
@@ -52960,12 +53160,12 @@ class IafTauRefCell(IafTauCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         leak_reversal=None,
         thresh=None,
         reset=None,
@@ -52980,12 +53180,12 @@ class IafTauRefCell(IafTauCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IafTauRefCell"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             leak_reversal,
             thresh,
             reset,
@@ -53196,12 +53396,12 @@ class DoubleSynapse(BaseVoltageDepSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         synapse1=None,
         synapse2=None,
         synapse1_path=None,
@@ -53215,7 +53415,7 @@ class DoubleSynapse(BaseVoltageDepSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("DoubleSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.synapse1 = _cast(None, synapse1)
         self.synapse1_nsprefix_ = None
@@ -53469,12 +53669,12 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         tau=None,
         ibase=None,
         gds_collector_=None,
@@ -53486,7 +53686,7 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AlphaCurrentSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.tau = _cast(None, tau)
         self.tau_nsprefix_ = None
@@ -53763,12 +53963,12 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         gbase1=None,
         gbase2=None,
         erev=None,
@@ -53782,12 +53982,12 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConductanceBasedSynapseTwo"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -54106,12 +54306,12 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         gbase=None,
         erev=None,
         extensiontype_=None,
@@ -54124,12 +54324,12 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConductanceBasedSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -54422,12 +54622,12 @@ class IonChannelVShift(IonChannel):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         q10_conductance_scalings=None,
         species=None,
         type=None,
@@ -54450,12 +54650,12 @@ class IonChannelVShift(IonChannel):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannelVShift"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             q10_conductance_scalings,
             species,
             type,
@@ -54670,12 +54870,12 @@ class IonChannelHH(IonChannel):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         q10_conductance_scalings=None,
         species=None,
         type=None,
@@ -54697,12 +54897,12 @@ class IonChannelHH(IonChannel):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannelHH"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             q10_conductance_scalings,
             species,
             type,
@@ -54874,12 +55074,12 @@ class IF_curr_exp(basePyNNIaFCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -54899,12 +55099,12 @@ class IF_curr_exp(basePyNNIaFCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IF_curr_exp"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,
@@ -55074,12 +55274,12 @@ class IF_curr_alpha(basePyNNIaFCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -55099,12 +55299,12 @@ class IF_curr_alpha(basePyNNIaFCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IF_curr_alpha"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,
@@ -55285,12 +55485,12 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -55313,12 +55513,12 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("basePyNNIaFCondCell"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,
@@ -55521,8 +55721,8 @@ class ContinuousConnectionInstance(ContinuousConnection):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell=None,
         pre_segment="0",
         pre_fraction_along="0.5",
@@ -55541,8 +55741,8 @@ class ContinuousConnectionInstance(ContinuousConnection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ContinuousConnectionInstance"), self).__init__(
-            neuro_lex_id,
             id,
+            neuro_lex_id,
             pre_cell,
             pre_segment,
             pre_fraction_along,
@@ -55742,8 +55942,8 @@ class ElectricalConnectionInstance(ElectricalConnection):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell=None,
         pre_segment="0",
         pre_fraction_along="0.5",
@@ -55761,8 +55961,8 @@ class ElectricalConnectionInstance(ElectricalConnection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ElectricalConnectionInstance"), self).__init__(
-            neuro_lex_id,
             id,
+            neuro_lex_id,
             pre_cell,
             pre_segment,
             pre_fraction_along,
@@ -55996,12 +56196,12 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         gbase1=None,
         gbase2=None,
         erev=None,
@@ -56017,12 +56217,12 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpThreeSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             gbase1,
             gbase2,
             erev,
@@ -56283,12 +56483,12 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         gbase=None,
         erev=None,
         tau_decay=None,
@@ -56303,12 +56503,12 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpTwoSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             gbase,
             erev,
             extensiontype_,
@@ -56556,12 +56756,12 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         gbase=None,
         erev=None,
         tau_decay=None,
@@ -56574,12 +56774,12 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpOneSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             gbase,
             erev,
             **kwargs_
@@ -56784,12 +56984,12 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         gbase=None,
         erev=None,
         tau=None,
@@ -56802,12 +57002,12 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AlphaSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             gbase,
             erev,
             **kwargs_
@@ -57042,12 +57242,12 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -57075,12 +57275,12 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("EIF_cond_exp_isfa_ista"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,
@@ -57314,7 +57514,8 @@ class IF_cond_exp(basePyNNIaFCondCell):
     \n
     :param e_rev_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_E: none
-    :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
+    :par
+    am e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
     :param tau_refrac:
     :type tau_refrac: none
@@ -57333,8 +57534,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
     :param tau_syn_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type tau_syn_E: none
     :param tau_syn_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
-    :type ta
-    u_syn_I: none
+    :type tau_syn_I: none
     :param v_init:
     :type v_init: none
 
@@ -57347,12 +57547,12 @@ class IF_cond_exp(basePyNNIaFCondCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -57374,12 +57574,12 @@ class IF_cond_exp(basePyNNIaFCondCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IF_cond_exp"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,
@@ -57555,12 +57755,12 @@ class IF_cond_alpha(basePyNNIaFCondCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -57582,12 +57782,12 @@ class IF_cond_alpha(basePyNNIaFCondCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IF_cond_alpha"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,
@@ -57743,8 +57943,8 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell=None,
         pre_segment="0",
         pre_fraction_along="0.5",
@@ -57763,8 +57963,8 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ContinuousConnectionInstanceW"), self).__init__(
-            neuro_lex_id,
             id,
+            neuro_lex_id,
             pre_cell,
             pre_segment,
             pre_fraction_along,
@@ -57969,8 +58169,8 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell=None,
         pre_segment="0",
         pre_fraction_along="0.5",
@@ -57988,8 +58188,8 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ElectricalConnectionInstanceW"), self).__init__(
-            neuro_lex_id,
             id,
+            neuro_lex_id,
             pre_cell,
             pre_segment,
             pre_fraction_along,
@@ -58220,12 +58420,12 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         gbase=None,
         erev=None,
         tau_decay=None,
@@ -58241,12 +58441,12 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BlockingPlasticSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             gbase,
             erev,
             tau_decay,
@@ -58487,12 +58687,12 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -58519,12 +58719,12 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("EIF_cond_alpha_isfa_ista"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,

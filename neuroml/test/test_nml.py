@@ -32,8 +32,6 @@ class TestNML(unittest.TestCase):
         for m in base_members:
             member_names.append(m.get_name())
 
-        # From parent: baseWithoutId
-        self.assertIn("neuro_lex_id", member_names)
         # From itself
         self.assertIn("id", member_names)
         # Not in here:
