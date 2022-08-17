@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Aug 17 15:53:40 2022 by generateDS.py version 2.40.13.
+# Generated Wed Aug 17 16:17:56 2022 by generateDS.py version 2.40.13.
 # Python 3.10.6 (main, Aug  2 2022, 00:00:00) [GCC 12.1.1 20220507 (Red Hat 12.1.1-1)]
 #
 # Command line options:
@@ -9052,13 +9052,6 @@ class Network(Standalone):
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_(
-            "neuro_lex_id",
-            "NeuroLexId",
-            0,
-            1,
-            {"use": "optional", "name": "neuro_lex_id"},
-        ),
         MemberSpec_("type", "networkTypes", 0, 1, {"use": "optional", "name": "type"}),
         MemberSpec_(
             "temperature",
@@ -9066,6 +9059,13 @@ class Network(Standalone):
             0,
             1,
             {"use": "optional", "name": "temperature"},
+        ),
+        MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
         ),
         MemberSpec_(
             "spaces",
@@ -9216,9 +9216,9 @@ class Network(Standalone):
         notes=None,
         properties=None,
         annotation=None,
-        neuro_lex_id=None,
         type=None,
         temperature=None,
+        neuro_lex_id=None,
         spaces=None,
         regions=None,
         extracellular_properties=None,
@@ -9241,12 +9241,12 @@ class Network(Standalone):
         super(globals().get("Network"), self).__init__(
             id, metaid, notes, properties, annotation, **kwargs_
         )
-        self.neuro_lex_id = _cast(None, neuro_lex_id)
-        self.neuro_lex_id_nsprefix_ = None
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.temperature = _cast(None, temperature)
         self.temperature_nsprefix_ = None
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         if spaces is None:
             self.spaces = []
         else:
@@ -9315,36 +9315,6 @@ class Network(Standalone):
 
     factory = staticmethod(factory)
 
-    def validate_NeuroLexId(self, value):
-        # Validate type NeuroLexId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NeuroLexId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NeuroLexId_patterns_,
-                    )
-                )
-
-    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
-
     def validate_networkTypes(self, value):
         # Validate type networkTypes, a restriction on xs:string.
         if (
@@ -9403,6 +9373,36 @@ class Network(Standalone):
     validate_Nml2Quantity_temperature_patterns_ = [
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(degC))$"]
     ]
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if (
@@ -9477,18 +9477,6 @@ class Network(Standalone):
         super(Network, self)._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Network"
         )
-        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
-            already_processed.add("neuro_lex_id")
-            outfile.write(
-                " neuroLexId=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
-                        )
-                    ),
-                )
-            )
         if self.type is not None and "type" not in already_processed:
             already_processed.add("type")
             outfile.write(
@@ -9509,6 +9497,18 @@ class Network(Standalone):
                     self.gds_encode(
                         self.gds_format_string(
                             quote_attrib(self.temperature), input_name="temperature"
+                        )
+                    ),
+                )
+            )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
                         )
                     ),
                 )
@@ -9705,11 +9705,6 @@ class Network(Standalone):
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("neuroLexId", node)
-        if value is not None and "neuroLexId" not in already_processed:
-            already_processed.add("neuroLexId")
-            self.neuro_lex_id = value
-            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         value = find_attr_value_("type", node)
         if value is not None and "type" not in already_processed:
             already_processed.add("type")
@@ -9722,6 +9717,11 @@ class Network(Standalone):
             self.validate_Nml2Quantity_temperature(
                 self.temperature
             )  # validate type Nml2Quantity_temperature
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         super(Network, self)._buildAttributes(node, attrs, already_processed)
 
     def _buildChildren(
@@ -57514,8 +57514,8 @@ class IF_cond_exp(basePyNNIaFCondCell):
     \n
     :param e_rev_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_E: none
-    :par
-    am e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
+    :param e
+    _rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
     :param tau_refrac:
     :type tau_refrac: none
