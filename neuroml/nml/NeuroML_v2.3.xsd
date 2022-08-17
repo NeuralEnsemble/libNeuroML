@@ -1828,7 +1828,6 @@
     <xs:complexContent>
       <xs:extension base="Base">
         <xs:sequence>
-          <xs:attribute name="neuroLexId" type="NeuroLexId" use="optional"/>
           <xs:element name="notes" type="Notes" minOccurs="0"/>
           <xs:element name="property" type="Property" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element name="annotation" type="Annotation" minOccurs="0"/>
@@ -1838,6 +1837,7 @@
           <xs:element name="subTree" type="SubTree" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element name="inhomogeneousParameter" type="InhomogeneousParameter" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
+        <xs:attribute name="neuroLexId" type="NeuroLexId" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -2823,7 +2823,6 @@
     <xs:complexContent>
       <xs:extension base="Standalone">
         <xs:sequence>
-          <xs:attribute name="neuroLexId" type="NeuroLexId" use="optional"/>
           <xs:element name="space" type="Space" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element name="region" type="Region" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element name="extracellularProperties" type="ExtracellularPropertiesLocal" minOccurs="0" maxOccurs="unbounded"/>
@@ -2842,6 +2841,7 @@
         </xs:sequence>
         <xs:attribute name="type" type="networkTypes" use="optional"/>
         <xs:attribute name="temperature" type="Nml2Quantity_temperature" use="optional"/>
+        <xs:attribute name="neuroLexId" type="NeuroLexId" use="optional"/>
         <!-- TODO: put check that type=networkWithTemperature -->
       </xs:extension>
     </xs:complexContent>
