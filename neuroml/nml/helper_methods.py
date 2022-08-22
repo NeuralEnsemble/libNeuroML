@@ -1094,6 +1094,7 @@ nml_doc_summary = MethodSpec(
         all_ids = []
         for ms in self.member_data_items_:
             mlist = getattr(self, ms.get_name())
+            # TODO: debug why this is required
             if mlist is None:
                 continue
             for m in mlist:
@@ -1139,6 +1140,7 @@ network_get_by_id = MethodSpec(
         all_ids = []
         for ms in self.member_data_items_:
             mlist = getattr(self, ms.get_name())
+            # TODO: debug why this is required
             if mlist is None:
                 continue
             for m in mlist:
