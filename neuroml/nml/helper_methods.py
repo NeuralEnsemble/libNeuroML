@@ -1093,7 +1093,10 @@ nml_doc_summary = MethodSpec(
             return None
         all_ids = []
         for ms in self.member_data_items_:
-            mlist = self.__getattribute__(ms.name)
+            mlist = getattr(self, ms.get_name())
+            # TODO: debug why this is required
+            if mlist is None:
+                continue
             for m in mlist:
                 if hasattr(m,"id"):
                     if m.id == id:
@@ -1136,7 +1139,10 @@ network_get_by_id = MethodSpec(
         """
         all_ids = []
         for ms in self.member_data_items_:
-            mlist = self.__getattribute__(ms.name)
+            mlist = getattr(self, ms.get_name())
+            # TODO: debug why this is required
+            if mlist is None:
+                continue
             for m in mlist:
                 if hasattr(m,"id"):
                     if m.id == id:

@@ -161,3 +161,11 @@ class TestNML(unittest.TestCase):
             self.assertRegex(info, "morphology")
             self.assertRegex(info, "biophysical_properties")
             self.assertNotRegex(info, "network")
+
+    def test_get_by_id(self):
+        """Test the get_by_id method"""
+        network = neuroml.Network(id="test")
+        pop = neuroml.Population(id="pop0")
+        network.add(pop)
+        test_pop = network.get_by_id("pop0")
+        self.assertIs(test_pop, pop)
