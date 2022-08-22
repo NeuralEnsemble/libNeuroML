@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Aug 17 16:17:56 2022 by generateDS.py version 2.40.13.
+# Generated Mon Aug 22 14:07:13 2022 by generateDS.py version 2.40.13.
 # Python 3.10.6 (main, Aug  2 2022, 00:00:00) [GCC 12.1.1 20220507 (Red Hat 12.1.1-1)]
 #
 # Command line options:
@@ -14,7 +14,7 @@
 #   NeuroML_v2.3.xsd
 #
 # Command line:
-#   /home/asinha/.local/share/virtualenvs/libneuroml-new/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" NeuroML_v2.3.xsd
+#   /home/asinha/.local/share/virtualenvs/pyneuroml-dev/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" NeuroML_v2.3.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -9795,7 +9795,10 @@ class Network(Standalone):
         """
         all_ids = []
         for ms in self.member_data_items_:
-            mlist = self.__getattribute__(ms.name)
+            mlist = getattr(self, ms.get_name())
+            # TODO: debug why this is required
+            if mlist is None:
+                continue
             for m in mlist:
                 if hasattr(m, "id"):
                     if m.id == id:
@@ -37260,7 +37263,10 @@ class NeuroMLDocument(Standalone):
             return None
         all_ids = []
         for ms in self.member_data_items_:
-            mlist = self.__getattribute__(ms.name)
+            mlist = getattr(self, ms.get_name())
+            # TODO: debug why this is required
+            if mlist is None:
+                continue
             for m in mlist:
                 if hasattr(m, "id"):
                     if m.id == id:
