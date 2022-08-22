@@ -614,7 +614,7 @@ class NeuroMLHdf5Parser:
 
                 for p in properties:
                     self.currOptPopulation.properties.append(
-                        neuroml.Property(p, properties[p])
+                        neuroml.Property(tag=p, value=properties[p])
                     )
 
                 self.optimizedNetwork.populations.append(self.currOptPopulation)

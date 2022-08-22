@@ -98,9 +98,9 @@ class InstanceList(OptimizedList):
 
         instance = neuroml.Instance(id=id)
         instance.location = neuroml.Location(
-            self.array[index][self._get_index_or_add("x", 1)],
-            self.array[index][self._get_index_or_add("y", 2)],
-            self.array[index][self._get_index_or_add("z", 3)],
+            x=self.array[index][self._get_index_or_add("x", 1)],
+            y=self.array[index][self._get_index_or_add("y", 2)],
+            z=self.array[index][self._get_index_or_add("z", 3)],
         )
 
         return instance
@@ -484,11 +484,11 @@ if __name__ == "__main__":
     nc.populations.append(pc0)
     pc = PopulationContainer(id="fake", component="izzy")
     nc.populations.append(pc)
-    instance = neuroml.Instance(0)
-    instance.location = neuroml.Location(100, 100, 33.333)
+    instance = neuroml.Instance(id=0)
+    instance.location = neuroml.Location(x=100, y=100, z=33.333)
     pc.instances.append(instance)
-    instance = neuroml.Instance(1)
-    instance.location = neuroml.Location(200, 200, 66.66)
+    instance = neuroml.Instance(id=1)
+    instance.location = neuroml.Location(x=200, y=200, z=66.66)
     pc.instances.append(instance)
 
     prc = ProjectionContainer(

@@ -114,37 +114,41 @@ class TestCell(unittest.TestCase):
         cell.morphology = Morphology()
         cell.morphology.segments.append(seg0)
 
-        seg1 = Segment(id=1, distal=d1, parent=SegmentParent(0))
+        seg1 = Segment(id=1, distal=d1, parent=SegmentParent(segments=0))
         cell.morphology.segments.append(seg1)
 
         d2 = Point3DWithDiam(x=20, y=0, z=0, diameter=diam)
 
-        seg2 = Segment(id=2, proximal=d1, distal=d2, parent=SegmentParent(seg1.id))
+        seg2 = Segment(
+            id=2, proximal=d1, distal=d2, parent=SegmentParent(segments=seg1.id)
+        )
         cell.morphology.segments.append(seg2)
 
         d3 = Point3DWithDiam(x=20, y=10, z=0, diameter=diam)
 
-        seg3 = Segment(id=3, distal=d3, parent=SegmentParent(seg2.id, fraction_along=1))
+        seg3 = Segment(
+            id=3, distal=d3, parent=SegmentParent(segments=seg2.id, fraction_along=1)
+        )
         cell.morphology.segments.append(seg3)
 
         sg1 = SegmentGroup(id="all")
         for seg in [seg0, seg1, seg2, seg3]:
-            sg1.members.append(Member(seg.id))
+            sg1.members.append(Member(segments=seg.id))
         cell.morphology.segment_groups.append(sg1)
 
         sg2 = SegmentGroup(id="soma_group")
         for seg in [seg0]:
-            sg2.members.append(Member(seg.id))
+            sg2.members.append(Member(segments=seg.id))
         cell.morphology.segment_groups.append(sg2)
 
         sg3 = SegmentGroup(id="dend_group")
         for seg in [seg1, seg2, seg3]:
-            sg3.members.append(Member(seg.id))
+            sg3.members.append(Member(segments=seg.id))
         cell.morphology.segment_groups.append(sg3)
 
         sg4 = SegmentGroup(id="soma_dends")
         for sg in [sg2, sg3]:
-            sg4.includes.append(Include(sg.id))
+            sg4.includes.append(Include(segment_groups=sg.id))
         cell.morphology.segment_groups.append(sg4)
 
         expected = {sg1.id: 4, sg2.id: 1, sg3.id: 3, sg4.id: 4}

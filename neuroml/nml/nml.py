@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Aug  4 17:21:54 2022 by generateDS.py version 2.40.13.
-# Python 3.10.5 (main, Jun  9 2022, 00:00:00) [GCC 12.1.1 20220507 (Red Hat 12.1.1-1)]
+# Generated Wed Aug 17 16:17:56 2022 by generateDS.py version 2.40.13.
+# Python 3.10.6 (main, Aug  2 2022, 00:00:00) [GCC 12.1.1 20220507 (Red Hat 12.1.1-1)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -14,7 +14,7 @@
 #   NeuroML_v2.3.xsd
 #
 # Command line:
-#   /home/asinha/.local/share/virtualenvs/generateds-310/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" NeuroML_v2.3.xsd
+#   /home/asinha/.local/share/virtualenvs/libneuroml-new/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" NeuroML_v2.3.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -1209,306 +1209,6 @@ class populationTypes(str, Enum):
     POPULATION_LIST = "populationList"
 
 
-class Property(GeneratedsSuper):
-    """Property -- A property ( a **tag**  and **value**  pair ), which can be on any  **baseStandalone**  either as a direct child, or within an  **Annotation** . Generally something which helps the visual display or facilitates simulation of a Component, but is not a core physiological property. Common examples include: **numberInternalDivisions,**  equivalent of nseg in NEURON; **radius,**  for a radius to use in graphical displays for abstract cells ( i. e. without defined morphologies ); **color,**  the color to use for a  **Population**  or  **populationList**  of cells; **recommended_dt_ms,**  the recommended timestep to use for simulating a  **Network** , **recommended_duration_ms**  the recommended duration to use when running a  **Network**"""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("tag", "xs:string", 0, 0, {"use": "required", "name": "tag"}),
-        MemberSpec_("value", "xs:string", 0, 0, {"use": "required", "name": "value"}),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(self, tag=None, value=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.tag = _cast(None, tag)
-        self.tag_nsprefix_ = None
-        self.value = _cast(None, value)
-        self.value_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Property)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Property.subclass:
-            return Property.subclass(*args_, **kwargs_)
-        else:
-            return Property(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Property",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Property")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Property":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Property"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Property",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="Property"
-    ):
-        if self.tag is not None and "tag" not in already_processed:
-            already_processed.add("tag")
-            outfile.write(
-                " tag=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(quote_attrib(self.tag), input_name="tag")
-                    ),
-                )
-            )
-        if self.value is not None and "value" not in already_processed:
-            already_processed.add("value")
-            outfile.write(
-                " value=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.value), input_name="value"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Property",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("tag", node)
-        if value is not None and "tag" not in already_processed:
-            already_processed.add("tag")
-            self.tag = value
-        value = find_attr_value_("value", node)
-        if value is not None and "value" not in already_processed:
-            already_processed.add("value")
-            self.value = value
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class Property
-
-
-class Annotation(GeneratedsSuper):
-    """Annotation -- A structured annotation containing metadata, specifically RDF or  **property**  elements"""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "__ANY__",
-            "__ANY__",
-            1,
-            1,
-            {"maxOccurs": "unbounded", "minOccurs": "0", "processContents": "skip"},
-            None,
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(self, anytypeobjs_=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        if anytypeobjs_ is None:
-            self.anytypeobjs_ = []
-        else:
-            self.anytypeobjs_ = anytypeobjs_
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Annotation)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Annotation.subclass:
-            return Annotation.subclass(*args_, **kwargs_)
-        else:
-            return Annotation(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if self.anytypeobjs_:
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="Annotation",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Annotation")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Annotation":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Annotation"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Annotation",
-                pretty_print=pretty_print,
-            )
-            showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="Annotation"
-    ):
-        pass
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="Annotation",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if not fromsubclass_:
-            for obj_ in self.anytypeobjs_:
-                showIndent(outfile, level, pretty_print)
-                outfile.write(str(obj_))
-                outfile.write("\n")
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        content_ = self.gds_build_any(child_, "Annotation")
-        self.anytypeobjs_.append(content_)
-
-
-# end class Annotation
-
-
 class ComponentType(GeneratedsSuper):
     """ComponentType -- Contains an extension to NeuroML by creating custom LEMS ComponentType."""
 
@@ -1979,1344 +1679,6 @@ class ComponentType(GeneratedsSuper):
 # end class ComponentType
 
 
-class Constant(GeneratedsSuper):
-    """Constant -- LEMS ComponentType for Constant."""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("name", "xs:string", 0, 0, {"use": "required", "name": "name"}),
-        MemberSpec_(
-            "dimension", "xs:string", 0, 0, {"use": "required", "name": "dimension"}
-        ),
-        MemberSpec_(
-            "value", "Nml2Quantity", 0, 0, {"use": "required", "name": "value"}
-        ),
-        MemberSpec_(
-            "description", "xs:string", 0, 1, {"use": "optional", "name": "description"}
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self,
-        name=None,
-        dimension=None,
-        value=None,
-        description=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.name = _cast(None, name)
-        self.name_nsprefix_ = None
-        self.dimension = _cast(None, dimension)
-        self.dimension_nsprefix_ = None
-        self.value = _cast(None, value)
-        self.value_nsprefix_ = None
-        self.description = _cast(None, description)
-        self.description_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Constant)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Constant.subclass:
-            return Constant.subclass(*args_, **kwargs_)
-        else:
-            return Constant(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_Nml2Quantity(self, value):
-        # Validate type Nml2Quantity, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*([_a-zA-Z0-9])*)$"]
-    ]
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Constant",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Constant")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Constant":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Constant"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Constant",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="Constant"
-    ):
-        if self.name is not None and "name" not in already_processed:
-            already_processed.add("name")
-            outfile.write(
-                " name=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.name), input_name="name"
-                        )
-                    ),
-                )
-            )
-        if self.dimension is not None and "dimension" not in already_processed:
-            already_processed.add("dimension")
-            outfile.write(
-                " dimension=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.dimension), input_name="dimension"
-                        )
-                    ),
-                )
-            )
-        if self.value is not None and "value" not in already_processed:
-            already_processed.add("value")
-            outfile.write(
-                " value=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.value), input_name="value"
-                        )
-                    ),
-                )
-            )
-        if self.description is not None and "description" not in already_processed:
-            already_processed.add("description")
-            outfile.write(
-                " description=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.description), input_name="description"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Constant",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("name", node)
-        if value is not None and "name" not in already_processed:
-            already_processed.add("name")
-            self.name = value
-        value = find_attr_value_("dimension", node)
-        if value is not None and "dimension" not in already_processed:
-            already_processed.add("dimension")
-            self.dimension = value
-        value = find_attr_value_("value", node)
-        if value is not None and "value" not in already_processed:
-            already_processed.add("value")
-            self.value = value
-            self.validate_Nml2Quantity(self.value)  # validate type Nml2Quantity
-        value = find_attr_value_("description", node)
-        if value is not None and "description" not in already_processed:
-            already_processed.add("description")
-            self.description = value
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class Constant
-
-
-class Exposure(GeneratedsSuper):
-    """Exposure -- LEMS Exposure (ComponentType property)"""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("name", "xs:string", 0, 0, {"use": "required", "name": "name"}),
-        MemberSpec_(
-            "dimension", "xs:string", 0, 0, {"use": "required", "name": "dimension"}
-        ),
-        MemberSpec_(
-            "description", "xs:string", 0, 1, {"use": "optional", "name": "description"}
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self,
-        name=None,
-        dimension=None,
-        description=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.name = _cast(None, name)
-        self.name_nsprefix_ = None
-        self.dimension = _cast(None, dimension)
-        self.dimension_nsprefix_ = None
-        self.description = _cast(None, description)
-        self.description_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Exposure)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Exposure.subclass:
-            return Exposure.subclass(*args_, **kwargs_)
-        else:
-            return Exposure(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Exposure",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Exposure")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Exposure":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Exposure"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Exposure",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="Exposure"
-    ):
-        if self.name is not None and "name" not in already_processed:
-            already_processed.add("name")
-            outfile.write(
-                " name=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.name), input_name="name"
-                        )
-                    ),
-                )
-            )
-        if self.dimension is not None and "dimension" not in already_processed:
-            already_processed.add("dimension")
-            outfile.write(
-                " dimension=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.dimension), input_name="dimension"
-                        )
-                    ),
-                )
-            )
-        if self.description is not None and "description" not in already_processed:
-            already_processed.add("description")
-            outfile.write(
-                " description=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.description), input_name="description"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Exposure",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("name", node)
-        if value is not None and "name" not in already_processed:
-            already_processed.add("name")
-            self.name = value
-        value = find_attr_value_("dimension", node)
-        if value is not None and "dimension" not in already_processed:
-            already_processed.add("dimension")
-            self.dimension = value
-        value = find_attr_value_("description", node)
-        if value is not None and "description" not in already_processed:
-            already_processed.add("description")
-            self.description = value
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class Exposure
-
-
-class NamedDimensionalType(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("name", "xs:string", 0, 0, {"use": "required", "name": "name"}),
-        MemberSpec_(
-            "dimension", "xs:string", 0, 0, {"use": "required", "name": "dimension"}
-        ),
-        MemberSpec_(
-            "description", "xs:string", 0, 1, {"use": "optional", "name": "description"}
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self,
-        name=None,
-        dimension=None,
-        description=None,
-        extensiontype_=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.name = _cast(None, name)
-        self.name_nsprefix_ = None
-        self.dimension = _cast(None, dimension)
-        self.dimension_nsprefix_ = None
-        self.description = _cast(None, description)
-        self.description_nsprefix_ = None
-        self.extensiontype_ = extensiontype_
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, NamedDimensionalType
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if NamedDimensionalType.subclass:
-            return NamedDimensionalType.subclass(*args_, **kwargs_)
-        else:
-            return NamedDimensionalType(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="NamedDimensionalType",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("NamedDimensionalType")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "NamedDimensionalType":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="NamedDimensionalType",
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="NamedDimensionalType",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="NamedDimensionalType",
-    ):
-        if self.name is not None and "name" not in already_processed:
-            already_processed.add("name")
-            outfile.write(
-                " name=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.name), input_name="name"
-                        )
-                    ),
-                )
-            )
-        if self.dimension is not None and "dimension" not in already_processed:
-            already_processed.add("dimension")
-            outfile.write(
-                " dimension=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.dimension), input_name="dimension"
-                        )
-                    ),
-                )
-            )
-        if self.description is not None and "description" not in already_processed:
-            already_processed.add("description")
-            outfile.write(
-                " description=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.description), input_name="description"
-                        )
-                    ),
-                )
-            )
-        if self.extensiontype_ is not None and "xsi:type" not in already_processed:
-            already_processed.add("xsi:type")
-            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
-            if ":" not in self.extensiontype_:
-                imported_ns_type_prefix_ = GenerateDSNamespaceTypePrefixes_.get(
-                    self.extensiontype_, ""
-                )
-                outfile.write(
-                    ' xsi:type="%s%s"' % (imported_ns_type_prefix_, self.extensiontype_)
-                )
-            else:
-                outfile.write(' xsi:type="%s"' % self.extensiontype_)
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="NamedDimensionalType",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("name", node)
-        if value is not None and "name" not in already_processed:
-            already_processed.add("name")
-            self.name = value
-        value = find_attr_value_("dimension", node)
-        if value is not None and "dimension" not in already_processed:
-            already_processed.add("dimension")
-            self.dimension = value
-        value = find_attr_value_("description", node)
-        if value is not None and "description" not in already_processed:
-            already_processed.add("description")
-            self.description = value
-        value = find_attr_value_("xsi:type", node)
-        if value is not None and "xsi:type" not in already_processed:
-            already_processed.add("xsi:type")
-            self.extensiontype_ = value
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class NamedDimensionalType
-
-
-class NamedDimensionalVariable(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("name", "xs:string", 0, 0, {"use": "required", "name": "name"}),
-        MemberSpec_(
-            "dimension", "xs:string", 0, 0, {"use": "required", "name": "dimension"}
-        ),
-        MemberSpec_(
-            "description", "xs:string", 0, 1, {"use": "optional", "name": "description"}
-        ),
-        MemberSpec_(
-            "exposure", "xs:string", 0, 1, {"use": "optional", "name": "exposure"}
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self,
-        name=None,
-        dimension=None,
-        description=None,
-        exposure=None,
-        extensiontype_=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.name = _cast(None, name)
-        self.name_nsprefix_ = None
-        self.dimension = _cast(None, dimension)
-        self.dimension_nsprefix_ = None
-        self.description = _cast(None, description)
-        self.description_nsprefix_ = None
-        self.exposure = _cast(None, exposure)
-        self.exposure_nsprefix_ = None
-        self.extensiontype_ = extensiontype_
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, NamedDimensionalVariable
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if NamedDimensionalVariable.subclass:
-            return NamedDimensionalVariable.subclass(*args_, **kwargs_)
-        else:
-            return NamedDimensionalVariable(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="NamedDimensionalVariable",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("NamedDimensionalVariable")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "NamedDimensionalVariable":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="NamedDimensionalVariable",
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="NamedDimensionalVariable",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="NamedDimensionalVariable",
-    ):
-        if self.name is not None and "name" not in already_processed:
-            already_processed.add("name")
-            outfile.write(
-                " name=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.name), input_name="name"
-                        )
-                    ),
-                )
-            )
-        if self.dimension is not None and "dimension" not in already_processed:
-            already_processed.add("dimension")
-            outfile.write(
-                " dimension=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.dimension), input_name="dimension"
-                        )
-                    ),
-                )
-            )
-        if self.description is not None and "description" not in already_processed:
-            already_processed.add("description")
-            outfile.write(
-                " description=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.description), input_name="description"
-                        )
-                    ),
-                )
-            )
-        if self.exposure is not None and "exposure" not in already_processed:
-            already_processed.add("exposure")
-            outfile.write(
-                " exposure=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.exposure), input_name="exposure"
-                        )
-                    ),
-                )
-            )
-        if self.extensiontype_ is not None and "xsi:type" not in already_processed:
-            already_processed.add("xsi:type")
-            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
-            if ":" not in self.extensiontype_:
-                imported_ns_type_prefix_ = GenerateDSNamespaceTypePrefixes_.get(
-                    self.extensiontype_, ""
-                )
-                outfile.write(
-                    ' xsi:type="%s%s"' % (imported_ns_type_prefix_, self.extensiontype_)
-                )
-            else:
-                outfile.write(' xsi:type="%s"' % self.extensiontype_)
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="NamedDimensionalVariable",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("name", node)
-        if value is not None and "name" not in already_processed:
-            already_processed.add("name")
-            self.name = value
-        value = find_attr_value_("dimension", node)
-        if value is not None and "dimension" not in already_processed:
-            already_processed.add("dimension")
-            self.dimension = value
-        value = find_attr_value_("description", node)
-        if value is not None and "description" not in already_processed:
-            already_processed.add("description")
-            self.description = value
-        value = find_attr_value_("exposure", node)
-        if value is not None and "exposure" not in already_processed:
-            already_processed.add("exposure")
-            self.exposure = value
-        value = find_attr_value_("xsi:type", node)
-        if value is not None and "xsi:type" not in already_processed:
-            already_processed.add("xsi:type")
-            self.extensiontype_ = value
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class NamedDimensionalVariable
-
-
-class Parameter(NamedDimensionalType):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = []
-    subclass = None
-    superclass = NamedDimensionalType
-
-    def __init__(
-        self,
-        name=None,
-        dimension=None,
-        description=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        super(globals().get("Parameter"), self).__init__(
-            name, dimension, description, **kwargs_
-        )
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Parameter)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Parameter.subclass:
-            return Parameter.subclass(*args_, **kwargs_)
-        else:
-            return Parameter(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if super(Parameter, self)._hasContent():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Parameter",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Parameter")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Parameter":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Parameter"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Parameter",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="Parameter"
-    ):
-        super(Parameter, self)._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Parameter"
-        )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Parameter",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        super(Parameter, self)._exportChildren(
-            outfile,
-            level,
-            namespaceprefix_,
-            namespacedef_,
-            name_,
-            True,
-            pretty_print=pretty_print,
-        )
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        super(Parameter, self)._buildAttributes(node, attrs, already_processed)
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        super(Parameter, self)._buildChildren(child_, node, nodeName_, True)
-        pass
-
-
-# end class Parameter
-
-
-class LEMS_Property(NamedDimensionalType):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "default_value",
-            "xs:double",
-            0,
-            1,
-            {"use": "optional", "name": "default_value"},
-        ),
-    ]
-    subclass = None
-    superclass = NamedDimensionalType
-
-    def __init__(
-        self,
-        name=None,
-        dimension=None,
-        description=None,
-        default_value=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        super(globals().get("LEMS_Property"), self).__init__(
-            name, dimension, description, **kwargs_
-        )
-        self.default_value = _cast(float, default_value)
-        self.default_value_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, LEMS_Property)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if LEMS_Property.subclass:
-            return LEMS_Property.subclass(*args_, **kwargs_)
-        else:
-            return LEMS_Property(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if super(LEMS_Property, self)._hasContent():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="LEMS_Property",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("LEMS_Property")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "LEMS_Property":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="LEMS_Property"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="LEMS_Property",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="LEMS_Property",
-    ):
-        super(LEMS_Property, self)._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="LEMS_Property"
-        )
-        if self.default_value is not None and "default_value" not in already_processed:
-            already_processed.add("default_value")
-            outfile.write(
-                ' defaultValue="%s"'
-                % self.gds_format_double(self.default_value, input_name="defaultValue")
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="LEMS_Property",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        super(LEMS_Property, self)._exportChildren(
-            outfile,
-            level,
-            namespaceprefix_,
-            namespacedef_,
-            name_,
-            True,
-            pretty_print=pretty_print,
-        )
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("defaultValue", node)
-        if value is not None and "defaultValue" not in already_processed:
-            already_processed.add("defaultValue")
-            value = self.gds_parse_double(value, node, "defaultValue")
-            self.default_value = value
-        super(LEMS_Property, self)._buildAttributes(node, attrs, already_processed)
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        super(LEMS_Property, self)._buildChildren(child_, node, nodeName_, True)
-        pass
-
-
-# end class LEMS_Property
-
-
-class Requirement(NamedDimensionalType):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = []
-    subclass = None
-    superclass = NamedDimensionalType
-
-    def __init__(
-        self,
-        name=None,
-        dimension=None,
-        description=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        super(globals().get("Requirement"), self).__init__(
-            name, dimension, description, **kwargs_
-        )
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Requirement)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Requirement.subclass:
-            return Requirement.subclass(*args_, **kwargs_)
-        else:
-            return Requirement(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if super(Requirement, self)._hasContent():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Requirement",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Requirement")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Requirement":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Requirement"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Requirement",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="Requirement",
-    ):
-        super(Requirement, self)._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Requirement"
-        )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Requirement",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        super(Requirement, self)._exportChildren(
-            outfile,
-            level,
-            namespaceprefix_,
-            namespacedef_,
-            name_,
-            True,
-            pretty_print=pretty_print,
-        )
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        super(Requirement, self)._buildAttributes(node, attrs, already_processed)
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        super(Requirement, self)._buildChildren(child_, node, nodeName_, True)
-        pass
-
-
-# end class Requirement
-
-
 class InstanceRequirement(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -3768,548 +2130,6 @@ class Dynamics(GeneratedsSuper):
 
 
 # end class Dynamics
-
-
-class DerivedVariable(NamedDimensionalVariable):
-    """DerivedVariable -- LEMS ComponentType for DerivedVariable"""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("value", "xs:string", 0, 1, {"use": "optional", "name": "value"}),
-        MemberSpec_("select", "xs:string", 0, 1, {"use": "optional", "name": "select"}),
-    ]
-    subclass = None
-    superclass = NamedDimensionalVariable
-
-    def __init__(
-        self,
-        name=None,
-        dimension=None,
-        description=None,
-        exposure=None,
-        value=None,
-        select=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        super(globals().get("DerivedVariable"), self).__init__(
-            name, dimension, description, exposure, **kwargs_
-        )
-        self.value = _cast(None, value)
-        self.value_nsprefix_ = None
-        self.select = _cast(None, select)
-        self.select_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, DerivedVariable)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if DerivedVariable.subclass:
-            return DerivedVariable.subclass(*args_, **kwargs_)
-        else:
-            return DerivedVariable(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if super(DerivedVariable, self)._hasContent():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="DerivedVariable",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("DerivedVariable")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "DerivedVariable":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="DerivedVariable"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="DerivedVariable",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="DerivedVariable",
-    ):
-        super(DerivedVariable, self)._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="DerivedVariable"
-        )
-        if self.value is not None and "value" not in already_processed:
-            already_processed.add("value")
-            outfile.write(
-                " value=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.value), input_name="value"
-                        )
-                    ),
-                )
-            )
-        if self.select is not None and "select" not in already_processed:
-            already_processed.add("select")
-            outfile.write(
-                " select=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.select), input_name="select"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="DerivedVariable",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        super(DerivedVariable, self)._exportChildren(
-            outfile,
-            level,
-            namespaceprefix_,
-            namespacedef_,
-            name_,
-            True,
-            pretty_print=pretty_print,
-        )
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("value", node)
-        if value is not None and "value" not in already_processed:
-            already_processed.add("value")
-            self.value = value
-        value = find_attr_value_("select", node)
-        if value is not None and "select" not in already_processed:
-            already_processed.add("select")
-            self.select = value
-        super(DerivedVariable, self)._buildAttributes(node, attrs, already_processed)
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        super(DerivedVariable, self)._buildChildren(child_, node, nodeName_, True)
-        pass
-
-
-# end class DerivedVariable
-
-
-class StateVariable(NamedDimensionalVariable):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = []
-    subclass = None
-    superclass = NamedDimensionalVariable
-
-    def __init__(
-        self,
-        name=None,
-        dimension=None,
-        description=None,
-        exposure=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        super(globals().get("StateVariable"), self).__init__(
-            name, dimension, description, exposure, **kwargs_
-        )
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, StateVariable)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if StateVariable.subclass:
-            return StateVariable.subclass(*args_, **kwargs_)
-        else:
-            return StateVariable(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if super(StateVariable, self)._hasContent():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="StateVariable",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("StateVariable")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "StateVariable":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="StateVariable"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="StateVariable",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="StateVariable",
-    ):
-        super(StateVariable, self)._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="StateVariable"
-        )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="StateVariable",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        super(StateVariable, self)._exportChildren(
-            outfile,
-            level,
-            namespaceprefix_,
-            namespacedef_,
-            name_,
-            True,
-            pretty_print=pretty_print,
-        )
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        super(StateVariable, self)._buildAttributes(node, attrs, already_processed)
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        super(StateVariable, self)._buildChildren(child_, node, nodeName_, True)
-        pass
-
-
-# end class StateVariable
-
-
-class ConditionalDerivedVariable(NamedDimensionalVariable):
-    """ConditionalDerivedVariable -- LEMS ComponentType for ConditionalDerivedVariable"""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "Case",
-            "Case",
-            1,
-            0,
-            {
-                "maxOccurs": "unbounded",
-                "minOccurs": "1",
-                "name": "Case",
-                "type": "Case",
-            },
-            None,
-        ),
-    ]
-    subclass = None
-    superclass = NamedDimensionalVariable
-
-    def __init__(
-        self,
-        name=None,
-        dimension=None,
-        description=None,
-        exposure=None,
-        Case=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        super(globals().get("ConditionalDerivedVariable"), self).__init__(
-            name, dimension, description, exposure, **kwargs_
-        )
-        if Case is None:
-            self.Case = []
-        else:
-            self.Case = Case
-        self.Case_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, ConditionalDerivedVariable
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if ConditionalDerivedVariable.subclass:
-            return ConditionalDerivedVariable.subclass(*args_, **kwargs_)
-        else:
-            return ConditionalDerivedVariable(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if self.Case or super(ConditionalDerivedVariable, self)._hasContent():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="ConditionalDerivedVariable",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("ConditionalDerivedVariable")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "ConditionalDerivedVariable":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="ConditionalDerivedVariable",
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="ConditionalDerivedVariable",
-                pretty_print=pretty_print,
-            )
-            showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="ConditionalDerivedVariable",
-    ):
-        super(ConditionalDerivedVariable, self)._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="ConditionalDerivedVariable",
-        )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="ConditionalDerivedVariable",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        super(ConditionalDerivedVariable, self)._exportChildren(
-            outfile,
-            level,
-            namespaceprefix_,
-            namespacedef_,
-            name_,
-            True,
-            pretty_print=pretty_print,
-        )
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        for Case_ in self.Case:
-            namespaceprefix_ = (
-                self.Case_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.Case_nsprefix_)
-                else ""
-            )
-            Case_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="Case",
-                pretty_print=pretty_print,
-            )
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        super(ConditionalDerivedVariable, self)._buildAttributes(
-            node, attrs, already_processed
-        )
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        if nodeName_ == "Case":
-            obj_ = Case.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.Case.append(obj_)
-            obj_.original_tagname_ = "Case"
-        super(ConditionalDerivedVariable, self)._buildChildren(
-            child_, node, nodeName_, True
-        )
-
-
-# end class ConditionalDerivedVariable
 
 
 class Case(GeneratedsSuper):
@@ -4775,270 +2595,6 @@ class IncludeType(GeneratedsSuper):
 # end class IncludeType
 
 
-class Q10ConductanceScaling(GeneratedsSuper):
-    """Q10ConductanceScaling -- A value for the conductance scaling which varies as a standard function of the difference between the current temperature, **temperature,**  and the temperature at which the conductance was originally determined, **experimentalTemp**
-    \n
-    :param q10Factor:
-    :type q10Factor: none
-    :param experimentalTemp:
-    :type experimentalTemp: temperature
-
-    """
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "q10_factor",
-            "Nml2Quantity_none",
-            0,
-            0,
-            {"use": "required", "name": "q10_factor"},
-        ),
-        MemberSpec_(
-            "experimental_temp",
-            "Nml2Quantity_temperature",
-            0,
-            0,
-            {"use": "required", "name": "experimental_temp"},
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self, q10_factor=None, experimental_temp=None, gds_collector_=None, **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.q10_factor = _cast(None, q10_factor)
-        self.q10_factor_nsprefix_ = None
-        self.experimental_temp = _cast(None, experimental_temp)
-        self.experimental_temp_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, Q10ConductanceScaling
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Q10ConductanceScaling.subclass:
-            return Q10ConductanceScaling.subclass(*args_, **kwargs_)
-        else:
-            return Q10ConductanceScaling(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_Nml2Quantity_none(self, value):
-        # Validate type Nml2Quantity_none, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_none_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_none_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_none_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?)$"]
-    ]
-
-    def validate_Nml2Quantity_temperature(self, value):
-        # Validate type Nml2Quantity_temperature, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_temperature_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_temperature_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_temperature_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(degC))$"]
-    ]
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Q10ConductanceScaling",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Q10ConductanceScaling")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Q10ConductanceScaling":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="Q10ConductanceScaling",
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Q10ConductanceScaling",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="Q10ConductanceScaling",
-    ):
-        if self.q10_factor is not None and "q10_factor" not in already_processed:
-            already_processed.add("q10_factor")
-            outfile.write(
-                " q10Factor=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.q10_factor), input_name="q10Factor"
-                        )
-                    ),
-                )
-            )
-        if (
-            self.experimental_temp is not None
-            and "experimental_temp" not in already_processed
-        ):
-            already_processed.add("experimental_temp")
-            outfile.write(
-                " experimentalTemp=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.experimental_temp),
-                            input_name="experimentalTemp",
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Q10ConductanceScaling",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("q10Factor", node)
-        if value is not None and "q10Factor" not in already_processed:
-            already_processed.add("q10Factor")
-            self.q10_factor = value
-            self.validate_Nml2Quantity_none(
-                self.q10_factor
-            )  # validate type Nml2Quantity_none
-        value = find_attr_value_("experimentalTemp", node)
-        if value is not None and "experimentalTemp" not in already_processed:
-            already_processed.add("experimentalTemp")
-            self.experimental_temp = value
-            self.validate_Nml2Quantity_temperature(
-                self.experimental_temp
-            )  # validate type Nml2Quantity_temperature
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class Q10ConductanceScaling
-
-
 class Q10Settings(GeneratedsSuper):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -5372,2906 +2928,6 @@ class Q10Settings(GeneratedsSuper):
 # end class Q10Settings
 
 
-class HHRate(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("type", "NmlId", 0, 0, {"use": "required", "name": "type"}),
-        MemberSpec_(
-            "rate", "Nml2Quantity_pertime", 0, 1, {"use": "optional", "name": "rate"}
-        ),
-        MemberSpec_(
-            "midpoint",
-            "Nml2Quantity_voltage",
-            0,
-            1,
-            {"use": "optional", "name": "midpoint"},
-        ),
-        MemberSpec_(
-            "scale", "Nml2Quantity_voltage", 0, 1, {"use": "optional", "name": "scale"}
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self,
-        type=None,
-        rate=None,
-        midpoint=None,
-        scale=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.type = _cast(None, type)
-        self.type_nsprefix_ = None
-        self.rate = _cast(None, rate)
-        self.rate_nsprefix_ = None
-        self.midpoint = _cast(None, midpoint)
-        self.midpoint_nsprefix_ = None
-        self.scale = _cast(None, scale)
-        self.scale_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, HHRate)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if HHRate.subclass:
-            return HHRate.subclass(*args_, **kwargs_)
-        else:
-            return HHRate(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NmlId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NmlId_patterns_,
-                    )
-                )
-
-    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
-
-    def validate_Nml2Quantity_pertime(self, value):
-        # Validate type Nml2Quantity_pertime, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_pertime_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_pertime_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_pertime_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz))$"]
-    ]
-
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_voltage_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_voltage_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_voltage_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
-    ]
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="HHRate",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("HHRate")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "HHRate":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="HHRate"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="HHRate",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="HHRate"
-    ):
-        if self.type is not None and "type" not in already_processed:
-            already_processed.add("type")
-            outfile.write(
-                " type=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.type), input_name="type"
-                        )
-                    ),
-                )
-            )
-        if self.rate is not None and "rate" not in already_processed:
-            already_processed.add("rate")
-            outfile.write(
-                " rate=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.rate), input_name="rate"
-                        )
-                    ),
-                )
-            )
-        if self.midpoint is not None and "midpoint" not in already_processed:
-            already_processed.add("midpoint")
-            outfile.write(
-                " midpoint=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.midpoint), input_name="midpoint"
-                        )
-                    ),
-                )
-            )
-        if self.scale is not None and "scale" not in already_processed:
-            already_processed.add("scale")
-            outfile.write(
-                " scale=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.scale), input_name="scale"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="HHRate",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("type", node)
-        if value is not None and "type" not in already_processed:
-            already_processed.add("type")
-            self.type = value
-            self.validate_NmlId(self.type)  # validate type NmlId
-        value = find_attr_value_("rate", node)
-        if value is not None and "rate" not in already_processed:
-            already_processed.add("rate")
-            self.rate = value
-            self.validate_Nml2Quantity_pertime(
-                self.rate
-            )  # validate type Nml2Quantity_pertime
-        value = find_attr_value_("midpoint", node)
-        if value is not None and "midpoint" not in already_processed:
-            already_processed.add("midpoint")
-            self.midpoint = value
-            self.validate_Nml2Quantity_voltage(
-                self.midpoint
-            )  # validate type Nml2Quantity_voltage
-        value = find_attr_value_("scale", node)
-        if value is not None and "scale" not in already_processed:
-            already_processed.add("scale")
-            self.scale = value
-            self.validate_Nml2Quantity_voltage(
-                self.scale
-            )  # validate type Nml2Quantity_voltage
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class HHRate
-
-
-class HHVariable(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("type", "NmlId", 0, 0, {"use": "required", "name": "type"}),
-        MemberSpec_("rate", "xs:float", 0, 1, {"use": "optional", "name": "rate"}),
-        MemberSpec_(
-            "midpoint",
-            "Nml2Quantity_voltage",
-            0,
-            1,
-            {"use": "optional", "name": "midpoint"},
-        ),
-        MemberSpec_(
-            "scale", "Nml2Quantity_voltage", 0, 1, {"use": "optional", "name": "scale"}
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self,
-        type=None,
-        rate=None,
-        midpoint=None,
-        scale=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.type = _cast(None, type)
-        self.type_nsprefix_ = None
-        self.rate = _cast(float, rate)
-        self.rate_nsprefix_ = None
-        self.midpoint = _cast(None, midpoint)
-        self.midpoint_nsprefix_ = None
-        self.scale = _cast(None, scale)
-        self.scale_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, HHVariable)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if HHVariable.subclass:
-            return HHVariable.subclass(*args_, **kwargs_)
-        else:
-            return HHVariable(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NmlId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NmlId_patterns_,
-                    )
-                )
-
-    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
-
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_voltage_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_voltage_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_voltage_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
-    ]
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="HHVariable",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("HHVariable")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "HHVariable":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="HHVariable"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="HHVariable",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="HHVariable"
-    ):
-        if self.type is not None and "type" not in already_processed:
-            already_processed.add("type")
-            outfile.write(
-                " type=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.type), input_name="type"
-                        )
-                    ),
-                )
-            )
-        if self.rate is not None and "rate" not in already_processed:
-            already_processed.add("rate")
-            outfile.write(
-                ' rate="%s"' % self.gds_format_float(self.rate, input_name="rate")
-            )
-        if self.midpoint is not None and "midpoint" not in already_processed:
-            already_processed.add("midpoint")
-            outfile.write(
-                " midpoint=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.midpoint), input_name="midpoint"
-                        )
-                    ),
-                )
-            )
-        if self.scale is not None and "scale" not in already_processed:
-            already_processed.add("scale")
-            outfile.write(
-                " scale=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.scale), input_name="scale"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="HHVariable",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("type", node)
-        if value is not None and "type" not in already_processed:
-            already_processed.add("type")
-            self.type = value
-            self.validate_NmlId(self.type)  # validate type NmlId
-        value = find_attr_value_("rate", node)
-        if value is not None and "rate" not in already_processed:
-            already_processed.add("rate")
-            value = self.gds_parse_float(value, node, "rate")
-            self.rate = value
-        value = find_attr_value_("midpoint", node)
-        if value is not None and "midpoint" not in already_processed:
-            already_processed.add("midpoint")
-            self.midpoint = value
-            self.validate_Nml2Quantity_voltage(
-                self.midpoint
-            )  # validate type Nml2Quantity_voltage
-        value = find_attr_value_("scale", node)
-        if value is not None and "scale" not in already_processed:
-            already_processed.add("scale")
-            self.scale = value
-            self.validate_Nml2Quantity_voltage(
-                self.scale
-            )  # validate type Nml2Quantity_voltage
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class HHVariable
-
-
-class HHTime(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("type", "NmlId", 0, 0, {"use": "required", "name": "type"}),
-        MemberSpec_(
-            "rate", "Nml2Quantity_time", 0, 1, {"use": "optional", "name": "rate"}
-        ),
-        MemberSpec_(
-            "midpoint",
-            "Nml2Quantity_voltage",
-            0,
-            1,
-            {"use": "optional", "name": "midpoint"},
-        ),
-        MemberSpec_(
-            "scale", "Nml2Quantity_voltage", 0, 1, {"use": "optional", "name": "scale"}
-        ),
-        MemberSpec_(
-            "tau", "Nml2Quantity_time", 0, 1, {"use": "optional", "name": "tau"}
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self,
-        type=None,
-        rate=None,
-        midpoint=None,
-        scale=None,
-        tau=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.type = _cast(None, type)
-        self.type_nsprefix_ = None
-        self.rate = _cast(None, rate)
-        self.rate_nsprefix_ = None
-        self.midpoint = _cast(None, midpoint)
-        self.midpoint_nsprefix_ = None
-        self.scale = _cast(None, scale)
-        self.scale_nsprefix_ = None
-        self.tau = _cast(None, tau)
-        self.tau_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, HHTime)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if HHTime.subclass:
-            return HHTime.subclass(*args_, **kwargs_)
-        else:
-            return HHTime(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NmlId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NmlId_patterns_,
-                    )
-                )
-
-    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
-
-    def validate_Nml2Quantity_time(self, value):
-        # Validate type Nml2Quantity_time, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_time_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_time_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_time_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
-    ]
-
-    def validate_Nml2Quantity_voltage(self, value):
-        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_voltage_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_voltage_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_voltage_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
-    ]
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="HHTime",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("HHTime")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "HHTime":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="HHTime"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="HHTime",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="HHTime"
-    ):
-        if self.type is not None and "type" not in already_processed:
-            already_processed.add("type")
-            outfile.write(
-                " type=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.type), input_name="type"
-                        )
-                    ),
-                )
-            )
-        if self.rate is not None and "rate" not in already_processed:
-            already_processed.add("rate")
-            outfile.write(
-                " rate=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.rate), input_name="rate"
-                        )
-                    ),
-                )
-            )
-        if self.midpoint is not None and "midpoint" not in already_processed:
-            already_processed.add("midpoint")
-            outfile.write(
-                " midpoint=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.midpoint), input_name="midpoint"
-                        )
-                    ),
-                )
-            )
-        if self.scale is not None and "scale" not in already_processed:
-            already_processed.add("scale")
-            outfile.write(
-                " scale=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.scale), input_name="scale"
-                        )
-                    ),
-                )
-            )
-        if self.tau is not None and "tau" not in already_processed:
-            already_processed.add("tau")
-            outfile.write(
-                " tau=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(quote_attrib(self.tau), input_name="tau")
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="HHTime",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("type", node)
-        if value is not None and "type" not in already_processed:
-            already_processed.add("type")
-            self.type = value
-            self.validate_NmlId(self.type)  # validate type NmlId
-        value = find_attr_value_("rate", node)
-        if value is not None and "rate" not in already_processed:
-            already_processed.add("rate")
-            self.rate = value
-            self.validate_Nml2Quantity_time(
-                self.rate
-            )  # validate type Nml2Quantity_time
-        value = find_attr_value_("midpoint", node)
-        if value is not None and "midpoint" not in already_processed:
-            already_processed.add("midpoint")
-            self.midpoint = value
-            self.validate_Nml2Quantity_voltage(
-                self.midpoint
-            )  # validate type Nml2Quantity_voltage
-        value = find_attr_value_("scale", node)
-        if value is not None and "scale" not in already_processed:
-            already_processed.add("scale")
-            self.scale = value
-            self.validate_Nml2Quantity_voltage(
-                self.scale
-            )  # validate type Nml2Quantity_voltage
-        value = find_attr_value_("tau", node)
-        if value is not None and "tau" not in already_processed:
-            already_processed.add("tau")
-            self.tau = value
-            self.validate_Nml2Quantity_time(self.tau)  # validate type Nml2Quantity_time
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class HHTime
-
-
-class PlasticityMechanism(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "type", "PlasticityTypes", 0, 0, {"use": "required", "name": "type"}
-        ),
-        MemberSpec_(
-            "init_release_prob",
-            "ZeroToOne",
-            0,
-            0,
-            {"use": "required", "name": "init_release_prob"},
-        ),
-        MemberSpec_(
-            "tau_rec", "Nml2Quantity_time", 0, 0, {"use": "required", "name": "tau_rec"}
-        ),
-        MemberSpec_(
-            "tau_fac", "Nml2Quantity_time", 0, 1, {"use": "optional", "name": "tau_fac"}
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self,
-        type=None,
-        init_release_prob=None,
-        tau_rec=None,
-        tau_fac=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.type = _cast(None, type)
-        self.type_nsprefix_ = None
-        self.init_release_prob = _cast(float, init_release_prob)
-        self.init_release_prob_nsprefix_ = None
-        self.tau_rec = _cast(None, tau_rec)
-        self.tau_rec_nsprefix_ = None
-        self.tau_fac = _cast(None, tau_fac)
-        self.tau_fac_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, PlasticityMechanism
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if PlasticityMechanism.subclass:
-            return PlasticityMechanism.subclass(*args_, **kwargs_)
-        else:
-            return PlasticityMechanism(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_PlasticityTypes(self, value):
-        # Validate type PlasticityTypes, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            value = value
-            enumerations = [
-                "tsodyksMarkramDepMechanism",
-                "tsodyksMarkramDepFacMechanism",
-            ]
-            if value not in enumerations:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s does not match xsd enumeration restriction on PlasticityTypes'
-                    % {"value": encode_str_2_3(value), "lineno": lineno}
-                )
-                result = False
-
-    def validate_ZeroToOne(self, value):
-        # Validate type ZeroToOne, a restriction on xs:float.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, float):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (float)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if value < 0:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on ZeroToOne'
-                    % {"value": value, "lineno": lineno}
-                )
-                result = False
-            if value > 1:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s does not match xsd maxInclusive restriction on ZeroToOne'
-                    % {"value": value, "lineno": lineno}
-                )
-                result = False
-
-    def validate_Nml2Quantity_time(self, value):
-        # Validate type Nml2Quantity_time, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_time_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_time_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_time_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
-    ]
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="PlasticityMechanism",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("PlasticityMechanism")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "PlasticityMechanism":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="PlasticityMechanism",
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="PlasticityMechanism",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="PlasticityMechanism",
-    ):
-        if self.type is not None and "type" not in already_processed:
-            already_processed.add("type")
-            outfile.write(
-                " type=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.type), input_name="type"
-                        )
-                    ),
-                )
-            )
-        if (
-            self.init_release_prob is not None
-            and "init_release_prob" not in already_processed
-        ):
-            already_processed.add("init_release_prob")
-            outfile.write(
-                ' initReleaseProb="%s"'
-                % self.gds_format_float(
-                    self.init_release_prob, input_name="initReleaseProb"
-                )
-            )
-        if self.tau_rec is not None and "tau_rec" not in already_processed:
-            already_processed.add("tau_rec")
-            outfile.write(
-                " tauRec=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.tau_rec), input_name="tauRec"
-                        )
-                    ),
-                )
-            )
-        if self.tau_fac is not None and "tau_fac" not in already_processed:
-            already_processed.add("tau_fac")
-            outfile.write(
-                " tauFac=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.tau_fac), input_name="tauFac"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="PlasticityMechanism",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("type", node)
-        if value is not None and "type" not in already_processed:
-            already_processed.add("type")
-            self.type = value
-            self.validate_PlasticityTypes(self.type)  # validate type PlasticityTypes
-        value = find_attr_value_("initReleaseProb", node)
-        if value is not None and "initReleaseProb" not in already_processed:
-            already_processed.add("initReleaseProb")
-            value = self.gds_parse_float(value, node, "initReleaseProb")
-            self.init_release_prob = value
-            self.validate_ZeroToOne(self.init_release_prob)  # validate type ZeroToOne
-        value = find_attr_value_("tauRec", node)
-        if value is not None and "tauRec" not in already_processed:
-            already_processed.add("tauRec")
-            self.tau_rec = value
-            self.validate_Nml2Quantity_time(
-                self.tau_rec
-            )  # validate type Nml2Quantity_time
-        value = find_attr_value_("tauFac", node)
-        if value is not None and "tauFac" not in already_processed:
-            already_processed.add("tauFac")
-            self.tau_fac = value
-            self.validate_Nml2Quantity_time(
-                self.tau_fac
-            )  # validate type Nml2Quantity_time
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class PlasticityMechanism
-
-
-class SegmentParent(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "segments",
-            "NonNegativeInteger",
-            0,
-            0,
-            {"use": "required", "name": "segments"},
-        ),
-        MemberSpec_(
-            "fraction_along",
-            "ZeroToOne",
-            0,
-            1,
-            {"use": "optional", "name": "fraction_along"},
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self, segments=None, fraction_along="1", gds_collector_=None, **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.segments = _cast(int, segments)
-        self.segments_nsprefix_ = None
-        self.fraction_along = _cast(float, fraction_along)
-        self.fraction_along_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, SegmentParent)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if SegmentParent.subclass:
-            return SegmentParent.subclass(*args_, **kwargs_)
-        else:
-            return SegmentParent(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_NonNegativeInteger(self, value):
-        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            pass
-
-    def validate_ZeroToOne(self, value):
-        # Validate type ZeroToOne, a restriction on xs:float.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, float):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (float)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if value < 0:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on ZeroToOne'
-                    % {"value": value, "lineno": lineno}
-                )
-                result = False
-            if value > 1:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s does not match xsd maxInclusive restriction on ZeroToOne'
-                    % {"value": value, "lineno": lineno}
-                )
-                result = False
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="SegmentParent",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("SegmentParent")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "SegmentParent":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="SegmentParent"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="SegmentParent",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="SegmentParent",
-    ):
-        if self.segments is not None and "segments" not in already_processed:
-            already_processed.add("segments")
-            outfile.write(
-                ' segment="%s"'
-                % self.gds_format_integer(self.segments, input_name="segment")
-            )
-        if self.fraction_along != 1 and "fraction_along" not in already_processed:
-            already_processed.add("fraction_along")
-            outfile.write(
-                ' fractionAlong="%s"'
-                % self.gds_format_float(self.fraction_along, input_name="fractionAlong")
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="SegmentParent",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("segment", node)
-        if value is not None and "segment" not in already_processed:
-            already_processed.add("segment")
-            self.segments = self.gds_parse_integer(value, node, "segment")
-            if self.segments < 0:
-                raise_parse_error(node, "Invalid NonNegativeInteger")
-            self.validate_NonNegativeInteger(
-                self.segments
-            )  # validate type NonNegativeInteger
-        value = find_attr_value_("fractionAlong", node)
-        if value is not None and "fractionAlong" not in already_processed:
-            already_processed.add("fractionAlong")
-            value = self.gds_parse_float(value, node, "fractionAlong")
-            self.fraction_along = value
-            self.validate_ZeroToOne(self.fraction_along)  # validate type ZeroToOne
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class SegmentParent
-
-
-class Point3DWithDiam(GeneratedsSuper):
-    """Point3DWithDiam -- Base type for ComponentTypes which specify an ( **x,**  **y,**  **z**  ) coordinate along with a **diameter.**  Note: no dimension used in the attributes for these coordinates! These are assumed to have dimension micrometer ( 10^-6 m ). This is due to micrometers being the default option for the majority of neuronal morphology formats, and dimensions are omitted here to facilitate reading and writing of morphologies in NeuroML.
-    \n
-    :param x: x coordinate of the point. Note: no dimension used, see description of  **point3DWithDiam**  for details.
-    :type x: none
-    :param y: y coordinate of the ppoint. Note: no dimension used, see description of  **point3DWithDiam**  for details.
-    :type y: none
-    :param z: z coordinate of the ppoint. Note: no dimension used, see description of  **point3DWithDiam**  for details.
-    :type z: none
-    :param diameter: Diameter of the ppoint. Note: no dimension used, see description of  **point3DWithDiam**  for details.
-    :type diameter: none
-
-    """
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("x", "xs:double", 0, 0, {"use": "required", "name": "x"}),
-        MemberSpec_("y", "xs:double", 0, 0, {"use": "required", "name": "y"}),
-        MemberSpec_("z", "xs:double", 0, 0, {"use": "required", "name": "z"}),
-        MemberSpec_(
-            "diameter",
-            "DoubleGreaterThanZero",
-            0,
-            0,
-            {"use": "required", "name": "diameter"},
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self, x=None, y=None, z=None, diameter=None, gds_collector_=None, **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.x = _cast(float, x)
-        self.x_nsprefix_ = None
-        self.y = _cast(float, y)
-        self.y_nsprefix_ = None
-        self.z = _cast(float, z)
-        self.z_nsprefix_ = None
-        self.diameter = _cast(float, diameter)
-        self.diameter_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Point3DWithDiam)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Point3DWithDiam.subclass:
-            return Point3DWithDiam.subclass(*args_, **kwargs_)
-        else:
-            return Point3DWithDiam(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_DoubleGreaterThanZero(self, value):
-        # Validate type DoubleGreaterThanZero, a restriction on xs:double.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, float):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (float)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if value <= 0:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s does not match xsd minExclusive restriction on DoubleGreaterThanZero'
-                    % {"value": value, "lineno": lineno}
-                )
-                result = False
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Point3DWithDiam",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Point3DWithDiam")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Point3DWithDiam":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Point3DWithDiam"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Point3DWithDiam",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="Point3DWithDiam",
-    ):
-        if self.x is not None and "x" not in already_processed:
-            already_processed.add("x")
-            outfile.write(' x="%s"' % self.gds_format_double(self.x, input_name="x"))
-        if self.y is not None and "y" not in already_processed:
-            already_processed.add("y")
-            outfile.write(' y="%s"' % self.gds_format_double(self.y, input_name="y"))
-        if self.z is not None and "z" not in already_processed:
-            already_processed.add("z")
-            outfile.write(' z="%s"' % self.gds_format_double(self.z, input_name="z"))
-        if self.diameter is not None and "diameter" not in already_processed:
-            already_processed.add("diameter")
-            outfile.write(
-                ' diameter="%s"'
-                % self.gds_format_double(self.diameter, input_name="diameter")
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Point3DWithDiam",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("x", node)
-        if value is not None and "x" not in already_processed:
-            already_processed.add("x")
-            value = self.gds_parse_double(value, node, "x")
-            self.x = value
-        value = find_attr_value_("y", node)
-        if value is not None and "y" not in already_processed:
-            already_processed.add("y")
-            value = self.gds_parse_double(value, node, "y")
-            self.y = value
-        value = find_attr_value_("z", node)
-        if value is not None and "z" not in already_processed:
-            already_processed.add("z")
-            value = self.gds_parse_double(value, node, "z")
-            self.z = value
-        value = find_attr_value_("diameter", node)
-        if value is not None and "diameter" not in already_processed:
-            already_processed.add("diameter")
-            value = self.gds_parse_double(value, node, "diameter")
-            self.diameter = value
-            self.validate_DoubleGreaterThanZero(
-                self.diameter
-            )  # validate type DoubleGreaterThanZero
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-    def __str__(self):
-
-        return (
-            "("
-            + str(self.x)
-            + ", "
-            + str(self.y)
-            + ", "
-            + str(self.z)
-            + "), diam "
-            + str(self.diameter)
-            + "um"
-        )
-
-    def __repr__(self):
-
-        return str(self)
-
-    def distance_to(self, other_3d_point):
-        """Find the distance between this point and another.
-
-        :param other_3d_point: other 3D point to calculate distance to
-        :type other_3d_point: Point3DWithDiam
-        :returns: distance between the two points
-        :rtype: float
-        """
-        a_x = self.x
-        a_y = self.y
-        a_z = self.z
-
-        b_x = other_3d_point.x
-        b_y = other_3d_point.y
-        b_z = other_3d_point.z
-
-        distance = ((a_x - b_x) ** 2 + (a_y - b_y) ** 2 + (a_z - b_z) ** 2) ** (0.5)
-        return distance
-
-
-# end class Point3DWithDiam
-
-
-class ProximalDetails(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "translation_start",
-            "xs:double",
-            0,
-            0,
-            {"use": "required", "name": "translation_start"},
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(self, translation_start=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.translation_start = _cast(float, translation_start)
-        self.translation_start_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, ProximalDetails)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if ProximalDetails.subclass:
-            return ProximalDetails.subclass(*args_, **kwargs_)
-        else:
-            return ProximalDetails(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="ProximalDetails",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("ProximalDetails")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "ProximalDetails":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="ProximalDetails"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="ProximalDetails",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="ProximalDetails",
-    ):
-        if (
-            self.translation_start is not None
-            and "translation_start" not in already_processed
-        ):
-            already_processed.add("translation_start")
-            outfile.write(
-                ' translationStart="%s"'
-                % self.gds_format_double(
-                    self.translation_start, input_name="translationStart"
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="ProximalDetails",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("translationStart", node)
-        if value is not None and "translationStart" not in already_processed:
-            already_processed.add("translationStart")
-            value = self.gds_parse_double(value, node, "translationStart")
-            self.translation_start = value
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class ProximalDetails
-
-
-class DistalDetails(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "normalization_end",
-            "xs:double",
-            0,
-            0,
-            {"use": "required", "name": "normalization_end"},
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(self, normalization_end=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.normalization_end = _cast(float, normalization_end)
-        self.normalization_end_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, DistalDetails)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if DistalDetails.subclass:
-            return DistalDetails.subclass(*args_, **kwargs_)
-        else:
-            return DistalDetails(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="DistalDetails",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("DistalDetails")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "DistalDetails":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="DistalDetails"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="DistalDetails",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="DistalDetails",
-    ):
-        if (
-            self.normalization_end is not None
-            and "normalization_end" not in already_processed
-        ):
-            already_processed.add("normalization_end")
-            outfile.write(
-                ' normalizationEnd="%s"'
-                % self.gds_format_double(
-                    self.normalization_end, input_name="normalizationEnd"
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="DistalDetails",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("normalizationEnd", node)
-        if value is not None and "normalizationEnd" not in already_processed:
-            already_processed.add("normalizationEnd")
-            value = self.gds_parse_double(value, node, "normalizationEnd")
-            self.normalization_end = value
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class DistalDetails
-
-
-class Member(GeneratedsSuper):
-    """Member -- A single identified **segment**  which is part of the  **segmentGroup**"""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "segments",
-            "NonNegativeInteger",
-            0,
-            0,
-            {"use": "required", "name": "segments"},
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(self, segments=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.segments = _cast(int, segments)
-        self.segments_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Member)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Member.subclass:
-            return Member.subclass(*args_, **kwargs_)
-        else:
-            return Member(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_NonNegativeInteger(self, value):
-        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            pass
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Member",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Member")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Member":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Member"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Member",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="Member"
-    ):
-        if self.segments is not None and "segments" not in already_processed:
-            already_processed.add("segments")
-            outfile.write(
-                ' segment="%s"'
-                % self.gds_format_integer(self.segments, input_name="segment")
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Member",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("segment", node)
-        if value is not None and "segment" not in already_processed:
-            already_processed.add("segment")
-            self.segments = self.gds_parse_integer(value, node, "segment")
-            if self.segments < 0:
-                raise_parse_error(node, "Invalid NonNegativeInteger")
-            self.validate_NonNegativeInteger(
-                self.segments
-            )  # validate type NonNegativeInteger
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class Member
-
-
-class Include(GeneratedsSuper):
-    """Include -- Include all members of another  **segmentGroup**  in this group"""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "segment_groups",
-            "NmlId",
-            0,
-            0,
-            {"use": "required", "name": "segment_groups"},
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(self, segment_groups=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.segment_groups = _cast(None, segment_groups)
-        self.segment_groups_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Include)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Include.subclass:
-            return Include.subclass(*args_, **kwargs_)
-        else:
-            return Include(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NmlId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NmlId_patterns_,
-                    )
-                )
-
-    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Include",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Include")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Include":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Include"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Include",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="Include"
-    ):
-        if (
-            self.segment_groups is not None
-            and "segment_groups" not in already_processed
-        ):
-            already_processed.add("segment_groups")
-            outfile.write(
-                " segmentGroup=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.segment_groups), input_name="segmentGroup"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Include",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("segmentGroup", node)
-        if value is not None and "segmentGroup" not in already_processed:
-            already_processed.add("segmentGroup")
-            self.segment_groups = value
-            self.validate_NmlId(self.segment_groups)  # validate type NmlId
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class Include
-
-
-class Path(GeneratedsSuper):
-    """Path -- Include all the  **segment** s between those specified by  **from**  and  **to** , inclusive"""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "from_",
-            "SegmentEndPoint",
-            0,
-            1,
-            {"minOccurs": "0", "name": "from", "type": "SegmentEndPoint"},
-            None,
-        ),
-        MemberSpec_(
-            "to",
-            "SegmentEndPoint",
-            0,
-            1,
-            {"minOccurs": "0", "name": "to", "type": "SegmentEndPoint"},
-            None,
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(self, from_=None, to=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.from_ = from_
-        self.from__nsprefix_ = None
-        self.to = to
-        self.to_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Path)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Path.subclass:
-            return Path.subclass(*args_, **kwargs_)
-        else:
-            return Path(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if self.from_ is not None or self.to is not None:
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="Path",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Path")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Path":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Path"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Path",
-                pretty_print=pretty_print,
-            )
-            showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="Path"
-    ):
-        pass
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="Path",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.from_ is not None:
-            namespaceprefix_ = (
-                self.from__nsprefix_ + ":"
-                if (UseCapturedNS_ and self.from__nsprefix_)
-                else ""
-            )
-            self.from_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="from",
-                pretty_print=pretty_print,
-            )
-        if self.to is not None:
-            namespaceprefix_ = (
-                self.to_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.to_nsprefix_)
-                else ""
-            )
-            self.to.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="to",
-                pretty_print=pretty_print,
-            )
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        if nodeName_ == "from":
-            obj_ = SegmentEndPoint.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.from_ = obj_
-            obj_.original_tagname_ = "from"
-        elif nodeName_ == "to":
-            obj_ = SegmentEndPoint.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.to = obj_
-            obj_.original_tagname_ = "to"
-
-
-# end class Path
-
-
-class SubTree(GeneratedsSuper):
-    """SubTree -- Include all the  **segment** s distal to that specified by  **from**  in the  **segmentGroup**"""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "from_",
-            "SegmentEndPoint",
-            0,
-            1,
-            {"minOccurs": "0", "name": "from", "type": "SegmentEndPoint"},
-            3,
-        ),
-        MemberSpec_(
-            "to",
-            "SegmentEndPoint",
-            0,
-            1,
-            {"minOccurs": "0", "name": "to", "type": "SegmentEndPoint"},
-            3,
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(self, from_=None, to=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.from_ = from_
-        self.from__nsprefix_ = None
-        self.to = to
-        self.to_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, SubTree)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if SubTree.subclass:
-            return SubTree.subclass(*args_, **kwargs_)
-        else:
-            return SubTree(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if self.from_ is not None or self.to is not None:
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="SubTree",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("SubTree")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "SubTree":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="SubTree"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="SubTree",
-                pretty_print=pretty_print,
-            )
-            showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="SubTree"
-    ):
-        pass
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="SubTree",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.from_ is not None:
-            namespaceprefix_ = (
-                self.from__nsprefix_ + ":"
-                if (UseCapturedNS_ and self.from__nsprefix_)
-                else ""
-            )
-            self.from_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="from",
-                pretty_print=pretty_print,
-            )
-        if self.to is not None:
-            namespaceprefix_ = (
-                self.to_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.to_nsprefix_)
-                else ""
-            )
-            self.to.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="to",
-                pretty_print=pretty_print,
-            )
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        if nodeName_ == "from":
-            obj_ = SegmentEndPoint.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.from_ = obj_
-            obj_.original_tagname_ = "from"
-        elif nodeName_ == "to":
-            obj_ = SegmentEndPoint.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.to = obj_
-            obj_.original_tagname_ = "to"
-
-
-# end class SubTree
-
-
-class SegmentEndPoint(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "segments",
-            "NonNegativeInteger",
-            0,
-            0,
-            {"use": "required", "name": "segments"},
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(self, segments=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.segments = _cast(int, segments)
-        self.segments_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, SegmentEndPoint)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if SegmentEndPoint.subclass:
-            return SegmentEndPoint.subclass(*args_, **kwargs_)
-        else:
-            return SegmentEndPoint(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_NonNegativeInteger(self, value):
-        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            pass
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="SegmentEndPoint",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("SegmentEndPoint")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "SegmentEndPoint":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="SegmentEndPoint"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="SegmentEndPoint",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="SegmentEndPoint",
-    ):
-        if self.segments is not None and "segments" not in already_processed:
-            already_processed.add("segments")
-            outfile.write(
-                ' segment="%s"'
-                % self.gds_format_integer(self.segments, input_name="segment")
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="SegmentEndPoint",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("segment", node)
-        if value is not None and "segment" not in already_processed:
-            already_processed.add("segment")
-            self.segments = self.gds_parse_integer(value, node, "segment")
-            if self.segments < 0:
-                raise_parse_error(node, "Invalid NonNegativeInteger")
-            self.validate_NonNegativeInteger(
-                self.segments
-            )  # validate type NonNegativeInteger
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class SegmentEndPoint
-
-
 class VariableParameter(GeneratedsSuper):
     """VariableParameter -- Specifies a **parameter**  ( e. g. condDensity ) which can vary its value across a **segmentGroup.**  The value is calculated from **value**  attribute of the  **inhomogeneousValue**  subelement. This element is normally a child of  **channelDensityNonUniform** ,  **channelDensityNonUniformNernst**  or  **channelDensityNonUniformGHK**  and is used to calculate the value of the conductance, etc. which will vary on different parts of the cell. The **segmentGroup**  specified here needs to define an  **inhomogeneousParameter**  ( referenced from **inhomogeneousParameter**  in the  **inhomogeneousValue**  ), which calculates a **variable**  ( e. g. p ) varying across the cell ( e. g. based on the path length from soma ), which is then used in the **value**  attribute of the  **inhomogeneousValue**  ( so for example condDensity = f( p ) )"""
 
@@ -8493,2990 +3149,20 @@ class VariableParameter(GeneratedsSuper):
 # end class VariableParameter
 
 
-class InhomogeneousValue(GeneratedsSuper):
-    """InhomogeneousValue -- Specifies the **value**  of an **inhomogeneousParameter.**  For usage see  **variableParameter**"""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "inhomogeneous_parameters",
-            "xs:string",
-            0,
-            0,
-            {"use": "required", "name": "inhomogeneous_parameters"},
-        ),
-        MemberSpec_("value", "xs:string", 0, 0, {"use": "required", "name": "value"}),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self, inhomogeneous_parameters=None, value=None, gds_collector_=None, **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.inhomogeneous_parameters = _cast(None, inhomogeneous_parameters)
-        self.inhomogeneous_parameters_nsprefix_ = None
-        self.value = _cast(None, value)
-        self.value_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, InhomogeneousValue
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if InhomogeneousValue.subclass:
-            return InhomogeneousValue.subclass(*args_, **kwargs_)
-        else:
-            return InhomogeneousValue(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="InhomogeneousValue",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("InhomogeneousValue")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "InhomogeneousValue":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="InhomogeneousValue",
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="InhomogeneousValue",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="InhomogeneousValue",
-    ):
-        if (
-            self.inhomogeneous_parameters is not None
-            and "inhomogeneous_parameters" not in already_processed
-        ):
-            already_processed.add("inhomogeneous_parameters")
-            outfile.write(
-                " inhomogeneousParameter=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.inhomogeneous_parameters),
-                            input_name="inhomogeneousParameter",
-                        )
-                    ),
-                )
-            )
-        if self.value is not None and "value" not in already_processed:
-            already_processed.add("value")
-            outfile.write(
-                " value=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.value), input_name="value"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="InhomogeneousValue",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("inhomogeneousParameter", node)
-        if value is not None and "inhomogeneousParameter" not in already_processed:
-            already_processed.add("inhomogeneousParameter")
-            self.inhomogeneous_parameters = value
-        value = find_attr_value_("value", node)
-        if value is not None and "value" not in already_processed:
-            already_processed.add("value")
-            self.value = value
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class InhomogeneousValue
-
-
-class Species(GeneratedsSuper):
-    """Species -- Description of a chemical species identified by **ion,**  which has internal, **concentration,**  and external, **extConcentration**  values for its concentration
-    \n
-    :param initialConcentration:
-    :type initialConcentration: concentration
-    :param initialExtConcentration:
-    :type initialExtConcentration: concentration
-
-    """
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("id", "NmlId", 0, 0, {"use": "required", "name": "id"}),
-        MemberSpec_(
-            "concentration_model",
-            "NmlId",
-            0,
-            0,
-            {"use": "required", "name": "concentration_model"},
-        ),
-        MemberSpec_("ion", "NmlId", 0, 1, {"use": "optional", "name": "ion"}),
-        MemberSpec_(
-            "initial_concentration",
-            "Nml2Quantity_concentration",
-            0,
-            0,
-            {"use": "required", "name": "initial_concentration"},
-        ),
-        MemberSpec_(
-            "initial_ext_concentration",
-            "Nml2Quantity_concentration",
-            0,
-            0,
-            {"use": "required", "name": "initial_ext_concentration"},
-        ),
-        MemberSpec_(
-            "segment_groups",
-            "NmlId",
-            0,
-            1,
-            {"use": "optional", "name": "segment_groups"},
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self,
-        id=None,
-        concentration_model=None,
-        ion=None,
-        initial_concentration=None,
-        initial_ext_concentration=None,
-        segment_groups="all",
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.id = _cast(None, id)
-        self.id_nsprefix_ = None
-        self.concentration_model = _cast(None, concentration_model)
-        self.concentration_model_nsprefix_ = None
-        self.ion = _cast(None, ion)
-        self.ion_nsprefix_ = None
-        self.initial_concentration = _cast(None, initial_concentration)
-        self.initial_concentration_nsprefix_ = None
-        self.initial_ext_concentration = _cast(None, initial_ext_concentration)
-        self.initial_ext_concentration_nsprefix_ = None
-        self.segment_groups = _cast(None, segment_groups)
-        self.segment_groups_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Species)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Species.subclass:
-            return Species.subclass(*args_, **kwargs_)
-        else:
-            return Species(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NmlId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NmlId_patterns_,
-                    )
-                )
-
-    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
-
-    def validate_Nml2Quantity_concentration(self, value):
-        # Validate type Nml2Quantity_concentration, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_concentration_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_concentration_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_concentration_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM))$"]
-    ]
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Species",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Species")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Species":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Species"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Species",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="Species"
-    ):
-        if self.id is not None and "id" not in already_processed:
-            already_processed.add("id")
-            outfile.write(
-                " id=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(quote_attrib(self.id), input_name="id")
-                    ),
-                )
-            )
-        if (
-            self.concentration_model is not None
-            and "concentration_model" not in already_processed
-        ):
-            already_processed.add("concentration_model")
-            outfile.write(
-                " concentrationModel=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.concentration_model),
-                            input_name="concentrationModel",
-                        )
-                    ),
-                )
-            )
-        if self.ion is not None and "ion" not in already_processed:
-            already_processed.add("ion")
-            outfile.write(
-                " ion=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(quote_attrib(self.ion), input_name="ion")
-                    ),
-                )
-            )
-        if (
-            self.initial_concentration is not None
-            and "initial_concentration" not in already_processed
-        ):
-            already_processed.add("initial_concentration")
-            outfile.write(
-                " initialConcentration=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.initial_concentration),
-                            input_name="initialConcentration",
-                        )
-                    ),
-                )
-            )
-        if (
-            self.initial_ext_concentration is not None
-            and "initial_ext_concentration" not in already_processed
-        ):
-            already_processed.add("initial_ext_concentration")
-            outfile.write(
-                " initialExtConcentration=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.initial_ext_concentration),
-                            input_name="initialExtConcentration",
-                        )
-                    ),
-                )
-            )
-        if self.segment_groups != "all" and "segment_groups" not in already_processed:
-            already_processed.add("segment_groups")
-            outfile.write(
-                " segmentGroup=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.segment_groups), input_name="segmentGroup"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Species",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("id", node)
-        if value is not None and "id" not in already_processed:
-            already_processed.add("id")
-            self.id = value
-            self.validate_NmlId(self.id)  # validate type NmlId
-        value = find_attr_value_("concentrationModel", node)
-        if value is not None and "concentrationModel" not in already_processed:
-            already_processed.add("concentrationModel")
-            self.concentration_model = value
-            self.validate_NmlId(self.concentration_model)  # validate type NmlId
-        value = find_attr_value_("ion", node)
-        if value is not None and "ion" not in already_processed:
-            already_processed.add("ion")
-            self.ion = value
-            self.validate_NmlId(self.ion)  # validate type NmlId
-        value = find_attr_value_("initialConcentration", node)
-        if value is not None and "initialConcentration" not in already_processed:
-            already_processed.add("initialConcentration")
-            self.initial_concentration = value
-            self.validate_Nml2Quantity_concentration(
-                self.initial_concentration
-            )  # validate type Nml2Quantity_concentration
-        value = find_attr_value_("initialExtConcentration", node)
-        if value is not None and "initialExtConcentration" not in already_processed:
-            already_processed.add("initialExtConcentration")
-            self.initial_ext_concentration = value
-            self.validate_Nml2Quantity_concentration(
-                self.initial_ext_concentration
-            )  # validate type Nml2Quantity_concentration
-        value = find_attr_value_("segmentGroup", node)
-        if value is not None and "segmentGroup" not in already_processed:
-            already_processed.add("segmentGroup")
-            self.segment_groups = value
-            self.validate_NmlId(self.segment_groups)  # validate type NmlId
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class Species
-
-
-class ExtracellularPropertiesLocal(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "species",
-            "Species",
-            1,
-            1,
-            {
-                "maxOccurs": "unbounded",
-                "minOccurs": "0",
-                "name": "species",
-                "type": "Species",
-            },
-            None,
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(self, species=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        if species is None:
-            self.species = []
-        else:
-            self.species = species
-        self.species_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, ExtracellularPropertiesLocal
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if ExtracellularPropertiesLocal.subclass:
-            return ExtracellularPropertiesLocal.subclass(*args_, **kwargs_)
-        else:
-            return ExtracellularPropertiesLocal(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if self.species:
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="ExtracellularPropertiesLocal",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("ExtracellularPropertiesLocal")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if (
-            self.original_tagname_ is not None
-            and name_ == "ExtracellularPropertiesLocal"
-        ):
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="ExtracellularPropertiesLocal",
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="ExtracellularPropertiesLocal",
-                pretty_print=pretty_print,
-            )
-            showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="ExtracellularPropertiesLocal",
-    ):
-        pass
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="ExtracellularPropertiesLocal",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        for species_ in self.species:
-            namespaceprefix_ = (
-                self.species_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.species_nsprefix_)
-                else ""
-            )
-            species_.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="species",
-                pretty_print=pretty_print,
-            )
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        pass
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        if nodeName_ == "species":
-            obj_ = Species.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.species.append(obj_)
-            obj_.original_tagname_ = "species"
-
-
-# end class ExtracellularPropertiesLocal
-
-
-class SpaceStructure(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "x_spacing", "xs:float", 0, 1, {"use": "optional", "name": "x_spacing"}
-        ),
-        MemberSpec_(
-            "y_spacing", "xs:float", 0, 1, {"use": "optional", "name": "y_spacing"}
-        ),
-        MemberSpec_(
-            "z_spacing", "xs:float", 0, 1, {"use": "optional", "name": "z_spacing"}
-        ),
-        MemberSpec_(
-            "x_start", "xs:float", 0, 1, {"use": "optional", "name": "x_start"}
-        ),
-        MemberSpec_(
-            "y_start", "xs:float", 0, 1, {"use": "optional", "name": "y_start"}
-        ),
-        MemberSpec_(
-            "z_start", "xs:float", 0, 1, {"use": "optional", "name": "z_start"}
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self,
-        x_spacing=None,
-        y_spacing=None,
-        z_spacing=None,
-        x_start=0,
-        y_start=0,
-        z_start=0,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.x_spacing = _cast(float, x_spacing)
-        self.x_spacing_nsprefix_ = None
-        self.y_spacing = _cast(float, y_spacing)
-        self.y_spacing_nsprefix_ = None
-        self.z_spacing = _cast(float, z_spacing)
-        self.z_spacing_nsprefix_ = None
-        self.x_start = _cast(float, x_start)
-        self.x_start_nsprefix_ = None
-        self.y_start = _cast(float, y_start)
-        self.y_start_nsprefix_ = None
-        self.z_start = _cast(float, z_start)
-        self.z_start_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, SpaceStructure)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if SpaceStructure.subclass:
-            return SpaceStructure.subclass(*args_, **kwargs_)
-        else:
-            return SpaceStructure(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="SpaceStructure",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("SpaceStructure")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "SpaceStructure":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="SpaceStructure"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="SpaceStructure",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="SpaceStructure",
-    ):
-        if self.x_spacing is not None and "x_spacing" not in already_processed:
-            already_processed.add("x_spacing")
-            outfile.write(
-                ' xSpacing="%s"'
-                % self.gds_format_float(self.x_spacing, input_name="xSpacing")
-            )
-        if self.y_spacing is not None and "y_spacing" not in already_processed:
-            already_processed.add("y_spacing")
-            outfile.write(
-                ' ySpacing="%s"'
-                % self.gds_format_float(self.y_spacing, input_name="ySpacing")
-            )
-        if self.z_spacing is not None and "z_spacing" not in already_processed:
-            already_processed.add("z_spacing")
-            outfile.write(
-                ' zSpacing="%s"'
-                % self.gds_format_float(self.z_spacing, input_name="zSpacing")
-            )
-        if self.x_start != 0 and "x_start" not in already_processed:
-            already_processed.add("x_start")
-            outfile.write(
-                ' xStart="%s"'
-                % self.gds_format_float(self.x_start, input_name="xStart")
-            )
-        if self.y_start != 0 and "y_start" not in already_processed:
-            already_processed.add("y_start")
-            outfile.write(
-                ' yStart="%s"'
-                % self.gds_format_float(self.y_start, input_name="yStart")
-            )
-        if self.z_start != 0 and "z_start" not in already_processed:
-            already_processed.add("z_start")
-            outfile.write(
-                ' zStart="%s"'
-                % self.gds_format_float(self.z_start, input_name="zStart")
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="SpaceStructure",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("xSpacing", node)
-        if value is not None and "xSpacing" not in already_processed:
-            already_processed.add("xSpacing")
-            value = self.gds_parse_float(value, node, "xSpacing")
-            self.x_spacing = value
-        value = find_attr_value_("ySpacing", node)
-        if value is not None and "ySpacing" not in already_processed:
-            already_processed.add("ySpacing")
-            value = self.gds_parse_float(value, node, "ySpacing")
-            self.y_spacing = value
-        value = find_attr_value_("zSpacing", node)
-        if value is not None and "zSpacing" not in already_processed:
-            already_processed.add("zSpacing")
-            value = self.gds_parse_float(value, node, "zSpacing")
-            self.z_spacing = value
-        value = find_attr_value_("xStart", node)
-        if value is not None and "xStart" not in already_processed:
-            already_processed.add("xStart")
-            value = self.gds_parse_float(value, node, "xStart")
-            self.x_start = value
-        value = find_attr_value_("yStart", node)
-        if value is not None and "yStart" not in already_processed:
-            already_processed.add("yStart")
-            value = self.gds_parse_float(value, node, "yStart")
-            self.y_start = value
-        value = find_attr_value_("zStart", node)
-        if value is not None and "zStart" not in already_processed:
-            already_processed.add("zStart")
-            value = self.gds_parse_float(value, node, "zStart")
-            self.z_start = value
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class SpaceStructure
-
-
-class Layout(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("spaces", "NmlId", 0, 1, {"use": "optional", "name": "spaces"}),
-        MemberSpec_(
-            "random",
-            "RandomLayout",
-            0,
-            0,
-            {"name": "random", "type": "RandomLayout"},
-            5,
-        ),
-        MemberSpec_(
-            "grid", "GridLayout", 0, 0, {"name": "grid", "type": "GridLayout"}, 5
-        ),
-        MemberSpec_(
-            "unstructured",
-            "UnstructuredLayout",
-            0,
-            0,
-            {"name": "unstructured", "type": "UnstructuredLayout"},
-            5,
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self,
-        spaces=None,
-        random=None,
-        grid=None,
-        unstructured=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.spaces = _cast(None, spaces)
-        self.spaces_nsprefix_ = None
-        self.random = random
-        self.random_nsprefix_ = None
-        self.grid = grid
-        self.grid_nsprefix_ = None
-        self.unstructured = unstructured
-        self.unstructured_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Layout)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Layout.subclass:
-            return Layout.subclass(*args_, **kwargs_)
-        else:
-            return Layout(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NmlId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NmlId_patterns_,
-                    )
-                )
-
-    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
-
-    def _hasContent(self):
-        if (
-            self.random is not None
-            or self.grid is not None
-            or self.unstructured is not None
-        ):
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="Layout",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Layout")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Layout":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Layout"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Layout",
-                pretty_print=pretty_print,
-            )
-            showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="Layout"
-    ):
-        if self.spaces is not None and "spaces" not in already_processed:
-            already_processed.add("spaces")
-            outfile.write(
-                " space=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.spaces), input_name="space"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="Layout",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.random is not None:
-            namespaceprefix_ = (
-                self.random_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.random_nsprefix_)
-                else ""
-            )
-            self.random.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="random",
-                pretty_print=pretty_print,
-            )
-        if self.grid is not None:
-            namespaceprefix_ = (
-                self.grid_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.grid_nsprefix_)
-                else ""
-            )
-            self.grid.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="grid",
-                pretty_print=pretty_print,
-            )
-        if self.unstructured is not None:
-            namespaceprefix_ = (
-                self.unstructured_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.unstructured_nsprefix_)
-                else ""
-            )
-            self.unstructured.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="unstructured",
-                pretty_print=pretty_print,
-            )
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("space", node)
-        if value is not None and "space" not in already_processed:
-            already_processed.add("space")
-            self.spaces = value
-            self.validate_NmlId(self.spaces)  # validate type NmlId
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        if nodeName_ == "random":
-            obj_ = RandomLayout.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.random = obj_
-            obj_.original_tagname_ = "random"
-        elif nodeName_ == "grid":
-            obj_ = GridLayout.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.grid = obj_
-            obj_.original_tagname_ = "grid"
-        elif nodeName_ == "unstructured":
-            obj_ = UnstructuredLayout.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.unstructured = obj_
-            obj_.original_tagname_ = "unstructured"
-
-
-# end class Layout
-
-
-class UnstructuredLayout(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "number",
-            "xs:nonNegativeInteger",
-            0,
-            1,
-            {"use": "optional", "name": "number"},
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(self, number=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.number = _cast(int, number)
-        self.number_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, UnstructuredLayout
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if UnstructuredLayout.subclass:
-            return UnstructuredLayout.subclass(*args_, **kwargs_)
-        else:
-            return UnstructuredLayout(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="UnstructuredLayout",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("UnstructuredLayout")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "UnstructuredLayout":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="UnstructuredLayout",
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="UnstructuredLayout",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="UnstructuredLayout",
-    ):
-        if self.number is not None and "number" not in already_processed:
-            already_processed.add("number")
-            outfile.write(
-                ' number="%s"'
-                % self.gds_format_integer(self.number, input_name="number")
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="UnstructuredLayout",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("number", node)
-        if value is not None and "number" not in already_processed:
-            already_processed.add("number")
-            self.number = self.gds_parse_integer(value, node, "number")
-            if self.number < 0:
-                raise_parse_error(node, "Invalid NonNegativeInteger")
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class UnstructuredLayout
-
-
-class RandomLayout(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "number",
-            "xs:nonNegativeInteger",
-            0,
-            1,
-            {"use": "optional", "name": "number"},
-        ),
-        MemberSpec_("regions", "NmlId", 0, 1, {"use": "optional", "name": "regions"}),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(self, number=None, regions=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.number = _cast(int, number)
-        self.number_nsprefix_ = None
-        self.regions = _cast(None, regions)
-        self.regions_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, RandomLayout)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if RandomLayout.subclass:
-            return RandomLayout.subclass(*args_, **kwargs_)
-        else:
-            return RandomLayout(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NmlId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NmlId_patterns_,
-                    )
-                )
-
-    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="RandomLayout",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("RandomLayout")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "RandomLayout":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="RandomLayout"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="RandomLayout",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="RandomLayout",
-    ):
-        if self.number is not None and "number" not in already_processed:
-            already_processed.add("number")
-            outfile.write(
-                ' number="%s"'
-                % self.gds_format_integer(self.number, input_name="number")
-            )
-        if self.regions is not None and "regions" not in already_processed:
-            already_processed.add("regions")
-            outfile.write(
-                " region=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.regions), input_name="region"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="RandomLayout",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("number", node)
-        if value is not None and "number" not in already_processed:
-            already_processed.add("number")
-            self.number = self.gds_parse_integer(value, node, "number")
-            if self.number < 0:
-                raise_parse_error(node, "Invalid NonNegativeInteger")
-        value = find_attr_value_("region", node)
-        if value is not None and "region" not in already_processed:
-            already_processed.add("region")
-            self.regions = value
-            self.validate_NmlId(self.regions)  # validate type NmlId
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class RandomLayout
-
-
-class GridLayout(GeneratedsSuper):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "x_size",
-            "xs:nonNegativeInteger",
-            0,
-            1,
-            {"use": "optional", "name": "x_size"},
-        ),
-        MemberSpec_(
-            "y_size",
-            "xs:nonNegativeInteger",
-            0,
-            1,
-            {"use": "optional", "name": "y_size"},
-        ),
-        MemberSpec_(
-            "z_size",
-            "xs:nonNegativeInteger",
-            0,
-            1,
-            {"use": "optional", "name": "z_size"},
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self, x_size=None, y_size=None, z_size=None, gds_collector_=None, **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.x_size = _cast(int, x_size)
-        self.x_size_nsprefix_ = None
-        self.y_size = _cast(int, y_size)
-        self.y_size_nsprefix_ = None
-        self.z_size = _cast(int, z_size)
-        self.z_size_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, GridLayout)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if GridLayout.subclass:
-            return GridLayout.subclass(*args_, **kwargs_)
-        else:
-            return GridLayout(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="GridLayout",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("GridLayout")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "GridLayout":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="GridLayout"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="GridLayout",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="GridLayout"
-    ):
-        if self.x_size is not None and "x_size" not in already_processed:
-            already_processed.add("x_size")
-            outfile.write(
-                ' xSize="%s"' % self.gds_format_integer(self.x_size, input_name="xSize")
-            )
-        if self.y_size is not None and "y_size" not in already_processed:
-            already_processed.add("y_size")
-            outfile.write(
-                ' ySize="%s"' % self.gds_format_integer(self.y_size, input_name="ySize")
-            )
-        if self.z_size is not None and "z_size" not in already_processed:
-            already_processed.add("z_size")
-            outfile.write(
-                ' zSize="%s"' % self.gds_format_integer(self.z_size, input_name="zSize")
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="GridLayout",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("xSize", node)
-        if value is not None and "xSize" not in already_processed:
-            already_processed.add("xSize")
-            self.x_size = self.gds_parse_integer(value, node, "xSize")
-            if self.x_size < 0:
-                raise_parse_error(node, "Invalid NonNegativeInteger")
-        value = find_attr_value_("ySize", node)
-        if value is not None and "ySize" not in already_processed:
-            already_processed.add("ySize")
-            self.y_size = self.gds_parse_integer(value, node, "ySize")
-            if self.y_size < 0:
-                raise_parse_error(node, "Invalid NonNegativeInteger")
-        value = find_attr_value_("zSize", node)
-        if value is not None and "zSize" not in already_processed:
-            already_processed.add("zSize")
-            self.z_size = self.gds_parse_integer(value, node, "zSize")
-            if self.z_size < 0:
-                raise_parse_error(node, "Invalid NonNegativeInteger")
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-
-# end class GridLayout
-
-
-class Instance(GeneratedsSuper):
-    """Instance -- Specifies a single instance of a component in a  **population**  ( placed at  **location**  )."""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "id", "xs:nonNegativeInteger", 0, 1, {"use": "optional", "name": "id"}
-        ),
-        MemberSpec_(
-            "i", "xs:nonNegativeInteger", 0, 1, {"use": "optional", "name": "i"}
-        ),
-        MemberSpec_(
-            "j", "xs:nonNegativeInteger", 0, 1, {"use": "optional", "name": "j"}
-        ),
-        MemberSpec_(
-            "k", "xs:nonNegativeInteger", 0, 1, {"use": "optional", "name": "k"}
-        ),
-        MemberSpec_(
-            "location", "Location", 0, 0, {"name": "location", "type": "Location"}, None
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self,
-        id=None,
-        i=None,
-        j=None,
-        k=None,
-        location=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.id = _cast(int, id)
-        self.id_nsprefix_ = None
-        self.i = _cast(int, i)
-        self.i_nsprefix_ = None
-        self.j = _cast(int, j)
-        self.j_nsprefix_ = None
-        self.k = _cast(int, k)
-        self.k_nsprefix_ = None
-        self.location = location
-        self.location_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Instance)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Instance.subclass:
-            return Instance.subclass(*args_, **kwargs_)
-        else:
-            return Instance(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if self.location is not None:
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="Instance",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Instance")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Instance":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Instance"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Instance",
-                pretty_print=pretty_print,
-            )
-            showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="Instance"
-    ):
-        if self.id is not None and "id" not in already_processed:
-            already_processed.add("id")
-            outfile.write(
-                ' id="%s"' % self.gds_format_integer(self.id, input_name="id")
-            )
-        if self.i is not None and "i" not in already_processed:
-            already_processed.add("i")
-            outfile.write(' i="%s"' % self.gds_format_integer(self.i, input_name="i"))
-        if self.j is not None and "j" not in already_processed:
-            already_processed.add("j")
-            outfile.write(' j="%s"' % self.gds_format_integer(self.j, input_name="j"))
-        if self.k is not None and "k" not in already_processed:
-            already_processed.add("k")
-            outfile.write(' k="%s"' % self.gds_format_integer(self.k, input_name="k"))
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
-        name_="Instance",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.location is not None:
-            namespaceprefix_ = (
-                self.location_nsprefix_ + ":"
-                if (UseCapturedNS_ and self.location_nsprefix_)
-                else ""
-            )
-            self.location.export(
-                outfile,
-                level,
-                namespaceprefix_,
-                namespacedef_="",
-                name_="location",
-                pretty_print=pretty_print,
-            )
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("id", node)
-        if value is not None and "id" not in already_processed:
-            already_processed.add("id")
-            self.id = self.gds_parse_integer(value, node, "id")
-            if self.id < 0:
-                raise_parse_error(node, "Invalid NonNegativeInteger")
-        value = find_attr_value_("i", node)
-        if value is not None and "i" not in already_processed:
-            already_processed.add("i")
-            self.i = self.gds_parse_integer(value, node, "i")
-            if self.i < 0:
-                raise_parse_error(node, "Invalid NonNegativeInteger")
-        value = find_attr_value_("j", node)
-        if value is not None and "j" not in already_processed:
-            already_processed.add("j")
-            self.j = self.gds_parse_integer(value, node, "j")
-            if self.j < 0:
-                raise_parse_error(node, "Invalid NonNegativeInteger")
-        value = find_attr_value_("k", node)
-        if value is not None and "k" not in already_processed:
-            already_processed.add("k")
-            self.k = self.gds_parse_integer(value, node, "k")
-            if self.k < 0:
-                raise_parse_error(node, "Invalid NonNegativeInteger")
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        if nodeName_ == "location":
-            obj_ = Location.factory(parent_object_=self)
-            obj_.build(child_, gds_collector_=gds_collector_)
-            self.location = obj_
-            obj_.original_tagname_ = "location"
-
-    def __str__(self):
-
-        return (
-            "Instance "
-            + str(self.id)
-            + (" at location: " + str(self.location) if self.location else "")
-        )
-
-    def __repr__(self):
-
-        return str(self)
-
-
-# end class Instance
-
-
-class Location(GeneratedsSuper):
-    """Location -- Specifies the ( x, y, z ) location of a single  **instance**  of a component in a  **population**
-    \n
-    :param x:
-    :type x: none
-    :param y:
-    :type y: none
-    :param z:
-    :type z: none
-
-    """
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("x", "xs:float", 0, 0, {"use": "required", "name": "x"}),
-        MemberSpec_("y", "xs:float", 0, 0, {"use": "required", "name": "y"}),
-        MemberSpec_("z", "xs:float", 0, 0, {"use": "required", "name": "z"}),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(self, x=None, y=None, z=None, gds_collector_=None, **kwargs_):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.x = _cast(float, x)
-        self.x_nsprefix_ = None
-        self.y = _cast(float, y)
-        self.y_nsprefix_ = None
-        self.z = _cast(float, z)
-        self.z_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Location)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Location.subclass:
-            return Location.subclass(*args_, **kwargs_)
-        else:
-            return Location(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Location",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Location")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Location":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Location"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Location",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="Location"
-    ):
-        if self.x is not None and "x" not in already_processed:
-            already_processed.add("x")
-            outfile.write(' x="%s"' % self.gds_format_float(self.x, input_name="x"))
-        if self.y is not None and "y" not in already_processed:
-            already_processed.add("y")
-            outfile.write(' y="%s"' % self.gds_format_float(self.y, input_name="y"))
-        if self.z is not None and "z" not in already_processed:
-            already_processed.add("z")
-            outfile.write(' z="%s"' % self.gds_format_float(self.z, input_name="z"))
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Location",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("x", node)
-        if value is not None and "x" not in already_processed:
-            already_processed.add("x")
-            value = self.gds_parse_float(value, node, "x")
-            self.x = value
-        value = find_attr_value_("y", node)
-        if value is not None and "y" not in already_processed:
-            already_processed.add("y")
-            value = self.gds_parse_float(value, node, "y")
-            self.y = value
-        value = find_attr_value_("z", node)
-        if value is not None and "z" not in already_processed:
-            already_processed.add("z")
-            value = self.gds_parse_float(value, node, "z")
-            self.z = value
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-    def _format(self, value):
-
-        if int(value) == value:
-            return str(int(value))
-        else:
-            return "%.4f" % value
-
-    def __str__(self):
-
-        return (
-            "("
-            + self._format(self.x)
-            + ", "
-            + self._format(self.y)
-            + ", "
-            + self._format(self.z)
-            + ")"
-        )
-
-    def __repr__(self):
-
-        return str(self)
-
-
-# end class Location
-
-
-class ExplicitInput(GeneratedsSuper):
-    """ExplicitInput -- An explicit input ( anything which extends  **basePointCurrent**  ) to a target cell in a population"""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("target", "xs:string", 0, 0, {"use": "required", "name": "target"}),
-        MemberSpec_("input", "xs:string", 0, 0, {"use": "required", "name": "input"}),
-        MemberSpec_(
-            "destination", "xs:string", 0, 1, {"use": "optional", "name": "destination"}
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self, target=None, input=None, destination=None, gds_collector_=None, **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.target = _cast(None, target)
-        self.target_nsprefix_ = None
-        self.input = _cast(None, input)
-        self.input_nsprefix_ = None
-        self.destination = _cast(None, destination)
-        self.destination_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, ExplicitInput)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if ExplicitInput.subclass:
-            return ExplicitInput.subclass(*args_, **kwargs_)
-        else:
-            return ExplicitInput(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="ExplicitInput",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("ExplicitInput")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "ExplicitInput":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="ExplicitInput"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="ExplicitInput",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="ExplicitInput",
-    ):
-        if self.target is not None and "target" not in already_processed:
-            already_processed.add("target")
-            outfile.write(
-                " target=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.target), input_name="target"
-                        )
-                    ),
-                )
-            )
-        if self.input is not None and "input" not in already_processed:
-            already_processed.add("input")
-            outfile.write(
-                " input=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.input), input_name="input"
-                        )
-                    ),
-                )
-            )
-        if self.destination is not None and "destination" not in already_processed:
-            already_processed.add("destination")
-            outfile.write(
-                " destination=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.destination), input_name="destination"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="ExplicitInput",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("target", node)
-        if value is not None and "target" not in already_processed:
-            already_processed.add("target")
-            self.target = value
-        value = find_attr_value_("input", node)
-        if value is not None and "input" not in already_processed:
-            already_processed.add("input")
-            self.input = value
-        value = find_attr_value_("destination", node)
-        if value is not None and "destination" not in already_processed:
-            already_processed.add("destination")
-            self.destination = value
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-    def _get_cell_id(self, id_string):
-        if "[" in id_string:
-            return int(id_string.split("[")[1].split("]")[0])
-        else:
-            return int(id_string.split("/")[2])
-
-    def get_target_cell_id(self):
-        """Get ID of target cell."""
-
-        return self._get_cell_id(self.target)
-
-    def get_segment_id(self):
-        """Get the ID of the segment.
-
-        Returns 0 if segment_id was not set.
-        """
-        return int(self.segment_id) if self.segment_id else 0
-
-    def get_fraction_along(self):
-        """Get fraction along.
-
-        Returns 0.5 is fraction_along was not set.
-        """
-
-        return float(self.fraction_along) if self.fraction_along else 0.5
-
-    def __str__(self):
-
-        return (
-            "Input "
-            + str(self.id)
-            + ": "
-            + str(self.get_target_cell_id())
-            + ":"
-            + str(self.get_segment_id())
-            + "("
-            + "%.6f" % self.get_fraction_along()
-            + ")"
-        )
-
-    def get_target_cell_id(
-        self,
-    ):
-        """Get target cell ID"""
-        if "[" in self.target:
-            return int(self.target.split("[")[1].split("]")[0])
-        else:
-            return int(self.target.split("/")[2])
-
-    def get_target_population(
-        self,
-    ):
-        """Get target population."""
-        if "[" in self.target:
-            return self.target.split("[")[0]
-        else:
-            return self.target.split("/")[0]
-
-    def __str__(self):
-
-        dest = self.destination if self.destination else "unspecified"
-        return (
-            "Explicit Input of type "
-            + str(self.input)
-            + " to "
-            + self.get_target_population()
-            + "(cell "
-            + str(self.get_target_cell_id())
-            + "), destination: "
-            + dest
-        )
-
-    # end class ExplicitInput
-
-
-class Input(GeneratedsSuper):
-    """Input -- Specifies a single input to a **target,**  optionally giving the **segmentId**  ( default 0 ) and **fractionAlong**  the segment ( default 0. 5 )."""
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "id", "NonNegativeInteger", 0, 0, {"use": "required", "name": "id"}
-        ),
-        MemberSpec_("target", "xs:string", 0, 0, {"use": "required", "name": "target"}),
-        MemberSpec_(
-            "destination", "NmlId", 0, 0, {"use": "required", "name": "destination"}
-        ),
-        MemberSpec_(
-            "segment_id",
-            "NonNegativeInteger",
-            0,
-            1,
-            {"use": "optional", "name": "segment_id"},
-        ),
-        MemberSpec_(
-            "fraction_along",
-            "ZeroToOne",
-            0,
-            1,
-            {"use": "optional", "name": "fraction_along"},
-        ),
-    ]
-    subclass = None
-    superclass = None
-
-    def __init__(
-        self,
-        id=None,
-        target=None,
-        destination=None,
-        segment_id=None,
-        fraction_along=None,
-        extensiontype_=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        self.id = _cast(int, id)
-        self.id_nsprefix_ = None
-        self.target = _cast(None, target)
-        self.target_nsprefix_ = None
-        self.destination = _cast(None, destination)
-        self.destination_nsprefix_ = None
-        self.segment_id = _cast(int, segment_id)
-        self.segment_id_nsprefix_ = None
-        self.fraction_along = _cast(float, fraction_along)
-        self.fraction_along_nsprefix_ = None
-        self.extensiontype_ = extensiontype_
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, Input)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if Input.subclass:
-            return Input.subclass(*args_, **kwargs_)
-        else:
-            return Input(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_NonNegativeInteger(self, value):
-        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, int):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            pass
-
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NmlId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NmlId_patterns_,
-                    )
-                )
-
-    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
-
-    def validate_ZeroToOne(self, value):
-        # Validate type ZeroToOne, a restriction on xs:float.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, float):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (float)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if value < 0:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on ZeroToOne'
-                    % {"value": value, "lineno": lineno}
-                )
-                result = False
-            if value > 1:
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s does not match xsd maxInclusive restriction on ZeroToOne'
-                    % {"value": value, "lineno": lineno}
-                )
-                result = False
-
-    def _hasContent(self):
-        if ():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Input",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Input")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "Input":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="Input"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="Input",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="Input"
-    ):
-        if self.id is not None and "id" not in already_processed:
-            already_processed.add("id")
-            outfile.write(
-                ' id="%s"' % self.gds_format_integer(self.id, input_name="id")
-            )
-        if self.target is not None and "target" not in already_processed:
-            already_processed.add("target")
-            outfile.write(
-                " target=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.target), input_name="target"
-                        )
-                    ),
-                )
-            )
-        if self.destination is not None and "destination" not in already_processed:
-            already_processed.add("destination")
-            outfile.write(
-                " destination=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.destination), input_name="destination"
-                        )
-                    ),
-                )
-            )
-        if self.segment_id is not None and "segment_id" not in already_processed:
-            already_processed.add("segment_id")
-            outfile.write(
-                ' segmentId="%s"'
-                % self.gds_format_integer(self.segment_id, input_name="segmentId")
-            )
-        if (
-            self.fraction_along is not None
-            and "fraction_along" not in already_processed
-        ):
-            already_processed.add("fraction_along")
-            outfile.write(
-                ' fractionAlong="%s"'
-                % self.gds_format_float(self.fraction_along, input_name="fractionAlong")
-            )
-        if self.extensiontype_ is not None and "xsi:type" not in already_processed:
-            already_processed.add("xsi:type")
-            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
-            if ":" not in self.extensiontype_:
-                imported_ns_type_prefix_ = GenerateDSNamespaceTypePrefixes_.get(
-                    self.extensiontype_, ""
-                )
-                outfile.write(
-                    ' xsi:type="%s%s"' % (imported_ns_type_prefix_, self.extensiontype_)
-                )
-            else:
-                outfile.write(' xsi:type="%s"' % self.extensiontype_)
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="Input",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("id", node)
-        if value is not None and "id" not in already_processed:
-            already_processed.add("id")
-            self.id = self.gds_parse_integer(value, node, "id")
-            if self.id < 0:
-                raise_parse_error(node, "Invalid NonNegativeInteger")
-            self.validate_NonNegativeInteger(
-                self.id
-            )  # validate type NonNegativeInteger
-        value = find_attr_value_("target", node)
-        if value is not None and "target" not in already_processed:
-            already_processed.add("target")
-            self.target = value
-        value = find_attr_value_("destination", node)
-        if value is not None and "destination" not in already_processed:
-            already_processed.add("destination")
-            self.destination = value
-            self.validate_NmlId(self.destination)  # validate type NmlId
-        value = find_attr_value_("segmentId", node)
-        if value is not None and "segmentId" not in already_processed:
-            already_processed.add("segmentId")
-            self.segment_id = self.gds_parse_integer(value, node, "segmentId")
-            if self.segment_id < 0:
-                raise_parse_error(node, "Invalid NonNegativeInteger")
-            self.validate_NonNegativeInteger(
-                self.segment_id
-            )  # validate type NonNegativeInteger
-        value = find_attr_value_("fractionAlong", node)
-        if value is not None and "fractionAlong" not in already_processed:
-            already_processed.add("fractionAlong")
-            value = self.gds_parse_float(value, node, "fractionAlong")
-            self.fraction_along = value
-            self.validate_ZeroToOne(self.fraction_along)  # validate type ZeroToOne
-        value = find_attr_value_("xsi:type", node)
-        if value is not None and "xsi:type" not in already_processed:
-            already_processed.add("xsi:type")
-            self.extensiontype_ = value
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        pass
-
-    def _get_cell_id(self, id_string):
-        if "[" in id_string:
-            return int(id_string.split("[")[1].split("]")[0])
-        else:
-            return int(id_string.split("/")[2])
-
-    def get_target_cell_id(self):
-        """Get ID of target cell."""
-
-        return self._get_cell_id(self.target)
-
-    def get_segment_id(self):
-        """Get the ID of the segment.
-
-        Returns 0 if segment_id was not set.
-        """
-        return int(self.segment_id) if self.segment_id else 0
-
-    def get_fraction_along(self):
-        """Get fraction along.
-
-        Returns 0.5 is fraction_along was not set.
-        """
-
-        return float(self.fraction_along) if self.fraction_along else 0.5
-
-    def __str__(self):
-
-        return (
-            "Input "
-            + str(self.id)
-            + ": "
-            + str(self.get_target_cell_id())
-            + ":"
-            + str(self.get_segment_id())
-            + "("
-            + "%.6f" % self.get_fraction_along()
-            + ")"
-        )
-
-    # end class Input
-
-
-class InputW(Input):
-    """InputW -- Specifies input lists. Can set **weight**  to scale individual inputs.
-    \n
-    :param weight:
-    :type weight: none
-
-    """
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("weight", "xs:float", 0, 0, {"use": "required", "name": "weight"}),
-    ]
-    subclass = None
-    superclass = Input
-
-    def __init__(
-        self,
-        id=None,
-        target=None,
-        destination=None,
-        segment_id=None,
-        fraction_along=None,
-        weight=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        super(globals().get("InputW"), self).__init__(
-            id, target, destination, segment_id, fraction_along, **kwargs_
-        )
-        self.weight = _cast(float, weight)
-        self.weight_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(CurrentSubclassModule_, InputW)
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if InputW.subclass:
-            return InputW.subclass(*args_, **kwargs_)
-        else:
-            return InputW(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def _hasContent(self):
-        if super(InputW, self)._hasContent():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="InputW",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("InputW")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "InputW":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="InputW"
-        )
-        if self._hasContent():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="InputW",
-                pretty_print=pretty_print,
-            )
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self, outfile, level, already_processed, namespaceprefix_="", name_="InputW"
-    ):
-        super(InputW, self)._exportAttributes(
-            outfile, level, already_processed, namespaceprefix_, name_="InputW"
-        )
-        if self.weight is not None and "weight" not in already_processed:
-            already_processed.add("weight")
-            outfile.write(
-                ' weight="%s"' % self.gds_format_float(self.weight, input_name="weight")
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="InputW",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        super(InputW, self)._exportChildren(
-            outfile,
-            level,
-            namespaceprefix_,
-            namespacedef_,
-            name_,
-            True,
-            pretty_print=pretty_print,
-        )
-        pass
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("weight", node)
-        if value is not None and "weight" not in already_processed:
-            already_processed.add("weight")
-            value = self.gds_parse_float(value, node, "weight")
-            self.weight = value
-        super(InputW, self)._buildAttributes(node, attrs, already_processed)
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        super(InputW, self)._buildChildren(child_, node, nodeName_, True)
-        pass
-
-    def get_weight(self):
-        """Get weight.
-
-        If weight is not set, the default value of 1.0 is returned.
-        """
-
-        return float(self.weight) if self.weight != None else 1.0
-
-    def __str__(self):
-
-        return (
-            "Input (weight) "
-            + str(self.id)
-            + ": "
-            + str(self.get_target_cell_id())
-            + ":"
-            + str(self.get_segment_id())
-            + "("
-            + "%.6f" % self.get_fraction_along()
-            + "), weight: "
-            + "%.6f" % self.get_weight()
-        )
-
-    # end class InputW
-
-
 class BaseWithoutId(GeneratedsSuper):
     """BaseWithoutId -- Base element without ID specified *yet*, e.g. for an element with a particular requirement on its id which does not comply with NmlId (e.g. Segment needs nonNegativeInteger)."""
 
     __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_(
-            "neuro_lex_id",
-            "NeuroLexId",
-            0,
-            1,
-            {"use": "optional", "name": "neuro_lex_id"},
-        ),
-    ]
+    member_data_items_ = []
     subclass = None
     superclass = None
 
-    def __init__(
-        self, neuro_lex_id=None, extensiontype_=None, gds_collector_=None, **kwargs_
-    ):
+    def __init__(self, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        self.neuro_lex_id = _cast(None, neuro_lex_id)
-        self.neuro_lex_id_nsprefix_ = None
         self.extensiontype_ = extensiontype_
 
     def factory(*args_, **kwargs_):
@@ -11490,36 +3176,6 @@ class BaseWithoutId(GeneratedsSuper):
             return BaseWithoutId(*args_, **kwargs_)
 
     factory = staticmethod(factory)
-
-    def validate_NeuroLexId(self, value):
-        # Validate type NeuroLexId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NeuroLexId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NeuroLexId_patterns_,
-                    )
-                )
-
-    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if ():
@@ -11582,18 +3238,6 @@ class BaseWithoutId(GeneratedsSuper):
         namespaceprefix_="",
         name_="BaseWithoutId",
     ):
-        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
-            already_processed.add("neuro_lex_id")
-            outfile.write(
-                " neuroLexId=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
-                        )
-                    ),
-                )
-            )
         if self.extensiontype_ is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -11606,6 +3250,7 @@ class BaseWithoutId(GeneratedsSuper):
                 )
             else:
                 outfile.write(' xsi:type="%s"' % self.extensiontype_)
+        pass
 
     def _exportChildren(
         self,
@@ -11632,11 +3277,6 @@ class BaseWithoutId(GeneratedsSuper):
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("neuroLexId", node)
-        if value is not None and "neuroLexId" not in already_processed:
-            already_processed.add("neuroLexId")
-            self.neuro_lex_id = value
-            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         value = find_attr_value_("xsi:type", node)
         if value is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
@@ -11861,21 +3501,14 @@ class BaseNonNegativeIntegerId(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(
-        self,
-        neuro_lex_id=None,
-        id=None,
-        extensiontype_=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
+    def __init__(self, id=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseNonNegativeIntegerId"), self).__init__(
-            neuro_lex_id, extensiontype_, **kwargs_
+            extensiontype_, **kwargs_
         )
         self.id = _cast(int, id)
         self.id_nsprefix_ = None
@@ -12077,22 +3710,13 @@ class Base(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(
-        self,
-        neuro_lex_id=None,
-        id=None,
-        extensiontype_=None,
-        gds_collector_=None,
-        **kwargs_
-    ):
+    def __init__(self, id=None, extensiontype_=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Base"), self).__init__(
-            neuro_lex_id, extensiontype_, **kwargs_
-        )
+        super(globals().get("Base"), self).__init__(extensiontype_, **kwargs_)
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
         self.extensiontype_ = extensiontype_
@@ -12317,7 +3941,6 @@ class Standalone(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -12332,9 +3955,7 @@ class Standalone(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Standalone"), self).__init__(
-            neuro_lex_id, id, extensiontype_, **kwargs_
-        )
+        super(globals().get("Standalone"), self).__init__(id, extensiontype_, **kwargs_)
         self.metaid = _cast(None, metaid)
         self.metaid_nsprefix_ = None
         self.notes = notes
@@ -12658,7 +4279,6 @@ class SpikeSourcePoisson(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -12676,7 +4296,7 @@ class SpikeSourcePoisson(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeSourcePoisson"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.start = _cast(None, start)
         self.start_nsprefix_ = None
@@ -12939,6 +4559,377 @@ class SpikeSourcePoisson(Standalone):
 # end class SpikeSourcePoisson
 
 
+class Input(BaseNonNegativeIntegerId):
+    """Input -- Specifies a single input to a **target,**  optionally giving the **segmentId**  ( default 0 ) and **fractionAlong**  the segment ( default 0. 5 )."""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("target", "xs:string", 0, 0, {"use": "required", "name": "target"}),
+        MemberSpec_(
+            "destination", "NmlId", 0, 0, {"use": "required", "name": "destination"}
+        ),
+        MemberSpec_(
+            "segment_id",
+            "NonNegativeInteger",
+            0,
+            1,
+            {"use": "optional", "name": "segment_id"},
+        ),
+        MemberSpec_(
+            "fraction_along",
+            "ZeroToOne",
+            0,
+            1,
+            {"use": "optional", "name": "fraction_along"},
+        ),
+    ]
+    subclass = None
+    superclass = BaseNonNegativeIntegerId
+
+    def __init__(
+        self,
+        id=None,
+        target=None,
+        destination=None,
+        segment_id=None,
+        fraction_along=None,
+        extensiontype_=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Input"), self).__init__(id, extensiontype_, **kwargs_)
+        self.target = _cast(None, target)
+        self.target_nsprefix_ = None
+        self.destination = _cast(None, destination)
+        self.destination_nsprefix_ = None
+        self.segment_id = _cast(int, segment_id)
+        self.segment_id_nsprefix_ = None
+        self.fraction_along = _cast(float, fraction_along)
+        self.fraction_along_nsprefix_ = None
+        self.extensiontype_ = extensiontype_
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Input)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Input.subclass:
+            return Input.subclass(*args_, **kwargs_)
+        else:
+            return Input(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NmlId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NmlId_patterns_,
+                    )
+                )
+
+    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
+
+    def validate_NonNegativeInteger(self, value):
+        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, int):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            pass
+
+    def validate_ZeroToOne(self, value):
+        # Validate type ZeroToOne, a restriction on xs:float.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, float):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (float)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if value < 0:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on ZeroToOne'
+                    % {"value": value, "lineno": lineno}
+                )
+                result = False
+            if value > 1:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s does not match xsd maxInclusive restriction on ZeroToOne'
+                    % {"value": value, "lineno": lineno}
+                )
+                result = False
+
+    def _hasContent(self):
+        if super(Input, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Input",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Input")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Input":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Input"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Input",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Input"
+    ):
+        super(Input, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Input"
+        )
+        if self.target is not None and "target" not in already_processed:
+            already_processed.add("target")
+            outfile.write(
+                " target=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.target), input_name="target"
+                        )
+                    ),
+                )
+            )
+        if self.destination is not None and "destination" not in already_processed:
+            already_processed.add("destination")
+            outfile.write(
+                " destination=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.destination), input_name="destination"
+                        )
+                    ),
+                )
+            )
+        if self.segment_id is not None and "segment_id" not in already_processed:
+            already_processed.add("segment_id")
+            outfile.write(
+                ' segmentId="%s"'
+                % self.gds_format_integer(self.segment_id, input_name="segmentId")
+            )
+        if (
+            self.fraction_along is not None
+            and "fraction_along" not in already_processed
+        ):
+            already_processed.add("fraction_along")
+            outfile.write(
+                ' fractionAlong="%s"'
+                % self.gds_format_float(self.fraction_along, input_name="fractionAlong")
+            )
+        if self.extensiontype_ is not None and "xsi:type" not in already_processed:
+            already_processed.add("xsi:type")
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            if ":" not in self.extensiontype_:
+                imported_ns_type_prefix_ = GenerateDSNamespaceTypePrefixes_.get(
+                    self.extensiontype_, ""
+                )
+                outfile.write(
+                    ' xsi:type="%s%s"' % (imported_ns_type_prefix_, self.extensiontype_)
+                )
+            else:
+                outfile.write(' xsi:type="%s"' % self.extensiontype_)
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Input",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Input, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("target", node)
+        if value is not None and "target" not in already_processed:
+            already_processed.add("target")
+            self.target = value
+        value = find_attr_value_("destination", node)
+        if value is not None and "destination" not in already_processed:
+            already_processed.add("destination")
+            self.destination = value
+            self.validate_NmlId(self.destination)  # validate type NmlId
+        value = find_attr_value_("segmentId", node)
+        if value is not None and "segmentId" not in already_processed:
+            already_processed.add("segmentId")
+            self.segment_id = self.gds_parse_integer(value, node, "segmentId")
+            if self.segment_id < 0:
+                raise_parse_error(node, "Invalid NonNegativeInteger")
+            self.validate_NonNegativeInteger(
+                self.segment_id
+            )  # validate type NonNegativeInteger
+        value = find_attr_value_("fractionAlong", node)
+        if value is not None and "fractionAlong" not in already_processed:
+            already_processed.add("fractionAlong")
+            value = self.gds_parse_float(value, node, "fractionAlong")
+            self.fraction_along = value
+            self.validate_ZeroToOne(self.fraction_along)  # validate type ZeroToOne
+        value = find_attr_value_("xsi:type", node)
+        if value is not None and "xsi:type" not in already_processed:
+            already_processed.add("xsi:type")
+            self.extensiontype_ = value
+        super(Input, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(Input, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+    def _get_cell_id(self, id_string):
+        if "[" in id_string:
+            return int(id_string.split("[")[1].split("]")[0])
+        else:
+            return int(id_string.split("/")[2])
+
+    def get_target_cell_id(self):
+        """Get ID of target cell."""
+
+        return self._get_cell_id(self.target)
+
+    def get_segment_id(self):
+        """Get the ID of the segment.
+
+        Returns 0 if segment_id was not set.
+        """
+        return int(self.segment_id) if self.segment_id else 0
+
+    def get_fraction_along(self):
+        """Get fraction along.
+
+        Returns 0.5 is fraction_along was not set.
+        """
+
+        return float(self.fraction_along) if self.fraction_along else 0.5
+
+    def __str__(self):
+
+        return (
+            "Input "
+            + str(self.id)
+            + ": "
+            + str(self.get_target_cell_id())
+            + ":"
+            + str(self.get_segment_id())
+            + "("
+            + "%.6f" % self.get_fraction_along()
+            + ")"
+        )
+
+    # end class Input
+
+
 class InputList(Base):
     """InputList -- An explicit list of  **input** s to a **population.**"""
 
@@ -12982,7 +4973,6 @@ class InputList(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         populations=None,
         component=None,
@@ -12996,7 +4986,7 @@ class InputList(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("InputList"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("InputList"), self).__init__(id, **kwargs_)
         self.populations = _cast(None, populations)
         self.populations_nsprefix_ = None
         self.component = _cast(None, component)
@@ -13298,18 +5288,298 @@ class InputList(Base):
     # end class InputList
 
 
+class ExplicitInput(BaseWithoutId):
+    """ExplicitInput -- An explicit input ( anything which extends  **basePointCurrent**  ) to a target cell in a population"""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("target", "xs:string", 0, 0, {"use": "required", "name": "target"}),
+        MemberSpec_("input", "xs:string", 0, 0, {"use": "required", "name": "input"}),
+        MemberSpec_(
+            "destination", "xs:string", 0, 1, {"use": "optional", "name": "destination"}
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self, target=None, input=None, destination=None, gds_collector_=None, **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("ExplicitInput"), self).__init__(**kwargs_)
+        self.target = _cast(None, target)
+        self.target_nsprefix_ = None
+        self.input = _cast(None, input)
+        self.input_nsprefix_ = None
+        self.destination = _cast(None, destination)
+        self.destination_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, ExplicitInput)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if ExplicitInput.subclass:
+            return ExplicitInput.subclass(*args_, **kwargs_)
+        else:
+            return ExplicitInput(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(ExplicitInput, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="ExplicitInput",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("ExplicitInput")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "ExplicitInput":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="ExplicitInput"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="ExplicitInput",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="ExplicitInput",
+    ):
+        super(ExplicitInput, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="ExplicitInput"
+        )
+        if self.target is not None and "target" not in already_processed:
+            already_processed.add("target")
+            outfile.write(
+                " target=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.target), input_name="target"
+                        )
+                    ),
+                )
+            )
+        if self.input is not None and "input" not in already_processed:
+            already_processed.add("input")
+            outfile.write(
+                " input=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.input), input_name="input"
+                        )
+                    ),
+                )
+            )
+        if self.destination is not None and "destination" not in already_processed:
+            already_processed.add("destination")
+            outfile.write(
+                " destination=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.destination), input_name="destination"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="ExplicitInput",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(ExplicitInput, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("target", node)
+        if value is not None and "target" not in already_processed:
+            already_processed.add("target")
+            self.target = value
+        value = find_attr_value_("input", node)
+        if value is not None and "input" not in already_processed:
+            already_processed.add("input")
+            self.input = value
+        value = find_attr_value_("destination", node)
+        if value is not None and "destination" not in already_processed:
+            already_processed.add("destination")
+            self.destination = value
+        super(ExplicitInput, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(ExplicitInput, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+    def _get_cell_id(self, id_string):
+        if "[" in id_string:
+            return int(id_string.split("[")[1].split("]")[0])
+        else:
+            return int(id_string.split("/")[2])
+
+    def get_target_cell_id(self):
+        """Get ID of target cell."""
+
+        return self._get_cell_id(self.target)
+
+    def get_segment_id(self):
+        """Get the ID of the segment.
+
+        Returns 0 if segment_id was not set.
+        """
+        return int(self.segment_id) if self.segment_id else 0
+
+    def get_fraction_along(self):
+        """Get fraction along.
+
+        Returns 0.5 is fraction_along was not set.
+        """
+
+        return float(self.fraction_along) if self.fraction_along else 0.5
+
+    def __str__(self):
+
+        return (
+            "Input "
+            + str(self.id)
+            + ": "
+            + str(self.get_target_cell_id())
+            + ":"
+            + str(self.get_segment_id())
+            + "("
+            + "%.6f" % self.get_fraction_along()
+            + ")"
+        )
+
+    def get_target_cell_id(
+        self,
+    ):
+        """Get target cell ID"""
+        if "[" in self.target:
+            return int(self.target.split("[")[1].split("]")[0])
+        else:
+            return int(self.target.split("/")[2])
+
+    def get_target_population(
+        self,
+    ):
+        """Get target population."""
+        if "[" in self.target:
+            return self.target.split("[")[0]
+        else:
+            return self.target.split("/")[0]
+
+    def __str__(self):
+
+        dest = self.destination if self.destination else "unspecified"
+        return (
+            "Explicit Input of type "
+            + str(self.input)
+            + " to "
+            + self.get_target_population()
+            + "(cell "
+            + str(self.get_target_cell_id())
+            + "), destination: "
+            + dest
+        )
+
+    # end class ExplicitInput
+
+
 class BaseConnection(BaseNonNegativeIntegerId):
     """BaseConnection -- Base of all synaptic connections (chemical/electrical/analog, etc.) inside projections"""
 
     __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = []
+    member_data_items_ = [
+        MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
+    ]
     subclass = None
     superclass = BaseNonNegativeIntegerId
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -13320,8 +5590,10 @@ class BaseConnection(BaseNonNegativeIntegerId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConnection"), self).__init__(
-            neuro_lex_id, id, extensiontype_, **kwargs_
+            id, extensiontype_, **kwargs_
         )
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         self.extensiontype_ = extensiontype_
 
     def factory(*args_, **kwargs_):
@@ -13335,6 +5607,36 @@ class BaseConnection(BaseNonNegativeIntegerId):
             return BaseConnection(*args_, **kwargs_)
 
     factory = staticmethod(factory)
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if super(BaseConnection, self)._hasContent():
@@ -13400,6 +5702,18 @@ class BaseConnection(BaseNonNegativeIntegerId):
         super(BaseConnection, self)._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="BaseConnection"
         )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
+                        )
+                    ),
+                )
+            )
         if self.extensiontype_ is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -13447,6 +5761,11 @@ class BaseConnection(BaseNonNegativeIntegerId):
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         value = find_attr_value_("xsi:type", node)
         if value is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
@@ -13488,7 +5807,6 @@ class BaseProjection(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         presynaptic_population=None,
         postsynaptic_population=None,
@@ -13502,7 +5820,7 @@ class BaseProjection(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseProjection"), self).__init__(
-            neuro_lex_id, id, extensiontype_, **kwargs_
+            id, extensiontype_, **kwargs_
         )
         self.presynaptic_population = _cast(None, presynaptic_population)
         self.presynaptic_population_nsprefix_ = None
@@ -13726,6 +6044,13 @@ class SynapticConnection(BaseWithoutId):
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
+        MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
         MemberSpec_("from_", "xs:string", 0, 0, {"use": "required", "name": "from_"}),
         MemberSpec_("to", "xs:string", 0, 0, {"use": "required", "name": "to"}),
         MemberSpec_(
@@ -13753,9 +6078,9 @@ class SynapticConnection(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SynapticConnection"), self).__init__(
-            neuro_lex_id, **kwargs_
-        )
+        super(globals().get("SynapticConnection"), self).__init__(**kwargs_)
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
         self.to = _cast(None, to)
@@ -13778,6 +6103,36 @@ class SynapticConnection(BaseWithoutId):
             return SynapticConnection(*args_, **kwargs_)
 
     factory = staticmethod(factory)
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
@@ -13881,6 +6236,18 @@ class SynapticConnection(BaseWithoutId):
             namespaceprefix_,
             name_="SynapticConnection",
         )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
+                        )
+                    ),
+                )
+            )
         if self.from_ is not None and "from_" not in already_processed:
             already_processed.add("from_")
             outfile.write(
@@ -13962,6 +6329,11 @@ class SynapticConnection(BaseWithoutId):
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         value = find_attr_value_("from", node)
         if value is not None and "from" not in already_processed:
             already_processed.add("from")
@@ -14039,20 +6411,14 @@ class CellSet(Base):
     superclass = Base
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        id=None,
-        select=None,
-        anytypeobjs_=None,
-        gds_collector_=None,
-        **kwargs_
+        self, id=None, select=None, anytypeobjs_=None, gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("CellSet"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("CellSet"), self).__init__(id, **kwargs_)
         self.select = _cast(None, select)
         self.select_nsprefix_ = None
         if anytypeobjs_ is None:
@@ -14204,6 +6570,1301 @@ class CellSet(Base):
 # end class CellSet
 
 
+class Location(BaseWithoutId):
+    """Location -- Specifies the ( x, y, z ) location of a single  **instance**  of a component in a  **population**
+    \n
+    :param x:
+    :type x: none
+    :param y:
+    :type y: none
+    :param z:
+    :type z: none
+
+    """
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("x", "xs:float", 0, 0, {"use": "required", "name": "x"}),
+        MemberSpec_("y", "xs:float", 0, 0, {"use": "required", "name": "y"}),
+        MemberSpec_("z", "xs:float", 0, 0, {"use": "required", "name": "z"}),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(self, x=None, y=None, z=None, gds_collector_=None, **kwargs_):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Location"), self).__init__(**kwargs_)
+        self.x = _cast(float, x)
+        self.x_nsprefix_ = None
+        self.y = _cast(float, y)
+        self.y_nsprefix_ = None
+        self.z = _cast(float, z)
+        self.z_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Location)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Location.subclass:
+            return Location.subclass(*args_, **kwargs_)
+        else:
+            return Location(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(Location, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Location",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Location")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Location":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Location"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Location",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Location"
+    ):
+        super(Location, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Location"
+        )
+        if self.x is not None and "x" not in already_processed:
+            already_processed.add("x")
+            outfile.write(' x="%s"' % self.gds_format_float(self.x, input_name="x"))
+        if self.y is not None and "y" not in already_processed:
+            already_processed.add("y")
+            outfile.write(' y="%s"' % self.gds_format_float(self.y, input_name="y"))
+        if self.z is not None and "z" not in already_processed:
+            already_processed.add("z")
+            outfile.write(' z="%s"' % self.gds_format_float(self.z, input_name="z"))
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Location",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Location, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("x", node)
+        if value is not None and "x" not in already_processed:
+            already_processed.add("x")
+            value = self.gds_parse_float(value, node, "x")
+            self.x = value
+        value = find_attr_value_("y", node)
+        if value is not None and "y" not in already_processed:
+            already_processed.add("y")
+            value = self.gds_parse_float(value, node, "y")
+            self.y = value
+        value = find_attr_value_("z", node)
+        if value is not None and "z" not in already_processed:
+            already_processed.add("z")
+            value = self.gds_parse_float(value, node, "z")
+            self.z = value
+        super(Location, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(Location, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+    def _format(self, value):
+
+        if int(value) == value:
+            return str(int(value))
+        else:
+            return "%.4f" % value
+
+    def __str__(self):
+
+        return (
+            "("
+            + self._format(self.x)
+            + ", "
+            + self._format(self.y)
+            + ", "
+            + self._format(self.z)
+            + ")"
+        )
+
+    def __repr__(self):
+
+        return str(self)
+
+
+# end class Location
+
+
+class Instance(BaseWithoutId):
+    """Instance -- Specifies a single instance of a component in a  **population**  ( placed at  **location**  )."""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "id", "xs:nonNegativeInteger", 0, 1, {"use": "optional", "name": "id"}
+        ),
+        MemberSpec_(
+            "i", "xs:nonNegativeInteger", 0, 1, {"use": "optional", "name": "i"}
+        ),
+        MemberSpec_(
+            "j", "xs:nonNegativeInteger", 0, 1, {"use": "optional", "name": "j"}
+        ),
+        MemberSpec_(
+            "k", "xs:nonNegativeInteger", 0, 1, {"use": "optional", "name": "k"}
+        ),
+        MemberSpec_(
+            "location", "Location", 0, 0, {"name": "location", "type": "Location"}, None
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        id=None,
+        i=None,
+        j=None,
+        k=None,
+        location=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Instance"), self).__init__(**kwargs_)
+        self.id = _cast(int, id)
+        self.id_nsprefix_ = None
+        self.i = _cast(int, i)
+        self.i_nsprefix_ = None
+        self.j = _cast(int, j)
+        self.j_nsprefix_ = None
+        self.k = _cast(int, k)
+        self.k_nsprefix_ = None
+        self.location = location
+        self.location_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Instance)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Instance.subclass:
+            return Instance.subclass(*args_, **kwargs_)
+        else:
+            return Instance(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if self.location is not None or super(Instance, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="Instance",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Instance")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Instance":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Instance"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Instance",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Instance"
+    ):
+        super(Instance, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Instance"
+        )
+        if self.id is not None and "id" not in already_processed:
+            already_processed.add("id")
+            outfile.write(
+                ' id="%s"' % self.gds_format_integer(self.id, input_name="id")
+            )
+        if self.i is not None and "i" not in already_processed:
+            already_processed.add("i")
+            outfile.write(' i="%s"' % self.gds_format_integer(self.i, input_name="i"))
+        if self.j is not None and "j" not in already_processed:
+            already_processed.add("j")
+            outfile.write(' j="%s"' % self.gds_format_integer(self.j, input_name="j"))
+        if self.k is not None and "k" not in already_processed:
+            already_processed.add("k")
+            outfile.write(' k="%s"' % self.gds_format_integer(self.k, input_name="k"))
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="Instance",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Instance, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.location is not None:
+            namespaceprefix_ = (
+                self.location_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.location_nsprefix_)
+                else ""
+            )
+            self.location.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="location",
+                pretty_print=pretty_print,
+            )
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("id", node)
+        if value is not None and "id" not in already_processed:
+            already_processed.add("id")
+            self.id = self.gds_parse_integer(value, node, "id")
+            if self.id < 0:
+                raise_parse_error(node, "Invalid NonNegativeInteger")
+        value = find_attr_value_("i", node)
+        if value is not None and "i" not in already_processed:
+            already_processed.add("i")
+            self.i = self.gds_parse_integer(value, node, "i")
+            if self.i < 0:
+                raise_parse_error(node, "Invalid NonNegativeInteger")
+        value = find_attr_value_("j", node)
+        if value is not None and "j" not in already_processed:
+            already_processed.add("j")
+            self.j = self.gds_parse_integer(value, node, "j")
+            if self.j < 0:
+                raise_parse_error(node, "Invalid NonNegativeInteger")
+        value = find_attr_value_("k", node)
+        if value is not None and "k" not in already_processed:
+            already_processed.add("k")
+            self.k = self.gds_parse_integer(value, node, "k")
+            if self.k < 0:
+                raise_parse_error(node, "Invalid NonNegativeInteger")
+        super(Instance, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        if nodeName_ == "location":
+            obj_ = Location.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.location = obj_
+            obj_.original_tagname_ = "location"
+        super(Instance, self)._buildChildren(child_, node, nodeName_, True)
+
+    def __str__(self):
+
+        return (
+            "Instance "
+            + str(self.id)
+            + (" at location: " + str(self.location) if self.location else "")
+        )
+
+    def __repr__(self):
+
+        return str(self)
+
+
+# end class Instance
+
+
+class GridLayout(BaseWithoutId):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "x_size",
+            "xs:nonNegativeInteger",
+            0,
+            1,
+            {"use": "optional", "name": "x_size"},
+        ),
+        MemberSpec_(
+            "y_size",
+            "xs:nonNegativeInteger",
+            0,
+            1,
+            {"use": "optional", "name": "y_size"},
+        ),
+        MemberSpec_(
+            "z_size",
+            "xs:nonNegativeInteger",
+            0,
+            1,
+            {"use": "optional", "name": "z_size"},
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self, x_size=None, y_size=None, z_size=None, gds_collector_=None, **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("GridLayout"), self).__init__(**kwargs_)
+        self.x_size = _cast(int, x_size)
+        self.x_size_nsprefix_ = None
+        self.y_size = _cast(int, y_size)
+        self.y_size_nsprefix_ = None
+        self.z_size = _cast(int, z_size)
+        self.z_size_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, GridLayout)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if GridLayout.subclass:
+            return GridLayout.subclass(*args_, **kwargs_)
+        else:
+            return GridLayout(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(GridLayout, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="GridLayout",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("GridLayout")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "GridLayout":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="GridLayout"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="GridLayout",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="GridLayout"
+    ):
+        super(GridLayout, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="GridLayout"
+        )
+        if self.x_size is not None and "x_size" not in already_processed:
+            already_processed.add("x_size")
+            outfile.write(
+                ' xSize="%s"' % self.gds_format_integer(self.x_size, input_name="xSize")
+            )
+        if self.y_size is not None and "y_size" not in already_processed:
+            already_processed.add("y_size")
+            outfile.write(
+                ' ySize="%s"' % self.gds_format_integer(self.y_size, input_name="ySize")
+            )
+        if self.z_size is not None and "z_size" not in already_processed:
+            already_processed.add("z_size")
+            outfile.write(
+                ' zSize="%s"' % self.gds_format_integer(self.z_size, input_name="zSize")
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="GridLayout",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(GridLayout, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("xSize", node)
+        if value is not None and "xSize" not in already_processed:
+            already_processed.add("xSize")
+            self.x_size = self.gds_parse_integer(value, node, "xSize")
+            if self.x_size < 0:
+                raise_parse_error(node, "Invalid NonNegativeInteger")
+        value = find_attr_value_("ySize", node)
+        if value is not None and "ySize" not in already_processed:
+            already_processed.add("ySize")
+            self.y_size = self.gds_parse_integer(value, node, "ySize")
+            if self.y_size < 0:
+                raise_parse_error(node, "Invalid NonNegativeInteger")
+        value = find_attr_value_("zSize", node)
+        if value is not None and "zSize" not in already_processed:
+            already_processed.add("zSize")
+            self.z_size = self.gds_parse_integer(value, node, "zSize")
+            if self.z_size < 0:
+                raise_parse_error(node, "Invalid NonNegativeInteger")
+        super(GridLayout, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(GridLayout, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class GridLayout
+
+
+class RandomLayout(BaseWithoutId):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "number",
+            "xs:nonNegativeInteger",
+            0,
+            1,
+            {"use": "optional", "name": "number"},
+        ),
+        MemberSpec_("regions", "NmlId", 0, 1, {"use": "optional", "name": "regions"}),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(self, number=None, regions=None, gds_collector_=None, **kwargs_):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("RandomLayout"), self).__init__(**kwargs_)
+        self.number = _cast(int, number)
+        self.number_nsprefix_ = None
+        self.regions = _cast(None, regions)
+        self.regions_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, RandomLayout)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if RandomLayout.subclass:
+            return RandomLayout.subclass(*args_, **kwargs_)
+        else:
+            return RandomLayout(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NmlId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NmlId_patterns_,
+                    )
+                )
+
+    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
+
+    def _hasContent(self):
+        if super(RandomLayout, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="RandomLayout",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("RandomLayout")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "RandomLayout":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="RandomLayout"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="RandomLayout",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="RandomLayout",
+    ):
+        super(RandomLayout, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="RandomLayout"
+        )
+        if self.number is not None and "number" not in already_processed:
+            already_processed.add("number")
+            outfile.write(
+                ' number="%s"'
+                % self.gds_format_integer(self.number, input_name="number")
+            )
+        if self.regions is not None and "regions" not in already_processed:
+            already_processed.add("regions")
+            outfile.write(
+                " region=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.regions), input_name="region"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="RandomLayout",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(RandomLayout, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("number", node)
+        if value is not None and "number" not in already_processed:
+            already_processed.add("number")
+            self.number = self.gds_parse_integer(value, node, "number")
+            if self.number < 0:
+                raise_parse_error(node, "Invalid NonNegativeInteger")
+        value = find_attr_value_("region", node)
+        if value is not None and "region" not in already_processed:
+            already_processed.add("region")
+            self.regions = value
+            self.validate_NmlId(self.regions)  # validate type NmlId
+        super(RandomLayout, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(RandomLayout, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class RandomLayout
+
+
+class UnstructuredLayout(BaseWithoutId):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "number",
+            "xs:nonNegativeInteger",
+            0,
+            1,
+            {"use": "optional", "name": "number"},
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(self, number=None, gds_collector_=None, **kwargs_):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("UnstructuredLayout"), self).__init__(**kwargs_)
+        self.number = _cast(int, number)
+        self.number_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, UnstructuredLayout
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if UnstructuredLayout.subclass:
+            return UnstructuredLayout.subclass(*args_, **kwargs_)
+        else:
+            return UnstructuredLayout(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(UnstructuredLayout, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="UnstructuredLayout",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("UnstructuredLayout")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "UnstructuredLayout":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="UnstructuredLayout",
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="UnstructuredLayout",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="UnstructuredLayout",
+    ):
+        super(UnstructuredLayout, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="UnstructuredLayout",
+        )
+        if self.number is not None and "number" not in already_processed:
+            already_processed.add("number")
+            outfile.write(
+                ' number="%s"'
+                % self.gds_format_integer(self.number, input_name="number")
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="UnstructuredLayout",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(UnstructuredLayout, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("number", node)
+        if value is not None and "number" not in already_processed:
+            already_processed.add("number")
+            self.number = self.gds_parse_integer(value, node, "number")
+            if self.number < 0:
+                raise_parse_error(node, "Invalid NonNegativeInteger")
+        super(UnstructuredLayout, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(UnstructuredLayout, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class UnstructuredLayout
+
+
+class Layout(BaseWithoutId):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("spaces", "NmlId", 0, 1, {"use": "optional", "name": "spaces"}),
+        MemberSpec_(
+            "random",
+            "RandomLayout",
+            0,
+            0,
+            {"name": "random", "type": "RandomLayout"},
+            5,
+        ),
+        MemberSpec_(
+            "grid", "GridLayout", 0, 0, {"name": "grid", "type": "GridLayout"}, 5
+        ),
+        MemberSpec_(
+            "unstructured",
+            "UnstructuredLayout",
+            0,
+            0,
+            {"name": "unstructured", "type": "UnstructuredLayout"},
+            5,
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        spaces=None,
+        random=None,
+        grid=None,
+        unstructured=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Layout"), self).__init__(**kwargs_)
+        self.spaces = _cast(None, spaces)
+        self.spaces_nsprefix_ = None
+        self.random = random
+        self.random_nsprefix_ = None
+        self.grid = grid
+        self.grid_nsprefix_ = None
+        self.unstructured = unstructured
+        self.unstructured_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Layout)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Layout.subclass:
+            return Layout.subclass(*args_, **kwargs_)
+        else:
+            return Layout(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NmlId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NmlId_patterns_,
+                    )
+                )
+
+    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
+
+    def _hasContent(self):
+        if (
+            self.random is not None
+            or self.grid is not None
+            or self.unstructured is not None
+            or super(Layout, self)._hasContent()
+        ):
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="Layout",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Layout")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Layout":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Layout"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Layout",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Layout"
+    ):
+        super(Layout, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Layout"
+        )
+        if self.spaces is not None and "spaces" not in already_processed:
+            already_processed.add("spaces")
+            outfile.write(
+                " space=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.spaces), input_name="space"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="Layout",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Layout, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.random is not None:
+            namespaceprefix_ = (
+                self.random_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.random_nsprefix_)
+                else ""
+            )
+            self.random.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="random",
+                pretty_print=pretty_print,
+            )
+        if self.grid is not None:
+            namespaceprefix_ = (
+                self.grid_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.grid_nsprefix_)
+                else ""
+            )
+            self.grid.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="grid",
+                pretty_print=pretty_print,
+            )
+        if self.unstructured is not None:
+            namespaceprefix_ = (
+                self.unstructured_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.unstructured_nsprefix_)
+                else ""
+            )
+            self.unstructured.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="unstructured",
+                pretty_print=pretty_print,
+            )
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("space", node)
+        if value is not None and "space" not in already_processed:
+            already_processed.add("space")
+            self.spaces = value
+            self.validate_NmlId(self.spaces)  # validate type NmlId
+        super(Layout, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        if nodeName_ == "random":
+            obj_ = RandomLayout.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.random = obj_
+            obj_.original_tagname_ = "random"
+        elif nodeName_ == "grid":
+            obj_ = GridLayout.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.grid = obj_
+            obj_.original_tagname_ = "grid"
+        elif nodeName_ == "unstructured":
+            obj_ = UnstructuredLayout.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.unstructured = obj_
+            obj_.original_tagname_ = "unstructured"
+        super(Layout, self)._buildChildren(child_, node, nodeName_, True)
+
+
+# end class Layout
+
+
 class Population(Standalone):
     """Population -- A population of components, with just one parameter for the **size,**  i. e. number of components to create. Note: quite often this is used with type= **populationList**  which means the size is determined by the number of  **instance** s ( with  **location** s ) in the list. The **size**  attribute is still set, and there will be a validation error if this does not match the number in the list.
     \n
@@ -14231,6 +7892,13 @@ class Population(Standalone):
             {"use": "optional", "name": "extracellular_properties"},
         ),
         MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
+        MemberSpec_(
             "layout",
             "Layout",
             0,
@@ -14252,7 +7920,6 @@ class Population(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -14262,6 +7929,7 @@ class Population(Standalone):
         size=None,
         type=None,
         extracellular_properties=None,
+        neuro_lex_id=None,
         layout=None,
         instances=None,
         gds_collector_=None,
@@ -14273,7 +7941,7 @@ class Population(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Population"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.component = _cast(None, component)
         self.component_nsprefix_ = None
@@ -14283,6 +7951,8 @@ class Population(Standalone):
         self.type_nsprefix_ = None
         self.extracellular_properties = _cast(None, extracellular_properties)
         self.extracellular_properties_nsprefix_ = None
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         self.layout = layout
         self.layout_nsprefix_ = None
         if instances is None:
@@ -14378,6 +8048,36 @@ class Population(Standalone):
                     % {"value": encode_str_2_3(value), "lineno": lineno}
                 )
                 result = False
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if (
@@ -14488,6 +8188,18 @@ class Population(Standalone):
                     ),
                 )
             )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
+                        )
+                    ),
+                )
+            )
 
     def _exportChildren(
         self,
@@ -14578,6 +8290,11 @@ class Population(Standalone):
             already_processed.add("extracellularProperties")
             self.extracellular_properties = value
             self.validate_NmlId(self.extracellular_properties)  # validate type NmlId
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         super(Population, self)._buildAttributes(node, attrs, already_processed)
 
     def _buildChildren(
@@ -14673,20 +8390,14 @@ class Region(Base):
     superclass = Base
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        id=None,
-        spaces=None,
-        anytypeobjs_=None,
-        gds_collector_=None,
-        **kwargs_
+        self, id=None, spaces=None, anytypeobjs_=None, gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Region"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("Region"), self).__init__(id, **kwargs_)
         self.spaces = _cast(None, spaces)
         self.spaces_nsprefix_ = None
         if anytypeobjs_ is None:
@@ -14869,6 +8580,250 @@ class Region(Base):
 # end class Region
 
 
+class SpaceStructure(BaseWithoutId):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "x_spacing", "xs:float", 0, 1, {"use": "optional", "name": "x_spacing"}
+        ),
+        MemberSpec_(
+            "y_spacing", "xs:float", 0, 1, {"use": "optional", "name": "y_spacing"}
+        ),
+        MemberSpec_(
+            "z_spacing", "xs:float", 0, 1, {"use": "optional", "name": "z_spacing"}
+        ),
+        MemberSpec_(
+            "x_start", "xs:float", 0, 1, {"use": "optional", "name": "x_start"}
+        ),
+        MemberSpec_(
+            "y_start", "xs:float", 0, 1, {"use": "optional", "name": "y_start"}
+        ),
+        MemberSpec_(
+            "z_start", "xs:float", 0, 1, {"use": "optional", "name": "z_start"}
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        x_spacing=None,
+        y_spacing=None,
+        z_spacing=None,
+        x_start=0,
+        y_start=0,
+        z_start=0,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("SpaceStructure"), self).__init__(**kwargs_)
+        self.x_spacing = _cast(float, x_spacing)
+        self.x_spacing_nsprefix_ = None
+        self.y_spacing = _cast(float, y_spacing)
+        self.y_spacing_nsprefix_ = None
+        self.z_spacing = _cast(float, z_spacing)
+        self.z_spacing_nsprefix_ = None
+        self.x_start = _cast(float, x_start)
+        self.x_start_nsprefix_ = None
+        self.y_start = _cast(float, y_start)
+        self.y_start_nsprefix_ = None
+        self.z_start = _cast(float, z_start)
+        self.z_start_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, SpaceStructure)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if SpaceStructure.subclass:
+            return SpaceStructure.subclass(*args_, **kwargs_)
+        else:
+            return SpaceStructure(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(SpaceStructure, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="SpaceStructure",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("SpaceStructure")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "SpaceStructure":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="SpaceStructure"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="SpaceStructure",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="SpaceStructure",
+    ):
+        super(SpaceStructure, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="SpaceStructure"
+        )
+        if self.x_spacing is not None and "x_spacing" not in already_processed:
+            already_processed.add("x_spacing")
+            outfile.write(
+                ' xSpacing="%s"'
+                % self.gds_format_float(self.x_spacing, input_name="xSpacing")
+            )
+        if self.y_spacing is not None and "y_spacing" not in already_processed:
+            already_processed.add("y_spacing")
+            outfile.write(
+                ' ySpacing="%s"'
+                % self.gds_format_float(self.y_spacing, input_name="ySpacing")
+            )
+        if self.z_spacing is not None and "z_spacing" not in already_processed:
+            already_processed.add("z_spacing")
+            outfile.write(
+                ' zSpacing="%s"'
+                % self.gds_format_float(self.z_spacing, input_name="zSpacing")
+            )
+        if self.x_start != 0 and "x_start" not in already_processed:
+            already_processed.add("x_start")
+            outfile.write(
+                ' xStart="%s"'
+                % self.gds_format_float(self.x_start, input_name="xStart")
+            )
+        if self.y_start != 0 and "y_start" not in already_processed:
+            already_processed.add("y_start")
+            outfile.write(
+                ' yStart="%s"'
+                % self.gds_format_float(self.y_start, input_name="yStart")
+            )
+        if self.z_start != 0 and "z_start" not in already_processed:
+            already_processed.add("z_start")
+            outfile.write(
+                ' zStart="%s"'
+                % self.gds_format_float(self.z_start, input_name="zStart")
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="SpaceStructure",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(SpaceStructure, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("xSpacing", node)
+        if value is not None and "xSpacing" not in already_processed:
+            already_processed.add("xSpacing")
+            value = self.gds_parse_float(value, node, "xSpacing")
+            self.x_spacing = value
+        value = find_attr_value_("ySpacing", node)
+        if value is not None and "ySpacing" not in already_processed:
+            already_processed.add("ySpacing")
+            value = self.gds_parse_float(value, node, "ySpacing")
+            self.y_spacing = value
+        value = find_attr_value_("zSpacing", node)
+        if value is not None and "zSpacing" not in already_processed:
+            already_processed.add("zSpacing")
+            value = self.gds_parse_float(value, node, "zSpacing")
+            self.z_spacing = value
+        value = find_attr_value_("xStart", node)
+        if value is not None and "xStart" not in already_processed:
+            already_processed.add("xStart")
+            value = self.gds_parse_float(value, node, "xStart")
+            self.x_start = value
+        value = find_attr_value_("yStart", node)
+        if value is not None and "yStart" not in already_processed:
+            already_processed.add("yStart")
+            value = self.gds_parse_float(value, node, "yStart")
+            self.y_start = value
+        value = find_attr_value_("zStart", node)
+        if value is not None and "zStart" not in already_processed:
+            already_processed.add("zStart")
+            value = self.gds_parse_float(value, node, "zStart")
+            self.z_start = value
+        super(SpaceStructure, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(SpaceStructure, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class SpaceStructure
+
+
 class Space(Base):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -14888,20 +8843,14 @@ class Space(Base):
     superclass = Base
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        id=None,
-        based_on=None,
-        structure=None,
-        gds_collector_=None,
-        **kwargs_
+        self, id=None, based_on=None, structure=None, gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Space"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("Space"), self).__init__(id, **kwargs_)
         self.based_on = _cast(None, based_on)
         self.based_on_nsprefix_ = None
         self.structure = structure
@@ -15112,6 +9061,13 @@ class Network(Standalone):
             {"use": "optional", "name": "temperature"},
         ),
         MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
+        MemberSpec_(
             "spaces",
             "Space",
             1,
@@ -15255,7 +9211,6 @@ class Network(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -15263,6 +9218,7 @@ class Network(Standalone):
         annotation=None,
         type=None,
         temperature=None,
+        neuro_lex_id=None,
         spaces=None,
         regions=None,
         extracellular_properties=None,
@@ -15283,12 +9239,14 @@ class Network(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Network"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.temperature = _cast(None, temperature)
         self.temperature_nsprefix_ = None
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         if spaces is None:
             self.spaces = []
         else:
@@ -15416,6 +9374,36 @@ class Network(Standalone):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(degC))$"]
     ]
 
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
+
     def _hasContent(self):
         if (
             self.spaces
@@ -15509,6 +9497,18 @@ class Network(Standalone):
                     self.gds_encode(
                         self.gds_format_string(
                             quote_attrib(self.temperature), input_name="temperature"
+                        )
+                    ),
+                )
+            )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
                         )
                     ),
                 )
@@ -15717,6 +9717,11 @@ class Network(Standalone):
             self.validate_Nml2Quantity_temperature(
                 self.temperature
             )  # validate type Nml2Quantity_temperature
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         super(Network, self)._buildAttributes(node, attrs, already_processed)
 
     def _buildChildren(
@@ -15903,7 +9908,6 @@ class TransientPoissonFiringSynapse(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -15923,7 +9927,7 @@ class TransientPoissonFiringSynapse(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("TransientPoissonFiringSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.average_rate = _cast(None, average_rate)
         self.average_rate_nsprefix_ = None
@@ -16262,7 +10266,6 @@ class PoissonFiringSynapse(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -16280,7 +10283,7 @@ class PoissonFiringSynapse(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("PoissonFiringSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.average_rate = _cast(None, average_rate)
         self.average_rate_nsprefix_ = None
@@ -16530,7 +10533,6 @@ class SpikeGeneratorPoisson(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -16547,14 +10549,7 @@ class SpikeGeneratorPoisson(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeGeneratorPoisson"), self).__init__(
-            neuro_lex_id,
-            id,
-            metaid,
-            notes,
-            properties,
-            annotation,
-            extensiontype_,
-            **kwargs_
+            id, metaid, notes, properties, annotation, extensiontype_, **kwargs_
         )
         self.average_rate = _cast(None, average_rate)
         self.average_rate_nsprefix_ = None
@@ -16786,7 +10781,6 @@ class SpikeGeneratorRandom(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -16803,7 +10797,7 @@ class SpikeGeneratorRandom(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeGeneratorRandom"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.max_isi = _cast(None, max_isi)
         self.max_isi_nsprefix_ = None
@@ -17034,7 +11028,6 @@ class SpikeGenerator(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -17050,7 +11043,7 @@ class SpikeGenerator(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeGenerator"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.period = _cast(None, period)
         self.period_nsprefix_ = None
@@ -17261,7 +11254,6 @@ class TimedSynapticInput(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -17279,7 +11271,7 @@ class TimedSynapticInput(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("TimedSynapticInput"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.synapse = _cast(None, synapse)
         self.synapse_nsprefix_ = None
@@ -17533,7 +11525,6 @@ class SpikeArray(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -17549,7 +11540,7 @@ class SpikeArray(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeArray"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         if spikes is None:
             self.spikes = []
@@ -17714,15 +11705,13 @@ class Spike(BaseNonNegativeIntegerId):
     subclass = None
     superclass = BaseNonNegativeIntegerId
 
-    def __init__(
-        self, neuro_lex_id=None, id=None, time=None, gds_collector_=None, **kwargs_
-    ):
+    def __init__(self, id=None, time=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Spike"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("Spike"), self).__init__(id, **kwargs_)
         self.time = _cast(None, time)
         self.time_nsprefix_ = None
 
@@ -17962,7 +11951,6 @@ class VoltageClampTriple(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -17984,7 +11972,7 @@ class VoltageClampTriple(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("VoltageClampTriple"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.active = _cast(float, active)
         self.active_nsprefix_ = None
@@ -18445,7 +12433,6 @@ class VoltageClamp(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -18464,7 +12451,7 @@ class VoltageClamp(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("VoltageClamp"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -18828,7 +12815,6 @@ class CompoundInputDL(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -18846,7 +12832,7 @@ class CompoundInputDL(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("CompoundInputDL"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         if pulse_generator_dls is None:
             self.pulse_generator_dls = []
@@ -19102,7 +13088,6 @@ class CompoundInput(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -19120,7 +13105,7 @@ class CompoundInput(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("CompoundInput"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         if pulse_generators is None:
             self.pulse_generators = []
@@ -19381,7 +13366,6 @@ class RampGeneratorDL(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -19401,7 +13385,7 @@ class RampGeneratorDL(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("RampGeneratorDL"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -19763,7 +13747,6 @@ class RampGenerator(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -19783,7 +13766,7 @@ class RampGenerator(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("RampGenerator"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -20137,7 +14120,6 @@ class SineGeneratorDL(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -20157,7 +14139,7 @@ class SineGeneratorDL(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SineGeneratorDL"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -20499,7 +14481,6 @@ class SineGenerator(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -20519,7 +14500,7 @@ class SineGenerator(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SineGenerator"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -20883,7 +14864,6 @@ class PulseGeneratorDL(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -20901,7 +14881,7 @@ class PulseGeneratorDL(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("PulseGeneratorDL"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -21199,7 +15179,6 @@ class PulseGenerator(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -21217,7 +15196,7 @@ class PulseGenerator(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("PulseGenerator"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -21489,7 +15468,6 @@ class ReactionScheme(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         source=None,
         type=None,
@@ -21502,9 +15480,7 @@ class ReactionScheme(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ReactionScheme"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("ReactionScheme"), self).__init__(id, **kwargs_)
         self.source = _cast(None, source)
         self.source_nsprefix_ = None
         self.type = _cast(None, type)
@@ -21679,6 +15655,203 @@ class ReactionScheme(Base):
 # end class ReactionScheme
 
 
+class ExtracellularPropertiesLocal(Base):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "species",
+            "Species",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "species",
+                "type": "Species",
+            },
+            None,
+        ),
+    ]
+    subclass = None
+    superclass = Base
+
+    def __init__(self, id=None, species=None, gds_collector_=None, **kwargs_):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("ExtracellularPropertiesLocal"), self).__init__(
+            id, **kwargs_
+        )
+        if species is None:
+            self.species = []
+        else:
+            self.species = species
+        self.species_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, ExtracellularPropertiesLocal
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if ExtracellularPropertiesLocal.subclass:
+            return ExtracellularPropertiesLocal.subclass(*args_, **kwargs_)
+        else:
+            return ExtracellularPropertiesLocal(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if self.species or super(ExtracellularPropertiesLocal, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="ExtracellularPropertiesLocal",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("ExtracellularPropertiesLocal")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if (
+            self.original_tagname_ is not None
+            and name_ == "ExtracellularPropertiesLocal"
+        ):
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="ExtracellularPropertiesLocal",
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="ExtracellularPropertiesLocal",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="ExtracellularPropertiesLocal",
+    ):
+        super(ExtracellularPropertiesLocal, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="ExtracellularPropertiesLocal",
+        )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="ExtracellularPropertiesLocal",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(ExtracellularPropertiesLocal, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        for species_ in self.species:
+            namespaceprefix_ = (
+                self.species_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.species_nsprefix_)
+                else ""
+            )
+            species_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="species",
+                pretty_print=pretty_print,
+            )
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        super(ExtracellularPropertiesLocal, self)._buildAttributes(
+            node, attrs, already_processed
+        )
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        if nodeName_ == "species":
+            obj_ = Species.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.species.append(obj_)
+            obj_.original_tagname_ = "species"
+        super(ExtracellularPropertiesLocal, self)._buildChildren(
+            child_, node, nodeName_, True
+        )
+
+
+# end class ExtracellularPropertiesLocal
+
+
 class ExtracellularProperties(Base):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -21699,17 +15872,13 @@ class ExtracellularProperties(Base):
     subclass = None
     superclass = Base
 
-    def __init__(
-        self, neuro_lex_id=None, id=None, species=None, gds_collector_=None, **kwargs_
-    ):
+    def __init__(self, id=None, species=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ExtracellularProperties"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("ExtracellularProperties"), self).__init__(id, **kwargs_)
         if species is None:
             self.species = []
         else:
@@ -21912,7 +16081,6 @@ class IntracellularProperties(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         species=None,
         resistivities=None,
         extensiontype_=None,
@@ -21925,7 +16093,7 @@ class IntracellularProperties(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IntracellularProperties"), self).__init__(
-            neuro_lex_id, extensiontype_, **kwargs_
+            extensiontype_, **kwargs_
         )
         if species is None:
             self.species = []
@@ -22137,6 +16305,558 @@ class IntracellularProperties(BaseWithoutId):
 # end class IntracellularProperties
 
 
+class Species(Base):
+    """Species -- Description of a chemical species identified by **ion,**  which has internal, **concentration,**  and external, **extConcentration**  values for its concentration
+    \n
+    :param initialConcentration:
+    :type initialConcentration: concentration
+    :param initialExtConcentration:
+    :type initialExtConcentration: concentration
+
+    """
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "concentration_model",
+            "NmlId",
+            0,
+            0,
+            {"use": "required", "name": "concentration_model"},
+        ),
+        MemberSpec_("ion", "NmlId", 0, 1, {"use": "optional", "name": "ion"}),
+        MemberSpec_(
+            "initial_concentration",
+            "Nml2Quantity_concentration",
+            0,
+            0,
+            {"use": "required", "name": "initial_concentration"},
+        ),
+        MemberSpec_(
+            "initial_ext_concentration",
+            "Nml2Quantity_concentration",
+            0,
+            0,
+            {"use": "required", "name": "initial_ext_concentration"},
+        ),
+        MemberSpec_(
+            "segment_groups",
+            "NmlId",
+            0,
+            1,
+            {"use": "optional", "name": "segment_groups"},
+        ),
+    ]
+    subclass = None
+    superclass = Base
+
+    def __init__(
+        self,
+        id=None,
+        concentration_model=None,
+        ion=None,
+        initial_concentration=None,
+        initial_ext_concentration=None,
+        segment_groups="all",
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Species"), self).__init__(id, **kwargs_)
+        self.concentration_model = _cast(None, concentration_model)
+        self.concentration_model_nsprefix_ = None
+        self.ion = _cast(None, ion)
+        self.ion_nsprefix_ = None
+        self.initial_concentration = _cast(None, initial_concentration)
+        self.initial_concentration_nsprefix_ = None
+        self.initial_ext_concentration = _cast(None, initial_ext_concentration)
+        self.initial_ext_concentration_nsprefix_ = None
+        self.segment_groups = _cast(None, segment_groups)
+        self.segment_groups_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Species)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Species.subclass:
+            return Species.subclass(*args_, **kwargs_)
+        else:
+            return Species(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NmlId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NmlId_patterns_,
+                    )
+                )
+
+    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
+
+    def validate_Nml2Quantity_concentration(self, value):
+        # Validate type Nml2Quantity_concentration, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_concentration_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_concentration_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_concentration_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM))$"]
+    ]
+
+    def _hasContent(self):
+        if super(Species, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Species",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Species")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Species":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Species"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Species",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Species"
+    ):
+        super(Species, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Species"
+        )
+        if (
+            self.concentration_model is not None
+            and "concentration_model" not in already_processed
+        ):
+            already_processed.add("concentration_model")
+            outfile.write(
+                " concentrationModel=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.concentration_model),
+                            input_name="concentrationModel",
+                        )
+                    ),
+                )
+            )
+        if self.ion is not None and "ion" not in already_processed:
+            already_processed.add("ion")
+            outfile.write(
+                " ion=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(quote_attrib(self.ion), input_name="ion")
+                    ),
+                )
+            )
+        if (
+            self.initial_concentration is not None
+            and "initial_concentration" not in already_processed
+        ):
+            already_processed.add("initial_concentration")
+            outfile.write(
+                " initialConcentration=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.initial_concentration),
+                            input_name="initialConcentration",
+                        )
+                    ),
+                )
+            )
+        if (
+            self.initial_ext_concentration is not None
+            and "initial_ext_concentration" not in already_processed
+        ):
+            already_processed.add("initial_ext_concentration")
+            outfile.write(
+                " initialExtConcentration=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.initial_ext_concentration),
+                            input_name="initialExtConcentration",
+                        )
+                    ),
+                )
+            )
+        if self.segment_groups != "all" and "segment_groups" not in already_processed:
+            already_processed.add("segment_groups")
+            outfile.write(
+                " segmentGroup=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.segment_groups), input_name="segmentGroup"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Species",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Species, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("concentrationModel", node)
+        if value is not None and "concentrationModel" not in already_processed:
+            already_processed.add("concentrationModel")
+            self.concentration_model = value
+            self.validate_NmlId(self.concentration_model)  # validate type NmlId
+        value = find_attr_value_("ion", node)
+        if value is not None and "ion" not in already_processed:
+            already_processed.add("ion")
+            self.ion = value
+            self.validate_NmlId(self.ion)  # validate type NmlId
+        value = find_attr_value_("initialConcentration", node)
+        if value is not None and "initialConcentration" not in already_processed:
+            already_processed.add("initialConcentration")
+            self.initial_concentration = value
+            self.validate_Nml2Quantity_concentration(
+                self.initial_concentration
+            )  # validate type Nml2Quantity_concentration
+        value = find_attr_value_("initialExtConcentration", node)
+        if value is not None and "initialExtConcentration" not in already_processed:
+            already_processed.add("initialExtConcentration")
+            self.initial_ext_concentration = value
+            self.validate_Nml2Quantity_concentration(
+                self.initial_ext_concentration
+            )  # validate type Nml2Quantity_concentration
+        value = find_attr_value_("segmentGroup", node)
+        if value is not None and "segmentGroup" not in already_processed:
+            already_processed.add("segmentGroup")
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)  # validate type NmlId
+        super(Species, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(Species, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class Species
+
+
+class InhomogeneousValue(BaseWithoutId):
+    """InhomogeneousValue -- Specifies the **value**  of an **inhomogeneousParameter.**  For usage see  **variableParameter**"""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "inhomogeneous_parameters",
+            "xs:string",
+            0,
+            0,
+            {"use": "required", "name": "inhomogeneous_parameters"},
+        ),
+        MemberSpec_("value", "xs:string", 0, 0, {"use": "required", "name": "value"}),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self, inhomogeneous_parameters=None, value=None, gds_collector_=None, **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("InhomogeneousValue"), self).__init__(**kwargs_)
+        self.inhomogeneous_parameters = _cast(None, inhomogeneous_parameters)
+        self.inhomogeneous_parameters_nsprefix_ = None
+        self.value = _cast(None, value)
+        self.value_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, InhomogeneousValue
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if InhomogeneousValue.subclass:
+            return InhomogeneousValue.subclass(*args_, **kwargs_)
+        else:
+            return InhomogeneousValue(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(InhomogeneousValue, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="InhomogeneousValue",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("InhomogeneousValue")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "InhomogeneousValue":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="InhomogeneousValue",
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="InhomogeneousValue",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="InhomogeneousValue",
+    ):
+        super(InhomogeneousValue, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="InhomogeneousValue",
+        )
+        if (
+            self.inhomogeneous_parameters is not None
+            and "inhomogeneous_parameters" not in already_processed
+        ):
+            already_processed.add("inhomogeneous_parameters")
+            outfile.write(
+                " inhomogeneousParameter=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.inhomogeneous_parameters),
+                            input_name="inhomogeneousParameter",
+                        )
+                    ),
+                )
+            )
+        if self.value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            outfile.write(
+                " value=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.value), input_name="value"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="InhomogeneousValue",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(InhomogeneousValue, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("inhomogeneousParameter", node)
+        if value is not None and "inhomogeneousParameter" not in already_processed:
+            already_processed.add("inhomogeneousParameter")
+            self.inhomogeneous_parameters = value
+        value = find_attr_value_("value", node)
+        if value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            self.value = value
+        super(InhomogeneousValue, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(InhomogeneousValue, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class InhomogeneousValue
+
+
 class ChannelDensityGHK2(Base):
     """ChannelDensityGHK2 -- Time varying conductance density, **gDensity,**  which is distributed on an area of the cell, producing a current density **iDensity.**  Modified version of Jaffe et al. 1994 ( used also in Lawrence et al. 2006 ). See https://github.com/OpenSourceBrain/ghk-nernst.
     \n
@@ -22172,7 +16892,6 @@ class ChannelDensityGHK2(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         cond_density=None,
@@ -22187,9 +16906,7 @@ class ChannelDensityGHK2(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ChannelDensityGHK2"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("ChannelDensityGHK2"), self).__init__(id, **kwargs_)
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.cond_density = _cast(None, cond_density)
@@ -22518,7 +17235,6 @@ class ChannelDensityGHK(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         permeability=None,
@@ -22533,9 +17249,7 @@ class ChannelDensityGHK(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ChannelDensityGHK"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("ChannelDensityGHK"), self).__init__(id, **kwargs_)
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.permeability = _cast(None, permeability)
@@ -22875,7 +17589,6 @@ class ChannelDensityNernst(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         cond_density=None,
@@ -22893,7 +17606,7 @@ class ChannelDensityNernst(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityNernst"), self).__init__(
-            neuro_lex_id, id, extensiontype_, **kwargs_
+            id, extensiontype_, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -23293,7 +18006,6 @@ class ChannelDensity(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         cond_density=None,
@@ -23312,7 +18024,7 @@ class ChannelDensity(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensity"), self).__init__(
-            neuro_lex_id, id, extensiontype_, **kwargs_
+            id, extensiontype_, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -23739,7 +18451,6 @@ class ChannelDensityNonUniformGHK(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         ion=None,
@@ -23753,7 +18464,7 @@ class ChannelDensityNonUniformGHK(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityNonUniformGHK"), self).__init__(
-            neuro_lex_id, id, **kwargs_
+            id, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -24020,7 +18731,6 @@ class ChannelDensityNonUniformNernst(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         ion=None,
@@ -24034,7 +18744,7 @@ class ChannelDensityNonUniformNernst(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityNonUniformNernst"), self).__init__(
-            neuro_lex_id, id, **kwargs_
+            id, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -24311,7 +19021,6 @@ class ChannelDensityNonUniform(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         erev=None,
@@ -24325,9 +19034,7 @@ class ChannelDensityNonUniform(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ChannelDensityNonUniform"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("ChannelDensityNonUniform"), self).__init__(id, **kwargs_)
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.erev = _cast(None, erev)
@@ -24670,7 +19377,6 @@ class ChannelPopulation(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         number=None,
@@ -24687,9 +19393,7 @@ class ChannelPopulation(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ChannelPopulation"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("ChannelPopulation"), self).__init__(id, **kwargs_)
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.number = _cast(int, number)
@@ -25069,19 +19773,14 @@ class Resistivity(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        value=None,
-        segment_groups="all",
-        gds_collector_=None,
-        **kwargs_
+        self, value=None, segment_groups="all", gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Resistivity"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("Resistivity"), self).__init__(**kwargs_)
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.segment_groups = _cast(None, segment_groups)
@@ -25333,21 +20032,14 @@ class InitMembPotential(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        value=None,
-        segment_groups="all",
-        gds_collector_=None,
-        **kwargs_
+        self, value=None, segment_groups="all", gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("InitMembPotential"), self).__init__(
-            neuro_lex_id, **kwargs_
-        )
+        super(globals().get("InitMembPotential"), self).__init__(**kwargs_)
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.segment_groups = _cast(None, segment_groups)
@@ -25611,21 +20303,14 @@ class SpecificCapacitance(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        value=None,
-        segment_groups="all",
-        gds_collector_=None,
-        **kwargs_
+        self, value=None, segment_groups="all", gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SpecificCapacitance"), self).__init__(
-            neuro_lex_id, **kwargs_
-        )
+        super(globals().get("SpecificCapacitance"), self).__init__(**kwargs_)
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.segment_groups = _cast(None, segment_groups)
@@ -25889,19 +20574,14 @@ class SpikeThresh(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        value=None,
-        segment_groups="all",
-        gds_collector_=None,
-        **kwargs_
+        self, value=None, segment_groups="all", gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SpikeThresh"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("SpikeThresh"), self).__init__(**kwargs_)
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.segment_groups = _cast(None, segment_groups)
@@ -26295,7 +20975,6 @@ class MembraneProperties(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         channel_populations=None,
         channel_densities=None,
         channel_density_v_shifts=None,
@@ -26318,7 +20997,7 @@ class MembraneProperties(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("MembraneProperties"), self).__init__(
-            neuro_lex_id, extensiontype_, **kwargs_
+            extensiontype_, **kwargs_
         )
         if channel_populations is None:
             self.channel_populations = []
@@ -26829,7 +21508,6 @@ class BiophysicalProperties2CaPools(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -26847,7 +21525,7 @@ class BiophysicalProperties2CaPools(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BiophysicalProperties2CaPools"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.membrane_properties2_ca_pools = membrane_properties2_ca_pools
         self.membrane_properties2_ca_pools_nsprefix_ = None
@@ -27106,7 +21784,6 @@ class BiophysicalProperties(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -27124,7 +21801,7 @@ class BiophysicalProperties(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BiophysicalProperties"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.membrane_properties = membrane_properties
         self.membrane_properties_nsprefix_ = None
@@ -27335,6 +22012,1285 @@ class BiophysicalProperties(Standalone):
 # end class BiophysicalProperties
 
 
+class SegmentEndPoint(BaseWithoutId):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "segments",
+            "NonNegativeInteger",
+            0,
+            0,
+            {"use": "required", "name": "segments"},
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(self, segments=None, gds_collector_=None, **kwargs_):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("SegmentEndPoint"), self).__init__(**kwargs_)
+        self.segments = _cast(int, segments)
+        self.segments_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, SegmentEndPoint)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if SegmentEndPoint.subclass:
+            return SegmentEndPoint.subclass(*args_, **kwargs_)
+        else:
+            return SegmentEndPoint(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_NonNegativeInteger(self, value):
+        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, int):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            pass
+
+    def _hasContent(self):
+        if super(SegmentEndPoint, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="SegmentEndPoint",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("SegmentEndPoint")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "SegmentEndPoint":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="SegmentEndPoint"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="SegmentEndPoint",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="SegmentEndPoint",
+    ):
+        super(SegmentEndPoint, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="SegmentEndPoint"
+        )
+        if self.segments is not None and "segments" not in already_processed:
+            already_processed.add("segments")
+            outfile.write(
+                ' segment="%s"'
+                % self.gds_format_integer(self.segments, input_name="segment")
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="SegmentEndPoint",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(SegmentEndPoint, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("segment", node)
+        if value is not None and "segment" not in already_processed:
+            already_processed.add("segment")
+            self.segments = self.gds_parse_integer(value, node, "segment")
+            if self.segments < 0:
+                raise_parse_error(node, "Invalid NonNegativeInteger")
+            self.validate_NonNegativeInteger(
+                self.segments
+            )  # validate type NonNegativeInteger
+        super(SegmentEndPoint, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(SegmentEndPoint, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class SegmentEndPoint
+
+
+class SubTree(BaseWithoutId):
+    """SubTree -- Include all the  **segment** s distal to that specified by  **from**  in the  **segmentGroup**"""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "from_",
+            "SegmentEndPoint",
+            0,
+            1,
+            {"minOccurs": "0", "name": "from", "type": "SegmentEndPoint"},
+            3,
+        ),
+        MemberSpec_(
+            "to",
+            "SegmentEndPoint",
+            0,
+            1,
+            {"minOccurs": "0", "name": "to", "type": "SegmentEndPoint"},
+            3,
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(self, from_=None, to=None, gds_collector_=None, **kwargs_):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("SubTree"), self).__init__(**kwargs_)
+        self.from_ = from_
+        self.from__nsprefix_ = None
+        self.to = to
+        self.to_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, SubTree)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if SubTree.subclass:
+            return SubTree.subclass(*args_, **kwargs_)
+        else:
+            return SubTree(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if (
+            self.from_ is not None
+            or self.to is not None
+            or super(SubTree, self)._hasContent()
+        ):
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="SubTree",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("SubTree")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "SubTree":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="SubTree"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="SubTree",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="SubTree"
+    ):
+        super(SubTree, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="SubTree"
+        )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="SubTree",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(SubTree, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.from_ is not None:
+            namespaceprefix_ = (
+                self.from__nsprefix_ + ":"
+                if (UseCapturedNS_ and self.from__nsprefix_)
+                else ""
+            )
+            self.from_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="from",
+                pretty_print=pretty_print,
+            )
+        if self.to is not None:
+            namespaceprefix_ = (
+                self.to_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.to_nsprefix_)
+                else ""
+            )
+            self.to.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="to",
+                pretty_print=pretty_print,
+            )
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        super(SubTree, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        if nodeName_ == "from":
+            obj_ = SegmentEndPoint.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.from_ = obj_
+            obj_.original_tagname_ = "from"
+        elif nodeName_ == "to":
+            obj_ = SegmentEndPoint.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.to = obj_
+            obj_.original_tagname_ = "to"
+        super(SubTree, self)._buildChildren(child_, node, nodeName_, True)
+
+
+# end class SubTree
+
+
+class Path(BaseWithoutId):
+    """Path -- Include all the  **segment** s between those specified by  **from**  and  **to** , inclusive"""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "from_",
+            "SegmentEndPoint",
+            0,
+            1,
+            {"minOccurs": "0", "name": "from", "type": "SegmentEndPoint"},
+            None,
+        ),
+        MemberSpec_(
+            "to",
+            "SegmentEndPoint",
+            0,
+            1,
+            {"minOccurs": "0", "name": "to", "type": "SegmentEndPoint"},
+            None,
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(self, from_=None, to=None, gds_collector_=None, **kwargs_):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Path"), self).__init__(**kwargs_)
+        self.from_ = from_
+        self.from__nsprefix_ = None
+        self.to = to
+        self.to_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Path)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Path.subclass:
+            return Path.subclass(*args_, **kwargs_)
+        else:
+            return Path(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if (
+            self.from_ is not None
+            or self.to is not None
+            or super(Path, self)._hasContent()
+        ):
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="Path",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Path")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Path":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Path"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Path",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Path"
+    ):
+        super(Path, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Path"
+        )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="Path",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Path, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.from_ is not None:
+            namespaceprefix_ = (
+                self.from__nsprefix_ + ":"
+                if (UseCapturedNS_ and self.from__nsprefix_)
+                else ""
+            )
+            self.from_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="from",
+                pretty_print=pretty_print,
+            )
+        if self.to is not None:
+            namespaceprefix_ = (
+                self.to_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.to_nsprefix_)
+                else ""
+            )
+            self.to.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="to",
+                pretty_print=pretty_print,
+            )
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        super(Path, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        if nodeName_ == "from":
+            obj_ = SegmentEndPoint.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.from_ = obj_
+            obj_.original_tagname_ = "from"
+        elif nodeName_ == "to":
+            obj_ = SegmentEndPoint.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.to = obj_
+            obj_.original_tagname_ = "to"
+        super(Path, self)._buildChildren(child_, node, nodeName_, True)
+
+
+# end class Path
+
+
+class Include(BaseWithoutId):
+    """Include -- Include all members of another  **segmentGroup**  in this group"""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "segment_groups",
+            "NmlId",
+            0,
+            0,
+            {"use": "required", "name": "segment_groups"},
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(self, segment_groups=None, gds_collector_=None, **kwargs_):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Include"), self).__init__(**kwargs_)
+        self.segment_groups = _cast(None, segment_groups)
+        self.segment_groups_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Include)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Include.subclass:
+            return Include.subclass(*args_, **kwargs_)
+        else:
+            return Include(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NmlId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NmlId_patterns_,
+                    )
+                )
+
+    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
+
+    def _hasContent(self):
+        if super(Include, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Include",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Include")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Include":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Include"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Include",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Include"
+    ):
+        super(Include, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Include"
+        )
+        if (
+            self.segment_groups is not None
+            and "segment_groups" not in already_processed
+        ):
+            already_processed.add("segment_groups")
+            outfile.write(
+                " segmentGroup=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.segment_groups), input_name="segmentGroup"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Include",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Include, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("segmentGroup", node)
+        if value is not None and "segmentGroup" not in already_processed:
+            already_processed.add("segmentGroup")
+            self.segment_groups = value
+            self.validate_NmlId(self.segment_groups)  # validate type NmlId
+        super(Include, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(Include, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class Include
+
+
+class Member(BaseWithoutId):
+    """Member -- A single identified **segment**  which is part of the  **segmentGroup**"""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "segments",
+            "NonNegativeInteger",
+            0,
+            0,
+            {"use": "required", "name": "segments"},
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(self, segments=None, gds_collector_=None, **kwargs_):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Member"), self).__init__(**kwargs_)
+        self.segments = _cast(int, segments)
+        self.segments_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Member)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Member.subclass:
+            return Member.subclass(*args_, **kwargs_)
+        else:
+            return Member(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_NonNegativeInteger(self, value):
+        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, int):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            pass
+
+    def _hasContent(self):
+        if super(Member, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Member",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Member")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Member":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Member"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Member",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Member"
+    ):
+        super(Member, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Member"
+        )
+        if self.segments is not None and "segments" not in already_processed:
+            already_processed.add("segments")
+            outfile.write(
+                ' segment="%s"'
+                % self.gds_format_integer(self.segments, input_name="segment")
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Member",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Member, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("segment", node)
+        if value is not None and "segment" not in already_processed:
+            already_processed.add("segment")
+            self.segments = self.gds_parse_integer(value, node, "segment")
+            if self.segments < 0:
+                raise_parse_error(node, "Invalid NonNegativeInteger")
+            self.validate_NonNegativeInteger(
+                self.segments
+            )  # validate type NonNegativeInteger
+        super(Member, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(Member, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class Member
+
+
+class DistalDetails(BaseWithoutId):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "normalization_end",
+            "xs:double",
+            0,
+            0,
+            {"use": "required", "name": "normalization_end"},
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(self, normalization_end=None, gds_collector_=None, **kwargs_):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("DistalDetails"), self).__init__(**kwargs_)
+        self.normalization_end = _cast(float, normalization_end)
+        self.normalization_end_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, DistalDetails)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if DistalDetails.subclass:
+            return DistalDetails.subclass(*args_, **kwargs_)
+        else:
+            return DistalDetails(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(DistalDetails, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="DistalDetails",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("DistalDetails")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "DistalDetails":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="DistalDetails"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="DistalDetails",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="DistalDetails",
+    ):
+        super(DistalDetails, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="DistalDetails"
+        )
+        if (
+            self.normalization_end is not None
+            and "normalization_end" not in already_processed
+        ):
+            already_processed.add("normalization_end")
+            outfile.write(
+                ' normalizationEnd="%s"'
+                % self.gds_format_double(
+                    self.normalization_end, input_name="normalizationEnd"
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="DistalDetails",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(DistalDetails, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("normalizationEnd", node)
+        if value is not None and "normalizationEnd" not in already_processed:
+            already_processed.add("normalizationEnd")
+            value = self.gds_parse_double(value, node, "normalizationEnd")
+            self.normalization_end = value
+        super(DistalDetails, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(DistalDetails, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class DistalDetails
+
+
+class ProximalDetails(BaseWithoutId):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "translation_start",
+            "xs:double",
+            0,
+            0,
+            {"use": "required", "name": "translation_start"},
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(self, translation_start=None, gds_collector_=None, **kwargs_):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("ProximalDetails"), self).__init__(**kwargs_)
+        self.translation_start = _cast(float, translation_start)
+        self.translation_start_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, ProximalDetails)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if ProximalDetails.subclass:
+            return ProximalDetails.subclass(*args_, **kwargs_)
+        else:
+            return ProximalDetails(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(ProximalDetails, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="ProximalDetails",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("ProximalDetails")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "ProximalDetails":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="ProximalDetails"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="ProximalDetails",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="ProximalDetails",
+    ):
+        super(ProximalDetails, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="ProximalDetails"
+        )
+        if (
+            self.translation_start is not None
+            and "translation_start" not in already_processed
+        ):
+            already_processed.add("translation_start")
+            outfile.write(
+                ' translationStart="%s"'
+                % self.gds_format_double(
+                    self.translation_start, input_name="translationStart"
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="ProximalDetails",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(ProximalDetails, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("translationStart", node)
+        if value is not None and "translationStart" not in already_processed:
+            already_processed.add("translationStart")
+            value = self.gds_parse_double(value, node, "translationStart")
+            self.translation_start = value
+        super(ProximalDetails, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(ProximalDetails, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class ProximalDetails
+
+
 class InhomogeneousParameter(Base):
     """InhomogeneousParameter -- An inhomogeneous parameter specified across the  **segmentGroup**  ( see  **variableParameter**  for usage )."""
 
@@ -27366,7 +23322,6 @@ class InhomogeneousParameter(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         variable=None,
         metric=None,
@@ -27380,9 +23335,7 @@ class InhomogeneousParameter(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("InhomogeneousParameter"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("InhomogeneousParameter"), self).__init__(id, **kwargs_)
         self.variable = _cast(None, variable)
         self.variable_nsprefix_ = None
         self.metric = _cast(None, metric)
@@ -27640,6 +23593,13 @@ class SegmentGroup(Base):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
+        MemberSpec_(
             "notes",
             ["Notes", "xs:string"],
             0,
@@ -27739,8 +23699,8 @@ class SegmentGroup(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         notes=None,
         properties=None,
         annotation=None,
@@ -27757,7 +23717,9 @@ class SegmentGroup(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SegmentGroup"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("SegmentGroup"), self).__init__(id, **kwargs_)
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         self.notes = notes
         self.validate_Notes(self.notes)
         self.notes_nsprefix_ = None
@@ -27826,6 +23788,36 @@ class SegmentGroup(Base):
                 return False
             pass
         return result
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if (
@@ -27902,6 +23894,18 @@ class SegmentGroup(Base):
         super(SegmentGroup, self)._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="SegmentGroup"
         )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
+                        )
+                    ),
+                )
+            )
 
     def _exportChildren(
         self,
@@ -28058,6 +24062,11 @@ class SegmentGroup(Base):
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         super(SegmentGroup, self)._buildAttributes(node, attrs, already_processed)
 
     def _buildChildren(
@@ -28128,12 +24137,526 @@ class SegmentGroup(Base):
 # end class SegmentGroup
 
 
+class Point3DWithDiam(BaseWithoutId):
+    """Point3DWithDiam -- Base type for ComponentTypes which specify an ( **x,**  **y,**  **z**  ) coordinate along with a **diameter.**  Note: no dimension used in the attributes for these coordinates! These are assumed to have dimension micrometer ( 10^-6 m ). This is due to micrometers being the default option for the majority of neuronal morphology formats, and dimensions are omitted here to facilitate reading and writing of morphologies in NeuroML.
+    \n
+    :param x: x coordinate of the point. Note: no dimension used, see description of  **point3DWithDiam**  for details.
+    :type x: none
+    :param y: y coordinate of the ppoint. Note: no dimension used, see description of  **point3DWithDiam**  for details.
+    :type y: none
+    :param z: z coordinate of the ppoint. Note: no dimension used, see description of  **point3DWithDiam**  for details.
+    :type z: none
+    :param diameter: Diameter of the ppoint. Note: no dimension used, see description of  **point3DWithDiam**  for details.
+    :type diameter: none
+
+    """
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("x", "xs:double", 0, 0, {"use": "required", "name": "x"}),
+        MemberSpec_("y", "xs:double", 0, 0, {"use": "required", "name": "y"}),
+        MemberSpec_("z", "xs:double", 0, 0, {"use": "required", "name": "z"}),
+        MemberSpec_(
+            "diameter",
+            "DoubleGreaterThanZero",
+            0,
+            0,
+            {"use": "required", "name": "diameter"},
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self, x=None, y=None, z=None, diameter=None, gds_collector_=None, **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Point3DWithDiam"), self).__init__(**kwargs_)
+        self.x = _cast(float, x)
+        self.x_nsprefix_ = None
+        self.y = _cast(float, y)
+        self.y_nsprefix_ = None
+        self.z = _cast(float, z)
+        self.z_nsprefix_ = None
+        self.diameter = _cast(float, diameter)
+        self.diameter_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Point3DWithDiam)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Point3DWithDiam.subclass:
+            return Point3DWithDiam.subclass(*args_, **kwargs_)
+        else:
+            return Point3DWithDiam(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_DoubleGreaterThanZero(self, value):
+        # Validate type DoubleGreaterThanZero, a restriction on xs:double.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, float):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (float)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if value <= 0:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s does not match xsd minExclusive restriction on DoubleGreaterThanZero'
+                    % {"value": value, "lineno": lineno}
+                )
+                result = False
+
+    def _hasContent(self):
+        if super(Point3DWithDiam, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Point3DWithDiam",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Point3DWithDiam")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Point3DWithDiam":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Point3DWithDiam"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Point3DWithDiam",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="Point3DWithDiam",
+    ):
+        super(Point3DWithDiam, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Point3DWithDiam"
+        )
+        if self.x is not None and "x" not in already_processed:
+            already_processed.add("x")
+            outfile.write(' x="%s"' % self.gds_format_double(self.x, input_name="x"))
+        if self.y is not None and "y" not in already_processed:
+            already_processed.add("y")
+            outfile.write(' y="%s"' % self.gds_format_double(self.y, input_name="y"))
+        if self.z is not None and "z" not in already_processed:
+            already_processed.add("z")
+            outfile.write(' z="%s"' % self.gds_format_double(self.z, input_name="z"))
+        if self.diameter is not None and "diameter" not in already_processed:
+            already_processed.add("diameter")
+            outfile.write(
+                ' diameter="%s"'
+                % self.gds_format_double(self.diameter, input_name="diameter")
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Point3DWithDiam",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Point3DWithDiam, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("x", node)
+        if value is not None and "x" not in already_processed:
+            already_processed.add("x")
+            value = self.gds_parse_double(value, node, "x")
+            self.x = value
+        value = find_attr_value_("y", node)
+        if value is not None and "y" not in already_processed:
+            already_processed.add("y")
+            value = self.gds_parse_double(value, node, "y")
+            self.y = value
+        value = find_attr_value_("z", node)
+        if value is not None and "z" not in already_processed:
+            already_processed.add("z")
+            value = self.gds_parse_double(value, node, "z")
+            self.z = value
+        value = find_attr_value_("diameter", node)
+        if value is not None and "diameter" not in already_processed:
+            already_processed.add("diameter")
+            value = self.gds_parse_double(value, node, "diameter")
+            self.diameter = value
+            self.validate_DoubleGreaterThanZero(
+                self.diameter
+            )  # validate type DoubleGreaterThanZero
+        super(Point3DWithDiam, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(Point3DWithDiam, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+    def __str__(self):
+
+        return (
+            "("
+            + str(self.x)
+            + ", "
+            + str(self.y)
+            + ", "
+            + str(self.z)
+            + "), diam "
+            + str(self.diameter)
+            + "um"
+        )
+
+    def __repr__(self):
+
+        return str(self)
+
+    def distance_to(self, other_3d_point):
+        """Find the distance between this point and another.
+
+        :param other_3d_point: other 3D point to calculate distance to
+        :type other_3d_point: Point3DWithDiam
+        :returns: distance between the two points
+        :rtype: float
+        """
+        a_x = self.x
+        a_y = self.y
+        a_z = self.z
+
+        b_x = other_3d_point.x
+        b_y = other_3d_point.y
+        b_z = other_3d_point.z
+
+        distance = ((a_x - b_x) ** 2 + (a_y - b_y) ** 2 + (a_z - b_z) ** 2) ** (0.5)
+        return distance
+
+
+# end class Point3DWithDiam
+
+
+class SegmentParent(BaseWithoutId):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "segments",
+            "NonNegativeInteger",
+            0,
+            0,
+            {"use": "required", "name": "segments"},
+        ),
+        MemberSpec_(
+            "fraction_along",
+            "ZeroToOne",
+            0,
+            1,
+            {"use": "optional", "name": "fraction_along"},
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self, segments=None, fraction_along="1", gds_collector_=None, **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("SegmentParent"), self).__init__(**kwargs_)
+        self.segments = _cast(int, segments)
+        self.segments_nsprefix_ = None
+        self.fraction_along = _cast(float, fraction_along)
+        self.fraction_along_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, SegmentParent)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if SegmentParent.subclass:
+            return SegmentParent.subclass(*args_, **kwargs_)
+        else:
+            return SegmentParent(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_NonNegativeInteger(self, value):
+        # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, int):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (int)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            pass
+
+    def validate_ZeroToOne(self, value):
+        # Validate type ZeroToOne, a restriction on xs:float.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, float):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (float)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if value < 0:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on ZeroToOne'
+                    % {"value": value, "lineno": lineno}
+                )
+                result = False
+            if value > 1:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s does not match xsd maxInclusive restriction on ZeroToOne'
+                    % {"value": value, "lineno": lineno}
+                )
+                result = False
+
+    def _hasContent(self):
+        if super(SegmentParent, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="SegmentParent",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("SegmentParent")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "SegmentParent":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="SegmentParent"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="SegmentParent",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="SegmentParent",
+    ):
+        super(SegmentParent, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="SegmentParent"
+        )
+        if self.segments is not None and "segments" not in already_processed:
+            already_processed.add("segments")
+            outfile.write(
+                ' segment="%s"'
+                % self.gds_format_integer(self.segments, input_name="segment")
+            )
+        if self.fraction_along != 1 and "fraction_along" not in already_processed:
+            already_processed.add("fraction_along")
+            outfile.write(
+                ' fractionAlong="%s"'
+                % self.gds_format_float(self.fraction_along, input_name="fractionAlong")
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="SegmentParent",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(SegmentParent, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("segment", node)
+        if value is not None and "segment" not in already_processed:
+            already_processed.add("segment")
+            self.segments = self.gds_parse_integer(value, node, "segment")
+            if self.segments < 0:
+                raise_parse_error(node, "Invalid NonNegativeInteger")
+            self.validate_NonNegativeInteger(
+                self.segments
+            )  # validate type NonNegativeInteger
+        value = find_attr_value_("fractionAlong", node)
+        if value is not None and "fractionAlong" not in already_processed:
+            already_processed.add("fractionAlong")
+            value = self.gds_parse_float(value, node, "fractionAlong")
+            self.fraction_along = value
+            self.validate_ZeroToOne(self.fraction_along)  # validate type ZeroToOne
+        super(SegmentParent, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(SegmentParent, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class SegmentParent
+
+
 class Segment(BaseNonNegativeIntegerId):
     """Segment -- A segment defines the smallest unit within a possibly branching structure (  **morphology**  ), such as a dendrite or axon. Its **id**  should be a nonnegative integer ( usually soma/root = 0 ). Its end points are given by the  **proximal**  and  **distal**  points. The  **proximal**  point can be omitted, usually because it is the same as a point on the  **parent**  segment, see  **proximal**  for details.  **parent**  specifies the parent segment. The first segment of a  **cell**  ( with no  **parent**  ) usually represents the soma. The shape is normally a cylinder ( radii of the  **proximal**  and  **distal**  equal, but positions different ) or a conical frustum ( radii and positions different ). If the x, y, x positions of the  **proximal**  and  **distal**  are equal, the segment can be interpreted as a sphere, and in this case the radii of these points must be equal. NOTE: LEMS does not yet support multicompartmental modelling, so the Dynamics here is only appropriate for single compartment modelling."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("name", "xs:string", 0, 1, {"use": "optional", "name": "name"}),
+        MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
         MemberSpec_(
             "parent",
             "SegmentParent",
@@ -28164,9 +24687,9 @@ class Segment(BaseNonNegativeIntegerId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         name=None,
+        neuro_lex_id=None,
         parent=None,
         proximal=None,
         distal=None,
@@ -28178,9 +24701,11 @@ class Segment(BaseNonNegativeIntegerId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Segment"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("Segment"), self).__init__(id, **kwargs_)
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         self.parent = parent
         self.parent_nsprefix_ = None
         self.proximal = proximal
@@ -28199,6 +24724,36 @@ class Segment(BaseNonNegativeIntegerId):
             return Segment(*args_, **kwargs_)
 
     factory = staticmethod(factory)
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if (
@@ -28273,6 +24828,18 @@ class Segment(BaseNonNegativeIntegerId):
                     self.gds_encode(
                         self.gds_format_string(
                             quote_attrib(self.name), input_name="name"
+                        )
+                    ),
+                )
+            )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
                         )
                     ),
                 )
@@ -28361,6 +24928,11 @@ class Segment(BaseNonNegativeIntegerId):
         if value is not None and "name" not in already_processed:
             already_processed.add("name")
             self.name = value
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         super(Segment, self)._buildAttributes(node, attrs, already_processed)
 
     def _buildChildren(
@@ -28546,7 +25118,6 @@ class Morphology(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -28563,7 +25134,7 @@ class Morphology(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Morphology"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         if segments is None:
             self.segments = []
@@ -28752,18 +25323,26 @@ class BaseCell(Standalone):
     """BaseCell -- Base type of any cell ( e. g. point neuron like  **izhikevich2007Cell** , or a morphologically detailed  **Cell**  with  **segment** s ) which can be used in a  **population**"""
 
     __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = []
+    member_data_items_ = [
+        MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
+    ]
     subclass = None
     superclass = Standalone
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -28774,15 +25353,10 @@ class BaseCell(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseCell"), self).__init__(
-            neuro_lex_id,
-            id,
-            metaid,
-            notes,
-            properties,
-            annotation,
-            extensiontype_,
-            **kwargs_
+            id, metaid, notes, properties, annotation, extensiontype_, **kwargs_
         )
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         self.extensiontype_ = extensiontype_
 
     def factory(*args_, **kwargs_):
@@ -28796,6 +25370,36 @@ class BaseCell(Standalone):
             return BaseCell(*args_, **kwargs_)
 
     factory = staticmethod(factory)
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if super(BaseCell, self)._hasContent():
@@ -28857,6 +25461,18 @@ class BaseCell(Standalone):
         super(BaseCell, self)._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="BaseCell"
         )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
+                        )
+                    ),
+                )
+            )
         if self.extensiontype_ is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -28903,6 +25519,11 @@ class BaseCell(Standalone):
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         value = find_attr_value_("xsi:type", node)
         if value is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
@@ -28917,6 +25538,354 @@ class BaseCell(Standalone):
 
 
 # end class BaseCell
+
+
+class PlasticityMechanism(BaseWithoutId):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "type", "PlasticityTypes", 0, 0, {"use": "required", "name": "type"}
+        ),
+        MemberSpec_(
+            "init_release_prob",
+            "ZeroToOne",
+            0,
+            0,
+            {"use": "required", "name": "init_release_prob"},
+        ),
+        MemberSpec_(
+            "tau_rec", "Nml2Quantity_time", 0, 0, {"use": "required", "name": "tau_rec"}
+        ),
+        MemberSpec_(
+            "tau_fac", "Nml2Quantity_time", 0, 1, {"use": "optional", "name": "tau_fac"}
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        type=None,
+        init_release_prob=None,
+        tau_rec=None,
+        tau_fac=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("PlasticityMechanism"), self).__init__(**kwargs_)
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
+        self.init_release_prob = _cast(float, init_release_prob)
+        self.init_release_prob_nsprefix_ = None
+        self.tau_rec = _cast(None, tau_rec)
+        self.tau_rec_nsprefix_ = None
+        self.tau_fac = _cast(None, tau_fac)
+        self.tau_fac_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, PlasticityMechanism
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if PlasticityMechanism.subclass:
+            return PlasticityMechanism.subclass(*args_, **kwargs_)
+        else:
+            return PlasticityMechanism(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_PlasticityTypes(self, value):
+        # Validate type PlasticityTypes, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            value = value
+            enumerations = [
+                "tsodyksMarkramDepMechanism",
+                "tsodyksMarkramDepFacMechanism",
+            ]
+            if value not in enumerations:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s does not match xsd enumeration restriction on PlasticityTypes'
+                    % {"value": encode_str_2_3(value), "lineno": lineno}
+                )
+                result = False
+
+    def validate_ZeroToOne(self, value):
+        # Validate type ZeroToOne, a restriction on xs:float.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, float):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (float)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if value < 0:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s does not match xsd minInclusive restriction on ZeroToOne'
+                    % {"value": value, "lineno": lineno}
+                )
+                result = False
+            if value > 1:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s does not match xsd maxInclusive restriction on ZeroToOne'
+                    % {"value": value, "lineno": lineno}
+                )
+                result = False
+
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_time_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_time_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_time_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
+    ]
+
+    def _hasContent(self):
+        if super(PlasticityMechanism, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="PlasticityMechanism",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("PlasticityMechanism")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "PlasticityMechanism":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="PlasticityMechanism",
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="PlasticityMechanism",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="PlasticityMechanism",
+    ):
+        super(PlasticityMechanism, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="PlasticityMechanism",
+        )
+        if self.type is not None and "type" not in already_processed:
+            already_processed.add("type")
+            outfile.write(
+                " type=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.type), input_name="type"
+                        )
+                    ),
+                )
+            )
+        if (
+            self.init_release_prob is not None
+            and "init_release_prob" not in already_processed
+        ):
+            already_processed.add("init_release_prob")
+            outfile.write(
+                ' initReleaseProb="%s"'
+                % self.gds_format_float(
+                    self.init_release_prob, input_name="initReleaseProb"
+                )
+            )
+        if self.tau_rec is not None and "tau_rec" not in already_processed:
+            already_processed.add("tau_rec")
+            outfile.write(
+                " tauRec=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.tau_rec), input_name="tauRec"
+                        )
+                    ),
+                )
+            )
+        if self.tau_fac is not None and "tau_fac" not in already_processed:
+            already_processed.add("tau_fac")
+            outfile.write(
+                " tauFac=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.tau_fac), input_name="tauFac"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="PlasticityMechanism",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(PlasticityMechanism, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("type", node)
+        if value is not None and "type" not in already_processed:
+            already_processed.add("type")
+            self.type = value
+            self.validate_PlasticityTypes(self.type)  # validate type PlasticityTypes
+        value = find_attr_value_("initReleaseProb", node)
+        if value is not None and "initReleaseProb" not in already_processed:
+            already_processed.add("initReleaseProb")
+            value = self.gds_parse_float(value, node, "initReleaseProb")
+            self.init_release_prob = value
+            self.validate_ZeroToOne(self.init_release_prob)  # validate type ZeroToOne
+        value = find_attr_value_("tauRec", node)
+        if value is not None and "tauRec" not in already_processed:
+            already_processed.add("tauRec")
+            self.tau_rec = value
+            self.validate_Nml2Quantity_time(
+                self.tau_rec
+            )  # validate type Nml2Quantity_time
+        value = find_attr_value_("tauFac", node)
+        if value is not None and "tauFac" not in already_processed:
+            already_processed.add("tauFac")
+            self.tau_fac = value
+            self.validate_Nml2Quantity_time(
+                self.tau_fac
+            )  # validate type Nml2Quantity_time
+        super(PlasticityMechanism, self)._buildAttributes(
+            node, attrs, already_processed
+        )
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(PlasticityMechanism, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class PlasticityMechanism
 
 
 class BlockMechanism(BaseWithoutId):
@@ -28951,7 +25920,6 @@ class BlockMechanism(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         type=None,
         species=None,
         block_concentration=None,
@@ -28965,7 +25933,7 @@ class BlockMechanism(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("BlockMechanism"), self).__init__(neuro_lex_id, **kwargs_)
+        super(globals().get("BlockMechanism"), self).__init__(**kwargs_)
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.species = _cast(None, species)
@@ -29320,18 +26288,26 @@ class BaseSynapse(Standalone):
     """BaseSynapse -- Base type for all synapses, i. e. ComponentTypes which produce a current ( dimension current ) and change Dynamics in response to an incoming event. cno_0000009"""
 
     __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = []
+    member_data_items_ = [
+        MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
+    ]
     subclass = None
     superclass = Standalone
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -29342,15 +26318,10 @@ class BaseSynapse(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseSynapse"), self).__init__(
-            neuro_lex_id,
-            id,
-            metaid,
-            notes,
-            properties,
-            annotation,
-            extensiontype_,
-            **kwargs_
+            id, metaid, notes, properties, annotation, extensiontype_, **kwargs_
         )
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         self.extensiontype_ = extensiontype_
 
     def factory(*args_, **kwargs_):
@@ -29364,6 +26335,36 @@ class BaseSynapse(Standalone):
             return BaseSynapse(*args_, **kwargs_)
 
     factory = staticmethod(factory)
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if super(BaseSynapse, self)._hasContent():
@@ -29430,6 +26431,18 @@ class BaseSynapse(Standalone):
         super(BaseSynapse, self)._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="BaseSynapse"
         )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
+                        )
+                    ),
+                )
+            )
         if self.extensiontype_ is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -29476,6 +26489,11 @@ class BaseSynapse(Standalone):
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         value = find_attr_value_("xsi:type", node)
         if value is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
@@ -29530,7 +26548,6 @@ class FixedFactorConcentrationModel(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -29549,7 +26566,7 @@ class FixedFactorConcentrationModel(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("FixedFactorConcentrationModel"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
@@ -29944,7 +26961,6 @@ class DecayingPoolConcentrationModel(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -29964,14 +26980,7 @@ class DecayingPoolConcentrationModel(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("DecayingPoolConcentrationModel"), self).__init__(
-            neuro_lex_id,
-            id,
-            metaid,
-            notes,
-            properties,
-            annotation,
-            extensiontype_,
-            **kwargs_
+            id, metaid, notes, properties, annotation, extensiontype_, **kwargs_
         )
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
@@ -30347,6 +27356,977 @@ class DecayingPoolConcentrationModel(Standalone):
 # end class DecayingPoolConcentrationModel
 
 
+class HHTime(BaseWithoutId):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("type", "NmlId", 0, 0, {"use": "required", "name": "type"}),
+        MemberSpec_(
+            "rate", "Nml2Quantity_time", 0, 1, {"use": "optional", "name": "rate"}
+        ),
+        MemberSpec_(
+            "midpoint",
+            "Nml2Quantity_voltage",
+            0,
+            1,
+            {"use": "optional", "name": "midpoint"},
+        ),
+        MemberSpec_(
+            "scale", "Nml2Quantity_voltage", 0, 1, {"use": "optional", "name": "scale"}
+        ),
+        MemberSpec_(
+            "tau", "Nml2Quantity_time", 0, 1, {"use": "optional", "name": "tau"}
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        type=None,
+        rate=None,
+        midpoint=None,
+        scale=None,
+        tau=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("HHTime"), self).__init__(**kwargs_)
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
+        self.rate = _cast(None, rate)
+        self.rate_nsprefix_ = None
+        self.midpoint = _cast(None, midpoint)
+        self.midpoint_nsprefix_ = None
+        self.scale = _cast(None, scale)
+        self.scale_nsprefix_ = None
+        self.tau = _cast(None, tau)
+        self.tau_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, HHTime)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if HHTime.subclass:
+            return HHTime.subclass(*args_, **kwargs_)
+        else:
+            return HHTime(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NmlId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NmlId_patterns_,
+                    )
+                )
+
+    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
+
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_time_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_time_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_time_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
+    ]
+
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_voltage_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_voltage_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_voltage_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
+    ]
+
+    def _hasContent(self):
+        if super(HHTime, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="HHTime",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("HHTime")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "HHTime":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="HHTime"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="HHTime",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="HHTime"
+    ):
+        super(HHTime, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="HHTime"
+        )
+        if self.type is not None and "type" not in already_processed:
+            already_processed.add("type")
+            outfile.write(
+                " type=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.type), input_name="type"
+                        )
+                    ),
+                )
+            )
+        if self.rate is not None and "rate" not in already_processed:
+            already_processed.add("rate")
+            outfile.write(
+                " rate=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.rate), input_name="rate"
+                        )
+                    ),
+                )
+            )
+        if self.midpoint is not None and "midpoint" not in already_processed:
+            already_processed.add("midpoint")
+            outfile.write(
+                " midpoint=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.midpoint), input_name="midpoint"
+                        )
+                    ),
+                )
+            )
+        if self.scale is not None and "scale" not in already_processed:
+            already_processed.add("scale")
+            outfile.write(
+                " scale=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.scale), input_name="scale"
+                        )
+                    ),
+                )
+            )
+        if self.tau is not None and "tau" not in already_processed:
+            already_processed.add("tau")
+            outfile.write(
+                " tau=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(quote_attrib(self.tau), input_name="tau")
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="HHTime",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(HHTime, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("type", node)
+        if value is not None and "type" not in already_processed:
+            already_processed.add("type")
+            self.type = value
+            self.validate_NmlId(self.type)  # validate type NmlId
+        value = find_attr_value_("rate", node)
+        if value is not None and "rate" not in already_processed:
+            already_processed.add("rate")
+            self.rate = value
+            self.validate_Nml2Quantity_time(
+                self.rate
+            )  # validate type Nml2Quantity_time
+        value = find_attr_value_("midpoint", node)
+        if value is not None and "midpoint" not in already_processed:
+            already_processed.add("midpoint")
+            self.midpoint = value
+            self.validate_Nml2Quantity_voltage(
+                self.midpoint
+            )  # validate type Nml2Quantity_voltage
+        value = find_attr_value_("scale", node)
+        if value is not None and "scale" not in already_processed:
+            already_processed.add("scale")
+            self.scale = value
+            self.validate_Nml2Quantity_voltage(
+                self.scale
+            )  # validate type Nml2Quantity_voltage
+        value = find_attr_value_("tau", node)
+        if value is not None and "tau" not in already_processed:
+            already_processed.add("tau")
+            self.tau = value
+            self.validate_Nml2Quantity_time(self.tau)  # validate type Nml2Quantity_time
+        super(HHTime, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(HHTime, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class HHTime
+
+
+class HHVariable(BaseWithoutId):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("type", "NmlId", 0, 0, {"use": "required", "name": "type"}),
+        MemberSpec_("rate", "xs:float", 0, 1, {"use": "optional", "name": "rate"}),
+        MemberSpec_(
+            "midpoint",
+            "Nml2Quantity_voltage",
+            0,
+            1,
+            {"use": "optional", "name": "midpoint"},
+        ),
+        MemberSpec_(
+            "scale", "Nml2Quantity_voltage", 0, 1, {"use": "optional", "name": "scale"}
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        type=None,
+        rate=None,
+        midpoint=None,
+        scale=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("HHVariable"), self).__init__(**kwargs_)
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
+        self.rate = _cast(float, rate)
+        self.rate_nsprefix_ = None
+        self.midpoint = _cast(None, midpoint)
+        self.midpoint_nsprefix_ = None
+        self.scale = _cast(None, scale)
+        self.scale_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, HHVariable)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if HHVariable.subclass:
+            return HHVariable.subclass(*args_, **kwargs_)
+        else:
+            return HHVariable(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NmlId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NmlId_patterns_,
+                    )
+                )
+
+    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
+
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_voltage_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_voltage_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_voltage_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
+    ]
+
+    def _hasContent(self):
+        if super(HHVariable, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="HHVariable",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("HHVariable")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "HHVariable":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="HHVariable"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="HHVariable",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="HHVariable"
+    ):
+        super(HHVariable, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="HHVariable"
+        )
+        if self.type is not None and "type" not in already_processed:
+            already_processed.add("type")
+            outfile.write(
+                " type=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.type), input_name="type"
+                        )
+                    ),
+                )
+            )
+        if self.rate is not None and "rate" not in already_processed:
+            already_processed.add("rate")
+            outfile.write(
+                ' rate="%s"' % self.gds_format_float(self.rate, input_name="rate")
+            )
+        if self.midpoint is not None and "midpoint" not in already_processed:
+            already_processed.add("midpoint")
+            outfile.write(
+                " midpoint=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.midpoint), input_name="midpoint"
+                        )
+                    ),
+                )
+            )
+        if self.scale is not None and "scale" not in already_processed:
+            already_processed.add("scale")
+            outfile.write(
+                " scale=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.scale), input_name="scale"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="HHVariable",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(HHVariable, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("type", node)
+        if value is not None and "type" not in already_processed:
+            already_processed.add("type")
+            self.type = value
+            self.validate_NmlId(self.type)  # validate type NmlId
+        value = find_attr_value_("rate", node)
+        if value is not None and "rate" not in already_processed:
+            already_processed.add("rate")
+            value = self.gds_parse_float(value, node, "rate")
+            self.rate = value
+        value = find_attr_value_("midpoint", node)
+        if value is not None and "midpoint" not in already_processed:
+            already_processed.add("midpoint")
+            self.midpoint = value
+            self.validate_Nml2Quantity_voltage(
+                self.midpoint
+            )  # validate type Nml2Quantity_voltage
+        value = find_attr_value_("scale", node)
+        if value is not None and "scale" not in already_processed:
+            already_processed.add("scale")
+            self.scale = value
+            self.validate_Nml2Quantity_voltage(
+                self.scale
+            )  # validate type Nml2Quantity_voltage
+        super(HHVariable, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(HHVariable, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class HHVariable
+
+
+class HHRate(BaseWithoutId):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("type", "NmlId", 0, 0, {"use": "required", "name": "type"}),
+        MemberSpec_(
+            "rate", "Nml2Quantity_pertime", 0, 1, {"use": "optional", "name": "rate"}
+        ),
+        MemberSpec_(
+            "midpoint",
+            "Nml2Quantity_voltage",
+            0,
+            1,
+            {"use": "optional", "name": "midpoint"},
+        ),
+        MemberSpec_(
+            "scale", "Nml2Quantity_voltage", 0, 1, {"use": "optional", "name": "scale"}
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        type=None,
+        rate=None,
+        midpoint=None,
+        scale=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("HHRate"), self).__init__(**kwargs_)
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
+        self.rate = _cast(None, rate)
+        self.rate_nsprefix_ = None
+        self.midpoint = _cast(None, midpoint)
+        self.midpoint_nsprefix_ = None
+        self.scale = _cast(None, scale)
+        self.scale_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, HHRate)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if HHRate.subclass:
+            return HHRate.subclass(*args_, **kwargs_)
+        else:
+            return HHRate(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NmlId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NmlId_patterns_,
+                    )
+                )
+
+    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
+
+    def validate_Nml2Quantity_pertime(self, value):
+        # Validate type Nml2Quantity_pertime, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_pertime_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_pertime_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_pertime_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz))$"]
+    ]
+
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_voltage_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_voltage_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_voltage_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
+    ]
+
+    def _hasContent(self):
+        if super(HHRate, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="HHRate",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("HHRate")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "HHRate":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="HHRate"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="HHRate",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="HHRate"
+    ):
+        super(HHRate, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="HHRate"
+        )
+        if self.type is not None and "type" not in already_processed:
+            already_processed.add("type")
+            outfile.write(
+                " type=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.type), input_name="type"
+                        )
+                    ),
+                )
+            )
+        if self.rate is not None and "rate" not in already_processed:
+            already_processed.add("rate")
+            outfile.write(
+                " rate=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.rate), input_name="rate"
+                        )
+                    ),
+                )
+            )
+        if self.midpoint is not None and "midpoint" not in already_processed:
+            already_processed.add("midpoint")
+            outfile.write(
+                " midpoint=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.midpoint), input_name="midpoint"
+                        )
+                    ),
+                )
+            )
+        if self.scale is not None and "scale" not in already_processed:
+            already_processed.add("scale")
+            outfile.write(
+                " scale=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.scale), input_name="scale"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="HHRate",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(HHRate, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("type", node)
+        if value is not None and "type" not in already_processed:
+            already_processed.add("type")
+            self.type = value
+            self.validate_NmlId(self.type)  # validate type NmlId
+        value = find_attr_value_("rate", node)
+        if value is not None and "rate" not in already_processed:
+            already_processed.add("rate")
+            self.rate = value
+            self.validate_Nml2Quantity_pertime(
+                self.rate
+            )  # validate type Nml2Quantity_pertime
+        value = find_attr_value_("midpoint", node)
+        if value is not None and "midpoint" not in already_processed:
+            already_processed.add("midpoint")
+            self.midpoint = value
+            self.validate_Nml2Quantity_voltage(
+                self.midpoint
+            )  # validate type Nml2Quantity_voltage
+        value = find_attr_value_("scale", node)
+        if value is not None and "scale" not in already_processed:
+            already_processed.add("scale")
+            self.scale = value
+            self.validate_Nml2Quantity_voltage(
+                self.scale
+            )  # validate type Nml2Quantity_voltage
+        super(HHRate, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(HHRate, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class HHRate
+
+
 class GateFractionalSubgate(Base):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
@@ -30395,7 +28375,6 @@ class GateFractionalSubgate(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         fractional_conductance=None,
         notes=None,
@@ -30410,9 +28389,7 @@ class GateFractionalSubgate(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateFractionalSubgate"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("GateFractionalSubgate"), self).__init__(id, **kwargs_)
         self.fractional_conductance = _cast(None, fractional_conductance)
         self.fractional_conductance_nsprefix_ = None
         self.notes = notes
@@ -30782,7 +28759,6 @@ class GateFractional(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         notes=None,
@@ -30796,9 +28772,7 @@ class GateFractional(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateFractional"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("GateFractional"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -31103,7 +29077,6 @@ class GateHHInstantaneous(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         notes=None,
@@ -31116,9 +29089,7 @@ class GateHHInstantaneous(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHInstantaneous"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("GateHHInstantaneous"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -31434,7 +29405,6 @@ class GateHHRatesInf(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         notes=None,
@@ -31450,9 +29420,7 @@ class GateHHRatesInf(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHRatesInf"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("GateHHRatesInf"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -31822,7 +29790,6 @@ class GateHHRatesTau(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         notes=None,
@@ -31838,9 +29805,7 @@ class GateHHRatesTau(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHRatesTau"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("GateHHRatesTau"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -32218,7 +30183,6 @@ class GateHHRatesTauInf(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         notes=None,
@@ -32235,9 +30199,7 @@ class GateHHRatesTauInf(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHRatesTauInf"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("GateHHRatesTauInf"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -32629,7 +30591,6 @@ class GateHHTauInf(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         notes=None,
@@ -32644,7 +30605,7 @@ class GateHHTauInf(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHTauInf"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("GateHHTauInf"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -32984,7 +30945,6 @@ class GateHHRates(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         notes=None,
@@ -32999,7 +30959,7 @@ class GateHHRates(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHRates"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("GateHHRates"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -33364,7 +31324,6 @@ class GateHHUndetermined(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         type=None,
@@ -33383,9 +31342,7 @@ class GateHHUndetermined(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHUndetermined"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("GateHHUndetermined"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.type = _cast(None, type)
@@ -33893,7 +31850,6 @@ class GateKS(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         instances=None,
         notes=None,
@@ -33911,7 +31867,7 @@ class GateKS(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateKS"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("GateKS"), self).__init__(id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -34301,7 +32257,6 @@ class TauInfTransition(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         from_=None,
         to=None,
@@ -34315,9 +32270,7 @@ class TauInfTransition(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("TauInfTransition"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("TauInfTransition"), self).__init__(id, **kwargs_)
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
         self.to = _cast(None, to)
@@ -34586,7 +32539,6 @@ class ReverseTransition(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         from_=None,
         to=None,
@@ -34599,9 +32551,7 @@ class ReverseTransition(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ReverseTransition"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("ReverseTransition"), self).__init__(id, **kwargs_)
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
         self.to = _cast(None, to)
@@ -34835,7 +32785,6 @@ class ForwardTransition(Base):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         from_=None,
         to=None,
@@ -34848,9 +32797,7 @@ class ForwardTransition(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ForwardTransition"), self).__init__(
-            neuro_lex_id, id, **kwargs_
-        )
+        super(globals().get("ForwardTransition"), self).__init__(id, **kwargs_)
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
         self.to = _cast(None, to)
@@ -35076,13 +33023,13 @@ class OpenState(Base):
     subclass = None
     superclass = Base
 
-    def __init__(self, neuro_lex_id=None, id=None, gds_collector_=None, **kwargs_):
+    def __init__(self, id=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("OpenState"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("OpenState"), self).__init__(id, **kwargs_)
 
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -35215,13 +33162,13 @@ class ClosedState(Base):
     subclass = None
     superclass = Base
 
-    def __init__(self, neuro_lex_id=None, id=None, gds_collector_=None, **kwargs_):
+    def __init__(self, id=None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ClosedState"), self).__init__(neuro_lex_id, id, **kwargs_)
+        super(globals().get("ClosedState"), self).__init__(id, **kwargs_)
 
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -35346,6 +33293,291 @@ class ClosedState(Base):
 # end class ClosedState
 
 
+class Q10ConductanceScaling(BaseWithoutId):
+    """Q10ConductanceScaling -- A value for the conductance scaling which varies as a standard function of the difference between the current temperature, **temperature,**  and the temperature at which the conductance was originally determined, **experimentalTemp**
+    \n
+    :param q10Factor:
+    :type q10Factor: none
+    :param experimentalTemp:
+    :type experimentalTemp: temperature
+
+    """
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "q10_factor",
+            "Nml2Quantity_none",
+            0,
+            0,
+            {"use": "required", "name": "q10_factor"},
+        ),
+        MemberSpec_(
+            "experimental_temp",
+            "Nml2Quantity_temperature",
+            0,
+            0,
+            {"use": "required", "name": "experimental_temp"},
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self, q10_factor=None, experimental_temp=None, gds_collector_=None, **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Q10ConductanceScaling"), self).__init__(**kwargs_)
+        self.q10_factor = _cast(None, q10_factor)
+        self.q10_factor_nsprefix_ = None
+        self.experimental_temp = _cast(None, experimental_temp)
+        self.experimental_temp_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, Q10ConductanceScaling
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Q10ConductanceScaling.subclass:
+            return Q10ConductanceScaling.subclass(*args_, **kwargs_)
+        else:
+            return Q10ConductanceScaling(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_Nml2Quantity_none(self, value):
+        # Validate type Nml2Quantity_none, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_none_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_none_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_none_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?)$"]
+    ]
+
+    def validate_Nml2Quantity_temperature(self, value):
+        # Validate type Nml2Quantity_temperature, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_temperature_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_temperature_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_temperature_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(degC))$"]
+    ]
+
+    def _hasContent(self):
+        if super(Q10ConductanceScaling, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Q10ConductanceScaling",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Q10ConductanceScaling")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Q10ConductanceScaling":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="Q10ConductanceScaling",
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Q10ConductanceScaling",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="Q10ConductanceScaling",
+    ):
+        super(Q10ConductanceScaling, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="Q10ConductanceScaling",
+        )
+        if self.q10_factor is not None and "q10_factor" not in already_processed:
+            already_processed.add("q10_factor")
+            outfile.write(
+                " q10Factor=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.q10_factor), input_name="q10Factor"
+                        )
+                    ),
+                )
+            )
+        if (
+            self.experimental_temp is not None
+            and "experimental_temp" not in already_processed
+        ):
+            already_processed.add("experimental_temp")
+            outfile.write(
+                " experimentalTemp=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.experimental_temp),
+                            input_name="experimentalTemp",
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Q10ConductanceScaling",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Q10ConductanceScaling, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("q10Factor", node)
+        if value is not None and "q10Factor" not in already_processed:
+            already_processed.add("q10Factor")
+            self.q10_factor = value
+            self.validate_Nml2Quantity_none(
+                self.q10_factor
+            )  # validate type Nml2Quantity_none
+        value = find_attr_value_("experimentalTemp", node)
+        if value is not None and "experimentalTemp" not in already_processed:
+            already_processed.add("experimentalTemp")
+            self.experimental_temp = value
+            self.validate_Nml2Quantity_temperature(
+                self.experimental_temp
+            )  # validate type Nml2Quantity_temperature
+        super(Q10ConductanceScaling, self)._buildAttributes(
+            node, attrs, already_processed
+        )
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(Q10ConductanceScaling, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class Q10ConductanceScaling
+
+
 class IonChannelKS(Standalone):
     """A kinetic scheme based ion channel with multiple  **gateKS** s, each of which consists of multiple  **KSState** s and  **KSTransition** s giving the rates of transition between them
     IonChannelKS -- A kinetic scheme based ion channel with multiple  **gateKS** s, each of which consists of multiple  **KSState** s and  **KSTransition** s giving the rates of transition between them
@@ -35366,6 +33598,13 @@ class IonChannelKS(Standalone):
             {"use": "optional", "name": "conductance"},
         ),
         MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
+        MemberSpec_(
             "gate_kses",
             "GateKS",
             1,
@@ -35384,7 +33623,6 @@ class IonChannelKS(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -35392,6 +33630,7 @@ class IonChannelKS(Standalone):
         annotation=None,
         species=None,
         conductance=None,
+        neuro_lex_id=None,
         gate_kses=None,
         gds_collector_=None,
         **kwargs_
@@ -35402,12 +33641,14 @@ class IonChannelKS(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannelKS"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         self.species = _cast(None, species)
         self.species_nsprefix_ = None
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         if gate_kses is None:
             self.gate_kses = []
         else:
@@ -35487,6 +33728,36 @@ class IonChannelKS(Standalone):
     validate_Nml2Quantity_conductance_patterns_ = [
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS))$"]
     ]
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if self.gate_kses or super(IonChannelKS, self)._hasContent():
@@ -35577,6 +33848,18 @@ class IonChannelKS(Standalone):
                     ),
                 )
             )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
+                        )
+                    ),
+                )
+            )
 
     def _exportChildren(
         self,
@@ -35641,6 +33924,11 @@ class IonChannelKS(Standalone):
             self.validate_Nml2Quantity_conductance(
                 self.conductance
             )  # validate type Nml2Quantity_conductance
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         super(IonChannelKS, self)._buildAttributes(node, attrs, already_processed)
 
     def _buildChildren(
@@ -35661,6 +33949,13 @@ class IonChannelScalable(Standalone):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
+            "neuro_lex_id",
+            "NeuroLexId",
+            0,
+            1,
+            {"use": "optional", "name": "neuro_lex_id"},
+        ),
+        MemberSpec_(
             "q10_conductance_scalings",
             "Q10ConductanceScaling",
             1,
@@ -35679,12 +33974,12 @@ class IonChannelScalable(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         q10_conductance_scalings=None,
         extensiontype_=None,
         gds_collector_=None,
@@ -35696,15 +33991,10 @@ class IonChannelScalable(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannelScalable"), self).__init__(
-            neuro_lex_id,
-            id,
-            metaid,
-            notes,
-            properties,
-            annotation,
-            extensiontype_,
-            **kwargs_
+            id, metaid, notes, properties, annotation, extensiontype_, **kwargs_
         )
+        self.neuro_lex_id = _cast(None, neuro_lex_id)
+        self.neuro_lex_id_nsprefix_ = None
         if q10_conductance_scalings is None:
             self.q10_conductance_scalings = []
         else:
@@ -35725,6 +34015,36 @@ class IonChannelScalable(Standalone):
             return IonChannelScalable(*args_, **kwargs_)
 
     factory = staticmethod(factory)
+
+    def validate_NeuroLexId(self, value):
+        # Validate type NeuroLexId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NeuroLexId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NeuroLexId_patterns_,
+                    )
+                )
+
+    validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
     def _hasContent(self):
         if (
@@ -35802,6 +34122,18 @@ class IonChannelScalable(Standalone):
             namespaceprefix_,
             name_="IonChannelScalable",
         )
+        if self.neuro_lex_id is not None and "neuro_lex_id" not in already_processed:
+            already_processed.add("neuro_lex_id")
+            outfile.write(
+                " neuroLexId=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.neuro_lex_id), input_name="neuroLexId"
+                        )
+                    ),
+                )
+            )
         if self.extensiontype_ is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
             outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
@@ -35866,6 +34198,11 @@ class IonChannelScalable(Standalone):
         return self
 
     def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("neuroLexId", node)
+        if value is not None and "neuroLexId" not in already_processed:
+            already_processed.add("neuroLexId")
+            self.neuro_lex_id = value
+            self.validate_NeuroLexId(self.neuro_lex_id)  # validate type NeuroLexId
         value = find_attr_value_("xsi:type", node)
         if value is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
@@ -36766,7 +35103,6 @@ class NeuroMLDocument(Standalone):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -36848,7 +35184,7 @@ class NeuroMLDocument(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("NeuroMLDocument"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, **kwargs_
         )
         if includes is None:
             self.includes = []
@@ -38956,6 +37292,1295 @@ class NeuroMLDocument(Standalone):
     # end class NeuroMLDocument
 
 
+class NamedDimensionalVariable(BaseWithoutId):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("name", "xs:string", 0, 0, {"use": "required", "name": "name"}),
+        MemberSpec_(
+            "dimension", "xs:string", 0, 0, {"use": "required", "name": "dimension"}
+        ),
+        MemberSpec_(
+            "description", "xs:string", 0, 1, {"use": "optional", "name": "description"}
+        ),
+        MemberSpec_(
+            "exposure", "xs:string", 0, 1, {"use": "optional", "name": "exposure"}
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        name=None,
+        dimension=None,
+        description=None,
+        exposure=None,
+        extensiontype_=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("NamedDimensionalVariable"), self).__init__(
+            extensiontype_, **kwargs_
+        )
+        self.name = _cast(None, name)
+        self.name_nsprefix_ = None
+        self.dimension = _cast(None, dimension)
+        self.dimension_nsprefix_ = None
+        self.description = _cast(None, description)
+        self.description_nsprefix_ = None
+        self.exposure = _cast(None, exposure)
+        self.exposure_nsprefix_ = None
+        self.extensiontype_ = extensiontype_
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, NamedDimensionalVariable
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if NamedDimensionalVariable.subclass:
+            return NamedDimensionalVariable.subclass(*args_, **kwargs_)
+        else:
+            return NamedDimensionalVariable(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(NamedDimensionalVariable, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="NamedDimensionalVariable",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("NamedDimensionalVariable")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "NamedDimensionalVariable":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="NamedDimensionalVariable",
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="NamedDimensionalVariable",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="NamedDimensionalVariable",
+    ):
+        super(NamedDimensionalVariable, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="NamedDimensionalVariable",
+        )
+        if self.name is not None and "name" not in already_processed:
+            already_processed.add("name")
+            outfile.write(
+                " name=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.name), input_name="name"
+                        )
+                    ),
+                )
+            )
+        if self.dimension is not None and "dimension" not in already_processed:
+            already_processed.add("dimension")
+            outfile.write(
+                " dimension=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.dimension), input_name="dimension"
+                        )
+                    ),
+                )
+            )
+        if self.description is not None and "description" not in already_processed:
+            already_processed.add("description")
+            outfile.write(
+                " description=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.description), input_name="description"
+                        )
+                    ),
+                )
+            )
+        if self.exposure is not None and "exposure" not in already_processed:
+            already_processed.add("exposure")
+            outfile.write(
+                " exposure=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.exposure), input_name="exposure"
+                        )
+                    ),
+                )
+            )
+        if self.extensiontype_ is not None and "xsi:type" not in already_processed:
+            already_processed.add("xsi:type")
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            if ":" not in self.extensiontype_:
+                imported_ns_type_prefix_ = GenerateDSNamespaceTypePrefixes_.get(
+                    self.extensiontype_, ""
+                )
+                outfile.write(
+                    ' xsi:type="%s%s"' % (imported_ns_type_prefix_, self.extensiontype_)
+                )
+            else:
+                outfile.write(' xsi:type="%s"' % self.extensiontype_)
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="NamedDimensionalVariable",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(NamedDimensionalVariable, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("name", node)
+        if value is not None and "name" not in already_processed:
+            already_processed.add("name")
+            self.name = value
+        value = find_attr_value_("dimension", node)
+        if value is not None and "dimension" not in already_processed:
+            already_processed.add("dimension")
+            self.dimension = value
+        value = find_attr_value_("description", node)
+        if value is not None and "description" not in already_processed:
+            already_processed.add("description")
+            self.description = value
+        value = find_attr_value_("exposure", node)
+        if value is not None and "exposure" not in already_processed:
+            already_processed.add("exposure")
+            self.exposure = value
+        value = find_attr_value_("xsi:type", node)
+        if value is not None and "xsi:type" not in already_processed:
+            already_processed.add("xsi:type")
+            self.extensiontype_ = value
+        super(NamedDimensionalVariable, self)._buildAttributes(
+            node, attrs, already_processed
+        )
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(NamedDimensionalVariable, self)._buildChildren(
+            child_, node, nodeName_, True
+        )
+        pass
+
+
+# end class NamedDimensionalVariable
+
+
+class NamedDimensionalType(BaseWithoutId):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("name", "xs:string", 0, 0, {"use": "required", "name": "name"}),
+        MemberSpec_(
+            "dimension", "xs:string", 0, 0, {"use": "required", "name": "dimension"}
+        ),
+        MemberSpec_(
+            "description", "xs:string", 0, 1, {"use": "optional", "name": "description"}
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        name=None,
+        dimension=None,
+        description=None,
+        extensiontype_=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("NamedDimensionalType"), self).__init__(
+            extensiontype_, **kwargs_
+        )
+        self.name = _cast(None, name)
+        self.name_nsprefix_ = None
+        self.dimension = _cast(None, dimension)
+        self.dimension_nsprefix_ = None
+        self.description = _cast(None, description)
+        self.description_nsprefix_ = None
+        self.extensiontype_ = extensiontype_
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, NamedDimensionalType
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if NamedDimensionalType.subclass:
+            return NamedDimensionalType.subclass(*args_, **kwargs_)
+        else:
+            return NamedDimensionalType(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(NamedDimensionalType, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="NamedDimensionalType",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("NamedDimensionalType")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "NamedDimensionalType":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="NamedDimensionalType",
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="NamedDimensionalType",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="NamedDimensionalType",
+    ):
+        super(NamedDimensionalType, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="NamedDimensionalType",
+        )
+        if self.name is not None and "name" not in already_processed:
+            already_processed.add("name")
+            outfile.write(
+                " name=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.name), input_name="name"
+                        )
+                    ),
+                )
+            )
+        if self.dimension is not None and "dimension" not in already_processed:
+            already_processed.add("dimension")
+            outfile.write(
+                " dimension=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.dimension), input_name="dimension"
+                        )
+                    ),
+                )
+            )
+        if self.description is not None and "description" not in already_processed:
+            already_processed.add("description")
+            outfile.write(
+                " description=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.description), input_name="description"
+                        )
+                    ),
+                )
+            )
+        if self.extensiontype_ is not None and "xsi:type" not in already_processed:
+            already_processed.add("xsi:type")
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            if ":" not in self.extensiontype_:
+                imported_ns_type_prefix_ = GenerateDSNamespaceTypePrefixes_.get(
+                    self.extensiontype_, ""
+                )
+                outfile.write(
+                    ' xsi:type="%s%s"' % (imported_ns_type_prefix_, self.extensiontype_)
+                )
+            else:
+                outfile.write(' xsi:type="%s"' % self.extensiontype_)
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="NamedDimensionalType",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(NamedDimensionalType, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("name", node)
+        if value is not None and "name" not in already_processed:
+            already_processed.add("name")
+            self.name = value
+        value = find_attr_value_("dimension", node)
+        if value is not None and "dimension" not in already_processed:
+            already_processed.add("dimension")
+            self.dimension = value
+        value = find_attr_value_("description", node)
+        if value is not None and "description" not in already_processed:
+            already_processed.add("description")
+            self.description = value
+        value = find_attr_value_("xsi:type", node)
+        if value is not None and "xsi:type" not in already_processed:
+            already_processed.add("xsi:type")
+            self.extensiontype_ = value
+        super(NamedDimensionalType, self)._buildAttributes(
+            node, attrs, already_processed
+        )
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(NamedDimensionalType, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class NamedDimensionalType
+
+
+class Exposure(BaseWithoutId):
+    """Exposure -- LEMS Exposure (ComponentType property)"""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("name", "xs:string", 0, 0, {"use": "required", "name": "name"}),
+        MemberSpec_(
+            "dimension", "xs:string", 0, 0, {"use": "required", "name": "dimension"}
+        ),
+        MemberSpec_(
+            "description", "xs:string", 0, 1, {"use": "optional", "name": "description"}
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        name=None,
+        dimension=None,
+        description=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Exposure"), self).__init__(**kwargs_)
+        self.name = _cast(None, name)
+        self.name_nsprefix_ = None
+        self.dimension = _cast(None, dimension)
+        self.dimension_nsprefix_ = None
+        self.description = _cast(None, description)
+        self.description_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Exposure)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Exposure.subclass:
+            return Exposure.subclass(*args_, **kwargs_)
+        else:
+            return Exposure(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(Exposure, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Exposure",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Exposure")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Exposure":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Exposure"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Exposure",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Exposure"
+    ):
+        super(Exposure, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Exposure"
+        )
+        if self.name is not None and "name" not in already_processed:
+            already_processed.add("name")
+            outfile.write(
+                " name=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.name), input_name="name"
+                        )
+                    ),
+                )
+            )
+        if self.dimension is not None and "dimension" not in already_processed:
+            already_processed.add("dimension")
+            outfile.write(
+                " dimension=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.dimension), input_name="dimension"
+                        )
+                    ),
+                )
+            )
+        if self.description is not None and "description" not in already_processed:
+            already_processed.add("description")
+            outfile.write(
+                " description=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.description), input_name="description"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Exposure",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Exposure, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("name", node)
+        if value is not None and "name" not in already_processed:
+            already_processed.add("name")
+            self.name = value
+        value = find_attr_value_("dimension", node)
+        if value is not None and "dimension" not in already_processed:
+            already_processed.add("dimension")
+            self.dimension = value
+        value = find_attr_value_("description", node)
+        if value is not None and "description" not in already_processed:
+            already_processed.add("description")
+            self.description = value
+        super(Exposure, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(Exposure, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class Exposure
+
+
+class Constant(BaseWithoutId):
+    """Constant -- LEMS ComponentType for Constant."""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("name", "xs:string", 0, 0, {"use": "required", "name": "name"}),
+        MemberSpec_(
+            "dimension", "xs:string", 0, 0, {"use": "required", "name": "dimension"}
+        ),
+        MemberSpec_(
+            "value", "Nml2Quantity", 0, 0, {"use": "required", "name": "value"}
+        ),
+        MemberSpec_(
+            "description", "xs:string", 0, 1, {"use": "optional", "name": "description"}
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(
+        self,
+        name=None,
+        dimension=None,
+        value=None,
+        description=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Constant"), self).__init__(**kwargs_)
+        self.name = _cast(None, name)
+        self.name_nsprefix_ = None
+        self.dimension = _cast(None, dimension)
+        self.dimension_nsprefix_ = None
+        self.value = _cast(None, value)
+        self.value_nsprefix_ = None
+        self.description = _cast(None, description)
+        self.description_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Constant)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Constant.subclass:
+            return Constant.subclass(*args_, **kwargs_)
+        else:
+            return Constant(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_Nml2Quantity(self, value):
+        # Validate type Nml2Quantity, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*([_a-zA-Z0-9])*)$"]
+    ]
+
+    def _hasContent(self):
+        if super(Constant, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Constant",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Constant")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Constant":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Constant"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Constant",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Constant"
+    ):
+        super(Constant, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Constant"
+        )
+        if self.name is not None and "name" not in already_processed:
+            already_processed.add("name")
+            outfile.write(
+                " name=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.name), input_name="name"
+                        )
+                    ),
+                )
+            )
+        if self.dimension is not None and "dimension" not in already_processed:
+            already_processed.add("dimension")
+            outfile.write(
+                " dimension=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.dimension), input_name="dimension"
+                        )
+                    ),
+                )
+            )
+        if self.value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            outfile.write(
+                " value=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.value), input_name="value"
+                        )
+                    ),
+                )
+            )
+        if self.description is not None and "description" not in already_processed:
+            already_processed.add("description")
+            outfile.write(
+                " description=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.description), input_name="description"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Constant",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Constant, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("name", node)
+        if value is not None and "name" not in already_processed:
+            already_processed.add("name")
+            self.name = value
+        value = find_attr_value_("dimension", node)
+        if value is not None and "dimension" not in already_processed:
+            already_processed.add("dimension")
+            self.dimension = value
+        value = find_attr_value_("value", node)
+        if value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            self.value = value
+            self.validate_Nml2Quantity(self.value)  # validate type Nml2Quantity
+        value = find_attr_value_("description", node)
+        if value is not None and "description" not in already_processed:
+            already_processed.add("description")
+            self.description = value
+        super(Constant, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(Constant, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class Constant
+
+
+class Annotation(BaseWithoutId):
+    """Annotation -- A structured annotation containing metadata, specifically RDF or  **property**  elements"""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "__ANY__",
+            "__ANY__",
+            1,
+            1,
+            {"maxOccurs": "unbounded", "minOccurs": "0", "processContents": "skip"},
+            None,
+        ),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(self, anytypeobjs_=None, gds_collector_=None, **kwargs_):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Annotation"), self).__init__(**kwargs_)
+        if anytypeobjs_ is None:
+            self.anytypeobjs_ = []
+        else:
+            self.anytypeobjs_ = anytypeobjs_
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Annotation)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Annotation.subclass:
+            return Annotation.subclass(*args_, **kwargs_)
+        else:
+            return Annotation(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if self.anytypeobjs_ or super(Annotation, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="Annotation",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Annotation")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Annotation":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Annotation"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Annotation",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Annotation"
+    ):
+        super(Annotation, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Annotation"
+        )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="Annotation",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Annotation, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if not fromsubclass_:
+            for obj_ in self.anytypeobjs_:
+                showIndent(outfile, level, pretty_print)
+                outfile.write(str(obj_))
+                outfile.write("\n")
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        super(Annotation, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        content_ = self.gds_build_any(child_, "Annotation")
+        self.anytypeobjs_.append(content_)
+        super(Annotation, self)._buildChildren(child_, node, nodeName_, True)
+
+
+# end class Annotation
+
+
+class Property(BaseWithoutId):
+    """Property -- A property ( a **tag**  and **value**  pair ), which can be on any  **baseStandalone**  either as a direct child, or within an  **Annotation** . Generally something which helps the visual display or facilitates simulation of a Component, but is not a core physiological property. Common examples include: **numberInternalDivisions,**  equivalent of nseg in NEURON; **radius,**  for a radius to use in graphical displays for abstract cells ( i. e. without defined morphologies ); **color,**  the color to use for a  **Population**  or  **populationList**  of cells; **recommended_dt_ms,**  the recommended timestep to use for simulating a  **Network** , **recommended_duration_ms**  the recommended duration to use when running a  **Network**"""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("tag", "xs:string", 0, 0, {"use": "required", "name": "tag"}),
+        MemberSpec_("value", "xs:string", 0, 0, {"use": "required", "name": "value"}),
+    ]
+    subclass = None
+    superclass = BaseWithoutId
+
+    def __init__(self, tag=None, value=None, gds_collector_=None, **kwargs_):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Property"), self).__init__(**kwargs_)
+        self.tag = _cast(None, tag)
+        self.tag_nsprefix_ = None
+        self.value = _cast(None, value)
+        self.value_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Property)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Property.subclass:
+            return Property.subclass(*args_, **kwargs_)
+        else:
+            return Property(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(Property, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Property",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Property")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Property":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Property"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Property",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Property"
+    ):
+        super(Property, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Property"
+        )
+        if self.tag is not None and "tag" not in already_processed:
+            already_processed.add("tag")
+            outfile.write(
+                " tag=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(quote_attrib(self.tag), input_name="tag")
+                    ),
+                )
+            )
+        if self.value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            outfile.write(
+                " value=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.value), input_name="value"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Property",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Property, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("tag", node)
+        if value is not None and "tag" not in already_processed:
+            already_processed.add("tag")
+            self.tag = value
+        value = find_attr_value_("value", node)
+        if value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            self.value = value
+        super(Property, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(Property, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class Property
+
+
 class BasePynnSynapse(BaseSynapse):
     """BasePynnSynapse -- Base type for all PyNN synapses. Note, the current **I**  produced is dimensionless, but it requires a membrane potential **v**  with dimension voltage
     \n
@@ -38975,12 +38600,12 @@ class BasePynnSynapse(BaseSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         tau_syn=None,
         extensiontype_=None,
         gds_collector_=None,
@@ -38992,12 +38617,12 @@ class BasePynnSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BasePynnSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -39190,12 +38815,12 @@ class basePyNNCell(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -39211,12 +38836,12 @@ class basePyNNCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("basePyNNCell"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -39422,6 +39047,193 @@ class basePyNNCell(BaseCell):
 # end class basePyNNCell
 
 
+class InputW(Input):
+    """InputW -- Specifies input lists. Can set **weight**  to scale individual inputs.
+    \n
+    :param weight:
+    :type weight: none
+
+    """
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("weight", "xs:float", 0, 0, {"use": "required", "name": "weight"}),
+    ]
+    subclass = None
+    superclass = Input
+
+    def __init__(
+        self,
+        id=None,
+        target=None,
+        destination=None,
+        segment_id=None,
+        fraction_along=None,
+        weight=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("InputW"), self).__init__(
+            id, target, destination, segment_id, fraction_along, **kwargs_
+        )
+        self.weight = _cast(float, weight)
+        self.weight_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, InputW)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if InputW.subclass:
+            return InputW.subclass(*args_, **kwargs_)
+        else:
+            return InputW(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(InputW, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="InputW",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("InputW")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "InputW":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="InputW"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="InputW",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="InputW"
+    ):
+        super(InputW, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="InputW"
+        )
+        if self.weight is not None and "weight" not in already_processed:
+            already_processed.add("weight")
+            outfile.write(
+                ' weight="%s"' % self.gds_format_float(self.weight, input_name="weight")
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="InputW",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(InputW, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("weight", node)
+        if value is not None and "weight" not in already_processed:
+            already_processed.add("weight")
+            value = self.gds_parse_float(value, node, "weight")
+            self.weight = value
+        super(InputW, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(InputW, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+    def get_weight(self):
+        """Get weight.
+
+        If weight is not set, the default value of 1.0 is returned.
+        """
+
+        return float(self.weight) if self.weight != None else 1.0
+
+    def __str__(self):
+
+        return (
+            "Input (weight) "
+            + str(self.id)
+            + ": "
+            + str(self.get_target_cell_id())
+            + ":"
+            + str(self.get_segment_id())
+            + "("
+            + "%.6f" % self.get_fraction_along()
+            + "), weight: "
+            + "%.6f" % self.get_weight()
+        )
+
+    # end class InputW
+
+
 class ContinuousProjection(BaseProjection):
     """ContinuousProjection -- A projection between **presynapticPopulation**  and **postsynapticPopulation**  through components **preComponent**  at the start and **postComponent**  at the end of a  **continuousConnection**  or  **continuousConnectionInstance** . Can be used for analog synapses."""
 
@@ -39472,7 +39284,6 @@ class ContinuousProjection(BaseProjection):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         presynaptic_population=None,
         postsynaptic_population=None,
@@ -39488,7 +39299,7 @@ class ContinuousProjection(BaseProjection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ContinuousProjection"), self).__init__(
-            neuro_lex_id, id, presynaptic_population, postsynaptic_population, **kwargs_
+            id, presynaptic_population, postsynaptic_population, **kwargs_
         )
         if continuous_connections is None:
             self.continuous_connections = []
@@ -39850,7 +39661,6 @@ class ElectricalProjection(BaseProjection):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         presynaptic_population=None,
         postsynaptic_population=None,
@@ -39866,7 +39676,7 @@ class ElectricalProjection(BaseProjection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ElectricalProjection"), self).__init__(
-            neuro_lex_id, id, presynaptic_population, postsynaptic_population, **kwargs_
+            id, presynaptic_population, postsynaptic_population, **kwargs_
         )
         if electrical_connections is None:
             self.electrical_connections = []
@@ -40218,8 +40028,8 @@ class BaseConnectionNewFormat(BaseConnection):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell=None,
         pre_segment="0",
         pre_fraction_along="0.5",
@@ -40236,7 +40046,7 @@ class BaseConnectionNewFormat(BaseConnection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConnectionNewFormat"), self).__init__(
-            neuro_lex_id, id, extensiontype_, **kwargs_
+            id, neuro_lex_id, extensiontype_, **kwargs_
         )
         self.pre_cell = _cast(None, pre_cell)
         self.pre_cell_nsprefix_ = None
@@ -40604,8 +40414,8 @@ class BaseConnectionOldFormat(BaseConnection):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell_id=None,
         pre_segment_id="0",
         pre_fraction_along="0.5",
@@ -40622,7 +40432,7 @@ class BaseConnectionOldFormat(BaseConnection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConnectionOldFormat"), self).__init__(
-            neuro_lex_id, id, extensiontype_, **kwargs_
+            id, neuro_lex_id, extensiontype_, **kwargs_
         )
         self.pre_cell_id = _cast(None, pre_cell_id)
         self.pre_cell_id_nsprefix_ = None
@@ -40980,7 +40790,6 @@ class Projection(BaseProjection):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         presynaptic_population=None,
         postsynaptic_population=None,
@@ -40996,7 +40805,7 @@ class Projection(BaseProjection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Projection"), self).__init__(
-            neuro_lex_id, id, presynaptic_population, postsynaptic_population, **kwargs_
+            id, presynaptic_population, postsynaptic_population, **kwargs_
         )
         self.synapse = _cast(None, synapse)
         self.synapse_nsprefix_ = None
@@ -41347,7 +41156,6 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -41364,14 +41172,7 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeGeneratorRefPoisson"), self).__init__(
-            neuro_lex_id,
-            id,
-            metaid,
-            notes,
-            properties,
-            annotation,
-            average_rate,
-            **kwargs_
+            id, metaid, notes, properties, annotation, average_rate, **kwargs_
         )
         self.minimum_isi = _cast(None, minimum_isi)
         self.minimum_isi_nsprefix_ = None
@@ -41573,12 +41374,7 @@ class IntracellularProperties2CaPools(IntracellularProperties):
     superclass = IntracellularProperties
 
     def __init__(
-        self,
-        neuro_lex_id=None,
-        species=None,
-        resistivities=None,
-        gds_collector_=None,
-        **kwargs_
+        self, species=None, resistivities=None, gds_collector_=None, **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -41586,7 +41382,7 @@ class IntracellularProperties2CaPools(IntracellularProperties):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IntracellularProperties2CaPools"), self).__init__(
-            neuro_lex_id, species, resistivities, **kwargs_
+            species, resistivities, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -41741,7 +41537,6 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
@@ -41761,7 +41556,6 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ConcentrationModel_D"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
@@ -41942,7 +41736,6 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         cond_density=None,
@@ -41959,7 +41752,6 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityNernstCa2"), self).__init__(
-            neuro_lex_id,
             id,
             ion_channel,
             cond_density,
@@ -42134,7 +41926,6 @@ class ChannelDensityVShift(ChannelDensity):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         ion_channel=None,
         cond_density=None,
@@ -42153,7 +41944,6 @@ class ChannelDensityVShift(ChannelDensity):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityVShift"), self).__init__(
-            neuro_lex_id,
             id,
             ion_channel,
             cond_density,
@@ -42377,7 +42167,6 @@ class MembraneProperties2CaPools(MembraneProperties):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         channel_populations=None,
         channel_densities=None,
         channel_density_v_shifts=None,
@@ -42400,7 +42189,6 @@ class MembraneProperties2CaPools(MembraneProperties):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("MembraneProperties2CaPools"), self).__init__(
-            neuro_lex_id,
             channel_populations,
             channel_densities,
             channel_density_v_shifts,
@@ -42628,12 +42416,12 @@ class Cell(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         morphology_attr=None,
         biophysical_properties_attr=None,
         morphology=None,
@@ -42648,12 +42436,12 @@ class Cell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Cell"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -42985,9 +42773,9 @@ class Cell(BaseCell):
             pd = parent.distal
             pp = self.get_actual_proximal(segment.parent.segments)
             p = Point3DWithDiam(
-                (1 - fract) * pp.x + fract * pd.x,
-                (1 - fract) * pp.y + fract * pd.y,
-                (1 - fract) * pp.z + fract * pd.z,
+                x=(1 - fract) * pp.x + fract * pd.x,
+                y=(1 - fract) * pp.y + fract * pd.y,
+                z=(1 - fract) * pp.z + fract * pd.z,
             )
             p.diameter = (1 - fract) * pp.diameter + fract * pd.diameter
 
@@ -43115,11 +42903,17 @@ class Cell(BaseCell):
         """
         Get ordered list of segments in specified groups
 
-        :param group_list: list of groups to get segments from
+        :param group_list: a group id or list of groups to get segments from
+        :type group_list: str or list
         :param check_parentage: verify parentage
+        :type check_parentage: bool
         :param include_commulative_lengths: also include cummulative lengths
+        :type include_cumulative_lengths: bool
         :param include_path_lengths: also include path lengths
-        :param path_length_metric:
+        :type include_path_lengths: bool
+        :param path_length_metric: metric to use for path length ("Path Length
+            from root" is currently the only supported option, and the default)
+        :type path_length_metric: str
 
         :return: dictionary of segments with additional information depending
             on what parameters were used:
@@ -43130,12 +42924,19 @@ class Cell(BaseCell):
         unord_segs = {}
         other_segs = {}
 
+        # convert to list if a single segment group ID has been provided
         if isinstance(group_list, str):
             group_list = [group_list]
 
+        # get a dict of all segments in the cell, with their ids as keys
         segments = self.get_segment_ids_vs_segments()
 
+        # get list of segments in all segment groups
+        # and store this information in two dicts:
+        # - unord_segs: for segment groups in group_list
+        # - other_segs: for segment groups not in group_list
         for sg in self.morphology.segment_groups:
+            # get all segments in a segment group
             all_segs_here = self.get_all_segments_in_group(sg)
 
             if sg.id in group_list:
@@ -43145,6 +42946,7 @@ class Cell(BaseCell):
 
         ord_segs = {}
 
+        # sort unord_segs by id to get an ordered list in ord_segs
         from operator import attrgetter
 
         for key in unord_segs.keys():
@@ -43469,12 +43271,12 @@ class PinskyRinzelCA3Cell(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         i_soma=None,
         i_dend=None,
         gc=None,
@@ -43505,7 +43307,7 @@ class PinskyRinzelCA3Cell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("PinskyRinzelCA3Cell"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.i_soma = _cast(None, i_soma)
         self.i_soma_nsprefix_ = None
@@ -44266,12 +44068,12 @@ class FitzHughNagumo1969Cell(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         a=None,
         b=None,
         I=None,
@@ -44287,7 +44089,7 @@ class FitzHughNagumo1969Cell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("FitzHughNagumo1969Cell"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.a = _cast(None, a)
         self.a_nsprefix_ = None
@@ -44578,12 +44380,12 @@ class FitzHughNagumoCell(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         I=None,
         gds_collector_=None,
         **kwargs_
@@ -44594,7 +44396,7 @@ class FitzHughNagumoCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("FitzHughNagumoCell"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.I = _cast(None, I)
         self.I_nsprefix_ = None
@@ -44798,12 +44600,12 @@ class BaseCellMembPotCap(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         C=None,
         extensiontype_=None,
         gds_collector_=None,
@@ -44815,12 +44617,12 @@ class BaseCellMembPotCap(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseCellMembPotCap"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -45066,12 +44868,12 @@ class IzhikevichCell(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         v0=None,
         thresh=None,
         a=None,
@@ -45087,7 +44889,7 @@ class IzhikevichCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IzhikevichCell"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.v0 = _cast(None, v0)
         self.v0_nsprefix_ = None
@@ -45436,12 +45238,12 @@ class IafCell(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         leak_reversal=None,
         thresh=None,
         reset=None,
@@ -45457,12 +45259,12 @@ class IafCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IafCell"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -45847,12 +45649,12 @@ class IafTauCell(BaseCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         leak_reversal=None,
         thresh=None,
         reset=None,
@@ -45867,12 +45669,12 @@ class IafTauCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IafTauCell"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -46199,12 +46001,12 @@ class GradedSynapse(BaseSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         conductance=None,
         delta=None,
         Vth=None,
@@ -46219,7 +46021,7 @@ class GradedSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("GradedSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
@@ -46565,12 +46367,12 @@ class LinearGradedSynapse(BaseSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         conductance=None,
         gds_collector_=None,
         **kwargs_
@@ -46581,7 +46383,7 @@ class LinearGradedSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("LinearGradedSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
@@ -46782,12 +46584,12 @@ class SilentSynapse(BaseSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -46797,7 +46599,7 @@ class SilentSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SilentSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -46946,12 +46748,12 @@ class GapJunction(BaseSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         conductance=None,
         gds_collector_=None,
         **kwargs_
@@ -46962,7 +46764,7 @@ class GapJunction(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("GapJunction"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
@@ -47151,12 +46953,12 @@ class BaseCurrentBasedSynapse(BaseSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -47167,12 +46969,12 @@ class BaseCurrentBasedSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseCurrentBasedSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -47341,12 +47143,12 @@ class BaseVoltageDepSynapse(BaseSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -47357,12 +47159,12 @@ class BaseVoltageDepSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseVoltageDepSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -47648,12 +47450,12 @@ class IonChannel(IonChannelScalable):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         q10_conductance_scalings=None,
         species=None,
         type=None,
@@ -47676,12 +47478,12 @@ class IonChannel(IonChannelScalable):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannel"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             q10_conductance_scalings,
             extensiontype_,
             **kwargs_
@@ -48175,6 +47977,1003 @@ class IonChannel(IonChannelScalable):
 # end class IonChannel
 
 
+class ConditionalDerivedVariable(NamedDimensionalVariable):
+    """ConditionalDerivedVariable -- LEMS ComponentType for ConditionalDerivedVariable"""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "Case",
+            "Case",
+            1,
+            0,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "1",
+                "name": "Case",
+                "type": "Case",
+            },
+            None,
+        ),
+    ]
+    subclass = None
+    superclass = NamedDimensionalVariable
+
+    def __init__(
+        self,
+        name=None,
+        dimension=None,
+        description=None,
+        exposure=None,
+        Case=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("ConditionalDerivedVariable"), self).__init__(
+            name, dimension, description, exposure, **kwargs_
+        )
+        if Case is None:
+            self.Case = []
+        else:
+            self.Case = Case
+        self.Case_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, ConditionalDerivedVariable
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if ConditionalDerivedVariable.subclass:
+            return ConditionalDerivedVariable.subclass(*args_, **kwargs_)
+        else:
+            return ConditionalDerivedVariable(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if self.Case or super(ConditionalDerivedVariable, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="ConditionalDerivedVariable",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("ConditionalDerivedVariable")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "ConditionalDerivedVariable":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="ConditionalDerivedVariable",
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="ConditionalDerivedVariable",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="ConditionalDerivedVariable",
+    ):
+        super(ConditionalDerivedVariable, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="ConditionalDerivedVariable",
+        )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="ConditionalDerivedVariable",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(ConditionalDerivedVariable, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        for Case_ in self.Case:
+            namespaceprefix_ = (
+                self.Case_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.Case_nsprefix_)
+                else ""
+            )
+            Case_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="Case",
+                pretty_print=pretty_print,
+            )
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        super(ConditionalDerivedVariable, self)._buildAttributes(
+            node, attrs, already_processed
+        )
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        if nodeName_ == "Case":
+            obj_ = Case.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.Case.append(obj_)
+            obj_.original_tagname_ = "Case"
+        super(ConditionalDerivedVariable, self)._buildChildren(
+            child_, node, nodeName_, True
+        )
+
+
+# end class ConditionalDerivedVariable
+
+
+class StateVariable(NamedDimensionalVariable):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = []
+    subclass = None
+    superclass = NamedDimensionalVariable
+
+    def __init__(
+        self,
+        name=None,
+        dimension=None,
+        description=None,
+        exposure=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("StateVariable"), self).__init__(
+            name, dimension, description, exposure, **kwargs_
+        )
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, StateVariable)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if StateVariable.subclass:
+            return StateVariable.subclass(*args_, **kwargs_)
+        else:
+            return StateVariable(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(StateVariable, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="StateVariable",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("StateVariable")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "StateVariable":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="StateVariable"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="StateVariable",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="StateVariable",
+    ):
+        super(StateVariable, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="StateVariable"
+        )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="StateVariable",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(StateVariable, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        super(StateVariable, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(StateVariable, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class StateVariable
+
+
+class DerivedVariable(NamedDimensionalVariable):
+    """DerivedVariable -- LEMS ComponentType for DerivedVariable"""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("value", "xs:string", 0, 1, {"use": "optional", "name": "value"}),
+        MemberSpec_("select", "xs:string", 0, 1, {"use": "optional", "name": "select"}),
+    ]
+    subclass = None
+    superclass = NamedDimensionalVariable
+
+    def __init__(
+        self,
+        name=None,
+        dimension=None,
+        description=None,
+        exposure=None,
+        value=None,
+        select=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("DerivedVariable"), self).__init__(
+            name, dimension, description, exposure, **kwargs_
+        )
+        self.value = _cast(None, value)
+        self.value_nsprefix_ = None
+        self.select = _cast(None, select)
+        self.select_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, DerivedVariable)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if DerivedVariable.subclass:
+            return DerivedVariable.subclass(*args_, **kwargs_)
+        else:
+            return DerivedVariable(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(DerivedVariable, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="DerivedVariable",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("DerivedVariable")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "DerivedVariable":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="DerivedVariable"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="DerivedVariable",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="DerivedVariable",
+    ):
+        super(DerivedVariable, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="DerivedVariable"
+        )
+        if self.value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            outfile.write(
+                " value=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.value), input_name="value"
+                        )
+                    ),
+                )
+            )
+        if self.select is not None and "select" not in already_processed:
+            already_processed.add("select")
+            outfile.write(
+                " select=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.select), input_name="select"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="DerivedVariable",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(DerivedVariable, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("value", node)
+        if value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            self.value = value
+        value = find_attr_value_("select", node)
+        if value is not None and "select" not in already_processed:
+            already_processed.add("select")
+            self.select = value
+        super(DerivedVariable, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(DerivedVariable, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class DerivedVariable
+
+
+class Requirement(NamedDimensionalType):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = []
+    subclass = None
+    superclass = NamedDimensionalType
+
+    def __init__(
+        self,
+        name=None,
+        dimension=None,
+        description=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Requirement"), self).__init__(
+            name, dimension, description, **kwargs_
+        )
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Requirement)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Requirement.subclass:
+            return Requirement.subclass(*args_, **kwargs_)
+        else:
+            return Requirement(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(Requirement, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Requirement",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Requirement")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Requirement":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Requirement"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Requirement",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="Requirement",
+    ):
+        super(Requirement, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Requirement"
+        )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Requirement",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Requirement, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        super(Requirement, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(Requirement, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class Requirement
+
+
+class LEMS_Property(NamedDimensionalType):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "default_value",
+            "xs:double",
+            0,
+            1,
+            {"use": "optional", "name": "default_value"},
+        ),
+    ]
+    subclass = None
+    superclass = NamedDimensionalType
+
+    def __init__(
+        self,
+        name=None,
+        dimension=None,
+        description=None,
+        default_value=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("LEMS_Property"), self).__init__(
+            name, dimension, description, **kwargs_
+        )
+        self.default_value = _cast(float, default_value)
+        self.default_value_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, LEMS_Property)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if LEMS_Property.subclass:
+            return LEMS_Property.subclass(*args_, **kwargs_)
+        else:
+            return LEMS_Property(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(LEMS_Property, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="LEMS_Property",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("LEMS_Property")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "LEMS_Property":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="LEMS_Property"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="LEMS_Property",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="LEMS_Property",
+    ):
+        super(LEMS_Property, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="LEMS_Property"
+        )
+        if self.default_value is not None and "default_value" not in already_processed:
+            already_processed.add("default_value")
+            outfile.write(
+                ' defaultValue="%s"'
+                % self.gds_format_double(self.default_value, input_name="defaultValue")
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="LEMS_Property",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(LEMS_Property, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("defaultValue", node)
+        if value is not None and "defaultValue" not in already_processed:
+            already_processed.add("defaultValue")
+            value = self.gds_parse_double(value, node, "defaultValue")
+            self.default_value = value
+        super(LEMS_Property, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(LEMS_Property, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class LEMS_Property
+
+
+class Parameter(NamedDimensionalType):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = []
+    subclass = None
+    superclass = NamedDimensionalType
+
+    def __init__(
+        self,
+        name=None,
+        dimension=None,
+        description=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Parameter"), self).__init__(
+            name, dimension, description, **kwargs_
+        )
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Parameter)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Parameter.subclass:
+            return Parameter.subclass(*args_, **kwargs_)
+        else:
+            return Parameter(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(Parameter, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Parameter",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Parameter")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Parameter":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Parameter"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Parameter",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Parameter"
+    ):
+        super(Parameter, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Parameter"
+        )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Parameter",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Parameter, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        super(Parameter, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(Parameter, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class Parameter
+
+
 class AlphaCurrSynapse(BasePynnSynapse):
     """AlphaCurrSynapse -- Alpha synapse: rise time and decay time are both tau_syn. Current based synapse.
     \n
@@ -48190,12 +48989,12 @@ class AlphaCurrSynapse(BasePynnSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         tau_syn=None,
         gds_collector_=None,
         **kwargs_
@@ -48206,7 +49005,7 @@ class AlphaCurrSynapse(BasePynnSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AlphaCurrSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, tau_syn, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -48355,12 +49154,12 @@ class ExpCurrSynapse(BasePynnSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         tau_syn=None,
         gds_collector_=None,
         **kwargs_
@@ -48371,7 +49170,7 @@ class ExpCurrSynapse(BasePynnSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpCurrSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, tau_syn, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -48516,12 +49315,12 @@ class AlphaCondSynapse(BasePynnSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         tau_syn=None,
         e_rev=None,
         gds_collector_=None,
@@ -48533,7 +49332,7 @@ class AlphaCondSynapse(BasePynnSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AlphaCondSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, tau_syn, **kwargs_
         )
         self.e_rev = _cast(float, e_rev)
         self.e_rev_nsprefix_ = None
@@ -48698,12 +49497,12 @@ class ExpCondSynapse(BasePynnSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         tau_syn=None,
         e_rev=None,
         gds_collector_=None,
@@ -48715,7 +49514,7 @@ class ExpCondSynapse(BasePynnSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpCondSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, tau_syn, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, tau_syn, **kwargs_
         )
         self.e_rev = _cast(float, e_rev)
         self.e_rev_nsprefix_ = None
@@ -48918,12 +49717,12 @@ class HH_cond_exp(basePyNNCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -48947,12 +49746,12 @@ class HH_cond_exp(basePyNNCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("HH_cond_exp"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,
@@ -49244,12 +50043,12 @@ class basePyNNIaFCell(basePyNNCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -49270,12 +50069,12 @@ class basePyNNIaFCell(basePyNNCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("basePyNNIaFCell"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,
@@ -49509,8 +50308,8 @@ class ContinuousConnection(BaseConnectionNewFormat):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell=None,
         pre_segment="0",
         pre_fraction_along="0.5",
@@ -49529,8 +50328,8 @@ class ContinuousConnection(BaseConnectionNewFormat):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ContinuousConnection"), self).__init__(
-            neuro_lex_id,
             id,
+            neuro_lex_id,
             pre_cell,
             pre_segment,
             pre_fraction_along,
@@ -49866,8 +50665,8 @@ class ElectricalConnection(BaseConnectionNewFormat):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell=None,
         pre_segment="0",
         pre_fraction_along="0.5",
@@ -49885,8 +50684,8 @@ class ElectricalConnection(BaseConnectionNewFormat):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ElectricalConnection"), self).__init__(
-            neuro_lex_id,
             id,
+            neuro_lex_id,
             pre_cell,
             pre_segment,
             pre_fraction_along,
@@ -50207,8 +51006,8 @@ class ConnectionWD(BaseConnectionOldFormat):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell_id=None,
         pre_segment_id="0",
         pre_fraction_along="0.5",
@@ -50226,8 +51025,8 @@ class ConnectionWD(BaseConnectionOldFormat):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ConnectionWD"), self).__init__(
-            neuro_lex_id,
             id,
+            neuro_lex_id,
             pre_cell_id,
             pre_segment_id,
             pre_fraction_along,
@@ -50550,8 +51349,8 @@ class Connection(BaseConnectionOldFormat):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell_id=None,
         pre_segment_id="0",
         pre_fraction_along="0.5",
@@ -50567,8 +51366,8 @@ class Connection(BaseConnectionOldFormat):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Connection"), self).__init__(
-            neuro_lex_id,
             id,
+            neuro_lex_id,
             pre_cell_id,
             pre_segment_id,
             pre_fraction_along,
@@ -50807,12 +51606,12 @@ class Cell2CaPools(Cell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         morphology_attr=None,
         biophysical_properties_attr=None,
         morphology=None,
@@ -50827,12 +51626,12 @@ class Cell2CaPools(Cell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Cell2CaPools"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             morphology_attr,
             biophysical_properties_attr,
             morphology,
@@ -51060,12 +51859,12 @@ class AdExIaFCell(BaseCellMembPotCap):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         C=None,
         g_l=None,
         EL=None,
@@ -51086,7 +51885,7 @@ class AdExIaFCell(BaseCellMembPotCap):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AdExIaFCell"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, C, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, C, **kwargs_
         )
         self.g_l = _cast(None, g_l)
         self.g_l_nsprefix_ = None
@@ -51605,12 +52404,12 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         C=None,
         v0=None,
         k=None,
@@ -51630,7 +52429,7 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Izhikevich2007Cell"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, C, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, C, **kwargs_
         )
         self.v0 = _cast(None, v0)
         self.v0_nsprefix_ = None
@@ -52128,12 +52927,12 @@ class IafRefCell(IafCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         leak_reversal=None,
         thresh=None,
         reset=None,
@@ -52149,12 +52948,12 @@ class IafRefCell(IafCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IafRefCell"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             leak_reversal,
             thresh,
             reset,
@@ -52361,12 +53160,12 @@ class IafTauRefCell(IafTauCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         leak_reversal=None,
         thresh=None,
         reset=None,
@@ -52381,12 +53180,12 @@ class IafTauRefCell(IafTauCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IafTauRefCell"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             leak_reversal,
             thresh,
             reset,
@@ -52597,12 +53396,12 @@ class DoubleSynapse(BaseVoltageDepSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         synapse1=None,
         synapse2=None,
         synapse1_path=None,
@@ -52616,7 +53415,7 @@ class DoubleSynapse(BaseVoltageDepSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("DoubleSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.synapse1 = _cast(None, synapse1)
         self.synapse1_nsprefix_ = None
@@ -52870,12 +53669,12 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         tau=None,
         ibase=None,
         gds_collector_=None,
@@ -52887,7 +53686,7 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AlphaCurrentSynapse"), self).__init__(
-            neuro_lex_id, id, metaid, notes, properties, annotation, **kwargs_
+            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
         )
         self.tau = _cast(None, tau)
         self.tau_nsprefix_ = None
@@ -53164,12 +53963,12 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         gbase1=None,
         gbase2=None,
         erev=None,
@@ -53183,12 +53982,12 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConductanceBasedSynapseTwo"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -53507,12 +54306,12 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         gbase=None,
         erev=None,
         extensiontype_=None,
@@ -53525,12 +54324,12 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConductanceBasedSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             extensiontype_,
             **kwargs_
         )
@@ -53823,12 +54622,12 @@ class IonChannelVShift(IonChannel):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         q10_conductance_scalings=None,
         species=None,
         type=None,
@@ -53851,12 +54650,12 @@ class IonChannelVShift(IonChannel):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannelVShift"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             q10_conductance_scalings,
             species,
             type,
@@ -54071,12 +54870,12 @@ class IonChannelHH(IonChannel):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         q10_conductance_scalings=None,
         species=None,
         type=None,
@@ -54098,12 +54897,12 @@ class IonChannelHH(IonChannel):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannelHH"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             q10_conductance_scalings,
             species,
             type,
@@ -54275,12 +55074,12 @@ class IF_curr_exp(basePyNNIaFCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -54300,12 +55099,12 @@ class IF_curr_exp(basePyNNIaFCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IF_curr_exp"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,
@@ -54475,12 +55274,12 @@ class IF_curr_alpha(basePyNNIaFCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -54500,12 +55299,12 @@ class IF_curr_alpha(basePyNNIaFCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IF_curr_alpha"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,
@@ -54686,12 +55485,12 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -54714,12 +55513,12 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("basePyNNIaFCondCell"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,
@@ -54922,8 +55721,8 @@ class ContinuousConnectionInstance(ContinuousConnection):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell=None,
         pre_segment="0",
         pre_fraction_along="0.5",
@@ -54942,8 +55741,8 @@ class ContinuousConnectionInstance(ContinuousConnection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ContinuousConnectionInstance"), self).__init__(
-            neuro_lex_id,
             id,
+            neuro_lex_id,
             pre_cell,
             pre_segment,
             pre_fraction_along,
@@ -55143,8 +55942,8 @@ class ElectricalConnectionInstance(ElectricalConnection):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell=None,
         pre_segment="0",
         pre_fraction_along="0.5",
@@ -55162,8 +55961,8 @@ class ElectricalConnectionInstance(ElectricalConnection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ElectricalConnectionInstance"), self).__init__(
-            neuro_lex_id,
             id,
+            neuro_lex_id,
             pre_cell,
             pre_segment,
             pre_fraction_along,
@@ -55397,12 +56196,12 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         gbase1=None,
         gbase2=None,
         erev=None,
@@ -55418,12 +56217,12 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpThreeSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             gbase1,
             gbase2,
             erev,
@@ -55684,12 +56483,12 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         gbase=None,
         erev=None,
         tau_decay=None,
@@ -55704,12 +56503,12 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpTwoSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             gbase,
             erev,
             extensiontype_,
@@ -55957,12 +56756,12 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         gbase=None,
         erev=None,
         tau_decay=None,
@@ -55975,12 +56774,12 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpOneSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             gbase,
             erev,
             **kwargs_
@@ -56185,12 +56984,12 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         gbase=None,
         erev=None,
         tau=None,
@@ -56203,12 +57002,12 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AlphaSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             gbase,
             erev,
             **kwargs_
@@ -56443,12 +57242,12 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -56476,12 +57275,12 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("EIF_cond_exp_isfa_ista"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,
@@ -56715,7 +57514,8 @@ class IF_cond_exp(basePyNNIaFCondCell):
     \n
     :param e_rev_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_E: none
-    :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
+    :param e
+    _rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
     :param tau_refrac:
     :type tau_refrac: none
@@ -56747,12 +57547,12 @@ class IF_cond_exp(basePyNNIaFCondCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -56774,12 +57574,12 @@ class IF_cond_exp(basePyNNIaFCondCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IF_cond_exp"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,
@@ -56955,12 +57755,12 @@ class IF_cond_alpha(basePyNNIaFCondCell):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -56982,12 +57782,12 @@ class IF_cond_alpha(basePyNNIaFCondCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IF_cond_alpha"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,
@@ -57143,8 +57943,8 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell=None,
         pre_segment="0",
         pre_fraction_along="0.5",
@@ -57163,8 +57963,8 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ContinuousConnectionInstanceW"), self).__init__(
-            neuro_lex_id,
             id,
+            neuro_lex_id,
             pre_cell,
             pre_segment,
             pre_fraction_along,
@@ -57369,8 +58169,8 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
+        neuro_lex_id=None,
         pre_cell=None,
         pre_segment="0",
         pre_fraction_along="0.5",
@@ -57388,8 +58188,8 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ElectricalConnectionInstanceW"), self).__init__(
-            neuro_lex_id,
             id,
+            neuro_lex_id,
             pre_cell,
             pre_segment,
             pre_fraction_along,
@@ -57620,12 +58420,12 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         gbase=None,
         erev=None,
         tau_decay=None,
@@ -57641,12 +58441,12 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BlockingPlasticSynapse"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             gbase,
             erev,
             tau_decay,
@@ -57887,12 +58687,12 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
 
     def __init__(
         self,
-        neuro_lex_id=None,
         id=None,
         metaid=None,
         notes=None,
         properties=None,
         annotation=None,
+        neuro_lex_id=None,
         cm=None,
         i_offset=None,
         tau_syn_E=None,
@@ -57919,12 +58719,12 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("EIF_cond_alpha_isfa_ista"), self).__init__(
-            neuro_lex_id,
             id,
             metaid,
             notes,
             properties,
             annotation,
+            neuro_lex_id,
             cm,
             i_offset,
             tau_syn_E,

@@ -82,8 +82,11 @@ def get_summary(nml_file_name: str) -> str:
     return nml_doc.summary(show_includes=False)
 
 
-def add_all_to_document(nml_doc_src: neuroml.NeuroMLDocument, nml_doc_tgt:
-                        neuroml.NeuroMLDocument, verbose: bool = False) -> None:
+def add_all_to_document(
+    nml_doc_src: neuroml.NeuroMLDocument,
+    nml_doc_tgt: neuroml.NeuroMLDocument,
+    verbose: bool = False,
+) -> None:
     """Add all members of the source NeuroML document to the target NeuroML document.
 
     :param nml_doc_src: source NeuroML document to copy from
@@ -128,7 +131,11 @@ def append_to_element(parent, child):
     :type child: Object
     :raises Exception: when the child could not be added to the parent
     """
-    warnings.warn("This method is deprecated and will be removed in future releases. Please use the `add` methods provided in each NeuroML ComponentType object", FutureWarning, stacklevel=2)
+    warnings.warn(
+        "This method is deprecated and will be removed in future releases. Please use the `add` methods provided in each NeuroML ComponentType object",
+        FutureWarning,
+        stacklevel=2,
+    )
     membs = inspect.getmembers(parent)
     # print("Adding %s to element %s"%(child, parent))
     mappings = {}
