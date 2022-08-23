@@ -366,23 +366,51 @@ generic_list = MethodSpec(
         elements) or "List" elements (Children elements). It will also note
         whether a member is optional or required.
 
+        By default, this will only show the members, and not their contents.
+        To see contents that have been set, use `show_contents=True`. This will
+        not show empty/unset contents. To see all contents, set
+        `show_contents=all`.
+
         See http://www.davekuhlman.org/generateDS.html#user-methods for more
         information on the MemberSpec_ class that generateDS uses.
 
-        :param show_contents: also prints out the contents of the members
-        :type show_contents: bool
+        :param show_contents: toggle to print out the contents of the members
+        :type show_contents: bool or str
 
         :returns: the string (for testing purposes)
         """
 
-        info_str = "Valid members for {} are:\\n".format(self.__class__.__name__)
+        # do not show parameters here, they are indicated by members below
+        info_str = "{}\\n\\n".format(self.__class__.__doc__.split(":param")[0].strip())
+        info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information.\\n\\n"
+        info_str += "Valid members for {} are:\\n".format(self.__class__.__name__)
         for member in self.member_data_items_:
-            info_str += ("* {} (class: {})\\n".format(member.name, member.data_type))
+            info_str += ("* {} (class: {}, {})\\n".format(member.get_name(), member.get_data_type(), "Optional" if member.get_optional() else "Required"))
             if show_contents:
                 contents = getattr(self, member.get_name())
-                info_str += ("\t* Contents: {}\\n\\n".format(contents))
+                # check if the member is set to None
+                # if it's a container (list), it will not be set to None, it
+                # will be empty, []
+                # if it's a scalar, it will be set to None or to a non
+                # container value
+                if contents is None or (isinstance(contents, list) and len(contents) == 0):
+                    if show_contents == "all":
+                        info_str += ("\t* Contents: {}\\n\\n".format(contents))
+                else:
+                    contents_id = None
+                    # if list, iterate to get ids
+                    if isinstance(contents, list):
+                        contents_id = []
+                        for c in contents:
+                            if hasattr(c, 'id'):
+                                contents_id.append(c.id)
+                            else:
+                                contents_id.append(c)
+                    # not a list, a scalar, just use contents
+                    else:
+                        contents_id = contents
+                    info_str += ("\t* Contents (ids): {}\\n\\n".format(contents_id))
 
-        info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information."
         print(info_str)
         return info_str
     ''',
@@ -1065,7 +1093,10 @@ nml_doc_summary = MethodSpec(
             return None
         all_ids = []
         for ms in self.member_data_items_:
-            mlist = self.__getattribute__(ms.name)
+            mlist = getattr(self, ms.get_name())
+            # TODO: debug why this is required
+            if mlist is None:
+                continue
             for m in mlist:
                 if hasattr(m,"id"):
                     if m.id == id:
@@ -1108,7 +1139,10 @@ network_get_by_id = MethodSpec(
         """
         all_ids = []
         for ms in self.member_data_items_:
-            mlist = self.__getattribute__(ms.name)
+            mlist = getattr(self, ms.get_name())
+            # TODO: debug why this is required
+            if mlist is None:
+                continue
             for m in mlist:
                 if hasattr(m,"id"):
                     if m.id == id:
@@ -1204,7 +1238,7 @@ cell_methods = MethodSpec(
         else:
             pd = parent.distal
             pp = self.get_actual_proximal(segment.parent.segments)
-            p = Point3DWithDiam((1-fract)*pp.x+fract*pd.x, (1-fract)*pp.y+fract*pd.y, (1-fract)*pp.z+fract*pd.z)
+            p = Point3DWithDiam(x=(1-fract)*pp.x+fract*pd.x, y=(1-fract)*pp.y+fract*pd.y, z=(1-fract)*pp.z+fract*pd.z)
             p.diameter = (1-fract)*pp.diameter+fract*pd.diameter
 
             return p
@@ -1329,11 +1363,17 @@ cell_methods = MethodSpec(
         """
         Get ordered list of segments in specified groups
 
-        :param group_list: list of groups to get segments from
+        :param group_list: a group id or list of groups to get segments from
+        :type group_list: str or list
         :param check_parentage: verify parentage
+        :type check_parentage: bool
         :param include_commulative_lengths: also include cummulative lengths
+        :type include_cumulative_lengths: bool
         :param include_path_lengths: also include path lengths
-        :param path_length_metric:
+        :type include_path_lengths: bool
+        :param path_length_metric: metric to use for path length ("Path Length
+            from root" is currently the only supported option, and the default)
+        :type path_length_metric: str
 
         :return: dictionary of segments with additional information depending
             on what parameters were used:
@@ -1344,12 +1384,19 @@ cell_methods = MethodSpec(
         unord_segs = {}
         other_segs = {}
 
+        # convert to list if a single segment group ID has been provided
         if isinstance(group_list, str):
             group_list = [group_list]
 
+        # get a dict of all segments in the cell, with their ids as keys
         segments = self.get_segment_ids_vs_segments()
 
+        # get list of segments in all segment groups
+        # and store this information in two dicts:
+        # - unord_segs: for segment groups in group_list
+        # - other_segs: for segment groups not in group_list
         for sg in self.morphology.segment_groups:
+            # get all segments in a segment group
             all_segs_here = self.get_all_segments_in_group(sg)
 
             if sg.id in group_list:
@@ -1359,6 +1406,7 @@ cell_methods = MethodSpec(
 
         ord_segs = {}
 
+        # sort unord_segs by id to get an ordered list in ord_segs
         from operator import attrgetter
         for key in unord_segs.keys():
             segs = unord_segs[key]

@@ -32,8 +32,6 @@ class TestNML(unittest.TestCase):
         for m in base_members:
             member_names.append(m.get_name())
 
-        # From parent: baseWithoutId
-        self.assertIn("neuro_lex_id", member_names)
         # From itself
         self.assertIn("id", member_names)
         # Not in here:
@@ -163,3 +161,11 @@ class TestNML(unittest.TestCase):
             self.assertRegex(info, "morphology")
             self.assertRegex(info, "biophysical_properties")
             self.assertNotRegex(info, "network")
+
+    def test_get_by_id(self):
+        """Test the get_by_id method"""
+        network = neuroml.Network(id="test")
+        pop = neuroml.Population(id="pop0")
+        network.add(pop)
+        test_pop = network.get_by_id("pop0")
+        self.assertIs(test_pop, pop)
