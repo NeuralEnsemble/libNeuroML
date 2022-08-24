@@ -532,7 +532,7 @@
     <xs:annotation>
       <xs:documentation>A kinetic scheme based ion channel with multiple  **gateKS** s, each of which consists of multiple  **KSState** s and  **KSTransition** s giving the rates of transition between them
 \n
-:param conductance: 
+:param conductance:
 :type conductance: conductance
 
 </xs:documentation>
@@ -552,7 +552,7 @@
     <xs:annotation>
       <xs:documentation>Note  **ionChannel**  and  **ionChannelHH**  are currently functionally identical. This is needed since many existing examples use ionChannel, some use ionChannelHH. NeuroML v2beta4 should remove one of these, probably ionChannelHH.
 \n
-:param conductance: 
+:param conductance:
 :type conductance: conductance
 
 </xs:documentation>
@@ -579,7 +579,7 @@
     <xs:annotation>
       <xs:documentation>Note  **ionChannel**  and  **ionChannelHH**  are currently functionally identical. This is needed since many existing examples use ionChannel, some use ionChannelHH. NeuroML v2beta4 should remove one of these, probably ionChannelHH.
 \n
-:param conductance: 
+:param conductance:
 :type conductance: conductance
 
 </xs:documentation>
@@ -592,9 +592,9 @@
     <xs:annotation>
       <xs:documentation>Same as  **ionChannel** , but with a **vShift**  parameter to change voltage activation of gates. The exact usage of **vShift**  in expressions for rates is determined by the individual gates.
 \n
-:param vShift: 
+:param vShift:
 :type vShift: voltage
-:param conductance: 
+:param conductance:
 :type conductance: conductance
 
 </xs:documentation>
@@ -616,9 +616,9 @@
     <xs:annotation>
       <xs:documentation>A value for the conductance scaling which varies as a standard function of the difference between the current temperature, **temperature,**  and the temperature at which the conductance was originally determined, **experimentalTemp**
 \n
-:param q10Factor: 
+:param q10Factor:
 :type q10Factor: none
-:param experimentalTemp: 
+:param experimentalTemp:
 :type experimentalTemp: temperature
 
 </xs:documentation>
@@ -646,7 +646,7 @@
     <xs:annotation>
       <xs:documentation>A  **KSState**  with **relativeConductance**  of 0
 \n
-:param relativeConductance: 
+:param relativeConductance:
 :type relativeConductance: none
 
 </xs:documentation>
@@ -661,7 +661,7 @@
     <xs:annotation>
       <xs:documentation>A  **KSState**  with **relativeConductance**  of 1
 \n
-:param relativeConductance: 
+:param relativeConductance:
 :type relativeConductance: none
 
 </xs:documentation>
@@ -730,7 +730,7 @@
     <xs:annotation>
       <xs:documentation>A gate which consists of multiple  **KSState** s and  **KSTransition** s giving the rates of transition between them
 \n
-:param instances: 
+:param instances:
 :type instances: none
 
 </xs:documentation>
@@ -776,7 +776,7 @@
     <xs:annotation>
       <xs:documentation>Gate which follows the general Hodgkin Huxley formalism
 \n
-:param instances: 
+:param instances:
 :type instances: none
 
 </xs:documentation>
@@ -798,7 +798,7 @@
     <xs:annotation>
       <xs:documentation>Gate which follows the general Hodgkin Huxley formalism
 \n
-:param instances: 
+:param instances:
 :type instances: none
 
 </xs:documentation>
@@ -820,7 +820,7 @@
     <xs:annotation>
       <xs:documentation>Gate which follows the general Hodgkin Huxley formalism
 \n
-:param instances: 
+:param instances:
 :type instances: none
 
 </xs:documentation>
@@ -844,7 +844,7 @@
     <xs:annotation>
       <xs:documentation>Gate which follows the general Hodgkin Huxley formalism
 \n
-:param instances: 
+:param instances:
 :type instances: none
 
 </xs:documentation>
@@ -867,7 +867,7 @@
     <xs:annotation>
       <xs:documentation>Gate which follows the general Hodgkin Huxley formalism
 \n
-:param instances: 
+:param instances:
 :type instances: none
 
 </xs:documentation>
@@ -890,7 +890,7 @@
     <xs:annotation>
       <xs:documentation>Gate which follows the general Hodgkin Huxley formalism but is instantaneous, so tau = 0 and gate follows exactly inf value
 \n
-:param instances: 
+:param instances:
 :type instances: none
 
 </xs:documentation>
@@ -910,7 +910,7 @@
     <xs:annotation>
       <xs:documentation>Gate composed of subgates contributing with fractional conductance
 \n
-:param instances: 
+:param instances:
 :type instances: none
 
 </xs:documentation>
@@ -988,11 +988,11 @@
     <xs:annotation>
       <xs:documentation>Model of an intracellular buffering mechanism for **ion**  ( currently hard Coded to be calcium, due to requirement for **iCa**  ) which has a baseline level **restingConc**  and tends to this value with time course **decayConstant.**  The ion is assumed to occupy a shell inside the membrane of thickness **shellThickness.**
 \n
-:param restingConc: 
+:param restingConc:
 :type restingConc: concentration
-:param decayConstant: 
+:param decayConstant:
 :type decayConstant: time
-:param shellThickness: 
+:param shellThickness:
 :type shellThickness: length
 
 </xs:documentation>
@@ -1013,11 +1013,11 @@
     <xs:annotation>
       <xs:documentation>Model of buffering of concentration of an ion ( currently hard coded to be calcium, due to requirement for **iCa**  ) which has a baseline level **restingConc**  and tends to this value with time course **decayConstant.**  A fixed factor **rho**  is used to scale the incoming current *independently of the size of the compartment* to produce a concentration change.
 \n
-:param restingConc: 
+:param restingConc:
 :type restingConc: concentration
-:param decayConstant: 
+:param decayConstant:
 :type decayConstant: time
-:param rho: 
+:param rho:
 :type rho: rho_factor
 
 </xs:documentation>
@@ -1113,7 +1113,7 @@
     <xs:annotation>
       <xs:documentation>Gap junction/single electrical connection
 \n
-:param conductance: 
+:param conductance:
 :type conductance: conductance
 
 </xs:documentation>
@@ -1139,7 +1139,7 @@
     <xs:annotation>
       <xs:documentation>Behaves just like a one way gap junction.
 \n
-:param conductance: 
+:param conductance:
 :type conductance: conductance
 
 </xs:documentation>
@@ -1154,7 +1154,7 @@
     <xs:annotation>
       <xs:documentation>Graded/analog synapse. Based on synapse in Methods of http://www. nature.com/neuro/journal/v7/n12/abs/nn1352.html
 \n
-:param conductance: 
+:param conductance:
 :type conductance: conductance
 :param delta: Slope of the activation curve
 :type delta: voltage
@@ -1237,9 +1237,9 @@
     <xs:annotation>
       <xs:documentation>Ohmic synapse model whose conductance waveform on receiving an event has a rise time of **tauRise**  and a decay time of **tauDecay.**  Max conductance reached during this time ( assuming zero conductance before ) is **gbase**  * **weight.**
 \n
-:param tauRise: 
+:param tauRise:
 :type tauRise: time
-:param tauDecay: 
+:param tauDecay:
 :type tauDecay: time
 :param gbase: Baseline conductance, generally the maximum conductance following a single spike
 :type gbase: conductance
@@ -1259,11 +1259,11 @@
     <xs:annotation>
       <xs:documentation>Ohmic synapse similar to expTwoSynapse but consisting of two components that can differ in decay times and max conductances but share the same rise time.
 \n
-:param tauRise: 
+:param tauRise:
 :type tauRise: time
-:param tauDecay1: 
+:param tauDecay1:
 :type tauDecay1: time
-:param tauDecay2: 
+:param tauDecay2:
 :type tauDecay2: time
 :param gbase1: Baseline conductance 1
 :type gbase1: conductance
@@ -1300,9 +1300,9 @@
     <xs:annotation>
       <xs:documentation>Biexponential synapse that allows for optional block and plasticity mechanisms, which can be expressed as child elements.
 \n
-:param tauRise: 
+:param tauRise:
 :type tauRise: time
-:param tauDecay: 
+:param tauDecay:
 :type tauDecay: time
 :param gbase: Baseline conductance, generally the maximum conductance following a single spike
 :type gbase: conductance
@@ -1370,9 +1370,9 @@
     <xs:annotation>
       <xs:documentation>Integrate and fire cell which returns to its leak reversal potential of **leakReversal**  with a time constant **tau**
 \n
-:param leakReversal: 
+:param leakReversal:
 :type leakReversal: voltage
-:param tau: 
+:param tau:
 :type tau: time
 :param thresh: The membrane potential at which to emit a spiking event and reset voltage
 :type thresh: voltage
@@ -1394,11 +1394,11 @@
     <xs:annotation>
       <xs:documentation>Integrate and fire cell which returns to its leak reversal potential of **leakReversal**  with a time course **tau.**  It has a refractory period of **refract**  after spiking
 \n
-:param refract: 
+:param refract:
 :type refract: time
-:param leakReversal: 
+:param leakReversal:
 :type leakReversal: voltage
-:param tau: 
+:param tau:
 :type tau: time
 :param thresh: The membrane potential at which to emit a spiking event and reset voltage
 :type thresh: voltage
@@ -1417,13 +1417,13 @@
     <xs:annotation>
       <xs:documentation>Integrate and fire cell with capacitance **C,**  **leakConductance**  and **leakReversal**
 \n
-:param leakConductance: 
+:param leakConductance:
 :type leakConductance: conductance
-:param leakReversal: 
+:param leakReversal:
 :type leakReversal: voltage
-:param thresh: 
+:param thresh:
 :type thresh: voltage
-:param reset: 
+:param reset:
 :type reset: voltage
 :param C: Total capacitance of the cell membrane
 :type C: capacitance
@@ -1444,15 +1444,15 @@
     <xs:annotation>
       <xs:documentation>Integrate and fire cell with capacitance **C,**  **leakConductance,**  **leakReversal**  and refractory period **refract**
 \n
-:param refract: 
+:param refract:
 :type refract: time
-:param leakConductance: 
+:param leakConductance:
 :type leakConductance: conductance
-:param leakReversal: 
+:param leakReversal:
 :type leakReversal: voltage
-:param thresh: 
+:param thresh:
 :type thresh: voltage
-:param reset: 
+:param reset:
 :type reset: voltage
 :param C: Total capacitance of the cell membrane
 :type C: capacitance
@@ -1520,23 +1520,23 @@
     <xs:annotation>
       <xs:documentation>Cell based on the modified Izhikevich model in Izhikevich 2007, Dynamical systems in neuroscience, MIT Press
 \n
-:param v0: 
+:param v0:
 :type v0: voltage
-:param k: 
+:param k:
 :type k: conductance_per_voltage
-:param vr: 
+:param vr:
 :type vr: voltage
-:param vt: 
+:param vt:
 :type vt: voltage
-:param vpeak: 
+:param vpeak:
 :type vpeak: voltage
-:param a: 
+:param a:
 :type a: per_time
-:param b: 
+:param b:
 :type b: conductance
-:param c: 
+:param c:
 :type c: voltage
-:param d: 
+:param d:
 :type d: current
 :param C: Total capacitance of the cell membrane
 :type C: capacitance
@@ -1561,25 +1561,25 @@
     <xs:annotation>
       <xs:documentation>Model based on Brette R and Gerstner W ( 2005 ) Adaptive Exponential Integrate-and-Fire Model as an Effective Description of Neuronal Activity. J Neurophysiol 94:3637-3642
 \n
-:param gL: 
+:param gL:
 :type gL: conductance
-:param EL: 
+:param EL:
 :type EL: voltage
-:param VT: 
+:param VT:
 :type VT: voltage
-:param thresh: 
+:param thresh:
 :type thresh: voltage
-:param reset: 
+:param reset:
 :type reset: voltage
-:param delT: 
+:param delT:
 :type delT: voltage
-:param tauw: 
+:param tauw:
 :type tauw: time
-:param refract: 
+:param refract:
 :type refract: time
-:param a: 
+:param a:
 :type a: conductance
-:param b: 
+:param b:
 :type b: current
 :param C: Total capacitance of the cell membrane
 :type C: capacitance
@@ -1605,7 +1605,7 @@
     <xs:annotation>
       <xs:documentation>Simple dimensionless model of spiking cell from FitzHugh and Nagumo. Superseded by **fitzHughNagumo1969Cell**  ( See https://github.com/NeuroML/NeuroML2/issues/42 )
 \n
-:param I: 
+:param I:
 :type I: none
 
 </xs:documentation>
@@ -1620,17 +1620,17 @@
     <xs:annotation>
       <xs:documentation>The Fitzhugh Nagumo model is a two-dimensional simplification of the Hodgkin-Huxley model of spike generation in squid giant axons. This system was suggested by FitzHugh ( FitzHugh R. [1961]: Impulses and physiological states in theoretical models of nerve membrane. Biophysical J. 1:445-466 ), who called it " Bonhoeffer-van der Pol model ", and the equivalent circuit by Nagumo et al. ( Nagumo J. , Arimoto S. , and Yoshizawa S. [1962] An active pulse transmission line simulating nerve axon. Proc IRE. 50:2061-2070. 1962 ). This version corresponds to the one described in FitzHugh R. [1969]: Mathematical models of excitation and propagation in nerve. Chapter 1 ( pp. 1-85 in H. P. Schwan, ed. Biological Engineering, McGraw-Hill Book Co. , N. Y. )
 \n
-:param a: 
+:param a:
 :type a: none
-:param b: 
+:param b:
 :type b: none
 :param I: plays the role of an external injected current
 :type I: none
-:param phi: 
+:param phi:
 :type phi: none
-:param V0: 
+:param V0:
 :type V0: none
-:param W0: 
+:param W0:
 :type W0: none
 
 </xs:documentation>
@@ -1650,47 +1650,47 @@
     <xs:annotation>
       <xs:documentation>Reduced CA3 cell model from Pinsky and Rinzel 1994. See https://github.com/OpenSourceBrain/PinskyRinzelModel
 \n
-:param iSoma: 
+:param iSoma:
 :type iSoma: currentDensity
-:param iDend: 
+:param iDend:
 :type iDend: currentDensity
-:param gLs: 
+:param gLs:
 :type gLs: conductanceDensity
-:param gLd: 
+:param gLd:
 :type gLd: conductanceDensity
-:param gNa: 
+:param gNa:
 :type gNa: conductanceDensity
-:param gKdr: 
+:param gKdr:
 :type gKdr: conductanceDensity
-:param gCa: 
+:param gCa:
 :type gCa: conductanceDensity
-:param gKahp: 
+:param gKahp:
 :type gKahp: conductanceDensity
-:param gKC: 
+:param gKC:
 :type gKC: conductanceDensity
-:param gc: 
+:param gc:
 :type gc: conductanceDensity
-:param eNa: 
+:param eNa:
 :type eNa: voltage
-:param eCa: 
+:param eCa:
 :type eCa: voltage
-:param eK: 
+:param eK:
 :type eK: voltage
-:param eL: 
+:param eL:
 :type eL: voltage
-:param pp: 
+:param pp:
 :type pp: none
-:param cm: 
+:param cm:
 :type cm: specificCapacitance
-:param alphac: 
+:param alphac:
 :type alphac: none
-:param betac: 
+:param betac:
 :type betac: none
-:param gNmda: 
+:param gNmda:
 :type gNmda: conductanceDensity
-:param gAmpa: 
+:param gAmpa:
 :type gAmpa: conductanceDensity
-:param qd0: 
+:param qd0:
 :type qd0: none
 
 </xs:documentation>
@@ -2013,7 +2013,7 @@
     <xs:annotation>
       <xs:documentation>Membrane potential at which to emit a spiking event. Note, usually the spiking event will not be emitted again until the membrane potential has fallen below this value and rises again to cross it in a positive direction
 \n
-:param value: 
+:param value:
 :type value: voltage
 
 </xs:documentation>
@@ -2029,7 +2029,7 @@
     <xs:annotation>
       <xs:documentation>Capacitance per unit area
 \n
-:param value: 
+:param value:
 :type value: specificCapacitance
 
 </xs:documentation>
@@ -2045,7 +2045,7 @@
     <xs:annotation>
       <xs:documentation>Explicitly set initial membrane potential for the cell
 \n
-:param value: 
+:param value:
 :type value: voltage
 
 </xs:documentation>
@@ -2061,7 +2061,7 @@
     <xs:annotation>
       <xs:documentation>The resistivity, or specific axial resistance, of the cytoplasm
 \n
-:param value: 
+:param value:
 :type value: resistivity
 
 </xs:documentation>
@@ -2167,7 +2167,7 @@
 \n
 :param erev: The reversal potential of the current produced
 :type erev: voltage
-:param condDensity: 
+:param condDensity:
 :type condDensity: conductanceDensity
 
 </xs:documentation>
@@ -2194,11 +2194,11 @@
     <xs:annotation>
       <xs:documentation>Same as  **channelDensity** , but with a **vShift**  parameter to change voltage activation of gates. The exact usage of **vShift**  in expressions for rates is determined by the individual gates.
 \n
-:param vShift: 
+:param vShift:
 :type vShift: voltage
 :param erev: The reversal potential of the current produced
 :type erev: voltage
-:param condDensity: 
+:param condDensity:
 :type condDensity: conductanceDensity
 
 </xs:documentation>
@@ -2213,7 +2213,7 @@
     <xs:annotation>
       <xs:documentation>Specifies a time varying conductance density, **gDensity,**  which is distributed on an area of the **cell,**  producing a current density **iDensity**  and whose reversal potential is calculated from the Nernst equation. Hard coded for Ca only! See https://github.com/OpenSourceBrain/ghk-nernst.
 \n
-:param condDensity: 
+:param condDensity:
 :type condDensity: conductanceDensity
 
 </xs:documentation>
@@ -2239,7 +2239,7 @@
     <xs:annotation>
       <xs:documentation>This component is similar to the original component type  **channelDensityNernst**  but it is changed in order to have a reversal potential that depends on a second independent Ca++ pool ( ca2 ). See https://github.com/OpenSourceBrain/ghk-nernst.
 \n
-:param condDensity: 
+:param condDensity:
 :type condDensity: conductanceDensity
 
 </xs:documentation>
@@ -2254,7 +2254,7 @@
     <xs:annotation>
       <xs:documentation>Specifies a time varying conductance density, **gDensity,**  which is distributed on an area of the cell, producing a current density **iDensity**  and whose reversal potential is calculated from the Goldman Hodgkin Katz equation. Hard coded for Ca only! See https://github.com/OpenSourceBrain/ghk-nernst.
 \n
-:param permeability: 
+:param permeability:
 :type permeability: permeability
 
 </xs:documentation>
@@ -2277,7 +2277,7 @@
     <xs:annotation>
       <xs:documentation>Time varying conductance density, **gDensity,**  which is distributed on an area of the cell, producing a current density **iDensity.**  Modified version of Jaffe et al. 1994 ( used also in Lawrence et al. 2006 ). See https://github.com/OpenSourceBrain/ghk-nernst.
 \n
-:param condDensity: 
+:param condDensity:
 :type condDensity: conductanceDensity
 
 </xs:documentation>
@@ -2336,9 +2336,9 @@
     <xs:annotation>
       <xs:documentation>Description of a chemical species identified by **ion,**  which has internal, **concentration,**  and external, **extConcentration**  values for its concentration
 \n
-:param initialConcentration: 
+:param initialConcentration:
 :type initialConcentration: concentration
-:param initialExtConcentration: 
+:param initialExtConcentration:
 :type initialExtConcentration: concentration
 
 </xs:documentation>
@@ -2793,11 +2793,11 @@
     <xs:annotation>
       <xs:documentation>Poisson spike generator firing at **averageRate**  after a **delay**  and for a **duration,**  connected to single **synapse**  that is triggered every time a spike is generated, providing an input current. Similar to ComponentType  **poissonFiringSynapse** .
 \n
-:param averageRate: 
+:param averageRate:
 :type averageRate: per_time
-:param delay: 
+:param delay:
 :type delay: time
-:param duration: 
+:param duration:
 :type duration: time
 
 </xs:documentation>
@@ -2995,11 +2995,11 @@
     <xs:annotation>
       <xs:documentation>Specifies the ( x, y, z ) location of a single  **instance**  of a component in a  **population**
 \n
-:param x: 
+:param x:
 :type x: none
-:param y: 
+:param y:
 :type y: none
-:param z: 
+:param z:
 :type z: none
 
 </xs:documentation>
@@ -3030,7 +3030,6 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BaseWithoutId">
-        <xs:attribute name="neuroLexId" type="NeuroLexId" use="optional"/>
         <xs:attribute name="from" type="xs:string" use="required"/>
         <xs:attribute name="to" type="xs:string" use="required"/>
         <xs:attribute name="synapse" type="xs:string" use="required"/>
@@ -3121,9 +3120,9 @@
     <xs:annotation>
       <xs:documentation>Event connection between named components, which gets processed via a new instance of a synapse component which is created on the target component, includes setting of **weight**  and **delay**  for the synaptic connection
 \n
-:param weight: 
+:param weight:
 :type weight: none
-:param delay: 
+:param delay:
 :type delay: time
 
 </xs:documentation>
@@ -3174,7 +3173,7 @@
     <xs:annotation>
       <xs:documentation>To enable connections between populations through gap junctions. Populations need to be of type  **populationList**  and contain  **instance**  and  **location**  elements. Includes setting of **weight**  for the connection
 \n
-:param weight: 
+:param weight:
 :type weight: none
 
 </xs:documentation>
@@ -3225,7 +3224,7 @@
     <xs:annotation>
       <xs:documentation>An instance of a connection in a  **continuousProjection**  between **presynapticPopulation**  to another **postsynapticPopulation**  through a **preComponent**  at the start and **postComponent**  at the end. Populations need to be of type  **populationList**  and contain  **instance**  and  **location**  elements. Can be used for analog synapses. Includes setting of **weight**  for the connection
 \n
-:param weight: 
+:param weight:
 :type weight: none
 
 </xs:documentation>
@@ -3283,7 +3282,7 @@
     <xs:annotation>
       <xs:documentation>Specifies input lists. Can set **weight**  to scale individual inputs.
 \n
-:param weight: 
+:param weight:
 :type weight: none
 
 </xs:documentation>
@@ -3301,15 +3300,15 @@
     <xs:annotation>
       <xs:documentation>Base type of any PyNN standard cell model. Note: membrane potential **v**  has dimensions voltage, but all other parameters are dimensionless. This is to facilitate translation to and from PyNN scripts in Python, where these parameters have implicit units, see http://neuralensemble.org/trac/PyNN/wiki/StandardModels
 \n
-:param cm: 
+:param cm:
 :type cm: none
-:param i_offset: 
+:param i_offset:
 :type i_offset: none
 :param tau_syn_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_E: none
 :param tau_syn_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_I: none
-:param v_init: 
+:param v_init:
 :type v_init: none
 
 </xs:documentation>
@@ -3328,25 +3327,25 @@
     <xs:annotation>
       <xs:documentation>Base type of any PyNN standard integrate and fire model
 \n
-:param tau_refrac: 
+:param tau_refrac:
 :type tau_refrac: none
-:param v_thresh: 
+:param v_thresh:
 :type v_thresh: none
-:param tau_m: 
+:param tau_m:
 :type tau_m: none
-:param v_rest: 
+:param v_rest:
 :type v_rest: none
-:param v_reset: 
+:param v_reset:
 :type v_reset: none
-:param cm: 
+:param cm:
 :type cm: none
-:param i_offset: 
+:param i_offset:
 :type i_offset: none
 :param tau_syn_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_E: none
 :param tau_syn_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_I: none
-:param v_init: 
+:param v_init:
 :type v_init: none
 
 </xs:documentation>
@@ -3369,25 +3368,25 @@
 :type e_rev_E: none
 :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type e_rev_I: none
-:param tau_refrac: 
+:param tau_refrac:
 :type tau_refrac: none
-:param v_thresh: 
+:param v_thresh:
 :type v_thresh: none
-:param tau_m: 
+:param tau_m:
 :type tau_m: none
-:param v_rest: 
+:param v_rest:
 :type v_rest: none
-:param v_reset: 
+:param v_reset:
 :type v_reset: none
-:param cm: 
+:param cm:
 :type cm: none
-:param i_offset: 
+:param i_offset:
 :type i_offset: none
 :param tau_syn_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_E: none
 :param tau_syn_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_I: none
-:param v_init: 
+:param v_init:
 :type v_init: none
 
 </xs:documentation>
@@ -3403,25 +3402,25 @@
     <xs:annotation>
       <xs:documentation>Leaky integrate and fire model with fixed threshold and alpha-function-shaped post-synaptic current
 \n
-:param tau_refrac: 
+:param tau_refrac:
 :type tau_refrac: none
-:param v_thresh: 
+:param v_thresh:
 :type v_thresh: none
-:param tau_m: 
+:param tau_m:
 :type tau_m: none
-:param v_rest: 
+:param v_rest:
 :type v_rest: none
-:param v_reset: 
+:param v_reset:
 :type v_reset: none
-:param cm: 
+:param cm:
 :type cm: none
-:param i_offset: 
+:param i_offset:
 :type i_offset: none
 :param tau_syn_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_E: none
 :param tau_syn_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_I: none
-:param v_init: 
+:param v_init:
 :type v_init: none
 
 </xs:documentation>
@@ -3435,25 +3434,25 @@
     <xs:annotation>
       <xs:documentation>Leaky integrate and fire model with fixed threshold and decaying-exponential post-synaptic current
 \n
-:param tau_refrac: 
+:param tau_refrac:
 :type tau_refrac: none
-:param v_thresh: 
+:param v_thresh:
 :type v_thresh: none
-:param tau_m: 
+:param tau_m:
 :type tau_m: none
-:param v_rest: 
+:param v_rest:
 :type v_rest: none
-:param v_reset: 
+:param v_reset:
 :type v_reset: none
-:param cm: 
+:param cm:
 :type cm: none
-:param i_offset: 
+:param i_offset:
 :type i_offset: none
 :param tau_syn_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_E: none
 :param tau_syn_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_I: none
-:param v_init: 
+:param v_init:
 :type v_init: none
 
 </xs:documentation>
@@ -3471,25 +3470,25 @@
 :type e_rev_E: none
 :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type e_rev_I: none
-:param tau_refrac: 
+:param tau_refrac:
 :type tau_refrac: none
-:param v_thresh: 
+:param v_thresh:
 :type v_thresh: none
-:param tau_m: 
+:param tau_m:
 :type tau_m: none
-:param v_rest: 
+:param v_rest:
 :type v_rest: none
-:param v_reset: 
+:param v_reset:
 :type v_reset: none
-:param cm: 
+:param cm:
 :type cm: none
-:param i_offset: 
+:param i_offset:
 :type i_offset: none
 :param tau_syn_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_E: none
 :param tau_syn_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_I: none
-:param v_init: 
+:param v_init:
 :type v_init: none
 
 </xs:documentation>
@@ -3507,25 +3506,25 @@
 :type e_rev_E: none
 :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type e_rev_I: none
-:param tau_refrac: 
+:param tau_refrac:
 :type tau_refrac: none
-:param v_thresh: 
+:param v_thresh:
 :type v_thresh: none
-:param tau_m: 
+:param tau_m:
 :type tau_m: none
-:param v_rest: 
+:param v_rest:
 :type v_rest: none
-:param v_reset: 
+:param v_reset:
 :type v_reset: none
-:param cm: 
+:param cm:
 :type cm: none
-:param i_offset: 
+:param i_offset:
 :type i_offset: none
 :param tau_syn_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_E: none
 :param tau_syn_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_I: none
-:param v_init: 
+:param v_init:
 :type v_init: none
 
 </xs:documentation>
@@ -3539,39 +3538,39 @@
     <xs:annotation>
       <xs:documentation>Adaptive exponential integrate and fire neuron according to Brette R and Gerstner W ( 2005 ) with exponentially-decaying post-synaptic conductance
 \n
-:param v_spike: 
+:param v_spike:
 :type v_spike: none
-:param delta_T: 
+:param delta_T:
 :type delta_T: none
-:param tau_w: 
+:param tau_w:
 :type tau_w: none
-:param a: 
+:param a:
 :type a: none
-:param b: 
+:param b:
 :type b: none
 :param e_rev_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type e_rev_E: none
 :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type e_rev_I: none
-:param tau_refrac: 
+:param tau_refrac:
 :type tau_refrac: none
-:param v_thresh: 
+:param v_thresh:
 :type v_thresh: none
-:param tau_m: 
+:param tau_m:
 :type tau_m: none
-:param v_rest: 
+:param v_rest:
 :type v_rest: none
-:param v_reset: 
+:param v_reset:
 :type v_reset: none
-:param cm: 
+:param cm:
 :type cm: none
-:param i_offset: 
+:param i_offset:
 :type i_offset: none
 :param tau_syn_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_E: none
 :param tau_syn_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_I: none
-:param v_init: 
+:param v_init:
 :type v_init: none
 
 </xs:documentation>
@@ -3590,39 +3589,39 @@
     <xs:annotation>
       <xs:documentation>Adaptive exponential integrate and fire neuron according to Brette R and Gerstner W ( 2005 ) with alpha-function-shaped post-synaptic conductance
 \n
-:param v_spike: 
+:param v_spike:
 :type v_spike: none
-:param delta_T: 
+:param delta_T:
 :type delta_T: none
-:param tau_w: 
+:param tau_w:
 :type tau_w: none
-:param a: 
+:param a:
 :type a: none
-:param b: 
+:param b:
 :type b: none
 :param e_rev_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type e_rev_E: none
 :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type e_rev_I: none
-:param tau_refrac: 
+:param tau_refrac:
 :type tau_refrac: none
-:param v_thresh: 
+:param v_thresh:
 :type v_thresh: none
-:param tau_m: 
+:param tau_m:
 :type tau_m: none
-:param v_rest: 
+:param v_rest:
 :type v_rest: none
-:param v_reset: 
+:param v_reset:
 :type v_reset: none
-:param cm: 
+:param cm:
 :type cm: none
-:param i_offset: 
+:param i_offset:
 :type i_offset: none
 :param tau_syn_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_E: none
 :param tau_syn_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_I: none
-:param v_init: 
+:param v_init:
 :type v_init: none
 
 </xs:documentation>
@@ -3636,33 +3635,33 @@
     <xs:annotation>
       <xs:documentation>Single-compartment Hodgkin-Huxley-type neuron with transient sodium and delayed-rectifier potassium currents using the ion channel models from Traub.
 \n
-:param gbar_K: 
+:param gbar_K:
 :type gbar_K: none
-:param gbar_Na: 
+:param gbar_Na:
 :type gbar_Na: none
-:param g_leak: 
+:param g_leak:
 :type g_leak: none
-:param e_rev_K: 
+:param e_rev_K:
 :type e_rev_K: none
-:param e_rev_Na: 
+:param e_rev_Na:
 :type e_rev_Na: none
-:param e_rev_leak: 
+:param e_rev_leak:
 :type e_rev_leak: none
-:param v_offset: 
+:param v_offset:
 :type v_offset: none
-:param e_rev_E: 
+:param e_rev_E:
 :type e_rev_E: none
-:param e_rev_I: 
+:param e_rev_I:
 :type e_rev_I: none
-:param cm: 
+:param cm:
 :type cm: none
-:param i_offset: 
+:param i_offset:
 :type i_offset: none
 :param tau_syn_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_E: none
 :param tau_syn_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
 :type tau_syn_I: none
-:param v_init: 
+:param v_init:
 :type v_init: none
 
 </xs:documentation>
@@ -3685,7 +3684,7 @@
     <xs:annotation>
       <xs:documentation>Base type for all PyNN synapses. Note, the current **I**  produced is dimensionless, but it requires a membrane potential **v**  with dimension voltage
 \n
-:param tau_syn: 
+:param tau_syn:
 :type tau_syn: none
 
 </xs:documentation>
@@ -3700,9 +3699,9 @@
     <xs:annotation>
       <xs:documentation>Conductance based synapse with instantaneous rise and single exponential decay ( with time constant tau_syn )
 \n
-:param e_rev: 
+:param e_rev:
 :type e_rev: none
-:param tau_syn: 
+:param tau_syn:
 :type tau_syn: none
 
 </xs:documentation>
@@ -3717,9 +3716,9 @@
     <xs:annotation>
       <xs:documentation>Alpha synapse: rise time and decay time are both tau_syn. Conductance based synapse.
 \n
-:param e_rev: 
+:param e_rev:
 :type e_rev: none
-:param tau_syn: 
+:param tau_syn:
 :type tau_syn: none
 
 </xs:documentation>
@@ -3734,7 +3733,7 @@
     <xs:annotation>
       <xs:documentation>Current based synapse with instantaneous rise and single exponential decay ( with time constant tau_syn )
 \n
-:param tau_syn: 
+:param tau_syn:
 :type tau_syn: none
 
 </xs:documentation>
@@ -3749,7 +3748,7 @@
     <xs:annotation>
       <xs:documentation>Alpha synapse: rise time and decay time are both tau_syn. Current based synapse.
 \n
-:param tau_syn: 
+:param tau_syn:
 :type tau_syn: none
 
 </xs:documentation>
@@ -3764,11 +3763,11 @@
     <xs:annotation>
       <xs:documentation>Spike source, generating spikes according to a Poisson process.
 \n
-:param start: 
+:param start:
 :type start: time
-:param duration: 
+:param duration:
 :type duration: time
-:param rate: 
+:param rate:
 :type rate: per_time
 
 </xs:documentation>
