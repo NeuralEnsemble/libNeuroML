@@ -381,7 +381,12 @@ generic_list = MethodSpec(
         """
 
         # do not show parameters here, they are indicated by members below
-        info_str = "{}\\n\\n".format(self.__class__.__doc__.split(":param")[0].strip())
+        # some classes may not have doc strings, do nothing if they don't
+        try:
+            info_str = "{}\\n\\n".format(self.__class__.__doc__.split(":param")[0].strip())
+        except AttributeError:
+            info_str = ""
+
         info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information.\\n\\n"
         info_str += "Valid members for {} are:\\n".format(self.__class__.__name__)
         for member in self.member_data_items_:
