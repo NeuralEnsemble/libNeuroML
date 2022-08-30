@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Aug 22 14:07:13 2022 by generateDS.py version 2.40.13.
+# Generated Tue Aug 30 15:36:11 2022 by generateDS.py version 2.40.13.
 # Python 3.10.6 (main, Aug  2 2022, 00:00:00) [GCC 12.1.1 20220507 (Red Hat 12.1.1-1)]
 #
 # Command line options:
@@ -3447,7 +3447,14 @@ class BaseWithoutId(GeneratedsSuper):
         """
 
         # do not show parameters here, they are indicated by members below
-        info_str = "{}\n\n".format(self.__class__.__doc__.split(":param")[0].strip())
+        # some classes may not have doc strings, do nothing if they don't
+        try:
+            info_str = "{}\n\n".format(
+                self.__class__.__doc__.split(":param")[0].strip()
+            )
+        except AttributeError:
+            info_str = ""
+
         info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information.\n\n"
         info_str += "Valid members for {} are:\n".format(self.__class__.__name__)
         for member in self.member_data_items_:
@@ -16861,7 +16868,8 @@ class InhomogeneousValue(BaseWithoutId):
 
 
 class ChannelDensityGHK2(Base):
-    """ChannelDensityGHK2 -- Time varying conductance density, **gDensity,**  which is distributed on an area of the cell, producing a current density **iDensity.**  Modified version of Jaffe et al. 1994 ( used also in Lawrence et al. 2006 ). See https://github.com/OpenSourceBrain/ghk-nernst.
+    """ChannelDensityGHK2 -- Time varying conductance density, **gDensity,**  which is distributed on an area of the cel
+    l, producing a current density **iDensity.**  Modified version of Jaffe et al. 1994 ( used also in Lawrence et al. 2006 ). See https://github.com/OpenSourceBrain/ghk-nernst.
     \n
     :param condDensity:
     :type condDensity: conductanceDensity
@@ -57520,8 +57528,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
     \n
     :param e_rev_E: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_E: none
-    :param e
-    _rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
+    :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
     :param tau_refrac:
     :type tau_refrac: none
