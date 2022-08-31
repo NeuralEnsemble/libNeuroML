@@ -371,6 +371,10 @@ generic_list = MethodSpec(
         not show empty/unset contents. To see all contents, set
         `show_contents=all`.
 
+        Note that not all members will have ids (since not all NeuroML2
+        ComponentTypes have ids). For members that do not have ids, the object
+        reference is listed instead.
+
         See http://www.davekuhlman.org/generateDS.html#user-methods for more
         information on the MemberSpec_ class that generateDS uses.
 
@@ -411,10 +415,13 @@ generic_list = MethodSpec(
                                 contents_id.append(c.id)
                             else:
                                 contents_id.append(c)
-                    # not a list, a scalar, just use contents
+                    # not a list, a scalar
                     else:
-                        contents_id = contents
-                    info_str += ("\t* Contents (ids): {}\\n\\n".format(contents_id))
+                        if hasattr(contents, 'id'):
+                            contents_id = f"'{contents.id}'"
+                        else:
+                            contents_id = contents
+                    info_str += ("\t* Contents ('ids'/<objects>): {}\\n\\n".format(contents_id))
 
         print(info_str)
         return info_str

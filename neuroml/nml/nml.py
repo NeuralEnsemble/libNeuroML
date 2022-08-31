@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Aug 30 15:36:11 2022 by generateDS.py version 2.40.13.
+# Generated Wed Aug 31 17:15:14 2022 by generateDS.py version 2.40.13.
 # Python 3.10.6 (main, Aug  2 2022, 00:00:00) [GCC 12.1.1 20220507 (Red Hat 12.1.1-1)]
 #
 # Command line options:
@@ -1329,7 +1329,7 @@ class ComponentType(GeneratedsSuper):
         InstanceRequirement=None,
         Dynamics=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -1914,7 +1914,7 @@ class Dynamics(GeneratedsSuper):
         ConditionalDerivedVariable=None,
         TimeDerivative=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -2631,7 +2631,7 @@ class Q10Settings(GeneratedsSuper):
         q10_factor=None,
         experimental_temp=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -2965,7 +2965,7 @@ class VariableParameter(GeneratedsSuper):
         segment_groups=None,
         inhomogeneous_value=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -3437,6 +3437,10 @@ class BaseWithoutId(GeneratedsSuper):
         not show empty/unset contents. To see all contents, set
         `show_contents=all`.
 
+        Note that not all members will have ids (since not all NeuroML2
+        ComponentTypes have ids). For members that do not have ids, the object
+        reference is listed instead.
+
         See http://www.davekuhlman.org/generateDS.html#user-methods for more
         information on the MemberSpec_ class that generateDS uses.
 
@@ -3485,10 +3489,15 @@ class BaseWithoutId(GeneratedsSuper):
                                 contents_id.append(c.id)
                             else:
                                 contents_id.append(c)
-                    # not a list, a scalar, just use contents
+                    # not a list, a scalar
                     else:
-                        contents_id = contents
-                    info_str += "	* Contents (ids): {}\n\n".format(contents_id)
+                        if hasattr(contents, "id"):
+                            contents_id = f"'{contents.id}'"
+                        else:
+                            contents_id = contents
+                    info_str += "	* Contents ('ids'/<objects>): {}\n\n".format(
+                        contents_id
+                    )
 
         print(info_str)
         return info_str
@@ -3955,7 +3964,7 @@ class Standalone(Base):
         annotation=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -4295,7 +4304,7 @@ class SpikeSourcePoisson(Standalone):
         duration=None,
         rate=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -4602,7 +4611,7 @@ class Input(BaseNonNegativeIntegerId):
         fraction_along=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -4986,7 +4995,7 @@ class InputList(Base):
         input=None,
         input_ws=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -5589,7 +5598,7 @@ class BaseConnection(BaseNonNegativeIntegerId):
         neuro_lex_id=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -5819,7 +5828,7 @@ class BaseProjection(Base):
         postsynaptic_population=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -6078,7 +6087,7 @@ class SynapticConnection(BaseWithoutId):
         synapse=None,
         destination=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -6809,7 +6818,7 @@ class Instance(BaseWithoutId):
         k=None,
         location=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -7625,7 +7634,7 @@ class Layout(BaseWithoutId):
         grid=None,
         unstructured=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -7940,7 +7949,7 @@ class Population(Standalone):
         layout=None,
         instances=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -8621,7 +8630,7 @@ class SpaceStructure(BaseWithoutId):
         y_start=0,
         z_start=0,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -9238,7 +9247,7 @@ class Network(Standalone):
         explicit_inputs=None,
         input_lists=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -9929,7 +9938,7 @@ class TransientPoissonFiringSynapse(Standalone):
         synapse=None,
         spike_target=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -10285,7 +10294,7 @@ class PoissonFiringSynapse(Standalone):
         synapse=None,
         spike_target=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -10551,7 +10560,7 @@ class SpikeGeneratorPoisson(Standalone):
         average_rate=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -10799,7 +10808,7 @@ class SpikeGeneratorRandom(Standalone):
         max_isi=None,
         min_isi=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -11045,7 +11054,7 @@ class SpikeGenerator(Standalone):
         annotation=None,
         period=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -11273,7 +11282,7 @@ class TimedSynapticInput(Standalone):
         spike_target=None,
         spikes=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -11542,7 +11551,7 @@ class SpikeArray(Standalone):
         annotation=None,
         spikes=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -11974,7 +11983,7 @@ class VoltageClampTriple(Standalone):
         return_voltage=None,
         simple_series_resistance=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -12453,7 +12462,7 @@ class VoltageClamp(Standalone):
         target_voltage=None,
         simple_series_resistance=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -12834,7 +12843,7 @@ class CompoundInputDL(Standalone):
         sine_generator_dls=None,
         ramp_generator_dls=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -13107,7 +13116,7 @@ class CompoundInput(Standalone):
         sine_generators=None,
         ramp_generators=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -13387,7 +13396,7 @@ class RampGeneratorDL(Standalone):
         finish_amplitude=None,
         baseline_amplitude=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -13768,7 +13777,7 @@ class RampGenerator(Standalone):
         finish_amplitude=None,
         baseline_amplitude=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -14141,7 +14150,7 @@ class SineGeneratorDL(Standalone):
         amplitude=None,
         period=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -14502,7 +14511,7 @@ class SineGenerator(Standalone):
         amplitude=None,
         period=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -14883,7 +14892,7 @@ class PulseGeneratorDL(Standalone):
         duration=None,
         amplitude=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -15198,7 +15207,7 @@ class PulseGenerator(Standalone):
         duration=None,
         amplitude=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -15483,7 +15492,7 @@ class ReactionScheme(Base):
         type=None,
         anytypeobjs_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -16095,7 +16104,7 @@ class IntracellularProperties(BaseWithoutId):
         resistivities=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -16369,7 +16378,7 @@ class Species(Base):
         initial_ext_concentration=None,
         segment_groups="all",
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -16910,7 +16919,7 @@ class ChannelDensityGHK2(Base):
         segments=None,
         ion=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -17253,7 +17262,7 @@ class ChannelDensityGHK(Base):
         segments=None,
         ion=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -17609,7 +17618,7 @@ class ChannelDensityNernst(Base):
         variable_parameters=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -18027,7 +18036,7 @@ class ChannelDensity(Base):
         variable_parameters=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -18467,7 +18476,7 @@ class ChannelDensityNonUniformGHK(Base):
         ion=None,
         variable_parameters=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -18747,7 +18756,7 @@ class ChannelDensityNonUniformNernst(Base):
         ion=None,
         variable_parameters=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -19038,7 +19047,7 @@ class ChannelDensityNonUniform(Base):
         ion=None,
         variable_parameters=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -19397,7 +19406,7 @@ class ChannelPopulation(Base):
         ion=None,
         variable_parameters=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -21000,7 +21009,7 @@ class MembraneProperties(BaseWithoutId):
         init_memb_potentials=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -21528,7 +21537,7 @@ class BiophysicalProperties2CaPools(Standalone):
         intracellular_properties2_ca_pools=None,
         extracellular_properties=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -21804,7 +21813,7 @@ class BiophysicalProperties(Standalone):
         intracellular_properties=None,
         extracellular_properties=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -23339,7 +23348,7 @@ class InhomogeneousParameter(Base):
         proximal=None,
         distal=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -23721,7 +23730,7 @@ class SegmentGroup(Base):
         sub_trees=None,
         inhomogeneous_parameters=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -24705,7 +24714,7 @@ class Segment(BaseNonNegativeIntegerId):
         proximal=None,
         distal=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -25137,7 +25146,7 @@ class Morphology(Standalone):
         segments=None,
         segment_groups=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -25356,7 +25365,7 @@ class BaseCell(Standalone):
         neuro_lex_id=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -25581,7 +25590,7 @@ class PlasticityMechanism(BaseWithoutId):
         tau_rec=None,
         tau_fac=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -25937,7 +25946,7 @@ class BlockMechanism(BaseWithoutId):
         scaling_conc=None,
         scaling_volt=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -26321,7 +26330,7 @@ class BaseSynapse(Standalone):
         neuro_lex_id=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -26569,7 +26578,7 @@ class FixedFactorConcentrationModel(Standalone):
         decay_constant=None,
         rho=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -26983,7 +26992,7 @@ class DecayingPoolConcentrationModel(Standalone):
         shell_thickness=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -27399,7 +27408,7 @@ class HHTime(BaseWithoutId):
         scale=None,
         tau=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -27745,7 +27754,7 @@ class HHVariable(BaseWithoutId):
         midpoint=None,
         scale=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -28035,7 +28044,7 @@ class HHRate(BaseWithoutId):
         midpoint=None,
         scale=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -28393,7 +28402,7 @@ class GateFractionalSubgate(Base):
         steady_state=None,
         time_course=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -28776,7 +28785,7 @@ class GateFractional(Base):
         q10_settings=None,
         sub_gates=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -29093,7 +29102,7 @@ class GateHHInstantaneous(Base):
         notes=None,
         steady_state=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -29424,7 +29433,7 @@ class GateHHRatesInf(Base):
         reverse_rate=None,
         steady_state=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -29809,7 +29818,7 @@ class GateHHRatesTau(Base):
         reverse_rate=None,
         time_course=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -30203,7 +30212,7 @@ class GateHHRatesTauInf(Base):
         time_course=None,
         steady_state=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -30609,7 +30618,7 @@ class GateHHTauInf(Base):
         time_course=None,
         steady_state=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -30963,7 +30972,7 @@ class GateHHRates(Base):
         forward_rate=None,
         reverse_rate=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -31346,7 +31355,7 @@ class GateHHUndetermined(Base):
         steady_state=None,
         sub_gates=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -31871,7 +31880,7 @@ class GateKS(Base):
         reverse_transition=None,
         tau_inf_transition=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -32274,7 +32283,7 @@ class TauInfTransition(Base):
         steady_state=None,
         time_course=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -32555,7 +32564,7 @@ class ReverseTransition(Base):
         to=None,
         anytypeobjs_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -32801,7 +32810,7 @@ class ForwardTransition(Base):
         to=None,
         anytypeobjs_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -33644,7 +33653,7 @@ class IonChannelKS(Standalone):
         neuro_lex_id=None,
         gate_kses=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -33994,7 +34003,7 @@ class IonChannelScalable(Standalone):
         q10_conductance_scalings=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -35187,7 +35196,7 @@ class NeuroMLDocument(Standalone):
         networks=None,
         ComponentType=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -37331,7 +37340,7 @@ class NamedDimensionalVariable(BaseWithoutId):
         exposure=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -37589,7 +37598,7 @@ class NamedDimensionalType(BaseWithoutId):
         description=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -37828,7 +37837,7 @@ class Exposure(BaseWithoutId):
         dimension=None,
         description=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -38035,7 +38044,7 @@ class Constant(BaseWithoutId):
         value=None,
         description=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -38623,7 +38632,7 @@ class BasePynnSynapse(BaseSynapse):
         tau_syn=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -38638,7 +38647,7 @@ class BasePynnSynapse(BaseSynapse):
             annotation,
             neuro_lex_id,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.tau_syn = _cast(float, tau_syn)
         self.tau_syn_nsprefix_ = None
@@ -38842,7 +38851,7 @@ class basePyNNCell(BaseCell):
         v_init=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -38857,7 +38866,7 @@ class basePyNNCell(BaseCell):
             annotation,
             neuro_lex_id,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.cm = _cast(float, cm)
         self.cm_nsprefix_ = None
@@ -39085,7 +39094,7 @@ class InputW(Input):
         fraction_along=None,
         weight=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -39305,7 +39314,7 @@ class ContinuousProjection(BaseProjection):
         continuous_connection_instances=None,
         continuous_connection_instance_ws=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -39682,7 +39691,7 @@ class ElectricalProjection(BaseProjection):
         electrical_connection_instances=None,
         electrical_connection_instance_ws=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -40052,7 +40061,7 @@ class BaseConnectionNewFormat(BaseConnection):
         post_fraction_along="0.5",
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -40438,7 +40447,7 @@ class BaseConnectionOldFormat(BaseConnection):
         post_fraction_along="0.5",
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -40811,7 +40820,7 @@ class Projection(BaseProjection):
         connections=None,
         connection_wds=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -41178,7 +41187,7 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
         average_rate=None,
         minimum_isi=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -41562,7 +41571,7 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
         shell_thickness=None,
         type="decayingPoolConcentrationModel",
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -41579,7 +41588,7 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
             resting_conc,
             decay_constant,
             shell_thickness,
-            **kwargs_
+            **kwargs_,
         )
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
@@ -41758,7 +41767,7 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
         ion=None,
         variable_parameters=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -41773,7 +41782,7 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
             segments,
             ion,
             variable_parameters,
-            **kwargs_
+            **kwargs_,
         )
 
     def factory(*args_, **kwargs_):
@@ -41950,7 +41959,7 @@ class ChannelDensityVShift(ChannelDensity):
         variable_parameters=None,
         v_shift=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -41966,7 +41975,7 @@ class ChannelDensityVShift(ChannelDensity):
             segments,
             ion,
             variable_parameters,
-            **kwargs_
+            **kwargs_,
         )
         self.v_shift = _cast(None, v_shift)
         self.v_shift_nsprefix_ = None
@@ -42195,7 +42204,7 @@ class MembraneProperties2CaPools(MembraneProperties):
         init_memb_potentials=None,
         channel_density_nernst_ca2s=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -42215,7 +42224,7 @@ class MembraneProperties2CaPools(MembraneProperties):
             spike_threshes,
             specific_capacitances,
             init_memb_potentials,
-            **kwargs_
+            **kwargs_,
         )
         if channel_density_nernst_ca2s is None:
             self.channel_density_nernst_ca2s = []
@@ -42442,7 +42451,7 @@ class Cell(BaseCell):
         biophysical_properties=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -42457,7 +42466,7 @@ class Cell(BaseCell):
             annotation,
             neuro_lex_id,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.morphology_attr = _cast(None, morphology_attr)
         self.morphology_attr_nsprefix_ = None
@@ -43313,7 +43322,7 @@ class PinskyRinzelCA3Cell(BaseCell):
         betac=None,
         cm=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -44095,7 +44104,7 @@ class FitzHughNagumo1969Cell(BaseCell):
         V0=None,
         W0=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -44402,7 +44411,7 @@ class FitzHughNagumoCell(BaseCell):
         neuro_lex_id=None,
         I=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -44623,7 +44632,7 @@ class BaseCellMembPotCap(BaseCell):
         C=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -44638,7 +44647,7 @@ class BaseCellMembPotCap(BaseCell):
             annotation,
             neuro_lex_id,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.C = _cast(None, C)
         self.C_nsprefix_ = None
@@ -44895,7 +44904,7 @@ class IzhikevichCell(BaseCell):
         c=None,
         d=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -45265,7 +45274,7 @@ class IafCell(BaseCell):
         leak_conductance=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -45280,7 +45289,7 @@ class IafCell(BaseCell):
             annotation,
             neuro_lex_id,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.leak_reversal = _cast(None, leak_reversal)
         self.leak_reversal_nsprefix_ = None
@@ -45675,7 +45684,7 @@ class IafTauCell(BaseCell):
         tau=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -45690,7 +45699,7 @@ class IafTauCell(BaseCell):
             annotation,
             neuro_lex_id,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.leak_reversal = _cast(None, leak_reversal)
         self.leak_reversal_nsprefix_ = None
@@ -46027,7 +46036,7 @@ class GradedSynapse(BaseSynapse):
         k=None,
         erev=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -46389,7 +46398,7 @@ class LinearGradedSynapse(BaseSynapse):
         neuro_lex_id=None,
         conductance=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -46605,7 +46614,7 @@ class SilentSynapse(BaseSynapse):
         annotation=None,
         neuro_lex_id=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -46770,7 +46779,7 @@ class GapJunction(BaseSynapse):
         neuro_lex_id=None,
         conductance=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -46975,7 +46984,7 @@ class BaseCurrentBasedSynapse(BaseSynapse):
         neuro_lex_id=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -46990,7 +46999,7 @@ class BaseCurrentBasedSynapse(BaseSynapse):
             annotation,
             neuro_lex_id,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.extensiontype_ = extensiontype_
 
@@ -47165,7 +47174,7 @@ class BaseVoltageDepSynapse(BaseSynapse):
         neuro_lex_id=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -47180,7 +47189,7 @@ class BaseVoltageDepSynapse(BaseSynapse):
             annotation,
             neuro_lex_id,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.extensiontype_ = extensiontype_
 
@@ -47484,7 +47493,7 @@ class IonChannel(IonChannelScalable):
         gate_fractionals=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -47500,7 +47509,7 @@ class IonChannel(IonChannelScalable):
             neuro_lex_id,
             q10_conductance_scalings,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.species = _cast(None, species)
         self.species_nsprefix_ = None
@@ -48021,7 +48030,7 @@ class ConditionalDerivedVariable(NamedDimensionalVariable):
         exposure=None,
         Case=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -48209,7 +48218,7 @@ class StateVariable(NamedDimensionalVariable):
         description=None,
         exposure=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -48363,7 +48372,7 @@ class DerivedVariable(NamedDimensionalVariable):
         value=None,
         select=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -48545,7 +48554,7 @@ class Requirement(NamedDimensionalType):
         dimension=None,
         description=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -48700,7 +48709,7 @@ class LEMS_Property(NamedDimensionalType):
         description=None,
         default_value=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -48859,7 +48868,7 @@ class Parameter(NamedDimensionalType):
         dimension=None,
         description=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -49011,7 +49020,7 @@ class AlphaCurrSynapse(BasePynnSynapse):
         neuro_lex_id=None,
         tau_syn=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -49176,7 +49185,7 @@ class ExpCurrSynapse(BasePynnSynapse):
         neuro_lex_id=None,
         tau_syn=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -49338,7 +49347,7 @@ class AlphaCondSynapse(BasePynnSynapse):
         tau_syn=None,
         e_rev=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -49520,7 +49529,7 @@ class ExpCondSynapse(BasePynnSynapse):
         tau_syn=None,
         e_rev=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -49752,7 +49761,7 @@ class HH_cond_exp(basePyNNCell):
         gbar_K=None,
         gbar_Na=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -49771,7 +49780,7 @@ class HH_cond_exp(basePyNNCell):
             tau_syn_E,
             tau_syn_I,
             v_init,
-            **kwargs_
+            **kwargs_,
         )
         self.v_offset = _cast(float, v_offset)
         self.v_offset_nsprefix_ = None
@@ -50075,7 +50084,7 @@ class basePyNNIaFCell(basePyNNCell):
         v_thresh=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -50095,7 +50104,7 @@ class basePyNNIaFCell(basePyNNCell):
             tau_syn_I,
             v_init,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.tau_m = _cast(float, tau_m)
         self.tau_m_nsprefix_ = None
@@ -50334,7 +50343,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
         post_component=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -50351,7 +50360,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
             post_segment,
             post_fraction_along,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.pre_component = _cast(None, pre_component)
         self.pre_component_nsprefix_ = None
@@ -50690,7 +50699,7 @@ class ElectricalConnection(BaseConnectionNewFormat):
         synapse=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -50707,7 +50716,7 @@ class ElectricalConnection(BaseConnectionNewFormat):
             post_segment,
             post_fraction_along,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.synapse = _cast(None, synapse)
         self.synapse_nsprefix_ = None
@@ -51031,7 +51040,7 @@ class ConnectionWD(BaseConnectionOldFormat):
         weight=None,
         delay=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -51047,7 +51056,7 @@ class ConnectionWD(BaseConnectionOldFormat):
             post_cell_id,
             post_segment_id,
             post_fraction_along,
-            **kwargs_
+            **kwargs_,
         )
         self.weight = _cast(float, weight)
         self.weight_nsprefix_ = None
@@ -51372,7 +51381,7 @@ class Connection(BaseConnectionOldFormat):
         post_segment_id="0",
         post_fraction_along="0.5",
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -51388,7 +51397,7 @@ class Connection(BaseConnectionOldFormat):
             post_cell_id,
             post_segment_id,
             post_fraction_along,
-            **kwargs_
+            **kwargs_,
         )
 
     def factory(*args_, **kwargs_):
@@ -51632,7 +51641,7 @@ class Cell2CaPools(Cell):
         biophysical_properties=None,
         biophysical_properties2_ca_pools=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -51650,7 +51659,7 @@ class Cell2CaPools(Cell):
             biophysical_properties_attr,
             morphology,
             biophysical_properties,
-            **kwargs_
+            **kwargs_,
         )
         self.biophysical_properties2_ca_pools = biophysical_properties2_ca_pools
         self.biophysical_properties2_ca_pools_nsprefix_ = None
@@ -51891,7 +51900,7 @@ class AdExIaFCell(BaseCellMembPotCap):
         a=None,
         b=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -52435,7 +52444,7 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
         c=None,
         d=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -52954,7 +52963,7 @@ class IafRefCell(IafCell):
         leak_conductance=None,
         refract=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -52973,7 +52982,7 @@ class IafRefCell(IafCell):
             reset,
             C,
             leak_conductance,
-            **kwargs_
+            **kwargs_,
         )
         self.refract = _cast(None, refract)
         self.refract_nsprefix_ = None
@@ -53186,7 +53195,7 @@ class IafTauRefCell(IafTauCell):
         tau=None,
         refract=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -53204,7 +53213,7 @@ class IafTauRefCell(IafTauCell):
             thresh,
             reset,
             tau,
-            **kwargs_
+            **kwargs_,
         )
         self.refract = _cast(None, refract)
         self.refract_nsprefix_ = None
@@ -53421,7 +53430,7 @@ class DoubleSynapse(BaseVoltageDepSynapse):
         synapse1_path=None,
         synapse2_path=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -53692,7 +53701,7 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
         tau=None,
         ibase=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -53988,7 +53997,7 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
         erev=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -54003,7 +54012,7 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
             annotation,
             neuro_lex_id,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.gbase1 = _cast(None, gbase1)
         self.gbase1_nsprefix_ = None
@@ -54330,7 +54339,7 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
         erev=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -54345,7 +54354,7 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
             annotation,
             neuro_lex_id,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.gbase = _cast(None, gbase)
         self.gbase_nsprefix_ = None
@@ -54656,7 +54665,7 @@ class IonChannelVShift(IonChannel):
         gate_fractionals=None,
         v_shift=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -54682,7 +54691,7 @@ class IonChannelVShift(IonChannel):
             gate_h_hrates_tau_infs,
             gate_hh_instantaneouses,
             gate_fractionals,
-            **kwargs_
+            **kwargs_,
         )
         self.v_shift = _cast(None, v_shift)
         self.v_shift_nsprefix_ = None
@@ -54903,7 +54912,7 @@ class IonChannelHH(IonChannel):
         gate_hh_instantaneouses=None,
         gate_fractionals=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -54929,7 +54938,7 @@ class IonChannelHH(IonChannel):
             gate_h_hrates_tau_infs,
             gate_hh_instantaneouses,
             gate_fractionals,
-            **kwargs_
+            **kwargs_,
         )
 
     def factory(*args_, **kwargs_):
@@ -55105,7 +55114,7 @@ class IF_curr_exp(basePyNNIaFCell):
         v_rest=None,
         v_thresh=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -55129,7 +55138,7 @@ class IF_curr_exp(basePyNNIaFCell):
             v_reset,
             v_rest,
             v_thresh,
-            **kwargs_
+            **kwargs_,
         )
 
     def factory(*args_, **kwargs_):
@@ -55305,7 +55314,7 @@ class IF_curr_alpha(basePyNNIaFCell):
         v_rest=None,
         v_thresh=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -55329,7 +55338,7 @@ class IF_curr_alpha(basePyNNIaFCell):
             v_reset,
             v_rest,
             v_thresh,
-            **kwargs_
+            **kwargs_,
         )
 
     def factory(*args_, **kwargs_):
@@ -55519,7 +55528,7 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
         e_rev_I=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -55544,7 +55553,7 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
             v_rest,
             v_thresh,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.e_rev_E = _cast(float, e_rev_E)
         self.e_rev_E_nsprefix_ = None
@@ -55747,7 +55756,7 @@ class ContinuousConnectionInstance(ContinuousConnection):
         post_component=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -55766,7 +55775,7 @@ class ContinuousConnectionInstance(ContinuousConnection):
             pre_component,
             post_component,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.extensiontype_ = extensiontype_
 
@@ -55967,7 +55976,7 @@ class ElectricalConnectionInstance(ElectricalConnection):
         synapse=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -55985,7 +55994,7 @@ class ElectricalConnectionInstance(ElectricalConnection):
             post_fraction_along,
             synapse,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.extensiontype_ = extensiontype_
 
@@ -56223,7 +56232,7 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
         tau_decay2=None,
         tau_rise=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -56240,7 +56249,7 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
             gbase1,
             gbase2,
             erev,
-            **kwargs_
+            **kwargs_,
         )
         self.tau_decay1 = _cast(None, tau_decay1)
         self.tau_decay1_nsprefix_ = None
@@ -56509,7 +56518,7 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
         tau_rise=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -56526,7 +56535,7 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
             gbase,
             erev,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.tau_decay = _cast(None, tau_decay)
         self.tau_decay_nsprefix_ = None
@@ -56780,7 +56789,7 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
         erev=None,
         tau_decay=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -56796,7 +56805,7 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
             neuro_lex_id,
             gbase,
             erev,
-            **kwargs_
+            **kwargs_,
         )
         self.tau_decay = _cast(None, tau_decay)
         self.tau_decay_nsprefix_ = None
@@ -57008,7 +57017,7 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
         erev=None,
         tau=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -57024,7 +57033,7 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
             neuro_lex_id,
             gbase,
             erev,
-            **kwargs_
+            **kwargs_,
         )
         self.tau = _cast(None, tau)
         self.tau_nsprefix_ = None
@@ -57281,7 +57290,7 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
         v_spike=None,
         extensiontype_=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -57308,7 +57317,7 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
             e_rev_E,
             e_rev_I,
             extensiontype_,
-            **kwargs_
+            **kwargs_,
         )
         self.a = _cast(float, a)
         self.a_nsprefix_ = None
@@ -57530,7 +57539,8 @@ class IF_cond_exp(basePyNNIaFCondCell):
     :type e_rev_E: none
     :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
-    :param tau_refrac:
+    :p
+    aram tau_refrac:
     :type tau_refrac: none
     :param v_thresh:
     :type v_thresh: none
@@ -57579,7 +57589,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
         e_rev_E=None,
         e_rev_I=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -57605,7 +57615,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
             v_thresh,
             e_rev_E,
             e_rev_I,
-            **kwargs_
+            **kwargs_,
         )
 
     def factory(*args_, **kwargs_):
@@ -57787,7 +57797,7 @@ class IF_cond_alpha(basePyNNIaFCondCell):
         e_rev_E=None,
         e_rev_I=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -57813,7 +57823,7 @@ class IF_cond_alpha(basePyNNIaFCondCell):
             v_thresh,
             e_rev_E,
             e_rev_I,
-            **kwargs_
+            **kwargs_,
         )
 
     def factory(*args_, **kwargs_):
@@ -57968,7 +57978,7 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
         post_component=None,
         weight=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -57986,7 +57996,7 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
             post_fraction_along,
             pre_component,
             post_component,
-            **kwargs_
+            **kwargs_,
         )
         self.weight = _cast(float, weight)
         self.weight_nsprefix_ = None
@@ -58193,7 +58203,7 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
         synapse=None,
         weight=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -58210,7 +58220,7 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
             post_segment,
             post_fraction_along,
             synapse,
-            **kwargs_
+            **kwargs_,
         )
         self.weight = _cast(float, weight)
         self.weight_nsprefix_ = None
@@ -58446,7 +58456,7 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
         plasticity_mechanism=None,
         block_mechanism=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -58464,7 +58474,7 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
             erev,
             tau_decay,
             tau_rise,
-            **kwargs_
+            **kwargs_,
         )
         self.plasticity_mechanism = plasticity_mechanism
         self.plasticity_mechanism_nsprefix_ = None
@@ -58724,7 +58734,7 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
         tau_w=None,
         v_spike=None,
         gds_collector_=None,
-        **kwargs_
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -58755,7 +58765,7 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
             delta_T,
             tau_w,
             v_spike,
-            **kwargs_
+            **kwargs_,
         )
 
     def factory(*args_, **kwargs_):
