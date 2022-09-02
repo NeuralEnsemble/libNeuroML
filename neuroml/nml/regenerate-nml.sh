@@ -23,6 +23,8 @@ regenerate () {
 
 
         PYTHONPATH="$PYTHONPATH:." generateDS -o nml.py --use-getter-setter=none --user-methods=helper_methods.py $SCHEMA_FILE
+        # correct path to generatedssupersuper module file
+        sed -i 's/from generatedssupersuper/from .generatedssupersuper/' nml.py
     else
         echo "GenerateDS not installed"
         echo "Run: pip install generateds"
