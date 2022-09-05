@@ -59,10 +59,7 @@ class TestNML(unittest.TestCase):
         self.assertIsNone(doc.add(cell))
 
         # Already added, so throw exception
-        if int(platform.python_version_tuple()[0]) > 2:
-            with self.assertWarns(UserWarning):
-                doc.add(cell)
-        else:
+        with self.assertWarns(UserWarning):
             doc.add(cell)
 
         # Success
@@ -152,10 +149,7 @@ class TestNML(unittest.TestCase):
         pop3 = neuroml.Population(id="unique")
         network.add(pop3)
         # warning because this is already added
-        if int(platform.python_version_tuple()[0]) > 2:
-            with self.assertWarns(UserWarning):
-                network.add(pop3)
-        else:
+        with self.assertWarns(UserWarning):
             network.add(pop3)
 
         # Note that for Python, this is a new object
