@@ -37,6 +37,16 @@ class TestNML(unittest.TestCase):
         # Not in here:
         self.assertNotIn("cell", member_names)
 
+        # check with IonChannel: inherits from IonChannel
+        ionchannelhh = neuroml.IonChannelHH()
+        ion_members = ionchannelhh.get_members()
+        member_names = []
+        for m in ion_members:
+            member_names.append(m.get_name())
+        self.assertIn("conductance", member_names)
+        self.assertIn("gates", member_names)
+        self.assertIn("gate_hh_rates", member_names)
+
     def test_generic_add_single(self):
         """Test the generic add function for single addition."""
         doc = neuroml.NeuroMLDocument(id="testdoc")
@@ -157,10 +167,16 @@ class TestNML(unittest.TestCase):
         """Test getting member info."""
         cell = neuroml.Cell(id="testcell")
         info = cell.info()
-        if int(platform.python_version_tuple()[0]) > 2:
-            self.assertRegex(info, "morphology")
-            self.assertRegex(info, "biophysical_properties")
-            self.assertNotRegex(info, "network")
+        self.assertRegex(info, "morphology")
+        self.assertRegex(info, "biophysical_properties")
+        self.assertNotRegex(info, "network")
+
+        # check with IonChannel: inherits from IonChannel
+        ionchannelhh = neuroml.IonChannelHH()
+        info = ionchannelhh.info(return_format="list")
+        self.assertIn("conductance", info)
+        self.assertIn("gates", info)
+        self.assertIn("gate_hh_rates", info)
 
     def test_get_by_id(self):
         """Test the get_by_id method"""
