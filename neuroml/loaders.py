@@ -192,7 +192,7 @@ def read_neuroml2_file(
     nml2_file_name: str,
     include_includes: bool = False,
     verbose: bool = False,
-    already_included: list = [],
+    already_included: list = None,
     print_method: Callable = print_,
     optimized: bool = False,
 ) -> neuroml.nml.nml.NeuroMLDocument:
@@ -214,6 +214,9 @@ def read_neuroml2_file(
     :returns: NeuroMLDoc object containing the read file
 
     """
+    if already_included is None:
+        already_included = []
+
     print_method("Loading NeuroML2 file: %s" % nml2_file_name, verbose)
 
     if not os.path.isfile(nml2_file_name):
