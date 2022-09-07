@@ -288,5 +288,3 @@ class GeneratedsSuperSuper(object):
             for msg in collector.get_messages():
                 err += f"- {msg}\n"
             raise ValueError(err)
-
-        return True
