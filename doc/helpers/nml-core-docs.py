@@ -11,6 +11,7 @@ Author: Ankur Sinha <sanjay DOT ankur AT gmail DOT com>
 
 import textwrap
 
+print("Generating list of nml classes")
 
 classes = {}
 files = {
@@ -76,3 +77,5 @@ with open("../userdocs/coreclasses_list.txt", 'w') as fwrite:
                     )
                 )
             print(towrite, file=fwrite)
+
+print("Saved to userdocs/coreclasses_list.txt")
