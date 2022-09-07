@@ -1,5 +1,25 @@
 .. Generated using nml-core-docs.py
 
+GeneratedsSuperSuper
+####################
+
+.. autoclass:: neuroml.nml.generatedssupersuper.GeneratedsSuperSuper
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+
+GdsCollector
+############
+
+.. autoclass:: neuroml.nml.generatedscollector.GdsCollector
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+
 AdExIaFCell
 ###########
 
@@ -870,6 +890,14 @@ GateKS
 
 
 
+GeneratedsSuper
+###############
+
+.. autoclass:: neuroml.nml.nml.GeneratedsSuper
+   :show-inheritance:
+
+
+
 GradedSynapse
 #############
 
@@ -1264,18 +1292,6 @@ MembraneProperties2CaPools
 ##########################
 
 .. autoclass:: neuroml.nml.nml.MembraneProperties2CaPools
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-
-MixedContainer:
-
-################
-
-.. autoclass:: neuroml.nml.nml.MixedContainer:
-
    :members:
    :undoc-members:
    :show-inheritance:
