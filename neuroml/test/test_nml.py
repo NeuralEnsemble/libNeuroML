@@ -179,3 +179,15 @@ class TestNML(unittest.TestCase):
         network.add(pop)
         test_pop = network.get_by_id("pop0")
         self.assertIs(test_pop, pop)
+
+    def test_component_validate(self):
+        """Test validate function"""
+        network = neuroml.Network()
+        with self.assertRaises(ValueError) as cm:
+            network.validate()
+        print(cm.exception)
+
+        res = neuroml.Resistivity(value="100 seconds")
+        with self.assertRaises(ValueError) as cm:
+            res.validate()
+        print(cm.exception)

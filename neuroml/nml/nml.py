@@ -2,19 +2,20 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Sep  5 11:38:08 2022 by generateDS.py version 2.40.13.
+# Generated Wed Sep  7 14:15:49 2022 by generateDS.py version 2.40.13.
 # Python 3.10.6 (main, Aug  2 2022, 00:00:00) [GCC 12.1.1 20220507 (Red Hat 12.1.1-1)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
 #   ('--use-getter-setter', 'none')
 #   ('--user-methods', 'helper_methods.py')
+#   ('--export', 'write validate')
 #
 # Command line arguments:
 #   NeuroML_v2.3.xsd
 #
 # Command line:
-#   /home/asinha/.local/share/virtualenvs/pyneuroml-dev/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" NeuroML_v2.3.xsd
+#   /home/asinha/.local/share/virtualenvs/pyneuroml-dev/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" NeuroML_v2.3.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -129,7 +130,7 @@ except ModulenotfoundExp_:
 # clues about the possible content of that class.
 #
 try:
-    from generatedscollector import GdsCollector as GdsCollector_
+    from .generatedscollector import GdsCollector as GdsCollector_
 except ModulenotfoundExp_:
 
     class GdsCollector_(object):
@@ -1610,6 +1611,61 @@ class ComponentType(GeneratedsSuper):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.name, "name")
+        self.gds_check_cardinality_(self.name, "name", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.extends, "extends")
+        self.gds_check_cardinality_(self.extends, "extends", required=False)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.description, "description"
+        )
+        self.gds_check_cardinality_(self.description, "description", required=False)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.Property, "Property", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.Parameter, "Parameter", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.Constant, "Constant", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.Exposure, "Exposure", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.Requirement, "Requirement", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.InstanceRequirement,
+            "InstanceRequirement",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.Dynamics, "Dynamics", min_occurs=0, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.Property:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.Parameter:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.Constant:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.Exposure:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.Requirement:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.InstanceRequirement:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.Dynamics:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -1814,6 +1870,20 @@ class InstanceRequirement(GeneratedsSuper):
         pretty_print=True,
     ):
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.name, "name")
+        self.gds_check_cardinality_(self.name, "name", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.type, "type")
+        self.gds_check_cardinality_(self.type, "type", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -2089,6 +2159,38 @@ class Dynamics(GeneratedsSuper):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.StateVariable, "StateVariable", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.DerivedVariable, "DerivedVariable", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.ConditionalDerivedVariable,
+            "ConditionalDerivedVariable",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.TimeDerivative, "TimeDerivative", min_occurs=0, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.StateVariable:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.DerivedVariable:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.ConditionalDerivedVariable:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.TimeDerivative:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -2259,6 +2361,22 @@ class Case(GeneratedsSuper):
     ):
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.condition, "condition"
+        )
+        self.gds_check_cardinality_(self.condition, "condition", required=False)
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.value, "value")
+        self.gds_check_cardinality_(self.value, "value", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -2422,6 +2540,22 @@ class TimeDerivative(GeneratedsSuper):
     ):
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.variable, "variable"
+        )
+        self.gds_check_cardinality_(self.variable, "variable", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.value, "value")
+        self.gds_check_cardinality_(self.value, "value", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -2567,6 +2701,18 @@ class IncludeType(GeneratedsSuper):
         pretty_print=True,
     ):
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.href, "href")
+        self.gds_check_cardinality_(self.href, "href", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -2879,6 +3025,34 @@ class Q10Settings(GeneratedsSuper):
     ):
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.type, "type")
+        self.gds_check_cardinality_(self.type, "type", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_none, self.fixed_q10, "fixed_q10"
+        )
+        self.gds_check_cardinality_(self.fixed_q10, "fixed_q10", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_none, self.q10_factor, "q10_factor"
+        )
+        self.gds_check_cardinality_(self.q10_factor, "q10_factor", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_temperature,
+            self.experimental_temp,
+            "experimental_temp",
+        )
+        self.gds_check_cardinality_(
+            self.experimental_temp, "experimental_temp", required=False
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -3114,6 +3288,30 @@ class VariableParameter(GeneratedsSuper):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.parameter, "parameter"
+        )
+        self.gds_check_cardinality_(self.parameter, "parameter", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.segment_groups, "segment_groups"
+        )
+        self.gds_check_cardinality_(
+            self.segment_groups, "segment_groups", required=True
+        )
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.inhomogeneous_value, "inhomogeneous_value", min_occurs=0, max_occurs=1
+        )
+        if recursive:
+            if self.inhomogeneous_value is not None:
+                self.inhomogeneous_value.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -3263,6 +3461,16 @@ class BaseWithoutId(GeneratedsSuper):
         pretty_print=True,
     ):
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -3459,6 +3667,18 @@ class BaseNonNegativeIntegerId(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NonNegativeInteger, self.id, "id")
+        self.gds_check_cardinality_(self.id, "id", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -3667,6 +3887,18 @@ class Base(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.id, "id")
+        self.gds_check_cardinality_(self.id, "id", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -3997,6 +4229,29 @@ class Standalone(Base):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_MetaId, self.metaid, "metaid")
+        self.gds_check_cardinality_(self.metaid, "metaid", required=False)
+        # validate simple type children
+        self.gds_validate_defined_ST_(self.validate_Notes, self.notes, "notes")
+        self.gds_check_cardinality_(self.notes, "notes", min_occurs=0, max_occurs=1)
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.properties, "properties", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.annotation, "annotation", min_occurs=0, max_occurs=1
+        )
+        if recursive:
+            for item in self.properties:
+                item.validate_(gds_collector, recursive=True)
+            if self.annotation is not None:
+                self.annotation.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -4314,6 +4569,28 @@ class SpikeSourcePoisson(Standalone):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.start, "start"
+        )
+        self.gds_check_cardinality_(self.start, "start", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.duration, "duration"
+        )
+        self.gds_check_cardinality_(self.duration, "duration", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_pertime, self.rate, "rate"
+        )
+        self.gds_check_cardinality_(self.rate, "rate", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -4639,6 +4916,32 @@ class Input(BaseNonNegativeIntegerId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.target, "target")
+        self.gds_check_cardinality_(self.target, "target", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.destination, "destination"
+        )
+        self.gds_check_cardinality_(self.destination, "destination", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_NonNegativeInteger, self.segment_id, "segment_id"
+        )
+        self.gds_check_cardinality_(self.segment_id, "segment_id", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_ZeroToOne, self.fraction_along, "fraction_along"
+        )
+        self.gds_check_cardinality_(
+            self.fraction_along, "fraction_along", required=False
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -4983,6 +5286,31 @@ class InputList(Base):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.populations, "populations"
+        )
+        self.gds_check_cardinality_(self.populations, "populations", required=True)
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.component, "component")
+        self.gds_check_cardinality_(self.component, "component", required=True)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.input, "input", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.input_ws, "input_ws", min_occurs=0, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.input:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.input_ws:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -5253,6 +5581,24 @@ class ExplicitInput(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.target, "target")
+        self.gds_check_cardinality_(self.target, "target", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.input, "input")
+        self.gds_check_cardinality_(self.input, "input", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.destination, "destination"
+        )
+        self.gds_check_cardinality_(self.destination, "destination", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -5550,6 +5896,20 @@ class BaseConnection(BaseNonNegativeIntegerId):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NeuroLexId, self.neuro_lex_id, "neuro_lex_id"
+        )
+        self.gds_check_cardinality_(self.neuro_lex_id, "neuro_lex_id", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -5801,6 +6161,28 @@ class BaseProjection(Base):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.presynaptic_population, "presynaptic_population"
+        )
+        self.gds_check_cardinality_(
+            self.presynaptic_population, "presynaptic_population", required=True
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.postsynaptic_population, "postsynaptic_population"
+        )
+        self.gds_check_cardinality_(
+            self.postsynaptic_population, "postsynaptic_population", required=True
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -6118,6 +6500,30 @@ class SynapticConnection(BaseWithoutId):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NeuroLexId, self.neuro_lex_id, "neuro_lex_id"
+        )
+        self.gds_check_cardinality_(self.neuro_lex_id, "neuro_lex_id", required=False)
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.from_, "from_")
+        self.gds_check_cardinality_(self.from_, "from_", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.to, "to")
+        self.gds_check_cardinality_(self.to, "to", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.synapse, "synapse")
+        self.gds_check_cardinality_(self.synapse, "synapse", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.destination, "destination"
+        )
+        self.gds_check_cardinality_(self.destination, "destination", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -6342,6 +6748,18 @@ class CellSet(Base):
                 outfile.write(str(obj_))
                 outfile.write("\n")
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.select, "select")
+        self.gds_check_cardinality_(self.select, "select", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -6508,6 +6926,22 @@ class Location(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.x, "x")
+        self.gds_check_cardinality_(self.x, "x", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.y, "y")
+        self.gds_check_cardinality_(self.y, "y", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.z, "z")
+        self.gds_check_cardinality_(self.z, "z", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -6748,6 +7182,28 @@ class Instance(BaseWithoutId):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_integer, self.id, "id")
+        self.gds_check_cardinality_(self.id, "id", required=False)
+        self.gds_validate_builtin_ST_(self.gds_validate_integer, self.i, "i")
+        self.gds_check_cardinality_(self.i, "i", required=False)
+        self.gds_validate_builtin_ST_(self.gds_validate_integer, self.j, "j")
+        self.gds_check_cardinality_(self.j, "j", required=False)
+        self.gds_validate_builtin_ST_(self.gds_validate_integer, self.k, "k")
+        self.gds_check_cardinality_(self.k, "k", required=False)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.location, "location", min_occurs=1, max_occurs=1
+        )
+        if recursive:
+            if self.location is not None:
+                self.location.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -6965,6 +7421,22 @@ class GridLayout(BaseWithoutId):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_integer, self.x_size, "x_size")
+        self.gds_check_cardinality_(self.x_size, "x_size", required=False)
+        self.gds_validate_builtin_ST_(self.gds_validate_integer, self.y_size, "y_size")
+        self.gds_check_cardinality_(self.y_size, "y_size", required=False)
+        self.gds_validate_builtin_ST_(self.gds_validate_integer, self.z_size, "z_size")
+        self.gds_check_cardinality_(self.z_size, "z_size", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -7181,6 +7653,20 @@ class RandomLayout(BaseWithoutId):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_integer, self.number, "number")
+        self.gds_check_cardinality_(self.number, "number", required=False)
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.regions, "regions")
+        self.gds_check_cardinality_(self.regions, "regions", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -7354,6 +7840,18 @@ class UnstructuredLayout(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_integer, self.number, "number")
+        self.gds_check_cardinality_(self.number, "number", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -7622,6 +8120,29 @@ class Layout(BaseWithoutId):
                 name_="unstructured",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.spaces, "spaces")
+        self.gds_check_cardinality_(self.spaces, "spaces", required=False)
+        # validate simple type children
+        # validate complex type children
+        # cardinality check omitted for choice item random
+        # self.gds_check_cardinality_(self.random, 'random', min_occurs=1, max_occurs=1)
+        # cardinality check omitted for choice item grid
+        # self.gds_check_cardinality_(self.grid, 'grid', min_occurs=1, max_occurs=1)
+        # cardinality check omitted for choice item unstructured
+        # self.gds_check_cardinality_(self.unstructured, 'unstructured', min_occurs=1, max_occurs=1)
+        if recursive:
+            if self.random is not None:
+                self.random.validate_(gds_collector, recursive=True)
+            if self.grid is not None:
+                self.grid.validate_(gds_collector, recursive=True)
+            if self.unstructured is not None:
+                self.unstructured.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -8055,6 +8576,43 @@ class Population(Standalone):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.component, "component")
+        self.gds_check_cardinality_(self.component, "component", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_NonNegativeInteger, self.size, "size"
+        )
+        self.gds_check_cardinality_(self.size, "size", required=False)
+        self.gds_validate_defined_ST_(self.validate_populationTypes, self.type, "type")
+        self.gds_check_cardinality_(self.type, "type", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId,
+            self.extracellular_properties,
+            "extracellular_properties",
+        )
+        self.gds_check_cardinality_(
+            self.extracellular_properties, "extracellular_properties", required=False
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_NeuroLexId, self.neuro_lex_id, "neuro_lex_id"
+        )
+        self.gds_check_cardinality_(self.neuro_lex_id, "neuro_lex_id", required=False)
+        # validate simple type children
+        # validate complex type children
+        # cardinality check omitted for choice item layout
+        # self.gds_check_cardinality_(self.layout, 'layout', min_occurs=0, max_occurs=1)
+        # cardinality check omitted for choice item instances
+        # self.gds_check_cardinality_(self.instances, 'instances', min_occurs=1, max_occurs=9999999)
+        if recursive:
+            if self.layout is not None:
+                self.layout.validate_(gds_collector, recursive=True)
+            for item in self.instances:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -8351,6 +8909,18 @@ class Region(Base):
                 outfile.write(str(obj_))
                 outfile.write("\n")
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.spaces, "spaces")
+        self.gds_check_cardinality_(self.spaces, "spaces", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -8570,6 +9140,34 @@ class SpaceStructure(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_float, self.x_spacing, "x_spacing"
+        )
+        self.gds_check_cardinality_(self.x_spacing, "x_spacing", required=False)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_float, self.y_spacing, "y_spacing"
+        )
+        self.gds_check_cardinality_(self.y_spacing, "y_spacing", required=False)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_float, self.z_spacing, "z_spacing"
+        )
+        self.gds_check_cardinality_(self.z_spacing, "z_spacing", required=False)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.x_start, "x_start")
+        self.gds_check_cardinality_(self.x_start, "x_start", required=False)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.y_start, "y_start")
+        self.gds_check_cardinality_(self.y_start, "y_start", required=False)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.z_start, "z_start")
+        self.gds_check_cardinality_(self.z_start, "z_start", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -8814,6 +9412,24 @@ class Space(Base):
                 name_="structure",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_allowedSpaces, self.based_on, "based_on"
+        )
+        self.gds_check_cardinality_(self.based_on, "based_on", required=False)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.structure, "structure", min_occurs=0, max_occurs=1
+        )
+        if recursive:
+            if self.structure is not None:
+                self.structure.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -9494,6 +10110,92 @@ class Network(Standalone):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_networkTypes, self.type, "type")
+        self.gds_check_cardinality_(self.type, "type", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_temperature, self.temperature, "temperature"
+        )
+        self.gds_check_cardinality_(self.temperature, "temperature", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_NeuroLexId, self.neuro_lex_id, "neuro_lex_id"
+        )
+        self.gds_check_cardinality_(self.neuro_lex_id, "neuro_lex_id", required=False)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.spaces, "spaces", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.regions, "regions", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.extracellular_properties,
+            "extracellular_properties",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.populations, "populations", min_occurs=1, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.cell_sets, "cell_sets", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.synaptic_connections,
+            "synaptic_connections",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.projections, "projections", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.electrical_projections,
+            "electrical_projections",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.continuous_projections,
+            "continuous_projections",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.explicit_inputs, "explicit_inputs", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.input_lists, "input_lists", min_occurs=0, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.spaces:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.regions:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.extracellular_properties:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.populations:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.cell_sets:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.synaptic_connections:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.projections:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.electrical_projections:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.continuous_projections:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.explicit_inputs:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.input_lists:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -9980,6 +10682,34 @@ class TransientPoissonFiringSynapse(Standalone):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_pertime, self.average_rate, "average_rate"
+        )
+        self.gds_check_cardinality_(self.average_rate, "average_rate", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.delay, "delay"
+        )
+        self.gds_check_cardinality_(self.delay, "delay", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.duration, "duration"
+        )
+        self.gds_check_cardinality_(self.duration, "duration", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.synapse, "synapse")
+        self.gds_check_cardinality_(self.synapse, "synapse", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.spike_target, "spike_target"
+        )
+        self.gds_check_cardinality_(self.spike_target, "spike_target", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -10273,6 +11003,26 @@ class PoissonFiringSynapse(Standalone):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_pertime, self.average_rate, "average_rate"
+        )
+        self.gds_check_cardinality_(self.average_rate, "average_rate", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.synapse, "synapse")
+        self.gds_check_cardinality_(self.synapse, "synapse", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.spike_target, "spike_target"
+        )
+        self.gds_check_cardinality_(self.spike_target, "spike_target", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -10524,6 +11274,20 @@ class SpikeGeneratorPoisson(Standalone):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_pertime, self.average_rate, "average_rate"
+        )
+        self.gds_check_cardinality_(self.average_rate, "average_rate", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -10773,6 +11537,24 @@ class SpikeGeneratorRandom(Standalone):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.max_isi, "max_isi"
+        )
+        self.gds_check_cardinality_(self.max_isi, "max_isi", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.min_isi, "min_isi"
+        )
+        self.gds_check_cardinality_(self.min_isi, "min_isi", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -10994,6 +11776,20 @@ class SpikeGenerator(Standalone):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.period, "period"
+        )
+        self.gds_check_cardinality_(self.period, "period", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -11268,6 +12064,26 @@ class TimedSynapticInput(Standalone):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.synapse, "synapse")
+        self.gds_check_cardinality_(self.synapse, "synapse", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.spike_target, "spike_target"
+        )
+        self.gds_check_cardinality_(self.spike_target, "spike_target", required=True)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.spikes, "spikes", min_occurs=0, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.spikes:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -11464,6 +12280,20 @@ class SpikeArray(Standalone):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.spikes, "spikes", min_occurs=0, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.spikes:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -11656,6 +12486,20 @@ class Spike(BaseNonNegativeIntegerId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.time, "time"
+        )
+        self.gds_check_cardinality_(self.time, "time", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -12119,6 +12963,54 @@ class VoltageClampTriple(Standalone):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_ZeroOrOne, self.active, "active")
+        self.gds_check_cardinality_(self.active, "active", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.delay, "delay"
+        )
+        self.gds_check_cardinality_(self.delay, "delay", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.duration, "duration"
+        )
+        self.gds_check_cardinality_(self.duration, "duration", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage,
+            self.conditioning_voltage,
+            "conditioning_voltage",
+        )
+        self.gds_check_cardinality_(
+            self.conditioning_voltage, "conditioning_voltage", required=True
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.testing_voltage, "testing_voltage"
+        )
+        self.gds_check_cardinality_(
+            self.testing_voltage, "testing_voltage", required=True
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.return_voltage, "return_voltage"
+        )
+        self.gds_check_cardinality_(
+            self.return_voltage, "return_voltage", required=True
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_resistance,
+            self.simple_series_resistance,
+            "simple_series_resistance",
+        )
+        self.gds_check_cardinality_(
+            self.simple_series_resistance, "simple_series_resistance", required=True
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -12517,6 +13409,38 @@ class VoltageClamp(Standalone):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.delay, "delay"
+        )
+        self.gds_check_cardinality_(self.delay, "delay", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.duration, "duration"
+        )
+        self.gds_check_cardinality_(self.duration, "duration", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.target_voltage, "target_voltage"
+        )
+        self.gds_check_cardinality_(
+            self.target_voltage, "target_voltage", required=True
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_resistance,
+            self.simple_series_resistance,
+            "simple_series_resistance",
+        )
+        self.gds_check_cardinality_(
+            self.simple_series_resistance, "simple_series_resistance", required=True
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -12804,6 +13728,39 @@ class CompoundInputDL(Standalone):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.pulse_generator_dls,
+            "pulse_generator_dls",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.sine_generator_dls,
+            "sine_generator_dls",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.ramp_generator_dls,
+            "ramp_generator_dls",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        if recursive:
+            for item in self.pulse_generator_dls:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.sine_generator_dls:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.ramp_generator_dls:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -13076,6 +14033,30 @@ class CompoundInput(Standalone):
                 name_="rampGenerator",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.pulse_generators, "pulse_generators", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.sine_generators, "sine_generators", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.ramp_generators, "ramp_generators", min_occurs=0, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.pulse_generators:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.sine_generators:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.ramp_generators:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -13436,6 +14417,44 @@ class RampGeneratorDL(Standalone):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.delay, "delay"
+        )
+        self.gds_check_cardinality_(self.delay, "delay", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.duration, "duration"
+        )
+        self.gds_check_cardinality_(self.duration, "duration", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_none, self.start_amplitude, "start_amplitude"
+        )
+        self.gds_check_cardinality_(
+            self.start_amplitude, "start_amplitude", required=True
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_none, self.finish_amplitude, "finish_amplitude"
+        )
+        self.gds_check_cardinality_(
+            self.finish_amplitude, "finish_amplitude", required=True
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_none,
+            self.baseline_amplitude,
+            "baseline_amplitude",
+        )
+        self.gds_check_cardinality_(
+            self.baseline_amplitude, "baseline_amplitude", required=True
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -13818,6 +14837,46 @@ class RampGenerator(Standalone):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.delay, "delay"
+        )
+        self.gds_check_cardinality_(self.delay, "delay", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.duration, "duration"
+        )
+        self.gds_check_cardinality_(self.duration, "duration", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_current, self.start_amplitude, "start_amplitude"
+        )
+        self.gds_check_cardinality_(
+            self.start_amplitude, "start_amplitude", required=True
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_current,
+            self.finish_amplitude,
+            "finish_amplitude",
+        )
+        self.gds_check_cardinality_(
+            self.finish_amplitude, "finish_amplitude", required=True
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_current,
+            self.baseline_amplitude,
+            "baseline_amplitude",
+        )
+        self.gds_check_cardinality_(
+            self.baseline_amplitude, "baseline_amplitude", required=True
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -14178,6 +15237,36 @@ class SineGeneratorDL(Standalone):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.delay, "delay"
+        )
+        self.gds_check_cardinality_(self.delay, "delay", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_none, self.phase, "phase"
+        )
+        self.gds_check_cardinality_(self.phase, "phase", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.duration, "duration"
+        )
+        self.gds_check_cardinality_(self.duration, "duration", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_none, self.amplitude, "amplitude"
+        )
+        self.gds_check_cardinality_(self.amplitude, "amplitude", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.period, "period"
+        )
+        self.gds_check_cardinality_(self.period, "period", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -14572,6 +15661,36 @@ class SineGenerator(Standalone):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.delay, "delay"
+        )
+        self.gds_check_cardinality_(self.delay, "delay", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_none, self.phase, "phase"
+        )
+        self.gds_check_cardinality_(self.phase, "phase", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.duration, "duration"
+        )
+        self.gds_check_cardinality_(self.duration, "duration", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_current, self.amplitude, "amplitude"
+        )
+        self.gds_check_cardinality_(self.amplitude, "amplitude", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.period, "period"
+        )
+        self.gds_check_cardinality_(self.period, "period", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -14901,6 +16020,28 @@ class PulseGeneratorDL(Standalone):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.delay, "delay"
+        )
+        self.gds_check_cardinality_(self.delay, "delay", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.duration, "duration"
+        )
+        self.gds_check_cardinality_(self.duration, "duration", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_none, self.amplitude, "amplitude"
+        )
+        self.gds_check_cardinality_(self.amplitude, "amplitude", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -15208,6 +16349,28 @@ class PulseGenerator(Standalone):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.delay, "delay"
+        )
+        self.gds_check_cardinality_(self.delay, "delay", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.duration, "duration"
+        )
+        self.gds_check_cardinality_(self.duration, "duration", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_current, self.amplitude, "amplitude"
+        )
+        self.gds_check_cardinality_(self.amplitude, "amplitude", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -15426,6 +16589,20 @@ class ReactionScheme(Base):
                 outfile.write(str(obj_))
                 outfile.write("\n")
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.source, "source")
+        self.gds_check_cardinality_(self.source, "source", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.type, "type")
+        self.gds_check_cardinality_(self.type, "type", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -15624,6 +16801,20 @@ class ExtracellularPropertiesLocal(Base):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.species, "species", min_occurs=0, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.species:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -15815,6 +17006,20 @@ class ExtracellularProperties(Base):
                 name_="species",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.species, "species", min_occurs=0, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.species:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -16067,6 +17272,25 @@ class IntracellularProperties(BaseWithoutId):
                 name_="resistivity",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.species, "species", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.resistivities, "resistivities", min_occurs=0, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.species:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.resistivities:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -16408,6 +17632,46 @@ class Species(Base):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.concentration_model, "concentration_model"
+        )
+        self.gds_check_cardinality_(
+            self.concentration_model, "concentration_model", required=True
+        )
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.ion, "ion")
+        self.gds_check_cardinality_(self.ion, "ion", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_concentration,
+            self.initial_concentration,
+            "initial_concentration",
+        )
+        self.gds_check_cardinality_(
+            self.initial_concentration, "initial_concentration", required=True
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_concentration,
+            self.initial_ext_concentration,
+            "initial_ext_concentration",
+        )
+        self.gds_check_cardinality_(
+            self.initial_ext_concentration, "initial_ext_concentration", required=True
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.segment_groups, "segment_groups"
+        )
+        self.gds_check_cardinality_(
+            self.segment_groups, "segment_groups", required=False
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -16628,6 +17892,26 @@ class InhomogeneousValue(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string,
+            self.inhomogeneous_parameters,
+            "inhomogeneous_parameters",
+        )
+        self.gds_check_cardinality_(
+            self.inhomogeneous_parameters, "inhomogeneous_parameters", required=True
+        )
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.value, "value")
+        self.gds_check_cardinality_(self.value, "value", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -16953,6 +18237,36 @@ class ChannelDensityGHK2(Base):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.ion_channel, "ion_channel"
+        )
+        self.gds_check_cardinality_(self.ion_channel, "ion_channel", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductanceDensity,
+            self.cond_density,
+            "cond_density",
+        )
+        self.gds_check_cardinality_(self.cond_density, "cond_density", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.segment_groups, "segment_groups"
+        )
+        self.gds_check_cardinality_(
+            self.segment_groups, "segment_groups", required=False
+        )
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.segments, "segments")
+        self.gds_check_cardinality_(self.segments, "segments", required=False)
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.ion, "ion")
+        self.gds_check_cardinality_(self.ion, "ion", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -17294,6 +18608,34 @@ class ChannelDensityGHK(Base):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.ion_channel, "ion_channel"
+        )
+        self.gds_check_cardinality_(self.ion_channel, "ion_channel", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_permeability, self.permeability, "permeability"
+        )
+        self.gds_check_cardinality_(self.permeability, "permeability", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.segment_groups, "segment_groups"
+        )
+        self.gds_check_cardinality_(
+            self.segment_groups, "segment_groups", required=False
+        )
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.segments, "segments")
+        self.gds_check_cardinality_(self.segments, "segments", required=False)
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.ion, "ion")
+        self.gds_check_cardinality_(self.ion, "ion", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -17690,6 +19032,43 @@ class ChannelDensityNernst(Base):
                 name_="variableParameter",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.ion_channel, "ion_channel"
+        )
+        self.gds_check_cardinality_(self.ion_channel, "ion_channel", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductanceDensity,
+            self.cond_density,
+            "cond_density",
+        )
+        self.gds_check_cardinality_(self.cond_density, "cond_density", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.segment_groups, "segment_groups"
+        )
+        self.gds_check_cardinality_(
+            self.segment_groups, "segment_groups", required=False
+        )
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.segments, "segments")
+        self.gds_check_cardinality_(self.segments, "segments", required=False)
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.ion, "ion")
+        self.gds_check_cardinality_(self.ion, "ion", required=True)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.variable_parameters,
+            "variable_parameters",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        if recursive:
+            for item in self.variable_parameters:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -18158,6 +19537,49 @@ class ChannelDensity(Base):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.ion_channel, "ion_channel"
+        )
+        self.gds_check_cardinality_(self.ion_channel, "ion_channel", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductanceDensity,
+            self.cond_density,
+            "cond_density",
+        )
+        self.gds_check_cardinality_(self.cond_density, "cond_density", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.erev, "erev"
+        )
+        self.gds_check_cardinality_(self.erev, "erev", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.segment_groups, "segment_groups"
+        )
+        self.gds_check_cardinality_(
+            self.segment_groups, "segment_groups", required=False
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_NonNegativeInteger, self.segments, "segments"
+        )
+        self.gds_check_cardinality_(self.segments, "segments", required=False)
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.ion, "ion")
+        self.gds_check_cardinality_(self.ion, "ion", required=True)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.variable_parameters,
+            "variable_parameters",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        if recursive:
+            for item in self.variable_parameters:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -18466,6 +19888,29 @@ class ChannelDensityNonUniformGHK(Base):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.ion_channel, "ion_channel"
+        )
+        self.gds_check_cardinality_(self.ion_channel, "ion_channel", required=True)
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.ion, "ion")
+        self.gds_check_cardinality_(self.ion, "ion", required=True)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.variable_parameters,
+            "variable_parameters",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        if recursive:
+            for item in self.variable_parameters:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -18747,6 +20192,29 @@ class ChannelDensityNonUniformNernst(Base):
                 name_="variableParameter",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.ion_channel, "ion_channel"
+        )
+        self.gds_check_cardinality_(self.ion_channel, "ion_channel", required=True)
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.ion, "ion")
+        self.gds_check_cardinality_(self.ion, "ion", required=True)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.variable_parameters,
+            "variable_parameters",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        if recursive:
+            for item in self.variable_parameters:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -19077,6 +20545,33 @@ class ChannelDensityNonUniform(Base):
                 name_="variableParameter",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.ion_channel, "ion_channel"
+        )
+        self.gds_check_cardinality_(self.ion_channel, "ion_channel", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.erev, "erev"
+        )
+        self.gds_check_cardinality_(self.erev, "erev", required=True)
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.ion, "ion")
+        self.gds_check_cardinality_(self.ion, "ion", required=True)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.variable_parameters,
+            "variable_parameters",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        if recursive:
+            for item in self.variable_parameters:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -19481,6 +20976,47 @@ class ChannelPopulation(Base):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.ion_channel, "ion_channel"
+        )
+        self.gds_check_cardinality_(self.ion_channel, "ion_channel", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_NonNegativeInteger, self.number, "number"
+        )
+        self.gds_check_cardinality_(self.number, "number", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.erev, "erev"
+        )
+        self.gds_check_cardinality_(self.erev, "erev", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.segment_groups, "segment_groups"
+        )
+        self.gds_check_cardinality_(
+            self.segment_groups, "segment_groups", required=False
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_NonNegativeInteger, self.segments, "segments"
+        )
+        self.gds_check_cardinality_(self.segments, "segments", required=False)
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.ion, "ion")
+        self.gds_check_cardinality_(self.ion, "ion", required=True)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.variable_parameters,
+            "variable_parameters",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        if recursive:
+            for item in self.variable_parameters:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -19776,6 +21312,26 @@ class Resistivity(BaseWithoutId):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_resistivity, self.value, "value"
+        )
+        self.gds_check_cardinality_(self.value, "value", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.segment_groups, "segment_groups"
+        )
+        self.gds_check_cardinality_(
+            self.segment_groups, "segment_groups", required=False
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -20042,6 +21598,26 @@ class InitMembPotential(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.value, "value"
+        )
+        self.gds_check_cardinality_(self.value, "value", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.segment_groups, "segment_groups"
+        )
+        self.gds_check_cardinality_(
+            self.segment_groups, "segment_groups", required=False
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -20316,6 +21892,26 @@ class SpecificCapacitance(BaseWithoutId):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_specificCapacitance, self.value, "value"
+        )
+        self.gds_check_cardinality_(self.value, "value", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.segment_groups, "segment_groups"
+        )
+        self.gds_check_cardinality_(
+            self.segment_groups, "segment_groups", required=False
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -20576,6 +22172,26 @@ class SpikeThresh(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.value, "value"
+        )
+        self.gds_check_cardinality_(self.value, "value", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.segment_groups, "segment_groups"
+        )
+        self.gds_check_cardinality_(
+            self.segment_groups, "segment_groups", required=False
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -21178,6 +22794,108 @@ class MembraneProperties(BaseWithoutId):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.channel_populations,
+            "channel_populations",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.channel_densities,
+            "channel_densities",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.channel_density_v_shifts,
+            "channel_density_v_shifts",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.channel_density_nernsts,
+            "channel_density_nernsts",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.channel_density_ghks,
+            "channel_density_ghks",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.channel_density_ghk2s,
+            "channel_density_ghk2s",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.channel_density_non_uniforms,
+            "channel_density_non_uniforms",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.channel_density_non_uniform_nernsts,
+            "channel_density_non_uniform_nernsts",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.channel_density_non_uniform_ghks,
+            "channel_density_non_uniform_ghks",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.spike_threshes, "spike_threshes", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.specific_capacitances,
+            "specific_capacitances",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.init_memb_potentials,
+            "init_memb_potentials",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        if recursive:
+            for item in self.channel_populations:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.channel_densities:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.channel_density_v_shifts:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.channel_density_nernsts:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.channel_density_ghks:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.channel_density_ghk2s:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.channel_density_non_uniforms:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.channel_density_non_uniform_nernsts:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.channel_density_non_uniform_ghks:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.spike_threshes:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.specific_capacitances:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.init_memb_potentials:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -21504,6 +23222,43 @@ class BiophysicalProperties2CaPools(Standalone):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.membrane_properties2_ca_pools,
+            "membrane_properties2_ca_pools",
+            min_occurs=1,
+            max_occurs=1,
+        )
+        self.gds_check_cardinality_(
+            self.intracellular_properties2_ca_pools,
+            "intracellular_properties2_ca_pools",
+            min_occurs=0,
+            max_occurs=1,
+        )
+        self.gds_check_cardinality_(
+            self.extracellular_properties,
+            "extracellular_properties",
+            min_occurs=0,
+            max_occurs=1,
+        )
+        if recursive:
+            if self.membrane_properties2_ca_pools is not None:
+                self.membrane_properties2_ca_pools.validate_(
+                    gds_collector, recursive=True
+                )
+            if self.intracellular_properties2_ca_pools is not None:
+                self.intracellular_properties2_ca_pools.validate_(
+                    gds_collector, recursive=True
+                )
+            if self.extracellular_properties is not None:
+                self.extracellular_properties.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -21775,6 +23530,36 @@ class BiophysicalProperties(Standalone):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.membrane_properties, "membrane_properties", min_occurs=1, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.intracellular_properties,
+            "intracellular_properties",
+            min_occurs=0,
+            max_occurs=1,
+        )
+        self.gds_check_cardinality_(
+            self.extracellular_properties,
+            "extracellular_properties",
+            min_occurs=0,
+            max_occurs=1,
+        )
+        if recursive:
+            if self.membrane_properties is not None:
+                self.membrane_properties.validate_(gds_collector, recursive=True)
+            if self.intracellular_properties is not None:
+                self.intracellular_properties.validate_(gds_collector, recursive=True)
+            if self.extracellular_properties is not None:
+                self.extracellular_properties.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -21964,6 +23749,20 @@ class SegmentEndPoint(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NonNegativeInteger, self.segments, "segments"
+        )
+        self.gds_check_cardinality_(self.segments, "segments", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -22165,6 +23964,23 @@ class SubTree(BaseWithoutId):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        # cardinality check omitted for choice item from_
+        # self.gds_check_cardinality_(self.from_, 'from_', min_occurs=0, max_occurs=1)
+        # cardinality check omitted for choice item to
+        # self.gds_check_cardinality_(self.to, 'to', min_occurs=0, max_occurs=1)
+        if recursive:
+            if self.from_ is not None:
+                self.from_.validate_(gds_collector, recursive=True)
+            if self.to is not None:
+                self.to.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -22365,6 +24181,21 @@ class Path(BaseWithoutId):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(self.from_, "from_", min_occurs=0, max_occurs=1)
+        self.gds_check_cardinality_(self.to, "to", min_occurs=0, max_occurs=1)
+        if recursive:
+            if self.from_ is not None:
+                self.from_.validate_(gds_collector, recursive=True)
+            if self.to is not None:
+                self.to.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -22563,6 +24394,22 @@ class Include(BaseWithoutId):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.segment_groups, "segment_groups"
+        )
+        self.gds_check_cardinality_(
+            self.segment_groups, "segment_groups", required=True
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -22737,6 +24584,20 @@ class Member(BaseWithoutId):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NonNegativeInteger, self.segments, "segments"
+        )
+        self.gds_check_cardinality_(self.segments, "segments", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -22904,6 +24765,22 @@ class DistalDetails(BaseWithoutId):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_double, self.normalization_end, "normalization_end"
+        )
+        self.gds_check_cardinality_(
+            self.normalization_end, "normalization_end", required=True
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -23066,6 +24943,22 @@ class ProximalDetails(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_double, self.translation_start, "translation_start"
+        )
+        self.gds_check_cardinality_(
+            self.translation_start, "translation_start", required=True
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -23345,6 +25238,29 @@ class InhomogeneousParameter(Base):
                 name_="distal",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.variable, "variable"
+        )
+        self.gds_check_cardinality_(self.variable, "variable", required=True)
+        self.gds_validate_defined_ST_(self.validate_Metric, self.metric, "metric")
+        self.gds_check_cardinality_(self.metric, "metric", required=True)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.proximal, "proximal", min_occurs=0, max_occurs=1
+        )
+        self.gds_check_cardinality_(self.distal, "distal", min_occurs=0, max_occurs=1)
+        if recursive:
+            if self.proximal is not None:
+                self.proximal.validate_(gds_collector, recursive=True)
+            if self.distal is not None:
+                self.distal.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -23855,6 +25771,59 @@ class SegmentGroup(Base):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NeuroLexId, self.neuro_lex_id, "neuro_lex_id"
+        )
+        self.gds_check_cardinality_(self.neuro_lex_id, "neuro_lex_id", required=False)
+        # validate simple type children
+        self.gds_validate_defined_ST_(self.validate_Notes, self.notes, "notes")
+        self.gds_check_cardinality_(self.notes, "notes", min_occurs=0, max_occurs=1)
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.properties, "properties", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.annotation, "annotation", min_occurs=0, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.members, "members", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.includes, "includes", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.paths, "paths", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.sub_trees, "sub_trees", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.inhomogeneous_parameters,
+            "inhomogeneous_parameters",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        if recursive:
+            for item in self.properties:
+                item.validate_(gds_collector, recursive=True)
+            if self.annotation is not None:
+                self.annotation.validate_(gds_collector, recursive=True)
+            for item in self.members:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.includes:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.paths:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.sub_trees:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.inhomogeneous_parameters:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -24128,6 +26097,26 @@ class Point3DWithDiam(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_double, self.x, "x")
+        self.gds_check_cardinality_(self.x, "x", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_double, self.y, "y")
+        self.gds_check_cardinality_(self.y, "y", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_double, self.z, "z")
+        self.gds_check_cardinality_(self.z, "z", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_DoubleGreaterThanZero, self.diameter, "diameter"
+        )
+        self.gds_check_cardinality_(self.diameter, "diameter", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -24409,6 +26398,26 @@ class SegmentParent(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NonNegativeInteger, self.segments, "segments"
+        )
+        self.gds_check_cardinality_(self.segments, "segments", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_ZeroToOne, self.fraction_along, "fraction_along"
+        )
+        self.gds_check_cardinality_(
+            self.fraction_along, "fraction_along", required=False
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -24716,6 +26725,32 @@ class Segment(BaseNonNegativeIntegerId):
                 name_="distal",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.name, "name")
+        self.gds_check_cardinality_(self.name, "name", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_NeuroLexId, self.neuro_lex_id, "neuro_lex_id"
+        )
+        self.gds_check_cardinality_(self.neuro_lex_id, "neuro_lex_id", required=False)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(self.parent, "parent", min_occurs=0, max_occurs=1)
+        self.gds_check_cardinality_(
+            self.proximal, "proximal", min_occurs=0, max_occurs=1
+        )
+        self.gds_check_cardinality_(self.distal, "distal", min_occurs=1, max_occurs=1)
+        if recursive:
+            if self.parent is not None:
+                self.parent.validate_(gds_collector, recursive=True)
+            if self.proximal is not None:
+                self.proximal.validate_(gds_collector, recursive=True)
+            if self.distal is not None:
+                self.distal.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -25082,6 +27117,25 @@ class Morphology(Standalone):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.segments, "segments", min_occurs=1, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.segment_groups, "segment_groups", min_occurs=0, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.segments:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.segment_groups:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -25311,6 +27365,20 @@ class BaseCell(Standalone):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NeuroLexId, self.neuro_lex_id, "neuro_lex_id"
+        )
+        self.gds_check_cardinality_(self.neuro_lex_id, "neuro_lex_id", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -25641,6 +27709,32 @@ class PlasticityMechanism(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_PlasticityTypes, self.type, "type")
+        self.gds_check_cardinality_(self.type, "type", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_ZeroToOne, self.init_release_prob, "init_release_prob"
+        )
+        self.gds_check_cardinality_(
+            self.init_release_prob, "init_release_prob", required=True
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.tau_rec, "tau_rec"
+        )
+        self.gds_check_cardinality_(self.tau_rec, "tau_rec", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.tau_fac, "tau_fac"
+        )
+        self.gds_check_cardinality_(self.tau_fac, "tau_fac", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -26034,6 +28128,36 @@ class BlockMechanism(BaseWithoutId):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_BlockTypes, self.type, "type")
+        self.gds_check_cardinality_(self.type, "type", required=True)
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.species, "species")
+        self.gds_check_cardinality_(self.species, "species", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_concentration,
+            self.block_concentration,
+            "block_concentration",
+        )
+        self.gds_check_cardinality_(
+            self.block_concentration, "block_concentration", required=True
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_concentration, self.scaling_conc, "scaling_conc"
+        )
+        self.gds_check_cardinality_(self.scaling_conc, "scaling_conc", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.scaling_volt, "scaling_volt"
+        )
+        self.gds_check_cardinality_(self.scaling_volt, "scaling_volt", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -26281,6 +28405,20 @@ class BaseSynapse(Standalone):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NeuroLexId, self.neuro_lex_id, "neuro_lex_id"
+        )
+        self.gds_check_cardinality_(self.neuro_lex_id, "neuro_lex_id", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -26669,6 +28807,32 @@ class FixedFactorConcentrationModel(Standalone):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.ion, "ion")
+        self.gds_check_cardinality_(self.ion, "ion", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_concentration, self.resting_conc, "resting_conc"
+        )
+        self.gds_check_cardinality_(self.resting_conc, "resting_conc", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.decay_constant, "decay_constant"
+        )
+        self.gds_check_cardinality_(
+            self.decay_constant, "decay_constant", required=True
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_rhoFactor, self.rho, "rho"
+        )
+        self.gds_check_cardinality_(self.rho, "rho", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -27103,6 +29267,34 @@ class DecayingPoolConcentrationModel(Standalone):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.ion, "ion")
+        self.gds_check_cardinality_(self.ion, "ion", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_concentration, self.resting_conc, "resting_conc"
+        )
+        self.gds_check_cardinality_(self.resting_conc, "resting_conc", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.decay_constant, "decay_constant"
+        )
+        self.gds_check_cardinality_(
+            self.decay_constant, "decay_constant", required=True
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_length, self.shell_thickness, "shell_thickness"
+        )
+        self.gds_check_cardinality_(
+            self.shell_thickness, "shell_thickness", required=True
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -27458,6 +29650,32 @@ class HHTime(BaseWithoutId):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.type, "type")
+        self.gds_check_cardinality_(self.type, "type", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.rate, "rate"
+        )
+        self.gds_check_cardinality_(self.rate, "rate", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.midpoint, "midpoint"
+        )
+        self.gds_check_cardinality_(self.midpoint, "midpoint", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.scale, "scale"
+        )
+        self.gds_check_cardinality_(self.scale, "scale", required=False)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_time, self.tau, "tau")
+        self.gds_check_cardinality_(self.tau, "tau", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -27752,6 +29970,28 @@ class HHVariable(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.type, "type")
+        self.gds_check_cardinality_(self.type, "type", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.rate, "rate")
+        self.gds_check_cardinality_(self.rate, "rate", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.midpoint, "midpoint"
+        )
+        self.gds_check_cardinality_(self.midpoint, "midpoint", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.scale, "scale"
+        )
+        self.gds_check_cardinality_(self.scale, "scale", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -28081,6 +30321,30 @@ class HHRate(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.type, "type")
+        self.gds_check_cardinality_(self.type, "type", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_pertime, self.rate, "rate"
+        )
+        self.gds_check_cardinality_(self.rate, "rate", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.midpoint, "midpoint"
+        )
+        self.gds_check_cardinality_(self.midpoint, "midpoint", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.scale, "scale"
+        )
+        self.gds_check_cardinality_(self.scale, "scale", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -28457,6 +30721,40 @@ class GateFractionalSubgate(Base):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_none,
+            self.fractional_conductance,
+            "fractional_conductance",
+        )
+        self.gds_check_cardinality_(
+            self.fractional_conductance, "fractional_conductance", required=True
+        )
+        # validate simple type children
+        self.gds_validate_defined_ST_(self.validate_Notes, self.notes, "notes")
+        self.gds_check_cardinality_(self.notes, "notes", min_occurs=0, max_occurs=1)
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.q10_settings, "q10_settings", min_occurs=0, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.steady_state, "steady_state", min_occurs=1, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.time_course, "time_course", min_occurs=1, max_occurs=1
+        )
+        if recursive:
+            if self.q10_settings is not None:
+                self.q10_settings.validate_(gds_collector, recursive=True)
+            if self.steady_state is not None:
+                self.steady_state.validate_(gds_collector, recursive=True)
+            if self.time_course is not None:
+                self.time_course.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -28793,6 +31091,31 @@ class GateFractional(Base):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_PositiveInteger, self.instances, "instances"
+        )
+        self.gds_check_cardinality_(self.instances, "instances", required=True)
+        # validate simple type children
+        self.gds_validate_defined_ST_(self.validate_Notes, self.notes, "notes")
+        self.gds_check_cardinality_(self.notes, "notes", min_occurs=0, max_occurs=1)
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.q10_settings, "q10_settings", min_occurs=0, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.sub_gates, "sub_gates", min_occurs=1, max_occurs=9999999
+        )
+        if recursive:
+            if self.q10_settings is not None:
+                self.q10_settings.validate_(gds_collector, recursive=True)
+            for item in self.sub_gates:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -29099,6 +31422,26 @@ class GateHHInstantaneous(Base):
                 name_="steadyState",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_PositiveInteger, self.instances, "instances"
+        )
+        self.gds_check_cardinality_(self.instances, "instances", required=True)
+        # validate simple type children
+        self.gds_validate_defined_ST_(self.validate_Notes, self.notes, "notes")
+        self.gds_check_cardinality_(self.notes, "notes", min_occurs=0, max_occurs=1)
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.steady_state, "steady_state", min_occurs=1, max_occurs=1
+        )
+        if recursive:
+            if self.steady_state is not None:
+                self.steady_state.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -29471,6 +31814,41 @@ class GateHHRatesInf(Base):
                 name_="steadyState",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_PositiveInteger, self.instances, "instances"
+        )
+        self.gds_check_cardinality_(self.instances, "instances", required=True)
+        # validate simple type children
+        self.gds_validate_defined_ST_(self.validate_Notes, self.notes, "notes")
+        self.gds_check_cardinality_(self.notes, "notes", min_occurs=0, max_occurs=1)
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.q10_settings, "q10_settings", min_occurs=0, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.forward_rate, "forward_rate", min_occurs=1, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.reverse_rate, "reverse_rate", min_occurs=1, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.steady_state, "steady_state", min_occurs=1, max_occurs=1
+        )
+        if recursive:
+            if self.q10_settings is not None:
+                self.q10_settings.validate_(gds_collector, recursive=True)
+            if self.forward_rate is not None:
+                self.forward_rate.validate_(gds_collector, recursive=True)
+            if self.reverse_rate is not None:
+                self.reverse_rate.validate_(gds_collector, recursive=True)
+            if self.steady_state is not None:
+                self.steady_state.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -29856,6 +32234,41 @@ class GateHHRatesTau(Base):
                 name_="timeCourse",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_PositiveInteger, self.instances, "instances"
+        )
+        self.gds_check_cardinality_(self.instances, "instances", required=True)
+        # validate simple type children
+        self.gds_validate_defined_ST_(self.validate_Notes, self.notes, "notes")
+        self.gds_check_cardinality_(self.notes, "notes", min_occurs=0, max_occurs=1)
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.q10_settings, "q10_settings", min_occurs=0, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.forward_rate, "forward_rate", min_occurs=1, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.reverse_rate, "reverse_rate", min_occurs=1, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.time_course, "time_course", min_occurs=1, max_occurs=1
+        )
+        if recursive:
+            if self.q10_settings is not None:
+                self.q10_settings.validate_(gds_collector, recursive=True)
+            if self.forward_rate is not None:
+                self.forward_rate.validate_(gds_collector, recursive=True)
+            if self.reverse_rate is not None:
+                self.reverse_rate.validate_(gds_collector, recursive=True)
+            if self.time_course is not None:
+                self.time_course.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -30276,6 +32689,46 @@ class GateHHRatesTauInf(Base):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_PositiveInteger, self.instances, "instances"
+        )
+        self.gds_check_cardinality_(self.instances, "instances", required=True)
+        # validate simple type children
+        self.gds_validate_defined_ST_(self.validate_Notes, self.notes, "notes")
+        self.gds_check_cardinality_(self.notes, "notes", min_occurs=0, max_occurs=1)
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.q10_settings, "q10_settings", min_occurs=0, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.forward_rate, "forward_rate", min_occurs=1, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.reverse_rate, "reverse_rate", min_occurs=1, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.time_course, "time_course", min_occurs=1, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.steady_state, "steady_state", min_occurs=1, max_occurs=1
+        )
+        if recursive:
+            if self.q10_settings is not None:
+                self.q10_settings.validate_(gds_collector, recursive=True)
+            if self.forward_rate is not None:
+                self.forward_rate.validate_(gds_collector, recursive=True)
+            if self.reverse_rate is not None:
+                self.reverse_rate.validate_(gds_collector, recursive=True)
+            if self.time_course is not None:
+                self.time_course.validate_(gds_collector, recursive=True)
+            if self.steady_state is not None:
+                self.steady_state.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -30640,6 +33093,36 @@ class GateHHTauInf(Base):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_PositiveInteger, self.instances, "instances"
+        )
+        self.gds_check_cardinality_(self.instances, "instances", required=True)
+        # validate simple type children
+        self.gds_validate_defined_ST_(self.validate_Notes, self.notes, "notes")
+        self.gds_check_cardinality_(self.notes, "notes", min_occurs=0, max_occurs=1)
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.q10_settings, "q10_settings", min_occurs=0, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.time_course, "time_course", min_occurs=1, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.steady_state, "steady_state", min_occurs=1, max_occurs=1
+        )
+        if recursive:
+            if self.q10_settings is not None:
+                self.q10_settings.validate_(gds_collector, recursive=True)
+            if self.time_course is not None:
+                self.time_course.validate_(gds_collector, recursive=True)
+            if self.steady_state is not None:
+                self.steady_state.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -30993,6 +33476,36 @@ class GateHHRates(Base):
                 name_="reverseRate",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_PositiveInteger, self.instances, "instances"
+        )
+        self.gds_check_cardinality_(self.instances, "instances", required=True)
+        # validate simple type children
+        self.gds_validate_defined_ST_(self.validate_Notes, self.notes, "notes")
+        self.gds_check_cardinality_(self.notes, "notes", min_occurs=0, max_occurs=1)
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.q10_settings, "q10_settings", min_occurs=0, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.forward_rate, "forward_rate", min_occurs=1, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.reverse_rate, "reverse_rate", min_occurs=1, max_occurs=1
+        )
+        if recursive:
+            if self.q10_settings is not None:
+                self.q10_settings.validate_(gds_collector, recursive=True)
+            if self.forward_rate is not None:
+                self.forward_rate.validate_(gds_collector, recursive=True)
+            if self.reverse_rate is not None:
+                self.reverse_rate.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -31491,6 +34004,53 @@ class GateHHUndetermined(Base):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_PositiveInteger, self.instances, "instances"
+        )
+        self.gds_check_cardinality_(self.instances, "instances", required=True)
+        self.gds_validate_defined_ST_(self.validate_gateTypes, self.type, "type")
+        self.gds_check_cardinality_(self.type, "type", required=True)
+        # validate simple type children
+        self.gds_validate_defined_ST_(self.validate_Notes, self.notes, "notes")
+        self.gds_check_cardinality_(self.notes, "notes", min_occurs=0, max_occurs=1)
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.q10_settings, "q10_settings", min_occurs=0, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.forward_rate, "forward_rate", min_occurs=0, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.reverse_rate, "reverse_rate", min_occurs=0, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.time_course, "time_course", min_occurs=0, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.steady_state, "steady_state", min_occurs=0, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.sub_gates, "sub_gates", min_occurs=0, max_occurs=9999999
+        )
+        if recursive:
+            if self.q10_settings is not None:
+                self.q10_settings.validate_(gds_collector, recursive=True)
+            if self.forward_rate is not None:
+                self.forward_rate.validate_(gds_collector, recursive=True)
+            if self.reverse_rate is not None:
+                self.reverse_rate.validate_(gds_collector, recursive=True)
+            if self.time_course is not None:
+                self.time_course.validate_(gds_collector, recursive=True)
+            if self.steady_state is not None:
+                self.steady_state.validate_(gds_collector, recursive=True)
+            for item in self.sub_gates:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -31963,6 +34523,48 @@ class GateKS(Base):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_PositiveInteger, self.instances, "instances"
+        )
+        self.gds_check_cardinality_(self.instances, "instances", required=True)
+        # validate simple type children
+        self.gds_validate_defined_ST_(self.validate_Notes, self.notes, "notes")
+        self.gds_check_cardinality_(self.notes, "notes", min_occurs=0, max_occurs=1)
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.q10_settings, "q10_settings", min_occurs=0, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.closed_states, "closed_states", min_occurs=1, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.open_states, "open_states", min_occurs=1, max_occurs=9999999
+        )
+        # cardinality check omitted for choice item forward_transition
+        # self.gds_check_cardinality_(self.forward_transition, 'forward_transition', min_occurs=1, max_occurs=9999999)
+        # cardinality check omitted for choice item reverse_transition
+        # self.gds_check_cardinality_(self.reverse_transition, 'reverse_transition', min_occurs=1, max_occurs=9999999)
+        # cardinality check omitted for choice item tau_inf_transition
+        # self.gds_check_cardinality_(self.tau_inf_transition, 'tau_inf_transition', min_occurs=1, max_occurs=9999999)
+        if recursive:
+            if self.q10_settings is not None:
+                self.q10_settings.validate_(gds_collector, recursive=True)
+            for item in self.closed_states:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.open_states:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.forward_transition:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.reverse_transition:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.tau_inf_transition:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -32280,6 +34882,29 @@ class TauInfTransition(Base):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.from_, "from_")
+        self.gds_check_cardinality_(self.from_, "from_", required=True)
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.to, "to")
+        self.gds_check_cardinality_(self.to, "to", required=True)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.steady_state, "steady_state", min_occurs=1, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.time_course, "time_course", min_occurs=1, max_occurs=1
+        )
+        if recursive:
+            if self.steady_state is not None:
+                self.steady_state.validate_(gds_collector, recursive=True)
+            if self.time_course is not None:
+                self.time_course.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -32534,6 +35159,20 @@ class ReverseTransition(Base):
                 outfile.write(str(obj_))
                 outfile.write("\n")
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.from_, "from_")
+        self.gds_check_cardinality_(self.from_, "from_", required=True)
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.to, "to")
+        self.gds_check_cardinality_(self.to, "to", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -32780,6 +35419,20 @@ class ForwardTransition(Base):
                 outfile.write(str(obj_))
                 outfile.write("\n")
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.from_, "from_")
+        self.gds_check_cardinality_(self.from_, "from_", required=True)
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.to, "to")
+        self.gds_check_cardinality_(self.to, "to", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -32930,6 +35583,16 @@ class OpenState(Base):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -33073,6 +35736,16 @@ class ClosedState(Base):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -33342,6 +36015,28 @@ class Q10ConductanceScaling(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_none, self.q10_factor, "q10_factor"
+        )
+        self.gds_check_cardinality_(self.q10_factor, "q10_factor", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_temperature,
+            self.experimental_temp,
+            "experimental_temp",
+        )
+        self.gds_check_cardinality_(
+            self.experimental_temp, "experimental_temp", required=True
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -33705,6 +36400,30 @@ class IonChannelKS(Standalone):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.species, "species")
+        self.gds_check_cardinality_(self.species, "species", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductance, self.conductance, "conductance"
+        )
+        self.gds_check_cardinality_(self.conductance, "conductance", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_NeuroLexId, self.neuro_lex_id, "neuro_lex_id"
+        )
+        self.gds_check_cardinality_(self.neuro_lex_id, "neuro_lex_id", required=False)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.gate_kses, "gate_kses", min_occurs=0, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.gate_kses:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -33990,6 +36709,27 @@ class IonChannelScalable(Standalone):
                 name_="q10ConductanceScaling",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NeuroLexId, self.neuro_lex_id, "neuro_lex_id"
+        )
+        self.gds_check_cardinality_(self.neuro_lex_id, "neuro_lex_id", required=False)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.q10_conductance_scalings,
+            "q10_conductance_scalings",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        if recursive:
+            for item in self.q10_conductance_scalings:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -36439,6 +39179,449 @@ class NeuroMLDocument(Standalone):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.includes, "includes", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.extracellular_properties,
+            "extracellular_properties",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.intracellular_properties,
+            "intracellular_properties",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.morphology, "morphology", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.ion_channel, "ion_channel", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.ion_channel_hhs, "ion_channel_hhs", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.ion_channel_v_shifts,
+            "ion_channel_v_shifts",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.ion_channel_kses, "ion_channel_kses", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.decaying_pool_concentration_models,
+            "decaying_pool_concentration_models",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.fixed_factor_concentration_models,
+            "fixed_factor_concentration_models",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.alpha_current_synapses,
+            "alpha_current_synapses",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.alpha_synapses, "alpha_synapses", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.exp_one_synapses, "exp_one_synapses", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.exp_two_synapses, "exp_two_synapses", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.exp_three_synapses,
+            "exp_three_synapses",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.blocking_plastic_synapses,
+            "blocking_plastic_synapses",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.double_synapses, "double_synapses", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.gap_junctions, "gap_junctions", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.silent_synapses, "silent_synapses", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.linear_graded_synapses,
+            "linear_graded_synapses",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.graded_synapses, "graded_synapses", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.biophysical_properties,
+            "biophysical_properties",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.cells, "cells", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.cell2_ca_poolses, "cell2_ca_poolses", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.base_cells, "base_cells", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.iaf_tau_cells, "iaf_tau_cells", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.iaf_tau_ref_cells,
+            "iaf_tau_ref_cells",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.iaf_cells, "iaf_cells", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.iaf_ref_cells, "iaf_ref_cells", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.izhikevich_cells, "izhikevich_cells", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.izhikevich2007_cells,
+            "izhikevich2007_cells",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.ad_ex_ia_f_cells, "ad_ex_ia_f_cells", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.fitz_hugh_nagumo_cells,
+            "fitz_hugh_nagumo_cells",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.fitz_hugh_nagumo1969_cells,
+            "fitz_hugh_nagumo1969_cells",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.pinsky_rinzel_ca3_cells,
+            "pinsky_rinzel_ca3_cells",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.pulse_generators, "pulse_generators", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.pulse_generator_dls,
+            "pulse_generator_dls",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.sine_generators, "sine_generators", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.sine_generator_dls,
+            "sine_generator_dls",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.ramp_generators, "ramp_generators", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.ramp_generator_dls,
+            "ramp_generator_dls",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.compound_inputs, "compound_inputs", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.compound_input_dls,
+            "compound_input_dls",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.voltage_clamps, "voltage_clamps", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.voltage_clamp_triples,
+            "voltage_clamp_triples",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.spike_arrays, "spike_arrays", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.timed_synaptic_inputs,
+            "timed_synaptic_inputs",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.spike_generators, "spike_generators", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.spike_generator_randoms,
+            "spike_generator_randoms",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.spike_generator_poissons,
+            "spike_generator_poissons",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.spike_generator_ref_poissons,
+            "spike_generator_ref_poissons",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.poisson_firing_synapses,
+            "poisson_firing_synapses",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.transient_poisson_firing_synapses,
+            "transient_poisson_firing_synapses",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.IF_curr_alpha, "IF_curr_alpha", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.IF_curr_exp, "IF_curr_exp", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.IF_cond_alpha, "IF_cond_alpha", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.IF_cond_exp, "IF_cond_exp", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.EIF_cond_exp_isfa_ista,
+            "EIF_cond_exp_isfa_ista",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.EIF_cond_alpha_isfa_ista,
+            "EIF_cond_alpha_isfa_ista",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.HH_cond_exp, "HH_cond_exp", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.exp_cond_synapses,
+            "exp_cond_synapses",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.alpha_cond_synapses,
+            "alpha_cond_synapses",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.exp_curr_synapses,
+            "exp_curr_synapses",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.alpha_curr_synapses,
+            "alpha_curr_synapses",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.SpikeSourcePoisson,
+            "SpikeSourcePoisson",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.networks, "networks", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.ComponentType, "ComponentType", min_occurs=0, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.includes:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.extracellular_properties:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.intracellular_properties:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.morphology:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.ion_channel:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.ion_channel_hhs:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.ion_channel_v_shifts:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.ion_channel_kses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.decaying_pool_concentration_models:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.fixed_factor_concentration_models:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.alpha_current_synapses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.alpha_synapses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.exp_one_synapses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.exp_two_synapses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.exp_three_synapses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.blocking_plastic_synapses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.double_synapses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.gap_junctions:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.silent_synapses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.linear_graded_synapses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.graded_synapses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.biophysical_properties:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.cells:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.cell2_ca_poolses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.base_cells:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.iaf_tau_cells:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.iaf_tau_ref_cells:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.iaf_cells:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.iaf_ref_cells:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.izhikevich_cells:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.izhikevich2007_cells:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.ad_ex_ia_f_cells:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.fitz_hugh_nagumo_cells:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.fitz_hugh_nagumo1969_cells:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.pinsky_rinzel_ca3_cells:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.pulse_generators:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.pulse_generator_dls:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.sine_generators:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.sine_generator_dls:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.ramp_generators:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.ramp_generator_dls:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.compound_inputs:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.compound_input_dls:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.voltage_clamps:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.voltage_clamp_triples:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.spike_arrays:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.timed_synaptic_inputs:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.spike_generators:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.spike_generator_randoms:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.spike_generator_poissons:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.spike_generator_ref_poissons:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.poisson_firing_synapses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.transient_poisson_firing_synapses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.IF_curr_alpha:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.IF_curr_exp:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.IF_cond_alpha:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.IF_cond_exp:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.EIF_cond_exp_isfa_ista:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.EIF_cond_alpha_isfa_ista:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.HH_cond_exp:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.exp_cond_synapses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.alpha_cond_synapses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.exp_curr_synapses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.alpha_curr_synapses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.SpikeSourcePoisson:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.networks:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.ComponentType:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -37314,6 +40497,30 @@ class NamedDimensionalVariable(BaseWithoutId):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.name, "name")
+        self.gds_check_cardinality_(self.name, "name", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.dimension, "dimension"
+        )
+        self.gds_check_cardinality_(self.dimension, "dimension", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.description, "description"
+        )
+        self.gds_check_cardinality_(self.description, "description", required=False)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.exposure, "exposure"
+        )
+        self.gds_check_cardinality_(self.exposure, "exposure", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -37558,6 +40765,26 @@ class NamedDimensionalType(BaseWithoutId):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.name, "name")
+        self.gds_check_cardinality_(self.name, "name", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.dimension, "dimension"
+        )
+        self.gds_check_cardinality_(self.dimension, "dimension", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.description, "description"
+        )
+        self.gds_check_cardinality_(self.description, "description", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -37766,6 +40993,26 @@ class Exposure(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.name, "name")
+        self.gds_check_cardinality_(self.name, "name", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.dimension, "dimension"
+        )
+        self.gds_check_cardinality_(self.dimension, "dimension", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.description, "description"
+        )
+        self.gds_check_cardinality_(self.description, "description", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -38020,6 +41267,28 @@ class Constant(BaseWithoutId):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.name, "name")
+        self.gds_check_cardinality_(self.name, "name", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.dimension, "dimension"
+        )
+        self.gds_check_cardinality_(self.dimension, "dimension", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity, self.value, "value")
+        self.gds_check_cardinality_(self.value, "value", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.description, "description"
+        )
+        self.gds_check_cardinality_(self.description, "description", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -38193,6 +41462,16 @@ class Annotation(BaseWithoutId):
                 outfile.write(str(obj_))
                 outfile.write("\n")
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -38356,6 +41635,20 @@ class Property(BaseWithoutId):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.tag, "tag")
+        self.gds_check_cardinality_(self.tag, "tag", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.value, "value")
+        self.gds_check_cardinality_(self.value, "value", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -38554,6 +41847,18 @@ class BasePynnSynapse(BaseSynapse):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.tau_syn, "tau_syn")
+        self.gds_check_cardinality_(self.tau_syn, "tau_syn", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -38802,6 +42107,32 @@ class basePyNNCell(BaseCell):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.cm, "cm")
+        self.gds_check_cardinality_(self.cm, "cm", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_float, self.i_offset, "i_offset"
+        )
+        self.gds_check_cardinality_(self.i_offset, "i_offset", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_float, self.tau_syn_E, "tau_syn_E"
+        )
+        self.gds_check_cardinality_(self.tau_syn_E, "tau_syn_E", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_float, self.tau_syn_I, "tau_syn_I"
+        )
+        self.gds_check_cardinality_(self.tau_syn_I, "tau_syn_I", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.v_init, "v_init")
+        self.gds_check_cardinality_(self.v_init, "v_init", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -38990,6 +42321,18 @@ class InputW(Input):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.weight, "weight")
+        self.gds_check_cardinality_(self.weight, "weight", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -39284,6 +42627,39 @@ class ContinuousProjection(BaseProjection):
                 name_="continuousConnectionInstanceW",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.continuous_connections,
+            "continuous_connections",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.continuous_connection_instances,
+            "continuous_connection_instances",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.continuous_connection_instance_ws,
+            "continuous_connection_instance_ws",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        if recursive:
+            for item in self.continuous_connections:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.continuous_connection_instances:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.continuous_connection_instance_ws:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -39661,6 +43037,39 @@ class ElectricalProjection(BaseProjection):
                 name_="electricalConnectionInstanceW",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.electrical_connections,
+            "electrical_connections",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.electrical_connection_instances,
+            "electrical_connection_instances",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
+            self.electrical_connection_instance_ws,
+            "electrical_connection_instance_ws",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        if recursive:
+            for item in self.electrical_connections:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.electrical_connection_instances:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.electrical_connection_instance_ws:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -40100,6 +43509,44 @@ class BaseConnectionNewFormat(BaseConnection):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.pre_cell, "pre_cell"
+        )
+        self.gds_check_cardinality_(self.pre_cell, "pre_cell", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_NonNegativeInteger, self.pre_segment, "pre_segment"
+        )
+        self.gds_check_cardinality_(self.pre_segment, "pre_segment", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_ZeroToOne, self.pre_fraction_along, "pre_fraction_along"
+        )
+        self.gds_check_cardinality_(
+            self.pre_fraction_along, "pre_fraction_along", required=False
+        )
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.post_cell, "post_cell"
+        )
+        self.gds_check_cardinality_(self.post_cell, "post_cell", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_NonNegativeInteger, self.post_segment, "post_segment"
+        )
+        self.gds_check_cardinality_(self.post_segment, "post_segment", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_ZeroToOne, self.post_fraction_along, "post_fraction_along"
+        )
+        self.gds_check_cardinality_(
+            self.post_fraction_along, "post_fraction_along", required=False
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -40490,6 +43937,48 @@ class BaseConnectionOldFormat(BaseConnection):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.pre_cell_id, "pre_cell_id"
+        )
+        self.gds_check_cardinality_(self.pre_cell_id, "pre_cell_id", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_NonNegativeInteger, self.pre_segment_id, "pre_segment_id"
+        )
+        self.gds_check_cardinality_(
+            self.pre_segment_id, "pre_segment_id", required=False
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_ZeroToOne, self.pre_fraction_along, "pre_fraction_along"
+        )
+        self.gds_check_cardinality_(
+            self.pre_fraction_along, "pre_fraction_along", required=False
+        )
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.post_cell_id, "post_cell_id"
+        )
+        self.gds_check_cardinality_(self.post_cell_id, "post_cell_id", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_NonNegativeInteger, self.post_segment_id, "post_segment_id"
+        )
+        self.gds_check_cardinality_(
+            self.post_segment_id, "post_segment_id", required=False
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_ZeroToOne, self.post_fraction_along, "post_fraction_along"
+        )
+        self.gds_check_cardinality_(
+            self.post_fraction_along, "post_fraction_along", required=False
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -40799,6 +44288,27 @@ class Projection(BaseProjection):
                 name_="connectionWD",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.synapse, "synapse")
+        self.gds_check_cardinality_(self.synapse, "synapse", required=True)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.connections, "connections", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.connection_wds, "connection_wds", min_occurs=0, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.connections:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.connection_wds:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -41138,6 +44648,20 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.minimum_isi, "minimum_isi"
+        )
+        self.gds_check_cardinality_(self.minimum_isi, "minimum_isi", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -41306,6 +44830,16 @@ class IntracellularProperties2CaPools(IntracellularProperties):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -41499,6 +45033,18 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.type, "type")
+        self.gds_check_cardinality_(self.type, "type", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -41678,6 +45224,16 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -41918,6 +45474,20 @@ class ChannelDensityVShift(ChannelDensity):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.v_shift, "v_shift"
+        )
+        self.gds_check_cardinality_(self.v_shift, "v_shift", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -42146,6 +45716,23 @@ class MembraneProperties2CaPools(MembraneProperties):
                 name_="channelDensityNernstCa2",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.channel_density_nernst_ca2s,
+            "channel_density_nernst_ca2s",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        if recursive:
+            for item in self.channel_density_nernst_ca2s:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -42466,6 +46053,44 @@ class Cell(BaseCell):
                 name_="biophysicalProperties",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.morphology_attr, "morphology_attr"
+        )
+        self.gds_check_cardinality_(
+            self.morphology_attr, "morphology_attr", required=False
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId,
+            self.biophysical_properties_attr,
+            "biophysical_properties_attr",
+        )
+        self.gds_check_cardinality_(
+            self.biophysical_properties_attr,
+            "biophysical_properties_attr",
+            required=False,
+        )
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.morphology, "morphology", min_occurs=0, max_occurs=1
+        )
+        self.gds_check_cardinality_(
+            self.biophysical_properties,
+            "biophysical_properties",
+            min_occurs=0,
+            max_occurs=1,
+        )
+        if recursive:
+            if self.morphology is not None:
+                self.morphology.validate_(gds_collector, recursive=True)
+            if self.biophysical_properties is not None:
+                self.biophysical_properties.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -43673,6 +47298,96 @@ class PinskyRinzelCA3Cell(BaseCell):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_currentDensity, self.i_soma, "i_soma"
+        )
+        self.gds_check_cardinality_(self.i_soma, "i_soma", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_currentDensity, self.i_dend, "i_dend"
+        )
+        self.gds_check_cardinality_(self.i_dend, "i_dend", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductanceDensity, self.gc, "gc"
+        )
+        self.gds_check_cardinality_(self.gc, "gc", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductanceDensity, self.g_ls, "g_ls"
+        )
+        self.gds_check_cardinality_(self.g_ls, "g_ls", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductanceDensity, self.g_ld, "g_ld"
+        )
+        self.gds_check_cardinality_(self.g_ld, "g_ld", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductanceDensity, self.g_na, "g_na"
+        )
+        self.gds_check_cardinality_(self.g_na, "g_na", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductanceDensity, self.g_kdr, "g_kdr"
+        )
+        self.gds_check_cardinality_(self.g_kdr, "g_kdr", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductanceDensity, self.g_ca, "g_ca"
+        )
+        self.gds_check_cardinality_(self.g_ca, "g_ca", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductanceDensity, self.g_kahp, "g_kahp"
+        )
+        self.gds_check_cardinality_(self.g_kahp, "g_kahp", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductanceDensity, self.g_kc, "g_kc"
+        )
+        self.gds_check_cardinality_(self.g_kc, "g_kc", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductanceDensity, self.g_nmda, "g_nmda"
+        )
+        self.gds_check_cardinality_(self.g_nmda, "g_nmda", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductanceDensity, self.g_ampa, "g_ampa"
+        )
+        self.gds_check_cardinality_(self.g_ampa, "g_ampa", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.e_na, "e_na"
+        )
+        self.gds_check_cardinality_(self.e_na, "e_na", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.e_ca, "e_ca"
+        )
+        self.gds_check_cardinality_(self.e_ca, "e_ca", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.e_k, "e_k"
+        )
+        self.gds_check_cardinality_(self.e_k, "e_k", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.e_l, "e_l"
+        )
+        self.gds_check_cardinality_(self.e_l, "e_l", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.qd0, "qd0")
+        self.gds_check_cardinality_(self.qd0, "qd0", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.pp, "pp")
+        self.gds_check_cardinality_(self.pp, "pp", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_none, self.alphac, "alphac"
+        )
+        self.gds_check_cardinality_(self.alphac, "alphac", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_none, self.betac, "betac"
+        )
+        self.gds_check_cardinality_(self.betac, "betac", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_specificCapacitance, self.cm, "cm"
+        )
+        self.gds_check_cardinality_(self.cm, "cm", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -44113,6 +47828,28 @@ class FitzHughNagumo1969Cell(BaseCell):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.a, "a")
+        self.gds_check_cardinality_(self.a, "a", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.b, "b")
+        self.gds_check_cardinality_(self.b, "b", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.I, "I")
+        self.gds_check_cardinality_(self.I, "I", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.phi, "phi")
+        self.gds_check_cardinality_(self.phi, "phi", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.V0, "V0")
+        self.gds_check_cardinality_(self.V0, "V0", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.W0, "W0")
+        self.gds_check_cardinality_(self.W0, "W0", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -44360,6 +48097,18 @@ class FitzHughNagumoCell(BaseCell):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.I, "I")
+        self.gds_check_cardinality_(self.I, "I", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -44600,6 +48349,20 @@ class BaseCellMembPotCap(BaseCell):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_capacitance, self.C, "C"
+        )
+        self.gds_check_cardinality_(self.C, "C", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -44936,6 +48699,30 @@ class IzhikevichCell(BaseCell):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_voltage, self.v0, "v0")
+        self.gds_check_cardinality_(self.v0, "v0", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.thresh, "thresh"
+        )
+        self.gds_check_cardinality_(self.thresh, "thresh", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.a, "a")
+        self.gds_check_cardinality_(self.a, "a", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.b, "b")
+        self.gds_check_cardinality_(self.b, "b", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.c, "c")
+        self.gds_check_cardinality_(self.c, "c", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.d, "d")
+        self.gds_check_cardinality_(self.d, "d", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -45352,6 +49139,40 @@ class IafCell(BaseCell):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.leak_reversal, "leak_reversal"
+        )
+        self.gds_check_cardinality_(self.leak_reversal, "leak_reversal", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.thresh, "thresh"
+        )
+        self.gds_check_cardinality_(self.thresh, "thresh", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.reset, "reset"
+        )
+        self.gds_check_cardinality_(self.reset, "reset", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_capacitance, self.C, "C"
+        )
+        self.gds_check_cardinality_(self.C, "C", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductance,
+            self.leak_conductance,
+            "leak_conductance",
+        )
+        self.gds_check_cardinality_(
+            self.leak_conductance, "leak_conductance", required=True
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -45711,6 +49532,30 @@ class IafTauCell(BaseCell):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.leak_reversal, "leak_reversal"
+        )
+        self.gds_check_cardinality_(self.leak_reversal, "leak_reversal", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.thresh, "thresh"
+        )
+        self.gds_check_cardinality_(self.thresh, "thresh", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.reset, "reset"
+        )
+        self.gds_check_cardinality_(self.reset, "reset", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_time, self.tau, "tau")
+        self.gds_check_cardinality_(self.tau, "tau", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -46093,6 +49938,34 @@ class GradedSynapse(BaseSynapse):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductance, self.conductance, "conductance"
+        )
+        self.gds_check_cardinality_(self.conductance, "conductance", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.delta, "delta"
+        )
+        self.gds_check_cardinality_(self.delta, "delta", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.Vth, "Vth"
+        )
+        self.gds_check_cardinality_(self.Vth, "Vth", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_pertime, self.k, "k")
+        self.gds_check_cardinality_(self.k, "k", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.erev, "erev"
+        )
+        self.gds_check_cardinality_(self.erev, "erev", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -46349,6 +50222,20 @@ class LinearGradedSynapse(BaseSynapse):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductance, self.conductance, "conductance"
+        )
+        self.gds_check_cardinality_(self.conductance, "conductance", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -46508,6 +50395,16 @@ class SilentSynapse(BaseSynapse):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -46720,6 +50617,20 @@ class GapJunction(BaseSynapse):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductance, self.conductance, "conductance"
+        )
+        self.gds_check_cardinality_(self.conductance, "conductance", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -46908,6 +50819,16 @@ class BaseCurrentBasedSynapse(BaseSynapse):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -47098,6 +51019,16 @@ class BaseVoltageDepSynapse(BaseSynapse):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -47701,6 +51632,55 @@ class IonChannel(IonChannelScalable):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.species, "species")
+        self.gds_check_cardinality_(self.species, "species", required=False)
+        self.gds_validate_defined_ST_(self.validate_channelTypes, self.type, "type")
+        self.gds_check_cardinality_(self.type, "type", required=False)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductance, self.conductance, "conductance"
+        )
+        self.gds_check_cardinality_(self.conductance, "conductance", required=False)
+        # validate simple type children
+        # validate complex type children
+        # cardinality check omitted for choice item gates
+        # self.gds_check_cardinality_(self.gates, 'gates', min_occurs=0, max_occurs=9999999)
+        # cardinality check omitted for choice item gate_hh_rates
+        # self.gds_check_cardinality_(self.gate_hh_rates, 'gate_hh_rates', min_occurs=0, max_occurs=9999999)
+        # cardinality check omitted for choice item gate_h_hrates_taus
+        # self.gds_check_cardinality_(self.gate_h_hrates_taus, 'gate_h_hrates_taus', min_occurs=0, max_occurs=9999999)
+        # cardinality check omitted for choice item gate_hh_tau_infs
+        # self.gds_check_cardinality_(self.gate_hh_tau_infs, 'gate_hh_tau_infs', min_occurs=0, max_occurs=9999999)
+        # cardinality check omitted for choice item gate_h_hrates_infs
+        # self.gds_check_cardinality_(self.gate_h_hrates_infs, 'gate_h_hrates_infs', min_occurs=0, max_occurs=9999999)
+        # cardinality check omitted for choice item gate_h_hrates_tau_infs
+        # self.gds_check_cardinality_(self.gate_h_hrates_tau_infs, 'gate_h_hrates_tau_infs', min_occurs=0, max_occurs=9999999)
+        # cardinality check omitted for choice item gate_hh_instantaneouses
+        # self.gds_check_cardinality_(self.gate_hh_instantaneouses, 'gate_hh_instantaneouses', min_occurs=0, max_occurs=9999999)
+        # cardinality check omitted for choice item gate_fractionals
+        # self.gds_check_cardinality_(self.gate_fractionals, 'gate_fractionals', min_occurs=0, max_occurs=9999999)
+        if recursive:
+            for item in self.gates:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.gate_hh_rates:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.gate_h_hrates_taus:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.gate_hh_tau_infs:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.gate_h_hrates_infs:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.gate_h_hrates_tau_infs:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.gate_hh_instantaneouses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.gate_fractionals:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -47958,6 +51938,18 @@ class ConditionalDerivedVariable(NamedDimensionalVariable):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(self.Case, "Case", min_occurs=1, max_occurs=9999999)
+        if recursive:
+            for item in self.Case:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -48112,6 +52104,16 @@ class StateVariable(NamedDimensionalVariable):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -48295,6 +52297,20 @@ class DerivedVariable(NamedDimensionalVariable):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.value, "value")
+        self.gds_check_cardinality_(self.value, "value", required=False)
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.select, "select")
+        self.gds_check_cardinality_(self.select, "select", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -48448,6 +52464,16 @@ class Requirement(NamedDimensionalType):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -48612,6 +52638,20 @@ class LEMS_Property(NamedDimensionalType):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_double, self.default_value, "default_value"
+        )
+        self.gds_check_cardinality_(self.default_value, "default_value", required=False)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -48757,6 +52797,16 @@ class Parameter(NamedDimensionalType):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -48923,6 +52973,16 @@ class AlphaCurrSynapse(BasePynnSynapse):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -49079,6 +53139,16 @@ class ExpCurrSynapse(BasePynnSynapse):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -49257,6 +53327,18 @@ class AlphaCondSynapse(BasePynnSynapse):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.e_rev, "e_rev")
+        self.gds_check_cardinality_(self.e_rev, "e_rev", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -49430,6 +53512,18 @@ class ExpCondSynapse(BasePynnSynapse):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.e_rev, "e_rev")
+        self.gds_check_cardinality_(self.e_rev, "e_rev", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -49737,6 +53831,40 @@ class HH_cond_exp(basePyNNCell):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_float, self.v_offset, "v_offset"
+        )
+        self.gds_check_cardinality_(self.v_offset, "v_offset", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.e_rev_E, "e_rev_E")
+        self.gds_check_cardinality_(self.e_rev_E, "e_rev_E", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.e_rev_I, "e_rev_I")
+        self.gds_check_cardinality_(self.e_rev_I, "e_rev_I", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.e_rev_K, "e_rev_K")
+        self.gds_check_cardinality_(self.e_rev_K, "e_rev_K", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_float, self.e_rev_Na, "e_rev_Na"
+        )
+        self.gds_check_cardinality_(self.e_rev_Na, "e_rev_Na", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_float, self.e_rev_leak, "e_rev_leak"
+        )
+        self.gds_check_cardinality_(self.e_rev_leak, "e_rev_leak", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.g_leak, "g_leak")
+        self.gds_check_cardinality_(self.g_leak, "g_leak", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.gbar_K, "gbar_K")
+        self.gds_check_cardinality_(self.gbar_K, "gbar_K", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.gbar_Na, "gbar_Na")
+        self.gds_check_cardinality_(self.gbar_Na, "gbar_Na", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -50042,6 +54170,30 @@ class basePyNNIaFCell(basePyNNCell):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.tau_m, "tau_m")
+        self.gds_check_cardinality_(self.tau_m, "tau_m", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_float, self.tau_refrac, "tau_refrac"
+        )
+        self.gds_check_cardinality_(self.tau_refrac, "tau_refrac", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.v_reset, "v_reset")
+        self.gds_check_cardinality_(self.v_reset, "v_reset", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.v_rest, "v_rest")
+        self.gds_check_cardinality_(self.v_rest, "v_rest", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_float, self.v_thresh, "v_thresh"
+        )
+        self.gds_check_cardinality_(self.v_thresh, "v_thresh", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -50331,6 +54483,26 @@ class ContinuousConnection(BaseConnectionNewFormat):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.pre_component, "pre_component"
+        )
+        self.gds_check_cardinality_(self.pre_component, "pre_component", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.post_component, "post_component"
+        )
+        self.gds_check_cardinality_(
+            self.post_component, "post_component", required=True
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -50670,6 +54842,18 @@ class ElectricalConnection(BaseConnectionNewFormat):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.synapse, "synapse")
+        self.gds_check_cardinality_(self.synapse, "synapse", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -50996,6 +55180,22 @@ class ConnectionWD(BaseConnectionOldFormat):
         )
         pass
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.weight, "weight")
+        self.gds_check_cardinality_(self.weight, "weight", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.delay, "delay"
+        )
+        self.gds_check_cardinality_(self.delay, "delay", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -51278,6 +55478,16 @@ class Connection(BaseConnectionOldFormat):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -51568,6 +55778,25 @@ class Cell2CaPools(Cell):
                 name_="biophysicalProperties2CaPools",
                 pretty_print=pretty_print,
             )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.biophysical_properties2_ca_pools,
+            "biophysical_properties2_ca_pools",
+            min_occurs=0,
+            max_occurs=1,
+        )
+        if recursive:
+            if self.biophysical_properties2_ca_pools is not None:
+                self.biophysical_properties2_ca_pools.validate_(
+                    gds_collector, recursive=True
+                )
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -52052,6 +56281,50 @@ class AdExIaFCell(BaseCellMembPotCap):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductance, self.g_l, "g_l"
+        )
+        self.gds_check_cardinality_(self.g_l, "g_l", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_voltage, self.EL, "EL")
+        self.gds_check_cardinality_(self.EL, "EL", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.reset, "reset"
+        )
+        self.gds_check_cardinality_(self.reset, "reset", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_voltage, self.VT, "VT")
+        self.gds_check_cardinality_(self.VT, "VT", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.thresh, "thresh"
+        )
+        self.gds_check_cardinality_(self.thresh, "thresh", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.del_t, "del_t"
+        )
+        self.gds_check_cardinality_(self.del_t, "del_t", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.tauw, "tauw"
+        )
+        self.gds_check_cardinality_(self.tauw, "tauw", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.refract, "refract"
+        )
+        self.gds_check_cardinality_(self.refract, "refract", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductance, self.a, "a"
+        )
+        self.gds_check_cardinality_(self.a, "a", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_current, self.b, "b")
+        self.gds_check_cardinality_(self.b, "b", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -52619,6 +56892,40 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_voltage, self.v0, "v0")
+        self.gds_check_cardinality_(self.v0, "v0", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductancePerVoltage, self.k, "k"
+        )
+        self.gds_check_cardinality_(self.k, "k", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_voltage, self.vr, "vr")
+        self.gds_check_cardinality_(self.vr, "vr", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_voltage, self.vt, "vt")
+        self.gds_check_cardinality_(self.vt, "vt", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.vpeak, "vpeak"
+        )
+        self.gds_check_cardinality_(self.vpeak, "vpeak", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_pertime, self.a, "a")
+        self.gds_check_cardinality_(self.a, "a", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductance, self.b, "b"
+        )
+        self.gds_check_cardinality_(self.b, "b", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_voltage, self.c, "c")
+        self.gds_check_cardinality_(self.c, "c", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_current, self.d, "d")
+        self.gds_check_cardinality_(self.d, "d", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -52910,6 +57217,20 @@ class IafRefCell(IafCell):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.refract, "refract"
+        )
+        self.gds_check_cardinality_(self.refract, "refract", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -53145,6 +57466,20 @@ class IafTauRefCell(IafTauCell):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.refract, "refract"
+        )
+        self.gds_check_cardinality_(self.refract, "refract", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -53410,6 +57745,28 @@ class DoubleSynapse(BaseVoltageDepSynapse):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.synapse1, "synapse1")
+        self.gds_check_cardinality_(self.synapse1, "synapse1", required=True)
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.synapse2, "synapse2")
+        self.gds_check_cardinality_(self.synapse2, "synapse2", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.synapse1_path, "synapse1_path"
+        )
+        self.gds_check_cardinality_(self.synapse1_path, "synapse1_path", required=True)
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.synapse2_path, "synapse2_path"
+        )
+        self.gds_check_cardinality_(self.synapse2_path, "synapse2_path", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -53695,6 +58052,22 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_time, self.tau, "tau")
+        self.gds_check_cardinality_(self.tau, "tau", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_current, self.ibase, "ibase"
+        )
+        self.gds_check_cardinality_(self.ibase, "ibase", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -54033,6 +58406,28 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductance, self.gbase1, "gbase1"
+        )
+        self.gds_check_cardinality_(self.gbase1, "gbase1", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductance, self.gbase2, "gbase2"
+        )
+        self.gds_check_cardinality_(self.gbase2, "gbase2", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.erev, "erev"
+        )
+        self.gds_check_cardinality_(self.erev, "erev", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -54359,6 +58754,24 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_conductance, self.gbase, "gbase"
+        )
+        self.gds_check_cardinality_(self.gbase, "gbase", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.erev, "erev"
+        )
+        self.gds_check_cardinality_(self.erev, "erev", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -54632,6 +59045,20 @@ class IonChannelVShift(IonChannel):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.v_shift, "v_shift"
+        )
+        self.gds_check_cardinality_(self.v_shift, "v_shift", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -54824,6 +59251,16 @@ class IonChannelHH(IonChannel):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -55025,6 +59462,16 @@ class IF_curr_exp(basePyNNIaFCell):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -55224,6 +59671,16 @@ class IF_curr_alpha(basePyNNIaFCell):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -55479,6 +59936,20 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.e_rev_E, "e_rev_E")
+        self.gds_check_cardinality_(self.e_rev_E, "e_rev_E", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.e_rev_I, "e_rev_I")
+        self.gds_check_cardinality_(self.e_rev_I, "e_rev_I", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -55687,6 +60158,16 @@ class ContinuousConnectionInstance(ContinuousConnection):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -55906,6 +60387,16 @@ class ElectricalConnectionInstance(ElectricalConnection):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -56210,6 +60701,28 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.tau_decay1, "tau_decay1"
+        )
+        self.gds_check_cardinality_(self.tau_decay1, "tau_decay1", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.tau_decay2, "tau_decay2"
+        )
+        self.gds_check_cardinality_(self.tau_decay2, "tau_decay2", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.tau_rise, "tau_rise"
+        )
+        self.gds_check_cardinality_(self.tau_rise, "tau_rise", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -56495,6 +61008,24 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.tau_decay, "tau_decay"
+        )
+        self.gds_check_cardinality_(self.tau_decay, "tau_decay", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.tau_rise, "tau_rise"
+        )
+        self.gds_check_cardinality_(self.tau_rise, "tau_rise", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -56738,6 +61269,20 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.tau_decay, "tau_decay"
+        )
+        self.gds_check_cardinality_(self.tau_decay, "tau_decay", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -56963,6 +61508,18 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_time, self.tau, "tau")
+        self.gds_check_cardinality_(self.tau, "tau", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -57260,6 +61817,26 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.a, "a")
+        self.gds_check_cardinality_(self.a, "a", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.b, "b")
+        self.gds_check_cardinality_(self.b, "b", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.delta_T, "delta_T")
+        self.gds_check_cardinality_(self.delta_T, "delta_T", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.tau_w, "tau_w")
+        self.gds_check_cardinality_(self.tau_w, "tau_w", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.v_spike, "v_spike")
+        self.gds_check_cardinality_(self.v_spike, "v_spike", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -57502,6 +62079,16 @@ class IF_cond_exp(basePyNNIaFCondCell):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -57710,6 +62297,16 @@ class IF_cond_alpha(basePyNNIaFCondCell):
             pretty_print=pretty_print,
         )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -57902,6 +62499,18 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.weight, "weight")
+        self.gds_check_cardinality_(self.weight, "weight", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -58126,6 +62735,18 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
             pretty_print=pretty_print,
         )
         pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_float, self.weight, "weight")
+        self.gds_check_cardinality_(self.weight, "weight", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -58411,6 +63032,28 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
                 pretty_print=pretty_print,
             )
 
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.plasticity_mechanism,
+            "plasticity_mechanism",
+            min_occurs=0,
+            max_occurs=1,
+        )
+        self.gds_check_cardinality_(
+            self.block_mechanism, "block_mechanism", min_occurs=0, max_occurs=1
+        )
+        if recursive:
+            if self.plasticity_mechanism is not None:
+                self.plasticity_mechanism.validate_(gds_collector, recursive=True)
+            if self.block_mechanism is not None:
+                self.block_mechanism.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
         if SaveElementTreeNode:
@@ -58661,6 +63304,16 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
             True,
             pretty_print=pretty_print,
         )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_

@@ -8,6 +8,9 @@ Copyright 2022 NeuroML contributors
 """
 
 
+from .generatedscollector import GdsCollector
+
+
 class GeneratedsSuperSuper(object):
 
     """Super class for GeneratedsSuper.
@@ -257,3 +260,33 @@ class GeneratedsSuperSuper(object):
 
         print(info_str)
         return info_str
+
+    def validate(self):
+        """Validate the component.
+
+        Throws a Python `ValueError` if a the component is invalid. You can
+        ignore this by using a `try .. except ValueError: pass` block.
+
+        Note: validating your NeuroML file will also check this.
+
+        Note: that this is different from the `validate_` method, which does not
+        validate inherited members.
+
+        :returns: None
+        :rtype: None
+        :raises ValueError: if component is invalid
+        """
+        collector = GdsCollector()  # noqa
+        valid = True
+        for c in type(self).__mro__:
+            if getattr(c, "validate_", None):
+                v = c.validate_(self, collector)
+                valid = valid and v
+
+        if valid is False:
+            err = "Validation failed:\n"
+            for msg in collector.get_messages():
+                err += f"- {msg}\n"
+            raise ValueError(err)
+
+        return True
