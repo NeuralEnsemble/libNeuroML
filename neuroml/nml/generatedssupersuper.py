@@ -210,11 +210,13 @@ class GeneratedsSuperSuper(object):
         info_str += "Valid members for {} are:\n".format(self.__class__.__name__)
         all_members = self.get_members()
         for member in all_members:
+            info_ret[member.get_name()] = {}
             info_str += "* {} (class: {}, {})\n".format(
                 member.get_name(),
                 member.get_data_type(),
                 "Optional" if member.get_optional() else "Required",
             )
+            info_ret[member.get_name()]["required"] = False if member.get_optional() else True
             if show_contents:
                 contents = getattr(self, member.get_name())
                 # check if the member is set to None
@@ -246,7 +248,7 @@ class GeneratedsSuperSuper(object):
                     info_str += "\t* Contents ('ids'/<objects>): {}\n\n".format(
                         contents_id
                     )
-                info_ret[member.get_name()] = getattr(self, member.get_name())
+                info_ret[member.get_name()]['members'] = getattr(self, member.get_name())
             else:
                 info_ret.append(member.get_name())
 
