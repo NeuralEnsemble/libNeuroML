@@ -217,6 +217,7 @@ class GeneratedsSuperSuper(object):
                 "Optional" if member.get_optional() else "Required",
             )
             info_ret[member.get_name()]["required"] = False if member.get_optional() else True
+            info_ret[member.get_name()]["type"] = member.get_data_type()
             if show_contents:
                 contents = getattr(self, member.get_name())
                 # check if the member is set to None
