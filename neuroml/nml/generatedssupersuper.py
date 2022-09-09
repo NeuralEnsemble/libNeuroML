@@ -252,7 +252,7 @@ class GeneratedsSuperSuper(object):
 
         if return_format == "list":
             if isinstance(info_ret, dict):
-                return info_ret.keys()
+                return list(info_ret.keys())
             else:
                 return info_ret
         elif return_format == "dict":
