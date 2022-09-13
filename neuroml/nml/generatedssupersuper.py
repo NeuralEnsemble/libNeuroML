@@ -217,9 +217,15 @@ class GeneratedsSuperSuper(object):
             )
             if show_contents:
                 info_ret[member.get_name()] = {}
-                info_ret[member.get_name()]["required"] = False if member.get_optional() else True
+                info_ret[member.get_name()]["required"] = (
+                    False if member.get_optional() else True
+                )
                 info_ret[member.get_name()]["type"] = member.get_data_type()
-                contents = getattr(self, member.get_name())
+                # Some classes like Annotation can hold anything, and are
+                # marked by an __ANY__ member, but a corresponding variable
+                # storing contents does not exist. For them, silently return
+                # None
+                contents = getattr(self, member.get_name(), None)
                 # check if the member is set to None
                 # if it's a container (list), it will not be set to None, it
                 # will be empty, []
@@ -249,7 +255,9 @@ class GeneratedsSuperSuper(object):
                     info_str += "\t* Contents ('ids'/<objects>): {}\n\n".format(
                         contents_id
                     )
-                info_ret[member.get_name()]['members'] = getattr(self, member.get_name())
+                info_ret[member.get_name()]["members"] = getattr(
+                    self, member.get_name(), None
+                )
             else:
                 info_ret.append(member.get_name())
 
