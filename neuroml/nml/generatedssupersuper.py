@@ -308,9 +308,8 @@ class GeneratedsSuperSuper(object):
     def parentinfo(self, return_format="string"):
         """Show the list of possible parents.
 
-        This will go through all the NeuroML component type classes, get their
-        members, and return those where a member matches the current component
-        class.
+        This object can then be added to objects of the parents using the `add`
+        method.
 
         It is similar to the `info()` method. However, where in the `info()`
         method, it is possible to find the contents of members for a component
@@ -320,8 +319,16 @@ class GeneratedsSuperSuper(object):
         So, this will provide information on possible parents. It will not
         provide information on whether the components (objects) of the
         particular parent have already been instantiated and what their values
-        are. The user should be able to gather this information easily be
+        are. The user should be able to gather this information easily by
         reading the sources.
+
+        Please also note that various component types in NeuroML take ids of
+        components as parameters. For example, an `ExplicitInput` will take the
+        id of a cell as its `target`, and the id of a `PulseGenerator` as
+        `input`. However, these are string fields, and the cell/pulse generator
+        classes do not currently know that their ids can be used in
+        `ExplicitInput`. This information does not live in the XSD schema, and
+        so cannot be obtained here either.
 
         :param return_format: format in which to return information. If
             "string" (default), an information string is returned. If "list" or
