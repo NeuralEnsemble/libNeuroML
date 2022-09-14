@@ -341,12 +341,23 @@ class GeneratedsSuperSuper(object):
         :rtype: str, list/dict
         """
         # from nml-core-docs.py in docs
-        excluded_classes = ['GDSParseError', 'MixedContainer', 'MemberSpec_',
-                            'BlockTypes', 'Metric', 'PlasticityTypes',
-                            'ZeroOrOne', 'allowedSpaces', 'channelTypes',
-                            'gateTypes', 'networkTypes', 'populationTypes',
-                            '_FixedOffsetTZ', 'GdsCollector_',
-                            'GeneratedsSuperSuper']
+        excluded_classes = [
+            "GDSParseError",
+            "MixedContainer",
+            "MemberSpec_",
+            "BlockTypes",
+            "Metric",
+            "PlasticityTypes",
+            "ZeroOrOne",
+            "allowedSpaces",
+            "channelTypes",
+            "gateTypes",
+            "networkTypes",
+            "populationTypes",
+            "_FixedOffsetTZ",
+            "GdsCollector_",
+            "GeneratedsSuperSuper",
+        ]
 
         # do not show parameters here, they are indicated by members below
         # some classes may not have doc strings, do nothing if they don't
@@ -385,8 +396,8 @@ class GeneratedsSuperSuper(object):
 
                             required = False if amember.get_optional() else True
                             retinfo[ac][amember.get_name()] = {
-                                'required': required,
-                                'type': amember.get_data_type()
+                                "required": required,
+                                "type": amember.get_data_type(),
                             }
                 # for classes that aren't NeuroML classes and so don't have
                 # get_members() etc. methods
@@ -397,9 +408,7 @@ class GeneratedsSuperSuper(object):
             info_str += f"* {parent}\n"
             for name, info in members.items():
                 info_str += "\t* {} (class: {}, {})\n".format(
-                    name,
-                    info['type'],
-                    "Required" if info['required'] else "Optional"
+                    name, info["type"], "Required" if info["required"] else "Optional"
                 )
         if return_format == "list":
             return list(retinfo.keys())
