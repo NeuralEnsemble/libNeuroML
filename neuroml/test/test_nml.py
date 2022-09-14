@@ -191,3 +191,20 @@ class TestNML(unittest.TestCase):
         with self.assertRaises(ValueError) as cm:
             res.validate()
         print(cm.exception)
+
+    def test_parentinfo(self):
+        """Test the parent info method"""
+        cell = neuroml.Cell(id="testcell")
+        info = cell.parentinfo()
+        self.assertRegex(info, "NeuroMLDocument")
+
+        ionchannelhh = neuroml.IonChannelHH()
+        info = ionchannelhh.parentinfo(return_format="list")
+        self.assertIn("NeuroMLDocument", info)
+
+        hhrate = neuroml.HHRate()
+        info = hhrate.parentinfo(return_format="list")
+        self.assertIn("GateHHRates", info)
+        self.assertIn("GateHHRatesInf", info)
+        self.assertIn("GateHHRatesTau", info)
+        self.assertIn("GateHHRatesTauInf", info)

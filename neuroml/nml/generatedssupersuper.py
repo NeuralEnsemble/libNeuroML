@@ -8,6 +8,8 @@ Copyright 2022 NeuroML contributors
 """
 
 
+import sys
+
 from .generatedscollector import GdsCollector
 
 
@@ -155,13 +157,16 @@ class GeneratedsSuperSuper(object):
         return all_members
 
     def info(self, show_contents=False, return_format="string"):
-        """A helper function to get a list of members of this class.
+        """Provide information on NeuroML component.
+
 
         This is useful to quickly check what members can go into a particular
         NeuroML class (which will match the Schema definitions). It lists these
         members and notes whether they are "single" type elements (Child
         elements) or "List" elements (Children elements). It will also note
         whether a member is optional or required.
+
+        To get a list of possible parents, use the `parentinfo()` method.
 
         By default, this will only show the members, and not their contents.
         To see contents that have been set, use `show_contents=True`. This will
@@ -299,3 +304,116 @@ class GeneratedsSuperSuper(object):
             for msg in collector.get_messages():
                 err += f"- {msg}\n"
             raise ValueError(err)
+
+    def parentinfo(self, return_format="string"):
+        """Show the list of possible parents.
+
+        This object can then be added to objects of the parents using the `add`
+        method.
+
+        It is similar to the `info()` method. However, where in the `info()`
+        method, it is possible to find the contents of members for a component
+        (object) rather easily, it is not so easily possible to get all the
+        objects that may refer to another object.
+
+        So, this will provide information on possible parents. It will not
+        provide information on whether the components (objects) of the
+        particular parent have already been instantiated and what their values
+        are. The user should be able to gather this information easily by
+        reading the sources.
+
+        Please also note that various component types in NeuroML take ids of
+        components as parameters. For example, an `ExplicitInput` will take the
+        id of a cell as its `target`, and the id of a `PulseGenerator` as
+        `input`. However, these are string fields, and the cell/pulse generator
+        classes do not currently know that their ids can be used in
+        `ExplicitInput`. This information does not live in the XSD schema, and
+        so cannot be obtained here either.
+
+        :param return_format: format in which to return information. If
+            "string" (default), an information string is returned. If "list" or
+            "dict", a list or dictionary is returned. The list will only
+            contain the parent names, whereas the dict will also include
+            the member of the parent that the component type matches to.
+        :type return_format: str
+        :returns: info string, or list of parents or dict with parents as keys
+            and member information as values
+        :rtype: str, list/dict
+        """
+        # from nml-core-docs.py in docs
+        excluded_classes = [
+            "GDSParseError",
+            "MixedContainer",
+            "MemberSpec_",
+            "BlockTypes",
+            "Metric",
+            "PlasticityTypes",
+            "ZeroOrOne",
+            "allowedSpaces",
+            "channelTypes",
+            "gateTypes",
+            "networkTypes",
+            "populationTypes",
+            "_FixedOffsetTZ",
+            "GdsCollector_",
+            "GeneratedsSuperSuper",
+        ]
+
+        # do not show parameters here, they are indicated by members below
+        # some classes may not have doc strings, do nothing if they don't
+        try:
+            info_str = "{}\n\n".format(
+                self.__class__.__doc__.split(":param")[0].strip()
+            )
+        except AttributeError:
+            info_str = ""
+
+        info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information.\n\n"
+        info_str += "Valid parents for {} are:\n".format(self.__class__.__name__)
+
+        retinfo = {}
+        module_object = sys.modules[self.__module__]
+        nml_ct_classes = dir(module_object)
+        for ac in nml_ct_classes:
+            if ac.startswith("_") or ac.endswith("_") or ac in excluded_classes:
+                continue
+            cc = getattr(module_object, ac, None)
+            if type(cc) == type:
+                try:
+                    cc_members = cc().get_members()
+                    for amember in cc_members:
+                        # it's a member with the type matching this class
+                        if amember.get_data_type() == self.__class__.__name__:
+                            # TODO: or it's a member which takes a component
+                            # reference. Only checking by NmlId is too noisy,
+                            # so not worth adding at the moment. The
+                            # information about what ComponentType ID is valid
+                            # for a member is not currently exposed to the XSD
+                            # schema, and so not available in nml.py
+                            # or (amember.get_data_type() == "NmlId" and amember.get_name() != "id"):
+                            if ac not in retinfo:
+                                retinfo[ac] = {}
+
+                            required = False if amember.get_optional() else True
+                            retinfo[ac][amember.get_name()] = {
+                                "required": required,
+                                "type": amember.get_data_type(),
+                            }
+                # for classes that aren't NeuroML classes and so don't have
+                # get_members() etc. methods
+                except AttributeError:
+                    pass
+
+        for parent, members in retinfo.items():
+            info_str += f"* {parent}\n"
+            for name, info in members.items():
+                info_str += "\t* {} (class: {}, {})\n".format(
+                    name, info["type"], "Required" if info["required"] else "Optional"
+                )
+        if return_format == "list":
+            return list(retinfo.keys())
+        elif return_format == "dict":
+            return retinfo
+
+        print(info_str)
+        return info_str
