@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """
-Enter one line description here.
+Test utilities
 
-File:
+File: neuroml/test/test_utils.py
 
-Copyright 2022 Ankur Sinha
-Author: Ankur Sinha <sanjay DOT ankur AT gmail DOT com>
+Copyright 2022 NeuroML contributors
 """
 
 import neuroml
