@@ -20,21 +20,28 @@ class GeneratedsSuperSuper(object):
     Any bits that must go into every libNeuroML class should go here.
     """
 
-    def add(self, obj=None, hint=None, force=False):
+    def add(self, obj=None, hint=None, force=False, validate=True, **kwargs):
         """Generic function to allow easy addition of a new member to a NeuroML object.
-
         Without arguments, when `obj=None`, it simply calls the `info()` method
         to provide the list of valid member types for the NeuroML class.
 
-        Use `info(show_contents=True)` to see the valid members of this class,
-        and their current contents.
+        Please use the `info()` method directly for more information on the
+        current contents of this component object.
 
-        :param obj: object member to add
-        :type obj: any NeuroML Type defined by the API
+        When `obj` is given a string name of a NeuroML class
+        ("NeuroMLDocument"), or the class itself (neuroml.NeuroMLDocument), a
+        new object will be created of this type and added as a member to the
+        calling (parent) component type object.
+
+        :param obj: member object or class type (neuroml.NeuroMLDocument) or
+            name of class type ("NeuroMLDocument"), or None
+        :type obj: str or type or None
         :param hint: member name to add to when there are multiple members that `obj` can be added to
         :type hint: string
         :param force: boolean to force addition when an obj has already been added previously
         :type force: bool
+        :param validate: validate component after adding (default: True)
+        :type validate: bool
 
         :raises Exception: if a member compatible to obj could not be found
         :raises Exception: if multiple members can accept the object and no hint is provided.
@@ -42,6 +49,9 @@ class GeneratedsSuperSuper(object):
         if not obj:
             self.info()
             return
+        # a component type has been passed, create and add a new one
+        if type(obj) == type or type(obj) == str:
+            obj = self.component_factory(obj, validate=validate, **kwargs)
 
         # getattr only returns the value of the provided member but one cannot
         # then use this to modify the member. Using `vars` also allows us to
@@ -80,6 +90,59 @@ class GeneratedsSuperSuper(object):
                 if hint == t.get_name():
                     self.__add(obj, t, force)
                     break
+
+        if validate:
+            self.validate()
+
+    @classmethod
+    def component_factory(cls, component_type, validate=True, **kwargs):
+        """Factory function to create a NeuroML Component object.
+
+        Users can provide the name of the component as a string or the class
+        variable, along with its named constructor arguments, and this function
+        will create a new object of the Component and return it.
+
+        Users can use the `add()` helper function to further modify components
+
+        This factory runs two checks while creating the component object:
+
+        - that all arguments given do belong to the ComponentType (useful for
+          caching typos)
+        - that the created component is valid NeuroML
+
+        It is therefore less error prone than creating Components directly using
+        the ComponentType constructors.
+
+        It may be useful to disable validation when starting a model. The `validate`
+        parameter can be set to False for this.
+
+        :param component_type: component type to create component from:
+            this can either be the name of the component as a string, e.g.
+            "NeuroMLDocument", or it can be the class type itself: NeuroMLDocument.
+            Note that when providing the class type, one will need to import it,
+            e.g.: `import NeuroMLDocument`, to ensure that it is defined, whereas
+            this will not be required when using the string.
+        :type component_type: str/type
+        :param validate: toggle validation (default: True)
+        :type validate: bool
+        :param **kwargs: named arguments to be passed to ComponentType constructor
+        :type **kwargs: named arguments
+        :returns: new Component (object) of provided ComponentType
+        :rtype: object
+        :raises ValueError: if validation/checks fail
+
+        """
+        module_object = sys.modules[cls.__module__]
+        if isinstance(component_type, str):
+            comp_type_class = getattr(module_object, component_type)
+        else:
+            comp_type_class = getattr(module_object, component_type.__name__)
+
+        comp = comp_type_class(**kwargs)
+        comp.check_arg_list(**kwargs)
+        if validate:
+            comp.validate()
+        return comp
 
     def __add(self, obj, member, force=False):
         """Private method to add new member to a specified variable in a NeuroML object.
@@ -417,3 +480,42 @@ class GeneratedsSuperSuper(object):
 
         print(info_str)
         return info_str
+
+    def check_arg_list(self, **kwargs):
+        """Check that the correct arguments have been passed for creation of a
+        particular Component comp.
+
+        This is required because generally, in Python, if one passes a keyword
+        argument that is not listed in a Class constructor, Python will error.
+        However, in libNeuroML/nml.py, all constructors have a last keyword
+        argument `**kwargs` which means extra keyword arguments that do not match
+        the members are silently accepted and then ignored---because they are not
+        used in the constructor.
+
+        This means that common mistakes like typos will not be caught by Python,
+        and in larger models, one will have to inspect the model in great detail to
+        realise that a mistake has been made while creating a component from a
+        NeuroML ComponentType.
+
+        This function makes this check manually.
+
+        :param **kwargs: arg list passed for creation of component
+        :type **kwargs: Any
+        :returns: None
+        :rtype: None
+        :raises ValueError: if given argument list does not match permitted  member
+
+        """
+        members = self.get_members()
+        member_names = []
+        for m in members:
+            member_names.append(m.get_name())
+
+        args = list(kwargs.keys())
+
+        for arg in args:
+            if arg not in member_names:
+                err = f"'{arg}' is not a permitted argument for ComponentType '{self.__class__.__name__}'\n"
+                print(err)
+                self.info()
+                raise ValueError(err)

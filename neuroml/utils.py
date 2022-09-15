@@ -7,8 +7,10 @@ import os.path
 import sys
 import inspect
 import warnings
+from typing import Union, Any
 
-import neuroml
+from .__version__ import current_neuroml_version
+import neuroml.nml.nml as schema
 
 
 def validate_neuroml2(file_name: str) -> None:
@@ -21,7 +23,7 @@ def validate_neuroml2(file_name: str) -> None:
 
     xsd_file = os.path.join(
         os.path.dirname(__file__),
-        "nml/NeuroML_%s.xsd" % neuroml.current_neuroml_version,
+        "nml/NeuroML_%s.xsd" % current_neuroml_version,
     )
 
     with open(xsd_file) as schema_file:
@@ -47,7 +49,7 @@ def is_valid_neuroml2(file_name: str) -> None:
 
     xsd_file = os.path.join(
         os.path.dirname(__file__),
-        "nml/NeuroML_%s.xsd" % neuroml.current_neuroml_version,
+        "nml/NeuroML_%s.xsd" % current_neuroml_version,
     )
 
     with open(xsd_file) as schema_file:
@@ -83,8 +85,8 @@ def get_summary(nml_file_name: str) -> str:
 
 
 def add_all_to_document(
-    nml_doc_src: neuroml.NeuroMLDocument,
-    nml_doc_tgt: neuroml.NeuroMLDocument,
+    nml_doc_src: schema.NeuroMLDocument,
+    nml_doc_tgt: schema.NeuroMLDocument,
     verbose: bool = False,
 ) -> None:
     """Add all members of the source NeuroML document to the target NeuroML document.
@@ -197,11 +199,23 @@ def ctinfo(component_type):
 
     """
     if isinstance(component_type, str):
-        comp_type_class = getattr(neuroml.nml.nml, component_type)
+        comp_type_class = getattr(schema, component_type)
     else:
-        comp_type_class = getattr(neuroml.nml.nml, component_type.__name__)
+        comp_type_class = getattr(schema, component_type.__name__)
 
     return comp_type_class().info()
+
+
+def component_factory(component_type: Union[str, type], validate: bool = True, **kwargs: Any) -> Any:
+    """Factory function to create a NeuroML Component object.
+
+    Wrapper around the component_factory method that is present in each NeuroML
+    component type class.
+
+    Please see `GeneratedsSuperSuper.component_factory` for more information.
+    """
+    return schema.NeuroMLDocument().component_factory(component_type, validate,
+                                                      **kwargs)
 
 
 def main():
