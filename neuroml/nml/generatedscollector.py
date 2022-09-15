@@ -23,7 +23,10 @@ class GdsCollector(object):
 
     def add_message(self, msg):
         caller = inspect.stack()[1].frame.f_locals['self']
-        caller_id_str = f" ({caller.id})" if caller.id else ""
+        try:
+            caller_id_str = f" ({caller.id})"
+        except AttributeError:
+            caller_id_str = ""
         self.messages.append(
             f"{caller.__class__.__name__}{caller_id_str}: {msg}"
         )
