@@ -7,7 +7,7 @@
 
 echo "Note(1): Please remember to update the schema from the NeuroML2 repository"
 echo "Note(2): Must be run in neuroml/nml/"
-NEUROML_VERSION=$(grep -E 'current_neuroml_version.*' ../__init__.py | cut -d '=' -f 2 | tr -d '"' | tr -d ' ')
+NEUROML_VERSION=$(grep -E 'current_neuroml_version.*' ../__version__.py | cut -d '=' -f 2 | tr -d '"' | tr -d ' ')
 SCHEMA_FILE=NeuroML_${NEUROML_VERSION}.xsd
 PYTHON_VERSION=$(python --version 2>&1)
 
