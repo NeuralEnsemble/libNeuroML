@@ -11,6 +11,8 @@ Copyright 2022 Ankur Sinha
 Author: Ankur Sinha <sanjay DOT ankur AT gmail DOT com>
 """
 
+import inspect
+
 
 class GdsCollector(object):
     def __init__(self, messages=None):
@@ -20,7 +22,11 @@ class GdsCollector(object):
             self.messages = messages
 
     def add_message(self, msg):
-        self.messages.append(msg)
+        caller = inspect.stack()[1].frame.f_locals['self']
+        caller_id_str = f" ({caller.id})" if caller.id else ""
+        self.messages.append(
+            f"{caller.__class__.__name__}{caller_id_str}: {msg}"
+        )
 
     def get_messages(self):
         return self.messages
