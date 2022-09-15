@@ -343,17 +343,20 @@ class GeneratedsSuperSuper(object):
         print(info_str)
         return info_str
 
-    def validate(self):
+    def validate(self, recursive=False):
         """Validate the component.
 
         Throws a Python `ValueError` if a the component is invalid. You can
         ignore this by using a `try .. except ValueError: pass` block.
 
-        Note: validating your NeuroML file will also check this.
+        Note: validating your NeuroML file against the schema, which pynml and
+        jnml do, will also check this.
 
         Note: that this is different from the `validate_` method, which does not
         validate inherited members.
 
+        :param recursive: toggle recursive validation (default: False)
+        :type recursive: bool
         :returns: None
         :rtype: None
         :raises ValueError: if component is invalid
@@ -362,7 +365,7 @@ class GeneratedsSuperSuper(object):
         valid = True
         for c in type(self).__mro__:
             if getattr(c, "validate_", None):
-                v = c.validate_(self, collector)
+                v = c.validate_(self, collector, recursive)
                 valid = valid and v
 
         if valid is False:
