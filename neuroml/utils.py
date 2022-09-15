@@ -206,6 +206,27 @@ def ctinfo(component_type):
     return comp_type_class().info()
 
 
+def ctparentinfo(component_type):
+    """Provide information on the parentage of any NeuroML Component Type
+    class.
+
+    This creates a new object (component) of the component type and call its
+    parentinfo() method.
+
+    :param component_type: component type to print information for, either a
+        string (the name) or the class itself
+    :type component_type: str or type
+    :returns: information string
+    :rtype: str
+    """
+    if isinstance(component_type, str):
+        comp_type_class = getattr(schema, component_type)
+    else:
+        comp_type_class = getattr(schema, component_type.__name__)
+
+    return comp_type_class().parentinfo()
+
+
 def component_factory(component_type: Union[str, type], validate: bool = True, **kwargs: Any) -> Any:
     """Factory function to create a NeuroML Component object.
 
