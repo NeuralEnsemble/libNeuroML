@@ -4,7 +4,7 @@ from setuptools import setup
 
 long_description = open("README.md").read()
 
-for line in open("neuroml/__init__.py"):
+for line in open("neuroml/__version__.py"):
     if line.startswith("__version__"):
         version = line.split("=")[1].strip()[1:-1]
 
