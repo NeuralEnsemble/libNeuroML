@@ -42,6 +42,8 @@ class GeneratedsSuperSuper(object):
         :type force: bool
         :param validate: validate component after adding (default: True)
         :type validate: bool
+        :returns obj: the provided or created object
+        :type obj: Object
 
         :raises Exception: if a member compatible to obj could not be found
         :raises Exception: if multiple members can accept the object and no hint is provided.
@@ -93,6 +95,7 @@ class GeneratedsSuperSuper(object):
 
         if validate:
             self.validate()
+        return obj
 
     @classmethod
     def component_factory(cls, component_type, validate=True, **kwargs):
