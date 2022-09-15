@@ -3,8 +3,7 @@ libNeuroML version information
 
 File: neuroml/__version__.py
 
-Copyright 2022 Ankur Sinha
-Author: Ankur Sinha <sanjay DOT ankur AT gmail DOT com>
+Copyright 2022 NeuroML contributors
 """
 
 
