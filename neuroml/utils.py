@@ -183,6 +183,27 @@ def has_segment_fraction_info(connections: list) -> bool:
     return not no_seg_fract_info
 
 
+def ctinfo(component_type):
+    """Provide information on any neuroml Component Type class.
+
+    This creates a new object (component) of the component type and call its
+    info() method.
+
+    :param component_type: component type to print information for, either a
+        string (the name) or the class itself
+    :type component_type: str or type
+    :returns: informatin string
+    :rtype: str
+
+    """
+    if isinstance(component_type, str):
+        comp_type_class = getattr(neuroml.nml.nml, component_type)
+    else:
+        comp_type_class = getattr(neuroml.nml.nml, component_type.__name__)
+
+    return comp_type_class().info()
+
+
 def main():
     if len(sys.argv) != 2:
         print("Please specify the name of the NeuroML2 file...")
