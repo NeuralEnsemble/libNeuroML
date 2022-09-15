@@ -63,7 +63,7 @@ copyright = u"2021, libNeuroML authors and contributors"
 #
 # The short X.Y version.
 version = ""
-for aline in open("../neuroml/__init__.py"):
+for aline in open("../neuroml/__version__.py"):
     # space here is important since __version__ is used in generation of
     # version_info also
     if "__version__ =" in aline:

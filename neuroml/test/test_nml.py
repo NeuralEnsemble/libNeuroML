@@ -55,23 +55,23 @@ class TestNML(unittest.TestCase):
         biprop = neuroml.BiophysicalProperties(id="biprops")
         net = neuroml.Network(id="net")
 
-        # Success: returns nothing (None)
-        self.assertIsNone(doc.add(cell))
+        # Success: returns object
+        self.assertIsNotNone(doc.add(cell))
 
         # Already added, so throw exception
         with self.assertWarns(UserWarning):
             doc.add(cell)
 
         # Success
-        self.assertIsNone(doc.add(cell1))
+        self.assertIsNotNone(doc.add(cell1))
 
         # str is not the type for any member
         with self.assertRaises(Exception):
             doc.add("A STRING")
 
         # success
-        self.assertIsNone(cell.add(biprop))
-        self.assertIsNone(cell1.add(biprop))
+        self.assertIsNotNone(cell.add(biprop))
+        self.assertIsNotNone(cell1.add(biprop))
 
         # failures
         with self.assertRaises(Exception):
@@ -108,8 +108,9 @@ class TestNML(unittest.TestCase):
         with self.assertRaises(Exception):
             gate_m.add(m_reverse_rate)
 
-        gate_m.add(m_forward_rate, hint="forward_rate")
-        gate_m.add(m_reverse_rate, hint="reverse_rate")
+        # first will not validate, reverse_rate is missing
+        gate_m.add(m_forward_rate, hint="forward_rate", validate=False)
+        gate_m.add(m_reverse_rate, hint="reverse_rate", validate=True)
 
         na_channel.gate_hh_rates.append(gate_m)
 
@@ -130,17 +131,17 @@ class TestNML(unittest.TestCase):
         with self.assertRaises(Exception):
             gate_h.add(h_reverse_rate)
 
-        gate_h.add(h_forward_rate, hint="forward_rate")
+        gate_h.add(h_forward_rate, hint="forward_rate", validate=False)
         gate_h.add(h_reverse_rate, hint="reverse_rate")
 
     def test_add_to_container(self):
         """Test adding multiple objects to a container class."""
-        network = neuroml.Network()
+        network = neuroml.Network(id="test")
         # They have the same id, but they are unique objects as far as Python
         # is concerned
-        pop0 = neuroml.Population()
-        pop1 = neuroml.Population()
-        pop2 = neuroml.Population()
+        pop0 = neuroml.Population(id="1")
+        pop1 = neuroml.Population(id="2")
+        pop2 = neuroml.Population(id="3")
 
         network.add(pop0)
         network.add(pop1)
@@ -208,3 +209,11 @@ class TestNML(unittest.TestCase):
         self.assertIn("GateHHRatesInf", info)
         self.assertIn("GateHHRatesTau", info)
         self.assertIn("GateHHRatesTauInf", info)
+
+    def test_component_argument_list_checker(self):
+        """Test the check_component_type_arg_list utility function"""
+        nml_doc = neuroml.nml.nml.NeuroMLDocument()
+        with self.assertRaises(ValueError) as cm:
+            nml_doc.check_arg_list(random_argument="nope")
+        print(cm.exception)
+        nml_doc.check_arg_list(id="yep")
