@@ -55,23 +55,23 @@ class TestNML(unittest.TestCase):
         biprop = neuroml.BiophysicalProperties(id="biprops")
         net = neuroml.Network(id="net")
 
-        # Success: returns nothing (None)
-        self.assertIsNone(doc.add(cell))
+        # Success: returns object
+        self.assertIsNotNone(doc.add(cell))
 
         # Already added, so throw exception
         with self.assertWarns(UserWarning):
             doc.add(cell)
 
         # Success
-        self.assertIsNone(doc.add(cell1))
+        self.assertIsNotNone(doc.add(cell1))
 
         # str is not the type for any member
         with self.assertRaises(Exception):
             doc.add("A STRING")
 
         # success
-        self.assertIsNone(cell.add(biprop))
-        self.assertIsNone(cell1.add(biprop))
+        self.assertIsNotNone(cell.add(biprop))
+        self.assertIsNotNone(cell1.add(biprop))
 
         # failures
         with self.assertRaises(Exception):
