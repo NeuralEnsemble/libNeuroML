@@ -12,6 +12,12 @@ from typing import Union, Any
 from .__version__ import current_neuroml_version
 import neuroml.nml.nml as schema
 
+neuro_lex_ids = {
+    "axon": "GO:0030424",
+    "dend": "GO:0030425",
+    "soma": "GO:0043025",
+}
+
 
 def validate_neuroml2(file_name: str) -> None:
     """Validate a NeuroML document against the NeuroML schema specification.
@@ -235,8 +241,87 @@ def component_factory(component_type: Union[str, type], validate: bool = True, *
 
     Please see `GeneratedsSuperSuper.component_factory` for more information.
     """
+    # for a cell, call create_cell
+    if component_type == schema.Cell or component_type == "Cell":
+        return create_cell(**kwargs)
+
+    # for everything else, create a new "vanilla" component
     return schema.NeuroMLDocument().component_factory(component_type, validate,
                                                       **kwargs)
+
+
+def create_cell(cell_id: str, use_convention: bool = True) -> schema.Cell:
+    """Create a NeuroML Cell.
+
+    Initialises the cell with these properties assigning IDs where applicable:
+
+    - Morphology: "morphology"
+    - BiophysicalProperties: "biophys"
+    - MembraneProperties
+    - IntracellularProperties
+
+    if `use_convention` is True, it also creates some default SegmentGroups for
+    convenience:
+
+    - "all", "soma_group", "dendrite_group", "axon_group" which
+      are used by other helper functions to include all, soma, dendrite, and
+      axon segments respectively.
+
+    Note that since this cell does not currently include a segment in its
+    morphology, it is *not* a valid NeuroML construct. Use the `add_segment`
+    function to add segments. `add_segment` will also populate the default
+    segment groups this creates.
+
+    :param cell_id: id of the cell
+    :type cell_id: str
+    :param use_convention: whether helper segment groups should be created using the default convention
+    :type use_convention: bool
+    :returns: created cell object of type neuroml.Cell
+
+    """
+    # Do not use component_factory here because component_factory uses
+    # create_cell
+    cell = schema.Cell(id=cell_id)
+    # do not validate yet, because segments are required
+    cell.add("Morphology", id="morphology", validate=False)
+
+    membrane_properties = component_factory("MembraneProperties")
+    intracellular_properties = component_factory("IntracellularProperties")
+
+    cell.biophysical_properties = component_factory(
+        "BiophysicalProperties",
+        id="biophys",
+        intracellular_properties=intracellular_properties,
+        membrane_properties=membrane_properties,
+    )
+
+    if use_convention:
+        seg_group_all = component_factory("SegmentGroup", id="all")
+        seg_group_soma = component_factory(
+            "SegmentGroup",
+            id="soma_group",
+            neuro_lex_id=neuro_lex_ids["soma"],
+            notes="Default soma segment group for the cell",
+        )
+        seg_group_axon = component_factory(
+            "SegmentGroup",
+            id="axon_group",
+            neuro_lex_id=neuro_lex_ids["axon"],
+            notes="Default axon segment group for the cell",
+        )
+        seg_group_dend = component_factory(
+            "SegmentGroup",
+            id="dendrite_group",
+            neuro_lex_id=neuro_lex_ids["dend"],
+            notes="Default dendrite segment group for the cell",
+        )
+        # skip validation: segments etc needed, cell is invalid
+        cell.morphology.add(seg_group_all, validate=False)
+        cell.morphology.add(seg_group_soma, validate=False)
+        cell.morphology.add(seg_group_axon, validate=False)
+        cell.morphology.add(seg_group_dend, validate=False)
+
+    return cell
 
 
 def main():
