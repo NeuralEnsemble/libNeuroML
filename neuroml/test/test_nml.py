@@ -12,12 +12,8 @@ try:
 except ImportError:
     import unittest
 
-import platform
-import tempfile
-
 from neuroml.utils import component_factory
 import neuroml
-from pyneuroml import pynml
 
 
 class TestNML(unittest.TestCase):
@@ -327,11 +323,7 @@ class TestNML(unittest.TestCase):
             new_cell.biophysical_properties.membrane_properties.channel_densities[0].id,
             "some_other_chan",
         )
-
-        with tempfile.NamedTemporaryFile(dir=".") as test_file:
-            self.assertTrue(
-                pynml.write_neuroml2_file(nml_doc, test_file.name, validate=True)
-            )
+        self.assertIsNone(nml_doc.validate(True))
 
     def test_setting_channel_density_v(self):
         """Test setting the channel_density."""
@@ -369,10 +361,7 @@ class TestNML(unittest.TestCase):
             "some_other_chan",
         )
 
-        with tempfile.NamedTemporaryFile(dir=".") as test_file:
-            self.assertTrue(
-                pynml.write_neuroml2_file(nml_doc, test_file.name, validate=True)
-            )
+        self.assertIsNone(nml_doc.validate(True))
 
     @unittest.expectedFailure
     def test_setting_channel_density_should_fail(self):
