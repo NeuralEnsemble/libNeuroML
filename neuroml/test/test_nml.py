@@ -1,15 +1,11 @@
 #!/usr/bin/env python3
 """
-Enter one line description here.
+Test nml.py functions/methods.
 
-File:
+File: neuroml/test/test_nml.py
 
-Copyright 2021 Ankur Sinha
-Author: Ankur Sinha <sanjay DOT ankur AT gmail DOT com>
+Copyright 2021 NeuroML contributors
 """
-
-
-import neuroml
 
 try:
     import unittest2 as unittest
@@ -17,6 +13,11 @@ except ImportError:
     import unittest
 
 import platform
+import tempfile
+
+from neuroml.utils import component_factory
+import neuroml
+from pyneuroml import pynml
 
 
 class TestNML(unittest.TestCase):
@@ -217,3 +218,275 @@ class TestNML(unittest.TestCase):
             nml_doc.check_arg_list(random_argument="nope")
         print(cm.exception)
         nml_doc.check_arg_list(id="yep")
+
+    def test_add_segment(self):
+        """Test adding a segment."""
+        new_cell = component_factory("Cell", id="test_cell")
+        segment = new_cell.add_segment(
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+        )
+        self.assertIsInstance(segment, neuroml.Segment)
+        self.assertEqual(segment.proximal.diameter, 20.0)
+        self.assertEqual(segment.proximal.x, 0.0)
+        self.assertEqual(segment.distal.diameter, 20.0)
+        self.assertEqual(segment.distal.x, 20.0)
+
+        self.assertIsNone(new_cell.validate(True))
+
+    def test_setting_init_memb_potential(self):
+        """Test adding initial membrane potential."""
+        new_cell = component_factory("Cell", id="test_cell")
+        new_cell.add_segment(
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+        )
+        new_cell.set_init_memb_potential("-65mV")
+
+        self.assertIsNone(new_cell.validate(True))
+
+    @unittest.expectedFailure
+    def test_setting_init_memb_potential_should_fail(self):
+        """Units of membrane potential are wrong: should fail."""
+        new_cell = component_factory("Cell", id="test_cell")
+        new_cell.add_segment(
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+        )
+        # Make it invalid: wrong dimensions for membrane potential
+        new_cell.set_init_memb_potential(new_cell, "-65 cm")
+
+        self.assertIsNone(new_cell.validate(True))
+
+    def test_setting_resistivity(self):
+        """Test setting the resistivity."""
+        new_cell = component_factory("Cell", id="test_cell")
+        new_cell.add_segment(
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+        )
+        new_cell.set_resistivity("2000 ohm_cm")
+        self.assertIsNone(new_cell.validate(True))
+
+    @unittest.expectedFailure
+    def test_setting_resistivity_should_fail(self):
+        """Test setting the resistivity."""
+        new_cell = component_factory("Cell", id="test_cell")
+        new_cell.add_segment(
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+        )
+        new_cell.set_resistivity("2000 kilO")
+        self.assertIsNone(new_cell.validate(True))
+
+    def test_setting_specific_capacitance(self):
+        """Test setting the specific_capacitance."""
+        new_cell = component_factory("Cell", id="test_cell")
+        new_cell.add_segment(
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+        )
+        new_cell.set_specific_capacitance("1.0 uF_per_cm2")
+        self.assertIsNone(new_cell.validate(True))
+
+    @unittest.expectedFailure
+    def test_setting_specific_capacitance_should_fail(self):
+        """Test setting the specific_capacitance."""
+        new_cell = component_factory("Cell", id="test_cell")
+        new_cell.add_segment(
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+        )
+        new_cell.set_specific_capacitance("kilo")
+        self.assertIsNone(new_cell.validate(True))
+
+    def test_setting_channel_density(self):
+        """Test setting the channel_density."""
+        new_cell = component_factory("Cell", id="test_cell")
+        new_cell.add_segment(
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+        )
+        nml_doc = component_factory("NeuroMLDocument", id="test_cell_with_channel_density_doc")
+        nml_doc.cells.append(new_cell)
+
+        nml_doc.add("IonChannel", id="pas", conductance="10 pS", type="ionChannelPassive")
+
+        new_cell.add_channel_density(
+            nml_doc,
+            "pas_chan",
+            "pas",
+            "0.021 mS_per_cm2",
+            "-70.0 mV",
+            "all",
+            "non_specific",
+            "",
+        )
+        # check that it was added
+        self.assertNotEqual(
+            len(new_cell.biophysical_properties.membrane_properties.channel_densities),
+            0,
+        )
+        self.assertEqual(
+            new_cell.biophysical_properties.membrane_properties.channel_densities[0].id,
+            "pas_chan",
+        )
+        self.assertNotEqual(
+            new_cell.biophysical_properties.membrane_properties.channel_densities[0].id,
+            "some_other_chan",
+        )
+
+        with tempfile.NamedTemporaryFile(dir=".") as test_file:
+            self.assertTrue(
+                pynml.write_neuroml2_file(nml_doc, test_file.name, validate=True)
+            )
+
+    def test_setting_channel_density_v(self):
+        """Test setting the channel_density."""
+        new_cell = component_factory("Cell", id="test_cell")
+        new_cell.add_segment(
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+        )
+        nml_doc = component_factory("NeuroMLDocument", id="test_cell_with_channel_density_doc")
+        nml_doc.add(new_cell)
+
+        nml_doc.add("IonChannel", id="pas", conductance="10 pS", type="ionChannelPassive")
+
+        new_cell.add_channel_density_v(
+            "ChannelDensity",
+            nml_doc,
+            "",
+            id="pas_chan",
+            ion_channel="pas",
+            cond_density="0.021 mS_per_cm2",
+            erev="-70.0 mV",
+            segment_groups="all",
+            ion="non_specific",
+        )
+        # check that it was added
+        self.assertNotEqual(
+            len(new_cell.biophysical_properties.membrane_properties.channel_densities),
+            0,
+        )
+        self.assertEqual(
+            new_cell.biophysical_properties.membrane_properties.channel_densities[0].id,
+            "pas_chan",
+        )
+        self.assertNotEqual(
+            new_cell.biophysical_properties.membrane_properties.channel_densities[0].id,
+            "some_other_chan",
+        )
+
+        with tempfile.NamedTemporaryFile(dir=".") as test_file:
+            self.assertTrue(
+                pynml.write_neuroml2_file(nml_doc, test_file.name, validate=True)
+            )
+
+    @unittest.expectedFailure
+    def test_setting_channel_density_should_fail(self):
+        """Test setting the channel_density."""
+        new_cell = component_factory("Cell", id="test_cell")
+        new_cell.add_segment(
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+        )
+        nml_doc = component_factory("NeuroMLDocument", id="test_cell_with_channel_density_doc")
+        nml_doc.add(new_cell)
+
+        ion_chan = nml_doc.add("IonChannel", id="pas", conductance="10 pS", type="ionChannelPassive")
+
+        new_cell.add_channel_density(
+            nml_doc,
+            "pas_chan",
+            "NOT A NUMBER",
+            "pas",
+            "",
+            "-70.0 mV",
+            "non_specific",
+            group="all",
+        )
+        self.assertIsNone(new_cell.validate(True))
+        self.assertIsNone(nml_doc.validate(True))
+
+    def test_setting_membrane_property(self):
+        """Test adding a new membrane property"""
+        new_cell = component_factory("Cell", id="test_cell")
+        new_cell.add_segment(
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+        )
+        new_cell.add_membrane_property("InitMembPotential", value="-65mV")
+
+        self.assertEqual(
+            new_cell.biophysical_properties.membrane_properties.init_memb_potentials[
+                0
+            ].value,
+            "-65mV",
+        )
+
+        self.assertIsNone(new_cell.validate(True))
+
+    def test_setting_intracellular_property(self):
+        """Test adding a new membrane property"""
+        new_cell = component_factory("Cell", id="test_cell")
+        new_cell.add_segment(
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+        )
+        new_cell.add_intracellular_property(
+            "Resistivity",
+            value="0ohm_cm",
+        )
+
+        self.assertEqual(
+            new_cell.biophysical_properties.intracellular_properties.resistivities[
+                0
+            ].value,
+            "0ohm_cm",
+        )
+
+        self.assertIsNone(new_cell.validate(True))
+
+    def test_simple_cell(self):
+        "Test a simple cell."
+        # test with component_factory
+        cell = component_factory("Cell", id="simple_cell")
+        cell.notes = "NeuroML cell created by CellBuilder"
+
+        # Add soma segment
+        diam = 10.0
+        soma_0 = cell.add_segment(
+            prox=[0.0, 0.0, 0.0, diam],
+            dist=[0.0, 10.0, 0.0, diam],
+            name="Seg0_soma_0",
+            group="soma_0",
+        )
+
+        self.assertIsInstance(soma_0, neuroml.Segment)
+
+        self.assertIsNone(cell.validate(True))
+
+    def test_complex_cell(self):
+        """Test a complex cell."""
+        # with component_factory
+        cell = component_factory("Cell", id="complex_cell")
+        cell.notes = "NeuroML cell created by CellBuilder"
+
+        # Add soma segment
+        diam = 30.0
+        soma_0 = cell.add_segment(
+            prox=[0.0, 0.0, 0.0, diam],
+            dist=[0.0, 20.0, 0.0, diam],
+            name="Seg0_soma_0",
+            group="soma_0",
+        )
+        self.assertIsInstance(soma_0, neuroml.Segment)
+
+        dend_0 = cell.add_segment(
+            prox=[soma_0.distal.x, soma_0.distal.y, soma_0.distal.z, 5],
+            dist=[soma_0.distal.x, soma_0.distal.y + 50, soma_0.distal.z, 2],
+            name="dend_0",
+            group="dend_0",
+            parent=soma_0,
+        )
+        self.assertIsInstance(dend_0, neuroml.Segment)
+
+        self.assertIsNone(cell.validate(True))
+
+    def test_component_factory_create_cell(self):
+        """Test cell creation"""
+        new_cell = component_factory("Cell", id="test_cell")
+        self.assertIsInstance(new_cell, neuroml.Cell)
+
+        # cell does not have segments: is invalid NeuroML
+        with self.assertRaises(ValueError):
+            new_cell.validate(True)
