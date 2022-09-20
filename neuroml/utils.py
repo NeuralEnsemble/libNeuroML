@@ -10,6 +10,7 @@ import warnings
 from typing import Union, Any
 
 from .__version__ import current_neuroml_version
+from .neuro_lex_ids import neuro_lex_ids
 import neuroml.nml.nml as schema
 
 
@@ -227,7 +228,9 @@ def ctparentinfo(component_type):
     return comp_type_class().parentinfo()
 
 
-def component_factory(component_type: Union[str, type], validate: bool = True, **kwargs: Any) -> Any:
+def component_factory(
+    component_type: Union[str, type], validate: bool = True, **kwargs: Any
+) -> Any:
     """Factory function to create a NeuroML Component object.
 
     Wrapper around the component_factory method that is present in each NeuroML
@@ -235,8 +238,18 @@ def component_factory(component_type: Union[str, type], validate: bool = True, *
 
     Please see `GeneratedsSuperSuper.component_factory` for more information.
     """
-    return schema.NeuroMLDocument().component_factory(component_type, validate,
-                                                      **kwargs)
+    # for a cell, run additional setup
+    if component_type == schema.Cell or component_type == "Cell":
+        new_obj = schema.NeuroMLDocument().component_factory(
+            component_type, False, **kwargs
+        )
+        new_obj.setup_nml_cell()
+    else:
+        # for everything else, create a new "vanilla" component
+        new_obj = schema.NeuroMLDocument().component_factory(
+            component_type, validate, **kwargs
+        )
+    return new_obj
 
 
 def main():
