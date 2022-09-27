@@ -42,13 +42,16 @@ with open("sed-script.txt", 'w') as f:
 
                 regexstart = f"^class {aclass}"
                 regexend = f"# end class {aclass}"
+
+                # We add annotations as strings, just to help users better
+                # understand what needs to be used.
                 if amember.get_container() == 0:
                     print(
-                        f"""/{regexstart}/,/{regexend}/ s/{dname}=None/{dname}="(one {dtype})"/""",
+                        f"""/{regexstart}/,/{regexend}/ s/{dname}=None/{dname}: "one {dtype}" = None/""",
                         file=f
                     )
                 else:
                     print(
-                        f"""/{regexstart}/,/{regexend}/ s/{dname}=None/{dname}=\\["(list of {dtype})"\\]/""",
+                        f"""/{regexstart}/,/{regexend}/ s/{dname}=None/{dname}: "list of {dtype}(s)" = None/""",
                         file=f
                     )
