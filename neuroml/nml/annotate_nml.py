@@ -39,6 +39,10 @@ with open("sed-script.txt", 'w') as f:
             for amember in members:
                 dtype = amember.get_data_type().replace("xs:", "").replace("string", "str")
                 dname = amember.get_name()
+                dreq = "required"
+
+                if amember.get_optional() == 0:
+                    dreq = "optional"
 
                 regexstart = f"^class {aclass}"
                 regexend = f"# end class {aclass}"
@@ -47,11 +51,11 @@ with open("sed-script.txt", 'w') as f:
                 # understand what needs to be used.
                 if amember.get_container() == 0:
                     print(
-                        f"""/{regexstart}/,/{regexend}/ s/{dname}=None/{dname}: "one {dtype}" = None/""",
+                        f"""/{regexstart}/,/{regexend}/ s/{dname}=None/{dname}: "one {dtype} ({dreq})" = None/""",
                         file=f
                     )
                 else:
                     print(
-                        f"""/{regexstart}/,/{regexend}/ s/{dname}=None/{dname}: "list of {dtype}(s)" = None/""",
+                        f"""/{regexstart}/,/{regexend}/ s/{dname}=None/{dname}: "list of {dtype}(s) ({dreq})" = None/""",
                         file=f
                     )
