@@ -31,12 +31,12 @@ regenerate () {
         # must be run from top level because of all the imports we
         # have---otherwise it errors
         echo "Modifying default arguments using annotate_nml and sed"
-        pushd ../../ > /dev/null 2>&1
+        pushd ../../
             # generates the sed-script.txt file
             python -m neuroml.nml.annotate_nml
-        popd > /dev/null 2&>1
+        popd
         # apply the sed transformations
-        sed -i -f ../../sed-script.txt nml.py
+        sleep 1 && sed -i -f ../../sed-script.txt nml.py
     else
         echo "GenerateDS not installed"
         echo "Run: pip install generateds"
