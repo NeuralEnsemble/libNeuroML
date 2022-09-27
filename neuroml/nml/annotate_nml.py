@@ -39,23 +39,23 @@ with open("sed-script.txt", 'w') as f:
             for amember in members:
                 dtype = amember.get_data_type().replace("xs:", "").replace("string", "str")
                 dname = amember.get_name()
-                dreq = "required"
-
-                if amember.get_optional() == 0:
-                    dreq = "optional"
+                dreq = "optional" if amember.get_optional() else "required"
 
                 regexstart = f"^class {aclass}"
                 regexend = f"# end class {aclass}"
 
                 # We add annotations as strings, just to help users better
                 # understand what needs to be used.
+
+                # must be run on unblacked file because we are relying on all
+                # arguments to be in the same line as init
                 if amember.get_container() == 0:
                     print(
-                        f"""/{regexstart}/,/{regexend}/ s/{dname}=None/{dname}: "one {dtype} ({dreq})" = None/""",
+                        f"""/{regexstart}/,/{regexend}/ s/\\(def __init__.* {dname}\\)=\\([[:alnum:]\\._ ']*\\),/\\1: "one {dtype} ({dreq})" = \\2,/""",
                         file=f
                     )
                 else:
                     print(
-                        f"""/{regexstart}/,/{regexend}/ s/{dname}=None/{dname}: "list of {dtype}(s) ({dreq})" = None/""",
+                        f"""/{regexstart}/,/{regexend}/ s/\\(def __init__.* {dname}\\)=\\([[:alnum:]\\._ ']*\\),/\\1: "list of {dtype}(s) ({dreq})" = \\2,/""",
                         file=f
                     )
