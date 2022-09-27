@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Sep 20 18:32:03 2022 by generateDS.py version 2.40.13.
+# Generated Tue Sep 27 14:57:15 2022 by generateDS.py version 2.40.13.
 # Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
 #
 # Command line options:
@@ -15,7 +15,7 @@
 #   NeuroML_v2.3.xsd
 #
 # Command line:
-#   /home/asinha/.local/share/virtualenvs/neuroml-dev/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" NeuroML_v2.3.xsd
+#   /home/asinha/.local/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" NeuroML_v2.3.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -1319,16 +1319,16 @@ class ComponentType(GeneratedsSuper):
 
     def __init__(
         self,
-        name=None,
-        extends=None,
-        description=None,
-        Property=None,
-        Parameter=None,
-        Constant=None,
-        Exposure=None,
-        Requirement=None,
-        InstanceRequirement=None,
-        Dynamics=None,
+        name: "one str" = None,
+        extends: "one str" = None,
+        description: "one str" = None,
+        Property: "list of Property(s)" = None,
+        Parameter: "list of Parameter(s)" = None,
+        Constant: "list of Constant(s)" = None,
+        Exposure: "list of Exposure(s)" = None,
+        Requirement: "list of Requirement(s)" = None,
+        InstanceRequirement: "list of InstanceRequirement(s)" = None,
+        Dynamics: "list of Dynamics(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -1744,7 +1744,13 @@ class InstanceRequirement(GeneratedsSuper):
     subclass = None
     superclass = None
 
-    def __init__(self, name=None, type=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self,
+        name: "one str" = None,
+        type: "one str" = None,
+        gds_collector_=None,
+        **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -1979,10 +1985,10 @@ class Dynamics(GeneratedsSuper):
 
     def __init__(
         self,
-        StateVariable=None,
-        DerivedVariable=None,
-        ConditionalDerivedVariable=None,
-        TimeDerivative=None,
+        StateVariable: "list of StateVariable(s)" = None,
+        DerivedVariable: "list of DerivedVariable(s)" = None,
+        ConditionalDerivedVariable: "list of ConditionalDerivedVariable(s)" = None,
+        TimeDerivative: "list of TimeDerivative(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -2245,7 +2251,13 @@ class Case(GeneratedsSuper):
     subclass = None
     superclass = None
 
-    def __init__(self, condition=None, value=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self,
+        condition: "one str" = None,
+        value: "one str" = None,
+        gds_collector_=None,
+        **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -2419,7 +2431,13 @@ class TimeDerivative(GeneratedsSuper):
     subclass = None
     superclass = None
 
-    def __init__(self, variable=None, value=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self,
+        variable: "one str" = None,
+        value: "one str" = None,
+        gds_collector_=None,
+        **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -2595,7 +2613,7 @@ class IncludeType(GeneratedsSuper):
     subclass = None
     superclass = None
 
-    def __init__(self, href=None, gds_collector_=None, **kwargs_):
+    def __init__(self, href: "one anyURI" = None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -2772,10 +2790,10 @@ class Q10Settings(GeneratedsSuper):
 
     def __init__(
         self,
-        type=None,
-        fixed_q10=None,
-        q10_factor=None,
-        experimental_temp=None,
+        type: "one NmlId" = None,
+        fixed_q10: "one Nml2Quantity_none" = None,
+        q10_factor: "one Nml2Quantity_none" = None,
+        experimental_temp: "one Nml2Quantity_temperature" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -3135,9 +3153,9 @@ class VariableParameter(GeneratedsSuper):
 
     def __init__(
         self,
-        parameter=None,
-        segment_groups=None,
-        inhomogeneous_value=None,
+        parameter: "one str" = None,
+        segment_groups: "one str" = None,
+        inhomogeneous_value: "one InhomogeneousValue" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -3511,7 +3529,13 @@ class BaseNonNegativeIntegerId(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(self, id=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self,
+        id: "one NmlId" = None,
+        extensiontype_=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -3732,7 +3756,13 @@ class Base(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(self, id=None, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self,
+        id: "one NmlId" = None,
+        extensiontype_=None,
+        gds_collector_=None,
+        **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -3975,11 +4005,11 @@ class Standalone(Base):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -4336,14 +4366,14 @@ class SpikeSourcePoisson(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        start=None,
-        duration=None,
-        rate=None,
+        id: "one NonNegativeInteger" = None,
+        metaid: "one NmlId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        start: "one Nml2Quantity_time" = None,
+        duration: "one Nml2Quantity_time" = None,
+        rate: "one Nml2Quantity_pertime" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -4667,11 +4697,11 @@ class Input(BaseNonNegativeIntegerId):
 
     def __init__(
         self,
-        id=None,
-        target=None,
-        destination=None,
-        segment_id=None,
-        fraction_along=None,
+        id: "one NonNegativeInteger" = None,
+        target: "one str" = None,
+        destination: "one NmlId" = None,
+        segment_id: "one NonNegativeInteger" = None,
+        fraction_along: "one ZeroToOne" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -5078,11 +5108,11 @@ class InputList(Base):
 
     def __init__(
         self,
-        id=None,
-        populations=None,
-        component=None,
-        input=None,
-        input_ws=None,
+        id: "one NonNegativeInteger" = None,
+        populations: "one NmlId" = None,
+        component: "one NmlId" = None,
+        input: "list of Input(s)" = None,
+        input_ws: "list of InputW(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -5433,7 +5463,12 @@ class ExplicitInput(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self, target=None, input=None, destination=None, gds_collector_=None, **kwargs_
+        self,
+        target: "one str" = None,
+        input: "one str" = None,
+        destination: "one str" = None,
+        gds_collector_=None,
+        **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -5726,8 +5761,8 @@ class BaseConnection(BaseNonNegativeIntegerId):
 
     def __init__(
         self,
-        id=None,
-        neuro_lex_id=None,
+        id: "one NmlId" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -5969,9 +6004,9 @@ class BaseProjection(Base):
 
     def __init__(
         self,
-        id=None,
-        presynaptic_population=None,
-        postsynaptic_population=None,
+        id: "one NmlId" = None,
+        presynaptic_population: "one NmlId" = None,
+        postsynaptic_population: "one NmlId" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -6249,11 +6284,11 @@ class SynapticConnection(BaseWithoutId):
 
     def __init__(
         self,
-        neuro_lex_id=None,
-        from_=None,
-        to=None,
-        synapse=None,
-        destination=None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        from_: "one str" = None,
+        to: "one str" = None,
+        synapse: "one str" = None,
+        destination: "one NmlId" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -6619,7 +6654,12 @@ class CellSet(Base):
     superclass = Base
 
     def __init__(
-        self, id=None, select=None, anytypeobjs_=None, gds_collector_=None, **kwargs_
+        self,
+        id: "one NmlId" = None,
+        select: "one str" = None,
+        anytypeobjs_=None,
+        gds_collector_=None,
+        **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -6811,7 +6851,14 @@ class Location(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(self, x=None, y=None, z=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self,
+        x: "one float" = None,
+        y: "one float" = None,
+        z: "one float" = None,
+        gds_collector_=None,
+        **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -7032,11 +7079,11 @@ class Instance(BaseWithoutId):
 
     def __init__(
         self,
-        id=None,
-        i=None,
-        j=None,
-        k=None,
-        location=None,
+        id: "one nonNegativeInteger" = None,
+        i: "one nonNegativeInteger" = None,
+        j: "one nonNegativeInteger" = None,
+        k: "one nonNegativeInteger" = None,
+        location: "one Location" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -7298,7 +7345,12 @@ class GridLayout(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self, x_size=None, y_size=None, z_size=None, gds_collector_=None, **kwargs_
+        self,
+        x_size: "one nonNegativeInteger" = None,
+        y_size: "one nonNegativeInteger" = None,
+        z_size: "one nonNegativeInteger" = None,
+        gds_collector_=None,
+        **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -7495,7 +7547,13 @@ class RandomLayout(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(self, number=None, regions=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self,
+        number: "one nonNegativeInteger" = None,
+        regions: "one NmlId" = None,
+        gds_collector_=None,
+        **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -7717,7 +7775,9 @@ class UnstructuredLayout(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(self, number=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self, number: "one nonNegativeInteger" = None, gds_collector_=None, **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -7913,10 +7973,10 @@ class Layout(BaseWithoutId):
 
     def __init__(
         self,
-        spaces=None,
-        random=None,
-        grid=None,
-        unstructured=None,
+        spaces: "one NmlId" = None,
+        random: "one RandomLayout" = None,
+        grid: "one GridLayout" = None,
+        unstructured: "one UnstructuredLayout" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -8243,18 +8303,18 @@ class Population(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        component=None,
-        size=None,
-        type=None,
-        extracellular_properties=None,
-        neuro_lex_id=None,
-        layout=None,
-        instances=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        component: "one NmlId" = None,
+        size: "one NonNegativeInteger" = None,
+        type: "one populationTypes" = None,
+        extracellular_properties: "one NmlId" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        layout: "one Layout" = None,
+        instances: "list of Instance(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -8750,7 +8810,12 @@ class Region(Base):
     superclass = Base
 
     def __init__(
-        self, id=None, spaces=None, anytypeobjs_=None, gds_collector_=None, **kwargs_
+        self,
+        id: "one NmlId" = None,
+        spaces: "one NmlId" = None,
+        anytypeobjs_=None,
+        gds_collector_=None,
+        **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -8979,9 +9044,9 @@ class SpaceStructure(BaseWithoutId):
 
     def __init__(
         self,
-        x_spacing=None,
-        y_spacing=None,
-        z_spacing=None,
+        x_spacing: "one float" = None,
+        y_spacing: "one float" = None,
+        z_spacing: "one float" = None,
         x_start=0,
         y_start=0,
         z_start=0,
@@ -9243,7 +9308,12 @@ class Space(Base):
     superclass = Base
 
     def __init__(
-        self, id=None, based_on=None, structure=None, gds_collector_=None, **kwargs_
+        self,
+        id: "one NmlId" = None,
+        based_on: "one allowedSpaces" = None,
+        structure: "one SpaceStructure" = None,
+        gds_collector_=None,
+        **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -9629,25 +9699,25 @@ class Network(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        type=None,
-        temperature=None,
-        neuro_lex_id=None,
-        spaces=None,
-        regions=None,
-        extracellular_properties=None,
-        populations=None,
-        cell_sets=None,
-        synaptic_connections=None,
-        projections=None,
-        electrical_projections=None,
-        continuous_projections=None,
-        explicit_inputs=None,
-        input_lists=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        type: "one networkTypes" = None,
+        temperature: "one Nml2Quantity_temperature" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        spaces: "list of Space(s)" = None,
+        regions: "list of Region(s)" = None,
+        extracellular_properties: "list of ExtracellularPropertiesLocal(s)" = None,
+        populations: "list of Population(s)" = None,
+        cell_sets: "list of CellSet(s)" = None,
+        synaptic_connections: "list of SynapticConnection(s)" = None,
+        projections: "list of Projection(s)" = None,
+        electrical_projections: "list of ElectricalProjection(s)" = None,
+        continuous_projections: "list of ContinuousProjection(s)" = None,
+        explicit_inputs: "list of ExplicitInput(s)" = None,
+        input_lists: "list of InputList(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -10415,16 +10485,16 @@ class TransientPoissonFiringSynapse(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        average_rate=None,
-        delay=None,
-        duration=None,
-        synapse=None,
-        spike_target=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        average_rate: "one Nml2Quantity_pertime" = None,
+        delay: "one Nml2Quantity_time" = None,
+        duration: "one Nml2Quantity_time" = None,
+        synapse: "one str" = None,
+        spike_target: "one str" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -10801,14 +10871,14 @@ class PoissonFiringSynapse(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        average_rate=None,
-        synapse=None,
-        spike_target=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        average_rate: "one Nml2Quantity_pertime" = None,
+        synapse: "one str" = None,
+        spike_target: "one str" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -11088,12 +11158,12 @@ class SpikeGeneratorPoisson(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        average_rate=None,
+        id: "one NonNegativeInteger" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        average_rate: "one Nml2Quantity_pertime" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -11350,13 +11420,13 @@ class SpikeGeneratorRandom(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        max_isi=None,
-        min_isi=None,
+        id: "one NonNegativeInteger" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        max_isi: "one Nml2Quantity_time" = None,
+        min_isi: "one Nml2Quantity_time" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -11615,12 +11685,12 @@ class SpikeGenerator(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        period=None,
+        id: "one NonNegativeInteger" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        period: "one Nml2Quantity_time" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -11855,14 +11925,14 @@ class TimedSynapticInput(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        synapse=None,
-        spike_target=None,
-        spikes=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        synapse: "one NmlId" = None,
+        spike_target: "one str" = None,
+        spikes: "list of Spike(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -12146,12 +12216,12 @@ class SpikeArray(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        spikes=None,
+        id: "one NonNegativeInteger" = None,
+        metaid: "one NmlId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        spikes: "list of Spike(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -12340,7 +12410,13 @@ class Spike(BaseNonNegativeIntegerId):
     subclass = None
     superclass = BaseNonNegativeIntegerId
 
-    def __init__(self, id=None, time=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self,
+        id: "one NonNegativeInteger" = None,
+        time: "one Nml2Quantity_time" = None,
+        gds_collector_=None,
+        **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -12600,18 +12676,18 @@ class VoltageClampTriple(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        active=None,
-        delay=None,
-        duration=None,
-        conditioning_voltage=None,
-        testing_voltage=None,
-        return_voltage=None,
-        simple_series_resistance=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        active: "one ZeroOrOne" = None,
+        delay: "one Nml2Quantity_time" = None,
+        duration: "one Nml2Quantity_time" = None,
+        conditioning_voltage: "one Nml2Quantity_voltage" = None,
+        testing_voltage: "one Nml2Quantity_voltage" = None,
+        return_voltage: "one Nml2Quantity_voltage" = None,
+        simple_series_resistance: "one Nml2Quantity_resistance" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -13130,15 +13206,15 @@ class VoltageClamp(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        delay=None,
-        duration=None,
-        target_voltage=None,
-        simple_series_resistance=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        delay: "one Nml2Quantity_time" = None,
+        duration: "one Nml2Quantity_time" = None,
+        target_voltage: "one Nml2Quantity_voltage" = None,
+        simple_series_resistance: "one Nml2Quantity_resistance" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -13544,14 +13620,14 @@ class CompoundInputDL(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        pulse_generator_dls=None,
-        sine_generator_dls=None,
-        ramp_generator_dls=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        pulse_generator_dls: "list of PulseGeneratorDL(s)" = None,
+        sine_generator_dls: "list of SineGeneratorDL(s)" = None,
+        ramp_generator_dls: "list of RampGeneratorDL(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -13850,14 +13926,14 @@ class CompoundInput(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        pulse_generators=None,
-        sine_generators=None,
-        ramp_generators=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        pulse_generators: "list of PulseGenerator(s)" = None,
+        sine_generators: "list of SineGenerator(s)" = None,
+        ramp_generators: "list of RampGenerator(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -14152,16 +14228,16 @@ class RampGeneratorDL(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        delay=None,
-        duration=None,
-        start_amplitude=None,
-        finish_amplitude=None,
-        baseline_amplitude=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        delay: "one Nml2Quantity_time" = None,
+        duration: "one Nml2Quantity_time" = None,
+        start_amplitude: "one Nml2Quantity_current" = None,
+        finish_amplitude: "one Nml2Quantity_current" = None,
+        baseline_amplitude: "one Nml2Quantity_current" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -14571,16 +14647,16 @@ class RampGenerator(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        delay=None,
-        duration=None,
-        start_amplitude=None,
-        finish_amplitude=None,
-        baseline_amplitude=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        delay: "one Nml2Quantity_time" = None,
+        duration: "one Nml2Quantity_time" = None,
+        start_amplitude: "one Nml2Quantity_current" = None,
+        finish_amplitude: "one Nml2Quantity_current" = None,
+        baseline_amplitude: "one Nml2Quantity_current" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -14984,16 +15060,16 @@ class SineGeneratorDL(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        delay=None,
-        phase=None,
-        duration=None,
-        amplitude=None,
-        period=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        delay: "one Nml2Quantity_time" = None,
+        phase: "one Nml2Quantity_none" = None,
+        duration: "one Nml2Quantity_time" = None,
+        amplitude: "one Nml2Quantity_current" = None,
+        period: "one Nml2Quantity_time" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -15375,16 +15451,16 @@ class SineGenerator(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        delay=None,
-        phase=None,
-        duration=None,
-        amplitude=None,
-        period=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        delay: "one Nml2Quantity_time" = None,
+        phase: "one Nml2Quantity_none" = None,
+        duration: "one Nml2Quantity_time" = None,
+        amplitude: "one Nml2Quantity_current" = None,
+        period: "one Nml2Quantity_time" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -15788,14 +15864,14 @@ class PulseGeneratorDL(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        delay=None,
-        duration=None,
-        amplitude=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        delay: "one Nml2Quantity_time" = None,
+        duration: "one Nml2Quantity_time" = None,
+        amplitude: "one Nml2Quantity_current" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -16125,14 +16201,14 @@ class PulseGenerator(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        delay=None,
-        duration=None,
-        amplitude=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        delay: "one Nml2Quantity_time" = None,
+        duration: "one Nml2Quantity_time" = None,
+        amplitude: "one Nml2Quantity_current" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -16436,9 +16512,9 @@ class ReactionScheme(Base):
 
     def __init__(
         self,
-        id=None,
-        source=None,
-        type=None,
+        id: "one NmlId" = None,
+        source: "one str" = None,
+        type: "one str" = None,
         anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_
@@ -16657,7 +16733,13 @@ class ExtracellularPropertiesLocal(Base):
     subclass = None
     superclass = Base
 
-    def __init__(self, id=None, species=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self,
+        id: "one NmlId" = None,
+        species: "list of Species(s)" = None,
+        gds_collector_=None,
+        **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -16868,7 +16950,13 @@ class ExtracellularProperties(Base):
     subclass = None
     superclass = Base
 
-    def __init__(self, id=None, species=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self,
+        id: "one NmlId" = None,
+        species: "list of Species(s)" = None,
+        gds_collector_=None,
+        **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -17091,8 +17179,8 @@ class IntracellularProperties(BaseWithoutId):
 
     def __init__(
         self,
-        species=None,
-        resistivities=None,
+        species: "list of Species(s)" = None,
+        resistivities: "list of Resistivity(s)" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -17381,11 +17469,11 @@ class Species(Base):
 
     def __init__(
         self,
-        id=None,
-        concentration_model=None,
-        ion=None,
-        initial_concentration=None,
-        initial_ext_concentration=None,
+        id: "one NmlId" = None,
+        concentration_model: "one NmlId" = None,
+        ion: "one NmlId" = None,
+        initial_concentration: "one Nml2Quantity_concentration" = None,
+        initial_ext_concentration: "one Nml2Quantity_concentration" = None,
         segment_groups="all",
         gds_collector_=None,
         **kwargs_
@@ -17744,7 +17832,11 @@ class InhomogeneousValue(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self, inhomogeneous_parameters=None, value=None, gds_collector_=None, **kwargs_
+        self,
+        inhomogeneous_parameters: "one str" = None,
+        value: "one str" = None,
+        gds_collector_=None,
+        **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -17982,12 +18074,12 @@ class ChannelDensityGHK2(Base):
 
     def __init__(
         self,
-        id=None,
-        ion_channel=None,
-        cond_density=None,
+        id: "one NmlId" = None,
+        ion_channel: "one NmlId" = None,
+        cond_density: "one Nml2Quantity_conductanceDensity" = None,
         segment_groups="all",
-        segments=None,
-        ion=None,
+        segments: "one NonNegativeInteger" = None,
+        ion: "one NmlId" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -18355,12 +18447,12 @@ class ChannelDensityGHK(Base):
 
     def __init__(
         self,
-        id=None,
-        ion_channel=None,
-        permeability=None,
+        id: "one NmlId" = None,
+        ion_channel: "one NmlId" = None,
+        permeability: "one Nml2Quantity_permeability" = None,
         segment_groups="all",
-        segments=None,
-        ion=None,
+        segments: "one NonNegativeInteger" = None,
+        ion: "one NmlId" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -18737,13 +18829,13 @@ class ChannelDensityNernst(Base):
 
     def __init__(
         self,
-        id=None,
-        ion_channel=None,
-        cond_density=None,
+        id: "one NmlId" = None,
+        ion_channel: "one NmlId" = None,
+        cond_density: "one Nml2Quantity_conductanceDensity" = None,
         segment_groups="all",
-        segments=None,
-        ion=None,
-        variable_parameters=None,
+        segments: "one NonNegativeInteger" = None,
+        ion: "one NmlId" = None,
+        variable_parameters: "list of VariableParameter(s)" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -19191,14 +19283,14 @@ class ChannelDensity(Base):
 
     def __init__(
         self,
-        id=None,
-        ion_channel=None,
-        cond_density=None,
-        erev=None,
+        id: "one NmlId" = None,
+        ion_channel: "one NmlId" = None,
+        cond_density: "one Nml2Quantity_conductanceDensity" = None,
+        erev: "one Nml2Quantity_voltage" = None,
         segment_groups="all",
-        segments=None,
-        ion=None,
-        variable_parameters=None,
+        segments: "one NonNegativeInteger" = None,
+        ion: "one NmlId" = None,
+        variable_parameters: "list of VariableParameter(s)" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -19679,10 +19771,10 @@ class ChannelDensityNonUniformGHK(Base):
 
     def __init__(
         self,
-        id=None,
-        ion_channel=None,
-        ion=None,
-        variable_parameters=None,
+        id: "one NmlId" = None,
+        ion_channel: "one NmlId" = None,
+        ion: "one NmlId" = None,
+        variable_parameters: "list of VariableParameter(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -19982,10 +20074,10 @@ class ChannelDensityNonUniformNernst(Base):
 
     def __init__(
         self,
-        id=None,
-        ion_channel=None,
-        ion=None,
-        variable_parameters=None,
+        id: "one NmlId" = None,
+        ion_channel: "one NmlId" = None,
+        ion: "one NmlId" = None,
+        variable_parameters: "list of VariableParameter(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -20295,11 +20387,11 @@ class ChannelDensityNonUniform(Base):
 
     def __init__(
         self,
-        id=None,
-        ion_channel=None,
-        erev=None,
-        ion=None,
-        variable_parameters=None,
+        id: "one NmlId" = None,
+        ion_channel: "one NmlId" = None,
+        erev: "one Nml2Quantity_voltage" = None,
+        ion: "one NmlId" = None,
+        variable_parameters: "list of VariableParameter(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -20678,14 +20770,14 @@ class ChannelPopulation(Base):
 
     def __init__(
         self,
-        id=None,
-        ion_channel=None,
-        number=None,
-        erev=None,
+        id: "one NmlId" = None,
+        ion_channel: "one NmlId" = None,
+        number: "one NonNegativeInteger" = None,
+        erev: "one Nml2Quantity_voltage" = None,
         segment_groups="all",
-        segments=None,
-        ion=None,
-        variable_parameters=None,
+        segments: "one NonNegativeInteger" = None,
+        ion: "one NmlId" = None,
+        variable_parameters: "list of VariableParameter(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -21115,7 +21207,11 @@ class Resistivity(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self, value=None, segment_groups="all", gds_collector_=None, **kwargs_
+        self,
+        value: "one Nml2Quantity_resistivity" = None,
+        segment_groups="all",
+        gds_collector_=None,
+        **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -21394,7 +21490,11 @@ class InitMembPotential(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self, value=None, segment_groups="all", gds_collector_=None, **kwargs_
+        self,
+        value: "one Nml2Quantity_voltage" = None,
+        segment_groups="all",
+        gds_collector_=None,
+        **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -21685,7 +21785,11 @@ class SpecificCapacitance(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self, value=None, segment_groups="all", gds_collector_=None, **kwargs_
+        self,
+        value: "one Nml2Quantity_specificCapacitance" = None,
+        segment_groups="all",
+        gds_collector_=None,
+        **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -21976,7 +22080,11 @@ class SpikeThresh(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self, value=None, segment_groups="all", gds_collector_=None, **kwargs_
+        self,
+        value: "one Nml2Quantity_voltage" = None,
+        segment_groups="all",
+        gds_collector_=None,
+        **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -22397,18 +22505,18 @@ class MembraneProperties(BaseWithoutId):
 
     def __init__(
         self,
-        channel_populations=None,
-        channel_densities=None,
-        channel_density_v_shifts=None,
-        channel_density_nernsts=None,
-        channel_density_ghks=None,
-        channel_density_ghk2s=None,
-        channel_density_non_uniforms=None,
-        channel_density_non_uniform_nernsts=None,
-        channel_density_non_uniform_ghks=None,
-        spike_threshes=None,
-        specific_capacitances=None,
-        init_memb_potentials=None,
+        channel_populations: "list of ChannelPopulation(s)" = None,
+        channel_densities: "list of ChannelDensity(s)" = None,
+        channel_density_v_shifts: "list of ChannelDensityVShift(s)" = None,
+        channel_density_nernsts: "list of ChannelDensityNernst(s)" = None,
+        channel_density_ghks: "list of ChannelDensityGHK(s)" = None,
+        channel_density_ghk2s: "list of ChannelDensityGHK2(s)" = None,
+        channel_density_non_uniforms: "list of ChannelDensityNonUniform(s)" = None,
+        channel_density_non_uniform_nernsts: "list of ChannelDensityNonUniformNernst(s)" = None,
+        channel_density_non_uniform_ghks: "list of ChannelDensityNonUniformGHK(s)" = None,
+        spike_threshes: "list of SpikeThresh(s)" = None,
+        specific_capacitances: "list of SpecificCapacitance(s)" = None,
+        init_memb_potentials: "list of InitMembPotential(s)" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -23032,14 +23140,14 @@ class BiophysicalProperties2CaPools(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        membrane_properties2_ca_pools=None,
-        intracellular_properties2_ca_pools=None,
-        extracellular_properties=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        membrane_properties2_ca_pools: "one MembraneProperties2CaPools" = None,
+        intracellular_properties2_ca_pools: "one IntracellularProperties2CaPools" = None,
+        extracellular_properties: "one ExtracellularProperties" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -23345,14 +23453,14 @@ class BiophysicalProperties(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        membrane_properties=None,
-        intracellular_properties=None,
-        extracellular_properties=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        membrane_properties: "one MembraneProperties" = None,
+        intracellular_properties: "one IntracellularProperties" = None,
+        extracellular_properties: "one ExtracellularProperties" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -23617,7 +23725,9 @@ class SegmentEndPoint(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(self, segments=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self, segments: "one NonNegativeInteger" = None, gds_collector_=None, **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -23823,7 +23933,13 @@ class SubTree(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(self, from_=None, to=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self,
+        from_: "one SegmentEndPoint" = None,
+        to: "one SegmentEndPoint" = None,
+        gds_collector_=None,
+        **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -24040,7 +24156,13 @@ class Path(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(self, from_=None, to=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self,
+        from_: "one SegmentEndPoint" = None,
+        to: "one SegmentEndPoint" = None,
+        gds_collector_=None,
+        **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -24246,7 +24368,9 @@ class Include(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(self, segment_groups=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self, segment_groups: "one NmlId" = None, gds_collector_=None, **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -24456,7 +24580,9 @@ class Member(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(self, segments=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self, segments: "one NonNegativeInteger" = None, gds_collector_=None, **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -24646,7 +24772,9 @@ class DistalDetails(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(self, normalization_end=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self, normalization_end: "one double" = None, gds_collector_=None, **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -24825,7 +24953,9 @@ class ProximalDetails(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(self, translation_start=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self, translation_start: "one double" = None, gds_collector_=None, **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -25021,11 +25151,11 @@ class InhomogeneousParameter(Base):
 
     def __init__(
         self,
-        id=None,
-        variable=None,
-        metric=None,
-        proximal=None,
-        distal=None,
+        id: "one NmlId" = None,
+        variable: "one str" = None,
+        metric: "one Metric" = None,
+        proximal: "one ProximalDetails" = None,
+        distal: "one DistalDetails" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -25421,16 +25551,16 @@ class SegmentGroup(Base):
 
     def __init__(
         self,
-        id=None,
-        neuro_lex_id=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        members=None,
-        includes=None,
-        paths=None,
-        sub_trees=None,
-        inhomogeneous_parameters=None,
+        id: "one NonNegativeInteger" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        members: "list of Member(s)" = None,
+        includes: "list of Include(s)" = None,
+        paths: "list of Path(s)" = None,
+        sub_trees: "list of SubTree(s)" = None,
+        inhomogeneous_parameters: "list of InhomogeneousParameter(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -25943,7 +26073,13 @@ class Point3DWithDiam(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self, x=None, y=None, z=None, diameter=None, gds_collector_=None, **kwargs_
+        self,
+        x: "one double" = None,
+        y: "one double" = None,
+        z: "one double" = None,
+        diameter: "one DoubleGreaterThanZero" = None,
+        gds_collector_=None,
+        **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -26225,7 +26361,11 @@ class SegmentParent(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self, segments=None, fraction_along="1", gds_collector_=None, **kwargs_
+        self,
+        segments: "one NonNegativeInteger" = None,
+        fraction_along="1",
+        gds_collector_=None,
+        **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -26502,12 +26642,12 @@ class Segment(BaseNonNegativeIntegerId):
 
     def __init__(
         self,
-        id=None,
-        name=None,
-        neuro_lex_id=None,
-        parent=None,
-        proximal=None,
-        distal=None,
+        id: "one NonNegativeInteger" = None,
+        name: "one str" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        parent: "one SegmentParent" = None,
+        proximal: "one Point3DWithDiam" = None,
+        distal: "one Point3DWithDiam" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -26959,13 +27099,13 @@ class Morphology(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        segments=None,
-        segment_groups=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        segments: "list of Segment(s)" = None,
+        segment_groups: "list of SegmentGroup(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -27197,12 +27337,12 @@ class BaseCell(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
+        id: "one NmlId" = None,
+        metaid: "one NmlId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -27439,10 +27579,10 @@ class PlasticityMechanism(BaseWithoutId):
 
     def __init__(
         self,
-        type=None,
-        init_release_prob=None,
-        tau_rec=None,
-        tau_fac=None,
+        type: "one PlasticityTypes" = None,
+        init_release_prob: "one ZeroToOne" = None,
+        tau_rec: "one Nml2Quantity_time" = None,
+        tau_fac: "one Nml2Quantity_time" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -27820,11 +27960,11 @@ class BlockMechanism(BaseWithoutId):
 
     def __init__(
         self,
-        type=None,
-        species=None,
-        block_concentration=None,
-        scaling_conc=None,
-        scaling_volt=None,
+        type: "one BlockTypes" = None,
+        species: "one NmlId" = None,
+        block_concentration: "one Nml2Quantity_concentration" = None,
+        scaling_conc: "one Nml2Quantity_concentration" = None,
+        scaling_volt: "one Nml2Quantity_voltage" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -28232,12 +28372,12 @@ class BaseSynapse(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
+        id: "one NmlId" = None,
+        metaid: "one NmlId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -28492,15 +28632,15 @@ class FixedFactorConcentrationModel(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        ion=None,
-        resting_conc=None,
-        decay_constant=None,
-        rho=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        ion: "one NmlId" = None,
+        resting_conc: "one Nml2Quantity_concentration" = None,
+        decay_constant: "one Nml2Quantity_time" = None,
+        rho: "one Nml2Quantity_rhoFactor" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -28931,15 +29071,15 @@ class DecayingPoolConcentrationModel(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        ion=None,
-        resting_conc=None,
-        decay_constant=None,
-        shell_thickness=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        ion: "one NmlId" = None,
+        resting_conc: "one Nml2Quantity_concentration" = None,
+        decay_constant: "one Nml2Quantity_time" = None,
+        shell_thickness: "one Nml2Quantity_length" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -29380,11 +29520,11 @@ class HHTime(BaseWithoutId):
 
     def __init__(
         self,
-        type=None,
-        rate=None,
-        midpoint=None,
-        scale=None,
-        tau=None,
+        type: "one NmlId" = None,
+        rate: "one Nml2Quantity_time" = None,
+        midpoint: "one Nml2Quantity_voltage" = None,
+        scale: "one Nml2Quantity_voltage" = None,
+        tau: "one Nml2Quantity_time" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -29753,10 +29893,10 @@ class HHVariable(BaseWithoutId):
 
     def __init__(
         self,
-        type=None,
-        rate=None,
-        midpoint=None,
-        scale=None,
+        type: "one NmlId" = None,
+        rate: "one float" = None,
+        midpoint: "one Nml2Quantity_voltage" = None,
+        scale: "one Nml2Quantity_voltage" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -30065,10 +30205,10 @@ class HHRate(BaseWithoutId):
 
     def __init__(
         self,
-        type=None,
-        rate=None,
-        midpoint=None,
-        scale=None,
+        type: "one NmlId" = None,
+        rate: "one Nml2Quantity_pertime" = None,
+        midpoint: "one Nml2Quantity_voltage" = None,
+        scale: "one Nml2Quantity_voltage" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -30445,12 +30585,12 @@ class GateFractionalSubgate(Base):
 
     def __init__(
         self,
-        id=None,
-        fractional_conductance=None,
-        notes=None,
-        q10_settings=None,
-        steady_state=None,
-        time_course=None,
+        id: "one NmlId" = None,
+        fractional_conductance: "one Nml2Quantity_none" = None,
+        notes: "one str" = None,
+        q10_settings: "one Q10Settings" = None,
+        steady_state: "one HHVariable" = None,
+        time_course: "one HHTime" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -30863,11 +31003,11 @@ class GateFractional(Base):
 
     def __init__(
         self,
-        id=None,
-        instances=None,
-        notes=None,
-        q10_settings=None,
-        sub_gates=None,
+        id: "one NmlId" = None,
+        instances: "one PositiveInteger" = None,
+        notes: "one str" = None,
+        q10_settings: "one Q10Settings" = None,
+        sub_gates: "list of GateFractionalSubgate(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -31206,10 +31346,10 @@ class GateHHInstantaneous(Base):
 
     def __init__(
         self,
-        id=None,
-        instances=None,
-        notes=None,
-        steady_state=None,
+        id: "one NmlId" = None,
+        instances: "one PositiveInteger" = None,
+        notes: "one str" = None,
+        steady_state: "one HHVariable" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -31554,13 +31694,13 @@ class GateHHRatesInf(Base):
 
     def __init__(
         self,
-        id=None,
-        instances=None,
-        notes=None,
-        q10_settings=None,
-        forward_rate=None,
-        reverse_rate=None,
-        steady_state=None,
+        id: "one NmlId" = None,
+        instances: "one PositiveInteger" = None,
+        notes: "one str" = None,
+        q10_settings: "one Q10Settings" = None,
+        forward_rate: "one HHRate" = None,
+        reverse_rate: "one HHRate" = None,
+        steady_state: "one HHVariable" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -31974,13 +32114,13 @@ class GateHHRatesTau(Base):
 
     def __init__(
         self,
-        id=None,
-        instances=None,
-        notes=None,
-        q10_settings=None,
-        forward_rate=None,
-        reverse_rate=None,
-        time_course=None,
+        id: "one NmlId" = None,
+        instances: "one PositiveInteger" = None,
+        notes: "one str" = None,
+        q10_settings: "one Q10Settings" = None,
+        forward_rate: "one HHRate" = None,
+        reverse_rate: "one HHRate" = None,
+        time_course: "one HHTime" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -32402,14 +32542,14 @@ class GateHHRatesTauInf(Base):
 
     def __init__(
         self,
-        id=None,
-        instances=None,
-        notes=None,
-        q10_settings=None,
-        forward_rate=None,
-        reverse_rate=None,
-        time_course=None,
-        steady_state=None,
+        id: "one NmlId" = None,
+        instances: "one PositiveInteger" = None,
+        notes: "one str" = None,
+        q10_settings: "one Q10Settings" = None,
+        forward_rate: "one HHRate" = None,
+        reverse_rate: "one HHRate" = None,
+        time_course: "one HHTime" = None,
+        steady_state: "one HHVariable" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -32850,12 +32990,12 @@ class GateHHTauInf(Base):
 
     def __init__(
         self,
-        id=None,
-        instances=None,
-        notes=None,
-        q10_settings=None,
-        time_course=None,
-        steady_state=None,
+        id: "one NmlId" = None,
+        instances: "one PositiveInteger" = None,
+        notes: "one str" = None,
+        q10_settings: "one Q10Settings" = None,
+        time_course: "one HHTime" = None,
+        steady_state: "one HHVariable" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -33234,12 +33374,12 @@ class GateHHRates(Base):
 
     def __init__(
         self,
-        id=None,
-        instances=None,
-        notes=None,
-        q10_settings=None,
-        forward_rate=None,
-        reverse_rate=None,
+        id: "one NmlId" = None,
+        instances: "one PositiveInteger" = None,
+        notes: "one str" = None,
+        q10_settings: "one Q10Settings" = None,
+        forward_rate: "one HHRate" = None,
+        reverse_rate: "one HHRate" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -33643,16 +33783,16 @@ class GateHHUndetermined(Base):
 
     def __init__(
         self,
-        id=None,
-        instances=None,
-        type=None,
-        notes=None,
-        q10_settings=None,
-        forward_rate=None,
-        reverse_rate=None,
-        time_course=None,
-        steady_state=None,
-        sub_gates=None,
+        id: "one NmlId" = None,
+        instances: "one PositiveInteger" = None,
+        type: "one gateTypes" = None,
+        notes: "one str" = None,
+        q10_settings: "one Q10Settings" = None,
+        forward_rate: "one HHRate" = None,
+        reverse_rate: "one HHRate" = None,
+        time_course: "one HHTime" = None,
+        steady_state: "one HHVariable" = None,
+        sub_gates: "list of GateFractionalSubgate(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -34216,15 +34356,15 @@ class GateKS(Base):
 
     def __init__(
         self,
-        id=None,
-        instances=None,
-        notes=None,
-        q10_settings=None,
-        closed_states=None,
-        open_states=None,
-        forward_transition=None,
-        reverse_transition=None,
-        tau_inf_transition=None,
+        id: "one NmlId" = None,
+        instances: "one PositiveInteger" = None,
+        notes: "one str" = None,
+        q10_settings: "one Q10Settings" = None,
+        closed_states: "list of ClosedState(s)" = None,
+        open_states: "list of OpenState(s)" = None,
+        forward_transition: "list of ForwardTransition(s)" = None,
+        reverse_transition: "list of ReverseTransition(s)" = None,
+        tau_inf_transition: "list of TauInfTransition(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -34665,11 +34805,11 @@ class TauInfTransition(Base):
 
     def __init__(
         self,
-        id=None,
-        from_=None,
-        to=None,
-        steady_state=None,
-        time_course=None,
+        id: "one NmlId" = None,
+        from_: "one NmlId" = None,
+        to: "one NmlId" = None,
+        steady_state: "one HHVariable" = None,
+        time_course: "one HHTime" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -34970,9 +35110,9 @@ class ReverseTransition(Base):
 
     def __init__(
         self,
-        id=None,
-        from_=None,
-        to=None,
+        id: "one NmlId" = None,
+        from_: "one NmlId" = None,
+        to: "one NmlId" = None,
         anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_
@@ -35230,9 +35370,9 @@ class ForwardTransition(Base):
 
     def __init__(
         self,
-        id=None,
-        from_=None,
-        to=None,
+        id: "one NmlId" = None,
+        from_: "one NmlId" = None,
+        to: "one NmlId" = None,
         anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_
@@ -35482,7 +35622,7 @@ class OpenState(Base):
     subclass = None
     superclass = Base
 
-    def __init__(self, id=None, gds_collector_=None, **kwargs_):
+    def __init__(self, id: "one NmlId" = None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -35631,7 +35771,7 @@ class ClosedState(Base):
     subclass = None
     superclass = Base
 
-    def __init__(self, id=None, gds_collector_=None, **kwargs_):
+    def __init__(self, id: "one NmlId" = None, gds_collector_=None, **kwargs_):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -35803,7 +35943,11 @@ class Q10ConductanceScaling(BaseWithoutId):
     superclass = BaseWithoutId
 
     def __init__(
-        self, q10_factor=None, experimental_temp=None, gds_collector_=None, **kwargs_
+        self,
+        q10_factor: "one Nml2Quantity_none" = None,
+        experimental_temp: "one Nml2Quantity_temperature" = None,
+        gds_collector_=None,
+        **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -36124,15 +36268,15 @@ class IonChannelKS(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        species=None,
-        conductance=None,
-        neuro_lex_id=None,
-        gate_kses=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        species: "one NmlId" = None,
+        conductance: "one Nml2Quantity_conductance" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        gate_kses: "list of GateKS(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -36499,13 +36643,13 @@ class IonChannelScalable(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        q10_conductance_scalings=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        q10_conductance_scalings: "list of Q10ConductanceScaling(s)" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -37649,78 +37793,78 @@ class NeuroMLDocument(Standalone):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        includes=None,
-        extracellular_properties=None,
-        intracellular_properties=None,
-        morphology=None,
-        ion_channel=None,
-        ion_channel_hhs=None,
-        ion_channel_v_shifts=None,
-        ion_channel_kses=None,
-        decaying_pool_concentration_models=None,
-        fixed_factor_concentration_models=None,
-        alpha_current_synapses=None,
-        alpha_synapses=None,
-        exp_one_synapses=None,
-        exp_two_synapses=None,
-        exp_three_synapses=None,
-        blocking_plastic_synapses=None,
-        double_synapses=None,
-        gap_junctions=None,
-        silent_synapses=None,
-        linear_graded_synapses=None,
-        graded_synapses=None,
-        biophysical_properties=None,
-        cells=None,
-        cell2_ca_poolses=None,
-        base_cells=None,
-        iaf_tau_cells=None,
-        iaf_tau_ref_cells=None,
-        iaf_cells=None,
-        iaf_ref_cells=None,
-        izhikevich_cells=None,
-        izhikevich2007_cells=None,
-        ad_ex_ia_f_cells=None,
-        fitz_hugh_nagumo_cells=None,
-        fitz_hugh_nagumo1969_cells=None,
-        pinsky_rinzel_ca3_cells=None,
-        pulse_generators=None,
-        pulse_generator_dls=None,
-        sine_generators=None,
-        sine_generator_dls=None,
-        ramp_generators=None,
-        ramp_generator_dls=None,
-        compound_inputs=None,
-        compound_input_dls=None,
-        voltage_clamps=None,
-        voltage_clamp_triples=None,
-        spike_arrays=None,
-        timed_synaptic_inputs=None,
-        spike_generators=None,
-        spike_generator_randoms=None,
-        spike_generator_poissons=None,
-        spike_generator_ref_poissons=None,
-        poisson_firing_synapses=None,
-        transient_poisson_firing_synapses=None,
-        IF_curr_alpha=None,
-        IF_curr_exp=None,
-        IF_cond_alpha=None,
-        IF_cond_exp=None,
-        EIF_cond_exp_isfa_ista=None,
-        EIF_cond_alpha_isfa_ista=None,
-        HH_cond_exp=None,
-        exp_cond_synapses=None,
-        alpha_cond_synapses=None,
-        exp_curr_synapses=None,
-        alpha_curr_synapses=None,
-        SpikeSourcePoisson=None,
-        networks=None,
-        ComponentType=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        includes: "list of IncludeType(s)" = None,
+        extracellular_properties: "list of ExtracellularProperties(s)" = None,
+        intracellular_properties: "list of IntracellularProperties(s)" = None,
+        morphology: "list of Morphology(s)" = None,
+        ion_channel: "list of IonChannel(s)" = None,
+        ion_channel_hhs: "list of IonChannelHH(s)" = None,
+        ion_channel_v_shifts: "list of IonChannelVShift(s)" = None,
+        ion_channel_kses: "list of IonChannelKS(s)" = None,
+        decaying_pool_concentration_models: "list of DecayingPoolConcentrationModel(s)" = None,
+        fixed_factor_concentration_models: "list of FixedFactorConcentrationModel(s)" = None,
+        alpha_current_synapses: "list of AlphaCurrentSynapse(s)" = None,
+        alpha_synapses: "list of AlphaSynapse(s)" = None,
+        exp_one_synapses: "list of ExpOneSynapse(s)" = None,
+        exp_two_synapses: "list of ExpTwoSynapse(s)" = None,
+        exp_three_synapses: "list of ExpThreeSynapse(s)" = None,
+        blocking_plastic_synapses: "list of BlockingPlasticSynapse(s)" = None,
+        double_synapses: "list of DoubleSynapse(s)" = None,
+        gap_junctions: "list of GapJunction(s)" = None,
+        silent_synapses: "list of SilentSynapse(s)" = None,
+        linear_graded_synapses: "list of LinearGradedSynapse(s)" = None,
+        graded_synapses: "list of GradedSynapse(s)" = None,
+        biophysical_properties: "list of BiophysicalProperties(s)" = None,
+        cells: "list of Cell(s)" = None,
+        cell2_ca_poolses: "list of Cell2CaPools(s)" = None,
+        base_cells: "list of BaseCell(s)" = None,
+        iaf_tau_cells: "list of IafTauCell(s)" = None,
+        iaf_tau_ref_cells: "list of IafTauRefCell(s)" = None,
+        iaf_cells: "list of IafCell(s)" = None,
+        iaf_ref_cells: "list of IafRefCell(s)" = None,
+        izhikevich_cells: "list of IzhikevichCell(s)" = None,
+        izhikevich2007_cells: "list of Izhikevich2007Cell(s)" = None,
+        ad_ex_ia_f_cells: "list of AdExIaFCell(s)" = None,
+        fitz_hugh_nagumo_cells: "list of FitzHughNagumoCell(s)" = None,
+        fitz_hugh_nagumo1969_cells: "list of FitzHughNagumo1969Cell(s)" = None,
+        pinsky_rinzel_ca3_cells: "list of PinskyRinzelCA3Cell(s)" = None,
+        pulse_generators: "list of PulseGenerator(s)" = None,
+        pulse_generator_dls: "list of PulseGeneratorDL(s)" = None,
+        sine_generators: "list of SineGenerator(s)" = None,
+        sine_generator_dls: "list of SineGeneratorDL(s)" = None,
+        ramp_generators: "list of RampGenerator(s)" = None,
+        ramp_generator_dls: "list of RampGeneratorDL(s)" = None,
+        compound_inputs: "list of CompoundInput(s)" = None,
+        compound_input_dls: "list of CompoundInputDL(s)" = None,
+        voltage_clamps: "list of VoltageClamp(s)" = None,
+        voltage_clamp_triples: "list of VoltageClampTriple(s)" = None,
+        spike_arrays: "list of SpikeArray(s)" = None,
+        timed_synaptic_inputs: "list of TimedSynapticInput(s)" = None,
+        spike_generators: "list of SpikeGenerator(s)" = None,
+        spike_generator_randoms: "list of SpikeGeneratorRandom(s)" = None,
+        spike_generator_poissons: "list of SpikeGeneratorPoisson(s)" = None,
+        spike_generator_ref_poissons: "list of SpikeGeneratorRefPoisson(s)" = None,
+        poisson_firing_synapses: "list of PoissonFiringSynapse(s)" = None,
+        transient_poisson_firing_synapses: "list of TransientPoissonFiringSynapse(s)" = None,
+        IF_curr_alpha: "list of IF_curr_alpha(s)" = None,
+        IF_curr_exp: "list of IF_curr_exp(s)" = None,
+        IF_cond_alpha: "list of IF_cond_alpha(s)" = None,
+        IF_cond_exp: "list of IF_cond_exp(s)" = None,
+        EIF_cond_exp_isfa_ista: "list of EIF_cond_exp_isfa_ista(s)" = None,
+        EIF_cond_alpha_isfa_ista: "list of EIF_cond_alpha_isfa_ista(s)" = None,
+        HH_cond_exp: "list of HH_cond_exp(s)" = None,
+        exp_cond_synapses: "list of ExpCondSynapse(s)" = None,
+        alpha_cond_synapses: "list of AlphaCondSynapse(s)" = None,
+        exp_curr_synapses: "list of ExpCurrSynapse(s)" = None,
+        alpha_curr_synapses: "list of AlphaCurrSynapse(s)" = None,
+        SpikeSourcePoisson: "list of SpikeSourcePoisson(s)" = None,
+        networks: "list of Network(s)" = None,
+        ComponentType: "list of ComponentType(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -40303,10 +40447,10 @@ class NamedDimensionalVariable(BaseWithoutId):
 
     def __init__(
         self,
-        name=None,
-        dimension=None,
-        description=None,
-        exposure=None,
+        name: "one str" = None,
+        dimension: "one str" = None,
+        description: "one str" = None,
+        exposure: "one str" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -40586,9 +40730,9 @@ class NamedDimensionalType(BaseWithoutId):
 
     def __init__(
         self,
-        name=None,
-        dimension=None,
-        description=None,
+        name: "one str" = None,
+        dimension: "one str" = None,
+        description: "one str" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -40846,9 +40990,9 @@ class Exposure(BaseWithoutId):
 
     def __init__(
         self,
-        name=None,
-        dimension=None,
-        description=None,
+        name: "one str" = None,
+        dimension: "one str" = None,
+        description: "one str" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -41072,10 +41216,10 @@ class Constant(BaseWithoutId):
 
     def __init__(
         self,
-        name=None,
-        dimension=None,
-        value=None,
-        description=None,
+        name: "one str" = None,
+        dimension: "one str" = None,
+        value: "one Nml2Quantity" = None,
+        description: "one str" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -41509,7 +41653,13 @@ class Property(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(self, tag=None, value=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self,
+        tag: "one str" = None,
+        value: "one str" = None,
+        gds_collector_=None,
+        **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
@@ -41702,13 +41852,13 @@ class BasePynnSynapse(BaseSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        tau_syn=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NmlId" = None,
+        tau_syn: "one float" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -41929,17 +42079,17 @@ class basePyNNCell(BaseCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        cm=None,
-        i_offset=None,
-        tau_syn_E=None,
-        tau_syn_I=None,
-        v_init=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        cm: "one float" = None,
+        i_offset: "one float" = None,
+        tau_syn_E: "one float" = None,
+        tau_syn_I: "one float" = None,
+        v_init: "one float" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -42204,12 +42354,12 @@ class InputW(Input):
 
     def __init__(
         self,
-        id=None,
-        target=None,
-        destination=None,
-        segment_id=None,
-        fraction_along=None,
-        weight=None,
+        id: "one NonNegativeInteger" = None,
+        target: "one str" = None,
+        destination: "one NmlId" = None,
+        segment_id: "one NonNegativeInteger" = None,
+        fraction_along: "one ZeroToOne" = None,
+        weight: "one float" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -42436,12 +42586,12 @@ class ContinuousProjection(BaseProjection):
 
     def __init__(
         self,
-        id=None,
-        presynaptic_population=None,
-        postsynaptic_population=None,
-        continuous_connections=None,
-        continuous_connection_instances=None,
-        continuous_connection_instance_ws=None,
+        id: "one NmlId" = None,
+        presynaptic_population: "one NmlId" = None,
+        postsynaptic_population: "one NmlId" = None,
+        continuous_connections: "list of ContinuousConnection(s)" = None,
+        continuous_connection_instances: "list of ContinuousConnectionInstance(s)" = None,
+        continuous_connection_instance_ws: "list of ContinuousConnectionInstanceW(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -42846,12 +42996,12 @@ class ElectricalProjection(BaseProjection):
 
     def __init__(
         self,
-        id=None,
-        presynaptic_population=None,
-        postsynaptic_population=None,
-        electrical_connections=None,
-        electrical_connection_instances=None,
-        electrical_connection_instance_ws=None,
+        id: "one NmlId" = None,
+        presynaptic_population: "one NmlId" = None,
+        postsynaptic_population: "one NmlId" = None,
+        electrical_connections: "list of ElectricalConnection(s)" = None,
+        electrical_connection_instances: "list of ElectricalConnectionInstance(s)" = None,
+        electrical_connection_instance_ws: "list of ElectricalConnectionInstanceW(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -43246,12 +43396,12 @@ class BaseConnectionNewFormat(BaseConnection):
 
     def __init__(
         self,
-        id=None,
-        neuro_lex_id=None,
-        pre_cell=None,
+        id: "one NmlId" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        pre_cell: "one str" = None,
         pre_segment="0",
         pre_fraction_along="0.5",
-        post_cell=None,
+        post_cell: "one str" = None,
         post_segment="0",
         post_fraction_along="0.5",
         extensiontype_=None,
@@ -43670,12 +43820,12 @@ class BaseConnectionOldFormat(BaseConnection):
 
     def __init__(
         self,
-        id=None,
-        neuro_lex_id=None,
-        pre_cell_id=None,
+        id: "one NmlId" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        pre_cell_id: "one NonNegativeInteger" = None,
         pre_segment_id="0",
         pre_fraction_along="0.5",
-        post_cell_id=None,
+        post_cell_id: "one str" = None,
         post_segment_id="0",
         post_fraction_along="0.5",
         extensiontype_=None,
@@ -44088,12 +44238,12 @@ class Projection(BaseProjection):
 
     def __init__(
         self,
-        id=None,
-        presynaptic_population=None,
-        postsynaptic_population=None,
-        synapse=None,
-        connections=None,
-        connection_wds=None,
+        id: "one NmlId" = None,
+        presynaptic_population: "one NmlId" = None,
+        postsynaptic_population: "one NmlId" = None,
+        synapse: "one NmlId" = None,
+        connections: "list of Connection(s)" = None,
+        connection_wds: "list of ConnectionWD(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -44475,13 +44625,13 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        average_rate=None,
-        minimum_isi=None,
+        id: "one NonNegativeInteger" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        average_rate: "one Nml2Quantity_pertime" = None,
+        minimum_isi: "one Nml2Quantity_time" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -44707,7 +44857,11 @@ class IntracellularProperties2CaPools(IntracellularProperties):
     superclass = IntracellularProperties
 
     def __init__(
-        self, species=None, resistivities=None, gds_collector_=None, **kwargs_
+        self,
+        species: "list of Species(s)" = None,
+        resistivities: "list of Resistivity(s)" = None,
+        gds_collector_=None,
+        **kwargs_
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
@@ -44880,15 +45034,15 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        ion=None,
-        resting_conc=None,
-        decay_constant=None,
-        shell_thickness=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        ion: "one NmlId" = None,
+        resting_conc: "one Nml2Quantity_concentration" = None,
+        decay_constant: "one Nml2Quantity_time" = None,
+        shell_thickness: "one Nml2Quantity_length" = None,
         type="decayingPoolConcentrationModel",
         gds_collector_=None,
         **kwargs_
@@ -45091,13 +45245,13 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
 
     def __init__(
         self,
-        id=None,
-        ion_channel=None,
-        cond_density=None,
+        id: "one NmlId" = None,
+        ion_channel: "one NmlId" = None,
+        cond_density: "one Nml2Quantity_conductanceDensity" = None,
         segment_groups="all",
-        segments=None,
-        ion=None,
-        variable_parameters=None,
+        segments: "one NonNegativeInteger" = None,
+        ion: "one NmlId" = None,
+        variable_parameters: "list of VariableParameter(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -45291,15 +45445,15 @@ class ChannelDensityVShift(ChannelDensity):
 
     def __init__(
         self,
-        id=None,
-        ion_channel=None,
-        cond_density=None,
-        erev=None,
+        id: "one NmlId" = None,
+        ion_channel: "one NmlId" = None,
+        cond_density: "one Nml2Quantity_conductanceDensity" = None,
+        erev: "one Nml2Quantity_voltage" = None,
         segment_groups="all",
-        segments=None,
-        ion=None,
-        variable_parameters=None,
-        v_shift=None,
+        segments: "one NonNegativeInteger" = None,
+        ion: "one NmlId" = None,
+        variable_parameters: "list of VariableParameter(s)" = None,
+        v_shift: "one Nml2Quantity_voltage" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -45546,19 +45700,19 @@ class MembraneProperties2CaPools(MembraneProperties):
 
     def __init__(
         self,
-        channel_populations=None,
-        channel_densities=None,
-        channel_density_v_shifts=None,
-        channel_density_nernsts=None,
-        channel_density_ghks=None,
-        channel_density_ghk2s=None,
-        channel_density_non_uniforms=None,
-        channel_density_non_uniform_nernsts=None,
-        channel_density_non_uniform_ghks=None,
-        spike_threshes=None,
-        specific_capacitances=None,
-        init_memb_potentials=None,
-        channel_density_nernst_ca2s=None,
+        channel_populations: "list of ChannelPopulation(s)" = None,
+        channel_densities: "list of ChannelDensity(s)" = None,
+        channel_density_v_shifts: "list of ChannelDensityVShift(s)" = None,
+        channel_density_nernsts: "list of ChannelDensityNernst(s)" = None,
+        channel_density_ghks: "list of ChannelDensityGHK(s)" = None,
+        channel_density_ghk2s: "list of ChannelDensityGHK2(s)" = None,
+        channel_density_non_uniforms: "list of ChannelDensityNonUniform(s)" = None,
+        channel_density_non_uniform_nernsts: "list of ChannelDensityNonUniformNernst(s)" = None,
+        channel_density_non_uniform_ghks: "list of ChannelDensityNonUniformGHK(s)" = None,
+        spike_threshes: "list of SpikeThresh(s)" = None,
+        specific_capacitances: "list of SpecificCapacitance(s)" = None,
+        init_memb_potentials: "list of InitMembPotential(s)" = None,
+        channel_density_nernst_ca2s: "list of ChannelDensityNernstCa2(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -45812,16 +45966,16 @@ class Cell(BaseCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        morphology_attr=None,
-        biophysical_properties_attr=None,
-        morphology=None,
-        biophysical_properties=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        morphology_attr: "one NmlId" = None,
+        biophysical_properties_attr: "one NmlId" = None,
+        morphology: "one Morphology" = None,
+        biophysical_properties: "one BiophysicalProperties" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -47052,33 +47206,33 @@ class PinskyRinzelCA3Cell(BaseCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        i_soma=None,
-        i_dend=None,
-        gc=None,
-        g_ls=None,
-        g_ld=None,
-        g_na=None,
-        g_kdr=None,
-        g_ca=None,
-        g_kahp=None,
-        g_kc=None,
-        g_nmda=None,
-        g_ampa=None,
-        e_na=None,
-        e_ca=None,
-        e_k=None,
-        e_l=None,
-        qd0=None,
-        pp=None,
-        alphac=None,
-        betac=None,
-        cm=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        i_soma: "one Nml2Quantity_currentDensity" = None,
+        i_dend: "one Nml2Quantity_currentDensity" = None,
+        gc: "one Nml2Quantity_conductanceDensity" = None,
+        g_ls: "one Nml2Quantity_conductanceDensity" = None,
+        g_ld: "one Nml2Quantity_conductanceDensity" = None,
+        g_na: "one Nml2Quantity_conductanceDensity" = None,
+        g_kdr: "one Nml2Quantity_conductanceDensity" = None,
+        g_ca: "one Nml2Quantity_conductanceDensity" = None,
+        g_kahp: "one Nml2Quantity_conductanceDensity" = None,
+        g_kc: "one Nml2Quantity_conductanceDensity" = None,
+        g_nmda: "one Nml2Quantity_conductanceDensity" = None,
+        g_ampa: "one Nml2Quantity_conductanceDensity" = None,
+        e_na: "one Nml2Quantity_voltage" = None,
+        e_ca: "one Nml2Quantity_voltage" = None,
+        e_k: "one Nml2Quantity_voltage" = None,
+        e_l: "one Nml2Quantity_voltage" = None,
+        qd0: "one Nml2Quantity_none" = None,
+        pp: "one Nml2Quantity_none" = None,
+        alphac: "one Nml2Quantity_none" = None,
+        betac: "one Nml2Quantity_none" = None,
+        cm: "one Nml2Quantity_specificCapacitance" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -47939,18 +48093,18 @@ class FitzHughNagumo1969Cell(BaseCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        a=None,
-        b=None,
-        I=None,
-        phi=None,
-        V0=None,
-        W0=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        a: "one Nml2Quantity_none" = None,
+        b: "one Nml2Quantity_none" = None,
+        I: "one Nml2Quantity_none" = None,
+        phi: "one Nml2Quantity_none" = None,
+        V0: "one Nml2Quantity_none" = None,
+        W0: "one Nml2Quantity_none" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -48273,13 +48427,13 @@ class FitzHughNagumoCell(BaseCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        I=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        I: "one Nml2Quantity_none" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -48505,13 +48659,13 @@ class BaseCellMembPotCap(BaseCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        C=None,
+        id: "one NmlId" = None,
+        metaid: "one NmlId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        C: "one Nml2Quantity_capacitance" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -48787,17 +48941,17 @@ class IzhikevichCell(BaseCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        v0=None,
-        thresh=None,
-        a=None,
-        b=None,
-        c=None,
+        id: "one Nml2Quantity_none" = None,
+        metaid: "one NmlId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        v0: "one Nml2Quantity_voltage" = None,
+        thresh: "one Nml2Quantity_voltage" = None,
+        a: "one Nml2Quantity_none" = None,
+        b: "one Nml2Quantity_none" = None,
+        c: "one Nml2Quantity_none" = None,
         d=None,
         gds_collector_=None,
         **kwargs_
@@ -49181,17 +49335,17 @@ class IafCell(BaseCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        leak_reversal=None,
-        thresh=None,
-        reset=None,
-        C=None,
-        leak_conductance=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        leak_reversal: "one Nml2Quantity_voltage" = None,
+        thresh: "one Nml2Quantity_voltage" = None,
+        reset: "one Nml2Quantity_voltage" = None,
+        C: "one Nml2Quantity_capacitance" = None,
+        leak_conductance: "one Nml2Quantity_conductance" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -49626,16 +49780,16 @@ class IafTauCell(BaseCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        leak_reversal=None,
-        thresh=None,
-        reset=None,
-        tau=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        leak_reversal: "one Nml2Quantity_voltage" = None,
+        thresh: "one Nml2Quantity_voltage" = None,
+        reset: "one Nml2Quantity_voltage" = None,
+        tau: "one Nml2Quantity_time" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -50002,17 +50156,17 @@ class GradedSynapse(BaseSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        conductance=None,
-        delta=None,
-        Vth=None,
-        k=None,
-        erev=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        conductance: "one Nml2Quantity_conductance" = None,
+        delta: "one Nml2Quantity_voltage" = None,
+        Vth: "one Nml2Quantity_voltage" = None,
+        k: "one Nml2Quantity_pertime" = None,
+        erev: "one Nml2Quantity_voltage" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -50396,13 +50550,13 @@ class LinearGradedSynapse(BaseSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        conductance=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        conductance: "one Nml2Quantity_conductance" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -50627,12 +50781,12 @@ class SilentSynapse(BaseSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -50801,13 +50955,13 @@ class GapJunction(BaseSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        conductance=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        conductance: "one Nml2Quantity_conductance" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -51020,12 +51174,12 @@ class BaseCurrentBasedSynapse(BaseSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
+        id: "one NmlId" = None,
+        metaid: "one NmlId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -51220,12 +51374,12 @@ class BaseVoltageDepSynapse(BaseSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
+        id: "one NmlId" = None,
+        metaid: "one NmlId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -51537,24 +51691,24 @@ class IonChannel(IonChannelScalable):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        q10_conductance_scalings=None,
-        species=None,
-        type=None,
-        conductance=None,
-        gates=None,
-        gate_hh_rates=None,
-        gate_h_hrates_taus=None,
-        gate_hh_tau_infs=None,
-        gate_h_hrates_infs=None,
-        gate_h_hrates_tau_infs=None,
-        gate_hh_instantaneouses=None,
-        gate_fractionals=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        q10_conductance_scalings: "list of Q10ConductanceScaling(s)" = None,
+        species: "one NmlId" = None,
+        type: "one channelTypes" = None,
+        conductance: "one Nml2Quantity_conductance" = None,
+        gates: "list of GateHHUndetermined(s)" = None,
+        gate_hh_rates: "list of GateHHRates(s)" = None,
+        gate_h_hrates_taus: "list of GateHHRatesTau(s)" = None,
+        gate_hh_tau_infs: "list of GateHHTauInf(s)" = None,
+        gate_h_hrates_infs: "list of GateHHRatesInf(s)" = None,
+        gate_h_hrates_tau_infs: "list of GateHHRatesTauInf(s)" = None,
+        gate_hh_instantaneouses: "list of GateHHInstantaneous(s)" = None,
+        gate_fractionals: "list of GateFractional(s)" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -52137,11 +52291,11 @@ class ConditionalDerivedVariable(NamedDimensionalVariable):
 
     def __init__(
         self,
-        name=None,
-        dimension=None,
-        description=None,
-        exposure=None,
-        Case=None,
+        name: "one str" = None,
+        dimension: "one str" = None,
+        description: "one str" = None,
+        exposure: "one str" = None,
+        Case: "list of Case(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -52338,10 +52492,10 @@ class StateVariable(NamedDimensionalVariable):
 
     def __init__(
         self,
-        name=None,
-        dimension=None,
-        description=None,
-        exposure=None,
+        name: "one str" = None,
+        dimension: "one str" = None,
+        description: "one str" = None,
+        exposure: "one str" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -52500,12 +52654,12 @@ class DerivedVariable(NamedDimensionalVariable):
 
     def __init__(
         self,
-        name=None,
-        dimension=None,
-        description=None,
-        exposure=None,
-        value=None,
-        select=None,
+        name: "one str" = None,
+        dimension: "one str" = None,
+        description: "one str" = None,
+        exposure: "one str" = None,
+        value: "one str" = None,
+        select: "one str" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -52699,9 +52853,9 @@ class Requirement(NamedDimensionalType):
 
     def __init__(
         self,
-        name=None,
-        dimension=None,
-        description=None,
+        name: "one str" = None,
+        dimension: "one str" = None,
+        description: "one str" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -52863,10 +53017,10 @@ class LEMS_Property(NamedDimensionalType):
 
     def __init__(
         self,
-        name=None,
-        dimension=None,
-        description=None,
-        default_value=None,
+        name: "one str" = None,
+        dimension: "one str" = None,
+        description: "one str" = None,
+        default_value: "one double" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -53037,9 +53191,9 @@ class Parameter(NamedDimensionalType):
 
     def __init__(
         self,
-        name=None,
-        dimension=None,
-        description=None,
+        name: "one str" = None,
+        dimension: "one str" = None,
+        description: "one str" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -53195,13 +53349,13 @@ class AlphaCurrSynapse(BasePynnSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        tau_syn=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        tau_syn: "one float" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -53370,13 +53524,13 @@ class ExpCurrSynapse(BasePynnSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        tau_syn=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        tau_syn: "one float" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -53541,14 +53695,14 @@ class AlphaCondSynapse(BasePynnSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        tau_syn=None,
-        e_rev=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        tau_syn: "one float" = None,
+        e_rev: "one float" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -53735,14 +53889,14 @@ class ExpCondSynapse(BasePynnSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        tau_syn=None,
-        e_rev=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        tau_syn: "one float" = None,
+        e_rev: "one float" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -53967,26 +54121,26 @@ class HH_cond_exp(basePyNNCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        cm=None,
-        i_offset=None,
-        tau_syn_E=None,
-        tau_syn_I=None,
-        v_init=None,
-        v_offset=None,
-        e_rev_E=None,
-        e_rev_I=None,
-        e_rev_K=None,
-        e_rev_Na=None,
-        e_rev_leak=None,
-        g_leak=None,
-        gbar_K=None,
-        gbar_Na=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        cm: "one float" = None,
+        i_offset: "one float" = None,
+        tau_syn_E: "one float" = None,
+        tau_syn_I: "one float" = None,
+        v_init: "one float" = None,
+        v_offset: "one float" = None,
+        e_rev_E: "one float" = None,
+        e_rev_I: "one float" = None,
+        e_rev_K: "one float" = None,
+        e_rev_Na: "one float" = None,
+        e_rev_leak: "one float" = None,
+        g_leak: "one float" = None,
+        gbar_K: "one float" = None,
+        gbar_Na: "one float" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -54327,22 +54481,22 @@ class basePyNNIaFCell(basePyNNCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        cm=None,
-        i_offset=None,
-        tau_syn_E=None,
-        tau_syn_I=None,
-        v_init=None,
-        tau_m=None,
-        tau_refrac=None,
-        v_reset=None,
-        v_rest=None,
-        v_thresh=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        cm: "one float" = None,
+        i_offset: "one float" = None,
+        tau_syn_E: "one float" = None,
+        tau_syn_I: "one float" = None,
+        v_init: "one float" = None,
+        tau_m: "one float" = None,
+        tau_refrac: "one float" = None,
+        v_reset: "one float" = None,
+        v_rest: "one float" = None,
+        v_thresh: "one float" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -54616,16 +54770,16 @@ class ContinuousConnection(BaseConnectionNewFormat):
 
     def __init__(
         self,
-        id=None,
-        neuro_lex_id=None,
-        pre_cell=None,
+        id: "one NonNegativeInteger" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        pre_cell: "one str" = None,
         pre_segment="0",
         pre_fraction_along="0.5",
-        post_cell=None,
+        post_cell: "one str" = None,
         post_segment="0",
         post_fraction_along="0.5",
-        pre_component=None,
-        post_component=None,
+        pre_component: "one NmlId" = None,
+        post_component: "one NmlId" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -54993,15 +55147,15 @@ class ElectricalConnection(BaseConnectionNewFormat):
 
     def __init__(
         self,
-        id=None,
-        neuro_lex_id=None,
-        pre_cell=None,
+        id: "one NonNegativeInteger" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        pre_cell: "one str" = None,
         pre_segment="0",
         pre_fraction_along="0.5",
-        post_cell=None,
+        post_cell: "one str" = None,
         post_segment="0",
         post_fraction_along="0.5",
-        synapse=None,
+        synapse: "one NmlId" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -55346,16 +55500,16 @@ class ConnectionWD(BaseConnectionOldFormat):
 
     def __init__(
         self,
-        id=None,
-        neuro_lex_id=None,
-        pre_cell_id=None,
+        id: "one NonNegativeInteger" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        pre_cell_id: "one str" = None,
         pre_segment_id="0",
         pre_fraction_along="0.5",
-        post_cell_id=None,
+        post_cell_id: "one str" = None,
         post_segment_id="0",
         post_fraction_along="0.5",
-        weight=None,
-        delay=None,
+        weight: "one float" = None,
+        delay: "one Nml2Quantity_time" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -55705,12 +55859,12 @@ class Connection(BaseConnectionOldFormat):
 
     def __init__(
         self,
-        id=None,
-        neuro_lex_id=None,
-        pre_cell_id=None,
+        id: "one NonNegativeInteger" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        pre_cell_id: "one str" = None,
         pre_segment_id="0",
         pre_fraction_along="0.5",
-        post_cell_id=None,
+        post_cell_id: "one str" = None,
         post_segment_id="0",
         post_fraction_along="0.5",
         gds_collector_=None,
@@ -55972,17 +56126,17 @@ class Cell2CaPools(Cell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        morphology_attr=None,
-        biophysical_properties_attr=None,
-        morphology=None,
-        biophysical_properties=None,
-        biophysical_properties2_ca_pools=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        morphology_attr: "one NmlId" = None,
+        biophysical_properties_attr: "one NmlId" = None,
+        morphology: "one Morphology" = None,
+        biophysical_properties: "one BiophysicalProperties" = None,
+        biophysical_properties2_ca_pools: "one BiophysicalProperties2CaPools" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -56244,23 +56398,23 @@ class AdExIaFCell(BaseCellMembPotCap):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        C=None,
-        g_l=None,
-        EL=None,
-        reset=None,
-        VT=None,
-        thresh=None,
-        del_t=None,
-        tauw=None,
-        refract=None,
-        a=None,
-        b=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        C: "one Nml2Quantity_capacitance" = None,
+        g_l: "one Nml2Quantity_conductance" = None,
+        EL: "one Nml2Quantity_voltage" = None,
+        reset: "one Nml2Quantity_voltage" = None,
+        VT: "one Nml2Quantity_voltage" = None,
+        thresh: "one Nml2Quantity_voltage" = None,
+        del_t: "one Nml2Quantity_voltage" = None,
+        tauw: "one Nml2Quantity_time" = None,
+        refract: "one Nml2Quantity_time" = None,
+        a: "one Nml2Quantity_conductance" = None,
+        b: "one Nml2Quantity_current" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -56833,21 +56987,21 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        C=None,
-        v0=None,
-        k=None,
-        vr=None,
-        vt=None,
-        vpeak=None,
-        a=None,
-        b=None,
-        c=None,
+        id: "one Nml2Quantity_current" = None,
+        metaid: "one NmlId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        C: "one Nml2Quantity_capacitance" = None,
+        v0: "one Nml2Quantity_voltage" = None,
+        k: "one Nml2Quantity_conductancePerVoltage" = None,
+        vr: "one Nml2Quantity_voltage" = None,
+        vt: "one Nml2Quantity_voltage" = None,
+        vpeak: "one Nml2Quantity_voltage" = None,
+        a: "one Nml2Quantity_pertime" = None,
+        b: "one Nml2Quantity_conductance" = None,
+        c: "one Nml2Quantity_voltage" = None,
         d=None,
         gds_collector_=None,
         **kwargs_
@@ -57390,18 +57544,18 @@ class IafRefCell(IafCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        leak_reversal=None,
-        thresh=None,
-        reset=None,
-        C=None,
-        leak_conductance=None,
-        refract=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        leak_reversal: "one Nml2Quantity_voltage" = None,
+        thresh: "one Nml2Quantity_voltage" = None,
+        reset: "one Nml2Quantity_voltage" = None,
+        C: "one Nml2Quantity_capacitance" = None,
+        leak_conductance: "one Nml2Quantity_conductance" = None,
+        refract: "one Nml2Quantity_time" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -57637,17 +57791,17 @@ class IafTauRefCell(IafTauCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        leak_reversal=None,
-        thresh=None,
-        reset=None,
-        tau=None,
-        refract=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        leak_reversal: "one Nml2Quantity_voltage" = None,
+        thresh: "one Nml2Quantity_voltage" = None,
+        reset: "one Nml2Quantity_voltage" = None,
+        tau: "one Nml2Quantity_time" = None,
+        refract: "one Nml2Quantity_time" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -57887,16 +58041,16 @@ class DoubleSynapse(BaseVoltageDepSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        synapse1=None,
-        synapse2=None,
-        synapse1_path=None,
-        synapse2_path=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        synapse1: "one NmlId" = None,
+        synapse2: "one NmlId" = None,
+        synapse1_path: "one str" = None,
+        synapse2_path: "one str" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -58182,14 +58336,14 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        tau=None,
-        ibase=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        tau: "one Nml2Quantity_time" = None,
+        ibase: "one Nml2Quantity_current" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -58492,15 +58646,15 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        gbase1=None,
-        gbase2=None,
-        erev=None,
+        id: "one NmlId" = None,
+        metaid: "one NmlId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        gbase1: "one Nml2Quantity_conductance" = None,
+        gbase2: "one Nml2Quantity_conductance" = None,
+        erev: "one Nml2Quantity_voltage" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -58857,14 +59011,14 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        gbase=None,
-        erev=None,
+        id: "one NmlId" = None,
+        metaid: "one NmlId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        gbase: "one Nml2Quantity_conductance" = None,
+        erev: "one Nml2Quantity_voltage" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -59191,25 +59345,25 @@ class IonChannelVShift(IonChannel):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        q10_conductance_scalings=None,
-        species=None,
-        type=None,
-        conductance=None,
-        gates=None,
-        gate_hh_rates=None,
-        gate_h_hrates_taus=None,
-        gate_hh_tau_infs=None,
-        gate_h_hrates_infs=None,
-        gate_h_hrates_tau_infs=None,
-        gate_hh_instantaneouses=None,
-        gate_fractionals=None,
-        v_shift=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        q10_conductance_scalings: "list of Q10ConductanceScaling(s)" = None,
+        species: "one NmlId" = None,
+        type: "one channelTypes" = None,
+        conductance: "one Nml2Quantity_conductance" = None,
+        gates: "list of GateHHUndetermined(s)" = None,
+        gate_hh_rates: "list of GateHHRates(s)" = None,
+        gate_h_hrates_taus: "list of GateHHRatesTau(s)" = None,
+        gate_hh_tau_infs: "list of GateHHTauInf(s)" = None,
+        gate_h_hrates_infs: "list of GateHHRatesInf(s)" = None,
+        gate_h_hrates_tau_infs: "list of GateHHRatesTauInf(s)" = None,
+        gate_hh_instantaneouses: "list of GateHHInstantaneous(s)" = None,
+        gate_fractionals: "list of GateFractional(s)" = None,
+        v_shift: "one Nml2Quantity_voltage" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -59453,24 +59607,24 @@ class IonChannelHH(IonChannel):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        q10_conductance_scalings=None,
-        species=None,
-        type=None,
-        conductance=None,
-        gates=None,
-        gate_hh_rates=None,
-        gate_h_hrates_taus=None,
-        gate_hh_tau_infs=None,
-        gate_h_hrates_infs=None,
-        gate_h_hrates_tau_infs=None,
-        gate_hh_instantaneouses=None,
-        gate_fractionals=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        q10_conductance_scalings: "list of Q10ConductanceScaling(s)" = None,
+        species: "one NmlId" = None,
+        type: "one channelTypes" = None,
+        conductance: "one Nml2Quantity_conductance" = None,
+        gates: "list of GateHHUndetermined(s)" = None,
+        gate_hh_rates: "list of GateHHRates(s)" = None,
+        gate_h_hrates_taus: "list of GateHHRatesTau(s)" = None,
+        gate_hh_tau_infs: "list of GateHHTauInf(s)" = None,
+        gate_h_hrates_infs: "list of GateHHRatesInf(s)" = None,
+        gate_h_hrates_tau_infs: "list of GateHHRatesTauInf(s)" = None,
+        gate_hh_instantaneouses: "list of GateHHInstantaneous(s)" = None,
+        gate_fractionals: "list of GateFractional(s)" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -59667,22 +59821,22 @@ class IF_curr_exp(basePyNNIaFCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        cm=None,
-        i_offset=None,
-        tau_syn_E=None,
-        tau_syn_I=None,
-        v_init=None,
-        tau_m=None,
-        tau_refrac=None,
-        v_reset=None,
-        v_rest=None,
-        v_thresh=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        cm: "one float" = None,
+        i_offset: "one float" = None,
+        tau_syn_E: "one float" = None,
+        tau_syn_I: "one float" = None,
+        v_init: "one float" = None,
+        tau_m: "one float" = None,
+        tau_refrac: "one float" = None,
+        v_reset: "one float" = None,
+        v_rest: "one float" = None,
+        v_thresh: "one float" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -59877,22 +60031,22 @@ class IF_curr_alpha(basePyNNIaFCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        cm=None,
-        i_offset=None,
-        tau_syn_E=None,
-        tau_syn_I=None,
-        v_init=None,
-        tau_m=None,
-        tau_refrac=None,
-        v_reset=None,
-        v_rest=None,
-        v_thresh=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        cm: "one float" = None,
+        i_offset: "one float" = None,
+        tau_syn_E: "one float" = None,
+        tau_syn_I: "one float" = None,
+        v_init: "one float" = None,
+        tau_m: "one float" = None,
+        tau_refrac: "one float" = None,
+        v_reset: "one float" = None,
+        v_rest: "one float" = None,
+        v_thresh: "one float" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -60098,24 +60252,24 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        cm=None,
-        i_offset=None,
-        tau_syn_E=None,
-        tau_syn_I=None,
-        v_init=None,
-        tau_m=None,
-        tau_refrac=None,
-        v_reset=None,
-        v_rest=None,
-        v_thresh=None,
-        e_rev_E=None,
-        e_rev_I=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        cm: "one float" = None,
+        i_offset: "one float" = None,
+        tau_syn_E: "one float" = None,
+        tau_syn_I: "one float" = None,
+        v_init: "one float" = None,
+        tau_m: "one float" = None,
+        tau_refrac: "one float" = None,
+        v_reset: "one float" = None,
+        v_rest: "one float" = None,
+        v_thresh: "one float" = None,
+        e_rev_E: "one float" = None,
+        e_rev_I: "one float" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -60348,16 +60502,16 @@ class ContinuousConnectionInstance(ContinuousConnection):
 
     def __init__(
         self,
-        id=None,
-        neuro_lex_id=None,
-        pre_cell=None,
+        id: "one NonNegativeInteger" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        pre_cell: "one str" = None,
         pre_segment="0",
         pre_fraction_along="0.5",
-        post_cell=None,
+        post_cell: "one str" = None,
         post_segment="0",
         post_fraction_along="0.5",
-        pre_component=None,
-        post_component=None,
+        pre_component: "one NmlId" = None,
+        post_component: "one NmlId" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -60579,15 +60733,15 @@ class ElectricalConnectionInstance(ElectricalConnection):
 
     def __init__(
         self,
-        id=None,
-        neuro_lex_id=None,
-        pre_cell=None,
+        id: "one NonNegativeInteger" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        pre_cell: "one str" = None,
         pre_segment="0",
         pre_fraction_along="0.5",
-        post_cell=None,
+        post_cell: "one str" = None,
         post_segment="0",
         post_fraction_along="0.5",
-        synapse=None,
+        synapse: "one NmlId" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -60843,18 +60997,18 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        gbase1=None,
-        gbase2=None,
-        erev=None,
-        tau_decay1=None,
-        tau_decay2=None,
-        tau_rise=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        gbase1: "one Nml2Quantity_conductance" = None,
+        gbase2: "one Nml2Quantity_conductance" = None,
+        erev: "one Nml2Quantity_voltage" = None,
+        tau_decay1: "one Nml2Quantity_time" = None,
+        tau_decay2: "one Nml2Quantity_time" = None,
+        tau_rise: "one Nml2Quantity_time" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -61152,16 +61306,16 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        gbase=None,
-        erev=None,
-        tau_decay=None,
-        tau_rise=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        gbase: "one Nml2Quantity_conductance" = None,
+        erev: "one Nml2Quantity_voltage" = None,
+        tau_decay: "one Nml2Quantity_time" = None,
+        tau_rise: "one Nml2Quantity_time" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -61443,15 +61597,15 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        gbase=None,
-        erev=None,
-        tau_decay=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        gbase: "one Nml2Quantity_conductance" = None,
+        erev: "one Nml2Quantity_voltage" = None,
+        tau_decay: "one Nml2Quantity_time" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -61685,15 +61839,15 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        gbase=None,
-        erev=None,
-        tau=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        gbase: "one Nml2Quantity_conductance" = None,
+        erev: "one Nml2Quantity_voltage" = None,
+        tau: "one Nml2Quantity_time" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -61955,29 +62109,29 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        cm=None,
-        i_offset=None,
-        tau_syn_E=None,
-        tau_syn_I=None,
-        v_init=None,
-        tau_m=None,
-        tau_refrac=None,
-        v_reset=None,
-        v_rest=None,
-        v_thresh=None,
-        e_rev_E=None,
-        e_rev_I=None,
-        a=None,
-        b=None,
-        delta_T=None,
-        tau_w=None,
-        v_spike=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        cm: "one float" = None,
+        i_offset: "one float" = None,
+        tau_syn_E: "one float" = None,
+        tau_syn_I: "one float" = None,
+        v_init: "one float" = None,
+        tau_m: "one float" = None,
+        tau_refrac: "one float" = None,
+        v_reset: "one float" = None,
+        v_rest: "one float" = None,
+        v_thresh: "one float" = None,
+        e_rev_E: "one float" = None,
+        e_rev_I: "one float" = None,
+        a: "one float" = None,
+        b: "one float" = None,
+        delta_T: "one float" = None,
+        tau_w: "one float" = None,
+        v_spike: "one float" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_
@@ -62249,7 +62403,8 @@ class IF_cond_exp(basePyNNIaFCondCell):
     :type e_rev_E: none
     :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
-    :param tau_refrac:
+    :p
+    aram tau_refrac:
     :type tau_refrac: none
     :param v_thresh:
     :type v_thresh: none
@@ -62279,24 +62434,24 @@ class IF_cond_exp(basePyNNIaFCondCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        cm=None,
-        i_offset=None,
-        tau_syn_E=None,
-        tau_syn_I=None,
-        v_init=None,
-        tau_m=None,
-        tau_refrac=None,
-        v_reset=None,
-        v_rest=None,
-        v_thresh=None,
-        e_rev_E=None,
-        e_rev_I=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        cm: "one float" = None,
+        i_offset: "one float" = None,
+        tau_syn_E: "one float" = None,
+        tau_syn_I: "one float" = None,
+        v_init: "one float" = None,
+        tau_m: "one float" = None,
+        tau_refrac: "one float" = None,
+        v_reset: "one float" = None,
+        v_rest: "one float" = None,
+        v_thresh: "one float" = None,
+        e_rev_E: "one float" = None,
+        e_rev_I: "one float" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -62497,24 +62652,24 @@ class IF_cond_alpha(basePyNNIaFCondCell):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        cm=None,
-        i_offset=None,
-        tau_syn_E=None,
-        tau_syn_I=None,
-        v_init=None,
-        tau_m=None,
-        tau_refrac=None,
-        v_reset=None,
-        v_rest=None,
-        v_thresh=None,
-        e_rev_E=None,
-        e_rev_I=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        cm: "one float" = None,
+        i_offset: "one float" = None,
+        tau_syn_E: "one float" = None,
+        tau_syn_I: "one float" = None,
+        v_init: "one float" = None,
+        tau_m: "one float" = None,
+        tau_refrac: "one float" = None,
+        v_reset: "one float" = None,
+        v_rest: "one float" = None,
+        v_thresh: "one float" = None,
+        e_rev_E: "one float" = None,
+        e_rev_I: "one float" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -62695,17 +62850,17 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
 
     def __init__(
         self,
-        id=None,
-        neuro_lex_id=None,
-        pre_cell=None,
+        id: "one NonNegativeInteger" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        pre_cell: "one str" = None,
         pre_segment="0",
         pre_fraction_along="0.5",
-        post_cell=None,
+        post_cell: "one str" = None,
         post_segment="0",
         post_fraction_along="0.5",
-        pre_component=None,
-        post_component=None,
-        weight=None,
+        pre_component: "one NmlId" = None,
+        post_component: "one NmlId" = None,
+        weight: "one float" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -62933,16 +63088,16 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
 
     def __init__(
         self,
-        id=None,
-        neuro_lex_id=None,
-        pre_cell=None,
+        id: "one NonNegativeInteger" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        pre_cell: "one str" = None,
         pre_segment="0",
         pre_fraction_along="0.5",
-        post_cell=None,
+        post_cell: "one str" = None,
         post_segment="0",
         post_fraction_along="0.5",
-        synapse=None,
-        weight=None,
+        synapse: "one NmlId" = None,
+        weight: "one float" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -63196,18 +63351,18 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        gbase=None,
-        erev=None,
-        tau_decay=None,
-        tau_rise=None,
-        plasticity_mechanism=None,
-        block_mechanism=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        gbase: "one Nml2Quantity_conductance" = None,
+        erev: "one Nml2Quantity_voltage" = None,
+        tau_decay: "one Nml2Quantity_time" = None,
+        tau_rise: "one Nml2Quantity_time" = None,
+        plasticity_mechanism: "one PlasticityMechanism" = None,
+        block_mechanism: "one BlockMechanism" = None,
         gds_collector_=None,
         **kwargs_
     ):
@@ -63485,29 +63640,29 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
 
     def __init__(
         self,
-        id=None,
-        metaid=None,
-        notes=None,
-        properties=None,
-        annotation=None,
-        neuro_lex_id=None,
-        cm=None,
-        i_offset=None,
-        tau_syn_E=None,
-        tau_syn_I=None,
-        v_init=None,
-        tau_m=None,
-        tau_refrac=None,
-        v_reset=None,
-        v_rest=None,
-        v_thresh=None,
-        e_rev_E=None,
-        e_rev_I=None,
-        a=None,
-        b=None,
-        delta_T=None,
-        tau_w=None,
-        v_spike=None,
+        id: "one NmlId" = None,
+        metaid: "one MetaId" = None,
+        notes: "one str" = None,
+        properties: "list of Property(s)" = None,
+        annotation: "one Annotation" = None,
+        neuro_lex_id: "one NeuroLexId" = None,
+        cm: "one float" = None,
+        i_offset: "one float" = None,
+        tau_syn_E: "one float" = None,
+        tau_syn_I: "one float" = None,
+        v_init: "one float" = None,
+        tau_m: "one float" = None,
+        tau_refrac: "one float" = None,
+        v_reset: "one float" = None,
+        v_rest: "one float" = None,
+        v_thresh: "one float" = None,
+        e_rev_E: "one float" = None,
+        e_rev_I: "one float" = None,
+        a: "one float" = None,
+        b: "one float" = None,
+        delta_T: "one float" = None,
+        tau_w: "one float" = None,
+        v_spike: "one float" = None,
         gds_collector_=None,
         **kwargs_
     ):
