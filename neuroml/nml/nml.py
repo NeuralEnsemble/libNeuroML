@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Sep 28 15:46:17 2022 by generateDS.py version 2.40.13.
+# Generated Wed Sep 28 16:46:51 2022 by generateDS.py version 2.40.13.
 # Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
 #
 # Command line options:
@@ -46652,13 +46652,22 @@ class Cell(BaseCell):
             # TODO: clarify if the order of definition is important, or if the jnml
             # validator needs to be updated to manage this use case.
             if use_convention and seg_group_default:
-                seg_group_default.add(
-                    self.component_factory("Member", segments=segment.id)
-                )
+                # note that these membership checks work because the `in`
+                # operator checks using both `is` and `==`:
+                # https://docs.python.org/3/reference/expressions.html#membership-test-operations
+                if (
+                    self.component_factory("Include", segment_groups=seg_group.id)
+                    not in seg_group_default.includes
+                ):
+                    seg_group_default.add("Include", segment_groups=seg_group.id)
 
         if use_convention:
             seg_group_all = self.get_segment_group("all")
-            seg_group_all.add(self.component_factory("Member", segments=segment.id))
+            if (
+                self.component_factory("Include", segment_groups=seg_group.id)
+                not in seg_group_all.includes
+            ):
+                seg_group_all.add("Include", segment_groups=seg_group.id)
 
         self.morphology.add(segment)
         return segment
