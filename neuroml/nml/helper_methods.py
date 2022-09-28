@@ -1359,8 +1359,8 @@ cell_methods = MethodSpec(
         """Add a segment to the cell.
 
         Suggested convention: use `axon_`, `soma_`, `dend_` prefixes for axon,
-        soma, and dendrite segments respectivey. This will allow this function to
-        add the correct neurolex IDs to the group.
+        soma, and dendrite segment groups respectively. This will allow this
+        function to add the correct neurolex IDs to the group.
 
         If `use_convention` is true, the created segment is also added to the
         default segment groups that were created by the `create_cell` function:
