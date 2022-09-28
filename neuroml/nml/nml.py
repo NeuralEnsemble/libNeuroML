@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Sep 28 12:15:52 2022 by generateDS.py version 2.40.13.
+# Generated Wed Sep 28 13:14:19 2022 by generateDS.py version 2.40.13.
 # Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
 #
 # Command line options:
@@ -46527,7 +46527,20 @@ class Cell(BaseCell):
         return sgs
 
     def summary(self):
-        """Print cell summary."""
+        """Print cell summary.
+
+        Currently prints:
+
+        - id of cell
+        - any notes
+        - number of segments
+        - number of segment groups
+
+        TODO: extend to show more information about the cell that may be useful
+        to users.
+
+        """
+
         print("*******************************************************")
         print("* Cell: " + str(self.id))
         print("* Notes: " + str(self.notes))
@@ -46888,14 +46901,16 @@ class Cell(BaseCell):
         The list of points will include the first proximal point where this
         should be joined to the cell, followed by a list of distal points:
 
-        |-----|-----|-----|------|.....---|
-        p1    d1    d2    d3     d4       d N-1
+        ::
+
+            |-----|-----|-----|------|.....---|
+            p1    d1    d2    d3     d4       d N-1
 
         So, a list of N points will create a list of N-1 segments
 
-        The list of points will be of the form:
+        The list of points will be of the form::
 
-        [[x1, y1, z1, d1], [x2, y2, z2, d2] ...]
+            [[x1, y1, z1, d1], [x2, y2, z2, d2] ...]
 
         Please ensure that the first point, p1, is correctly set to ensure that
         this segment list is correctly connected to the rest of the cell.
