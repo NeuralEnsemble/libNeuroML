@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Sep 20 18:32:03 2022 by generateDS.py version 2.40.13.
+# Generated Wed Sep 28 15:46:17 2022 by generateDS.py version 2.40.13.
 # Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
 #
 # Command line options:
@@ -46548,8 +46548,8 @@ class Cell(BaseCell):
         """Add a segment to the cell.
 
         Suggested convention: use `axon_`, `soma_`, `dend_` prefixes for axon,
-        soma, and dendrite segments respectivey. This will allow this function to
-        add the correct neurolex IDs to the group.
+        soma, and dendrite segment groups respectively. This will allow this
+        function to add the correct neurolex IDs to the group.
 
         If `use_convention` is true, the created segment is also added to the
         default segment groups that were created by the `create_cell` function:
@@ -46755,10 +46755,10 @@ class Cell(BaseCell):
 
         if len(ion_chan_def_file) > 0:
             if (
-                self.component_factory("IncludeType", ion_chan_def_file)
+                self.component_factory("IncludeType", href=ion_chan_def_file)
                 not in nml_cell_doc.includes
             ):
-                nml_cell_doc.add("IncludeType", ion_chan_def_file)
+                nml_cell_doc.add("IncludeType", href=ion_chan_def_file)
 
     def add_channel_density(
         self,
@@ -46802,10 +46802,10 @@ class Cell(BaseCell):
 
         if len(ion_chan_def_file) > 0:
             if (
-                self.component_factory("IncludeType", ion_chan_def_file)
+                self.component_factory("IncludeType", href=ion_chan_def_file)
                 not in nml_cell_doc.includes
             ):
-                nml_cell_doc.add("IncludeType", ion_chan_def_file)
+                nml_cell_doc.add("IncludeType", href=ion_chan_def_file)
 
     def setup_nml_cell(self, use_convention=True):
         """Correctly initialise a NeuroML cell.
