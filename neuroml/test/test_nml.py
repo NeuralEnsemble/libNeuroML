@@ -295,10 +295,14 @@ class TestNML(unittest.TestCase):
         new_cell.add_segment(
             (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
         )
-        nml_doc = component_factory("NeuroMLDocument", id="test_cell_with_channel_density_doc")
+        nml_doc = component_factory(
+            "NeuroMLDocument", id="test_cell_with_channel_density_doc"
+        )
         nml_doc.cells.append(new_cell)
 
-        nml_doc.add("IonChannel", id="pas", conductance="10 pS", type="ionChannelPassive")
+        nml_doc.add(
+            "IonChannel", id="pas", conductance="10 pS", type="ionChannelPassive"
+        )
 
         new_cell.add_channel_density(
             nml_doc,
@@ -331,10 +335,14 @@ class TestNML(unittest.TestCase):
         new_cell.add_segment(
             (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
         )
-        nml_doc = component_factory("NeuroMLDocument", id="test_cell_with_channel_density_doc")
+        nml_doc = component_factory(
+            "NeuroMLDocument", id="test_cell_with_channel_density_doc"
+        )
         nml_doc.add(new_cell)
 
-        nml_doc.add("IonChannel", id="pas", conductance="10 pS", type="ionChannelPassive")
+        nml_doc.add(
+            "IonChannel", id="pas", conductance="10 pS", type="ionChannelPassive"
+        )
 
         new_cell.add_channel_density_v(
             "ChannelDensity",
@@ -370,10 +378,14 @@ class TestNML(unittest.TestCase):
         new_cell.add_segment(
             (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
         )
-        nml_doc = component_factory("NeuroMLDocument", id="test_cell_with_channel_density_doc")
+        nml_doc = component_factory(
+            "NeuroMLDocument", id="test_cell_with_channel_density_doc"
+        )
         nml_doc.add(new_cell)
 
-        ion_chan = nml_doc.add("IonChannel", id="pas", conductance="10 pS", type="ionChannelPassive")
+        ion_chan = nml_doc.add(
+            "IonChannel", id="pas", conductance="10 pS", type="ionChannelPassive"
+        )
 
         new_cell.add_channel_density(
             nml_doc,
@@ -499,11 +511,12 @@ class TestNML(unittest.TestCase):
             points=[
                 [0.0, 10.0, 0.0, diam],
                 [0.0, 20.0, 0.0, diam],
-                [0.0, 30.0, 0.0, diam]],
+                [0.0, 30.0, 0.0, diam],
+            ],
             parent=soma_0,
             fraction_along=1.0,
             group="dend_group_0",
-            use_convention=True
+            use_convention=True,
         )
 
         self.assertIsInstance(dend_group, neuroml.SegmentGroup)
