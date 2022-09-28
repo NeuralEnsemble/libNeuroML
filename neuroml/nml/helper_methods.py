@@ -1337,7 +1337,20 @@ cell_methods = MethodSpec(
 
 
     def summary(self):
-        """Print cell summary."""
+        """Print cell summary.
+
+        Currently prints:
+
+        - id of cell
+        - any notes
+        - number of segments
+        - number of segment groups
+
+        TODO: extend to show more information about the cell that may be useful
+        to users.
+
+        """
+
         print("*******************************************************")
         print("* Cell: "+str(self.id))
         print("* Notes: "+str(self.notes))
