@@ -479,3 +479,36 @@ class TestNML(unittest.TestCase):
         # cell does not have segments: is invalid NeuroML
         with self.assertRaises(ValueError):
             new_cell.validate(True)
+
+    def test_add_unbranched_segments(self):
+        "Test add_unbranced_segments"
+        # test with component_factory
+        cell = component_factory("Cell", id="simple_cell")
+        cell.notes = "NeuroML cell created by CellBuilder"
+
+        # Add soma segment
+        diam = 10.0
+        soma_0 = cell.add_segment(
+            prox=[0.0, 0.0, 0.0, diam],
+            dist=[0.0, 10.0, 0.0, diam],
+            name="Seg0_soma_0",
+            group="soma_0",
+        )
+
+        dend_group = cell.add_unbranched_segments(
+            points=[
+                [0.0, 10.0, 0.0, diam],
+                [0.0, 20.0, 0.0, diam],
+                [0.0, 30.0, 0.0, diam]],
+            parent=soma_0,
+            fraction_along=1.0,
+            group="dend_group_0",
+            use_convention=True
+        )
+
+        self.assertIsInstance(dend_group, neuroml.SegmentGroup)
+
+        self.assertIsNone(cell.validate(True))
+        self.assertEqual(3, len(cell.morphology.segments))
+
+        cell.summary()
