@@ -1620,10 +1620,10 @@ cell_methods = MethodSpec(
 
         if len(ion_chan_def_file) > 0:
             if (
-                self.component_factory("IncludeType", ion_chan_def_file)
+                self.component_factory("IncludeType", href=ion_chan_def_file)
                 not in nml_cell_doc.includes
             ):
-                nml_cell_doc.add("IncludeType", ion_chan_def_file)
+                nml_cell_doc.add("IncludeType", href=ion_chan_def_file)
 
     def setup_nml_cell(self, use_convention=True):
         """Correctly initialise a NeuroML cell.
