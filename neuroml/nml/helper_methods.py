@@ -1418,17 +1418,19 @@ cell_methods = MethodSpec(
 
         if name:
             segment.name = name
+        """
+
         else:
             # set a default name
             segment_name = f"Segid_{segid}"
             if group:
                 segment_name += f"_{group}"
             segment.name = segment_name
+        """
 
         if group:
             seg_group = None
             seg_group_default = None
-            neuro_lex_id = None
 
             # cell.get_segment_group throws an exception of the segment group
             # does not exist
@@ -1438,20 +1440,16 @@ cell_methods = MethodSpec(
                 print("Warning: {}".format(e))
 
             if "axon_" in group:
-                neuro_lex_id = self.neuro_lex_ids[
-                    "axon"
-                ]  # See http://amigo.geneontology.org/amigo/term/GO:0030424
                 if use_convention:
                     seg_group_default = self.get_segment_group("axon_group")
             if "soma_" in group:
-                neuro_lex_id = self.neuro_lex_ids["soma"]
                 if use_convention:
                     seg_group_default = self.get_segment_group("soma_group")
             if "dend_" in group:
-                neuro_lex_id = self.neuro_lex_ids["dend"]
                 if use_convention:
                     seg_group_default = self.get_segment_group("dendrite_group")
 
+            neuro_lex_id = self.neuro_lex_ids["section"]
             if seg_group is None:
                 seg_group = self.component_factory(
                     "SegmentGroup", id=group, neuro_lex_id=neuro_lex_id
@@ -1467,6 +1465,7 @@ cell_methods = MethodSpec(
             # TODO: clarify if the order of definition is important, or if the jnml
             # validator needs to be updated to manage this use case.
             if use_convention and seg_group_default:
+                seg_group_default.add(self.component_factory("Member", segments=segment.id))
                 # note that these membership checks work because the `in`
                 # operator checks using both `is` and `==`:
                 # https://docs.python.org/3/reference/expressions.html#membership-test-operations
@@ -1476,6 +1475,7 @@ cell_methods = MethodSpec(
 
         if use_convention:
             seg_group_all = self.get_segment_group("all")
+            seg_group_all.add(self.component_factory("Member", segments=segment.id))
             if self.component_factory(
                 "Include", segment_groups=seg_group.id) not in seg_group_all.includes:
                 seg_group_all.add("Include", segment_groups=seg_group.id)
