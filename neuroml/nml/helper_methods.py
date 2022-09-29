@@ -1309,14 +1309,14 @@ cell_methods = MethodSpec(
         :param sg_id: id of segment group to find
         :type sg_id: str
         :returns: SegmentGroup object of specified ID
-        :raises Exception: if segment group is not found in cell
+        :raises ValueError: if segment group is not found in cell
         """
         if sg_id:
             for sg in self.morphology.segment_groups:
                 if sg.id == sg_id:
                     return sg
 
-        raise Exception("Segment group with id "+str(sg_id)+" not found in cell "+str(self.id))
+        raise ValueError("Segment group with id "+str(sg_id)+" not found in cell "+str(self.id))
 
     def get_segment_groups_by_substring(self, substring):
         # type: (str) -> dict
@@ -1325,14 +1325,14 @@ cell_methods = MethodSpec(
         :param substring: substring to match
         :type substring: str
         :return: dictionary with segment group ID as key, and segment group as value
-        :raises Exception: if no segment groups are not found in cell
+        :raises ValueError: if no matching segment groups are found in cell
         """
         sgs = {}
         for sg in self.morphology.segment_groups:
             if substring in sg.id:
                 sgs[sg.id] = sg
         if len(sgs) == 0:
-            raise Exception("Segment group with id matching "+str(substring)+" not found in cell "+str(self.id))
+            raise ValueError("Segment group with id matching "+str(substring)+" not found in cell "+str(self.id))
         return sgs
 
 
@@ -1424,7 +1424,7 @@ cell_methods = MethodSpec(
             # does not exist
             try:
                 seg_group = self.get_segment_group(group)
-            except Exception as e:
+            except ValueError as e:
                 print("Warning: {}".format(e))
 
             if "axon_" in group:
