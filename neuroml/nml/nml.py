@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Sep 29 11:11:09 2022 by generateDS.py version 2.40.13.
+# Generated Thu Sep 29 14:35:43 2022 by generateDS.py version 2.40.13.
 # Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
 #
 # Command line options:
@@ -46607,19 +46607,9 @@ class Cell(BaseCell):
             "Segment", id=segid, proximal=p, distal=d, parent=sp
         )
 
-        if name:
-            segment.name = name
-        else:
-            # set a default name
-            segment_name = f"Segid_{segid}"
-            if group:
-                segment_name += f"_{group}"
-            segment.name = segment_name
-
         if group:
             seg_group = None
             seg_group_default = None
-            neuro_lex_id = None
 
             # cell.get_segment_group throws an exception of the segment group
             # does not exist
@@ -46629,20 +46619,16 @@ class Cell(BaseCell):
                 print("Warning: {}".format(e))
 
             if "axon_" in group:
-                neuro_lex_id = self.neuro_lex_ids[
-                    "axon"
-                ]  # See http://amigo.geneontology.org/amigo/term/GO:0030424
                 if use_convention:
                     seg_group_default = self.get_segment_group("axon_group")
             if "soma_" in group:
-                neuro_lex_id = self.neuro_lex_ids["soma"]
                 if use_convention:
                     seg_group_default = self.get_segment_group("soma_group")
             if "dend_" in group:
-                neuro_lex_id = self.neuro_lex_ids["dend"]
                 if use_convention:
                     seg_group_default = self.get_segment_group("dendrite_group")
 
+            neuro_lex_id = self.neuro_lex_ids["section"]
             if seg_group is None:
                 seg_group = self.component_factory(
                     "SegmentGroup", id=group, neuro_lex_id=neuro_lex_id
@@ -46658,6 +46644,9 @@ class Cell(BaseCell):
             # TODO: clarify if the order of definition is important, or if the jnml
             # validator needs to be updated to manage this use case.
             if use_convention and seg_group_default:
+                seg_group_default.add(
+                    self.component_factory("Member", segments=segment.id)
+                )
                 # note that these membership checks work because the `in`
                 # operator checks using both `is` and `==`:
                 # https://docs.python.org/3/reference/expressions.html#membership-test-operations
@@ -46669,11 +46658,26 @@ class Cell(BaseCell):
 
         if use_convention:
             seg_group_all = self.get_segment_group("all")
+            seg_group_all.add(self.component_factory("Member", segments=segment.id))
             if (
                 self.component_factory("Include", segment_groups=seg_group.id)
                 not in seg_group_all.includes
             ):
                 seg_group_all.add("Include", segment_groups=seg_group.id)
+
+        if name:
+            segment.name = name
+        else:
+            # set a default name
+            if group:
+                # seg_group will exist by now: either it already existed or it
+                # was created above
+                segments_in_group = len(seg_group.members)
+                segment_name = f"Seg{segments_in_group - 1}_{group}"
+            else:
+                # if it doesn't belong to a group, just use the segment id
+                segment_name = f"Seg{segid}"
+            segment.name = segment_name
 
         self.morphology.add(segment)
         return segment
@@ -62264,7 +62268,8 @@ class IF_cond_exp(basePyNNIaFCondCell):
     :type e_rev_E: none
     :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
-    :param tau_refrac:
+    :p
+    aram tau_refrac:
     :type tau_refrac: none
     :param v_thresh:
     :type v_thresh: none
