@@ -136,13 +136,27 @@ class GeneratedsSuperSuper(object):
 
         """
         module_object = sys.modules[cls.__module__]
+        isCell = False
         if isinstance(component_type, str):
             comp_type_class = getattr(module_object, component_type)
+
+            if component_type == "Cell":
+                isCell = True
+
         else:
             comp_type_class = getattr(module_object, component_type.__name__)
 
+            if component_type.__name__ == "neuroml.nml.nml.Cell":
+                isCell = True
+
         comp = comp_type_class(**kwargs)
+
+        # for cell, run additional setup
+        if isCell:
+            comp.setup_nml_cell()
+
         comp.check_arg_list(**kwargs)
+
         if validate:
             comp.validate()
         return comp

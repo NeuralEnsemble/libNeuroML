@@ -238,17 +238,9 @@ def component_factory(
 
     Please see `GeneratedsSuperSuper.component_factory` for more information.
     """
-    # for a cell, run additional setup
-    if component_type == schema.Cell or component_type == "Cell":
-        new_obj = schema.NeuroMLDocument().component_factory(
-            component_type, False, **kwargs
-        )
-        new_obj.setup_nml_cell()
-    else:
-        # for everything else, create a new "vanilla" component
-        new_obj = schema.NeuroMLDocument().component_factory(
-            component_type, validate, **kwargs
-        )
+    new_obj = schema.NeuroMLDocument().component_factory(
+        component_type, validate, **kwargs
+    )
     return new_obj
 
 
