@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Sep 29 14:35:43 2022 by generateDS.py version 2.40.13.
+# Generated Thu Sep 29 15:08:36 2022 by generateDS.py version 2.40.13.
 # Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
 #
 # Command line options:
@@ -46493,14 +46493,14 @@ class Cell(BaseCell):
         :param sg_id: id of segment group to find
         :type sg_id: str
         :returns: SegmentGroup object of specified ID
-        :raises Exception: if segment group is not found in cell
+        :raises ValueError: if segment group is not found in cell
         """
         if sg_id:
             for sg in self.morphology.segment_groups:
                 if sg.id == sg_id:
                     return sg
 
-        raise Exception(
+        raise ValueError(
             "Segment group with id " + str(sg_id) + " not found in cell " + str(self.id)
         )
 
@@ -46511,14 +46511,14 @@ class Cell(BaseCell):
         :param substring: substring to match
         :type substring: str
         :return: dictionary with segment group ID as key, and segment group as value
-        :raises Exception: if no segment groups are not found in cell
+        :raises ValueError: if no matching segment groups are found in cell
         """
         sgs = {}
         for sg in self.morphology.segment_groups:
             if substring in sg.id:
                 sgs[sg.id] = sg
         if len(sgs) == 0:
-            raise Exception(
+            raise ValueError(
                 "Segment group with id matching "
                 + str(substring)
                 + " not found in cell "
@@ -46615,7 +46615,7 @@ class Cell(BaseCell):
             # does not exist
             try:
                 seg_group = self.get_segment_group(group)
-            except Exception as e:
+            except ValueError as e:
                 print("Warning: {}".format(e))
 
             if "axon_" in group:
@@ -46665,6 +46665,8 @@ class Cell(BaseCell):
             ):
                 seg_group_all.add("Include", segment_groups=seg_group.id)
 
+            self.reorder_segment_groups()
+
         if name:
             segment.name = name
         else:
@@ -46681,6 +46683,24 @@ class Cell(BaseCell):
 
         self.morphology.add(segment)
         return segment
+
+    def reorder_segment_groups(self):
+        """Move default segment groups to the end.
+
+        This is required so that the segment groups included in the default
+        groups are defined before they are used.
+
+        :returns: None
+
+        """
+        seg_groups = self.morphology.segment_groups
+        for group in ["soma_group", "axon_group", "dendrite_group", "all"]:
+            try:
+                sg = self.get_segment_group(group)
+            except ValueError:
+                pass
+
+            seg_groups.append(seg_groups.pop(seg_groups.index(sg)))
 
     def set_init_memb_potential(self, v, group="all"):
         """Set the initial membrane potential of the cell.
