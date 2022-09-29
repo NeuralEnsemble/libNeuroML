@@ -1468,6 +1468,8 @@ cell_methods = MethodSpec(
                 "Include", segment_groups=seg_group.id) not in seg_group_all.includes:
                 seg_group_all.add("Include", segment_groups=seg_group.id)
 
+            self.reorder_segment_groups()
+
         if name:
             segment.name = name
         else:
@@ -1484,6 +1486,24 @@ cell_methods = MethodSpec(
 
         self.morphology.add(segment)
         return segment
+
+    def reorder_segment_groups(self):
+        """Move default segment groups to the end.
+
+        This is required so that the segment groups included in the default
+        groups are defined before they are used.
+
+        :returns: None
+
+        """
+        seg_groups = self.morphology.segment_groups
+        for group in ["soma_group", "axon_group", "dendrite_group", "all"]:
+            try:
+                sg = self.get_segment_group(group)
+            except ValueError:
+                pass
+
+            seg_groups.append(seg_groups.pop(seg_groups.index(sg)))
 
 
     def set_init_memb_potential(self, v, group="all"):
