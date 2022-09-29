@@ -1418,6 +1418,12 @@ cell_methods = MethodSpec(
 
         if name:
             segment.name = name
+        else:
+            # set a default name
+            segment_name = f"Segid_{segid}"
+            if group:
+                segment_name += f"_{group}"
+            segment.name = segment_name
 
         if group:
             seg_group = None
