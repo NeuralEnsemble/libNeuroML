@@ -1416,18 +1416,6 @@ cell_methods = MethodSpec(
         )
         segment = self.component_factory("Segment", id=segid, proximal=p, distal=d, parent=sp)
 
-        if name:
-            segment.name = name
-        """
-
-        else:
-            # set a default name
-            segment_name = f"Segid_{segid}"
-            if group:
-                segment_name += f"_{group}"
-            segment.name = segment_name
-        """
-
         if group:
             seg_group = None
             seg_group_default = None
@@ -1479,6 +1467,20 @@ cell_methods = MethodSpec(
             if self.component_factory(
                 "Include", segment_groups=seg_group.id) not in seg_group_all.includes:
                 seg_group_all.add("Include", segment_groups=seg_group.id)
+
+        if name:
+            segment.name = name
+        else:
+            # set a default name
+            if group:
+                # seg_group will exist by now: either it already existed or it
+                # was created above
+                segments_in_group = len(seg_group.members)
+                segment_name = f"Seg{segments_in_group - 1}_{group}"
+            else:
+                # if it doesn't belong to a group, just use the segment id
+                segment_name = f"Seg{segid}"
+            segment.name = segment_name
 
         self.morphology.add(segment)
         return segment
