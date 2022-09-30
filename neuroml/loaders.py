@@ -3,7 +3,7 @@ from neuroml.nml.nml import parse as nmlparse
 from neuroml.nml.nml import parseString as nmlparsestring
 
 import neuroml
-from neuroml.utils import add_all_to_document
+import neuroml.utils as utils
 
 import os
 import sys
@@ -86,7 +86,7 @@ class NeuroMLHdf5Loader(object):
 
             nml2_doc = nmlHandler.get_nml_doc()
             if currParser.nml_doc_extra_elements:
-                add_all_to_document(currParser.nml_doc_extra_elements, nml2_doc)
+                utils.add_all_to_document(currParser.nml_doc_extra_elements, nml2_doc)
 
             return nml2_doc
 
@@ -358,12 +358,12 @@ def _read_neuroml2(
                         already_included=already_included,
                     )
                     already_included.append(incl_loc)
-                    add_all_to_document(nml2_sub_doc, nml2_doc)
+                    utils.add_all_to_document(nml2_sub_doc, nml2_doc)
 
                 elif incl_loc.endswith(".nml.h5"):
                     nml2_sub_doc = NeuroMLHdf5Loader.load(incl_loc)
                     already_included.append(incl_loc)
-                    add_all_to_document(nml2_sub_doc, nml2_doc)
+                    utils.add_all_to_document(nml2_sub_doc, nml2_doc)
 
                 else:
                     raise Exception("Unrecognised extension on file: %s" % incl_loc)
