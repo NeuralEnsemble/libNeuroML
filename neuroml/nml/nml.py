@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Sep 29 15:08:36 2022 by generateDS.py version 2.40.13.
+# Generated Fri Sep 30 14:53:12 2022 by generateDS.py version 2.40.13.
 # Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
 #
 # Command line options:
@@ -46846,21 +46846,19 @@ class Cell(BaseCell):
             ):
                 nml_cell_doc.add("IncludeType", href=ion_chan_def_file)
 
-    def setup_nml_cell(self, use_convention=True):
+    def setup_nml_cell(self, use_convention=True, overwrite=False):
         """Correctly initialise a NeuroML cell.
 
-        To be called after a new component has been created. Note that
-        `utils.component_factory` calls this for users when creating a new Cell
-        component.
+        To be called after a new component has been created to initialise the
+        cell with these properties:
 
-        Initialises the cell with these properties assigning IDs where applicable:
+        - Morphology: id="morphology"
+        - BiophysicalProperties: id="biophys":
 
-        - Morphology: "morphology"
-        - BiophysicalProperties: "biophys"
-        - MembraneProperties
-        - IntracellularProperties
+          - MembraneProperties
+          - IntracellularProperties
 
-        if `use_convention` is True, it also creates some default SegmentGroups for
+        If `use_convention` is True, it also creates some default SegmentGroups for
         convenience:
 
         - "all", "soma_group", "dendrite_group", "axon_group" which
@@ -46869,28 +46867,29 @@ class Cell(BaseCell):
 
         Note that since this cell does not currently include a segment in its
         morphology, it is *not* a valid NeuroML construct. Use the `add_segment`
-        function to add segments. `add_segment` will also populate the default
-        segment groups this creates.
+        and `add_unbranched_segments` functions to add segments and branches.
+        They will also populate the default segment groups.
 
         :param id: id of the cell
         :type id: str
         :param use_convention: whether helper segment groups should be created using the default convention
         :type use_convention: bool
+        :param overwrite: overwrite existing components
+        :type overwrite: bool
         :returns: None
         :rtype: None
 
         """
         # do not validate yet, because segments are required
-        self.add("Morphology", id="morphology", validate=False)
+        self.add("Morphology", id="morphology", validate=False, force=overwrite)
 
-        membrane_properties = self.component_factory("MembraneProperties")
-        intracellular_properties = self.component_factory("IntracellularProperties")
-
-        self.biophysical_properties = self.component_factory(
-            "BiophysicalProperties",
-            id="biophys",
-            intracellular_properties=intracellular_properties,
-            membrane_properties=membrane_properties,
+        # add does not overwrite existing values
+        self.add("BiophysicalProperties", id="biophys", validate=False, force=overwrite)
+        self.biophysical_properties.add(
+            "IntracellularProperties", validate=False, force=overwrite
+        )
+        self.biophysical_properties.add(
+            "MembraneProperties", validate=False, force=overwrite
         )
 
         if use_convention:
@@ -46914,10 +46913,10 @@ class Cell(BaseCell):
                 notes="Default dendrite segment group for the cell",
             )
             # skip validation: segments etc needed, cell is invalid
-            self.morphology.add(seg_group_all, validate=False)
-            self.morphology.add(seg_group_soma, validate=False)
-            self.morphology.add(seg_group_axon, validate=False)
-            self.morphology.add(seg_group_dend, validate=False)
+            self.morphology.add(seg_group_all, validate=False, force=overwrite)
+            self.morphology.add(seg_group_soma, validate=False, force=overwrite)
+            self.morphology.add(seg_group_axon, validate=False, force=overwrite)
+            self.morphology.add(seg_group_dend, validate=False, force=overwrite)
 
     # end class Cell
 
