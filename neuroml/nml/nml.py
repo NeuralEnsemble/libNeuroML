@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Sep 28 13:14:19 2022 by generateDS.py version 2.40.13.
+# Generated Fri Sep 30 15:19:09 2022 by generateDS.py version 2.40.13.
 # Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
 #
 # Command line options:
@@ -62334,7 +62334,8 @@ class IF_cond_exp(basePyNNIaFCondCell):
     :type e_rev_E: none
     :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
-    :param tau_refrac:
+    :p
+    aram tau_refrac:
     :type tau_refrac: none
     :param v_thresh:
     :type v_thresh: none
