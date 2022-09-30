@@ -3,15 +3,13 @@
 Utilities for checking generated code
 
 """
-import os.path
 import sys
 import inspect
 import warnings
 from typing import Union, Any
 
-from .__version__ import current_neuroml_version
-from .neuro_lex_ids import neuro_lex_ids
 import neuroml.nml.nml as schema
+from . import loaders
 
 
 def validate_neuroml2(file_name: str) -> None:
@@ -19,23 +17,13 @@ def validate_neuroml2(file_name: str) -> None:
 
     :param file_name: name of NeuroML file to validate.
     :type file_name: str
+    :raises ValueError: if document is invalid
     """
-    from lxml import etree
-
-    xsd_file = os.path.join(
-        os.path.dirname(__file__),
-        "nml/NeuroML_%s.xsd" % current_neuroml_version,
+    nml_doc = loaders.read_neuroml2_file(
+        file_name, include_includes=True, verbose=False, optimized=True
     )
-
-    with open(xsd_file) as schema_file:
-        xmlschema = etree.XMLSchema(etree.parse(schema_file))
-        print("Validating %s against %s" % (file_name, xsd_file))
-        if not xmlschema.validate(etree.parse(file_name)):
-            xmlschema.assertValid(
-                etree.parse(file_name)
-            )  # print reason if file is invalid
-            return
-        print("It's valid!")
+    nml_doc.validate(recursive=True)
+    print("It's valid!")
 
 
 def is_valid_neuroml2(file_name: str) -> None:
@@ -46,17 +34,14 @@ def is_valid_neuroml2(file_name: str) -> None:
     :returns: True if file is valid, False if not.
     :rtype: Boolean
     """
-    from lxml import etree
-
-    xsd_file = os.path.join(
-        os.path.dirname(__file__),
-        "nml/NeuroML_%s.xsd" % current_neuroml_version,
+    nml_doc = loaders.read_neuroml2_file(
+        file_name, include_includes=True, verbose=False, optimized=True
     )
-
-    with open(xsd_file) as schema_file:
-        xmlschema = etree.XMLSchema(etree.parse(schema_file))
-        return xmlschema.validate(etree.parse(file_name))
-    return False
+    try:
+        nml_doc.validate(recursive=True)
+    except ValueError:
+        return False
+    return True
 
 
 def print_summary(nml_file_name: str) -> None:
