@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Sep 30 14:53:12 2022 by generateDS.py version 2.40.13.
+# Generated Fri Sep 30 15:36:05 2022 by generateDS.py version 2.40.13.
 # Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
 #
 # Command line options:
@@ -46527,7 +46527,20 @@ class Cell(BaseCell):
         return sgs
 
     def summary(self):
-        """Print cell summary."""
+        """Print cell summary.
+
+        Currently prints:
+
+        - id of cell
+        - any notes
+        - number of segments
+        - number of segment groups
+
+        TODO: extend to show more information about the cell that may be useful
+        to users.
+
+        """
+
         print("*******************************************************")
         print("* Cell: " + str(self.id))
         print("* Notes: " + str(self.notes))
@@ -46917,6 +46930,78 @@ class Cell(BaseCell):
             self.morphology.add(seg_group_soma, validate=False, force=overwrite)
             self.morphology.add(seg_group_axon, validate=False, force=overwrite)
             self.morphology.add(seg_group_dend, validate=False, force=overwrite)
+
+    def add_unbranched_segments(
+        self, points, parent=None, fraction_along=1.0, group=None, use_convention=True
+    ):
+        """Add an unbranched list of segments to the cell.
+
+        The list of points will include the first proximal point where this
+        should be joined to the cell, followed by a list of distal points:
+
+        ::
+
+            |-----|-----|-----|------|.....---|
+            p1    d1    d2    d3     d4       d N-1
+
+        So, a list of N points will create a list of N-1 segments
+
+        The list of points will be of the form::
+
+            [[x1, y1, z1, d1], [x2, y2, z2, d2] ...]
+
+        Please ensure that the first point, p1, is correctly set to ensure that
+        this segment list is correctly connected to the rest of the cell.
+
+        :param points: 3D points to create the segments
+        :type points: list of [x, y, z, d] points
+        :param parent: parent segment where first segment of list is to be attached
+        :type parent: SegmentParent
+        :param fraction_along: where the new segment list is connected to the parent (0: distal point, 1: proximal point)
+            Note that the second and following segments will all be added at the
+            distal point of the previous segment
+        :type fraction_along: float
+        :param group: segment group to add the segment to
+            if a segment group does not already exist, it will be created
+        :type group: SegmentGroup
+        :param use_convention: whether helper segment groups should be created using the default convention
+            See the documentation of the `add_segment` method for more information
+            on the convention
+        :type use_convention: bool
+        :returns: the segment group containing this new list of segments
+        :rtype: SegmentGroup
+
+        """
+        prox = points[0]
+        dist = points[1]
+
+        # first segment
+        seg = self.add_segment(
+            prox=prox,
+            dist=dist,
+            name=None,
+            parent=parent,
+            fraction_along=fraction_along,
+            group=group,
+            use_convention=use_convention,
+        )
+
+        # rest of the segments
+        prox = dist
+        for pt in points[2:]:
+            dist = pt
+            seg = self.add_segment(
+                prox=prox,
+                dist=dist,
+                name=None,
+                parent=seg,
+                fraction_along=1.0,
+                group=group,
+                use_convention=use_convention,
+            )
+            prox = dist
+
+        return self.get_segment_group(group)
 
     # end class Cell
 
@@ -62287,8 +62372,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
     :type e_rev_E: none
     :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
-    :p
-    aram tau_refrac:
+    :param tau_refrac:
     :type tau_refrac: none
     :param v_thresh:
     :type v_thresh: none

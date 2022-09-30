@@ -128,8 +128,8 @@ class GeneratedsSuperSuper(object):
         :type component_type: str/type
         :param validate: toggle validation (default: True)
         :type validate: bool
-        :param **kwargs: named arguments to be passed to ComponentType constructor
-        :type **kwargs: named arguments
+        :param kwargs: named arguments to be passed to ComponentType constructor
+        :type kwargs: named arguments
         :returns: new Component (object) of provided ComponentType
         :rtype: object
         :raises ValueError: if validation/checks fail
@@ -258,7 +258,7 @@ class GeneratedsSuperSuper(object):
         reference is listed instead.
 
         See http://www.davekuhlman.org/generateDS.html#user-methods for more
-        information on the MemberSpec_ class that generateDS uses.
+        information on the `MemberSpec_` class that generateDS uses.
 
         :param show_contents: toggle to print out the contents of the members
         :type show_contents: bool or str
@@ -519,8 +519,8 @@ class GeneratedsSuperSuper(object):
 
         This function makes this check manually.
 
-        :param **kwargs: arg list passed for creation of component
-        :type **kwargs: Any
+        :param kwargs: arg list passed for creation of component
+        :type kwargs: Any
         :returns: None
         :rtype: None
         :raises ValueError: if given argument list does not match permitted  member
