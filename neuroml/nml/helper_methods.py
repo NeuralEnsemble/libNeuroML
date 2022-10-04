@@ -1368,6 +1368,7 @@ cell_methods = MethodSpec(
         fraction_along=1.0,
         group_id=None,
         use_convention=True,
+        reorder_segment_groups=True,
     ):
         """Add a segment to the cell.
 
@@ -1399,6 +1400,14 @@ cell_methods = MethodSpec(
         :type group_id: str
         :param use_convention: whether helper segment groups should be created using the default convention
         :type use_convention: bool
+        :param reorder_segment_groups: whether the groups should be reordered
+            to put the default segment groups last after the segment has been
+            added. This is required for a valid NeuroML file because segment
+            groups included in the default groups should be declared before
+            they are used in the default groups. When adding lots of segments,
+            one may want to only reorder at the end of the process instead of
+            after each segment is added.
+        :type reorder_segment_groups: bool
         :returns: the created segment
 
         """
@@ -1479,7 +1488,8 @@ cell_methods = MethodSpec(
                 "Include", segment_groups=seg_group.id) not in seg_group_all.includes:
                 seg_group_all.add("Include", segment_groups=seg_group.id)
 
-            self.reorder_segment_groups()
+            if reorder_segment_groups:
+                self.reorder_segment_groups()
 
         if name:
             segment.name = name
@@ -1846,7 +1856,8 @@ cell_methods = MethodSpec(
         # first segment
         seg = self.add_segment(prox=prox, dist=dist, name=None, parent=parent,
                                fraction_along=fraction_along, group_id=group_id,
-                               use_convention=use_convention)
+                               use_convention=use_convention,
+                               reorder_segment_groups=False)
 
         # rest of the segments
         prox = dist
@@ -1854,9 +1865,11 @@ cell_methods = MethodSpec(
             dist = pt
             seg = self.add_segment(prox=prox, dist=dist, name=None, parent=seg,
                                    fraction_along=1.0, group_id=group_id,
-                                   use_convention=use_convention)
+                                   use_convention=use_convention,
+                                   reorder_segment_groups=False)
             prox = dist
 
+        self.reorder_segment_groups()
         return self.get_segment_group(group_id)
     ''',
     class_names=("Cell"),
