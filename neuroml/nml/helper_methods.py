@@ -1476,6 +1476,10 @@ cell_methods = MethodSpec(
                 seg_group = self.get_segment_group(group_id)
             except ValueError as e:
                 print("Warning: {}".format(e))
+                print(f"Warning: creating Segment Group with id {group_id}")
+                seg_group = self.add_segment_group(
+                    group_id=group_id
+                )
 
             if "axon_" in group_id:
                 if use_convention:
@@ -1486,12 +1490,6 @@ cell_methods = MethodSpec(
             if "dend_" in group_id:
                 if use_convention:
                     seg_group_default = self.get_segment_group("dendrite_group")
-
-            if seg_group is None:
-                seg_group = self.add_segment_group(
-                    group_id=group_id
-                )
-                self.morphology.add(seg_group, validate=False)
 
             seg_group.add(self.component_factory("Member", segments=segment.id))
             if use_convention and seg_group_default:
