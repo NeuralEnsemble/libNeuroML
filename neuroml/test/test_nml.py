@@ -239,6 +239,16 @@ class TestNML(unittest.TestCase):
 
         self.assertIsNone(new_cell.validate(True))
 
+    def test_setting_spike_thresh(self):
+        """Test adding spike threshold."""
+        new_cell = component_factory("Cell", id="test_cell")
+        new_cell.add_segment(
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group_id="soma_group"
+        )
+        new_cell.set_spike_thresh("40mV")
+
+        self.assertIsNone(new_cell.validate(True))
+
     @unittest.expectedFailure
     def test_setting_init_memb_potential_should_fail(self):
         """Units of membrane potential are wrong: should fail."""

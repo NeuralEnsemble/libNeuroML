@@ -1563,6 +1563,19 @@ cell_methods = MethodSpec(
             seg_groups.append(seg_groups.pop(seg_groups.index(sg)))
 
 
+    def set_spike_thresh(self, v, group_id="all"):
+        """Set the spike threshold of the cell.
+
+        :param v: value to set for spike threshold with units
+        :type v: str
+        :param group_id: id of segment group to modify
+        :type group_id: str
+        """
+        self.biophysical_properties.membrane_properties.add(
+            "SpikeThresh", value=v, segment_groups=group_id
+        )
+
+
     def set_init_memb_potential(self, v, group_id="all"):
         """Set the initial membrane potential of the cell.
 
