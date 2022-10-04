@@ -37,7 +37,7 @@ with open("sed-script.txt", 'w') as f:
         if getattr(atype, "get_members", False):
             members = atype().get_members()
             for amember in members:
-                dtype = amember.get_data_type().replace("xs:", "").replace("string", "str")
+                dtype = amember.get_data_type().replace("xs:", "")
                 dname = amember.get_name()
                 dreq = "optional" if amember.get_optional() else "required"
 
@@ -51,7 +51,7 @@ with open("sed-script.txt", 'w') as f:
                 # arguments to be in the same line as init
                 if amember.get_container() == 0:
                     print(
-                        f"""/{regexstart}/,/{regexend}/ s/\\(def __init__.* {dname}\\)=\\([[:alnum:]\\._ ']*\\),/\\1: "one {dtype} ({dreq})" = \\2,/""",
+                        f"""/{regexstart}/,/{regexend}/ s/\\(def __init__.* {dname}\\)=\\([[:alnum:]\\._ ']*\\),/\\1: "a {dtype} ({dreq})" = \\2,/""",
                         file=f
                     )
                 else:
