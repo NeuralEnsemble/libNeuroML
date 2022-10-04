@@ -1390,8 +1390,13 @@ cell_methods = MethodSpec(
         :type parent: SegmentParent
         :param fraction_along: where the new segment is connected to the parent (0: distal point, 1: proximal point)
         :type fraction_along: float
-        :param group: segment group to add the segment to
-        :type group: SegmentGroup
+        :param group: id of segment group to add the segment to
+            If a segment group with this id does not exist, a new segment group
+            will be created. Note that this will not be marked as an unbranched
+            segment group. If you wish to add a segment to an unbranched
+            segment group, please create one using
+            `add_unbranched_segment_group` and then add segments to it.
+        :type group: str
         :param use_convention: whether helper segment groups should be created using the default convention
         :type use_convention: bool
         :returns: the created segment
@@ -1450,10 +1455,9 @@ cell_methods = MethodSpec(
                 if use_convention:
                     seg_group_default = self.get_segment_group("dendrite_group")
 
-            neuro_lex_id = self.neuro_lex_ids["section"]
             if seg_group is None:
-                seg_group = self.component_factory(
-                    "SegmentGroup", id=group, neuro_lex_id=neuro_lex_id
+                seg_group = self.add_segment_group(
+                    group_id=group
                 )
                 self.morphology.add(seg_group, validate=False)
 
@@ -1499,6 +1503,46 @@ cell_methods = MethodSpec(
 
         self.morphology.add(segment)
         return segment
+
+    def add_segment_group(self, group_id):
+        """Add a new general segment group.
+
+        The segments included in this group do not need to be contiguous. This
+        segment group will not be marked as a section using the required
+        NeuroLex ID.
+
+        :param group_id: ID of segment group
+        :type group_id: str
+        :returns: new segment group
+        :rtype: SegmentGroup
+
+        """
+        seg_group = self.component_factory(
+            "SegmentGroup", id=group
+        )
+        self.morphology.add(seg_group, validate=False)
+        return seg_group
+
+
+    def add_unbranched_segment_group(self, group_id):
+        """Add a new unbranched segment group.
+
+        This is similar to the `add_segment_group` method, but this segment
+        group will be used to store contiguous segments, which form an
+        unbranched section of a cell.
+
+        :param group_id: ID of segment group
+        :type group_id: str
+        :returns: new segment group
+        :rtype: SegmentGroup
+
+        """
+        seg_group = self.component_factory(
+            "SegmentGroup", id=group, neuro_lex_id=self.neuro_lex_ids["section"]
+        )
+        self.morphology.add(seg_group, validate=False)
+        return seg_group
+
 
     def reorder_segment_groups(self):
         """Move default segment groups to the end.
@@ -1789,6 +1833,8 @@ cell_methods = MethodSpec(
         """
         prox = points[0]
         dist = points[1]
+
+        seg_group = self.add_unbranched_segment_group(group_id=group)
 
         # first segment
         seg = self.add_segment(prox=prox, dist=dist, name=None, parent=parent,
