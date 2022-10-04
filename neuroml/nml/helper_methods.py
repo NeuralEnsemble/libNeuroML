@@ -1363,6 +1363,7 @@ cell_methods = MethodSpec(
         self,
         prox,
         dist,
+        seg_id=None,
         name=None,
         parent=None,
         fraction_along=1.0,
@@ -1385,6 +1386,13 @@ cell_methods = MethodSpec(
         :type prox: list with 4 float entries: [x, y, z, diameter]
         :param dist: dist segment information
         :type dist: list with 4 float entries: [x, y, z, diameter]
+        :param seg_id: explicit ID to set for segment
+            When not provided, the function will automatically add an ID based
+            on the number of segments already included in the cell. It is best
+            to either always set an explicit ID or let the function set it
+            automatically, but not to mix the two. A `ValueError` is raised if
+            a segment with the provided ID already exists
+        :type seg_id: str
         :param name: name of segment
         :type name: str
         :param parent: parent segment
@@ -1409,6 +1417,9 @@ cell_methods = MethodSpec(
             after each segment is added.
         :type reorder_segment_groups: bool
         :returns: the created segment
+        :rtype: Segment
+        :raises ValueError: if `seg_id` is provided and a segment with this ID
+            already exists
 
         """
         try:
@@ -1428,7 +1439,6 @@ cell_methods = MethodSpec(
             print("{}: dist must be a list of 4 elements".format(e))
 
         segid = len(self.morphology.segments)
-
         if segid > 0 and parent is None:
             raise Exception(
                 "There are currently more than one segments in the cell, but one is being added without specifying a parent segment"
@@ -1441,7 +1451,20 @@ cell_methods = MethodSpec(
             if parent
             else None
         )
-        segment = self.component_factory("Segment", id=segid, proximal=p, distal=d, parent=sp)
+
+        if seg_id:
+            try:
+                seg = None
+                seg = self.get_segment(seg_id)
+                if seg:
+                    raise ValueError("A segment with provided id f{seg_id} already exists")
+            except ValueError:
+                # a segment with this ID does not already exist
+                pass
+        else:
+            seg_id = segid
+
+        segment = self.component_factory("Segment", id=seg_id, proximal=p, distal=d, parent=sp)
 
         if group_id:
             seg_group = None
@@ -1502,7 +1525,7 @@ cell_methods = MethodSpec(
                 segment_name = f"Seg{segments_in_group - 1}_{group_id}"
             else:
                 # if it doesn't belong to a group, just use the segment id
-                segment_name = f"Seg{segid}"
+                segment_name = f"Seg{seg_id}"
             segment.name = segment_name
 
         self.morphology.add(segment)
