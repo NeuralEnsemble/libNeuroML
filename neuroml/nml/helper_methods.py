@@ -989,14 +989,14 @@ cell_methods = MethodSpec(
         :param segment_id: ID of segment
         :return: segment
 
-        :raises Exception: if the segment is not found in the cell
+        :raises ValueError: if the segment is not found in the cell
         """
 
         for segment in self.morphology.segments:
             if segment.id == segment_id:
                 return segment
 
-        raise Exception("Segment with id "+str(segment_id)+" not found in cell "+str(self.id))
+        raise ValueError("Segment with id "+str(segment_id)+" not found in cell "+str(self.id))
 
     def get_segments_by_substring(self, substring):
         # type: (str) -> dict
