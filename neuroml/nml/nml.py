@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Sep 30 15:36:05 2022 by generateDS.py version 2.40.13.
+# Generated Tue Oct  4 11:24:44 2022 by generateDS.py version 2.40.13.
 # Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
 #
 # Command line options:
@@ -46555,7 +46555,7 @@ class Cell(BaseCell):
         name=None,
         parent=None,
         fraction_along=1.0,
-        group=None,
+        group_id=None,
         use_convention=True,
     ):
         """Add a segment to the cell.
@@ -46579,8 +46579,13 @@ class Cell(BaseCell):
         :type parent: SegmentParent
         :param fraction_along: where the new segment is connected to the parent (0: distal point, 1: proximal point)
         :type fraction_along: float
-        :param group: segment group to add the segment to
-        :type group: SegmentGroup
+        :param group_id: id of segment group to add the segment to
+            If a segment group with this id does not exist, a new segment group
+            will be created. Note that this will not be marked as an unbranched
+            segment group. If you wish to add a segment to an unbranched
+            segment group, please create one using
+            `add_unbranched_segment_group` and then add segments to it.
+        :type group_id: str
         :param use_convention: whether helper segment groups should be created using the default convention
         :type use_convention: bool
         :returns: the created segment
@@ -46620,32 +46625,29 @@ class Cell(BaseCell):
             "Segment", id=segid, proximal=p, distal=d, parent=sp
         )
 
-        if group:
+        if group_id:
             seg_group = None
             seg_group_default = None
 
             # cell.get_segment_group throws an exception of the segment group
             # does not exist
             try:
-                seg_group = self.get_segment_group(group)
+                seg_group = self.get_segment_group(group_id)
             except ValueError as e:
                 print("Warning: {}".format(e))
 
-            if "axon_" in group:
+            if "axon_" in group_id:
                 if use_convention:
                     seg_group_default = self.get_segment_group("axon_group")
-            if "soma_" in group:
+            if "soma_" in group_id:
                 if use_convention:
                     seg_group_default = self.get_segment_group("soma_group")
-            if "dend_" in group:
+            if "dend_" in group_id:
                 if use_convention:
                     seg_group_default = self.get_segment_group("dendrite_group")
 
-            neuro_lex_id = self.neuro_lex_ids["section"]
             if seg_group is None:
-                seg_group = self.component_factory(
-                    "SegmentGroup", id=group, neuro_lex_id=neuro_lex_id
-                )
+                seg_group = self.add_segment_group(group_id=group_id)
                 self.morphology.add(seg_group, validate=False)
 
             seg_group.add(self.component_factory("Member", segments=segment.id))
@@ -46684,11 +46686,11 @@ class Cell(BaseCell):
             segment.name = name
         else:
             # set a default name
-            if group:
+            if group_id:
                 # seg_group will exist by now: either it already existed or it
                 # was created above
                 segments_in_group = len(seg_group.members)
-                segment_name = f"Seg{segments_in_group - 1}_{group}"
+                segment_name = f"Seg{segments_in_group - 1}_{group_id}"
             else:
                 # if it doesn't belong to a group, just use the segment id
                 segment_name = f"Seg{segid}"
@@ -46696,6 +46698,42 @@ class Cell(BaseCell):
 
         self.morphology.add(segment)
         return segment
+
+    def add_segment_group(self, group_id):
+        """Add a new general segment group.
+
+        The segments included in this group do not need to be contiguous. This
+        segment group will not be marked as a section using the required
+        NeuroLex ID.
+
+        :param group_id: ID of segment group
+        :type group_id: str
+        :returns: new segment group
+        :rtype: SegmentGroup
+
+        """
+        seg_group = self.component_factory("SegmentGroup", id=group_id)
+        self.morphology.add(seg_group, validate=False)
+        return seg_group
+
+    def add_unbranched_segment_group(self, group_id):
+        """Add a new unbranched segment group.
+
+        This is similar to the `add_segment_group` method, but this segment
+        group will be used to store contiguous segments, which form an
+        unbranched section of a cell.
+
+        :param group_id: ID of segment group
+        :type group_id: str
+        :returns: new segment group
+        :rtype: SegmentGroup
+
+        """
+        seg_group = self.component_factory(
+            "SegmentGroup", id=group_id, neuro_lex_id=self.neuro_lex_ids["section"]
+        )
+        self.morphology.add(seg_group, validate=False)
+        return seg_group
 
     def reorder_segment_groups(self):
         """Move default segment groups to the end.
@@ -46715,39 +46753,51 @@ class Cell(BaseCell):
 
             seg_groups.append(seg_groups.pop(seg_groups.index(sg)))
 
-    def set_init_memb_potential(self, v, group="all"):
+    def set_spike_thresh(self, v, group_id="all"):
+        """Set the spike threshold of the cell.
+
+        :param v: value to set for spike threshold with units
+        :type v: str
+        :param group_id: id of segment group to modify
+        :type group_id: str
+        """
+        self.biophysical_properties.membrane_properties.add(
+            "SpikeThresh", value=v, segment_groups=group_id
+        )
+
+    def set_init_memb_potential(self, v, group_id="all"):
         """Set the initial membrane potential of the cell.
 
         :param v: value to set for membrane potential with units
         :type v: str
-        :param group: id of segment group to modify
-        :type group: str
+        :param group_id: id of segment group to modify
+        :type group_id: str
         """
         self.biophysical_properties.membrane_properties.add(
-            "InitMembPotential", value=v, segment_groups=group
+            "InitMembPotential", value=v, segment_groups=group_id
         )
 
-    def set_resistivity(self, resistivity, group="all") -> None:
+    def set_resistivity(self, resistivity, group_id="all") -> None:
         """Set the resistivity of the cell
 
         :type resistivity: str
-        :param group: segment group to modify
-        :type group: str
+        :param group_id: segment group to modify
+        :type group_id: str
         """
         self.biophysical_properties.intracellular_properties.add(
-            "Resistivity", value=resistivity, segment_groups=group
+            "Resistivity", value=resistivity, segment_groups=group_id
         )
 
-    def set_specific_capacitance(self, spec_cap, group="all"):
+    def set_specific_capacitance(self, spec_cap, group_id="all"):
         """Set the specific capacitance for the cell.
 
         :param spec_cap: value of specific capacitance with units
         :type spec_cap: str
-        :param group: segment group to modify
-        :type group: str
+        :param group_id: segment group to modify
+        :type group_id: str
         """
         self.biophysical_properties.membrane_properties.add(
-            "SpecificCapacitance", value=spec_cap, segment_groups=group
+            "SpecificCapacitance", value=spec_cap, segment_groups=group_id
         )
 
     def add_intracellular_property(self, property_name, **kwargs):
@@ -46819,7 +46869,7 @@ class Cell(BaseCell):
         ion_channel,
         cond_density,
         erev="0.0 mV",
-        group="all",
+        group_id="all",
         ion="non_specific",
         ion_chan_def_file="",
     ):
@@ -46835,8 +46885,8 @@ class Cell(BaseCell):
         :type cond_density: str
         :param erev: value of reversal potential with units
         :type erev: str
-        :param group: segment groups to add to
-        :type group: str
+        :param group_id: segment groups to add to
+        :type group_id: str
         :param ion: name of ion
         :type ion: str
         :param ion_chan_def_file: path to NeuroML2 file defining the ion channel, if empty, it assumes the channel is defined in the same file
@@ -46845,7 +46895,7 @@ class Cell(BaseCell):
         cd = self.biophysical_properties.membrane_properties.add(
             "ChannelDensity",
             id=cd_id,
-            segment_groups=group,
+            segment_groups=group_id,
             ion=ion,
             ion_channel=ion_channel,
             erev=erev,
@@ -46932,7 +46982,12 @@ class Cell(BaseCell):
             self.morphology.add(seg_group_dend, validate=False, force=overwrite)
 
     def add_unbranched_segments(
-        self, points, parent=None, fraction_along=1.0, group=None, use_convention=True
+        self,
+        points,
+        parent=None,
+        fraction_along=1.0,
+        group_id=None,
+        use_convention=True,
     ):
         """Add an unbranched list of segments to the cell.
 
@@ -46961,9 +47016,9 @@ class Cell(BaseCell):
             Note that the second and following segments will all be added at the
             distal point of the previous segment
         :type fraction_along: float
-        :param group: segment group to add the segment to
+        :param group_id: segment group to add the segment to
             if a segment group does not already exist, it will be created
-        :type group: SegmentGroup
+        :type group_id: SegmentGroup
         :param use_convention: whether helper segment groups should be created using the default convention
             See the documentation of the `add_segment` method for more information
             on the convention
@@ -46975,6 +47030,8 @@ class Cell(BaseCell):
         prox = points[0]
         dist = points[1]
 
+        seg_group = self.add_unbranched_segment_group(group_id=group_id)
+
         # first segment
         seg = self.add_segment(
             prox=prox,
@@ -46982,7 +47039,7 @@ class Cell(BaseCell):
             name=None,
             parent=parent,
             fraction_along=fraction_along,
-            group=group,
+            group_id=group_id,
             use_convention=use_convention,
         )
 
@@ -46996,12 +47053,12 @@ class Cell(BaseCell):
                 name=None,
                 parent=seg,
                 fraction_along=1.0,
-                group=group,
+                group_id=group_id,
                 use_convention=use_convention,
             )
             prox = dist
 
-        return self.get_segment_group(group)
+        return self.get_segment_group(group_id)
 
     # end class Cell
 
@@ -62372,7 +62429,8 @@ class IF_cond_exp(basePyNNIaFCondCell):
     :type e_rev_E: none
     :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
-    :param tau_refrac:
+    :p
+    aram tau_refrac:
     :type tau_refrac: none
     :param v_thresh:
     :type v_thresh: none
