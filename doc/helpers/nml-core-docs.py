@@ -71,6 +71,7 @@ with open("../userdocs/coreclasses_list.txt", 'w') as fwrite:
                        :members:
                        :undoc-members:
                        :show-inheritance:
+                       :inherited-members:
 
                     """.format(
                         aclass, "#" * len(aclass), f, aclass,
