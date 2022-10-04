@@ -23,7 +23,7 @@ class TestNML(unittest.TestCase):
     def test_get_members(self):
         """Test get_members()"""
         example_base = neuroml.Base(id="examplebase")
-        base_members = example_base.get_members()
+        base_members = example_base._get_members()
 
         member_names = []
         for m in base_members:
@@ -36,7 +36,7 @@ class TestNML(unittest.TestCase):
 
         # check with IonChannel: inherits from IonChannel
         ionchannelhh = neuroml.IonChannelHH()
-        ion_members = ionchannelhh.get_members()
+        ion_members = ionchannelhh._get_members()
         member_names = []
         for m in ion_members:
             member_names.append(m.get_name())
@@ -211,9 +211,9 @@ class TestNML(unittest.TestCase):
         """Test the check_component_type_arg_list utility function"""
         nml_doc = neuroml.nml.nml.NeuroMLDocument()
         with self.assertRaises(ValueError) as cm:
-            nml_doc.check_arg_list(random_argument="nope")
+            nml_doc._check_arg_list(random_argument="nope")
         print(cm.exception)
-        nml_doc.check_arg_list(id="yep")
+        nml_doc._check_arg_list(id="yep")
 
     def test_add_segment(self):
         """Test adding a segment."""
