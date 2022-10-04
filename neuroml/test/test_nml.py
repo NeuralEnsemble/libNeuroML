@@ -219,7 +219,7 @@ class TestNML(unittest.TestCase):
         """Test adding a segment."""
         new_cell = component_factory("Cell", id="test_cell")
         segment = new_cell.add_segment(
-            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group_id="soma_group"
         )
         self.assertIsInstance(segment, neuroml.Segment)
         self.assertEqual(segment.proximal.diameter, 20.0)
@@ -233,7 +233,7 @@ class TestNML(unittest.TestCase):
         """Test adding initial membrane potential."""
         new_cell = component_factory("Cell", id="test_cell")
         new_cell.add_segment(
-            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group_id="soma_group"
         )
         new_cell.set_init_memb_potential("-65mV")
 
@@ -244,7 +244,7 @@ class TestNML(unittest.TestCase):
         """Units of membrane potential are wrong: should fail."""
         new_cell = component_factory("Cell", id="test_cell")
         new_cell.add_segment(
-            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group_id="soma_group"
         )
         # Make it invalid: wrong dimensions for membrane potential
         new_cell.set_init_memb_potential(new_cell, "-65 cm")
@@ -255,7 +255,7 @@ class TestNML(unittest.TestCase):
         """Test setting the resistivity."""
         new_cell = component_factory("Cell", id="test_cell")
         new_cell.add_segment(
-            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group_id="soma_group"
         )
         new_cell.set_resistivity("2000 ohm_cm")
         self.assertIsNone(new_cell.validate(True))
@@ -265,7 +265,7 @@ class TestNML(unittest.TestCase):
         """Test setting the resistivity."""
         new_cell = component_factory("Cell", id="test_cell")
         new_cell.add_segment(
-            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group_id="soma_group"
         )
         new_cell.set_resistivity("2000 kilO")
         self.assertIsNone(new_cell.validate(True))
@@ -274,7 +274,7 @@ class TestNML(unittest.TestCase):
         """Test setting the specific_capacitance."""
         new_cell = component_factory("Cell", id="test_cell")
         new_cell.add_segment(
-            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group_id="soma_group"
         )
         new_cell.set_specific_capacitance("1.0 uF_per_cm2")
         self.assertIsNone(new_cell.validate(True))
@@ -284,7 +284,7 @@ class TestNML(unittest.TestCase):
         """Test setting the specific_capacitance."""
         new_cell = component_factory("Cell", id="test_cell")
         new_cell.add_segment(
-            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group_id="soma_group"
         )
         new_cell.set_specific_capacitance("kilo")
         self.assertIsNone(new_cell.validate(True))
@@ -293,7 +293,7 @@ class TestNML(unittest.TestCase):
         """Test setting the channel_density."""
         new_cell = component_factory("Cell", id="test_cell")
         new_cell.add_segment(
-            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group_id="soma_group"
         )
         nml_doc = component_factory(
             "NeuroMLDocument", id="test_cell_with_channel_density_doc"
@@ -333,7 +333,7 @@ class TestNML(unittest.TestCase):
         """Test setting the channel_density."""
         new_cell = component_factory("Cell", id="test_cell")
         new_cell.add_segment(
-            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group_id="soma_group"
         )
         nml_doc = component_factory(
             "NeuroMLDocument", id="test_cell_with_channel_density_doc"
@@ -376,7 +376,7 @@ class TestNML(unittest.TestCase):
         """Test setting the channel_density."""
         new_cell = component_factory("Cell", id="test_cell")
         new_cell.add_segment(
-            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group_id="soma_group"
         )
         nml_doc = component_factory(
             "NeuroMLDocument", id="test_cell_with_channel_density_doc"
@@ -395,7 +395,7 @@ class TestNML(unittest.TestCase):
             "",
             "-70.0 mV",
             "non_specific",
-            group="all",
+            group_id="all",
         )
         self.assertIsNone(new_cell.validate(True))
         self.assertIsNone(nml_doc.validate(True))
@@ -404,7 +404,7 @@ class TestNML(unittest.TestCase):
         """Test adding a new membrane property"""
         new_cell = component_factory("Cell", id="test_cell")
         new_cell.add_segment(
-            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group_id="soma_group"
         )
         new_cell.add_membrane_property("InitMembPotential", value="-65mV")
 
@@ -421,7 +421,7 @@ class TestNML(unittest.TestCase):
         """Test adding a new membrane property"""
         new_cell = component_factory("Cell", id="test_cell")
         new_cell.add_segment(
-            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group="soma_group"
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group_id="soma_group"
         )
         new_cell.add_intracellular_property(
             "Resistivity",
@@ -449,7 +449,7 @@ class TestNML(unittest.TestCase):
             prox=[0.0, 0.0, 0.0, diam],
             dist=[0.0, 10.0, 0.0, diam],
             name="Seg0_soma_0",
-            group="soma_0",
+            group_id="soma_0",
         )
 
         self.assertIsInstance(soma_0, neuroml.Segment)
@@ -468,7 +468,7 @@ class TestNML(unittest.TestCase):
             prox=[0.0, 0.0, 0.0, diam],
             dist=[0.0, 20.0, 0.0, diam],
             name="Seg0_soma_0",
-            group="soma_0",
+            group_id="soma_0",
         )
         self.assertIsInstance(soma_0, neuroml.Segment)
 
@@ -476,7 +476,7 @@ class TestNML(unittest.TestCase):
             prox=[soma_0.distal.x, soma_0.distal.y, soma_0.distal.z, 5],
             dist=[soma_0.distal.x, soma_0.distal.y + 50, soma_0.distal.z, 2],
             name="dend_0",
-            group="dend_0",
+            group_id="dend_0",
             parent=soma_0,
         )
         self.assertIsInstance(dend_0, neuroml.Segment)
@@ -504,7 +504,7 @@ class TestNML(unittest.TestCase):
             prox=[0.0, 0.0, 0.0, diam],
             dist=[0.0, 10.0, 0.0, diam],
             name="Seg0_soma_0",
-            group="soma_0",
+            group_id="soma_0",
         )
 
         dend_group = cell.add_unbranched_segments(
@@ -515,7 +515,7 @@ class TestNML(unittest.TestCase):
             ],
             parent=soma_0,
             fraction_along=1.0,
-            group="dend_group_0",
+            group_id="dend_group_0",
             use_convention=True,
         )
 
