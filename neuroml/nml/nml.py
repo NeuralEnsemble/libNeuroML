@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Oct  4 11:56:55 2022 by generateDS.py version 2.40.13.
+# Generated Tue Oct  4 17:32:32 2022 by generateDS.py version 2.40.13.
 # Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
 #
 # Command line options:
@@ -46320,14 +46320,14 @@ class Cell(BaseCell):
         :param segment_id: ID of segment
         :return: segment
 
-        :raises Exception: if the segment is not found in the cell
+        :raises ValueError: if the segment is not found in the cell
         """
 
         for segment in self.morphology.segments:
             if segment.id == segment_id:
                 return segment
 
-        raise Exception(
+        raise ValueError(
             "Segment with id " + str(segment_id) + " not found in cell " + str(self.id)
         )
 
@@ -46726,11 +46726,13 @@ class Cell(BaseCell):
         self,
         prox,
         dist,
+        seg_id=None,
         name=None,
         parent=None,
         fraction_along=1.0,
         group_id=None,
         use_convention=True,
+        reorder_segment_groups=True,
     ):
         """Add a segment to the cell.
 
@@ -46747,6 +46749,13 @@ class Cell(BaseCell):
         :type prox: list with 4 float entries: [x, y, z, diameter]
         :param dist: dist segment information
         :type dist: list with 4 float entries: [x, y, z, diameter]
+        :param seg_id: explicit ID to set for segment
+            When not provided, the function will automatically add an ID based
+            on the number of segments already included in the cell. It is best
+            to either always set an explicit ID or let the function set it
+            automatically, but not to mix the two. A `ValueError` is raised if
+            a segment with the provided ID already exists
+        :type seg_id: str
         :param name: name of segment
         :type name: str
         :param parent: parent segment
@@ -46762,7 +46771,18 @@ class Cell(BaseCell):
         :type group_id: str
         :param use_convention: whether helper segment groups should be created using the default convention
         :type use_convention: bool
+        :param reorder_segment_groups: whether the groups should be reordered
+            to put the default segment groups last after the segment has been
+            added. This is required for a valid NeuroML file because segment
+            groups included in the default groups should be declared before
+            they are used in the default groups. When adding lots of segments,
+            one may want to only reorder at the end of the process instead of
+            after each segment is added.
+        :type reorder_segment_groups: bool
         :returns: the created segment
+        :rtype: Segment
+        :raises ValueError: if `seg_id` is provided and a segment with this ID
+            already exists
 
         """
         try:
@@ -46782,7 +46802,6 @@ class Cell(BaseCell):
             print("{}: dist must be a list of 4 elements".format(e))
 
         segid = len(self.morphology.segments)
-
         if segid > 0 and parent is None:
             raise Exception(
                 "There are currently more than one segments in the cell, but one is being added without specifying a parent segment"
@@ -46795,8 +46814,23 @@ class Cell(BaseCell):
             if parent
             else None
         )
+
+        if seg_id:
+            try:
+                seg = None
+                seg = self.get_segment(seg_id)
+                if seg:
+                    raise ValueError(
+                        "A segment with provided id f{seg_id} already exists"
+                    )
+            except ValueError:
+                # a segment with this ID does not already exist
+                pass
+        else:
+            seg_id = segid
+
         segment = self.component_factory(
-            "Segment", id=segid, proximal=p, distal=d, parent=sp
+            "Segment", id=seg_id, proximal=p, distal=d, parent=sp
         )
 
         if group_id:
@@ -46809,6 +46843,8 @@ class Cell(BaseCell):
                 seg_group = self.get_segment_group(group_id)
             except ValueError as e:
                 print("Warning: {}".format(e))
+                print(f"Warning: creating Segment Group with id {group_id}")
+                seg_group = self.add_segment_group(group_id=group_id)
 
             if "axon_" in group_id:
                 if use_convention:
@@ -46820,25 +46856,14 @@ class Cell(BaseCell):
                 if use_convention:
                     seg_group_default = self.get_segment_group("dendrite_group")
 
-            if seg_group is None:
-                seg_group = self.add_segment_group(group_id=group_id)
-                self.morphology.add(seg_group, validate=False)
-
             seg_group.add(self.component_factory("Member", segments=segment.id))
-            # Ideally, these higher level segment groups should just include other
-            # segment groups using Include, which would result in smaller NML
-            # files. However, because these default segment groups are defined
-            # first, they are printed in the NML file before the new segments and their
-            # groups. The jnml validator does not like this.
-            # TODO: clarify if the order of definition is important, or if the jnml
-            # validator needs to be updated to manage this use case.
             if use_convention and seg_group_default:
-                seg_group_default.add(
-                    self.component_factory("Member", segments=segment.id)
-                )
-                # note that these membership checks work because the `in`
-                # operator checks using both `is` and `==`:
+                # Note: these membership checks work because the `in` operator
+                # checks using both `is` and `==`:
                 # https://docs.python.org/3/reference/expressions.html#membership-test-operations
+                # Note: the add method also checks, but does not check by
+                # value, only by object (is, not ==), so we must run this check
+                # ourselves.
                 if (
                     self.component_factory("Include", segment_groups=seg_group.id)
                     not in seg_group_default.includes
@@ -46847,14 +46872,14 @@ class Cell(BaseCell):
 
         if use_convention:
             seg_group_all = self.get_segment_group("all")
-            seg_group_all.add(self.component_factory("Member", segments=segment.id))
             if (
                 self.component_factory("Include", segment_groups=seg_group.id)
                 not in seg_group_all.includes
             ):
                 seg_group_all.add("Include", segment_groups=seg_group.id)
 
-            self.reorder_segment_groups()
+            if reorder_segment_groups:
+                self.reorder_segment_groups()
 
         if name:
             segment.name = name
@@ -46867,7 +46892,7 @@ class Cell(BaseCell):
                 segment_name = f"Seg{segments_in_group - 1}_{group_id}"
             else:
                 # if it doesn't belong to a group, just use the segment id
-                segment_name = f"Seg{segid}"
+                segment_name = f"Seg{seg_id}"
             segment.name = segment_name
 
         self.morphology.add(segment)
@@ -47215,6 +47240,7 @@ class Cell(BaseCell):
             fraction_along=fraction_along,
             group_id=group_id,
             use_convention=use_convention,
+            reorder_segment_groups=False,
         )
 
         # rest of the segments
@@ -47229,9 +47255,11 @@ class Cell(BaseCell):
                 fraction_along=1.0,
                 group_id=group_id,
                 use_convention=use_convention,
+                reorder_segment_groups=False,
             )
             prox = dist
 
+        self.reorder_segment_groups()
         return self.get_segment_group(group_id)
 
     # end class Cell
