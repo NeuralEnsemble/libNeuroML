@@ -59,7 +59,7 @@ class GeneratedsSuperSuper(object):
         # then use this to modify the member. Using `vars` also allows us to
         # modify the value
         targets = []
-        all_members = self.get_members()
+        all_members = self.__get_members()
         for member in all_members:
             # get_data_type() returns the type as a string, e.g.: 'IncludeType'
             if member.get_data_type() == type(obj).__name__:
@@ -155,7 +155,7 @@ class GeneratedsSuperSuper(object):
         if isCell:
             comp.setup_nml_cell()
 
-        comp.check_arg_list(**kwargs)
+        comp.__check_arg_list(**kwargs)
 
         if validate:
             comp.validate()
@@ -205,7 +205,7 @@ class GeneratedsSuperSuper(object):
                 else:
                     vars(self)[member.get_name()].append(obj)
 
-    def get_members(self):
+    def __get_members(self):
         """Get member data items, also from ancestors.
 
         This function is required because generateDS does not include inherited
@@ -293,7 +293,7 @@ class GeneratedsSuperSuper(object):
 
         info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information.\n\n"
         info_str += "Valid members for {} are:\n".format(self.__class__.__name__)
-        all_members = self.get_members()
+        all_members = self.__get_members()
         for member in all_members:
             info_str += "* {} (class: {}, {})\n".format(
                 member.get_name(),
@@ -463,7 +463,7 @@ class GeneratedsSuperSuper(object):
             cc = getattr(module_object, ac, None)
             if type(cc) == type:
                 try:
-                    cc_members = cc().get_members()
+                    cc_members = cc().__get_members()
                     for amember in cc_members:
                         # it's a member with the type matching this class
                         if amember.get_data_type() == self.__class__.__name__:
@@ -501,7 +501,7 @@ class GeneratedsSuperSuper(object):
         print(info_str)
         return info_str
 
-    def check_arg_list(self, **kwargs):
+    def __check_arg_list(self, **kwargs):
         """Check that the correct arguments have been passed for creation of a
         particular Component comp.
 
@@ -526,7 +526,7 @@ class GeneratedsSuperSuper(object):
         :raises ValueError: if given argument list does not match permitted  member
 
         """
-        members = self.get_members()
+        members = self.__get_members()
         member_names = []
         for m in members:
             member_names.append(m.get_name())
