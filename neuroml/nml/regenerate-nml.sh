@@ -34,6 +34,14 @@ regenerate () {
         pushd ../../
             # generates the sed-script.txt file
             python -m neuroml.nml.annotate_nml
+            echo "Generated sed script"
+            sed_lines=$(wc -l sed-script.txt | cut -f1 -d " ")
+            if [ $sed_lines -eq 0 ]
+            then
+                echo "Something went wrong. No lines in sed script."
+            else
+                echo "${sed_lines} lines in sed script"
+            fi
         popd
         # apply the sed transformations
         sleep 1 && sed -i -f ../../sed-script.txt nml.py

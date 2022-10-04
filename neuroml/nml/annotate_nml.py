@@ -34,8 +34,8 @@ with open("sed-script.txt", 'w') as f:
     for aclass, atype in classes:
         # print(f"Processing {aclass}")
         member_types = {}
-        if getattr(atype, "get_members", False):
-            members = atype().get_members()
+        if getattr(atype, "_get_members", False):
+            members = atype()._get_members()
             for amember in members:
                 dtype = amember.get_data_type().replace("xs:", "")
                 dname = amember.get_name()
