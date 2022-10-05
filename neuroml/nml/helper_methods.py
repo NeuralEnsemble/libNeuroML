@@ -983,7 +983,7 @@ cell_methods = MethodSpec(
 
     # Get segment object by its id
     def get_segment(self, segment_id):
-        # type: (str) -> Segment
+        # type: (int) -> Segment
         """Get segment object by its id
 
         :param segment_id: ID of segment
@@ -1371,16 +1371,8 @@ cell_methods = MethodSpec(
         use_convention=True,
         reorder_segment_groups=True,
     ):
-        """Add a segment to the cell.
-
-        Suggested convention: use `axon_`, `soma_`, `dend_` prefixes for axon,
-        soma, and dendrite segment groups respectively. This will allow this
-        function to add the correct neurolex IDs to the group.
-
-        If `use_convention` is true, the created segment is also added to the
-        default segment groups that were created by the `create_cell` function:
-        `all`, `dendrite_group`, `soma_group`, `axon_group`. Note that while it is
-        not necessary to use the convention, it is necessary to be consistent.
+        """Add a segment to the cell, to the provided segment group, creating
+        it if required.
 
         :param prox: proximal segment information
         :type prox: list with 4 float entries: [x, y, z, diameter]
@@ -1401,12 +1393,26 @@ cell_methods = MethodSpec(
         :type fraction_along: float
         :param group_id: id of segment group to add the segment to
             If a segment group with this id does not exist, a new segment group
-            will be created. Note that this will not be marked as an unbranched
-            segment group. If you wish to add a segment to an unbranched
-            segment group, please create one using
+            will be created.
+
+            If the suggested convention is used: `axon_`, `soma_`, `dend_`
+            prefixes for axon, soma, and dendrite segment groups respectively,
+            the correct neurolex ID will be added to the created group.
+
+            if `use_convention` is `True`, the segment group will also be added
+            to the default segment groups.
+
+            Note that the newly created segment group will not be marked as an
+            unbranched segment group. If you wish to add a segment to an
+            unbranched segment group, please create one using
             `add_unbranched_segment_group` and then add segments to it.
         :type group_id: str
         :param use_convention: whether helper segment groups should be created using the default convention
+            This requires the `group_id` to be provided, because that is how
+            the function infers what kind of segment (axon/soma/dendrite) is
+            being created, and what global group (created by the `create_cell`
+            function) to add the corresponding segment group to: `all`,
+            `dendrite_group`, `soma_group`, `axon_group`.
         :type use_convention: bool
         :param reorder_segment_groups: whether the groups should be reordered
             to put the default segment groups last after the segment has been
@@ -1480,6 +1486,7 @@ cell_methods = MethodSpec(
                 seg_group = self.add_segment_group(
                     group_id=group_id
                 )
+            seg_group.add(self.component_factory("Member", segments=segment.id))
 
             if "axon_" in group_id:
                 if use_convention:
@@ -1491,19 +1498,20 @@ cell_methods = MethodSpec(
                 if use_convention:
                     seg_group_default = self.get_segment_group("dendrite_group")
 
-            seg_group.add(self.component_factory("Member", segments=segment.id))
-            if use_convention and seg_group_default:
-                # Note: these membership checks work because the `in` operator
-                # checks using both `is` and `==`:
-                # https://docs.python.org/3/reference/expressions.html#membership-test-operations
-                # Note: the add method also checks, but does not check by
-                # value, only by object (is, not ==), so we must run this check
-                # ourselves.
-                if self.component_factory(
-                    "Include", segment_groups=seg_group.id) not in seg_group_default.includes:
-                    seg_group_default.add("Include", segment_groups=seg_group.id)
+            # get_segment_group raises a ValueError, so won't get here if one
+            # is not found
 
-        if use_convention:
+            # Note: these membership checks work because the `in` operator
+            # checks using both `is` and `==`:
+            # https://docs.python.org/3/reference/expressions.html#membership-test-operations
+            # Note: the add method also checks, but does not check by
+            # value, only by object (is, not ==), so we must run this check
+            # ourselves.
+            if self.component_factory(
+                "Include", segment_groups=seg_group.id) not in seg_group_default.includes:
+                seg_group_default.add("Include", segment_groups=seg_group.id)
+
+            # also add to global
             seg_group_all = self.get_segment_group("all")
             if self.component_factory(
                 "Include", segment_groups=seg_group.id) not in seg_group_all.includes:
