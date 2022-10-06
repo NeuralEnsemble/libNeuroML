@@ -230,6 +230,21 @@ class TestNML(unittest.TestCase):
 
         self.assertIsNone(new_cell.validate(True))
 
+    def test_add_segment_no_group(self):
+        """Test adding a segment but without a group."""
+        new_cell = component_factory("Cell", id="test_cell")
+        segment = new_cell.add_segment(
+            (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group_id=None,
+            seg_type="soma"
+        )
+        self.assertIsInstance(segment, neuroml.Segment)
+        self.assertEqual(segment.proximal.diameter, 20.0)
+        self.assertEqual(segment.proximal.x, 0.0)
+        self.assertEqual(segment.distal.diameter, 20.0)
+        self.assertEqual(segment.distal.x, 20.0)
+
+        self.assertIsNone(new_cell.validate(True))
+
     def test_setting_init_memb_potential(self):
         """Test adding initial membrane potential."""
         new_cell = component_factory("Cell", id="test_cell")
