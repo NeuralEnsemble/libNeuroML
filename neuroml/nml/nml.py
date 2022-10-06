@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Oct  5 17:44:57 2022 by generateDS.py version 2.41.1.
+# Generated Thu Oct  6 14:01:56 2022 by generateDS.py version 2.40.13.
 # Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
 #
 # Command line options:
@@ -46732,6 +46732,7 @@ class Cell(BaseCell):
         fraction_along=1.0,
         group_id=None,
         use_convention=True,
+        seg_type=None,
         reorder_segment_groups=True,
     ):
         """Add a segment to the cell, to the provided segment group, creating
@@ -46749,7 +46750,22 @@ class Cell(BaseCell):
             a segment with the provided ID already exists
         :type seg_id: str
         :param name: name of segment
+            If a name is given, it is used.
+            If no name is given, but a segment group is provided, the segment
+            is named: "Seg<number>_<group name>" where <number> is the number
+            of the segment in the segment group. (to be read as "segment
+            <number> in <group>"; the group name should indicate the type here)
+            If no name is given, and no segment group is provided, the segment
+            is simply named: "Seg<segment id>".
         :type name: str
+        :seg_type: type of segment ("axon", "dendrite", "soma")
+            If `use_convention` is `True`, and a `group_id` is provided, the
+            segment group will also be added to the default segment groups if
+            it has not been previously added. If `group_id` is `None`, the
+            segment will be added to the default groups instead.
+
+            If `use_convention` is `False`, this is unused.
+        :type seg_type: str
         :param parent: parent segment
         :type parent: SegmentParent
         :param fraction_along: where the new segment is connected to the parent (0: distal point, 1: proximal point)
@@ -46758,32 +46774,28 @@ class Cell(BaseCell):
             If a segment group with this id does not exist, a new segment group
             will be created.
 
-            If the suggested convention is used: `axon_`, `soma_`, `dend_`
-            prefixes for axon, soma, and dendrite segment groups respectively,
-            the correct neurolex ID will be added to the created group.
+            The suggested convention is: `axon_`, `soma_`, `dend_` for axonal,
+            somatic, and dendritic segment groups respectively.
 
-            if `use_convention` is `True`, the segment group will also be added
-            to the default segment groups.
-
-            Note that the newly created segment group will not be marked as an
+            Note that a newly created segment group will not be marked as an
             unbranched segment group. If you wish to add a segment to an
             unbranched segment group, please create one using
             `add_unbranched_segment_group` and then add segments to it.
         :type group_id: str
-        :param use_convention: whether helper segment groups should be created using the default convention
-            This requires the `group_id` to be provided, because that is how
-            the function infers what kind of segment (axon/soma/dendrite) is
-            being created, and what global group (created by the `create_cell`
-            function) to add the corresponding segment group to: `all`,
-            `dendrite_group`, `soma_group`, `axon_group`.
+        :param use_convention: whether the segment or its group should be added
+            to the global segment groups. The `seg_type` notes what global
+            group this segment or its segment group should also be added to.
         :type use_convention: bool
         :param reorder_segment_groups: whether the groups should be reordered
             to put the default segment groups last after the segment has been
-            added. This is required for a valid NeuroML file because segment
-            groups included in the default groups should be declared before
-            they are used in the default groups. When adding lots of segments,
-            one may want to only reorder at the end of the process instead of
-            after each segment is added.
+            added.
+            This is required for a valid NeuroML file because segment groups
+            included in the default groups should be declared before they are
+            used in the default groups. When adding lots of segments, one may
+            want to only reorder at the end of the process instead of after
+            each segment is added.
+
+            This is only relevant if `use_convention=True`.
         :type reorder_segment_groups: bool
         :returns: the created segment
         :rtype: Segment
@@ -46839,8 +46851,8 @@ class Cell(BaseCell):
             "Segment", id=seg_id, proximal=p, distal=d, parent=sp
         )
 
+        seg_group = None
         if group_id:
-            seg_group = None
             seg_group_default = None
 
             # cell.get_segment_group throws an exception of the segment group
@@ -46853,18 +46865,26 @@ class Cell(BaseCell):
                 seg_group = self.add_segment_group(group_id=group_id)
             seg_group.add(self.component_factory("Member", segments=segment.id))
 
-            if "axon_" in group_id:
-                if use_convention:
-                    seg_group_default = self.get_segment_group("axon_group")
-            if "soma_" in group_id:
-                if use_convention:
-                    seg_group_default = self.get_segment_group("soma_group")
-            if "dend_" in group_id:
-                if use_convention:
-                    seg_group_default = self.get_segment_group("dendrite_group")
+        if use_convention:
+            if not seg_type:
+                raise ValueError("Please provide a seg_type")
+            if seg_type == "axon":
+                seg_group_default = self.get_segment_group("axon_group")
+            elif seg_type == "soma":
+                seg_group_default = self.get_segment_group("soma_group")
+            elif seg_type == "dendrite":
+                seg_group_default = self.get_segment_group("dendrite_group")
+            else:
+                raise ValueError(f"Invalid segment type provided: {seg_type}")
+
+            seg_group_all = self.get_segment_group("all")
 
             # get_segment_group raises a ValueError, so won't get here if one
             # is not found
+
+            # Now add the segment group that contains this segment if it exists
+            # to the global groups. If a segment group does not exist for this
+            # segment, add the segment itself to the global groups
 
             # Note: these membership checks work because the `in` operator
             # checks using both `is` and `==`:
@@ -46872,19 +46892,21 @@ class Cell(BaseCell):
             # Note: the add method also checks, but does not check by
             # value, only by object (is, not ==), so we must run this check
             # ourselves.
-            if (
-                self.component_factory("Include", segment_groups=seg_group.id)
-                not in seg_group_default.includes
-            ):
-                seg_group_default.add("Include", segment_groups=seg_group.id)
-
-            # also add to global
-            seg_group_all = self.get_segment_group("all")
-            if (
-                self.component_factory("Include", segment_groups=seg_group.id)
-                not in seg_group_all.includes
-            ):
-                seg_group_all.add("Include", segment_groups=seg_group.id)
+            if seg_group:
+                if (
+                    self.component_factory("Include", segment_groups=seg_group.id)
+                    not in seg_group_default.includes
+                ):
+                    seg_group_default.add("Include", segment_groups=seg_group.id)
+                # also add to global
+                if (
+                    self.component_factory("Include", segment_groups=seg_group.id)
+                    not in seg_group_all.includes
+                ):
+                    seg_group_all.add("Include", segment_groups=seg_group.id)
+            else:
+                seg_group_default.add("Member", segments=segment)
+                seg_group_all.add("Member", segments=segment)
 
             if reorder_segment_groups:
                 self.reorder_segment_groups()
@@ -46892,14 +46914,16 @@ class Cell(BaseCell):
         if name:
             segment.name = name
         else:
-            # set a default name
+            # set a default name based on the group membership if group
+            # provided
             if group_id:
                 # seg_group will exist by now: either it already existed or it
                 # was created above
                 segments_in_group = len(seg_group.members)
                 segment_name = f"Seg{segments_in_group - 1}_{group_id}"
             else:
-                # if it doesn't belong to a group, just use the segment id
+                # if it doesn't belong to a group, use the type to indicate
+                # what kind of segment this is
                 segment_name = f"Seg{seg_id}"
             segment.name = segment_name
 
@@ -47195,6 +47219,7 @@ class Cell(BaseCell):
         fraction_along=1.0,
         group_id=None,
         use_convention=True,
+        seg_type=None,
     ):
         """Add an unbranched list of segments to the cell.
 
@@ -47230,6 +47255,8 @@ class Cell(BaseCell):
             See the documentation of the `add_segment` method for more information
             on the convention
         :type use_convention: bool
+        :param seg_type: type of segments ("axon", "soma", "dendrite")
+        :type seg_type: str
         :returns: the segment group containing this new list of segments
         :rtype: SegmentGroup
 
@@ -47248,6 +47275,7 @@ class Cell(BaseCell):
             fraction_along=fraction_along,
             group_id=group_id,
             use_convention=use_convention,
+            seg_type=seg_type,
             reorder_segment_groups=False,
         )
 
@@ -47263,6 +47291,7 @@ class Cell(BaseCell):
                 fraction_along=1.0,
                 group_id=group_id,
                 use_convention=use_convention,
+                seg_type=seg_type,
                 reorder_segment_groups=False,
             )
             prox = dist
