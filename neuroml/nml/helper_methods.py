@@ -1536,8 +1536,8 @@ cell_methods = MethodSpec(
                     "Include", segment_groups=seg_group.id) not in seg_group_all.includes:
                     seg_group_all.add("Include", segment_groups=seg_group.id)
             else:
-                seg_group_default.add("Member", segments=segment)
-                seg_group_all.add("Member", segments=segment)
+                seg_group_default.add("Member", segments=segment.id)
+                seg_group_all.add("Member", segments=segment.id)
 
             if reorder_segment_groups:
                 self.reorder_segment_groups()
