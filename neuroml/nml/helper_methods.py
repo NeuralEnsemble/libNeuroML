@@ -1024,9 +1024,8 @@ cell_methods = MethodSpec(
         # type: (str) -> Point3DWithDiam
         """Get the proximal point of a segment.
 
-        Get the proximal point of a segment, even the proximal field is None
-        and so the proximal point is on the parent (at a point set by
-        fraction_along).
+        If the proximal for the segment is set to None, calculate the proximal
+        on the parent using fraction_along and return it.
 
         :param segment_id: ID of segment
         :return: proximal point
@@ -1045,6 +1044,7 @@ cell_methods = MethodSpec(
         else:
             pd = parent.distal
             pp = self.get_actual_proximal(segment.parent.segments)
+            # pp + f(pd - pp) = (1 - f)pp + f*pd
             p = Point3DWithDiam(x=(1-fract)*pp.x+fract*pd.x, y=(1-fract)*pp.y+fract*pd.y, z=(1-fract)*pp.z+fract*pd.z)
             p.diameter = (1-fract)*pp.diameter+fract*pd.diameter
 
@@ -1526,18 +1526,20 @@ cell_methods = MethodSpec(
             # https://docs.python.org/3/reference/expressions.html#membership-test-operations
             # Note: the add method also checks, but does not check by
             # value, only by object (is, not ==), so we must run this check
-            # ourselves.
+            # ourselves, and append to the list.
             if seg_group:
                 if self.component_factory(
                     "Include", segment_groups=seg_group.id) not in seg_group_default.includes:
-                    seg_group_default.add("Include", segment_groups=seg_group.id)
+                    seg_group_default.includes.append(self.component_factory("Include", segment_groups=seg_group.id))
                 # also add to global
                 if self.component_factory(
                     "Include", segment_groups=seg_group.id) not in seg_group_all.includes:
-                    seg_group_all.add("Include", segment_groups=seg_group.id)
+                    seg_group_all.includes.append(self.component_factory("Include", segment_groups=seg_group.id))
             else:
-                seg_group_default.add("Member", segments=segment.id)
-                seg_group_all.add("Member", segments=segment.id)
+                if self.component_factory("Member", segments=segment.id) not in seg_group_default.members:
+                    seg_group_default.members.append(self.component_factory("Member", segments=segment.id))
+                if self.component_factory("Member", segments=segment.id) not in seg_group_all.members:
+                    seg_group_all.members.append(self.component_factory("Member", segments=segment.id))
 
             if reorder_segment_groups:
                 self.reorder_segment_groups()
