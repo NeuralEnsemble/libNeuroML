@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Oct  6 14:01:56 2022 by generateDS.py version 2.40.13.
+# Generated Thu Oct  6 14:13:33 2022 by generateDS.py version 2.40.13.
 # Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
 #
 # Command line options:
@@ -46905,8 +46905,8 @@ class Cell(BaseCell):
                 ):
                     seg_group_all.add("Include", segment_groups=seg_group.id)
             else:
-                seg_group_default.add("Member", segments=segment)
-                seg_group_all.add("Member", segments=segment)
+                seg_group_default.add("Member", segments=segment.id)
+                seg_group_all.add("Member", segments=segment.id)
 
             if reorder_segment_groups:
                 self.reorder_segment_groups()
@@ -62668,8 +62668,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
     :type e_rev_E: none
     :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
-    :p
-    aram tau_refrac:
+    :param tau_refrac:
     :type tau_refrac: none
     :param v_thresh:
     :type v_thresh: none
