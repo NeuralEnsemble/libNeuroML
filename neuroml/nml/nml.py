@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Oct  6 14:13:33 2022 by generateDS.py version 2.40.13.
+# Generated Thu Oct  6 16:55:38 2022 by generateDS.py version 2.40.13.
 # Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
 #
 # Command line options:
@@ -46361,9 +46361,8 @@ class Cell(BaseCell):
         # type: (str) -> Point3DWithDiam
         """Get the proximal point of a segment.
 
-        Get the proximal point of a segment, even the proximal field is None
-        and so the proximal point is on the parent (at a point set by
-        fraction_along).
+        If the proximal for the segment is set to None, calculate the proximal
+        on the parent using fraction_along and return it.
 
         :param segment_id: ID of segment
         :return: proximal point
@@ -46382,6 +46381,7 @@ class Cell(BaseCell):
         else:
             pd = parent.distal
             pp = self.get_actual_proximal(segment.parent.segments)
+            # pp + f(pd - pp) = (1 - f)pp + f*pd
             p = Point3DWithDiam(
                 x=(1 - fract) * pp.x + fract * pd.x,
                 y=(1 - fract) * pp.y + fract * pd.y,
@@ -46892,21 +46892,39 @@ class Cell(BaseCell):
             # Note: the add method also checks, but does not check by
             # value, only by object (is, not ==), so we must run this check
             # ourselves.
+            # We do not use `add` here. We run the check ourselves, and append
+            # to the list.
             if seg_group:
                 if (
                     self.component_factory("Include", segment_groups=seg_group.id)
                     not in seg_group_default.includes
                 ):
-                    seg_group_default.add("Include", segment_groups=seg_group.id)
+                    seg_group_default.includes.append(
+                        self.component_factory("Include", segment_groups=seg_group.id)
+                    )
                 # also add to global
                 if (
                     self.component_factory("Include", segment_groups=seg_group.id)
                     not in seg_group_all.includes
                 ):
-                    seg_group_all.add("Include", segment_groups=seg_group.id)
+                    seg_group_all.includes.append(
+                        self.component_factory("Include", segment_groups=seg_group.id)
+                    )
             else:
-                seg_group_default.add("Member", segments=segment.id)
-                seg_group_all.add("Member", segments=segment.id)
+                if (
+                    self.component_factory("Member", segments=segment.id)
+                    not in seg_group_default.members
+                ):
+                    seg_group_default.members.append(
+                        self.component_factory("Member", segments=segment.id)
+                    )
+                if (
+                    self.component_factory("Member", segments=segment.id)
+                    not in seg_group_all.members
+                ):
+                    seg_group_all.members.append(
+                        self.component_factory("Member", segments=segment.id)
+                    )
 
             if reorder_segment_groups:
                 self.reorder_segment_groups()
@@ -62668,7 +62686,8 @@ class IF_cond_exp(basePyNNIaFCondCell):
     :type e_rev_E: none
     :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
-    :param tau_refrac:
+    :p
+    aram tau_refrac:
     :type tau_refrac: none
     :param v_thresh:
     :type v_thresh: none
