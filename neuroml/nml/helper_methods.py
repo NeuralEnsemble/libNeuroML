@@ -1119,16 +1119,14 @@ cell_methods = MethodSpec(
     def get_all_segments_in_group(self,
                                   segment_group,
                                   assume_all_means_all=True):
-        # type: (SegmentGroup, bool) -> List[Segment]
+        # type: (SegmentGroup, bool) -> List[int]
         """Get all the segments in a segment group of the cell.
 
         :param segment_group: segment group to get all segments of
-        :param assume_all_means_all: return all segments if the segment group
-            wasn't explicitly defined
-
-        :todo: check docstring
-
-        :return: list of segments
+        :param assume_all_means_all: return all segments if the "all" segment
+            group wasn't explicitly defined
+        :return: list of segment ids
+        :rtype: list[int]
 
         :raises Exception: if no segment group is found in the cell.
         """
