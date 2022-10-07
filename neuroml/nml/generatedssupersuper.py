@@ -182,14 +182,14 @@ class GeneratedsSuperSuper(object):
                     vars(self)[member.get_name()] = obj
         # List
         else:
-            # Do not use 'obj in ..' for membership check because it also
-            # returns true if an element with the same value exists in the
-            # container
-            # https://docs.python.org/3/reference/expressions.html#membership-test-operations
             if force:
                 vars(self)[member.get_name()].append(obj)
             else:
-                if any(obj is e for e in vars(self)[member.get_name()]):
+                # "obj in .." checks by identity and value.
+                # In XML, two children with same values are identical.
+                # There is no use case where the same child would be added
+                # twice to a component.
+                if obj in vars(self)[member.get_name()]:
                     warnings.warn(
                         """{} already exists in {}. Use `force=True` to force readdition. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
                             obj, member.get_name()
