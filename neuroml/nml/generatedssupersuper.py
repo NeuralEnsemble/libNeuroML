@@ -198,7 +198,8 @@ class GeneratedsSuperSuper(object):
                 else:
                     vars(self)[member.get_name()].append(obj)
 
-    def _get_members(self):
+    @classmethod
+    def _get_members(cls):
         """Get member data items, also from ancestors.
 
         This function is required because generateDS does not include inherited
@@ -211,23 +212,41 @@ class GeneratedsSuperSuper(object):
         """
         import copy
 
+        current_class = cls.__name__
+
+        # __all_members_: starting undercores to make it "private", ending
+        # underscore to make it match generateds convention where all gds
+        # variables have trailing underscores
+
+        # caching: for each class, only get members list the first time
+        # `_get_members` is invoked, and store in the dict. For all successive
+        # calls, the value is simply returned from the dict. This should not
+        # use a lot of memory, and, it'll ensure that repeated calls to
+        # `_get_members` are efficient.
+
+        try:
+            return cls.__all_members_[current_class]
+        # first run
+        except AttributeError:
+            cls.__all_members_ = {}
+        # current class hasn't called it before, so doesn't exist in dict
+        except KeyError:
+            pass
+
         # create a copy by value
         # if copied by reference (=), the member_data_items_ object variable is
         # modified to a large list, greatly increasing the memory usage.
-        all_members = copy.copy(self.member_data_items_)
-        for c in type(self).__mro__:
+        cls.__all_members_[current_class] = copy.copy(cls.member_data_items_)
+        for c in cls.__mro__:
             try:
-                all_members.extend(c.member_data_items_)
+                cls.__all_members_[current_class] += c.member_data_items_
             except AttributeError:
                 pass
             except TypeError:
                 pass
 
-        # deduplicate
-        # TODO where are the duplicates coming from given that we're not
-        # calling this recursively?
-        all_members = list(set(all_members))
-        return all_members
+        cls.__all_members_[current_class] = list(set(cls.__all_members_[current_class]))
+        return cls.__all_members_[current_class]
 
     def info(self, show_contents=False, return_format="string"):
         """Provide information on NeuroML component.
