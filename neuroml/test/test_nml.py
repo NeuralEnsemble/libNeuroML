@@ -568,3 +568,40 @@ class TestNML(unittest.TestCase):
         self.assertEqual(3, len(cell.morphology.segments))
 
         cell.summary()
+
+    def test_optimise_segment_group(self):
+        """Test `optimise_segment_group`
+        """
+        cell = component_factory("Cell", id="simple_cell")  # type: neuroml.Cell
+        cell.notes = "NeuroML cell created by CellBuilder"
+
+        # Add soma segment
+        diam = 10.0
+        soma_0 = cell.add_segment(
+            prox=[0.0, 0.0, 0.0, diam],
+            dist=[0.0, 10.0, 0.0, diam],
+            name="Seg0_soma_0",
+            group_id="soma_0",
+            seg_type="soma"
+        )
+
+        # add the segment again to all group
+        cell.get_segment_group("all").members.append(cell.component_factory(neuroml.Member,
+                                                     segments=cell.get_segment_group("soma_0").members[0].segments))
+
+        # add group to all, explicitly
+        cell.get_segment_group("all").add(neuroml.Include,
+                                          segment_groups="soma_0",
+                                          force=True)
+        cell.get_segment_group("all").add(neuroml.Include,
+                                          segment_groups="soma_0",
+                                          force=True)
+        cell.get_segment_group("all").add(neuroml.Include,
+                                          segment_groups="soma_0",
+                                          force=True)
+        self.assertEqual(4, len(cell.get_segment_group("all").includes))
+        # should have only one included segment group
+        # should have no segments, because the segment is included in the one
+        # segment group already
+        cell.optimise_segment_group("all")
+        self.assertEqual(1, len(cell.get_segment_group("all").includes))
