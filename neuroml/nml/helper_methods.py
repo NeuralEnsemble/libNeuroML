@@ -1498,7 +1498,7 @@ cell_methods = MethodSpec(
                 seg_group = self.add_segment_group(
                     group_id=group_id
                 )
-            seg_group.add(self.component_factory("Member", segments=segment.id))
+            seg_group.add("Member", segments=segment.id, force=True)
 
         if use_convention:
             if not seg_type:
@@ -1521,25 +1521,14 @@ cell_methods = MethodSpec(
             # to the global groups. If a segment group does not exist for this
             # segment, add the segment itself to the global groups
 
-            # Note: these membership checks work because the `in` operator
-            # checks using both `is` and `==`:
-            # https://docs.python.org/3/reference/expressions.html#membership-test-operations
-            # Note: the add method also checks, but does not check by
-            # value, only by object (is, not ==), so we must run this check
-            # ourselves, and append to the list.
+            # Do not run membership checks for the larger groups: it is not
+            # performant. Better to add, and then de-duplicate later.
             if seg_group:
-                if self.component_factory(
-                    "Include", segment_groups=seg_group.id) not in seg_group_default.includes:
-                    seg_group_default.includes.append(self.component_factory("Include", segment_groups=seg_group.id))
-                # also add to global
-                if self.component_factory(
-                    "Include", segment_groups=seg_group.id) not in seg_group_all.includes:
-                    seg_group_all.includes.append(self.component_factory("Include", segment_groups=seg_group.id))
+                seg_group_default.add("Include", segment_groups=seg_group.id, force=True)
+                seg_group_all.add("Include", segment_groups=seg_group.id, force=True)
             else:
-                if self.component_factory("Member", segments=segment.id) not in seg_group_default.members:
-                    seg_group_default.members.append(self.component_factory("Member", segments=segment.id))
-                if self.component_factory("Member", segments=segment.id) not in seg_group_all.members:
-                    seg_group_all.members.append(self.component_factory("Member", segments=segment.id))
+                seg_group_default.add("Member", segments=segment.id, force=True)
+                seg_group_all.add("Member", segments=segment.id, force=True)
 
             if reorder_segment_groups:
                 self.reorder_segment_groups()
