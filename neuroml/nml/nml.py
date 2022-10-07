@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Oct  7 15:22:51 2022 by generateDS.py version 2.41.1.
+# Generated Fri Oct  7 15:54:45 2022 by generateDS.py version 2.41.1.
 # Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
 #
 # Command line options:
@@ -46981,7 +46981,7 @@ class Cell(BaseCell):
 
         """
         for seg_group in self.morphology.segment_groups:
-            self.optimise_segment_group(seg_group)
+            self.optimise_segment_group(seg_group.id)
 
     def optimise_segment_group(self, seg_group_id):
         """Optimise segment group with id `seg_group_id`.
@@ -47001,6 +47001,7 @@ class Cell(BaseCell):
             if i not in new_members:
                 new_members.append(i)
         members = new_members
+        seg_group.members = list(members)
 
         includes = seg_group.includes
         new_includes = []
@@ -47008,19 +47009,19 @@ class Cell(BaseCell):
             if i not in new_includes:
                 new_includes.append(i)
         includes = set(new_includes)
+        seg_group.includes = list(includes)
 
         # remove members that are included by included segment groups
-        new_members = []
-        for inc in includes:
-            all_segment_ids_in_group = set(
-                self.get_all_segments_in_group(inc.segment_groups)
-            )
-            for i in members:
-                if i.segments not in all_segment_ids_in_group:
-                    new_members.append(i)
-
-        seg_group.members = list(new_members)
-        seg_group.includes = list(includes)
+        if len(includes) > 0 and len(members) > 0:
+            new_members = []
+            for inc in includes:
+                all_segment_ids_in_group = set(
+                    self.get_all_segments_in_group(inc.segment_groups)
+                )
+                for i in members:
+                    if i.segments not in all_segment_ids_in_group:
+                        new_members.append(i)
+            seg_group.members = list(new_members)
 
     def set_spike_thresh(self, v, group_id="all"):
         """Set the spike threshold of the cell.
