@@ -1496,7 +1496,7 @@ cell_methods = MethodSpec(
                 seg_group = self.add_segment_group(
                     group_id=group_id
                 )
-            seg_group.add("Member", segments=segment.id, force=True)
+            seg_group.members.append(Member(segments=segment.id))
 
         if use_convention:
             if not seg_type:
@@ -1519,14 +1519,15 @@ cell_methods = MethodSpec(
             # to the global groups. If a segment group does not exist for this
             # segment, add the segment itself to the global groups
 
-            # Do not run membership checks for the larger groups: it is not
-            # performant. Better to add, and then de-duplicate later.
+            # Do not use add here, we do not need it's extra features (and
+            # their performance costs)
+            # De-duplicate/optimise later if required
             if seg_group:
-                seg_group_default.add("Include", segment_groups=seg_group.id, force=True)
-                seg_group_all.add("Include", segment_groups=seg_group.id, force=True)
+                seg_group_default.includes.append(Include(segment_groups=seg_group.id))
+                seg_group_all.includes.append(Include(segment_groups=seg_group.id))
             else:
-                seg_group_default.add("Member", segments=segment.id, force=True)
-                seg_group_all.add("Member", segments=segment.id, force=True)
+                seg_group_default.members.append(Member(segments=segment.id))
+                seg_group_all.members.append(Member(segments=segment.id))
 
             if reorder_segment_groups:
                 self.reorder_segment_groups()
@@ -1547,7 +1548,7 @@ cell_methods = MethodSpec(
                 segment_name = f"Seg{seg_id}"
             segment.name = segment_name
 
-        self.morphology.add(segment)
+        self.morphology.segments.append(segment)
         return segment
 
     def add_segment_group(self, group_id):
@@ -1566,7 +1567,7 @@ cell_methods = MethodSpec(
         seg_group = self.component_factory(
             "SegmentGroup", id=group_id
         )
-        self.morphology.add(seg_group, validate=False)
+        self.morphology.segment_groups.append(seg_group)
         return seg_group
 
 
@@ -1586,7 +1587,7 @@ cell_methods = MethodSpec(
         seg_group = self.component_factory(
             "SegmentGroup", id=group_id, neuro_lex_id=self.neuro_lex_ids["section"]
         )
-        self.morphology.add(seg_group, validate=False)
+        self.morphology.segment_groups.append(seg_group)
         return seg_group
 
 
