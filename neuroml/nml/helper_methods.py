@@ -1618,7 +1618,7 @@ cell_methods = MethodSpec(
 
         """
         for seg_group in self.morphology.segment_groups:
-            self.optimise_segment_group(seg_group)
+            self.optimise_segment_group(seg_group.id)
 
     def optimise_segment_group(self, seg_group_id):
         """Optimise segment group with id `seg_group_id`.
