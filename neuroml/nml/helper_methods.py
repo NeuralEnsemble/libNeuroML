@@ -1638,6 +1638,7 @@ cell_methods = MethodSpec(
             if i not in new_members:
                 new_members.append(i)
         members = new_members
+        seg_group.members = list(members)
 
         includes = seg_group.includes
         new_includes = []
@@ -1645,17 +1646,17 @@ cell_methods = MethodSpec(
             if i not in new_includes:
                 new_includes.append(i)
         includes = set(new_includes)
+        seg_group.includes = list(includes)
 
         # remove members that are included by included segment groups
-        new_members = []
-        for inc in includes:
-            all_segment_ids_in_group = set(self.get_all_segments_in_group(inc.segment_groups))
-            for i in members:
-                if i.segments not in all_segment_ids_in_group:
-                    new_members.append(i)
-
-        seg_group.members = list(new_members)
-        seg_group.includes = list(includes)
+        if len(includes) > 0 and len(members) > 0:
+            new_members = []
+            for inc in includes:
+                all_segment_ids_in_group = set(self.get_all_segments_in_group(inc.segment_groups))
+                for i in members:
+                    if i.segments not in all_segment_ids_in_group:
+                        new_members.append(i)
+            seg_group.members = list(new_members)
 
 
     def set_spike_thresh(self, v, group_id="all"):
