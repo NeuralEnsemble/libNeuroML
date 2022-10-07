@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Oct  7 12:50:22 2022 by generateDS.py version 2.41.1.
+# Generated Fri Oct  7 15:22:51 2022 by generateDS.py version 2.41.1.
 # Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
 #
 # Command line options:
@@ -46458,16 +46458,14 @@ class Cell(BaseCell):
         return segments
 
     def get_all_segments_in_group(self, segment_group, assume_all_means_all=True):
-        # type: (SegmentGroup, bool) -> List[Segment]
+        # type: (SegmentGroup, bool) -> List[int]
         """Get all the segments in a segment group of the cell.
 
         :param segment_group: segment group to get all segments of
-        :param assume_all_means_all: return all segments if the segment group
-            wasn't explicitly defined
-
-        :todo: check docstring
-
-        :return: list of segments
+        :param assume_all_means_all: return all segments if the "all" segment
+            group wasn't explicitly defined
+        :return: list of segment ids
+        :rtype: list[int]
 
         :raises Exception: if no segment group is found in the cell.
         """
@@ -46972,6 +46970,57 @@ class Cell(BaseCell):
                 pass
 
             seg_groups.append(seg_groups.pop(seg_groups.index(sg)))
+
+    def optimise_segment_groups(self):
+        """Optimise all segment groups in the cell.
+
+        This will:
+
+        - deduplicate members and includes in segment groups
+        - remove members that have already been included using a segment group
+
+        """
+        for seg_group in self.morphology.segment_groups:
+            self.optimise_segment_group(seg_group)
+
+    def optimise_segment_group(self, seg_group_id):
+        """Optimise segment group with id `seg_group_id`.
+
+        :param seg_group_id: id of segment group to optimise
+        :type seg_group_id: str
+
+        """
+        seg_group = self.get_segment_group(seg_group_id)
+        # de-duplicate members and includes
+        # cannot use list(set(list)) because the hash values for NeuroML
+        # classes with identical values is also different
+
+        members = seg_group.members
+        new_members = []
+        for i in members:
+            if i not in new_members:
+                new_members.append(i)
+        members = new_members
+
+        includes = seg_group.includes
+        new_includes = []
+        for i in includes:
+            if i not in new_includes:
+                new_includes.append(i)
+        includes = set(new_includes)
+
+        # remove members that are included by included segment groups
+        new_members = []
+        for inc in includes:
+            all_segment_ids_in_group = set(
+                self.get_all_segments_in_group(inc.segment_groups)
+            )
+            for i in members:
+                if i.segments not in all_segment_ids_in_group:
+                    new_members.append(i)
+
+        seg_group.members = list(new_members)
+        seg_group.includes = list(includes)
 
     def set_spike_thresh(self, v, group_id="all"):
         """Set the spike threshold of the cell.
@@ -62657,8 +62706,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
     :type e_rev_E: none
     :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
-    :p
-    aram tau_refrac:
+    :param tau_refrac:
     :type tau_refrac: none
     :param v_thresh:
     :type v_thresh: none
