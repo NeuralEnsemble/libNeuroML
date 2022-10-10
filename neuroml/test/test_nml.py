@@ -44,6 +44,25 @@ class TestNML(unittest.TestCase):
         self.assertIn("gates", member_names)
         self.assertIn("gate_hh_rates", member_names)
 
+        # check with Cell
+        acell = neuroml.Cell()
+        cell_members = acell._get_members()
+        member_names = []
+        for m in cell_members:
+            member_names.append(m.get_name())
+        self.assertIn("properties", member_names)
+        self.assertIn("morphology", member_names)
+        self.assertIn("biophysical_properties", member_names)
+
+        # again---ensure things aren't added again
+        cell_members = acell._get_members()
+        member_names = []
+        for m in cell_members:
+            member_names.append(m.get_name())
+        self.assertIn("properties", member_names)
+        self.assertIn("morphology", member_names)
+        self.assertIn("biophysical_properties", member_names)
+
     def test_generic_add_single(self):
         """Test the generic add function for single addition."""
         doc = neuroml.NeuroMLDocument(id="testdoc")
