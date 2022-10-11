@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Oct 11 13:01:47 2022 by generateDS.py version 2.40.13.
+# Generated Tue Oct 11 14:23:30 2022 by generateDS.py version 2.40.13.
 # Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
 #
 # Command line options:
@@ -47338,7 +47338,7 @@ class Cell(BaseCell):
         return self.get_segment_group(group_id)
 
     def create_unbranched_segment_group_branches(
-        self, root_segment_id: int, use_convention=True
+        self, root_segment_id: int, use_convention: bool = True
     ):
         """Organise the segments of the cell into new segment groups that each
         form a single contiguous unbranched cell branch.
@@ -47371,12 +47371,7 @@ class Cell(BaseCell):
         # run recursive function
         self.__sectionise(root_segment_id, new_seg_group, morph_tree)
 
-    def __sectionise(
-        self,
-        root_segment_id: int,
-        seg_group: SegmentGroup,
-        morph_tree: dict[int, list[int]],
-    ):
+    def __sectionise(self, root_segment_id, seg_group, morph_tree):
         """Main recursive sectionising method.
 
         :param root_segment_id: id of root of branch
@@ -47421,7 +47416,7 @@ class Cell(BaseCell):
         except KeyError:
             seg_group.add("Member", segments=root_segment_id)
 
-    def get_segment_adjacency_list(self) -> dict[int, list[int]]:
+    def get_segment_adjacency_list(self):
         """Get the adjacency list of all segments in the cell morphology.
         Returns a dict where each key is a parent segment, and the value is the
         list of its children segments.
@@ -47434,7 +47429,7 @@ class Cell(BaseCell):
 
         """
         # create data structure holding list of children for each segment
-        child_lists = {}  # type: dict[int, list[int]]
+        child_lists = {}
         for segment in self.morphology.segments:
             try:
                 parent = segment.parent.segments
@@ -62815,7 +62810,8 @@ class IF_cond_exp(basePyNNIaFCondCell):
     :type e_rev_E: none
     :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
-    :param tau_refrac:
+    :p
+    aram tau_refrac:
     :type tau_refrac: none
     :param v_thresh:
     :type v_thresh: none
