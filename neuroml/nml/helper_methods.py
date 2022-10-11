@@ -1970,7 +1970,7 @@ cell_methods = MethodSpec(
         self.reorder_segment_groups()
         return self.get_segment_group(group_id)
 
-    def create_unbranched_segment_group_branches(self, root_segment_id: int, use_convention=True):
+    def create_unbranched_segment_group_branches(self, root_segment_id: int, use_convention: bool=True):
         """Organise the segments of the cell into new segment groups that each
         form a single contiguous unbranched cell branch.
 
@@ -2004,7 +2004,7 @@ cell_methods = MethodSpec(
 
 
     def __sectionise(self, root_segment_id: int, seg_group:
-                     SegmentGroup, morph_tree: dict[int, list[int]]):
+                     SegmentGroup, morph_tree: dict(int, list(int))):
         """Main recursive sectionising method.
 
         :param root_segment_id: id of root of branch
@@ -2050,7 +2050,7 @@ cell_methods = MethodSpec(
             seg_group.add("Member", segments=root_segment_id)
 
 
-    def get_segment_adjacency_list(self) -> dict[int, list[int]]:
+    def get_segment_adjacency_list(self) -> dict(int, list(int)):
         """Get the adjacency list of all segments in the cell morphology.
         Returns a dict where each key is a parent segment, and the value is the
         list of its children segments.
@@ -2063,7 +2063,7 @@ cell_methods = MethodSpec(
 
         """
         # create data structure holding list of children for each segment
-        child_lists = {}  # type: dict[int, list[int]]
+        child_lists = {}  # type: dict(int, list(int))
         for segment in self.morphology.segments:
             try:
                 parent = segment.parent.segments
