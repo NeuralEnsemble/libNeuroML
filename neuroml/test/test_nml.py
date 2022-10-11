@@ -624,3 +624,69 @@ class TestNML(unittest.TestCase):
         # segment group already
         cell.optimise_segment_group("all")
         self.assertEqual(1, len(cell.get_segment_group("all").includes))
+
+    def test_create_unbranched_segment_group_branches(self):
+        "Test create_unbranched_segment_group_branches"
+        cell = component_factory("Cell", id="simple_cell")  # type: neuroml.Cell
+        cell.notes = "NeuroML cell created by CellBuilder"
+
+        # Add soma segment
+        diam = 10.0
+        soma_0 = cell.add_segment(
+            prox=[0.0, 0.0, 0.0, diam],
+            dist=[0.0, 10.0, 0.0, diam],
+            name="Seg0_soma_0",
+            group_id="soma_0",
+            seg_type="soma"
+        )
+
+        # create two unbranched segment group
+        dend_group = cell.add_unbranched_segments(
+            points=[
+                [0.0, 10.0, 0.0, diam],
+                [0.0, 20.0, 0.0, diam],
+                [0.0, 30.0, 0.0, diam],
+            ],
+            parent=soma_0,
+            fraction_along=1.0,
+            group_id="dend_group_0",
+            use_convention=True,
+            seg_type="dendrite"
+        )
+        dend_group_1 = cell.add_unbranched_segments(
+            points=[
+                [0.0, 10.0, 0.0, diam],
+                [0.0, 20.0, 5.0, diam],
+                [0.0, 30.0, 5.0, diam],
+            ],
+            parent=soma_0,
+            fraction_along=1.0,
+            group_id="dend_group_1",
+            use_convention=True,
+            seg_type="dendrite"
+        )
+        cell.optimise_segment_groups()
+
+        self.assertIsNone(cell.validate(True))
+        self.assertEqual(5, len(cell.morphology.segments))
+        self.assertEqual(7, len(cell.morphology.segment_groups))
+        print("initial")
+        for g in cell.morphology.segment_groups:
+            print(g)
+            print([x.segments for x in g.members])
+
+        # remove the two unbranched groups
+        cell.morphology.segment_groups.remove(cell.get_segment_group("soma_0"))
+        cell.morphology.segment_groups.remove(dend_group)
+        cell.morphology.segment_groups.remove(dend_group_1)
+        print("after removal")
+        for g in cell.morphology.segment_groups:
+            print(g)
+            print([x.segments for x in g.members])
+
+        # create the unbranched segments
+        cell.create_unbranched_segment_group_branches(soma_0.id)
+        print("after re-creation")
+        for g in cell.morphology.segment_groups:
+            print(g)
+            print([x.segments for x in g.members])
