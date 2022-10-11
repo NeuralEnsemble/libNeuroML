@@ -2003,8 +2003,7 @@ cell_methods = MethodSpec(
         self.__sectionise(root_segment_id, new_seg_group, morph_tree)
 
 
-    def __sectionise(self, root_segment_id: int, seg_group:
-                     SegmentGroup, morph_tree: dict(int, list(int))):
+    def __sectionise(self, root_segment_id, seg_group, morph_tree):
         """Main recursive sectionising method.
 
         :param root_segment_id: id of root of branch
@@ -2050,7 +2049,7 @@ cell_methods = MethodSpec(
             seg_group.add("Member", segments=root_segment_id)
 
 
-    def get_segment_adjacency_list(self) -> dict(int, list(int)):
+    def get_segment_adjacency_list(self):
         """Get the adjacency list of all segments in the cell morphology.
         Returns a dict where each key is a parent segment, and the value is the
         list of its children segments.
@@ -2063,7 +2062,7 @@ cell_methods = MethodSpec(
 
         """
         # create data structure holding list of children for each segment
-        child_lists = {}  # type: dict(int, list(int))
+        child_lists = {}
         for segment in self.morphology.segments:
             try:
                 parent = segment.parent.segments
