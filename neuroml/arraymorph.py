@@ -2,8 +2,39 @@ r"""
 Prototype for object model backend for the libNeuroML project
 """
 
+
 import numpy as np
 import neuroml
+from pyneuroml.pynml import print_function  # type: ignore
+
+
+neuro_lex_ids = {
+    'axon': "GO:0030424",
+    'dend': "GO:0030425",
+    'soma': "GO:0043025",
+}
+
+
+def get_seg_group_by_id(sg_id, morph):
+    # type (str, Cell) -> SegmentGroup
+    """Return the SegmentGroup object for the specified segment group id.
+
+    :param sg_id: id of segment group to find
+    :type sg_id: str
+    :param cell: cell to look for segment group in
+    :type cell: Cell
+    :returns: SegmentGroup object of specified ID or None if not found
+
+    """
+    if not sg_id or not morph:
+        print_function("Please specify both a segment group id and a Morphology")
+        return None
+
+    for sg in morph.segment_groups:
+        if sg.id == sg_id:
+            return sg
+
+    return None
 
 
 class ArrayMorphology(neuroml.Morphology):
@@ -44,7 +75,11 @@ class ArrayMorphology(neuroml.Morphology):
         self.connectivity = np.array(connectivity)
         self.vertices = np.array(vertices)
 
-        self.id = id
+        if id is None:
+            self.id = name
+        else:
+            self.id = id
+        self.name = name
 
         if np.any(physical_mask):
             self.physical_mask = np.array(physical_mask)
@@ -171,19 +206,45 @@ class ArrayMorphology(neuroml.Morphology):
             k += 1
         pass
 
-    def to_neuroml_morphology(self, id=""):
+    def to_neuroml_morphology(self, id="", add_color_prop=False):
 
         morphology = neuroml.Morphology()
-        morphology.id = id
+        if id:
+            morphology.id = id
+        else:
+            morphology.id = self.id
+
+        seg_group_all = neuroml.SegmentGroup(id='all')
+        seg_group_soma = neuroml.SegmentGroup(id='soma_group',
+                                              neuro_lex_id=neuro_lex_ids["soma"],
+                                              notes="Default soma segment group for the cell")
+        seg_group_axon = neuroml.SegmentGroup(id='axon_group',
+                                              neuro_lex_id=neuro_lex_ids["axon"],
+                                              notes="Default axon segment group for the cell")
+        seg_group_dend = neuroml.SegmentGroup(id='dendrite_group',
+                                              neuro_lex_id=neuro_lex_ids["dend"],
+                                              notes="Default dendrite segment group for the cell")
+
+        if add_color_prop:
+            seg_group_soma.properties.append(neuroml.Property(tag="color", value="0.8 0 0"))
+            seg_group_axon.properties.append(neuroml.Property(tag="color", value="0 0.8 0"))
+            seg_group_dend.properties.append(neuroml.Property(tag="color", value="0 0 0.8"))
+
+        morphology.segment_groups.append(seg_group_all)
+        morphology.segment_groups.append(seg_group_soma)
+        morphology.segment_groups.append(seg_group_axon)
+        morphology.segment_groups.append(seg_group_dend)
 
         # need to traverse the tree:
-        for index in range(self.num_vertices - 1):
-            seg = self.segment_from_vertex_index(index)
+        for index in range(self.num_vertices):
+            seg = self.segment_from_vertex_index(index, morphology)
             morphology.segments.append(seg)
+
+        self.group_segments(morphology)
 
         return morphology
 
-    def segment_from_vertex_index(self, index):
+    def segment_from_vertex_index(self, index, morphology):
         parent_index = self.connectivity[index]
 
         node_x = self.vertices[index][0]
@@ -196,18 +257,75 @@ class ArrayMorphology(neuroml.Morphology):
         parent_z = self.vertices[parent_index][2]
         parent_d = self.vertices[parent_index][3]
 
+
         p = neuroml.Point3DWithDiam(x=node_x, y=node_y, z=node_z, diameter=node_d)
 
-        d = neuroml.Point3DWithDiam(
-            x=parent_x, y=parent_y, z=parent_z, diameter=parent_d
-        )
+        d = neuroml.Point3DWithDiam(x=parent_x, y=parent_y, 
+                                    z=parent_z, diameter=parent_d)
 
         seg = neuroml.Segment(proximal=p, distal=d, id=index)
-        if index > 1:
+        if parent_index != -1:
             parent = neuroml.SegmentParent(segments=parent_index)
             seg.parent = parent
 
         return seg
+
+    def group_segments(self, morphology):
+
+        non_branching_lex_id = 'sao864921383'
+
+        N = len(self.connectivity)
+        ind_root = np.where(self.connectivity == -1)[0]
+        assert(len(ind_root) == 1)
+        assert(not np.any(np.arange(N) == self.connectivity))
+        ind_root = ind_root[0]
+
+        nodes, counts = np.unique(self.connectivity, return_counts=True)
+        nodes = nodes[counts > 1]
+
+        parent_trunks = np.arange(N)
+        # parent_trunks are the children of parent_nodes.
+        # They are the trunk of non-branching sections
+        for ind, parent_node in enumerate(self.connectivity):
+            if ind == ind_root:
+                continue
+            while parent_node not in nodes:
+                # Go one step back
+                parent_trunks[ind] = parent_node
+                parent_node = self.connectivity[parent_node]
+
+        seg_prefixes = {1: "soma", 2: "axon", 3: "dend", 4: "apical"}
+        default_groups = {1: get_seg_group_by_id("soma_group", morphology),
+                          2: get_seg_group_by_id("axon_group", morphology),
+                          3: get_seg_group_by_id("dendrite_group", morphology),
+                          4: get_seg_group_by_id("dendrite_group", morphology),
+                          }
+
+        trunks = np.unique(parent_trunks)
+        for trunk in trunks:
+            if self.node_types[trunk] in seg_prefixes:
+                trunk_type = seg_prefixes[self.node_types[trunk]]
+            else:
+                trunk_type = "other"
+
+            group_id = f"{trunk_type}_{trunk}"
+            seg_group = neuroml.SegmentGroup(id=group_id,
+                                             neuro_lex_id=non_branching_lex_id)
+            for ind in np.arange(N)[parent_trunks == trunk]:
+                seg_group.members.append(neuroml.Member(segments=morphology.segments[ind].id))
+
+            # Add the segment group to the morphology
+            morphology.segment_groups.insert(0, seg_group)
+
+            # Include the segment group in the corresponding anatomical group
+            default_group = default_groups[self.node_types[trunk]]
+            default_group.includes.append(neuroml.Include(segment_groups=group_id))
+
+            # Add to the all group
+            seg_group_all = get_seg_group_by_id("all", morphology)
+            seg_group_all.includes.append(neuroml.Include(segment_groups=group_id))
+
+
 
 
 class SegmentList(object):
