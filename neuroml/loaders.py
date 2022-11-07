@@ -335,9 +335,9 @@ def _read_neuroml2(
     if supressGeneratedsWarnings:
         warnings.resetwarnings()
 
-    if include_includes:
+    if include_includes and verbose:
         print_method(
-            "Including included files (included already: %s)" % already_included,
+            "Including the included files (included already: %s)" % already_included,
             verbose,
         )
 
