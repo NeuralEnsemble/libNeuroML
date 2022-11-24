@@ -1369,6 +1369,8 @@ cell_methods = MethodSpec(
         use_convention=True,
         seg_type=None,
         reorder_segment_groups=True,
+        optimise_segment_groups=True
+
     ):
         """Add a segment to the cell, to the provided segment group, creating
         it if required.
@@ -1432,6 +1434,9 @@ cell_methods = MethodSpec(
 
             This is only relevant if `use_convention=True`.
         :type reorder_segment_groups: bool
+        :param optimise_segment_groups: toggle whether segment groups should be
+            optimised after operation
+        :type optimise_segment_groups: bool
         :returns: the created segment
         :rtype: Segment
         :raises ValueError: if `seg_id` is provided and a segment with this ID
@@ -1558,6 +1563,10 @@ cell_methods = MethodSpec(
             segment.name = segment_name
 
         self.morphology.segments.append(segment)
+
+        if optimise_segment_groups:
+            self.optimise_segment_groups()
+
         return segment
 
     def add_segment_group(self, group_id):
@@ -1613,10 +1622,10 @@ cell_methods = MethodSpec(
         for group in ["soma_group", "axon_group", "dendrite_group", "all"]:
             try:
                 sg = self.get_segment_group(group)
+                seg_groups.append(seg_groups.pop(seg_groups.index(sg)))
             except ValueError:
                 pass
 
-            seg_groups.append(seg_groups.pop(seg_groups.index(sg)))
 
     def optimise_segment_groups(self):
         """Optimise all segment groups in the cell.
@@ -1836,7 +1845,7 @@ cell_methods = MethodSpec(
             ):
                 nml_cell_doc.add("IncludeType", href=ion_chan_def_file)
 
-    def setup_nml_cell(self, use_convention=True, overwrite=False):
+    def setup_nml_cell(self, use_convention=True, overwrite=False, default_groups=["all", "soma_group"]):
         """Correctly initialise a NeuroML cell.
 
         To be called after a new component has been created to initialise the
@@ -1909,7 +1918,9 @@ cell_methods = MethodSpec(
         fraction_along=1.0,
         group_id=None,
         use_convention=True,
-        seg_type=None
+        seg_type=None,
+        reorder_segment_groups=True,
+        optimise_segment_groups=True
     ):
         """Add an unbranched list of segments to the cell.
 
@@ -1947,6 +1958,20 @@ cell_methods = MethodSpec(
         :type use_convention: bool
         :param seg_type: type of segments ("axon", "soma", "dendrite")
         :type seg_type: str
+        :param reorder_segment_groups: whether the groups should be reordered
+            to put the default segment groups last after the segment has been
+            added.
+            This is required for a valid NeuroML file because segment groups
+            included in the default groups should be declared before they are
+            used in the default groups. When adding lots of segments, one may
+            want to only reorder at the end of the process instead of after
+            each segment is added.
+
+            This is only relevant if `use_convention=True`.
+        :type reorder_segment_groups: bool
+        :param optimise_segment_groups: toggle whether segment groups should be
+            optimised after operation
+        :type optimise_segment_groups: bool
         :returns: the segment group containing this new list of segments
         :rtype: SegmentGroup
 
@@ -1974,10 +1999,15 @@ cell_methods = MethodSpec(
                                    reorder_segment_groups=False)
             prox = dist
 
-        self.reorder_segment_groups()
+        if reorder_segment_groups:
+            self.reorder_segment_groups()
+
+        if optimise_segment_groups:
+            self.optimise_segment_groups()
+
         return self.get_segment_group(group_id)
 
-    def create_unbranched_segment_group_branches(self, root_segment_id: int, use_convention: bool=True):
+    def create_unbranched_segment_group_branches(self, root_segment_id: int, use_convention: bool=True, reorder_segment_groups=True, optimise_segment_groups=True):
         """Organise the segments of the cell into new segment groups that each
         form a single contiguous unbranched cell branch.
 
@@ -1994,6 +2024,20 @@ cell_methods = MethodSpec(
         :type root_segment_id: int
         :param use_convention: toggle using NeuroML convention for segment groups
         :type use_convention: bool
+        :param reorder_segment_groups: whether the groups should be reordered
+            to put the default segment groups last after the segment has been
+            added.
+            This is required for a valid NeuroML file because segment groups
+            included in the default groups should be declared before they are
+            used in the default groups. When adding lots of segments, one may
+            want to only reorder at the end of the process instead of after
+            each segment is added.
+
+            This is only relevant if `use_convention=True`.
+        :type reorder_segment_groups: bool
+        :param optimise_segment_groups: toggle whether segment groups should be
+            optimised after operation
+        :type optimise_segment_groups: bool
         :returns: modified cell with new section groups
         :rtype: neuroml.Cell
 
@@ -2008,6 +2052,13 @@ cell_methods = MethodSpec(
 
         # run recursive function
         self.__sectionise(root_segment_id, new_seg_group, morph_tree)
+
+        if reorder_segment_groups:
+            self.reorder_segment_groups()
+
+        if optimise_segment_groups:
+            self.optimise_segment_groups()
+
 
 
     def __sectionise(self, root_segment_id, seg_group, morph_tree):

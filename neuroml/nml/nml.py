@@ -46732,6 +46732,7 @@ class Cell(BaseCell):
         use_convention=True,
         seg_type=None,
         reorder_segment_groups=True,
+        optimise_segment_groups=True,
     ):
         """Add a segment to the cell, to the provided segment group, creating
         it if required.
@@ -46795,6 +46796,9 @@ class Cell(BaseCell):
 
             This is only relevant if `use_convention=True`.
         :type reorder_segment_groups: bool
+        :param optimise_segment_groups: toggle whether segment groups should be
+            optimised after operation
+        :type optimise_segment_groups: bool
         :returns: the created segment
         :rtype: Segment
         :raises ValueError: if `seg_id` is provided and a segment with this ID
@@ -46923,6 +46927,10 @@ class Cell(BaseCell):
             segment.name = segment_name
 
         self.morphology.segments.append(segment)
+
+        if optimise_segment_groups:
+            self.optimise_segment_groups()
+
         return segment
 
     def add_segment_group(self, group_id):
@@ -47268,6 +47276,8 @@ class Cell(BaseCell):
         group_id=None,
         use_convention=True,
         seg_type=None,
+        reorder_segment_groups=True,
+        optimise_segment_groups=True,
     ):
         """Add an unbranched list of segments to the cell.
 
@@ -47305,6 +47315,20 @@ class Cell(BaseCell):
         :type use_convention: bool
         :param seg_type: type of segments ("axon", "soma", "dendrite")
         :type seg_type: str
+        :param reorder_segment_groups: whether the groups should be reordered
+            to put the default segment groups last after the segment has been
+            added.
+            This is required for a valid NeuroML file because segment groups
+            included in the default groups should be declared before they are
+            used in the default groups. When adding lots of segments, one may
+            want to only reorder at the end of the process instead of after
+            each segment is added.
+
+            This is only relevant if `use_convention=True`.
+        :type reorder_segment_groups: bool
+        :param optimise_segment_groups: toggle whether segment groups should be
+            optimised after operation
+        :type optimise_segment_groups: bool
         :returns: the segment group containing this new list of segments
         :rtype: SegmentGroup
 
@@ -47344,11 +47368,20 @@ class Cell(BaseCell):
             )
             prox = dist
 
-        self.reorder_segment_groups()
+        if reorder_segment_groups:
+            self.reorder_segment_groups()
+
+        if optimise_segment_groups:
+            self.optimise_segment_groups()
+
         return self.get_segment_group(group_id)
 
     def create_unbranched_segment_group_branches(
-        self, root_segment_id: int, use_convention: bool = True
+        self,
+        root_segment_id: int,
+        use_convention: bool = True,
+        reorder_segment_groups=True,
+        optimise_segment_groups=True,
     ):
         """Organise the segments of the cell into new segment groups that each
         form a single contiguous unbranched cell branch.
@@ -47366,6 +47399,20 @@ class Cell(BaseCell):
         :type root_segment_id: int
         :param use_convention: toggle using NeuroML convention for segment groups
         :type use_convention: bool
+        :param reorder_segment_groups: whether the groups should be reordered
+            to put the default segment groups last after the segment has been
+            added.
+            This is required for a valid NeuroML file because segment groups
+            included in the default groups should be declared before they are
+            used in the default groups. When adding lots of segments, one may
+            want to only reorder at the end of the process instead of after
+            each segment is added.
+
+            This is only relevant if `use_convention=True`.
+        :type reorder_segment_groups: bool
+        :param optimise_segment_groups: toggle whether segment groups should be
+            optimised after operation
+        :type optimise_segment_groups: bool
         :returns: modified cell with new section groups
         :rtype: neuroml.Cell
 
@@ -47380,6 +47427,12 @@ class Cell(BaseCell):
 
         # run recursive function
         self.__sectionise(root_segment_id, new_seg_group, morph_tree)
+
+        if reorder_segment_groups:
+            self.reorder_segment_groups()
+
+        if optimise_segment_groups:
+            self.optimise_segment_groups()
 
     def __sectionise(self, root_segment_id, seg_group, morph_tree):
         """Main recursive sectionising method.
