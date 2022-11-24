@@ -669,7 +669,9 @@ class TestNML(unittest.TestCase):
 
         self.assertIsNone(cell.validate(True))
         self.assertEqual(5, len(cell.morphology.segments))
-        self.assertEqual(7, len(cell.morphology.segment_groups))
+        # all, dend_group_1, dend_group_0, soma_0, and dendrite_group,
+        # soma_group
+        self.assertEqual(6, len(cell.morphology.segment_groups))
         print("initial")
         for g in cell.morphology.segment_groups:
             print(g)

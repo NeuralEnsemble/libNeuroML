@@ -1502,11 +1502,20 @@ cell_methods = MethodSpec(
             if not seg_type:
                 raise ValueError("Please provide a seg_type")
             if seg_type == "axon":
-                seg_group_default = self.get_segment_group("axon_group")
+                try:
+                    seg_group_default = self.get_segment_group("axon_group")
+                except ValueError:
+                    seg_group_default = self.add_segment_group("axon_group")
             elif seg_type == "soma":
-                seg_group_default = self.get_segment_group("soma_group")
+                try:
+                    seg_group_default = self.get_segment_group("soma_group")
+                except ValueError:
+                    seg_group_default = self.add_segment_group("soma_group")
             elif seg_type == "dendrite":
-                seg_group_default = self.get_segment_group("dendrite_group")
+                try:
+                    seg_group_default = self.get_segment_group("dendrite_group")
+                except ValueError:
+                    seg_group_default = self.add_segment_group("dendrite_group")
             else:
                 raise ValueError(f"Invalid segment type provided: {seg_type}")
 
@@ -1522,7 +1531,7 @@ cell_methods = MethodSpec(
             # Do not use add here, we do not need it's extra features (and
             # their performance costs)
             # De-duplicate/optimise later if required
-            if seg_group:
+            if seg_group and seg_group.id != seg_group_default.id:
                 seg_group_default.includes.append(Include(segment_groups=seg_group.id))
                 seg_group_all.includes.append(Include(segment_groups=seg_group.id))
             else:
@@ -1839,12 +1848,14 @@ cell_methods = MethodSpec(
           - MembraneProperties
           - IntracellularProperties
 
-        If `use_convention` is True, it also creates some default SegmentGroups for
-        convenience:
+        If `use_convention` is True, it also creates the provided
+        `default_groups` SegmentGroups for convenience. By default, it creates
+        the "all", and "soma_group" groups since each cell must at least have a
+        soma.
 
-        - "all", "soma_group", "dendrite_group", "axon_group" which
-          are used by other helper functions to include all, soma, dendrite, and
-          axon segments respectively.
+        When dendritic and axonal segments are added, the `add_segment`
+        function will create `dendrite_group` and `axon_group` groups as
+        required.
 
         Note that since this cell does not currently include a segment in its
         morphology, it is *not* a valid NeuroML construct. Use the `add_segment`
@@ -1857,6 +1868,8 @@ cell_methods = MethodSpec(
         :type use_convention: bool
         :param overwrite: overwrite existing components
         :type overwrite: bool
+        :param default_groups: list of default segment groups to create
+        :type default_groups: list of strings
         :returns: None
         :rtype: None
 
@@ -1870,30 +1883,24 @@ cell_methods = MethodSpec(
         self.biophysical_properties.add("MembraneProperties", validate=False, force=overwrite)
 
         if use_convention:
-            seg_group_all = self.component_factory("SegmentGroup", id="all")
-            seg_group_soma = self.component_factory(
-                "SegmentGroup",
-                id="soma_group",
-                neuro_lex_id=self.neuro_lex_ids["soma"],
-                notes="Default soma segment group for the cell",
-            )
-            seg_group_axon = self.component_factory(
-                "SegmentGroup",
-                id="axon_group",
-                neuro_lex_id=self.neuro_lex_ids["axon"],
-                notes="Default axon segment group for the cell",
-            )
-            seg_group_dend = self.component_factory(
-                "SegmentGroup",
-                id="dendrite_group",
-                neuro_lex_id=self.neuro_lex_ids["dend"],
-                notes="Default dendrite segment group for the cell",
-            )
-            # skip validation: segments etc needed, cell is invalid
-            self.morphology.add(seg_group_all, validate=False, force=overwrite)
-            self.morphology.add(seg_group_soma, validate=False, force=overwrite)
-            self.morphology.add(seg_group_axon, validate=False, force=overwrite)
-            self.morphology.add(seg_group_dend, validate=False, force=overwrite)
+            for grp in default_groups:
+                neuro_lex_id = None
+                notes = None
+
+                if grp == "soma_group":
+                    neuro_lex_id=self.neuro_lex_ids["soma"]
+                    notes="Default soma segment group for the cell"
+                elif grp == "axon_group":
+                    neuro_lex_id=self.neuro_lex_ids["axon"]
+                    notes="Default axon segment group for the cell"
+                elif grp == "dendrite_group":
+                    neuro_lex_id=self.neuro_lex_ids["dend"]
+                    notes="Default dendrite segment group for the cell"
+
+                seg_group = self.component_factory("SegmentGroup", id=grp, neuro_lex_id=neuro_lex_id, notes=notes)
+                self.morphology.add(seg_group, validate=False, force=overwrite)
+
+            self.reorder_segment_groups()
 
     def add_unbranched_segments(
         self,
