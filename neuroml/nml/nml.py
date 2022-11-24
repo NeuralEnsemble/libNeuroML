@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Oct 11 14:23:30 2022 by generateDS.py version 2.40.13.
-# Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
+# Generated Thu Nov 24 17:31:36 2022 by generateDS.py version 2.41.1.
+# Python 3.10.8 (main, Nov 14 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-2)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -15,7 +15,7 @@
 #   NeuroML_v2.3.xsd
 #
 # Command line:
-#   /home/asinha/.local/share/virtualenvs/neuroml-dev/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" NeuroML_v2.3.xsd
+#   /home/asinha/.local/share/virtualenvs/neuroml-dev-310/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" NeuroML_v2.3.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -46965,10 +46965,9 @@ class Cell(BaseCell):
         for group in ["soma_group", "axon_group", "dendrite_group", "all"]:
             try:
                 sg = self.get_segment_group(group)
+                seg_groups.append(seg_groups.pop(seg_groups.index(sg)))
             except ValueError:
                 pass
-
-            seg_groups.append(seg_groups.pop(seg_groups.index(sg)))
 
     def optimise_segment_groups(self):
         """Optimise all segment groups in the cell.
