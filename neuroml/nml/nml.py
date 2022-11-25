@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Nov 25 16:44:59 2022 by generateDS.py version 2.41.1.
+# Generated Fri Nov 25 17:06:47 2022 by generateDS.py version 2.41.1.
 # Python 3.10.8 (main, Nov 14 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-2)]
 #
 # Command line options:
@@ -47059,9 +47059,7 @@ class Cell(BaseCell):
         :param group_id: id of segment group to modify
         :type group_id: str
         """
-        self.biophysical_properties.membrane_properties.add(
-            "SpikeThresh", value=v, segment_groups=group_id
-        )
+        self.add_membrane_property("SpikeThresh", value=v, segment_groups=group_id)
 
     def set_init_memb_potential(self, v, group_id="all"):
         """Set the initial membrane potential of the cell.
@@ -47071,7 +47069,7 @@ class Cell(BaseCell):
         :param group_id: id of segment group to modify
         :type group_id: str
         """
-        self.biophysical_properties.membrane_properties.add(
+        self.add_membrane_property(
             "InitMembPotential", value=v, segment_groups=group_id
         )
 
@@ -47082,7 +47080,7 @@ class Cell(BaseCell):
         :param group_id: segment group to modify
         :type group_id: str
         """
-        self.biophysical_properties.intracellular_properties.add(
+        self.add_intracellular_property(
             "Resistivity", value=resistivity, segment_groups=group_id
         )
 
@@ -47094,7 +47092,7 @@ class Cell(BaseCell):
         :param group_id: segment group to modify
         :type group_id: str
         """
-        self.biophysical_properties.membrane_properties.add(
+        self.add_membrane_property(
             "SpecificCapacitance", value=spec_cap, segment_groups=group_id
         )
 
@@ -47111,6 +47109,7 @@ class Cell(BaseCell):
         :returns: None
 
         """
+        self.setup_nml_cell(use_convention=False)
         self.biophysical_properties.intracellular_properties.add(
             property_name, **kwargs
         )
@@ -47131,6 +47130,7 @@ class Cell(BaseCell):
         :returns: None
 
         """
+        self.setup_nml_cell(use_convention=False)
         self.biophysical_properties.membrane_properties.add(property_name, **kwargs)
 
     def add_channel_density_v(
@@ -47190,7 +47190,7 @@ class Cell(BaseCell):
         :param ion_chan_def_file: path to NeuroML2 file defining the ion channel, if empty, it assumes the channel is defined in the same file
         :type ion_chan_def_file: str
         """
-        cd = self.biophysical_properties.membrane_properties.add(
+        cd = self.add_membrane_property(
             "ChannelDensity",
             id=cd_id,
             segment_groups=group_id,

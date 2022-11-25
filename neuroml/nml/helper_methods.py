@@ -1690,7 +1690,7 @@ cell_methods = MethodSpec(
         :param group_id: id of segment group to modify
         :type group_id: str
         """
-        self.biophysical_properties.membrane_properties.add(
+        self.add_membrane_property(
             "SpikeThresh", value=v, segment_groups=group_id
         )
 
@@ -1703,7 +1703,7 @@ cell_methods = MethodSpec(
         :param group_id: id of segment group to modify
         :type group_id: str
         """
-        self.biophysical_properties.membrane_properties.add(
+        self.add_membrane_property(
             "InitMembPotential", value=v, segment_groups=group_id
         )
 
@@ -1715,7 +1715,7 @@ cell_methods = MethodSpec(
         :param group_id: segment group to modify
         :type group_id: str
         """
-        self.biophysical_properties.intracellular_properties.add(
+        self.add_intracellular_property(
             "Resistivity", value=resistivity, segment_groups=group_id
         )
 
@@ -1730,7 +1730,7 @@ cell_methods = MethodSpec(
         :param group_id: segment group to modify
         :type group_id: str
         """
-        self.biophysical_properties.membrane_properties.add(
+        self.add_membrane_property(
             "SpecificCapacitance", value=spec_cap, segment_groups=group_id
         )
 
@@ -1748,6 +1748,7 @@ cell_methods = MethodSpec(
         :returns: None
 
         """
+        self.setup_nml_cell(use_convention=False)
         self.biophysical_properties.intracellular_properties.add(property_name, **kwargs)
 
 
@@ -1767,6 +1768,7 @@ cell_methods = MethodSpec(
         :returns: None
 
         """
+        self.setup_nml_cell(use_convention=False)
         self.biophysical_properties.membrane_properties.add(property_name, **kwargs)
 
 
@@ -1832,7 +1834,7 @@ cell_methods = MethodSpec(
         :param ion_chan_def_file: path to NeuroML2 file defining the ion channel, if empty, it assumes the channel is defined in the same file
         :type ion_chan_def_file: str
         """
-        cd = self.biophysical_properties.membrane_properties.add(
+        cd = self.add_membrane_property(
             "ChannelDensity",
             id=cd_id,
             segment_groups=group_id,
