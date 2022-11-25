@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Nov 24 18:41:33 2022 by generateDS.py version 2.41.1.
+# Generated Fri Nov 25 16:44:59 2022 by generateDS.py version 2.41.1.
 # Python 3.10.8 (main, Nov 14 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-2)]
 #
 # Command line options:
@@ -46871,27 +46871,19 @@ class Cell(BaseCell):
             if not seg_type:
                 raise ValueError("Please provide a seg_type")
             if seg_type == "axon":
-                try:
-                    seg_group_default = self.get_segment_group("axon_group")
-                except ValueError:
-                    seg_group_default = self.add_segment_group("axon_group")
+                [seg_group_all, seg_group_default] = self.setup_default_segment_groups(
+                    use_convention=True, default_groups=["all", "axon_group"]
+                )
             elif seg_type == "soma":
-                try:
-                    seg_group_default = self.get_segment_group("soma_group")
-                except ValueError:
-                    seg_group_default = self.add_segment_group("soma_group")
+                [seg_group_all, seg_group_default] = self.setup_default_segment_groups(
+                    use_convention=True, default_groups=["all", "soma_group"]
+                )
             elif seg_type == "dendrite":
-                try:
-                    seg_group_default = self.get_segment_group("dendrite_group")
-                except ValueError:
-                    seg_group_default = self.add_segment_group("dendrite_group")
+                [seg_group_all, seg_group_default] = self.setup_default_segment_groups(
+                    use_convention=True, default_groups=["all", "dendrite_group"]
+                )
             else:
                 raise ValueError(f"Invalid segment type provided: {seg_type}")
-
-            seg_group_all = self.get_segment_group("all")
-
-            # get_segment_group raises a ValueError, so won't get here if one
-            # is not found
 
             # Now add the segment group that contains this segment if it exists
             # to the global groups. If a segment group does not exist for this
@@ -46933,40 +46925,61 @@ class Cell(BaseCell):
 
         return segment
 
-    def add_segment_group(self, group_id):
+    def add_segment_group(self, group_id, neuro_lex_id=None, notes=None):
         """Add a new general segment group.
 
         The segments included in this group do not need to be contiguous. This
-        segment group will not be marked as a section using the required
-        NeuroLex ID.
+        segment group will not be automatically marked as a section using the
+        required NeuroLex ID.
+
+        If a segment group with provided ID already exists, it will not be
+        overwritten.
 
         :param group_id: ID of segment group
         :type group_id: str
+        :param neuro_lex_id: NeuroLex ID to use for segment group
+        :type neuro_lex_id: str
+        :param notes: Notes text to add
+        :type notes: str
         :returns: new segment group
         :rtype: SegmentGroup
 
         """
-        seg_group = self.component_factory("SegmentGroup", id=group_id)
-        self.morphology.segment_groups.append(seg_group)
+        seg_group = None
+        try:
+            seg_group = self.get_segment_group(group_id)
+        except ValueError:
+            seg_group = self.morphology.add(
+                "SegmentGroup",
+                id=group_id,
+                neuro_lex_id=neuro_lex_id,
+                notes=notes,
+                validate=False,
+            )
+        else:
+            print(f"Segment group {seg_group} already exists.")
+
         return seg_group
 
-    def add_unbranched_segment_group(self, group_id):
+    def add_unbranched_segment_group(self, group_id, notes=None):
         """Add a new unbranched segment group.
 
         This is similar to the `add_segment_group` method, but this segment
         group will be used to store contiguous segments, which form an
-        unbranched section of a cell.
+        unbranched section of a cell. It adds the NeuroLex ID for a neuronal
+        branch to the segment group.
 
         :param group_id: ID of segment group
         :type group_id: str
+        :param notes: notes to add
+        :type notes: str
         :returns: new segment group
         :rtype: SegmentGroup
 
         """
-        seg_group = self.component_factory(
-            "SegmentGroup", id=group_id, neuro_lex_id=self.neuro_lex_ids["section"]
+        seg_group = self.add_segment_group(
+            group_id=group_id, neuro_lex_id=self.neuro_lex_ids["section"], notes=notes
         )
-        self.morphology.segment_groups.append(seg_group)
         return seg_group
 
     def reorder_segment_groups(self):
@@ -47246,6 +47259,26 @@ class Cell(BaseCell):
             "MembraneProperties", validate=False, force=overwrite
         )
 
+        self.setup_default_segment_groups(use_convention, default_groups)
+
+    def setup_default_segment_groups(
+        self, use_convention=True, default_groups=["all", "soma_group"]
+    ):
+        """Create default segment groups for the cell.
+
+        If `use_convention` is True, it also creates the provided
+        `default_groups` SegmentGroups for convenience. By default, it creates
+        the "all", and "soma_group" groups since each cell must at least have a
+        soma. Allowed values are: "all", "soma_group", "axon_group", "dendrite_group".
+
+        :param use_convention: whether helper segment groups should be created using the default convention
+        :type use_convention: bool
+        :param default_groups: list of default segment groups to create
+        :type default_groups: list of strings
+        :returns: list of created segment groups (or empty list if none created)
+        :rtype: list
+        """
+        new_groups = []
         if use_convention:
             for grp in default_groups:
                 neuro_lex_id = None
@@ -47260,13 +47293,23 @@ class Cell(BaseCell):
                 elif grp == "dendrite_group":
                     neuro_lex_id = self.neuro_lex_ids["dend"]
                     notes = "Default dendrite segment group for the cell"
+                elif grp == "all":
+                    neuro_lex_id = None
+                    notes = "Default segment group for all segments in the cell"
+                else:
+                    print(
+                        f"Error: only 'all', 'soma_group', 'dendrite_group', and 'axon_group' are supported. Received {grp}"
+                    )
+                    return []
 
-                seg_group = self.component_factory(
-                    "SegmentGroup", id=grp, neuro_lex_id=neuro_lex_id, notes=notes
+                seg_group = self.add_segment_group(
+                    group_id=grp, neuro_lex_id=neuro_lex_id, notes=notes
                 )
-                self.morphology.add(seg_group, validate=False, force=overwrite)
+                new_groups.append(seg_group)
 
             self.reorder_segment_groups()
+
+        return new_groups
 
     def add_unbranched_segments(
         self,
