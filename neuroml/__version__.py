@@ -7,7 +7,7 @@ Copyright 2022 NeuroML contributors
 """
 
 
-__version__: str = "0.4.1"
+__version__: str = "0.4.2"
 __version_info__: tuple = tuple(int(i) for i in __version__.split("."))
 
 
