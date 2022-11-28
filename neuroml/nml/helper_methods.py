@@ -1334,29 +1334,43 @@ cell_methods = MethodSpec(
         return sgs
 
 
-    def summary(self):
+    def summary(self, morph=True, biophys=True):
         """Print cell summary.
 
-        Currently prints:
+        Shows the number of segments and segment groups, and information on the
+        biophysical properties of the cell. See the `morphinfo` and
+        `biophysinfo` methods for more details.
 
-        - id of cell
-        - any notes
-        - number of segments
-        - number of segment groups
-
-        TODO: extend to show more information about the cell that may be useful
-        to users.
-
+        :param morph: toggle showing/hiding morphology information
+        :type morph: bool
+        :param biophys: toggle showing/hiding biophysology information
+        :type biophys: bool
+        :returns: None
         """
 
         print(f"*********** Summary ({self.id}) ************")
         print("* Notes: "+str(self.notes))
         print()
-        self.morphinfo()
+
+        if morph:
+            print(f"*********** Morphology summary ({self.id}) ************")
+            self.morphinfo()
+            print("*******************************************************")
+            print("Tip: use morphinfo(True) to see more detailed information.")
+
+        if biophys:
+            print(f"*********** Biophys summary ({self.id}) ************")
+            self.biophysinfo()
+            print("*******************************************************")
 
 
     def morphinfo(self, segment_detail=False):
         """Show info on morphology of the cell.
+        By default, since cells can have large numbers of segments and segment
+        groups, it only provides metrics on the total numbers. To see details,
+        pass `segment_detail=True`.
+
+        See also: `get_segment_group_info`.
 
         :param segment_detail: toggle whether to show detailed information on
             segment groups and their segments
@@ -1364,15 +1378,69 @@ cell_methods = MethodSpec(
         :returns: None
 
         """
-        print(f"*********** Morphology summary ({self.id}) ************")
         print("* Segments: "+str(len(self.morphology.segments)))
         print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        print("*******************************************************")
 
         if segment_detail:
             for sg in self.morphology.segment_groups:
                 self.get_segment_group_info(sg.id)
 
+
+    def biophysinfo(self):
+        """Get information on the biophysical properties of the cell.
+        :returns: None
+
+        """
+        bp = None
+        mp = None
+        ip = None
+        if self.__class__.__name__ == "Cell":
+            bp = self.biophysical_properties
+            mp = bp.membrane_properties
+            ip = bp.intracellular_properties
+        elif self.__class__.__name__ == "Cell2CaPools":
+            bp = self.biophysical_properties2_ca_pools
+            mp = bp.membrane_properties2_ca_pools
+            ip = bp.intracellular_properties2_ca_pools
+
+        membp = mp.info(show_contents=True, return_format="dict")
+        # check if there are any membrane properties
+        for prop, val in membp.items():
+            if len(val['members']) > 0:
+                print(f"* Membrane properties")
+                break
+
+        for prop, val in membp.items():
+            ctype = val['type']
+            # objects
+            ms = val['members']
+            if len(ms) > 0:
+                print(f"\t* {ctype}:")
+                for am in ms:
+                    inf = am.info(show_contents=True, return_format="dict")
+                    for p, v in inf.items():
+                        print(f"\t\t* {p}: {v['members']}")
+
+                    print()
+
+        intp = ip.info(show_contents=True, return_format="dict")
+        for prop, val in intp.items():
+            if len(val['members']) > 0:
+                print(f"* Intracellular properties")
+                break
+
+        for prop, val in intp.items():
+            ctype = val['type']
+            # objects
+            ms = val['members']
+            if len(ms) > 0:
+                print(f"\t* {ctype}:")
+                for am in ms:
+                    inf = am.info(show_contents=True, return_format="dict")
+                    for p, v in inf.items():
+                        print(f"\t\t* {p}: {v['members']}")
+
+                    print()
 
     def get_segment_group_info(self, group_id):
         """Get information about a segment group
