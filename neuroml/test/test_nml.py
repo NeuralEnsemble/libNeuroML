@@ -692,3 +692,32 @@ class TestNML(unittest.TestCase):
         for g in cell.morphology.segment_groups:
             print(g)
             print([x.segments for x in g.members])
+
+    def test_morphinfo(self):
+        """Test the morphinfo method """
+        # with component_factory
+        cell = component_factory("Cell", id="complex_cell")  # type: neuroml.Cell
+        cell.notes = "NeuroML cell created by CellBuilder"
+
+        # Add soma segment
+        diam = 30.0
+        soma_0 = cell.add_segment(
+            prox=[0.0, 0.0, 0.0, diam],
+            dist=[0.0, 20.0, 0.0, diam],
+            name="Seg0_soma_0",
+            group_id="soma_0",
+            seg_type="soma"
+        )
+        self.assertIsInstance(soma_0, neuroml.Segment)
+
+        dend_0 = cell.add_segment(
+            prox=[soma_0.distal.x, soma_0.distal.y, soma_0.distal.z, 5],
+            dist=[soma_0.distal.x, soma_0.distal.y + 50, soma_0.distal.z, 2],
+            name="dend_0",
+            group_id="dend_0",
+            parent=soma_0,
+            seg_type="soma"
+        )
+
+        cell.morphinfo(True)
+        cell.biophysinfo()
