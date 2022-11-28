@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Oct 11 14:23:30 2022 by generateDS.py version 2.40.13.
-# Python 3.10.7 (main, Sep  7 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-1)]
+# Generated Mon Nov 28 12:56:40 2022 by generateDS.py version 2.41.1.
+# Python 3.10.8 (main, Nov 14 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-2)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -15,7 +15,7 @@
 #   NeuroML_v2.3.xsd
 #
 # Command line:
-#   /home/asinha/.local/share/virtualenvs/neuroml-dev/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" NeuroML_v2.3.xsd
+#   /home/asinha/.local/share/virtualenvs/neuroml-dev-310/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" NeuroML_v2.3.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -46698,27 +46698,127 @@ class Cell(BaseCell):
             )
         return sgs
 
-    def summary(self):
+    def summary(self, morph=True, biophys=True):
         """Print cell summary.
 
-        Currently prints:
+        Shows the number of segments and segment groups, and information on the
+        biophysical properties of the cell. See the `morphinfo` and
+        `biophysinfo` methods for more details.
 
-        - id of cell
-        - any notes
-        - number of segments
-        - number of segment groups
-
-        TODO: extend to show more information about the cell that may be useful
-        to users.
-
+        :param morph: toggle showing/hiding morphology information
+        :type morph: bool
+        :param biophys: toggle showing/hiding biophysology information
+        :type biophys: bool
+        :returns: None
         """
 
-        print("*******************************************************")
-        print("* Cell: " + str(self.id))
+        print(f"*********** Summary ({self.id}) ************")
         print("* Notes: " + str(self.notes))
+        print()
+
+        if morph:
+            print(f"*********** Morphology summary ({self.id}) ************")
+            self.morphinfo()
+            print("*******************************************************")
+            print("Tip: use morphinfo(True) to see more detailed information.")
+
+        if biophys:
+            print(f"*********** Biophys summary ({self.id}) ************")
+            self.biophysinfo()
+            print("*******************************************************")
+
+    def morphinfo(self, segment_detail=False):
+        """Show info on morphology of the cell.
+        By default, since cells can have large numbers of segments and segment
+        groups, it only provides metrics on the total numbers. To see details,
+        pass `segment_detail=True`.
+
+        See also: `get_segment_group_info`.
+
+        :param segment_detail: toggle whether to show detailed information on
+            segment groups and their segments
+        :type segment_detail: bool
+        :returns: None
+
+        """
         print("* Segments: " + str(len(self.morphology.segments)))
         print("* SegmentGroups: " + str(len(self.morphology.segment_groups)))
-        print("*******************************************************")
+
+        if segment_detail:
+            for sg in self.morphology.segment_groups:
+                self.get_segment_group_info(sg.id)
+
+    def biophysinfo(self):
+        """Get information on the biophysical properties of the cell.
+        :returns: None
+
+        """
+        bp = None
+        mp = None
+        ip = None
+        if self.__class__.__name__ == "Cell":
+            bp = self.biophysical_properties
+            mp = bp.membrane_properties
+            ip = bp.intracellular_properties
+        elif self.__class__.__name__ == "Cell2CaPools":
+            bp = self.biophysical_properties2_ca_pools
+            mp = bp.membrane_properties2_ca_pools
+            ip = bp.intracellular_properties2_ca_pools
+
+        membp = mp.info(show_contents=True, return_format="dict")
+        # check if there are any membrane properties
+        for prop, val in membp.items():
+            if len(val["members"]) > 0:
+                print(f"* Membrane properties")
+                break
+
+        for prop, val in membp.items():
+            ctype = val["type"]
+            # objects
+            ms = val["members"]
+            if len(ms) > 0:
+                print(f"	* {ctype}:")
+                for am in ms:
+                    inf = am.info(show_contents=True, return_format="dict")
+                    for p, v in inf.items():
+                        print(f"		* {p}: {v['members']}")
+
+                    print()
+
+        intp = ip.info(show_contents=True, return_format="dict")
+        for prop, val in intp.items():
+            if len(val["members"]) > 0:
+                print(f"* Intracellular properties")
+                break
+
+        for prop, val in intp.items():
+            ctype = val["type"]
+            # objects
+            ms = val["members"]
+            if len(ms) > 0:
+                print(f"	* {ctype}:")
+                for am in ms:
+                    inf = am.info(show_contents=True, return_format="dict")
+                    for p, v in inf.items():
+                        print(f"		* {p}: {v['members']}")
+
+                    print()
+
+    def get_segment_group_info(self, group_id):
+        """Get information about a segment group
+
+        :param group_id: id of segment group
+        :type group_id: int
+        :returns: None
+
+        """
+        print(f"* Segment group: {group_id}:")
+        segs = self.get_all_segments_in_group(segment_group=group_id)
+        for s in segs:
+            sinfo = self.get_segment(s)
+            print(
+                f"	 * {s} (Parent: {sinfo.parent.segments if sinfo.parent else '-'}; {self.get_actual_proximal(s)} -> {sinfo.distal})"
+            )
 
     def add_segment(
         self,
@@ -46732,6 +46832,7 @@ class Cell(BaseCell):
         use_convention=True,
         seg_type=None,
         reorder_segment_groups=True,
+        optimise_segment_groups=True,
     ):
         """Add a segment to the cell, to the provided segment group, creating
         it if required.
@@ -46795,6 +46896,9 @@ class Cell(BaseCell):
 
             This is only relevant if `use_convention=True`.
         :type reorder_segment_groups: bool
+        :param optimise_segment_groups: toggle whether segment groups should be
+            optimised after operation
+        :type optimise_segment_groups: bool
         :returns: the created segment
         :rtype: Segment
         :raises ValueError: if `seg_id` is provided and a segment with this ID
@@ -46867,18 +46971,19 @@ class Cell(BaseCell):
             if not seg_type:
                 raise ValueError("Please provide a seg_type")
             if seg_type == "axon":
-                seg_group_default = self.get_segment_group("axon_group")
+                [seg_group_all, seg_group_default] = self.setup_default_segment_groups(
+                    use_convention=True, default_groups=["all", "axon_group"]
+                )
             elif seg_type == "soma":
-                seg_group_default = self.get_segment_group("soma_group")
+                [seg_group_all, seg_group_default] = self.setup_default_segment_groups(
+                    use_convention=True, default_groups=["all", "soma_group"]
+                )
             elif seg_type == "dendrite":
-                seg_group_default = self.get_segment_group("dendrite_group")
+                [seg_group_all, seg_group_default] = self.setup_default_segment_groups(
+                    use_convention=True, default_groups=["all", "dendrite_group"]
+                )
             else:
                 raise ValueError(f"Invalid segment type provided: {seg_type}")
-
-            seg_group_all = self.get_segment_group("all")
-
-            # get_segment_group raises a ValueError, so won't get here if one
-            # is not found
 
             # Now add the segment group that contains this segment if it exists
             # to the global groups. If a segment group does not exist for this
@@ -46887,7 +46992,7 @@ class Cell(BaseCell):
             # Do not use add here, we do not need it's extra features (and
             # their performance costs)
             # De-duplicate/optimise later if required
-            if seg_group:
+            if seg_group and seg_group.id != seg_group_default.id:
                 seg_group_default.includes.append(Include(segment_groups=seg_group.id))
                 seg_group_all.includes.append(Include(segment_groups=seg_group.id))
             else:
@@ -46914,42 +47019,67 @@ class Cell(BaseCell):
             segment.name = segment_name
 
         self.morphology.segments.append(segment)
+
+        if optimise_segment_groups:
+            self.optimise_segment_groups()
+
         return segment
 
-    def add_segment_group(self, group_id):
+    def add_segment_group(self, group_id, neuro_lex_id=None, notes=None):
         """Add a new general segment group.
 
         The segments included in this group do not need to be contiguous. This
-        segment group will not be marked as a section using the required
-        NeuroLex ID.
+        segment group will not be automatically marked as a section using the
+        required NeuroLex ID.
+
+        If a segment group with provided ID already exists, it will not be
+        overwritten.
 
         :param group_id: ID of segment group
         :type group_id: str
+        :param neuro_lex_id: NeuroLex ID to use for segment group
+        :type neuro_lex_id: str
+        :param notes: Notes text to add
+        :type notes: str
         :returns: new segment group
         :rtype: SegmentGroup
 
         """
-        seg_group = self.component_factory("SegmentGroup", id=group_id)
-        self.morphology.segment_groups.append(seg_group)
+        seg_group = None
+        try:
+            seg_group = self.get_segment_group(group_id)
+        except ValueError:
+            seg_group = self.morphology.add(
+                "SegmentGroup",
+                id=group_id,
+                neuro_lex_id=neuro_lex_id,
+                notes=notes,
+                validate=False,
+            )
+        else:
+            print(f"Segment group {seg_group} already exists.")
+
         return seg_group
 
-    def add_unbranched_segment_group(self, group_id):
+    def add_unbranched_segment_group(self, group_id, notes=None):
         """Add a new unbranched segment group.
 
         This is similar to the `add_segment_group` method, but this segment
         group will be used to store contiguous segments, which form an
-        unbranched section of a cell.
+        unbranched section of a cell. It adds the NeuroLex ID for a neuronal
+        branch to the segment group.
 
         :param group_id: ID of segment group
         :type group_id: str
+        :param notes: notes to add
+        :type notes: str
         :returns: new segment group
         :rtype: SegmentGroup
 
         """
-        seg_group = self.component_factory(
-            "SegmentGroup", id=group_id, neuro_lex_id=self.neuro_lex_ids["section"]
+        seg_group = self.add_segment_group(
+            group_id=group_id, neuro_lex_id=self.neuro_lex_ids["section"], notes=notes
         )
-        self.morphology.segment_groups.append(seg_group)
         return seg_group
 
     def reorder_segment_groups(self):
@@ -46965,10 +47095,9 @@ class Cell(BaseCell):
         for group in ["soma_group", "axon_group", "dendrite_group", "all"]:
             try:
                 sg = self.get_segment_group(group)
+                seg_groups.append(seg_groups.pop(seg_groups.index(sg)))
             except ValueError:
                 pass
-
-            seg_groups.append(seg_groups.pop(seg_groups.index(sg)))
 
     def optimise_segment_groups(self):
         """Optimise all segment groups in the cell.
@@ -47030,9 +47159,7 @@ class Cell(BaseCell):
         :param group_id: id of segment group to modify
         :type group_id: str
         """
-        self.biophysical_properties.membrane_properties.add(
-            "SpikeThresh", value=v, segment_groups=group_id
-        )
+        self.add_membrane_property("SpikeThresh", value=v, segment_groups=group_id)
 
     def set_init_memb_potential(self, v, group_id="all"):
         """Set the initial membrane potential of the cell.
@@ -47042,7 +47169,7 @@ class Cell(BaseCell):
         :param group_id: id of segment group to modify
         :type group_id: str
         """
-        self.biophysical_properties.membrane_properties.add(
+        self.add_membrane_property(
             "InitMembPotential", value=v, segment_groups=group_id
         )
 
@@ -47053,7 +47180,7 @@ class Cell(BaseCell):
         :param group_id: segment group to modify
         :type group_id: str
         """
-        self.biophysical_properties.intracellular_properties.add(
+        self.add_intracellular_property(
             "Resistivity", value=resistivity, segment_groups=group_id
         )
 
@@ -47065,7 +47192,7 @@ class Cell(BaseCell):
         :param group_id: segment group to modify
         :type group_id: str
         """
-        self.biophysical_properties.membrane_properties.add(
+        self.add_membrane_property(
             "SpecificCapacitance", value=spec_cap, segment_groups=group_id
         )
 
@@ -47082,6 +47209,7 @@ class Cell(BaseCell):
         :returns: None
 
         """
+        self.setup_nml_cell(use_convention=False)
         self.biophysical_properties.intracellular_properties.add(
             property_name, **kwargs
         )
@@ -47102,6 +47230,7 @@ class Cell(BaseCell):
         :returns: None
 
         """
+        self.setup_nml_cell(use_convention=False)
         self.biophysical_properties.membrane_properties.add(property_name, **kwargs)
 
     def add_channel_density_v(
@@ -47161,7 +47290,7 @@ class Cell(BaseCell):
         :param ion_chan_def_file: path to NeuroML2 file defining the ion channel, if empty, it assumes the channel is defined in the same file
         :type ion_chan_def_file: str
         """
-        cd = self.biophysical_properties.membrane_properties.add(
+        cd = self.add_membrane_property(
             "ChannelDensity",
             id=cd_id,
             segment_groups=group_id,
@@ -47178,7 +47307,9 @@ class Cell(BaseCell):
             ):
                 nml_cell_doc.add("IncludeType", href=ion_chan_def_file)
 
-    def setup_nml_cell(self, use_convention=True, overwrite=False):
+    def setup_nml_cell(
+        self, use_convention=True, overwrite=False, default_groups=["all", "soma_group"]
+    ):
         """Correctly initialise a NeuroML cell.
 
         To be called after a new component has been created to initialise the
@@ -47190,12 +47321,14 @@ class Cell(BaseCell):
           - MembraneProperties
           - IntracellularProperties
 
-        If `use_convention` is True, it also creates some default SegmentGroups for
-        convenience:
+        If `use_convention` is True, it also creates the provided
+        `default_groups` SegmentGroups for convenience. By default, it creates
+        the "all", and "soma_group" groups since each cell must at least have a
+        soma.
 
-        - "all", "soma_group", "dendrite_group", "axon_group" which
-          are used by other helper functions to include all, soma, dendrite, and
-          axon segments respectively.
+        When dendritic and axonal segments are added, the `add_segment`
+        function will create `dendrite_group` and `axon_group` groups as
+        required.
 
         Note that since this cell does not currently include a segment in its
         morphology, it is *not* a valid NeuroML construct. Use the `add_segment`
@@ -47208,6 +47341,8 @@ class Cell(BaseCell):
         :type use_convention: bool
         :param overwrite: overwrite existing components
         :type overwrite: bool
+        :param default_groups: list of default segment groups to create
+        :type default_groups: list of strings
         :returns: None
         :rtype: None
 
@@ -47224,31 +47359,57 @@ class Cell(BaseCell):
             "MembraneProperties", validate=False, force=overwrite
         )
 
+        self.setup_default_segment_groups(use_convention, default_groups)
+
+    def setup_default_segment_groups(
+        self, use_convention=True, default_groups=["all", "soma_group"]
+    ):
+        """Create default segment groups for the cell.
+
+        If `use_convention` is True, it also creates the provided
+        `default_groups` SegmentGroups for convenience. By default, it creates
+        the "all", and "soma_group" groups since each cell must at least have a
+        soma. Allowed values are: "all", "soma_group", "axon_group", "dendrite_group".
+
+        :param use_convention: whether helper segment groups should be created using the default convention
+        :type use_convention: bool
+        :param default_groups: list of default segment groups to create
+        :type default_groups: list of strings
+        :returns: list of created segment groups (or empty list if none created)
+        :rtype: list
+        """
+        new_groups = []
         if use_convention:
-            seg_group_all = self.component_factory("SegmentGroup", id="all")
-            seg_group_soma = self.component_factory(
-                "SegmentGroup",
-                id="soma_group",
-                neuro_lex_id=self.neuro_lex_ids["soma"],
-                notes="Default soma segment group for the cell",
-            )
-            seg_group_axon = self.component_factory(
-                "SegmentGroup",
-                id="axon_group",
-                neuro_lex_id=self.neuro_lex_ids["axon"],
-                notes="Default axon segment group for the cell",
-            )
-            seg_group_dend = self.component_factory(
-                "SegmentGroup",
-                id="dendrite_group",
-                neuro_lex_id=self.neuro_lex_ids["dend"],
-                notes="Default dendrite segment group for the cell",
-            )
-            # skip validation: segments etc needed, cell is invalid
-            self.morphology.add(seg_group_all, validate=False, force=overwrite)
-            self.morphology.add(seg_group_soma, validate=False, force=overwrite)
-            self.morphology.add(seg_group_axon, validate=False, force=overwrite)
-            self.morphology.add(seg_group_dend, validate=False, force=overwrite)
+            for grp in default_groups:
+                neuro_lex_id = None
+                notes = None
+
+                if grp == "soma_group":
+                    neuro_lex_id = self.neuro_lex_ids["soma"]
+                    notes = "Default soma segment group for the cell"
+                elif grp == "axon_group":
+                    neuro_lex_id = self.neuro_lex_ids["axon"]
+                    notes = "Default axon segment group for the cell"
+                elif grp == "dendrite_group":
+                    neuro_lex_id = self.neuro_lex_ids["dend"]
+                    notes = "Default dendrite segment group for the cell"
+                elif grp == "all":
+                    neuro_lex_id = None
+                    notes = "Default segment group for all segments in the cell"
+                else:
+                    print(
+                        f"Error: only 'all', 'soma_group', 'dendrite_group', and 'axon_group' are supported. Received {grp}"
+                    )
+                    return []
+
+                seg_group = self.add_segment_group(
+                    group_id=grp, neuro_lex_id=neuro_lex_id, notes=notes
+                )
+                new_groups.append(seg_group)
+
+            self.reorder_segment_groups()
+
+        return new_groups
 
     def add_unbranched_segments(
         self,
@@ -47258,6 +47419,8 @@ class Cell(BaseCell):
         group_id=None,
         use_convention=True,
         seg_type=None,
+        reorder_segment_groups=True,
+        optimise_segment_groups=True,
     ):
         """Add an unbranched list of segments to the cell.
 
@@ -47295,6 +47458,20 @@ class Cell(BaseCell):
         :type use_convention: bool
         :param seg_type: type of segments ("axon", "soma", "dendrite")
         :type seg_type: str
+        :param reorder_segment_groups: whether the groups should be reordered
+            to put the default segment groups last after the segment has been
+            added.
+            This is required for a valid NeuroML file because segment groups
+            included in the default groups should be declared before they are
+            used in the default groups. When adding lots of segments, one may
+            want to only reorder at the end of the process instead of after
+            each segment is added.
+
+            This is only relevant if `use_convention=True`.
+        :type reorder_segment_groups: bool
+        :param optimise_segment_groups: toggle whether segment groups should be
+            optimised after operation
+        :type optimise_segment_groups: bool
         :returns: the segment group containing this new list of segments
         :rtype: SegmentGroup
 
@@ -47334,11 +47511,20 @@ class Cell(BaseCell):
             )
             prox = dist
 
-        self.reorder_segment_groups()
+        if reorder_segment_groups:
+            self.reorder_segment_groups()
+
+        if optimise_segment_groups:
+            self.optimise_segment_groups()
+
         return self.get_segment_group(group_id)
 
     def create_unbranched_segment_group_branches(
-        self, root_segment_id: int, use_convention: bool = True
+        self,
+        root_segment_id: int,
+        use_convention: bool = True,
+        reorder_segment_groups=True,
+        optimise_segment_groups=True,
     ):
         """Organise the segments of the cell into new segment groups that each
         form a single contiguous unbranched cell branch.
@@ -47356,6 +47542,20 @@ class Cell(BaseCell):
         :type root_segment_id: int
         :param use_convention: toggle using NeuroML convention for segment groups
         :type use_convention: bool
+        :param reorder_segment_groups: whether the groups should be reordered
+            to put the default segment groups last after the segment has been
+            added.
+            This is required for a valid NeuroML file because segment groups
+            included in the default groups should be declared before they are
+            used in the default groups. When adding lots of segments, one may
+            want to only reorder at the end of the process instead of after
+            each segment is added.
+
+            This is only relevant if `use_convention=True`.
+        :type reorder_segment_groups: bool
+        :param optimise_segment_groups: toggle whether segment groups should be
+            optimised after operation
+        :type optimise_segment_groups: bool
         :returns: modified cell with new section groups
         :rtype: neuroml.Cell
 
@@ -47370,6 +47570,12 @@ class Cell(BaseCell):
 
         # run recursive function
         self.__sectionise(root_segment_id, new_seg_group, morph_tree)
+
+        if reorder_segment_groups:
+            self.reorder_segment_groups()
+
+        if optimise_segment_groups:
+            self.optimise_segment_groups()
 
     def __sectionise(self, root_segment_id, seg_group, morph_tree):
         """Main recursive sectionising method.
