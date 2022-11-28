@@ -1349,13 +1349,44 @@ cell_methods = MethodSpec(
 
         """
 
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
+        print(f"*********** Summary ({self.id}) ************")
         print("* Notes: "+str(self.notes))
+        print()
+        self.morphinfo()
+
+
+    def morphinfo(self, segment_detail=False):
+        """Show info on morphology of the cell.
+
+        :param segment_detail: toggle whether to show detailed information on
+            segment groups and their segments
+        :type segment_detail: bool
+        :returns: None
+
+        """
+        print(f"*********** Morphology summary ({self.id}) ************")
         print("* Segments: "+str(len(self.morphology.segments)))
         print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
         print("*******************************************************")
 
+        if segment_detail:
+            for sg in self.morphology.segment_groups:
+                self.get_segment_group_info(sg.id)
+
+
+    def get_segment_group_info(self, group_id):
+        """Get information about a segment group
+
+        :param group_id: id of segment group
+        :type group_id: int
+        :returns: None
+
+        """
+        print(f"* Segment group: {group_id}:")
+        segs = self.get_all_segments_in_group(segment_group=group_id)
+        for s in segs:
+            sinfo = self.get_segment(s)
+            print(f"\t * {s} (Parent: {sinfo.parent.segments if sinfo.parent else '-'}; {self.get_actual_proximal(s)} -> {sinfo.distal})")
 
     def add_segment(
         self,
