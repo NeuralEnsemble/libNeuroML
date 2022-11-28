@@ -333,7 +333,6 @@ class GeneratedsSuperSuper(object):
                 ):
                     if show_contents == "all":
                         info_str += "\t* Contents: {}\n\n".format(contents)
-                    info_ret[member.get_name()]["members"] = "{}".format(contents)
                 else:
                     contents_id = None
                     # if list, iterate to get ids
@@ -353,7 +352,9 @@ class GeneratedsSuperSuper(object):
                     info_str += "\t* Contents ('ids'/<objects>): {}\n\n".format(
                         contents_id
                     )
-                    info_ret[member.get_name()]["members"] = contents_id
+                info_ret[member.get_name()]["members"] = getattr(
+                    self, member.get_name(), None
+                )
             else:
                 info_ret.append(member.get_name())
 
