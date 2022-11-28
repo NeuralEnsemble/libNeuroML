@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Nov 25 17:06:47 2022 by generateDS.py version 2.41.1.
+# Generated Mon Nov 28 12:56:40 2022 by generateDS.py version 2.41.1.
 # Python 3.10.8 (main, Nov 14 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-2)]
 #
 # Command line options:
@@ -46698,27 +46698,127 @@ class Cell(BaseCell):
             )
         return sgs
 
-    def summary(self):
+    def summary(self, morph=True, biophys=True):
         """Print cell summary.
 
-        Currently prints:
+        Shows the number of segments and segment groups, and information on the
+        biophysical properties of the cell. See the `morphinfo` and
+        `biophysinfo` methods for more details.
 
-        - id of cell
-        - any notes
-        - number of segments
-        - number of segment groups
-
-        TODO: extend to show more information about the cell that may be useful
-        to users.
-
+        :param morph: toggle showing/hiding morphology information
+        :type morph: bool
+        :param biophys: toggle showing/hiding biophysology information
+        :type biophys: bool
+        :returns: None
         """
 
-        print("*******************************************************")
-        print("* Cell: " + str(self.id))
+        print(f"*********** Summary ({self.id}) ************")
         print("* Notes: " + str(self.notes))
+        print()
+
+        if morph:
+            print(f"*********** Morphology summary ({self.id}) ************")
+            self.morphinfo()
+            print("*******************************************************")
+            print("Tip: use morphinfo(True) to see more detailed information.")
+
+        if biophys:
+            print(f"*********** Biophys summary ({self.id}) ************")
+            self.biophysinfo()
+            print("*******************************************************")
+
+    def morphinfo(self, segment_detail=False):
+        """Show info on morphology of the cell.
+        By default, since cells can have large numbers of segments and segment
+        groups, it only provides metrics on the total numbers. To see details,
+        pass `segment_detail=True`.
+
+        See also: `get_segment_group_info`.
+
+        :param segment_detail: toggle whether to show detailed information on
+            segment groups and their segments
+        :type segment_detail: bool
+        :returns: None
+
+        """
         print("* Segments: " + str(len(self.morphology.segments)))
         print("* SegmentGroups: " + str(len(self.morphology.segment_groups)))
-        print("*******************************************************")
+
+        if segment_detail:
+            for sg in self.morphology.segment_groups:
+                self.get_segment_group_info(sg.id)
+
+    def biophysinfo(self):
+        """Get information on the biophysical properties of the cell.
+        :returns: None
+
+        """
+        bp = None
+        mp = None
+        ip = None
+        if self.__class__.__name__ == "Cell":
+            bp = self.biophysical_properties
+            mp = bp.membrane_properties
+            ip = bp.intracellular_properties
+        elif self.__class__.__name__ == "Cell2CaPools":
+            bp = self.biophysical_properties2_ca_pools
+            mp = bp.membrane_properties2_ca_pools
+            ip = bp.intracellular_properties2_ca_pools
+
+        membp = mp.info(show_contents=True, return_format="dict")
+        # check if there are any membrane properties
+        for prop, val in membp.items():
+            if len(val["members"]) > 0:
+                print(f"* Membrane properties")
+                break
+
+        for prop, val in membp.items():
+            ctype = val["type"]
+            # objects
+            ms = val["members"]
+            if len(ms) > 0:
+                print(f"	* {ctype}:")
+                for am in ms:
+                    inf = am.info(show_contents=True, return_format="dict")
+                    for p, v in inf.items():
+                        print(f"		* {p}: {v['members']}")
+
+                    print()
+
+        intp = ip.info(show_contents=True, return_format="dict")
+        for prop, val in intp.items():
+            if len(val["members"]) > 0:
+                print(f"* Intracellular properties")
+                break
+
+        for prop, val in intp.items():
+            ctype = val["type"]
+            # objects
+            ms = val["members"]
+            if len(ms) > 0:
+                print(f"	* {ctype}:")
+                for am in ms:
+                    inf = am.info(show_contents=True, return_format="dict")
+                    for p, v in inf.items():
+                        print(f"		* {p}: {v['members']}")
+
+                    print()
+
+    def get_segment_group_info(self, group_id):
+        """Get information about a segment group
+
+        :param group_id: id of segment group
+        :type group_id: int
+        :returns: None
+
+        """
+        print(f"* Segment group: {group_id}:")
+        segs = self.get_all_segments_in_group(segment_group=group_id)
+        for s in segs:
+            sinfo = self.get_segment(s)
+            print(
+                f"	 * {s} (Parent: {sinfo.parent.segments if sinfo.parent else '-'}; {self.get_actual_proximal(s)} -> {sinfo.distal})"
+            )
 
     def add_segment(
         self,
