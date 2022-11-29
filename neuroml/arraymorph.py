@@ -5,7 +5,7 @@ Prototype for object model backend for the libNeuroML project
 
 import numpy as np
 import neuroml
-from pyneuroml.pynml import print_function  # type: ignore
+from __future__ import print_function  # type: ignore
 
 
 neuro_lex_ids = {
