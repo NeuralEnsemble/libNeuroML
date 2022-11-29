@@ -25,8 +25,8 @@ def print_(text, verbose=True):
 
 class NeuroMLLoader(object):
     @classmethod
-    def load(cls, src):
-        doc = cls.__nml2_doc(src)
+    def load(cls, src, silence=True):
+        doc = cls.__nml2_doc(src, silence)
         if isinstance(doc, neuroml.nml.nml.NeuroMLDocument):
             return doc
         else:
@@ -37,12 +37,13 @@ class NeuroMLLoader(object):
             )
 
     @classmethod
-    def __nml2_doc(cls, file_name):
+    def __nml2_doc(cls, file_name, silence=True):
+
         try:
 
             if supressGeneratedsWarnings:
                 warnings.simplefilter("ignore")
-            nml2_doc = nmlparse(file_name, silence=True)
+            nml2_doc = nmlparse(file_name, silence=silence)
             if supressGeneratedsWarnings:
                 warnings.resetwarnings()
         except Exception as e:
@@ -97,7 +98,7 @@ class SWCLoader(object):
     """
 
     @classmethod
-    def load_swc_single(cls, src, name=None):
+    def load_swc_single(cls, src, id=None):
 
         import numpy as np
         from neuroml import arraymorph
@@ -147,7 +148,7 @@ class SWCLoader(object):
             vertices=vertices,
             connectivity=connection_indices,
             node_types=section_types,
-            name=name,
+            id=id,
         )
 
 
