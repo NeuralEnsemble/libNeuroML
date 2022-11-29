@@ -5,7 +5,6 @@ Prototype for object model backend for the libNeuroML project
 
 import numpy as np
 import neuroml
-from __future__ import print_function  # type: ignore
 
 
 neuro_lex_ids = {
@@ -27,7 +26,7 @@ def get_seg_group_by_id(sg_id, morph):
 
     """
     if not sg_id or not morph:
-        print_function("Please specify both a segment group id and a Morphology")
+        print("Please specify both a segment group id and a Morphology")
         return None
 
     for sg in morph.segment_groups:
