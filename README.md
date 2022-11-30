@@ -41,7 +41,30 @@ That branch is kept up to date with the development branches for [NeuroML 2](htt
 See https://docs.neuroml.org/ for an overview of the various NeuroML libraries.
 
 ## Changelog
-### version 0.2.57 (dev)
+### version 0.4.1
+
+- add multiple cell builder utility functions
+- performance improvements in generic helper functions
+- documentation fixes/improvements
+- add type annotations to all nml classes to aid users
+- add level 1 validation method
+- add generic component inspection methods
+
+### version 0.4.0
+
+- update to use schema version 2.3
+- drop python 2 support
+
+### version 0.3.1
+
+- include schema documentation in generated `nml.py` API
+- introduce generic methods to add child/children elements to components
+
+### version 0.2.58
+
+- multiple documentation fixes
+
+### version 0.2.57
 
 - Enable Python 3.10 support
 - Regenerate nml.py with generateDS using Python 3
