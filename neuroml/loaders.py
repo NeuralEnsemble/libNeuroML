@@ -93,11 +93,17 @@ class NeuroMLHdf5Loader(object):
 
 class SWCLoader(object):
     """
-    WARNING: Class defunct
+    This class is deprecated. Please refer to
+    https://docs.neuroml.org/Userdocs/ImportingMorphologyFiles.html
+    for information on importing/converting morphology files to NeuroML2.
     """
 
     @classmethod
     def load_swc_single(cls, src, name=None):
+
+        raise RuntimeError(
+            "This method/class is deprecated. Please see https://docs.neuroml.org/Userdocs/ImportingMorphologyFiles.html",
+        )
 
         import numpy as np
         from neuroml import arraymorph
