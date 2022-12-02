@@ -46941,7 +46941,7 @@ class Cell(BaseCell):
                 seg = self.get_segment(seg_id)
                 if seg:
                     raise ValueError(
-                        "A segment with provided id f{seg_id} already exists"
+                        f"A segment with provided id {seg_id} already exists"
                     )
             except ValueError:
                 # a segment with this ID does not already exist
