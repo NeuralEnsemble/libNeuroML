@@ -393,12 +393,33 @@ class GeneratedsSuperSuper(object):
             if getattr(c, "validate_", None):
                 v = c.validate_(self, collector, recursive)
                 valid = valid and v
+            # l2 tests for specific classes
+            if c.__name__ == "SegmentGroup":
+                v = self.__l2_validate_SegmentGroup(collector)
+                valid = valid and v
 
         if valid is False:
             err = "Validation failed:\n"
             for msg in collector.get_messages():
                 err += f"- {msg}\n"
             raise ValueError(err)
+
+    def __l2_validate_SegmentGroup(self, collector):
+        """Additional validation tests for SegmentGroup class.
+
+        :param collector: GdsCollector instance
+        :type collector: GdsCollector
+        :returns: False if validation fails, True otherwise
+        :rtype: bool
+        """
+        # T1: segment group includes itself
+        for sginc in self.includes:
+            print(f"{sginc.segment_groups}, {self.id}")
+            if sginc.segment_groups == self.id:
+                collector.add_message("Segment group includes itself.")
+                return False
+
+        return True
 
     def parentinfo(self, return_format="string"):
         """Show the list of possible parents.

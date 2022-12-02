@@ -721,3 +721,16 @@ class TestNML(unittest.TestCase):
 
         cell.morphinfo(True)
         cell.biophysinfo()
+
+    def test_l2_validate_SegmentGroup(self):
+        """Test __l2_validate_Cell
+
+        :returns: None
+
+        """
+        tg = component_factory("SegmentGroup", id="test_group")  # type: neuroml.SegmentGroup
+
+        # should throw value error on post addition validation
+        with self.assertRaises(ValueError) as cm:
+            tg.add(neuroml.Include(segment_groups="test_group"))
+        print(cm.exception)
