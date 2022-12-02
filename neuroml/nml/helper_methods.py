@@ -1577,7 +1577,7 @@ cell_methods = MethodSpec(
                 seg = None
                 seg = self.get_segment(seg_id)
                 if seg:
-                    raise ValueError("A segment with provided id f{seg_id} already exists")
+                    raise ValueError(f"A segment with provided id {seg_id} already exists")
             except ValueError:
                 # a segment with this ID does not already exist
                 pass
