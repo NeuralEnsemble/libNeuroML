@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Dec  2 15:46:07 2022 by generateDS.py version 2.41.1.
+# Generated Fri Dec  2 15:56:13 2022 by generateDS.py version 2.41.1.
 # Python 3.10.8 (main, Nov 14 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-2)]
 #
 # Command line options:
@@ -47057,7 +47057,7 @@ class Cell(BaseCell):
                 validate=False,
             )
         else:
-            print(f"Segment group {seg_group} already exists.")
+            print(f"Warning: Segment group {seg_group.id} already exists.")
 
         return seg_group
 
@@ -63026,8 +63026,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
     :type e_rev_E: none
     :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
-    :p
-    aram tau_refrac:
+    :param tau_refrac:
     :type tau_refrac: none
     :param v_thresh:
     :type v_thresh: none
