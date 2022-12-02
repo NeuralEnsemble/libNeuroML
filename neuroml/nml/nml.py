@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Nov 28 12:56:40 2022 by generateDS.py version 2.41.1.
+# Generated Fri Dec  2 15:46:07 2022 by generateDS.py version 2.41.1.
 # Python 3.10.8 (main, Nov 14 2022, 00:00:00) [GCC 12.2.1 20220819 (Red Hat 12.2.1-2)]
 #
 # Command line options:
@@ -47206,13 +47206,14 @@ class Cell(BaseCell):
         :type property_name: str
         :param kwargs: named arguments for intracellular property to be added
         :type kwargs: Any
-        :returns: None
+        :returns: added property
 
         """
         self.setup_nml_cell(use_convention=False)
-        self.biophysical_properties.intracellular_properties.add(
+        prop = self.biophysical_properties.intracellular_properties.add(
             property_name, **kwargs
         )
+        return prop
 
     def add_membrane_property(self, property_name, **kwargs):
         """Generic function to add a membrane property to the cell.
@@ -47227,11 +47228,14 @@ class Cell(BaseCell):
         :type property_name: str
         :param kwargs: named arguments for membrane property to be added
         :type kwargs: Any
-        :returns: None
+        :returns: added property
 
         """
         self.setup_nml_cell(use_convention=False)
-        self.biophysical_properties.membrane_properties.add(property_name, **kwargs)
+        prop = self.biophysical_properties.membrane_properties.add(
+            property_name, **kwargs
+        )
+        return prop
 
     def add_channel_density_v(
         self, channel_density_type, nml_cell_doc, ion_chan_def_file="", **kwargs
@@ -47248,10 +47252,10 @@ class Cell(BaseCell):
         :type ion_chan_def_file: str
         :param kwargs: named arguments for required channel density type
         :type kwargs: Any
-        :returns: None
+        :returns: added channel density
         """
 
-        self.add_membrane_property(channel_density_type, **kwargs)
+        cd = self.add_membrane_property(channel_density_type, **kwargs)
 
         if len(ion_chan_def_file) > 0:
             if (
@@ -47259,6 +47263,8 @@ class Cell(BaseCell):
                 not in nml_cell_doc.includes
             ):
                 nml_cell_doc.add("IncludeType", href=ion_chan_def_file)
+
+        return cd
 
     def add_channel_density(
         self,
@@ -47289,6 +47295,8 @@ class Cell(BaseCell):
         :type ion: str
         :param ion_chan_def_file: path to NeuroML2 file defining the ion channel, if empty, it assumes the channel is defined in the same file
         :type ion_chan_def_file: str
+        :returns: added channel density
+        :rtype: ChannelDensity
         """
         cd = self.add_membrane_property(
             "ChannelDensity",
@@ -47306,6 +47314,8 @@ class Cell(BaseCell):
                 not in nml_cell_doc.includes
             ):
                 nml_cell_doc.add("IncludeType", href=ion_chan_def_file)
+
+        return cd
 
     def setup_nml_cell(
         self, use_convention=True, overwrite=False, default_groups=["all", "soma_group"]
@@ -63016,7 +63026,8 @@ class IF_cond_exp(basePyNNIaFCondCell):
     :type e_rev_E: none
     :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
-    :param tau_refrac:
+    :p
+    aram tau_refrac:
     :type tau_refrac: none
     :param v_thresh:
     :type v_thresh: none
