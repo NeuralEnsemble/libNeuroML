@@ -1844,11 +1844,12 @@ cell_methods = MethodSpec(
         :type property_name: str
         :param kwargs: named arguments for intracellular property to be added
         :type kwargs: Any
-        :returns: None
+        :returns: added property
 
         """
         self.setup_nml_cell(use_convention=False)
-        self.biophysical_properties.intracellular_properties.add(property_name, **kwargs)
+        prop = self.biophysical_properties.intracellular_properties.add(property_name, **kwargs)
+        return prop
 
 
     def add_membrane_property(self, property_name, **kwargs):
@@ -1864,11 +1865,12 @@ cell_methods = MethodSpec(
         :type property_name: str
         :param kwargs: named arguments for membrane property to be added
         :type kwargs: Any
-        :returns: None
+        :returns: added property
 
         """
         self.setup_nml_cell(use_convention=False)
-        self.biophysical_properties.membrane_properties.add(property_name, **kwargs)
+        prop = self.biophysical_properties.membrane_properties.add(property_name, **kwargs)
+        return prop
 
 
     def add_channel_density_v(
@@ -1890,10 +1892,10 @@ cell_methods = MethodSpec(
         :type ion_chan_def_file: str
         :param kwargs: named arguments for required channel density type
         :type kwargs: Any
-        :returns: None
+        :returns: added channel density
         """
 
-        self.add_membrane_property(channel_density_type, **kwargs)
+        cd = self.add_membrane_property(channel_density_type, **kwargs)
 
         if len(ion_chan_def_file) > 0:
             if (
@@ -1901,6 +1903,8 @@ cell_methods = MethodSpec(
                 not in nml_cell_doc.includes
             ):
                 nml_cell_doc.add("IncludeType", href=ion_chan_def_file)
+
+        return cd
 
 
     def add_channel_density(
@@ -1932,6 +1936,8 @@ cell_methods = MethodSpec(
         :type ion: str
         :param ion_chan_def_file: path to NeuroML2 file defining the ion channel, if empty, it assumes the channel is defined in the same file
         :type ion_chan_def_file: str
+        :returns: added channel density
+        :rtype: ChannelDensity
         """
         cd = self.add_membrane_property(
             "ChannelDensity",
@@ -1949,6 +1955,8 @@ cell_methods = MethodSpec(
                 not in nml_cell_doc.includes
             ):
                 nml_cell_doc.add("IncludeType", href=ion_chan_def_file)
+
+        return cd
 
     def setup_nml_cell(self, use_convention=True, overwrite=False, default_groups=["all", "soma_group"]):
         """Correctly initialise a NeuroML cell.
