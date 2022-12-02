@@ -1684,7 +1684,7 @@ cell_methods = MethodSpec(
                 notes=notes, validate=False
             )
         else:
-            print(f"Segment group {seg_group} already exists.")
+            print(f"Warning: Segment group {seg_group.id} already exists.")
 
         return seg_group
 
