@@ -380,12 +380,10 @@ def _read_neuroml2(
     else:
         if len(nml2_doc.includes) > 0:
             print_method(
-                "NOT including included files, even though %s are included!"
+                "NOT processing included files, even though %s are included!"
                 % len(nml2_doc.includes),
                 verbose,
             )
-
-        nml2_doc.includes = []
 
     return nml2_doc
 
