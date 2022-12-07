@@ -93,16 +93,18 @@ class NeuroMLHdf5Loader(object):
 
 class SWCLoader(object):
     """
-    This class is deprecated. Please refer to
-    https://docs.neuroml.org/Userdocs/ImportingMorphologyFiles.html
+    This class is deprecated and will be removed in a future release. Please
+    refer to https://docs.neuroml.org/Userdocs/ImportingMorphologyFiles.html
     for information on importing/converting morphology files to NeuroML2.
     """
 
     @classmethod
     def load_swc_single(cls, src, name=None):
 
-        raise RuntimeError(
-            "This method/class is deprecated. Please see https://docs.neuroml.org/Userdocs/ImportingMorphologyFiles.html",
+        warnings.warn(
+            "This method/class is deprecated and will be removed in a future release. Please see https://docs.neuroml.org/Userdocs/ImportingMorphologyFiles.html",
+            FutureWarning,
+            stacklevel=2,
         )
 
         import numpy as np
