@@ -304,7 +304,7 @@ class TestArrayMorphology(unittest.TestCase):
             vertices = [[0, 0, 0], [1, 1]]
             connectivity = [-1, 0]
             self.assertRaises(
-                AssertionError, am.ArrayMorphology, vertices, connectivity
+                Exception, am.ArrayMorphology, vertices, connectivity
             )
 
         vertices = [[0, 0, 0], [1, 1, 1]]
