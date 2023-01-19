@@ -44,6 +44,10 @@ jobs:
       run: |
         cd ./neuroml/examples && python run_all.py
 
+    - name: Final version info
+      run: |
+          pip list
+
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
