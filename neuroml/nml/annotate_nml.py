@@ -10,7 +10,7 @@ python -m neuroml.nml.annotate_nml
 
 File: annotate_nml.py
 
-Copyright 2022 NeuroML contributors
+Copyright 2023 NeuroML contributors
 """
 
 

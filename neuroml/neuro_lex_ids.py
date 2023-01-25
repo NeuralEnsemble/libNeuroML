@@ -4,7 +4,7 @@ NeuroLex Ids
 
 File: neuroml/neuro_lex_ids.py
 
-Copyright 2022 NeuroML contributors
+Copyright 2023 NeuroML contributors
 """
 
 neuro_lex_ids = {
