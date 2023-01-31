@@ -7,7 +7,7 @@ generatedssupersuper.py
 
 File: neuroml/nml.py/generatedscollector.py
 
-Copyright 2022 Ankur Sinha
+Copyright 2023 Ankur Sinha
 Author: Ankur Sinha <sanjay DOT ankur AT gmail DOT com>
 """
 

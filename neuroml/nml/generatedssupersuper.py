@@ -4,7 +4,7 @@ Super class for GeneratedsSuper
 
 File: neuroml/nml/generatedssupersuper.py
 
-Copyright 2022 NeuroML contributors
+Copyright 2023 NeuroML contributors
 """
 
 

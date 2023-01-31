@@ -12,16 +12,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.3.0
 
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
 
@@ -43,6 +43,10 @@ jobs:
     - name: Run examples
       run: |
         cd ./neuroml/examples && python run_all.py
+
+    - name: Final version info
+      run: |
+          pip list
 
     - name: Lint with flake8
       run: |

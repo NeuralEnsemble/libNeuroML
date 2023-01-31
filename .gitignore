@@ -54,3 +54,4 @@ neuroml/test/*.h5
 .mypy_cache/
 
 sed-script.txt
+/test.sh
