@@ -16,6 +16,8 @@ except ImportError:
 
 from neuroml.l2validators import (L2Validator, SegmentGroupSelfIncludes,
                                   StandardTestSuper)
+from neuroml import SegmentGroup, Include
+from neuroml.utils import component_factory
 
 
 class TestL2Validators(unittest.TestCase):
@@ -95,3 +97,10 @@ class TestL2Validators(unittest.TestCase):
 
         self.assertIn(DummyTest, list(self.l2validator.tests["DummyClass"]))
         self.assertTrue(self.l2validator.validate(dummy))
+
+    def test_SegmentGroupSelfIncludes(self):
+        """test SegmentGroupSelfIncludes class"""
+        sg = component_factory(SegmentGroup, validate=True, id="dummy_group")
+        sg.l2_validator.list_tests()
+        with self.assertRaises(ValueError):
+            sg.add(Include, segment_groups="dummy_group")
