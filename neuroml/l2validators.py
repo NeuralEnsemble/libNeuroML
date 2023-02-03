@@ -90,17 +90,21 @@ class L2Validator(object):
         try:
             for test in cls.tests[class_name_]:
                 test_result = test.run(obj)
+
+                if test_result is False:
+                    if self._gds_collector:
+                        self._gds_collector.add_message(f"Validation failed: {test.test_id}: {test.description}")
+                    if test.level == logging.WARNING:
+                        # a warning, don't mark as invalid
+                        test_result = True
+                        logger.warning(f"Validation failed: {obj}: {test.test_id}: {test.description}")
+                    else:
+                        logger.error(f"Validation failed: {obj}: {test.test_id}: {test.description}")
+                else:
+                    logger.debug(f"PASSED: {obj}: {test.test_id}: {test.description}")
+
         except KeyError:
             pass # no L2 tests have been defined
-
-        if test_result is False:
-            if self._gds_collector:
-                self._gds_collector.add_message(f"Validation failed: {test.test_id}: {test.description}")
-            else:
-                if test.level == logging.WARNING:
-                    logger.warn(f"Validation failed: {test.test_id}: {test.description}")
-                else:
-                    logger.error(f"Validation failed: {test.test_id}: {test.description}")
 
         return test_result
 
