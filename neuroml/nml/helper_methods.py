@@ -1762,6 +1762,8 @@ cell_methods = MethodSpec(
         members = new_members
         seg_group.members = list(members)
 
+        # TODO: only deduplicates by identical objects, also deduplicate by
+        # contents
         includes = seg_group.includes
         new_includes = []
         for i in includes:
