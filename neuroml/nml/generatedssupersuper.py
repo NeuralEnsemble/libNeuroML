@@ -11,6 +11,7 @@ Copyright 2023 NeuroML contributors
 import sys
 
 from .generatedscollector import GdsCollector
+from .l2validators import L2Validator
 
 
 class GeneratedsSuperSuper(object):
@@ -19,6 +20,8 @@ class GeneratedsSuperSuper(object):
 
     Any bits that must go into every libNeuroML class should go here.
     """
+
+    l2validator = L2Validator()
 
     def add(self, obj=None, hint=None, force=False, validate=True, **kwargs):
         """Generic function to allow easy addition of a new member to a NeuroML object.
@@ -395,7 +398,7 @@ class GeneratedsSuperSuper(object):
                 valid = valid and v
             # l2 tests for specific classes
             if c.__name__ == "SegmentGroup":
-                v = self.__l2_validate_SegmentGroup(collector)
+                v = self.l2validator.validate(self, collector)
                 valid = valid and v
 
         if valid is False:
@@ -403,23 +406,6 @@ class GeneratedsSuperSuper(object):
             for msg in collector.get_messages():
                 err += f"- {msg}\n"
             raise ValueError(err)
-
-    def __l2_validate_SegmentGroup(self, collector):
-        """Additional validation tests for SegmentGroup class.
-
-        :param collector: GdsCollector instance
-        :type collector: GdsCollector
-        :returns: False if validation fails, True otherwise
-        :rtype: bool
-        """
-        # T1: segment group includes itself
-        for sginc in self.includes:
-            print(f"{sginc.segment_groups}, {self.id}")
-            if sginc.segment_groups == self.id:
-                collector.add_message("Segment group includes itself.")
-                return False
-
-        return True
 
     def parentinfo(self, return_format="string"):
         """Show the list of possible parents.
