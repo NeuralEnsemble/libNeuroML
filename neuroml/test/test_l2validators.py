@@ -12,13 +12,13 @@ try:
     import unittest2 as unittest
 except ImportError:
     import unittest
+import logging
 
 
 from neuroml.l2validators import (L2Validator, SegmentGroupSelfIncludes,
                                   StandardTestSuper)
 from neuroml import SegmentGroup, Include
 from neuroml.utils import component_factory
-
 
 class TestL2Validators(unittest.TestCase):
 
@@ -71,7 +71,7 @@ class TestL2Validators(unittest.TestCase):
             test_id = "0001"
             target_class = "DummyClass"
             description = "DummyClass"
-            level = 0
+            level = logging.ERROR
 
             @classmethod
             def run(self, obj):
@@ -96,6 +96,80 @@ class TestL2Validators(unittest.TestCase):
         dummy = DummyClass()
 
         self.assertIn(DummyTest, list(self.l2validator.tests["DummyClass"]))
+        self.assertTrue(self.l2validator.validate(dummy))
+
+    def test_l2validator_runs_errors(self):
+        """Test l2validator test running"""
+        class DummyTest(StandardTestSuper):
+
+            """A dummy test"""
+            test_id = "0001"
+            target_class = "DummyClass"
+            description = "DummyClass"
+            level = logging.ERROR
+
+            @classmethod
+            def run(self, obj):
+                """Test runner method.
+
+                :param obj: object to run tests on
+                :type object: any neuroml.* object
+                :returns: True if test passes, false if not.
+
+                """
+                return False
+
+        class DummyClass(object):
+
+            """A dummy class"""
+
+            name = "dummy"
+
+        self.l2validator = None
+        self.l2validator = L2Validator()
+        self.l2validator.register_test(DummyTest)
+        dummy = DummyClass()
+
+        self.assertIn(DummyTest, list(self.l2validator.tests["DummyClass"]))
+
+        # since it's an error, validation should fail
+        self.assertFalse(self.l2validator.validate(dummy))
+
+    def test_l2validator_runs_warns(self):
+        """Test l2validator test running"""
+        class DummyTest(StandardTestSuper):
+
+            """A dummy test"""
+            test_id = "0001"
+            target_class = "DummyClass"
+            description = "DummyClass"
+            level = logging.WARNING
+
+            @classmethod
+            def run(self, obj):
+                """Test runner method.
+
+                :param obj: object to run tests on
+                :type object: any neuroml.* object
+                :returns: True if test passes, false if not.
+
+                """
+                return False
+
+        class DummyClass(object):
+
+            """A dummy class"""
+
+            name = "dummy"
+
+        self.l2validator = None
+        self.l2validator = L2Validator()
+        self.l2validator.register_test(DummyTest)
+        dummy = DummyClass()
+
+        self.assertIn(DummyTest, list(self.l2validator.tests["DummyClass"]))
+
+        # since it's a warning, validation should still pass
         self.assertTrue(self.l2validator.validate(dummy))
 
     def test_SegmentGroupSelfIncludes(self):
