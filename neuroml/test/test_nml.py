@@ -609,20 +609,19 @@ class TestNML(unittest.TestCase):
                                                      segments=cell.get_segment_group("soma_0").members[0].segments))
 
         # add group to all, explicitly
-        cell.get_segment_group("all").add(neuroml.Include,
-                                          segment_groups="soma_0",
-                                          force=True)
-        cell.get_segment_group("all").add(neuroml.Include,
-                                          segment_groups="soma_0",
-                                          force=True)
-        cell.get_segment_group("all").add(neuroml.Include,
-                                          segment_groups="soma_0",
-                                          force=True)
+        inc = neuroml.Include(segment_groups="soma_0", force=True)
+
+        cell.get_segment_group("all").add(inc, force=True)
+        cell.get_segment_group("all").add(inc, force=True)
+        cell.get_segment_group("all").add(inc, force=True)
+
         self.assertEqual(4, len(cell.get_segment_group("all").includes))
         # should have only one included segment group
         # should have no segments, because the segment is included in the one
         # segment group already
         cell.optimise_segment_group("all")
+        for i in cell.get_segment_group("all").includes:
+            print(i)
         self.assertEqual(1, len(cell.get_segment_group("all").includes))
 
     def test_create_unbranched_segment_group_branches(self):
