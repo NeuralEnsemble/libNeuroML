@@ -407,6 +407,14 @@ class GeneratedsSuperSuper(object):
                 err += f"- {msg}\n"
             raise ValueError(err)
 
+        # Other validation warnings
+        msgs = collector.get_messages()
+        if len(msgs) > 0:
+            err = "Validation warnings:\n"
+            for msg in collector.get_messages():
+                err += f"- {msg}\n"
+            print(err)
+
     def parentinfo(self, return_format="string"):
         """Show the list of possible parents.
 
