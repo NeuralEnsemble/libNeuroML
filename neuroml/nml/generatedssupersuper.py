@@ -11,7 +11,7 @@ Copyright 2023 NeuroML contributors
 import sys
 
 from .generatedscollector import GdsCollector
-from .l2validators import L2Validator
+from ..l2validators import L2Validator
 
 
 class GeneratedsSuperSuper(object):
@@ -21,7 +21,7 @@ class GeneratedsSuperSuper(object):
     Any bits that must go into every libNeuroML class should go here.
     """
 
-    l2validator = L2Validator()
+    l2_validator = L2Validator()
 
     def add(self, obj=None, hint=None, force=False, validate=True, **kwargs):
         """Generic function to allow easy addition of a new member to a NeuroML object.
@@ -396,10 +396,10 @@ class GeneratedsSuperSuper(object):
             if getattr(c, "validate_", None):
                 v = c.validate_(self, collector, recursive)
                 valid = valid and v
-            # l2 tests for specific classes
-            if c.__name__ == "SegmentGroup":
-                v = self.l2validator.validate(self, collector)
-                valid = valid and v
+
+                # l2 tests for specific classes
+                v1 = self.l2_validator.validate(obj=self, class_name=c.__name__, collector=collector)
+                valid = valid and v1
 
         if valid is False:
             err = "Validation failed:\n"

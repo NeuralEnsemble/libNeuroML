@@ -31,10 +31,10 @@ class StandardTestSuper(ABC):
     register any classes in this module that extend this class.
     """
 
-    test_id = None
-    target_class = None
-    description = None
-    level = None
+    test_id = ""
+    target_class = ""
+    description = ""
+    level = TEST_LEVEL.ERROR
 
     @abstractmethod
     def run(self, obj):
@@ -60,28 +60,49 @@ class L2Validator(object):
                         self.register_test(obj)
 
     @classmethod
-    def validate(cls, obj, collector=None):
+    def validate(cls, obj, class_name=None, collector=None):
         """Main validate method that should include calls to all tests that are
         to be run on an object
 
         :param obj: object to be validated
         :type obj: an object to be validated
+        :param class_name: name of class for which tests are to be run
+            In most cases, this will be None, and the class name will be
+            obtained from the object. However, in cases where a tests has been
+            defined in an ancestor (BaseCell, which a Cell would inherit), one
+            can pass the class name of the ancestor. This can be used to run L2
+            test defined for ancestors for all descendents. In fact, tests for
+            arbitrary classes can be run on any objects. It is for the
+            developer to ensure that the appropriate tests are run.
+        :type class_name: str
         :param collector: a GdsCollector instance for messages
         :type collector: neuroml.GdsCollector
         :returns: True if all validation tests pass, false if not
         """
-        for test in cls.tests[obj.__class__.__name__]:
-            if not test.run(obj):
-                if collector:
-                    collector.add_message(f"Validation failed: {test.test_id}: {test.description}")
-                else:
-                    if test.level == logging.WARN:
-                        logger.warn(f"Validation failed: {test.test_id}: {test.description}")
-                    else:
-                        logger.error(f"Validation failed: {test.test_id}: {test.description}")
-                return False
+        test_result = True
+        class_name_ = class_name if class_name else obj.__class__.__name__
+        # The collector looks for a local with name "self" in the stack frame
+        # to figure out what the "caller" class is.
+        # So, set "self" to the object that is being validated here.
+        self = obj
+        self._gds_collector = collector
 
-        return True
+        try:
+            for test in cls.tests[class_name_]:
+                test_result = test.run(obj)
+        except KeyError:
+            pass # no L2 tests have been defined
+
+        if test_result is False:
+            if self._gds_collector:
+                self._gds_collector.add_message(f"Validation failed: {test.test_id}: {test.description}")
+            else:
+                if test.level == logging.WARNING:
+                    logger.warn(f"Validation failed: {test.test_id}: {test.description}")
+                else:
+                    logger.error(f"Validation failed: {test.test_id}: {test.description}")
+
+        return test_result
 
     @classmethod
     def register_test(cls, test):
@@ -126,7 +147,6 @@ class SegmentGroupSelfIncludes(StandardTestSuper):
 
         """
         for sginc in obj.includes:
-            print(f"{sginc.segment_groups}, {obj.id}")
             if sginc.segment_groups == obj.id:
                 return False
         return True
