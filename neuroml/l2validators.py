@@ -84,16 +84,15 @@ class L2Validator(object):
         # The collector looks for a local with name "self" in the stack frame
         # to figure out what the "caller" class is.
         # So, set "self" to the object that is being validated here.
-        self = obj
-        self._gds_collector = collector
+        # self = obj
 
         try:
             for test in cls.tests[class_name_]:
                 test_result = test.run(obj)
 
                 if test_result is False:
-                    if self._gds_collector:
-                        self._gds_collector.add_message(f"Validation failed: {test.test_id}: {test.description}")
+                    if obj.collector:
+                        obj.collector.add_message(f"Validation failed: {test.test_id}: {test.description}")
                     if test.level == logging.WARNING:
                         # a warning, don't mark as invalid
                         test_result = True

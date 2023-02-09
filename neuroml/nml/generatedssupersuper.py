@@ -22,6 +22,7 @@ class GeneratedsSuperSuper(object):
     """
 
     l2_validator = L2Validator()
+    collector = GdsCollector()  # noqa
 
     def add(self, obj=None, hint=None, force=False, validate=True, **kwargs):
         """Generic function to allow easy addition of a new member to a NeuroML object.
@@ -390,28 +391,30 @@ class GeneratedsSuperSuper(object):
         :rtype: None
         :raises ValueError: if component is invalid
         """
-        collector = GdsCollector()  # noqa
+        self.collector.clear_messages()
         valid = True
         for c in type(self).__mro__:
             if getattr(c, "validate_", None):
-                v = c.validate_(self, collector, recursive)
+                v = c.validate_(self, self.collector, recursive)
                 valid = valid and v
 
                 # l2 tests for specific classes
-                v1 = self.l2_validator.validate(obj=self, class_name=c.__name__, collector=collector)
+                v1 = self.l2_validator.validate(obj=self,
+                                                class_name=c.__name__,
+                                                collector=self.collector)
                 valid = valid and v1
 
         if valid is False:
             err = "Validation failed:\n"
-            for msg in collector.get_messages():
+            for msg in self.collector.get_messages():
                 err += f"- {msg}\n"
             raise ValueError(err)
 
         # Other validation warnings
-        msgs = collector.get_messages()
+        msgs = self.collector.get_messages()
         if len(msgs) > 0:
             err = "Validation warnings:\n"
-            for msg in collector.get_messages():
+            for msg in self.collector.get_messages():
                 err += f"- {msg}\n"
             print(err)
 
