@@ -1188,6 +1188,7 @@ cell_methods = MethodSpec(
         :type path_length_metric: str
 
         :returns: depending on provided arguments:
+
                 - if no additional options are provided, returns a dictionary
                   with segment group ids as keys, and lists of ordered segments
                   in those segment groups as values (`ord_segs`)
