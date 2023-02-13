@@ -1164,24 +1164,42 @@ cell_methods = MethodSpec(
                                        include_cumulative_lengths=False,
                                        include_path_lengths=False,
                                        path_length_metric="Path Length from root"): # Only option supported
-        # type: (List, bool, bool, bool, str) -> Dict
+        # type: (List, bool, bool, bool, str) -> Any
         """
-        Get ordered list of segments in specified groups
+        Get ordered list of segments in specified groups, with additional
+        information.
+
+        Note that this method orders segments by id, so the assumption is that
+        all segment with id `N + m` will be a descendent of segment with id `N`
+        in the segment group.
 
         :param group_list: a group id or list of groups to get segments from
         :type group_list: str or list
         :param check_parentage: verify parentage
         :type check_parentage: bool
-        :param include_commulative_lengths: also include cummulative lengths
+        :param include_cumulative_lengths: also include cummulative length of
+            each segment from root
         :type include_cumulative_lengths: bool
-        :param include_path_lengths: also include path lengths
+        :param include_path_lengths: also include path lengths from segment
+            group's root segment to proximal and distal points of each segment
         :type include_path_lengths: bool
         :param path_length_metric: metric to use for path length ("Path Length
             from root" is currently the only supported option, and the default)
         :type path_length_metric: str
 
-        :return: dictionary of segments with additional information depending
-            on what parameters were used:
+        :returns: depending on provided arguments:
+                - if no additional options are provided, returns a dictionary
+                  with segment group ids as keys, and lists of ordered segments
+                  in those segment groups as values (`ord_segs`)
+                - if only `include_path_lengths` is set, returns a tuple:
+                  [`ord_segs`, `path_lengths_to_proximal` ,
+                  `path_lengths_to_distal`]
+                - if only `include_cumulative_lengths` is set, returns a tuple:
+                  [`ord_segs`, `cumulative_lengths`]
+                - if both `include_path_lengths` and
+                  `include_cumulative_lengths` are set, returns a tuple:
+                  [`ord_segs`, `cumulative_lengths`, `path_lengths_to_proximal` ,
+                  `path_lengths_to_distal`]
 
         :raises: Exception if check_parentage is True and parentage cannot be verified
         """
