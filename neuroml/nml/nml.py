@@ -5051,7 +5051,6 @@ class Input(BaseNonNegativeIntegerId):
         return float(self.fraction_along) if self.fraction_along else 0.5
 
     def __str__(self):
-
         return (
             "Input "
             + str(self.id)
@@ -5437,7 +5436,6 @@ class InputList(Base):
             array._f_setattr(k, extra_cols[k])
 
     def __str__(self):
-
         return (
             "Input list: "
             + self.id
@@ -5697,7 +5695,6 @@ class ExplicitInput(BaseWithoutId):
         return float(self.fraction_along) if self.fraction_along else 0.5
 
     def __str__(self):
-
         return (
             "Input "
             + str(self.id)
@@ -5729,7 +5726,6 @@ class ExplicitInput(BaseWithoutId):
             return self.target.split("/")[0]
 
     def __str__(self):
-
         dest = self.destination if self.destination else "unspecified"
         return (
             "Explicit Input of type "
@@ -6619,7 +6615,6 @@ class SynapticConnection(BaseWithoutId):
             return ref.split("/")[0]
 
     def __str__(self):
-
         dest = self.destination if self.destination else "unspecified"
         return (
             "Synaptic connection from "
@@ -7029,14 +7024,12 @@ class Location(BaseWithoutId):
         pass
 
     def _format(self, value):
-
         if int(value) == value:
             return str(int(value))
         else:
             return "%.4f" % value
 
     def __str__(self):
-
         return (
             "("
             + self._format(self.x)
@@ -7048,7 +7041,6 @@ class Location(BaseWithoutId):
         )
 
     def __repr__(self):
-
         return str(self)
 
 
@@ -7303,7 +7295,6 @@ class Instance(BaseWithoutId):
         super(Instance, self)._buildChildren(child_, node, nodeName_, True)
 
     def __str__(self):
-
         return (
             "Instance "
             + str(self.id)
@@ -7311,7 +7302,6 @@ class Instance(BaseWithoutId):
         )
 
     def __repr__(self):
-
         return str(self)
 
 
@@ -8750,7 +8740,6 @@ class Population(Standalone):
             popGroup._f_setattr("property:" + p.tag, p.value)
 
         if len(self.instances) > 0:
-
             colCount = 3
             a = numpy.zeros([len(self.instances), colCount], numpy.float32)
 
@@ -8783,7 +8772,6 @@ class Population(Standalone):
         )
 
     def __str__(self):
-
         return (
             "Population: "
             + str(self.id)
@@ -10399,7 +10387,6 @@ class Network(Standalone):
         return None
 
     def __str__(self):
-
         return (
             "Network "
             + str(self.id)
@@ -26043,7 +26030,6 @@ class SegmentGroup(Base):
         super(SegmentGroup, self)._buildChildren(child_, node, nodeName_, True)
 
     def __str__(self):
-
         return (
             "SegmentGroup: "
             + str(self.id)
@@ -26055,7 +26041,6 @@ class SegmentGroup(Base):
         )
 
     def __repr__(self):
-
         return str(self)
 
 
@@ -26319,7 +26304,6 @@ class Point3DWithDiam(BaseWithoutId):
         pass
 
     def __str__(self):
-
         return (
             "("
             + str(self.x)
@@ -26333,7 +26317,6 @@ class Point3DWithDiam(BaseWithoutId):
         )
 
     def __repr__(self):
-
         return str(self)
 
     def distance_to(self, other_3d_point):
@@ -26986,7 +26969,6 @@ class Segment(BaseNonNegativeIntegerId):
         return length
 
     def __str__(self):
-
         return (
             "<Segment|"
             + str(self.id)
@@ -26995,7 +26977,6 @@ class Segment(BaseNonNegativeIntegerId):
         )
 
     def __repr__(self):
-
         return str(self)
 
     @property
@@ -27023,7 +27004,6 @@ class Segment(BaseNonNegativeIntegerId):
             and self.proximal.y == self.distal.y
             and self.proximal.z == self.distal.z
         ):
-
             if prox_rad != dist_rad:
                 raise Exception(
                     "Cannot get volume of segment "
@@ -27066,7 +27046,6 @@ class Segment(BaseNonNegativeIntegerId):
             and self.proximal.y == self.distal.y
             and self.proximal.z == self.distal.z
         ):
-
             if prox_rad != dist_rad:
                 raise Exception(
                     "Cannot get surface area of segment "
@@ -42539,7 +42518,6 @@ class InputW(Input):
         return float(self.weight) if self.weight != None else 1.0
 
     def __str__(self):
-
         return (
             "Input (weight) "
             + str(self.id)
@@ -46475,7 +46453,6 @@ class Cell(BaseCell):
                 if sg.id == segment_group:
                     segment_group = sg
             if isinstance(segment_group, str):
-
                 if (
                     assume_all_means_all and segment_group == "all"
                 ):  # i.e. wasn't explicitly defined, but assume it means all segments
@@ -46507,24 +46484,42 @@ class Cell(BaseCell):
         include_path_lengths=False,
         path_length_metric="Path Length from root",
     ):  # Only option supported
-        # type: (List, bool, bool, bool, str) -> Dict
+        # type: (List, bool, bool, bool, str) -> Any
         """
-        Get ordered list of segments in specified groups
+        Get ordered list of segments in specified groups, with additional
+        information.
+
+        Note that this method orders segments by id, so the assumption is that
+        all segment with id `N + m` will be a descendent of segment with id `N`
+        in the segment group.
 
         :param group_list: a group id or list of groups to get segments from
         :type group_list: str or list
         :param check_parentage: verify parentage
         :type check_parentage: bool
-        :param include_commulative_lengths: also include cummulative lengths
+        :param include_cumulative_lengths: also include cummulative length of
+            each segment from root
         :type include_cumulative_lengths: bool
-        :param include_path_lengths: also include path lengths
+        :param include_path_lengths: also include path lengths from segment
+            group's root segment to proximal and distal points of each segment
         :type include_path_lengths: bool
         :param path_length_metric: metric to use for path length ("Path Length
             from root" is currently the only supported option, and the default)
         :type path_length_metric: str
 
-        :return: dictionary of segments with additional information depending
-            on what parameters were used:
+        :returns: depending on provided arguments:
+                - if no additional options are provided, returns a dictionary
+                  with segment group ids as keys, and lists of ordered segments
+                  in those segment groups as values (`ord_segs`)
+                - if only `include_path_lengths` is set, returns a tuple:
+                  [`ord_segs`, `path_lengths_to_proximal` ,
+                  `path_lengths_to_distal`]
+                - if only `include_cumulative_lengths` is set, returns a tuple:
+                  [`ord_segs`, `cumulative_lengths`]
+                - if both `include_path_lengths` and
+                  `include_cumulative_lengths` are set, returns a tuple:
+                  [`ord_segs`, `cumulative_lengths`, `path_lengths_to_proximal` ,
+                  `path_lengths_to_distal`]
 
         :raises: Exception if check_parentage is True and parentage cannot be verified
         """
@@ -46594,19 +46589,16 @@ class Cell(BaseCell):
 
                 tot_len = 0
                 for seg in ord_segs[key]:
-
                     length = self.get_segment_length(seg.id)
 
                     if (
                         not seg.parent
                         or not seg.parent.segments in path_lengths_to_distal[key]
                     ):
-
                         path_lengths_to_proximal[key][seg.id] = 0
                         last_seg = seg
                         par_seg_element = seg.parent
                         while par_seg_element != None:
-
                             par_seg = segments[par_seg_element.segments]
                             d = par_seg.distal
                             p = par_seg.proximal
@@ -46640,15 +46632,12 @@ class Cell(BaseCell):
                     cumulative_lengths[key].append(tot_len)
 
         if include_path_lengths and not include_cumulative_lengths:
-
             return ord_segs, path_lengths_to_proximal, path_lengths_to_distal
 
         if include_cumulative_lengths and not include_path_lengths:
-
             return ord_segs, cumulative_lengths
 
         if include_cumulative_lengths and include_path_lengths:
-
             return (
                 ord_segs,
                 cumulative_lengths,
@@ -55741,7 +55730,6 @@ class ContinuousConnection(BaseConnectionNewFormat):
         )
 
     def __str__(self):
-
         return (
             "Continuous Connection "
             + str(self.id)
@@ -56086,7 +56074,6 @@ class ElectricalConnection(BaseConnectionNewFormat):
         )
 
     def __str__(self):
-
         return (
             "Electrical Connection "
             + str(self.id)
@@ -56432,7 +56419,6 @@ class ConnectionWD(BaseConnectionOldFormat):
         )
 
     def __str__(self):
-
         return (
             "Connection "
             + str(self.id)
@@ -56443,7 +56429,6 @@ class ConnectionWD(BaseConnectionOldFormat):
         )
 
     def __str__(self):
-
         return (
             "Connection "
             + str(self.id)
@@ -56713,7 +56698,6 @@ class Connection(BaseConnectionOldFormat):
         )
 
     def __str__(self):
-
         return (
             "Connection "
             + str(self.id)
@@ -61329,7 +61313,6 @@ class ContinuousConnectionInstance(ContinuousConnection):
             return int(id_string.split("/")[2])
 
     def __str__(self):
-
         return (
             "Continuous Connection (Instance based) "
             + str(self.id)
@@ -61558,7 +61541,6 @@ class ElectricalConnectionInstance(ElectricalConnection):
             return int(id_string.split("/")[2])
 
     def __str__(self):
-
         return (
             "Electrical Connection (Instance based) "
             + str(self.id)
@@ -63674,7 +63656,6 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
         return float(self.weight) if self.weight != None else 1.0
 
     def __str__(self):
-
         return (
             "Continuous Connection (Instance based & weight) "
             + str(self.id)
@@ -63914,7 +63895,6 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
         return float(self.weight) if self.weight != None else 1.0
 
     def __str__(self):
-
         return (
             "Electrical Connection (Instance based & weight) "
             + str(self.id)
