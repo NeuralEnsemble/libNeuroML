@@ -1193,14 +1193,14 @@ cell_methods = MethodSpec(
                   with segment group ids as keys, and lists of ordered segments
                   in those segment groups as values (`ord_segs`)
                 - if only `include_path_lengths` is set, returns a tuple:
-                  [`ord_segs`, `path_lengths_to_proximal` ,
-                  `path_lengths_to_distal`]
+                  `[ord_segs, path_lengths_to_proximal ,
+                  path_lengths_to_distal]`
                 - if only `include_cumulative_lengths` is set, returns a tuple:
-                  [`ord_segs`, `cumulative_lengths`]
+                  `[ord_segs, cumulative_lengths]`
                 - if both `include_path_lengths` and
                   `include_cumulative_lengths` are set, returns a tuple:
-                  [`ord_segs`, `cumulative_lengths`, `path_lengths_to_proximal` ,
-                  `path_lengths_to_distal`]
+                  `[ord_segs, cumulative_lengths, path_lengths_to_proximal ,
+                  path_lengths_to_distal]`
 
         :raises: Exception if check_parentage is True and parentage cannot be verified
         """
