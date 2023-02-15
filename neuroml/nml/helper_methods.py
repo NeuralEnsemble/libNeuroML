@@ -1173,8 +1173,8 @@ cell_methods = MethodSpec(
         all segment with id `N + m` will be a descendent of segment with id `N`
         in the segment group.
 
-        :param group_list: a group id or list of groups to get segments from
-        :type group_list: str or list
+        :param group_list: a group id or list of group ids to get segments from
+        :type group_list: str or list(str)
         :param check_parentage: verify parentage
         :type check_parentage: bool
         :param include_cumulative_lengths: also include cummulative length of
@@ -1212,6 +1212,11 @@ cell_methods = MethodSpec(
         if isinstance(group_list, str):
             group_list = [group_list]
 
+        # populate the dict to ensure that the order of segment groups is
+        # maintained in the returned result
+        for sgid in grouplist:
+            unord_segs[sgid] = None
+
         # get a dict of all segments in the cell, with their ids as keys
         segments = self.get_segment_ids_vs_segments()
 
@@ -1232,12 +1237,12 @@ cell_methods = MethodSpec(
 
         # sort unord_segs by id to get an ordered list in ord_segs
         from operator import attrgetter
-        for key in unord_segs.keys():
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False)
+        for key, segs in unord_segs.items():
+            if segs is not None:
+                if len(segs)==1 or len(segs)==0:
+                    ord_segs[key]=segs
+                else:
+                    ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False)
 
         if check_parentage:
             # check parent ordering
