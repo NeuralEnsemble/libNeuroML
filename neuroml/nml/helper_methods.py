@@ -1214,7 +1214,7 @@ cell_methods = MethodSpec(
 
         # populate the dict to ensure that the order of segment groups is
         # maintained in the returned result
-        for sgid in grouplist:
+        for sgid in group_list:
             unord_segs[sgid] = None
 
         # get a dict of all segments in the cell, with their ids as keys
