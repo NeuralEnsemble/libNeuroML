@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Feb 13 11:26:26 2023 by generateDS.py version 2.41.1.
-# Python 3.10.9 (main, Dec 20 2022, 00:00:00) [GCC 12.2.1 20221121 (Red Hat 12.2.1-4)]
+# Generated Wed Feb 15 23:13:01 2023 by generateDS.py version 2.41.1.
+# Python 3.11.1 (main, Jan  6 2023, 00:00:00) [GCC 12.2.1 20221121 (Red Hat 12.2.1-4)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -15,7 +15,7 @@
 #   NeuroML_v2.3.xsd
 #
 # Command line:
-#   /home/asinha/.local/share/virtualenvs/neuroml-dev-310/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" NeuroML_v2.3.xsd
+#   /home/asinha/.local/share/virtualenvs/neuroml-dev/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" NeuroML_v2.3.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -46493,8 +46493,8 @@ class Cell(BaseCell):
         all segment with id `N + m` will be a descendent of segment with id `N`
         in the segment group.
 
-        :param group_list: a group id or list of groups to get segments from
-        :type group_list: str or list
+        :param group_list: a group id or list of group ids to get segments from
+        :type group_list: str or list(str)
         :param check_parentage: verify parentage
         :type check_parentage: bool
         :param include_cumulative_lengths: also include cummulative length of
@@ -46513,7 +46513,7 @@ class Cell(BaseCell):
                   with segment group ids as keys, and lists of ordered segments
                   in those segment groups as values (`ord_segs`)
                 - if only `include_path_lengths` is set, returns a tuple:
-                  `[ord_segs, path_lengths_to_proximal,
+                  `[ord_segs, path_lengths_to_proximal ,
                   path_lengths_to_distal]`
                 - if only `include_cumulative_lengths` is set, returns a tuple:
                   `[ord_segs, cumulative_lengths]`
@@ -46531,6 +46531,11 @@ class Cell(BaseCell):
         # convert to list if a single segment group ID has been provided
         if isinstance(group_list, str):
             group_list = [group_list]
+
+        # populate the dict to ensure that the order of segment groups is
+        # maintained in the returned result
+        for sgid in grouplist:
+            unord_segs[sgid] = None
 
         # get a dict of all segments in the cell, with their ids as keys
         segments = self.get_segment_ids_vs_segments()
@@ -46553,12 +46558,12 @@ class Cell(BaseCell):
         # sort unord_segs by id to get an ordered list in ord_segs
         from operator import attrgetter
 
-        for key in unord_segs.keys():
-            segs = unord_segs[key]
-            if len(segs) == 1 or len(segs) == 0:
-                ord_segs[key] = segs
-            else:
-                ord_segs[key] = sorted(segs, key=attrgetter("id"), reverse=False)
+        for key, segs in unord_segs.items():
+            if segs is not None:
+                if len(segs) == 1 or len(segs) == 0:
+                    ord_segs[key] = segs
+                else:
+                    ord_segs[key] = sorted(segs, key=attrgetter("id"), reverse=False)
 
         if check_parentage:
             # check parent ordering
