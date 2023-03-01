@@ -2279,8 +2279,8 @@ cell_methods = MethodSpec(
         Segment without children (leaf segments) are not included as parents in the
         adjacency list.
 
-        :returns: dict with parent segments as keys and their children as values
-        :rtype: dict
+        :returns: dict with parent segment ids as keys and ids of their children as values
+        :rtype: dict[int, list[int]]
 
         """
         # create data structure holding list of children for each segment
@@ -2295,6 +2295,44 @@ cell_methods = MethodSpec(
                 print(f"Warning: Segment: {segment} has no parent")
 
         return child_lists
+
+    def get_graph(self):
+        """Get a networkx Graph of the morphology of the cell with distances
+        between the proximal point of a parent and the point where a child
+        connects to it as the weights of the edges of the graph.
+        :returns: networkx.Graph
+
+        """
+        import networkx as nx
+        cell_graph = nx.Graph()
+        adlist = self.get_segment_adjacency_list()
+        for parid, childrenids in adlist.items():
+            for cid in childrenids:
+                par = self.get_segment(parid)
+                child = self.get_segment(cid)
+                d = par.distal
+                p = self.get_actual_proximal(parid)
+
+                par_length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+
+                fract = float(cid.parent.fraction_along)
+                len_to_proximal[key][seg.id] += par_length*fract
+
+                cell_graph.add_edge(par, c, weight=len_to_proximal)
+
+        return cell_graph
+
+
+    def distance(self, dest, source = None):
+        """Get path length between between two segments on a cell.
+
+        :param from: id of segment to get distance from
+        :type from: Segment
+        :param to: id of segment to get distance to
+        :type to: Segment
+        :returns: TODO
+        """
+        pass
 
     ''',
     class_names=("Cell"),
