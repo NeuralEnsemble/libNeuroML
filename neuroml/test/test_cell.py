@@ -188,6 +188,34 @@ class TestCell(unittest.TestCase):
             )
             self.assertEqual(expected[sg.id], len(path_lengths_to_distal[sg.id]))
 
+    def test_adjacency_list(self):
+        """test get_segment_adjacency_list method
+        """
+        cells = ["Purk2M9s", "pyr_4_sym.cell"]
+
+        cells = ["pyr_4_sym"]
+
+        for cell_name in cells:
+
+            local_path = "../examples/test_files/%s.cell.nml" % cell_name
+            if os.path.isfile(local_path):
+                test_file_path = local_path
+            else:
+                root_dir = os.path.dirname(neuroml.__file__)
+                test_file_path = os.path.join(
+                    root_dir, "examples/test_files/%s.cell.nml" % cell_name
+                )
+            print("test file path is: " + test_file_path)
+
+            doc = loaders.NeuroMLLoader.load(test_file_path)
+            cell = doc.cells[0]  # type: neuroml.Cell
+            self.assertEqual(cell.id, cell_name.split(".")[0])
+
+            adlist = cell.get_segment_adjacency_list()
+            self.assertIn(1, adlist[0])
+            self.assertIn(7, adlist[6])
+            self.assertIn(5, adlist[1])
+
     def runTest(self):
         print("Running tests in TestCell")
 
