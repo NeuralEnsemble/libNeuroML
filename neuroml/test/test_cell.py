@@ -216,6 +216,64 @@ class TestCell(unittest.TestCase):
             self.assertIn(7, adlist[6])
             self.assertIn(5, adlist[1])
 
+    def test_cell_graph(self):
+        """test get_graph method
+        """
+        cells = ["Purk2M9s", "pyr_4_sym.cell"]
+
+        cells = ["pyr_4_sym"]
+
+        for cell_name in cells:
+
+            local_path = "../examples/test_files/%s.cell.nml" % cell_name
+            if os.path.isfile(local_path):
+                test_file_path = local_path
+            else:
+                root_dir = os.path.dirname(neuroml.__file__)
+                test_file_path = os.path.join(
+                    root_dir, "examples/test_files/%s.cell.nml" % cell_name
+                )
+            print("test file path is: " + test_file_path)
+
+            doc = loaders.NeuroMLLoader.load(test_file_path)
+            acell = doc.cells[0]  # type: neuroml.Cell
+            self.assertEqual(acell.id, cell_name.split(".")[0])
+
+            graph = acell.get_graph()
+            print(graph)
+            import networkx as nx
+            nx.nx_agraph.write_dot(graph, "test_graph.dot")
+
+    def test_get_distance(self):
+        """test distance method
+        """
+        cells = ["Purk2M9s", "pyr_4_sym.cell"]
+
+        cells = ["pyr_4_sym"]
+
+        for cell_name in cells:
+
+            local_path = "../examples/test_files/%s.cell.nml" % cell_name
+            if os.path.isfile(local_path):
+                test_file_path = local_path
+            else:
+                root_dir = os.path.dirname(neuroml.__file__)
+                test_file_path = os.path.join(
+                    root_dir, "examples/test_files/%s.cell.nml" % cell_name
+                )
+            print("test file path is: " + test_file_path)
+
+            doc = loaders.NeuroMLLoader.load(test_file_path)
+            acell = doc.cells[0]  # type: neuroml.Cell
+            self.assertEqual(acell.id, cell_name.split(".")[0])
+
+            distance1 = acell.get_distance(dest=1)
+            distance2 = acell.get_distance(dest=2)
+            distance3 = acell.get_distance(dest=3)
+            distance4 = acell.get_distance(dest=4)
+
+            print(distance1, distance2, distance3, distance4)
+
     def runTest(self):
         print("Running tests in TestCell")
 
