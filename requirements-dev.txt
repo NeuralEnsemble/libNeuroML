@@ -5,4 +5,5 @@ flake8
 pytest
 numpy
 networkx
+pygraphviz
 black ; python_version >= '3.0'
