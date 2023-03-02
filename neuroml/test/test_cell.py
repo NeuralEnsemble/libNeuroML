@@ -271,8 +271,10 @@ class TestCell(unittest.TestCase):
             distance2 = acell.get_distance(dest=2)
             distance3 = acell.get_distance(dest=3)
             distance4 = acell.get_distance(dest=4)
-
             print(distance1, distance2, distance3, distance4)
+
+            all_distances = acell.get_all_distances_from_segment()
+            print(all_distances)
 
     def runTest(self):
         print("Running tests in TestCell")
