@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Feb 15 23:13:01 2023 by generateDS.py version 2.41.1.
-# Python 3.11.1 (main, Jan  6 2023, 00:00:00) [GCC 12.2.1 20221121 (Red Hat 12.2.1-4)]
+# Generated Thu Mar  2 18:45:56 2023 by generateDS.py version 2.41.2.
+# Python 3.11.2 (main, Feb  8 2023, 00:00:00) [GCC 12.2.1 20221121 (Red Hat 12.2.1-4)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -47565,8 +47565,11 @@ class Cell(BaseCell):
         :rtype: neuroml.Cell
 
         """
+        # don't recompute if already exists
         # get morphology tree
-        morph_tree = self.get_segment_adjacency_list()
+        morph_tree = getattr(self, "adjacency_list", None)
+        if morph_tree is None:
+            morph_tree = self.get_segment_adjacency_list()
 
         # initialise root segment and first segment group
         seg = self.get_segment(root_segment_id)
@@ -47635,8 +47638,16 @@ class Cell(BaseCell):
         Segment without children (leaf segments) are not included as parents in the
         adjacency list.
 
-        :returns: dict with parent segments as keys and their children as values
-        :rtype: dict
+        This method also stores the computed adjacency list in
+        `self.adjacency_list` for future use by other methods.
+
+        `self.adjacency_list` is populated each time this method is run, to
+        ensure that users can regenerate it after making modifications to the
+        cell morphology. If the morphology has not changed, one only needs to
+        populate it once and then re-use it as required.
+
+        :returns: dict with parent segment ids as keys and ids of their children as values
+        :rtype: dict[int, list[int]]
 
         """
         # create data structure holding list of children for each segment
@@ -47650,7 +47661,93 @@ class Cell(BaseCell):
             except AttributeError:
                 print(f"Warning: Segment: {segment} has no parent")
 
+        self.adjacency_list = child_lists
         return child_lists
+
+    def get_graph(self):
+        """Get a networkx Graph of the morphology of the cell with distances
+        between the proximal point of a parent and the point where a child
+        connects to it as the weights of the edges of the graph.
+
+        Please see https://networkx.org/documentation/stable/reference
+        for information on networkx routines that can be used on this graph.
+
+        This method also stores the graph in the `self.cell_graph` attribute
+        for future use.
+
+        :returns: networkx.Graph
+
+        """
+        import networkx as nx
+        import math
+
+        cell_graph = nx.Graph()
+
+        # don't recompute if already exists
+        adlist = getattr(self, "adjacency_list", None)
+        if adlist is None:
+            adlist = self.get_segment_adjacency_list()
+
+        for parid, childrenids in adlist.items():
+            par = self.get_segment(parid)
+            d = par.distal
+            p = self.get_actual_proximal(parid)
+            par_length = math.sqrt(
+                (d.x - p.x) ** 2 + (d.y - p.y) ** 2 + (d.z - p.z) ** 2
+            )
+
+            for cid in childrenids:
+                child = self.get_segment(cid)
+
+                fract = float(child.parent.fraction_along)
+                len_to_proximal = par_length * fract
+
+                cell_graph.add_edge(parid, cid, weight=len_to_proximal)
+
+        self.cell_graph = cell_graph
+        return cell_graph
+
+    def get_distance(self, dest, source=0):
+        """Get path length between between two segments on a cell.
+
+        Uses `networkx.dijkstra_path_length` to compute the shortest
+        path between source and dest
+
+        :param from: id of segment to get distance from
+        :type from: int
+        :param to: id of segment to get distance to
+        :type to: int
+        :returns: float
+        """
+        import networkx as nx
+
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        return nx.dijkstra_path_length(graph, source, dest)
+
+    def get_all_distances_from_segment(self, seg_id=0):
+        """Get distances of all segments from the segment with id seg_id.
+
+        Useful to get distances of segments from the soma.
+
+        Uses networkx.single_source_dijkstra on the cell graph, without a
+        target.
+
+        :param seg_id: id of segment to get distances from
+        :type seg_id: int
+        :returns: pair of dictionaries for distance, path
+            The return value is a tuple of two dictionaries keyed by target
+            nodes. The first dictionary stores distance to each target node.
+            The second stores the path to each target node.
+
+        """
+        import networkx as nx
+
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        return nx.single_source_dijkstra(graph, source=seg_id)
 
     # end class Cell
 
