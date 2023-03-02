@@ -2366,6 +2366,28 @@ cell_methods = MethodSpec(
         if graph is None:
             graph = self.get_graph()
         return nx.dijkstra_path_length(graph, source, dest)
+
+    def get_all_distances_from_segment(self, seg_id = 0):
+        """Get distances of all segments from the segment with id seg_id.
+
+        Useful to get distances of segments from the soma.
+
+        Uses networkx.single_source_dijkstra on the cell graph, without a
+        target.
+
+        :param seg_id: id of segment to get distances from
+        :type seg_id: int
+        :returns: pair of dictionaries for distance, path
+            The return value is a tuple of two dictionaries keyed by target
+            nodes. The first dictionary stores distance to each target node.
+            The second stores the path to each target node.
+
+        """
+        import networkx as nx
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        return(nx.single_source_dijkstra(graph, source=seg_id))
     ''',
     class_names=("Cell"),
 )
