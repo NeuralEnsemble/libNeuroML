@@ -276,6 +276,36 @@ class TestCell(unittest.TestCase):
             all_distances = acell.get_all_distances_from_segment()
             print(all_distances)
 
+    def test_get_all_segments_at_distance(self):
+        """test distance method
+        """
+        cells = ["pyr_4_sym"]
+
+        for cell_name in cells:
+
+            local_path = "../examples/test_files/%s.cell.nml" % cell_name
+            if os.path.isfile(local_path):
+                test_file_path = local_path
+            else:
+                root_dir = os.path.dirname(neuroml.__file__)
+                test_file_path = os.path.join(
+                    root_dir, "examples/test_files/%s.cell.nml" % cell_name
+                )
+            print("test file path is: " + test_file_path)
+
+            doc = loaders.NeuroMLLoader.load(test_file_path)
+            acell = doc.cells[0]  # type: neuroml.Cell
+            self.assertEqual(acell.id, cell_name.split(".")[0])
+
+            distance1 = acell.get_distance(dest=1)
+            distance2 = acell.get_distance(dest=2)
+            distance3 = acell.get_distance(dest=3)
+            distance4 = acell.get_distance(dest=4)
+            print(distance1, distance2, distance3, distance4)
+
+            adict = acell.get_segments_at_distance(distance=500)
+            self.assertIn(3, list(adict.keys()))
+
     def runTest(self):
         print("Running tests in TestCell")
 
