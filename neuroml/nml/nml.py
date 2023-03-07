@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Mar  7 15:13:06 2023 by generateDS.py version 2.41.2.
+# Generated Tue Mar  7 16:23:45 2023 by generateDS.py version 2.41.2.
 # Python 3.11.2 (main, Feb  8 2023, 00:00:00) [GCC 12.2.1 20221121 (Red Hat 12.2.1-4)]
 #
 # Command line options:
@@ -47749,7 +47749,7 @@ class Cell(BaseCell):
             graph = self.get_graph()
         return nx.single_source_dijkstra(graph, source=seg_id)
 
-    def get_segments_at_distance(self, src_seg=0, distance=None):
+    def get_segments_at_distance(self, distance, src_seg=0):
         """Get all segments at distance from the provided `src_seg`.
 
         For each segment, it returns the fraction along the segment that the
