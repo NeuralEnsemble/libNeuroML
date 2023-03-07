@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Mar  2 18:45:56 2023 by generateDS.py version 2.41.2.
+# Generated Tue Mar  7 15:13:06 2023 by generateDS.py version 2.41.2.
 # Python 3.11.2 (main, Feb  8 2023, 00:00:00) [GCC 12.2.1 20221121 (Red Hat 12.2.1-4)]
 #
 # Command line options:
@@ -47748,6 +47748,43 @@ class Cell(BaseCell):
         if graph is None:
             graph = self.get_graph()
         return nx.single_source_dijkstra(graph, source=seg_id)
+
+    def get_segments_at_distance(self, src_seg=0, distance=None):
+        """Get all segments at distance from the provided `src_seg`.
+
+        For each segment, it returns the fraction along the segment that the
+        provided distance is at. For example, if segment N is 500 units long,
+        and the `distance` cut-off is at 200, the fraction along is: 200/500.
+
+        :param src_seg: id of segment to get distances from
+        :type src_seg: int
+        :param distance: distance to get segments at
+        :type distance: float
+        :returns: dict with segment ids as keys, and fraction along at which
+            the cut off is as values
+
+        """
+        import networkx as nx
+
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        # returns all segments that are less than `distance` away.
+        (target_dict, path_dict) = nx.single_source_dijkstra(
+            graph, source=src_seg, cutoff=distance
+        )
+
+        segs_frac_alongs = {}
+
+        for tgt, dist in target_dict.items():
+            frac_along = (distance - dist) / self.get_segment_length(tgt)
+            if frac_along > 1.0:
+                # not in this segment
+                continue
+            else:
+                segs_frac_alongs[tgt] = frac_along
+
+        return segs_frac_alongs
 
     # end class Cell
 
