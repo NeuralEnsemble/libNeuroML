@@ -2389,7 +2389,7 @@ cell_methods = MethodSpec(
             graph = self.get_graph()
         return(nx.single_source_dijkstra(graph, source=seg_id))
 
-    def get_segments_at_distance(self, src_seg = 0, distance = None):
+    def get_segments_at_distance(self, distance, src_seg = 0):
         """Get all segments at distance from the provided `src_seg`.
 
         For each segment, it returns the fraction along the segment that the
