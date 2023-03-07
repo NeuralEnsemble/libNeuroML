@@ -2388,6 +2388,42 @@ cell_methods = MethodSpec(
         if graph is None:
             graph = self.get_graph()
         return(nx.single_source_dijkstra(graph, source=seg_id))
+
+    def get_segments_at_distance(self, src_seg = 0, distance = None):
+        """Get all segments at distance from the provided `src_seg`.
+
+        For each segment, it returns the fraction along the segment that the
+        provided distance is at. For example, if segment N is 500 units long,
+        and the `distance` cut-off is at 200, the fraction along is: 200/500.
+
+        :param src_seg: id of segment to get distances from
+        :type src_seg: int
+        :param distance: distance to get segments at
+        :type distance: float
+        :returns: dict with segment ids as keys, and fraction along at which
+            the cut off is as values
+
+        """
+        import networkx as nx
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        # returns all segments that are less than `distance` away.
+        (target_dict, path_dict) = (nx.single_source_dijkstra(graph, source=src_seg, cutoff=distance))
+
+        segs_frac_alongs = {}
+
+        for tgt, dist in target_dict.items():
+            frac_along = ((distance - dist) / self.get_segment_length(tgt))
+            if frac_along > 1.0:
+                # not in this segment
+                continue
+            else:
+                segs_frac_alongs[tgt] = frac_along
+
+        return segs_frac_alongs
+
+
     ''',
     class_names=("Cell"),
 )
