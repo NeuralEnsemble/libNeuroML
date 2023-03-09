@@ -2454,6 +2454,98 @@ cell_methods = MethodSpec(
         segs = [n for (n, d) in graph.out_degree if d == 0]
         return segs
 
+
+    def get_segment_location_info(self, seg_id):
+        """Get location information about a particular segment.
+
+        :param seg_id: id of segment to get information for
+        :type seg_id: int
+        :returns: a dictionary with various metrics about the segment
+
+            - length of segment
+            - distance from cell root
+            - distance from nearest branching point
+            - name of unbranched segment group segment belongs to (if any)
+            - id of root segment of the unbranched segment group
+            - distance from the segment group root segment
+
+        """
+        soma_id = self.get_morphology_root()
+        distance_from_soma = self.get_distance(seg_id, source=soma_id)
+        in_sg = None
+        sg_segs = None
+        sg_root = None
+        distance_from_sg_root = None
+        distance_from_bpt = None
+
+        # get the unbranched segment group that this segment is in
+        for sg in self.morphology.segment_groups:
+            if sg.neuro_lex_id == self.neuro_lex_ids["section"]:
+                sg_segs = self.get_all_segments_in_group(sg)
+                if seg_id in sg_segs:
+                    in_sg = sg
+
+                    # break out of loop
+                    break
+
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+
+        # find first ancestral branching point
+        # (a segment with more than one child)
+        current = seg_id
+        parent = list(graph.predecessors(current))[0]
+        children = list(graph.successors(parent))
+
+        while len(children) == 1:
+            # the root of the segment group may not be at a
+            # branching point: an unbranched cell branch can consist of
+            # multiple unbranched segment groups
+            if in_sg is not None:
+                if current in sg_segs:
+                    sg_root = current
+
+            current = parent
+            parent = list(graph.predecessors(current))[0]
+            children = list(graph.successors(parent))
+
+        distance_from_bpt = self.get_distance(seg_id, source=current)
+
+        res = {}
+        res['id'] = seg_id
+        res['length'] = self.get_segment_length(seg_id)
+        res['distance_from_cell_root'] = distance_from_soma
+        res['distance_from_nearest_branching_point'] = distance_from_bpt
+
+        # at unbranched segment root
+        if in_sg is not None:
+            res['in_unbranched_segment_group'] = in_sg.id
+            res['unbranched_segment_group_root'] = sg_root
+            distance_from_sg_root = self.get_distance(seg_id, source=sg_root)
+            res['distance_from_segment_group_root'] = distance_from_sg_root
+
+        return res
+
+
+    def get_morphology_root(self):
+        """Return the root of the complete cell morphology.
+
+        This is usually the first segment of the soma, and there should only be
+        one such segment.
+
+        :returns: id of the root segment
+
+        """
+        import networkx as nx
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        segs = [n for (n, d) in graph.in_degree if d == 0]
+        # there should only be one segment with 0 indegree
+        assert len(segs) == 1
+        return segs[0]
+
     ''',
     class_names=("Cell"),
 )
