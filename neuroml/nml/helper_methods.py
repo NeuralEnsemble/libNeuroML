@@ -2309,7 +2309,7 @@ cell_methods = MethodSpec(
         return child_lists
 
     def get_graph(self):
-        """Get a networkx Graph of the morphology of the cell with distances
+        """Get a networkx DiGraph of the morphology of the cell with distances
         between the proximal point of a parent and the point where a child
         connects to it as the weights of the edges of the graph.
 
@@ -2324,7 +2324,7 @@ cell_methods = MethodSpec(
         """
         import networkx as nx
         import math
-        cell_graph = nx.Graph()
+        cell_graph = nx.DiGraph()
 
         # don't recompute if already exists
         adlist = getattr(self, "adjacency_list", None)
@@ -2423,6 +2423,36 @@ cell_methods = MethodSpec(
 
         return segs_frac_alongs
 
+
+    def get_branching_points(self):
+        """Get segments where the cell morphology branches.
+
+        That is, the out-degree of the segment is > 1
+
+        :returns: list of segment ids
+
+        """
+        import networkx as nx
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+
+        segs = [n for (n, d) in graph.out_degree if d > 1]
+        return segs
+
+
+    def get_extremeties(self):
+        """Get segments that are at the ends/tips of the neuronal morphology.
+
+        :returns: list of segment ids
+
+        """
+        import networkx as nx
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        segs = [n for (n, d) in graph.out_degree if d == 0]
+        return segs
 
     ''',
     class_names=("Cell"),
