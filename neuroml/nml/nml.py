@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Mar  7 16:23:45 2023 by generateDS.py version 2.41.2.
+# Generated Thu Mar  9 12:43:57 2023 by generateDS.py version 2.41.2.
 # Python 3.11.2 (main, Feb  8 2023, 00:00:00) [GCC 12.2.1 20221121 (Red Hat 12.2.1-4)]
 #
 # Command line options:
@@ -47665,7 +47665,7 @@ class Cell(BaseCell):
         return child_lists
 
     def get_graph(self):
-        """Get a networkx Graph of the morphology of the cell with distances
+        """Get a networkx DiGraph of the morphology of the cell with distances
         between the proximal point of a parent and the point where a child
         connects to it as the weights of the edges of the graph.
 
@@ -47681,7 +47681,7 @@ class Cell(BaseCell):
         import networkx as nx
         import math
 
-        cell_graph = nx.Graph()
+        cell_graph = nx.DiGraph()
 
         # don't recompute if already exists
         adlist = getattr(self, "adjacency_list", None)
@@ -47785,6 +47785,37 @@ class Cell(BaseCell):
                 segs_frac_alongs[tgt] = frac_along
 
         return segs_frac_alongs
+
+    def get_branching_points(self):
+        """Get segments where the cell morphology branches.
+
+        That is, the out-degree of the segment is > 1
+
+        :returns: list of segment ids
+
+        """
+        import networkx as nx
+
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+
+        segs = [n for (n, d) in graph.out_degree if d > 1]
+        return segs
+
+    def get_extremeties(self):
+        """Get segments that are at the ends/tips of the neuronal morphology.
+
+        :returns: list of segment ids
+
+        """
+        import networkx as nx
+
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        segs = [n for (n, d) in graph.out_degree if d == 0]
+        return segs
 
     # end class Cell
 
