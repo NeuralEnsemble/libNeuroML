@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Mar 10 15:26:30 2023 by generateDS.py version 2.41.2.
+# Generated Fri Mar 10 16:40:38 2023 by generateDS.py version 2.41.2.
 # Python 3.11.2 (main, Feb  8 2023, 00:00:00) [GCC 12.2.1 20221121 (Red Hat 12.2.1-4)]
 #
 # Command line options:
@@ -47777,7 +47777,12 @@ class Cell(BaseCell):
         segs_frac_alongs = {}
 
         for tgt, dist in target_dict.items():
-            frac_along = (distance - dist) / self.get_segment_length(tgt)
+            try:
+                frac_along = (distance - dist) / self.get_segment_length(tgt)
+            except ZeroDivisionError:
+                # ignore zero length segments
+                continue
+
             if frac_along > 1.0:
                 # not in this segment
                 continue

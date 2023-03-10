@@ -2414,7 +2414,12 @@ cell_methods = MethodSpec(
         segs_frac_alongs = {}
 
         for tgt, dist in target_dict.items():
-            frac_along = ((distance - dist) / self.get_segment_length(tgt))
+            try:
+                frac_along = ((distance - dist) / self.get_segment_length(tgt))
+            except ZeroDivisionError:
+                # ignore zero length segments
+                continue
+
             if frac_along > 1.0:
                 # not in this segment
                 continue
