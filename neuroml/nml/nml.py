@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Mar  9 16:15:51 2023 by generateDS.py version 2.41.2.
+# Generated Fri Mar 10 15:26:30 2023 by generateDS.py version 2.41.2.
 # Python 3.11.2 (main, Feb  8 2023, 00:00:00) [GCC 12.2.1 20221121 (Red Hat 12.2.1-4)]
 #
 # Command line options:
@@ -47804,9 +47804,10 @@ class Cell(BaseCell):
         return segs
 
     def get_extremeties(self):
-        """Get segments that are at the ends/tips of the neuronal morphology.
+        """Get segments that are at the ends/tips of the neuronal morphology,
+        with their distances from the soma.
 
-        :returns: list of segment ids
+        :returns: dict of segment ids and their distances from cell root as values
 
         """
         import networkx as nx
@@ -47815,7 +47816,11 @@ class Cell(BaseCell):
         if graph is None:
             graph = self.get_graph()
         segs = [n for (n, d) in graph.out_degree if d == 0]
-        return segs
+
+        res = {}
+        for s in segs:
+            res[s] = self.get_distance(s)
+        return res
 
     def get_segment_location_info(self, seg_id):
         """Get location information about a particular segment.
