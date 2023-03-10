@@ -355,10 +355,11 @@ class TestCell(unittest.TestCase):
             self.assertEqual(acell.id, cell_name.split(".")[0])
 
             res = acell.get_extremeties()
-            self.assertIn(4, res)
-            self.assertIn(5, res)
-            self.assertIn(7, res)
-            self.assertIn(8, res)
+            keys = list(res.keys())
+            self.assertIn(4, keys)
+            self.assertIn(5, keys)
+            self.assertIn(7, keys)
+            self.assertIn(8, keys)
             print(res)
 
     def test_locate_segment(self):

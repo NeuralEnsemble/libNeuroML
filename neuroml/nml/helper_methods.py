@@ -2442,9 +2442,10 @@ cell_methods = MethodSpec(
 
 
     def get_extremeties(self):
-        """Get segments that are at the ends/tips of the neuronal morphology.
+        """Get segments that are at the ends/tips of the neuronal morphology,
+        with their distances from the soma.
 
-        :returns: list of segment ids
+        :returns: dict of segment ids and their distances from cell root as values
 
         """
         import networkx as nx
@@ -2452,7 +2453,11 @@ cell_methods = MethodSpec(
         if graph is None:
             graph = self.get_graph()
         segs = [n for (n, d) in graph.out_degree if d == 0]
-        return segs
+
+        res = {}
+        for s in segs:
+            res[s] = self.get_distance(s)
+        return res
 
 
     def get_segment_location_info(self, seg_id):
