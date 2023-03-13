@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Mar 10 16:40:38 2023 by generateDS.py version 2.41.2.
+# Generated Mon Mar 13 10:40:33 2023 by generateDS.py version 2.41.2.
 # Python 3.11.2 (main, Feb  8 2023, 00:00:00) [GCC 12.2.1 20221121 (Red Hat 12.2.1-4)]
 #
 # Command line options:
@@ -47781,6 +47781,7 @@ class Cell(BaseCell):
                 frac_along = (distance - dist) / self.get_segment_length(tgt)
             except ZeroDivisionError:
                 # ignore zero length segments
+                print(f"Warning: encountered zero length segment: {tgt}")
                 continue
 
             if frac_along > 1.0:
@@ -47867,6 +47868,7 @@ class Cell(BaseCell):
         # find first ancestral branching point
         # (a segment with more than one child)
         current = seg_id
+        sg_root = current
         parent = list(graph.predecessors(current))[0]
         children = list(graph.successors(parent))
 
