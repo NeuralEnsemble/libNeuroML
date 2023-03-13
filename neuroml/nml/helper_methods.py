@@ -2418,6 +2418,7 @@ cell_methods = MethodSpec(
                 frac_along = ((distance - dist) / self.get_segment_length(tgt))
             except ZeroDivisionError:
                 # ignore zero length segments
+                print(f"Warning: encountered zero length segment: {tgt}")
                 continue
 
             if frac_along > 1.0:
@@ -2505,6 +2506,7 @@ cell_methods = MethodSpec(
         # find first ancestral branching point
         # (a segment with more than one child)
         current = seg_id
+        sg_root = current
         parent = list(graph.predecessors(current))[0]
         children = list(graph.successors(parent))
 
