@@ -387,6 +387,42 @@ class TestCell(unittest.TestCase):
             self.assertEqual("apical4", res['in_unbranched_segment_group'])
             self.assertEqual(0, res['distance_from_segment_group_root'])
 
+    def test_get_morphology_root(self):
+        """Test get_morphology_root method """
+        cells = ["pyr_4_sym"]
+
+        for cell_name in cells:
+
+            local_path = "../examples/test_files/%s.cell.nml" % cell_name
+            if os.path.isfile(local_path):
+                test_file_path = local_path
+            else:
+                root_dir = os.path.dirname(neuroml.__file__)
+                test_file_path = os.path.join(
+                    root_dir, "examples/test_files/%s.cell.nml" % cell_name
+                )
+            print("test file path is: " + test_file_path)
+
+            doc = loaders.NeuroMLLoader.load(test_file_path)
+            acell = doc.cells[0]  # type: neuroml.Cell
+
+            root = acell.get_morphology_root()
+            self.assertEqual(0, root)
+
+            # change the id and confirm if we get the new one
+            root_seg = acell.get_segment(0)
+            new_id = 99999
+            root_seg.id = new_id
+            # also update all descendents to ensure cell remains valid
+            for seg in acell.morphology.segments:
+                par = seg.parent
+                if par is not None:
+                    if par.segments == 0:
+                        par.segments = new_id
+
+            new_root = acell.get_morphology_root()
+            self.assertEqual(new_id, new_root)
+
     def runTest(self):
         print("Running tests in TestCell")
 
