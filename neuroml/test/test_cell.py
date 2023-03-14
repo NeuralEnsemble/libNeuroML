@@ -219,8 +219,6 @@ class TestCell(unittest.TestCase):
     def test_cell_graph(self):
         """test get_graph method
         """
-        cells = ["Purk2M9s", "pyr_4_sym.cell"]
-
         cells = ["pyr_4_sym"]
 
         for cell_name in cells:
