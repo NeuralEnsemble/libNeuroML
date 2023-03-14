@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Mar 14 10:49:39 2023 by generateDS.py version 2.41.2.
+# Generated Tue Mar 14 11:19:25 2023 by generateDS.py version 2.41.3.
 # Python 3.11.2 (main, Feb  8 2023, 00:00:00) [GCC 12.2.1 20221121 (Red Hat 12.2.1-4)]
 #
 # Command line options:
@@ -46606,16 +46606,7 @@ class Cell(BaseCell):
                         par_seg_element = seg.parent
                         while par_seg_element != None:
                             par_seg = segments[par_seg_element.segments]
-                            d = par_seg.distal
-                            p = par_seg.proximal
-
-                            if not p:
-                                par_seg_parent_seg = segments[par_seg.parent.segments]
-                                p = par_seg_parent_seg.distal
-
-                            par_length = math.sqrt(
-                                (d.x - p.x) ** 2 + (d.y - p.y) ** 2 + (d.z - p.z) ** 2
-                            )
+                            par_length = self.get_segment_length(par_seg.id)
 
                             fract = float(last_seg.parent.fraction_along)
                             path_lengths_to_proximal[key][seg.id] += par_length * fract
@@ -47689,12 +47680,7 @@ class Cell(BaseCell):
             adlist = self.get_segment_adjacency_list()
 
         for parid, childrenids in adlist.items():
-            par = self.get_segment(parid)
-            d = par.distal
-            p = self.get_actual_proximal(parid)
-            par_length = math.sqrt(
-                (d.x - p.x) ** 2 + (d.y - p.y) ** 2 + (d.z - p.z) ** 2
-            )
+            par_length = self.get_segment_length(parid)
 
             for cid in childrenids:
                 child = self.get_segment(cid)
