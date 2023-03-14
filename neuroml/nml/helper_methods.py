@@ -2549,6 +2549,15 @@ cell_methods = MethodSpec(
         :returns: id of the root segment
 
         """
+        # check if convention was followed and segment id 0 is root (has no
+        # parents)
+        try:
+            root_seg = self.get_segment(0)
+            if root_seg.parent is None:
+                return 0
+        except ValueError:
+            pass
+
         import networkx as nx
         graph = getattr(self, "cell_graph", None)
         if graph is None:
