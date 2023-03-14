@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Mar 13 10:40:33 2023 by generateDS.py version 2.41.2.
+# Generated Tue Mar 14 10:49:39 2023 by generateDS.py version 2.41.2.
 # Python 3.11.2 (main, Feb  8 2023, 00:00:00) [GCC 12.2.1 20221121 (Red Hat 12.2.1-4)]
 #
 # Command line options:
@@ -15,7 +15,7 @@
 #   NeuroML_v2.3.xsd
 #
 # Command line:
-#   /home/asinha/.local/share/virtualenvs/neuroml-dev/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" NeuroML_v2.3.xsd
+#   /home/asinha/.local/share/virtualenvs/neuroml-dev-310/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" NeuroML_v2.3.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -47910,6 +47910,15 @@ class Cell(BaseCell):
         :returns: id of the root segment
 
         """
+        # check if convention was followed and segment id 0 is root (has no
+        # parents)
+        try:
+            root_seg = self.get_segment(0)
+            if root_seg.parent is None:
+                return 0
+        except ValueError:
+            pass
+
         import networkx as nx
 
         graph = getattr(self, "cell_graph", None)
