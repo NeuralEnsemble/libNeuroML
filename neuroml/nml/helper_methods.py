@@ -2333,10 +2333,7 @@ cell_methods = MethodSpec(
 
         for parid, childrenids in adlist.items():
 
-            par = self.get_segment(parid)
-            d = par.distal
-            p = self.get_actual_proximal(parid)
-            par_length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+            par_length = self.get_segment_length(parid)
 
             for cid in childrenids:
                 child = self.get_segment(cid)
