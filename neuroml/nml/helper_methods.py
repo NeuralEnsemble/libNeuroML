@@ -1281,14 +1281,7 @@ cell_methods = MethodSpec(
                         while par_seg_element!=None:
 
                             par_seg = segments[par_seg_element.segments]
-                            d = par_seg.distal
-                            p = par_seg.proximal
-
-                            if not p:
-                                par_seg_parent_seg = segments[par_seg.parent.segments]
-                                p = par_seg_parent_seg.distal
-
-                            par_length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                            par_length = self.get_segment_length(par_seg.id)
 
                             fract = float(last_seg.parent.fraction_along)
                             path_lengths_to_proximal[key][seg.id] += par_length*fract
