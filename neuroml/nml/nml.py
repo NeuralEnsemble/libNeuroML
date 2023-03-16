@@ -2,20 +2,21 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Mar 14 11:19:25 2023 by generateDS.py version 2.41.3.
-# Python 3.11.2 (main, Feb  8 2023, 00:00:00) [GCC 12.2.1 20221121 (Red Hat 12.2.1-4)]
+# Generated Thu Mar 16 11:31:59 2023 by generateDS.py version 2.41.2.
+# Python 3.11.2 (main, Feb  8 2023, 00:00:00) [GCC 13.0.1 20230208 (Red Hat 13.0.1-0)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
 #   ('--use-getter-setter', 'none')
 #   ('--user-methods', 'helper_methods.py')
 #   ('--export', 'write validate')
+#   ('--custom-imports-template', 'gds_imports-template.py')
 #
 # Command line arguments:
 #   NeuroML_v2.3.xsd
 #
 # Command line:
-#   /home/asinha/.local/share/virtualenvs/neuroml-dev-310/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" NeuroML_v2.3.xsd
+#   /home/asinha/.local/share/virtualenvs/neuroml-dev/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" --custom-imports-template="gds_imports-template.py" NeuroML_v2.3.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -35,6 +36,22 @@ import datetime as datetime_
 import decimal as decimal_
 from lxml import etree as etree_
 
+import math
+
+from math import pi, sqrt
+
+from operator import attrgetter
+
+import inspect
+
+import networkx as nx
+
+import numpy
+
+
+import neuroml
+
+import neuroml.neuro_lex_ids
 
 Validate_simpletypes_ = True
 SaveElementTreeNode = True
@@ -5387,8 +5404,6 @@ class InputList(Base):
         """Export to HDF5 file."""
         # print("Exporting InputList: "+str(self.id)+" as HDF5")
 
-        import numpy
-
         ilGroup = h5file.create_group(h5Group, "inputList_" + self.id)
         ilGroup._f_setattr("id", self.id)
         ilGroup._f_setattr("component", self.component)
@@ -8731,8 +8746,6 @@ class Population(Standalone):
         """Export to HDF5 file."""
         # print("Exporting Population: "+str(self.id)+" as HDF5")
 
-        import numpy
-
         popGroup = h5file.create_group(h5Group, "population_" + self.id)
         popGroup._f_setattr("id", self.id)
         popGroup._f_setattr("component", self.component)
@@ -10372,10 +10385,8 @@ class Network(Standalone):
                         return m
                     else:
                         all_ids.append(m.id)
-        from neuroml.loaders import print_
-
         if self.warn_count < 10:
-            print_(
+            neuroml.loaders.print_(
                 "Id "
                 + id
                 + " not found in <network> element. All ids: "
@@ -10383,7 +10394,9 @@ class Network(Standalone):
             )
             self.warn_count += 1
         elif self.warn_count == 10:
-            print_(" - Suppressing further warnings about id not found...")
+            neuroml.loaders.print_(
+                " - Suppressing further warnings about id not found..."
+            )
         return None
 
     def __str__(self):
@@ -10398,8 +10411,6 @@ class Network(Standalone):
     def exportHdf5(self, h5file, h5Group):
         """Export to HDF5 file."""
         # print("Exporting Network: "+str(self.id)+" as HDF5")
-
-        import numpy
 
         netGroup = h5file.create_group(h5Group, "network")
         netGroup._f_setattr("id", self.id)
@@ -26986,9 +26997,6 @@ class Segment(BaseNonNegativeIntegerId):
         :returns: volume of segment
         :rtype: float
         """
-
-        from math import pi
-
         if self.proximal == None:
             raise Exception(
                 "Cannot get volume of segment "
@@ -27028,9 +27036,6 @@ class Segment(BaseNonNegativeIntegerId):
         :returns: surface area of segment
         :rtype: float
         """
-        from math import pi
-        from math import sqrt
-
         if self.proximal == None:
             raise Exception(
                 "Cannot get surface area of segment "
@@ -40137,8 +40142,6 @@ class NeuroMLDocument(Standalone):
         NeuroMLDocument: networks, cells, projections, synapses, and so on.
         """
 
-        import inspect
-
         info = "*******************************************************\n"
         info += "* NeuroMLDocument: " + self.id + "\n*\n"
         post = ""
@@ -40382,8 +40385,6 @@ class NeuroMLDocument(Standalone):
         :returns: Component with given ID or None if no Component with provided ID was found
         """
         if len(id) == 0:
-            import inspect
-
             callframe = inspect.getouterframes(inspect.currentframe(), 2)
             print(
                 "Method: " + callframe[1][3] + " is asking for an element with no id..."
@@ -40402,10 +40403,8 @@ class NeuroMLDocument(Standalone):
                         return m
                     else:
                         all_ids.append(m.id)
-        from neuroml.loaders import print_
-
         if self.warn_count < 10:
-            print_(
+            neuroml.loaders.print_(
                 "Id "
                 + id
                 + " not found in <neuroml> element. All ids: "
@@ -40413,7 +40412,9 @@ class NeuroMLDocument(Standalone):
             )
             self.warn_count += 1
         elif self.warn_count == 10:
-            print_(" - Suppressing further warnings about id not found...")
+            neuroml.loaders.print_(
+                " - Suppressing further warnings about id not found..."
+            )
         return None
 
     def append(self, element):
@@ -42852,8 +42853,6 @@ class ContinuousProjection(BaseProjection):
         """Export to HDF5 file."""
         # print("Exporting ContinuousProjection: "+str(self.id)+" as HDF5")
 
-        import numpy
-
         projGroup = h5file.create_group(h5Group, "projection_" + self.id)
         projGroup._f_setattr("id", self.id)
         projGroup._f_setattr("type", "continuousProjection")
@@ -43261,8 +43260,6 @@ class ElectricalProjection(BaseProjection):
     def exportHdf5(self, h5file, h5Group):
         """Export to HDF5 file."""
         # print("Exporting ElectricalProjection: "+str(self.id)+" as HDF5")
-
-        import numpy
 
         projGroup = h5file.create_group(h5Group, "projection_" + self.id)
         projGroup._f_setattr("id", self.id)
@@ -44497,8 +44494,6 @@ class Projection(BaseProjection):
         """Export to HDF5 file."""
         # print("Exporting Projection: "+str(self.id)+" as HDF5")
 
-        import numpy
-
         projGroup = h5file.create_group(h5Group, "projection_" + self.id)
         projGroup._f_setattr("id", self.id)
         projGroup._f_setattr("type", "projection")
@@ -44514,11 +44509,9 @@ class Projection(BaseProjection):
 
         extra_cols = {}
 
-        from neuroml.utils import has_segment_fraction_info
-
-        include_segment_fraction = has_segment_fraction_info(
+        include_segment_fraction = neuroml.utils.has_segment_fraction_info(
             self.connections
-        ) or has_segment_fraction_info(self.connection_wds)
+        ) or neuroml.utils.has_segment_fraction_info(self.connection_wds)
 
         if include_segment_fraction:
             extra_cols["column_" + str(cols)] = "pre_segment_id"
@@ -46288,8 +46281,6 @@ class Cell(BaseCell):
             obj_.original_tagname_ = "biophysicalProperties"
         super(Cell, self)._buildChildren(child_, node, nodeName_, True)
 
-    from ..neuro_lex_ids import neuro_lex_ids
-
     # Get segment object by its id
     def get_segment(self, segment_id):
         # type: (int) -> Segment
@@ -46556,8 +46547,6 @@ class Cell(BaseCell):
         ord_segs = {}
 
         # sort unord_segs by id to get an ordered list in ord_segs
-        from operator import attrgetter
-
         for key, segs in unord_segs.items():
             if segs is not None:
                 if len(segs) == 1 or len(segs) == 0:
@@ -46582,8 +46571,6 @@ class Cell(BaseCell):
                     existing_ids.append(s.id)
 
         if include_cumulative_lengths or include_path_lengths:
-            import math
-
             cumulative_lengths = {}
             path_lengths_to_proximal = {}
             path_lengths_to_distal = {}
@@ -47064,7 +47051,9 @@ class Cell(BaseCell):
 
         """
         seg_group = self.add_segment_group(
-            group_id=group_id, neuro_lex_id=self.neuro_lex_ids["section"], notes=notes
+            group_id=group_id,
+            neuro_lex_id=neuroml.neuro_lex_ids.neuro_lex_ids["section"],
+            notes=notes,
         )
         return seg_group
 
@@ -47381,13 +47370,13 @@ class Cell(BaseCell):
                 notes = None
 
                 if grp == "soma_group":
-                    neuro_lex_id = self.neuro_lex_ids["soma"]
+                    neuro_lex_id = neuroml.neuro_lex_ids.neuro_lex_ids["soma"]
                     notes = "Default soma segment group for the cell"
                 elif grp == "axon_group":
-                    neuro_lex_id = self.neuro_lex_ids["axon"]
+                    neuro_lex_id = neuroml.neuro_lex_ids.neuro_lex_ids["axon"]
                     notes = "Default axon segment group for the cell"
                 elif grp == "dendrite_group":
-                    neuro_lex_id = self.neuro_lex_ids["dend"]
+                    neuro_lex_id = neuroml.neuro_lex_ids.neuro_lex_ids["dend"]
                     notes = "Default dendrite segment group for the cell"
                 elif grp == "all":
                     neuro_lex_id = None
@@ -47669,9 +47658,6 @@ class Cell(BaseCell):
         :returns: networkx.Graph
 
         """
-        import networkx as nx
-        import math
-
         cell_graph = nx.DiGraph()
 
         # don't recompute if already exists
@@ -47705,8 +47691,6 @@ class Cell(BaseCell):
         :type to: int
         :returns: float
         """
-        import networkx as nx
-
         graph = getattr(self, "cell_graph", None)
         if graph is None:
             graph = self.get_graph()
@@ -47728,8 +47712,6 @@ class Cell(BaseCell):
             The second stores the path to each target node.
 
         """
-        import networkx as nx
-
         graph = getattr(self, "cell_graph", None)
         if graph is None:
             graph = self.get_graph()
@@ -47750,8 +47732,6 @@ class Cell(BaseCell):
             the cut off is as values
 
         """
-        import networkx as nx
-
         graph = getattr(self, "cell_graph", None)
         if graph is None:
             graph = self.get_graph()
@@ -47786,8 +47766,6 @@ class Cell(BaseCell):
         :returns: list of segment ids
 
         """
-        import networkx as nx
-
         graph = getattr(self, "cell_graph", None)
         if graph is None:
             graph = self.get_graph()
@@ -47802,8 +47780,6 @@ class Cell(BaseCell):
         :returns: dict of segment ids and their distances from cell root as values
 
         """
-        import networkx as nx
-
         graph = getattr(self, "cell_graph", None)
         if graph is None:
             graph = self.get_graph()
@@ -47839,7 +47815,7 @@ class Cell(BaseCell):
 
         # get the unbranched segment group that this segment is in
         for sg in self.morphology.segment_groups:
-            if sg.neuro_lex_id == self.neuro_lex_ids["section"]:
+            if sg.neuro_lex_id == neuroml.neuro_lex_ids.neuro_lex_ids["section"]:
                 sg_segs = self.get_all_segments_in_group(sg)
                 if seg_id in sg_segs:
                     in_sg = sg
@@ -47904,8 +47880,6 @@ class Cell(BaseCell):
                 return 0
         except ValueError:
             pass
-
-        import networkx as nx
 
         graph = getattr(self, "cell_graph", None)
         if graph is None:
