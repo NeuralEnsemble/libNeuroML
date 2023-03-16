@@ -157,8 +157,6 @@ volume = MethodSpec(
         :returns: volume of segment
         :rtype: float
         """
-
-        from math import pi
         if self.proximal==None:
             raise Exception('Cannot get volume of segment '+str(self.id)+' using the volume property, since no proximal point is set on it (the proximal point comes from the parent segment). Use the method get_segment_volume(segment_id) on the cell instead.')
 
@@ -195,9 +193,6 @@ surface_area = MethodSpec(
         :returns: surface area of segment
         :rtype: float
         """
-        from math import pi
-        from math import sqrt
-
         if self.proximal==None:
             raise Exception('Cannot get surface area of segment '+str(self.id)+' using the surface_area property, since no proximal point is set on it (the proximal point comes from the parent segment). Use the method get_segment_surface_area(segment_id) on the cell instead.')
 
@@ -760,7 +755,6 @@ nml_doc_summary = MethodSpec(
         NeuroMLDocument: networks, cells, projections, synapses, and so on.
         """
 
-        import inspect
 
         info = "*******************************************************\\n"
         info+="* NeuroMLDocument: "+self.id+"\\n*\\n"
@@ -892,7 +886,6 @@ nml_doc_summary = MethodSpec(
         :returns: Component with given ID or None if no Component with provided ID was found
         """
         if len(id)==0:
-            import inspect
             callframe = inspect.getouterframes(inspect.currentframe(), 2)
             print('Method: '+ callframe[1][3] + ' is asking for an element with no id...')
 
@@ -909,12 +902,11 @@ nml_doc_summary = MethodSpec(
                         return m
                     else:
                         all_ids.append(m.id)
-        from neuroml.loaders import print_
         if self.warn_count<10:
-            print_("Id "+id+" not found in <neuroml> element. All ids: "+str(sorted(all_ids)))
+            neuroml.loaders.print_("Id "+id+" not found in <neuroml> element. All ids: "+str(sorted(all_ids)))
             self.warn_count+=1
         elif self.warn_count==10:
-            print_(" - Suppressing further warnings about id not found...")
+            neuroml.loaders.print_(" - Suppressing further warnings about id not found...")
         return None
 
     def append(self, element):
@@ -955,12 +947,11 @@ network_get_by_id = MethodSpec(
                         return m
                     else:
                         all_ids.append(m.id)
-        from neuroml.loaders import print_
         if self.warn_count<10:
-            print_("Id "+id+" not found in <network> element. All ids: "+str(sorted(all_ids)))
+            neuroml.loaders.print_("Id "+id+" not found in <network> element. All ids: "+str(sorted(all_ids)))
             self.warn_count+=1
         elif self.warn_count==10:
-            print_(" - Suppressing further warnings about id not found...")
+            neuroml.loaders.print_(" - Suppressing further warnings about id not found...")
         return None
 
 
@@ -978,8 +969,6 @@ METHOD_SPECS += (network_get_by_id,)
 cell_methods = MethodSpec(
     name="cell_methods",
     source='''\
-
-    from ..neuro_lex_ids import neuro_lex_ids
 
     # Get segment object by its id
     def get_segment(self, segment_id):
@@ -1236,7 +1225,6 @@ cell_methods = MethodSpec(
         ord_segs = {}
 
         # sort unord_segs by id to get an ordered list in ord_segs
-        from operator import attrgetter
         for key, segs in unord_segs.items():
             if segs is not None:
                 if len(segs)==1 or len(segs)==0:
@@ -1257,8 +1245,6 @@ cell_methods = MethodSpec(
 
 
         if include_cumulative_lengths or include_path_lengths:
-            import math
-
             cumulative_lengths = {}
             path_lengths_to_proximal = {}
             path_lengths_to_distal = {}
@@ -1723,7 +1709,7 @@ cell_methods = MethodSpec(
 
         """
         seg_group = self.add_segment_group(
-            group_id=group_id, neuro_lex_id=self.neuro_lex_ids["section"],
+            group_id=group_id, neuro_lex_id=neuroml.neuro_lex_ids.neuro_lex_ids["section"],
             notes=notes
         )
         return seg_group
@@ -2046,13 +2032,13 @@ cell_methods = MethodSpec(
                 notes = None
 
                 if grp == "soma_group":
-                    neuro_lex_id=self.neuro_lex_ids["soma"]
+                    neuro_lex_id=neuroml.neuro_lex_ids.neuro_lex_ids["soma"]
                     notes="Default soma segment group for the cell"
                 elif grp == "axon_group":
-                    neuro_lex_id=self.neuro_lex_ids["axon"]
+                    neuro_lex_id=neuroml.neuro_lex_ids.neuro_lex_ids["axon"]
                     notes="Default axon segment group for the cell"
                 elif grp == "dendrite_group":
-                    neuro_lex_id=self.neuro_lex_ids["dend"]
+                    neuro_lex_id=neuroml.neuro_lex_ids.neuro_lex_ids["dend"]
                     notes="Default dendrite segment group for the cell"
                 elif grp == "all":
                     neuro_lex_id=None
@@ -2315,8 +2301,6 @@ cell_methods = MethodSpec(
         :returns: networkx.Graph
 
         """
-        import networkx as nx
-        import math
         cell_graph = nx.DiGraph()
 
         # don't recompute if already exists
@@ -2351,7 +2335,6 @@ cell_methods = MethodSpec(
         :type to: int
         :returns: float
         """
-        import networkx as nx
         graph = getattr(self, "cell_graph", None)
         if graph is None:
             graph = self.get_graph()
@@ -2373,7 +2356,6 @@ cell_methods = MethodSpec(
             The second stores the path to each target node.
 
         """
-        import networkx as nx
         graph = getattr(self, "cell_graph", None)
         if graph is None:
             graph = self.get_graph()
@@ -2394,7 +2376,6 @@ cell_methods = MethodSpec(
             the cut off is as values
 
         """
-        import networkx as nx
         graph = getattr(self, "cell_graph", None)
         if graph is None:
             graph = self.get_graph()
@@ -2428,7 +2409,6 @@ cell_methods = MethodSpec(
         :returns: list of segment ids
 
         """
-        import networkx as nx
         graph = getattr(self, "cell_graph", None)
         if graph is None:
             graph = self.get_graph()
@@ -2444,7 +2424,6 @@ cell_methods = MethodSpec(
         :returns: dict of segment ids and their distances from cell root as values
 
         """
-        import networkx as nx
         graph = getattr(self, "cell_graph", None)
         if graph is None:
             graph = self.get_graph()
@@ -2481,7 +2460,7 @@ cell_methods = MethodSpec(
 
         # get the unbranched segment group that this segment is in
         for sg in self.morphology.segment_groups:
-            if sg.neuro_lex_id == self.neuro_lex_ids["section"]:
+            if sg.neuro_lex_id == neuroml.neuro_lex_ids.neuro_lex_ids["section"]:
                 sg_segs = self.get_all_segments_in_group(sg)
                 if seg_id in sg_segs:
                     in_sg = sg
@@ -2548,7 +2527,6 @@ cell_methods = MethodSpec(
         except ValueError:
             pass
 
-        import networkx as nx
         graph = getattr(self, "cell_graph", None)
         if graph is None:
             graph = self.get_graph()
@@ -2570,7 +2548,6 @@ inserts[
     "Network"
 ] = """
 
-        import numpy
 
         netGroup = h5file.create_group(h5Group, 'network')
         netGroup._f_setattr("id", self.id)
@@ -2604,8 +2581,6 @@ inserts[
 inserts[
     "Population"
 ] = """
-
-        import numpy
 
         popGroup = h5file.create_group(h5Group, 'population_'+self.id)
         popGroup._f_setattr("id", self.id)
@@ -2651,8 +2626,6 @@ inserts[
     "Projection"
 ] = """
 
-        import numpy
-
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
         projGroup._f_setattr("type", "projection")
@@ -2668,9 +2641,7 @@ inserts[
 
         extra_cols = {}
 
-        from neuroml.utils import has_segment_fraction_info
-
-        include_segment_fraction = has_segment_fraction_info(self.connections) or has_segment_fraction_info(self.connection_wds)
+        include_segment_fraction = neuroml.utils.has_segment_fraction_info(self.connections) or neuroml.utils.has_segment_fraction_info(self.connection_wds)
 
         if include_segment_fraction:
             extra_cols["column_"+str(cols)] = "pre_segment_id"
@@ -2743,8 +2714,6 @@ inserts[
 inserts[
     "ElectricalProjection"
 ] = """
-
-        import numpy
 
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
@@ -2820,8 +2789,6 @@ inserts[
 inserts[
     "ContinuousProjection"
 ] = """
-
-        import numpy
 
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
@@ -2903,8 +2870,6 @@ inserts[
 inserts[
     "InputList"
 ] = """
-
-        import numpy
 
         ilGroup = h5file.create_group(h5Group, 'inputList_'+self.id)
         ilGroup._f_setattr("id", self.id)
