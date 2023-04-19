@@ -46839,7 +46839,7 @@ class Cell(BaseCell):
             If `use_convention` is `False`, this is unused.
         :type seg_type: str
         :param parent: parent segment object
-        :type parent: neuroml.Segment
+        :type parent: Segment
         :param fraction_along: where the new segment is connected to the parent (0: distal point, 1: proximal point)
         :type fraction_along: float
         :param group_id: id of segment group to add the segment to
