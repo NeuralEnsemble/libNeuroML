@@ -136,10 +136,8 @@ input_list = InputList(id="il", component=pfs.id, populations=from_pop)
 net.input_lists.append(input_list)
 
 for pre_index in range(0, cell_num):
-
     for post_index in range(0, cell_num):
         if pre_index != post_index and random.random() <= prob_connection:
-
             pre_seg_id = 0
             post_seg_id = 0
 
@@ -192,10 +190,8 @@ electricalProjection = ElectricalProjection(
 net.electrical_projections.append(electricalProjection)
 
 for pre_index in range(0, size0):
-
     for post_index in range(0, size1):
         if pre_index != post_index and random.random() <= prob_connection:
-
             pre_seg_id = 0
             post_seg_id = 0
 

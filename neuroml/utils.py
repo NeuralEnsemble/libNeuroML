@@ -92,7 +92,6 @@ def add_all_to_document(
         if isinstance(memb[1], list) and len(memb[1]) > 0 and not memb[0].endswith("_"):
             for entry in memb[1]:
                 if memb[0] != "includes":
-
                     added = False
                     for c in getattr(nml_doc_tgt, memb[0]):
                         if hasattr(c, "id") and c.id == entry.id:

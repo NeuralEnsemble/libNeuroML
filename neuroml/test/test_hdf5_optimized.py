@@ -17,7 +17,6 @@ except ImportError:
 
 
 class TestNeuroMLHDF5Optimized(unittest.TestCase):
-
     base_dir = os.path.dirname(__file__)
     # base_dir = '.'
 
@@ -25,7 +24,6 @@ class TestNeuroMLHDF5Optimized(unittest.TestCase):
         print("Running tests in TestNeuroMLHDF5Optimized")
 
     def test_write_load(self):
-
         # for f in []:
         # for f in ['complete.nml']:
         # for f in ['simplenet.nml','testh5.nml','MediumNet.net.nml','complete.nml']:
@@ -79,6 +77,5 @@ class TestNeuroMLHDF5Optimized(unittest.TestCase):
 
 
 if __name__ == "__main__":
-
     tnxp = TestNeuroMLHDF5Optimized()
     tnxp.test_write_load()

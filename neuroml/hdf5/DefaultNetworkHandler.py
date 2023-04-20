@@ -22,7 +22,6 @@ import logging
 
 
 class DefaultNetworkHandler:
-
     log = logging.getLogger("DefaultNetworkHandler")
 
     isParallel = 0
@@ -101,7 +100,6 @@ class DefaultNetworkHandler:
     #  Should be overridden
     #
     def handle_document_start(self, id, notes):
-
         self.log.debug("Document: %s" % id)
         if notes:
             self.log.debug("  Notes: " + notes)
@@ -110,7 +108,6 @@ class DefaultNetworkHandler:
     #  Should be overridden to create network
     #
     def handle_network(self, network_id, notes, temperature=None):
-
         self.log.debug("Network: %s" % network_id)
         if temperature:
             self.log.debug("  Temperature: " + temperature)
@@ -171,7 +168,6 @@ class DefaultNetworkHandler:
         synapse_obj=None,
         pre_synapse_obj=None,
     ):
-
         synInfo = ""
         if synapse_obj:
             synInfo += " (syn: %s)" % synapse_obj.__class__.__name__
@@ -210,7 +206,6 @@ class DefaultNetworkHandler:
         delay=0,
         weight=1,
     ):
-
         self.print_connection_information(
             projName, id, prePop, postPop, synapseType, preCellId, postCellId, weight
         )
@@ -235,7 +230,6 @@ class DefaultNetworkHandler:
     def finalise_projection(
         self, projName, prePop, postPop, synapse=None, type="projection"
     ):
-
         self.log.debug(
             "Projection: "
             + projName
@@ -252,7 +246,6 @@ class DefaultNetworkHandler:
     def handle_input_list(
         self, inputListId, population_id, component, size, input_comp_obj=None
     ):
-
         self.print_input_information(inputListId, population_id, component, size)
 
         if size < 0:
@@ -267,7 +260,6 @@ class DefaultNetworkHandler:
     def handle_single_input(
         self, inputListId, id, cellId, segId=0, fract=0.5, weight=1
     ):
-
         self.log.debug(
             "Input: %s[%s], cellId: %i, seg: %i, fract: %f, weight: %f"
             % (inputListId, id, cellId, segId, fract, weight)

@@ -21,7 +21,6 @@ import neuroml
 
 
 class NetworkBuilder(DefaultNetworkHandler):
-
     log = logging.getLogger("NetworkBuilder")
 
     populations = {}
@@ -48,7 +47,6 @@ class NetworkBuilder(DefaultNetworkHandler):
     #  Overridden from DefaultNetworkHandler
     #
     def handle_network(self, network_id, notes, temperature=None):
-
         self.network = neuroml.Network(id=network_id)
         self.nml_doc.networks.append(self.network)
         if notes and len(notes) > 0:
@@ -69,7 +67,6 @@ class NetworkBuilder(DefaultNetworkHandler):
         properties={},
         notes=None,
     ):
-
         if component_obj:
             self.nml_doc.append(component_obj)
 
@@ -138,7 +135,6 @@ class NetworkBuilder(DefaultNetworkHandler):
         synapse_obj=None,
         pre_synapse_obj=None,
     ):
-
         if synapse_obj:
             self.nml_doc.append(synapse_obj)
         if pre_synapse_obj:
@@ -247,7 +243,6 @@ class NetworkBuilder(DefaultNetworkHandler):
         delay=0,
         weight=1,
     ):
-
         # self.printConnectionInformation(proj_id, conn_id, prePop, postPop, synapseType, preCellId, postCellId, weight)
 
         pre_cell_path = "../%s/%i/%s" % (
@@ -267,7 +262,6 @@ class NetworkBuilder(DefaultNetworkHandler):
             post_cell_path = "../%s[%i]" % (postPop, postCellId)
 
         if isinstance(self.projections[proj_id], neuroml.ElectricalProjection):
-
             instances = False
             if (
                 len(self.populations[prePop].instances) > 0
@@ -323,7 +317,6 @@ class NetworkBuilder(DefaultNetworkHandler):
                     )
 
         elif isinstance(self.projections[proj_id], neuroml.ContinuousProjection):
-
             instances = False
             if (
                 len(self.populations[prePop].instances) > 0
@@ -387,9 +380,7 @@ class NetworkBuilder(DefaultNetworkHandler):
                     )
 
         else:
-
             if not self.weightDelays[proj_id] and delay == 0 and weight == 1:
-
                 connection = neuroml.Connection(
                     id=conn_id,
                     pre_cell_id=pre_cell_path,
@@ -423,7 +414,6 @@ class NetworkBuilder(DefaultNetworkHandler):
     def handle_input_list(
         self, inputListId, population_id, component, size, input_comp_obj=None
     ):
-
         if input_comp_obj:
             self.nml_doc.append(input_comp_obj)
 
@@ -441,7 +431,6 @@ class NetworkBuilder(DefaultNetworkHandler):
     def handle_single_input(
         self, inputListId, id, cellId, segId=0, fract=0.5, weight=1.0
     ):
-
         input_list = self.input_lists[inputListId]
         target_path = "../%s/%i/%s" % (
             input_list.populations,

@@ -8,14 +8,12 @@ import numpy as np
 
 
 class NetworkContainer(neuroml.Network):
-
     pass
     # def __getattr__(self,name):
     #    print('Requesting in NC: %s'%name)
 
 
 class OptimizedList(object):
-
     array = None
     cursor = 0
 
@@ -39,7 +37,6 @@ class OptimizedList(object):
 
     def _add_index_information(self, hdf5_array):
         for name in self.indices.keys():
-
             n = "column_%i" % self.indices[name]
             # print("Adding attribute to H5 array: %s = %s"%(n,name))
             hdf5_array._f_setattr(n, name)
@@ -70,25 +67,21 @@ class OptimizedList(object):
         return self
 
     def __delitem__(self, index):
-
         raise NotImplementedError(
             "__delitem__ is not implemented (yet) in HDF5 based optimized list"
         )
 
     def __setitem__(self, index, instance):
-
         raise NotImplementedError(
             "__setitem__() is not implemented (yet) in HDF5 based instance list"
         )
 
     def __str__(self):
-
         return "%s (optimized) with %s entries" % (self.__class__.__name__, len(self))
 
 
 class InstanceList(OptimizedList):
     def __getitem__(self, index):
-
         if len(self.array[index]) == 4:
             id = self.array[index][self._get_index_or_add("id", 0)]
             # print('    Getting instance %s in %s (%s)'%(index,self,id))
@@ -106,7 +99,6 @@ class InstanceList(OptimizedList):
         return instance
 
     def append(self, instance):
-
         # print('Adding instance: %s'%instance)
         l = instance.location
         i = np.array([[instance.id, l.x, l.y, l.z]], np.float32)
@@ -116,7 +108,6 @@ class InstanceList(OptimizedList):
             self.array = np.concatenate((self.array, i))
 
     def add_instance(self, id, x, y, z):
-
         i = np.array([[id, x, y, z]], np.float32)
         if len(self) == 0:
             self.array = i
@@ -160,7 +151,6 @@ class PopulationContainer(neuroml.Population):
         # print("PopulationContainer created")
 
     def __str__(self):
-
         return (
             "Population (optimized): "
             + str(self.id)
@@ -181,7 +171,6 @@ class PopulationContainer(neuroml.Population):
             popGroup._f_setattr("property:%s" % p.tag, p)
 
         if len(self.instances) > 0:
-
             popGroup._f_setattr("size", len(self.instances))
             popGroup._f_setattr("type", "populationList")
 
@@ -209,7 +198,6 @@ class ProjectionContainer(neuroml.Projection):
         connections=None,
         connection_wds=None,
     ):
-
         super(self.__class__, self).__init__(
             neuro_lex_id=neuro_lex_id,
             id=id,
@@ -272,7 +260,6 @@ class ElectricalProjectionContainer(neuroml.ElectricalProjection):
         electrical_connections=None,
         electrical_connection_instances=None,
     ):
-
         super(self.__class__, self).__init__(
             neuro_lex_id=neuro_lex_id,
             id=id,
@@ -322,12 +309,10 @@ class ElectricalProjectionContainer(neuroml.ElectricalProjection):
 
 
 class ConnectionList(OptimizedList):
-
     presynaptic_population = None
     postsynaptic_population = None
 
     def __getitem__(self, index):
-
         id_index = self._get_index_or_add("id", -1)
         if id_index > 0:
             id = int(self.array[index][id_index])
@@ -357,7 +342,6 @@ class ConnectionList(OptimizedList):
         return input
 
     def append(self, conn):
-
         i = np.array(
             [[conn.id, conn.get_pre_cell_id(), conn.get_post_cell_id()]], np.float32
         )
@@ -387,7 +371,6 @@ class InputListContainer(neuroml.InputList):
         # print("InputListContainer %s created"%self.id)
 
     def __str__(self):
-
         return (
             "Input list (optimized): "
             + self.id
@@ -416,11 +399,9 @@ class InputListContainer(neuroml.InputList):
 
 
 class InputsList(OptimizedList):
-
     target_population = None
 
     def __getitem__(self, index):
-
         # print('    Getting instance %s'%(index))
         # print self.array
 
@@ -446,7 +427,6 @@ class InputsList(OptimizedList):
         return input
 
     def append(self, input):
-
         # print('Adding input: %s'%input)
 
         i = np.array(
@@ -468,7 +448,6 @@ class InputsList(OptimizedList):
 
 
 if __name__ == "__main__":
-
     from neuroml.loaders import read_neuroml2_file
 
     file_name = "../examples/test_files/MediumNet.net.nml"

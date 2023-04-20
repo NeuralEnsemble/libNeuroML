@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2021 NeuroML contributors
+# Copyright 2023 NeuroML contributors
 # File : regenerate-nml.sh
 # Regenerate nml.py from the current schema version
 
