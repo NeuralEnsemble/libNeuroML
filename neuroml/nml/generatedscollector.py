@@ -22,14 +22,12 @@ class GdsCollector(object):
             self.messages = messages
 
     def add_message(self, msg):
-        caller = inspect.stack()[1].frame.f_locals['self']
+        caller = inspect.stack()[1].frame.f_locals["self"]
         try:
             caller_id_str = f" ({caller.id})"
         except AttributeError:
             caller_id_str = ""
-        self.messages.append(
-            f"{caller.__class__.__name__}{caller_id_str}: {msg}"
-        )
+        self.messages.append(f"{caller.__class__.__name__}{caller_id_str}: {msg}")
 
     def get_messages(self):
         return self.messages

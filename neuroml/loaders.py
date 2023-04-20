@@ -19,7 +19,6 @@ def print_(text, verbose=True):
         prefix = "libNeuroML >>> "
         # if not isinstance(text, str): text = text.decode('ascii')
         if verbose:
-
             print("%s%s" % (prefix, text.replace("\n", "\n" + prefix)))
 
 
@@ -39,7 +38,6 @@ class NeuroMLLoader(object):
     @classmethod
     def __nml2_doc(cls, file_name):
         try:
-
             if supressGeneratedsWarnings:
                 warnings.simplefilter("ignore")
             nml2_doc = nmlparse(file_name, silence=True)
@@ -68,14 +66,12 @@ class NeuroMLHdf5Loader(object):
         from neuroml.hdf5.NeuroMLHdf5Parser import NeuroMLHdf5Parser
 
         if optimized:
-
             currParser = NeuroMLHdf5Parser(None, optimized=True)
 
             currParser.parse(file_name)
 
             return currParser.get_nml_doc()
         else:
-
             from neuroml.hdf5.NetworkBuilder import NetworkBuilder
 
             nmlHandler = NetworkBuilder()
@@ -100,7 +96,6 @@ class SWCLoader(object):
 
     @classmethod
     def load_swc_single(cls, src, name=None):
-
         warnings.warn(
             "This method/class is deprecated and will be removed in a future release. Please see https://docs.neuroml.org/Userdocs/ImportingMorphologyFiles.html",
             FutureWarning,
@@ -162,7 +157,6 @@ class SWCLoader(object):
 class ArrayMorphLoader(object):
     @classmethod
     def __extract_morphology(cls, node):
-
         from neuroml import arraymorph
 
         loaded_morphology = arraymorph.ArrayMorphology()
@@ -181,7 +175,6 @@ class ArrayMorphLoader(object):
         import tables
 
         with tables.open_file(filepath, mode="r") as file:
-
             document = neuroml.NeuroMLDocument()
 
             for node in file.root:
@@ -344,7 +337,6 @@ def _read_neuroml2(
         warnings.resetwarnings()
 
     if include_includes:
-
         print_method(
             "Including the included files (included already: %s)" % already_included,
             verbose,

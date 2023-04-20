@@ -62,7 +62,6 @@ net.populations.append(pop1)
 prob_connection = 0.5
 
 for pre in range(0, size0):
-
     pg = PulseGenerator(
         id="pulseGen_%i" % pre,
         delay="0ms",

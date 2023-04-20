@@ -25,12 +25,12 @@ ignorelist = [
 
 
 def pred(c):
-    return (inspect.isclass(c) and (c.__name__ not in ignorelist))
+    return inspect.isclass(c) and (c.__name__ not in ignorelist)
 
 
 classes = inspect.getmembers(nml, pred)
 
-with open("sed-script.txt", 'w') as f:
+with open("sed-script.txt", "w") as f:
     for aclass, atype in classes:
         # print(f"Processing {aclass}")
         member_types = {}
@@ -52,10 +52,10 @@ with open("sed-script.txt", 'w') as f:
                 if amember.get_container() == 0:
                     print(
                         f"""/{regexstart}/,/{regexend}/ s/\\(def __init__.* {dname}\\)=\\([[:alnum:]\\._ ']*\\),/\\1: "a {dtype} ({dreq})" = \\2,/""",
-                        file=f
+                        file=f,
                     )
                 else:
                     print(
                         f"""/{regexstart}/,/{regexend}/ s/\\(def __init__.* {dname}\\)=\\([[:alnum:]\\._ ']*\\),/\\1: "list of {dtype}(s) ({dreq})" = \\2,/""",
-                        file=f
+                        file=f,
                     )

@@ -25,13 +25,11 @@ except ImportError:
 
 class TestCell(unittest.TestCase):
     def test_cell_methods(self):
-
         cells = ["Purk2M9s", "pyr_4_sym.cell"]
 
         cells = ["pyr_4_sym"]
 
         for cell_name in cells:
-
             local_path = "../examples/test_files/%s.cell.nml" % cell_name
             if os.path.isfile(local_path):
                 test_file_path = local_path
@@ -63,7 +61,6 @@ class TestCell(unittest.TestCase):
                 ["dendrite_group"],
                 ["all"],
             ]:
-
                 print("-----------------------------")
                 print("   Testing %s..." % grp)
 

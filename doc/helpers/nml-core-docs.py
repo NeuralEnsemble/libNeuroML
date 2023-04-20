@@ -17,32 +17,44 @@ classes = {}
 files = {
     "generatedssupersuper.py": [],
     "generatedscollector.py": [],
-    "nml.py": ['GDSParseError', 'MixedContainer', 'MemberSpec_',
-               'BlockTypes', 'Metric', 'PlasticityTypes', 'ZeroOrOne', 'allowedSpaces',
-               'channelTypes', 'gateTypes', 'networkTypes',
-               'populationTypes', '_FixedOffsetTZ', 'GdsCollector_',
-               'GeneratedsSuperSuper']
+    "nml.py": [
+        "GDSParseError",
+        "MixedContainer",
+        "MemberSpec_",
+        "BlockTypes",
+        "Metric",
+        "PlasticityTypes",
+        "ZeroOrOne",
+        "allowedSpaces",
+        "channelTypes",
+        "gateTypes",
+        "networkTypes",
+        "populationTypes",
+        "_FixedOffsetTZ",
+        "GdsCollector_",
+        "GeneratedsSuperSuper",
+    ],
 }
 
 for f, excluded_classes in files.items():
     classlist = []
-    with open("../../neuroml/nml/" + f, 'r') as file:
+    with open("../../neuroml/nml/" + f, "r") as file:
         lines = file.readlines()
         for line in lines:
             line = line.strip()
             if line.startswith("class "):
                 # get the class signature
-                aclass = line[len("class "):]
+                aclass = line[len("class ") :]
                 # for classes that are of form class A():
-                aclass = aclass.split('(')[0]
+                aclass = aclass.split("(")[0]
                 # for classes that are of form class A:
-                aclass = aclass.split(':')[0]
+                aclass = aclass.split(":")[0]
                 if aclass not in excluded_classes:
                     classlist.append(aclass)
     classlist.sort()
     classes[f] = classlist
 
-with open("../userdocs/coreclasses_list.txt", 'w') as fwrite:
+with open("../userdocs/coreclasses_list.txt", "w") as fwrite:
     print(".. Generated using nml-core-docs.py", file=fwrite)
     for module, clist in classes.items():
         f = module.split(".")[0]
@@ -58,7 +70,10 @@ with open("../userdocs/coreclasses_list.txt", 'w') as fwrite:
                        :show-inheritance:
 
                     """.format(
-                        aclass, "#" * len(aclass), f, aclass,
+                        aclass,
+                        "#" * len(aclass),
+                        f,
+                        aclass,
                     )
                 )
             else:
@@ -74,7 +89,10 @@ with open("../userdocs/coreclasses_list.txt", 'w') as fwrite:
                        :inherited-members:
 
                     """.format(
-                        aclass, "#" * len(aclass), f, aclass,
+                        aclass,
+                        "#" * len(aclass),
+                        f,
+                        aclass,
                     )
                 )
             print(towrite, file=fwrite)
