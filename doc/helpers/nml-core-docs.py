@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """
-Enter one line description here.
+Generate sphinx sources for the libNeuroML nml.py classes
 
-File:
+File: helpers/nml-core-docs.py
 
-Copyright 2021 Ankur Sinha
-Author: Ankur Sinha <sanjay DOT ankur AT gmail DOT com>
+Copyright 2023 NeuroML authors
 """
 
 

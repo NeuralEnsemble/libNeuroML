@@ -4,7 +4,7 @@ Test nml.py functions/methods.
 
 File: neuroml/test/test_nml.py
 
-Copyright 2021 NeuroML contributors
+Copyright 2023 NeuroML contributors
 """
 
 try:

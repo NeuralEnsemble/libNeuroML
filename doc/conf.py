@@ -55,7 +55,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "libNeuroML"
-copyright = "2021, libNeuroML authors and contributors"
+copyright = "2023, libNeuroML authors and contributors"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
