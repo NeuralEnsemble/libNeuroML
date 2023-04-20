@@ -74,7 +74,6 @@ def pluralize(noun):
 
 
 def _node_to_python(node):
-
     pluralize_flag = "maxOccurs" in node.attrib
 
     for attribute in node.attrib:

@@ -30,7 +30,6 @@ dend_num = 10
 
 
 def generateRandomMorphology():
-
     morphology = Morphology()
 
     p = Point3DWithDiam(x=0, y=0, z=0, diameter=soma_diam)
@@ -41,7 +40,6 @@ def generateRandomMorphology():
     parent_seg = soma
 
     for dend_id in range(0, dend_num):
-
         p = Point3DWithDiam(x=d.x, y=d.y, z=d.z, diameter=dend_diam)
         d = Point3DWithDiam(x=p.x, y=p.y + dend_len, z=p.z, diameter=dend_diam)
         dend = Segment(proximal=p, distal=d, name="Dend_%i" % dend_id, id=1 + dend_id)
@@ -56,7 +54,6 @@ def generateRandomMorphology():
 
 
 def run():
-
     cell_num = 10
     x_size = 500
     y_size = 500
@@ -74,7 +71,6 @@ def run():
     # conn_count = 0
 
     for cell_id in range(0, cell_num):
-
         cell = Cell(id="Cell_%i" % cell_id)
 
         cell.morphology = generateRandomMorphology()
@@ -97,7 +93,6 @@ def run():
         prob_connection = 0.5
         for post in range(0, cell_num):
             if post is not cell_id and random() <= prob_connection:
-
                 from_pop = "Pop_%i" % cell_id
                 to_pop = "Pop_%i" % post
 
