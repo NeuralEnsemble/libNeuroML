@@ -98,7 +98,6 @@ class TestObjectBuiltMorphology(unittest.TestCase):
 
 class TestArrayMorphology(unittest.TestCase):
     def setUp(self):
-
         num_segments = int(100)
         num_vertices = num_segments + 1
 
@@ -303,9 +302,7 @@ class TestArrayMorphology(unittest.TestCase):
             )
             vertices = [[0, 0, 0], [1, 1]]
             connectivity = [-1, 0]
-            self.assertRaises(
-                Exception, am.ArrayMorphology, vertices, connectivity
-            )
+            self.assertRaises(Exception, am.ArrayMorphology, vertices, connectivity)
 
         vertices = [[0, 0, 0], [1, 1, 1]]
         connectivity = [-1, 0, 0]
@@ -360,7 +357,6 @@ class TestArrayMorphology(unittest.TestCase):
         self.assertEqual(segment, segment_again)
 
     def test_segmentlist_setter(self):
-
         p = neuroml.Point3DWithDiam(x=0.9, y=0.0, z=0.0, diameter=0.1)
 
         d = neuroml.Point3DWithDiam(x=0.0, y=0.0, z=0.0, diameter=0.1)
@@ -372,7 +368,6 @@ class TestArrayMorphology(unittest.TestCase):
         self.assertEqual(self.optimized_morphology.segments[2], new_segment)
 
     def test_segmentlist_setter_by_inference(self):
-
         p = neuroml.Point3DWithDiam(x=0.9, y=0.0, z=0.0, diameter=0.1)
 
         d = neuroml.Point3DWithDiam(x=0.0, y=0.0, z=0.0, diameter=0.1)

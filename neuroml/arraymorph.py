@@ -38,7 +38,6 @@ class ArrayMorphology(neuroml.Morphology):
         physical_mask=None,
         fractions_along=None,
     ):
-
         super(ArrayMorphology, self).__init__()
 
         self.connectivity = np.array(connectivity)
@@ -172,7 +171,6 @@ class ArrayMorphology(neuroml.Morphology):
         pass
 
     def to_neuroml_morphology(self, id=""):
-
         morphology = neuroml.Morphology()
         morphology.id = id
 
@@ -255,7 +253,6 @@ class SegmentList(object):
         return self
 
     def __getitem__(self, segment_index):
-
         if segment_index in self.instantiated_segments:
             neuroml_segment = self.instantiated_segments[segment_index]
         else:

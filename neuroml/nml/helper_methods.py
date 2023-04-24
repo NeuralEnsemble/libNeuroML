@@ -1,6 +1,7 @@
 import sys
 import re
 
+
 #
 # You must include the following class definition at the top of
 #   your method specification file.
@@ -1526,8 +1527,8 @@ cell_methods = MethodSpec(
 
             If `use_convention` is `False`, this is unused.
         :type seg_type: str
-        :param parent: parent segment
-        :type parent: SegmentParent
+        :param parent: parent segment object
+        :type parent: Segment
         :param fraction_along: where the new segment is connected to the parent (0: distal point, 1: proximal point)
         :type fraction_along: float
         :param group_id: id of segment group to add the segment to

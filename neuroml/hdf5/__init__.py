@@ -1,6 +1,4 @@
-import neuroml
 import numpy
-import sys
 
 
 def get_str_attribute_group(group, name):

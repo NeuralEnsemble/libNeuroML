@@ -39,7 +39,6 @@ import os.path
 
 
 class NeuroMLHdf5Parser:
-
     log = logging.getLogger("NeuroMLHdf5Parser")
 
     currPopulation = ""
@@ -113,7 +112,6 @@ class NeuroMLHdf5Parser:
                 )
 
     def parse(self, filename):
-
         h5file = tables.open_file(filename, mode="r")
 
         self.log.info(
@@ -146,14 +144,12 @@ class NeuroMLHdf5Parser:
         h5file.close()
 
     def get_nml_doc(self):
-
         if not self.optimized:
             nml2_doc = nmlHandler.get_nml_doc()
             if self.nml_doc_extra_elements:
                 add_all_to_document(self.nml_doc_extra_elements, nml2_doc)
             return nml2_doc
         else:
-
             nml_doc = neuroml.NeuroMLDocument(id=self.doc_id, notes=self.doc_notes)
             if self.nml_doc_extra_elements:
                 add_all_to_document(self.nml_doc_extra_elements, nml_doc)
@@ -173,14 +169,12 @@ class NeuroMLHdf5Parser:
 
         # Ensure populations parsed first!
         for node in g:
-
             if node._c_classid == "GROUP" and node._v_name.count("population_") >= 1:
                 self.log.debug("Sub node: " + str(node) + ", class: " + node._c_classid)
                 self.parse_group(node)
 
         # Non populations!
         for node in g:
-
             if node._c_classid == "GROUP" and node._v_name.count("population_") == 0:
                 self.log.debug(
                     "Sub node (ng): " + str(node) + ", class: " + node._c_classid
@@ -196,11 +190,9 @@ class NeuroMLHdf5Parser:
         self.end_group(g)
 
     def _extract_named_indices(self, d):
-
         named_indices = {}
 
         for attrName in d.attrs._v_attrnames:
-
             if "column_" in attrName:
                 val = d.attrs.__getattr__(attrName)
                 if isinstance(val, str):
@@ -228,7 +220,6 @@ class NeuroMLHdf5Parser:
             )
 
             if not self.optimized:
-
                 indexId = -1
                 indexX = -1
                 indexY = -1
@@ -266,7 +257,6 @@ class NeuroMLHdf5Parser:
                         indexY = 3
 
                 for i in range(0, d.shape[0]):
-
                     self.netHandler.handle_location(
                         int(d[i, indexId]) if indexId >= 0 else i,
                         self.currPopulation,
@@ -276,7 +266,6 @@ class NeuroMLHdf5Parser:
                         float(d[i, indexZ]),
                     )
             else:
-
                 # TODO: a better way to convert???
                 a = np.array(d)
                 self.currOptPopulation.instances = InstanceList(
@@ -294,7 +283,6 @@ class NeuroMLHdf5Parser:
             )
 
             if not self.optimized:
-
                 indexId = -1
                 indexPreCellId = -1
                 indexPreSegId = -1
@@ -449,7 +437,6 @@ class NeuroMLHdf5Parser:
             )
 
             if not self.optimized:
-
                 indexId = -1
                 indexTargetCellId = -1
                 indexSegId = -1
@@ -479,7 +466,6 @@ class NeuroMLHdf5Parser:
                         indexWeight = int(attrName[len("column_") :])
 
                 for i in range(0, d.shape[0]):
-
                     if indexId >= 0:
                         id_ = int(d[i, indexId])
                     else:
@@ -510,7 +496,6 @@ class NeuroMLHdf5Parser:
                 self.netHandler.finalise_input_source(self.currInputList)
 
             else:
-
                 # TODO: a better way to convert???
                 a = np.array(d)
                 self.currOptInputList.input = InputsList(
@@ -518,7 +503,6 @@ class NeuroMLHdf5Parser:
                 )
 
     def _get_node_size(self, g, name):
-
         size = -1
         # Peek ahead for size...
         for node in g:
@@ -534,7 +518,6 @@ class NeuroMLHdf5Parser:
         self.log.debug("Going into a group: " + g._v_name)
 
         if g._v_name == "neuroml":
-
             if not self.optimized:
                 self.netHandler.handle_document_start(
                     get_str_attribute_group(g, "id"),
@@ -545,7 +528,6 @@ class NeuroMLHdf5Parser:
                 self.doc_notes = get_str_attribute_group(g, "notes")
 
         if g._v_name == "network":
-
             if not self.optimized:
                 self.netHandler.handle_network(
                     get_str_attribute_group(g, "id"),
@@ -620,7 +602,6 @@ class NeuroMLHdf5Parser:
                 self.optimizedNetwork.populations.append(self.currOptPopulation)
 
         if g._v_name.count("projection_") >= 1:
-
             self.currentProjectionId = get_str_attribute_group(g, "id")
             pt = get_str_attribute_group(g, "type")
             self.currentProjectionType = pt if pt else "projection"
@@ -650,7 +631,6 @@ class NeuroMLHdf5Parser:
                     )
                 )
             else:
-
                 if self.currentProjectionType == "electricalProjection":
                     raise Exception(
                         "Cannot yet export electricalProjections to optimized HDF5 format"
@@ -666,7 +646,6 @@ class NeuroMLHdf5Parser:
                     )
 
                 elif self.currentProjectionType == "continuousProjection":
-
                     raise Exception(
                         "Cannot yet export continuousProjections to optimized HDF5 format"
                     )
@@ -739,7 +718,6 @@ class NeuroMLHdf5Parser:
             self.currentComponent = ""
 
         if g._v_name.count("projection_") >= 1:
-
             if not self.optimized:
                 self.netHandler.finalise_projection(
                     self.currentProjectionId,
@@ -761,7 +739,6 @@ class NeuroMLHdf5Parser:
 
 
 if __name__ == "__main__":
-
     file_name = "../examples/test_files/complete.nml.h5"
     # file_name = '../../../neuroConstruct/osb/showcase/NetPyNEShowcase/NeuroML2/scaling/Balanced.net.nml.h5'
 

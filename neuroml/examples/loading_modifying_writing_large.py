@@ -21,7 +21,6 @@ cells = []
 numCells = 1
 
 for n in range(numCells):
-
     doc = loaders.NeuroMLLoader.load(fn)
     cells.append(doc.cells[0])
     print("Loaded morphology file from: " + fn)

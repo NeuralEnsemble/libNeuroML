@@ -101,7 +101,6 @@ class TestHelperProperties(unittest.TestCase):
         self.assertAlmostEqual(seg.surface_area, 4.19011944, places=7)
 
     def test_volume0(self):
-
         diam = 1.0
         len = 1.0
         d = Point3DWithDiam(x=0, y=0, z=0, diameter=diam)
@@ -111,7 +110,6 @@ class TestHelperProperties(unittest.TestCase):
         self.assertAlmostEqual(seg.volume, math.pi * (diam / 2) ** 2 * len, places=7)
 
     def test_volume1(self):
-
         diam = 1.0
         len = 1.0
         d = Point3DWithDiam(x=0, y=0, z=0, diameter=diam)
@@ -128,7 +126,6 @@ class TestHelperProperties(unittest.TestCase):
         self.assertAlmostEqual(seg.volume, 0.7932855820702964, places=7)
 
     def test_spherical(self):
-
         diam = 1.0
         d = Point3DWithDiam(x=0, y=0, z=0, diameter=diam)
         p = Point3DWithDiam(x=0, y=0, z=0, diameter=diam)
@@ -139,7 +136,6 @@ class TestHelperProperties(unittest.TestCase):
         self.assertEqual(seg.surface_area, math.pi)
 
     def test_cell_with_segs(self):
-
         cell = Cell(id="cell0")
 
         diam = 1.0
@@ -229,7 +225,6 @@ class TestAttachedSegments(unittest.TestCase):
 
 
 if __name__ == "__main__":
-
     ta = TestHelperProperties()
 
     ta.test_length0()
