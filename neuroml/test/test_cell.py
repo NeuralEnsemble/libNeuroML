@@ -185,6 +185,239 @@ class TestCell(unittest.TestCase):
             )
             self.assertEqual(expected[sg.id], len(path_lengths_to_distal[sg.id]))
 
+    def test_adjacency_list(self):
+        """test get_segment_adjacency_list method
+        """
+        cells = ["Purk2M9s", "pyr_4_sym.cell"]
+
+        cells = ["pyr_4_sym"]
+
+        for cell_name in cells:
+
+            local_path = "../examples/test_files/%s.cell.nml" % cell_name
+            if os.path.isfile(local_path):
+                test_file_path = local_path
+            else:
+                root_dir = os.path.dirname(neuroml.__file__)
+                test_file_path = os.path.join(
+                    root_dir, "examples/test_files/%s.cell.nml" % cell_name
+                )
+            print("test file path is: " + test_file_path)
+
+            doc = loaders.NeuroMLLoader.load(test_file_path)
+            cell = doc.cells[0]  # type: neuroml.Cell
+            self.assertEqual(cell.id, cell_name.split(".")[0])
+
+            adlist = cell.get_segment_adjacency_list()
+            self.assertIn(1, adlist[0])
+            self.assertIn(7, adlist[6])
+            self.assertIn(5, adlist[1])
+
+    def test_cell_graph(self):
+        """test get_graph method
+        """
+        cells = ["pyr_4_sym"]
+
+        for cell_name in cells:
+
+            local_path = "../examples/test_files/%s.cell.nml" % cell_name
+            if os.path.isfile(local_path):
+                test_file_path = local_path
+            else:
+                root_dir = os.path.dirname(neuroml.__file__)
+                test_file_path = os.path.join(
+                    root_dir, "examples/test_files/%s.cell.nml" % cell_name
+                )
+            print("test file path is: " + test_file_path)
+
+            doc = loaders.NeuroMLLoader.load(test_file_path)
+            acell = doc.cells[0]  # type: neuroml.Cell
+            self.assertEqual(acell.id, cell_name.split(".")[0])
+
+            graph = acell.get_graph()
+            print(graph)
+            import networkx as nx
+            nx.nx_agraph.write_dot(graph, "test_graph.dot")
+
+    def test_get_distance(self):
+        """test distance method
+        """
+        cells = ["Purk2M9s", "pyr_4_sym.cell"]
+
+        cells = ["pyr_4_sym"]
+
+        for cell_name in cells:
+
+            local_path = "../examples/test_files/%s.cell.nml" % cell_name
+            if os.path.isfile(local_path):
+                test_file_path = local_path
+            else:
+                root_dir = os.path.dirname(neuroml.__file__)
+                test_file_path = os.path.join(
+                    root_dir, "examples/test_files/%s.cell.nml" % cell_name
+                )
+            print("test file path is: " + test_file_path)
+
+            doc = loaders.NeuroMLLoader.load(test_file_path)
+            acell = doc.cells[0]  # type: neuroml.Cell
+            self.assertEqual(acell.id, cell_name.split(".")[0])
+
+            distance1 = acell.get_distance(dest=1)
+            distance2 = acell.get_distance(dest=2)
+            distance3 = acell.get_distance(dest=3)
+            distance4 = acell.get_distance(dest=4)
+            print(distance1, distance2, distance3, distance4)
+
+            all_distances = acell.get_all_distances_from_segment()
+            print(all_distances)
+
+    def test_get_all_segments_at_distance(self):
+        """test distance method
+        """
+        cells = ["pyr_4_sym"]
+
+        for cell_name in cells:
+
+            local_path = "../examples/test_files/%s.cell.nml" % cell_name
+            if os.path.isfile(local_path):
+                test_file_path = local_path
+            else:
+                root_dir = os.path.dirname(neuroml.__file__)
+                test_file_path = os.path.join(
+                    root_dir, "examples/test_files/%s.cell.nml" % cell_name
+                )
+            print("test file path is: " + test_file_path)
+
+            doc = loaders.NeuroMLLoader.load(test_file_path)
+            acell = doc.cells[0]  # type: neuroml.Cell
+            self.assertEqual(acell.id, cell_name.split(".")[0])
+
+            distance1 = acell.get_distance(dest=1)
+            distance2 = acell.get_distance(dest=2)
+            distance3 = acell.get_distance(dest=3)
+            distance4 = acell.get_distance(dest=4)
+            print(distance1, distance2, distance3, distance4)
+
+            adict = acell.get_segments_at_distance(distance=500)
+            self.assertIn(3, list(adict.keys()))
+
+    def test_get_branching_points(self):
+        """test get_branching_points
+        """
+        cells = ["pyr_4_sym"]
+
+        for cell_name in cells:
+
+            local_path = "../examples/test_files/%s.cell.nml" % cell_name
+            if os.path.isfile(local_path):
+                test_file_path = local_path
+            else:
+                root_dir = os.path.dirname(neuroml.__file__)
+                test_file_path = os.path.join(
+                    root_dir, "examples/test_files/%s.cell.nml" % cell_name
+                )
+            print("test file path is: " + test_file_path)
+
+            doc = loaders.NeuroMLLoader.load(test_file_path)
+            acell = doc.cells[0]  # type: neuroml.Cell
+            self.assertEqual(acell.id, cell_name.split(".")[0])
+
+            res = acell.get_branching_points()
+            self.assertIn(0, res)
+            self.assertIn(1, res)
+            self.assertIn(6, res)
+            print(res)
+
+    def test_get_extremeties(self):
+        """test get_extremeties
+        """
+        cells = ["pyr_4_sym"]
+
+        for cell_name in cells:
+
+            local_path = "../examples/test_files/%s.cell.nml" % cell_name
+            if os.path.isfile(local_path):
+                test_file_path = local_path
+            else:
+                root_dir = os.path.dirname(neuroml.__file__)
+                test_file_path = os.path.join(
+                    root_dir, "examples/test_files/%s.cell.nml" % cell_name
+                )
+            print("test file path is: " + test_file_path)
+
+            doc = loaders.NeuroMLLoader.load(test_file_path)
+            acell = doc.cells[0]  # type: neuroml.Cell
+            self.assertEqual(acell.id, cell_name.split(".")[0])
+
+            res = acell.get_extremeties()
+            keys = list(res.keys())
+            self.assertIn(4, keys)
+            self.assertIn(5, keys)
+            self.assertIn(7, keys)
+            self.assertIn(8, keys)
+            print(res)
+
+    def test_locate_segment(self):
+        """test locate_segment method
+        """
+        cells = ["pyr_4_sym"]
+
+        for cell_name in cells:
+
+            local_path = "../examples/test_files/%s.cell.nml" % cell_name
+            if os.path.isfile(local_path):
+                test_file_path = local_path
+            else:
+                root_dir = os.path.dirname(neuroml.__file__)
+                test_file_path = os.path.join(
+                    root_dir, "examples/test_files/%s.cell.nml" % cell_name
+                )
+            print("test file path is: " + test_file_path)
+
+            doc = loaders.NeuroMLLoader.load(test_file_path)
+            acell = doc.cells[0]  # type: neuroml.Cell
+            self.assertEqual(acell.id, cell_name.split(".")[0])
+
+            res = acell.get_segment_location_info(4)
+            self.assertEqual("apical4", res['in_unbranched_segment_group'])
+            self.assertEqual(0, res['distance_from_segment_group_root'])
+
+    def test_get_morphology_root(self):
+        """Test get_morphology_root method """
+        cells = ["pyr_4_sym"]
+
+        for cell_name in cells:
+
+            local_path = "../examples/test_files/%s.cell.nml" % cell_name
+            if os.path.isfile(local_path):
+                test_file_path = local_path
+            else:
+                root_dir = os.path.dirname(neuroml.__file__)
+                test_file_path = os.path.join(
+                    root_dir, "examples/test_files/%s.cell.nml" % cell_name
+                )
+            print("test file path is: " + test_file_path)
+
+            doc = loaders.NeuroMLLoader.load(test_file_path)
+            acell = doc.cells[0]  # type: neuroml.Cell
+
+            root = acell.get_morphology_root()
+            self.assertEqual(0, root)
+
+            # change the id and confirm if we get the new one
+            root_seg = acell.get_segment(0)
+            new_id = 99999
+            root_seg.id = new_id
+            # also update all descendents to ensure cell remains valid
+            for seg in acell.morphology.segments:
+                par = seg.parent
+                if par is not None:
+                    if par.segments == 0:
+                        par.segments = new_id
+
+            new_root = acell.get_morphology_root()
+            self.assertEqual(new_id, new_root)
+
     def runTest(self):
         print("Running tests in TestCell")
 
