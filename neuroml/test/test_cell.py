@@ -236,8 +236,6 @@ class TestCell(unittest.TestCase):
 
             graph = acell.get_graph()
             print(graph)
-            import networkx as nx
-            nx.nx_agraph.write_dot(graph, "test_graph.dot")
 
     def test_get_distance(self):
         """test distance method
