@@ -63247,8 +63247,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
     :type e_rev_E: none
     :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
-    :p
-    aram tau_refrac:
+    :param tau_refrac:
     :type tau_refrac: none
     :param v_thresh:
     :type v_thresh: none
