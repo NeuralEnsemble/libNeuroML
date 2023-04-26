@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Mar 16 11:31:59 2023 by generateDS.py version 2.41.2.
-# Python 3.11.2 (main, Feb  8 2023, 00:00:00) [GCC 13.0.1 20230208 (Red Hat 13.0.1-0)]
+# Generated Wed Apr 26 10:50:48 2023 by generateDS.py version 2.41.3.
+# Python 3.10.11 (main, Apr  5 2023, 00:00:00) [GCC 13.0.1 20230404 (Red Hat 13.0.1-0)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -16,7 +16,7 @@
 #   NeuroML_v2.3.xsd
 #
 # Command line:
-#   /home/asinha/.local/share/virtualenvs/neuroml-dev/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" --custom-imports-template="gds_imports-template.py" NeuroML_v2.3.xsd
+#   /home/asinha/.local/share/virtualenvs/neuroml-310/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" --custom-imports-template="gds_imports-template.py" NeuroML_v2.3.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -10386,7 +10386,7 @@ class Network(Standalone):
                     else:
                         all_ids.append(m.id)
         if self.warn_count < 10:
-            neuroml.loaders.print_(
+            neuroml.print_(
                 "Id "
                 + id
                 + " not found in <network> element. All ids: "
@@ -10394,9 +10394,7 @@ class Network(Standalone):
             )
             self.warn_count += 1
         elif self.warn_count == 10:
-            neuroml.loaders.print_(
-                " - Suppressing further warnings about id not found..."
-            )
+            neuroml.print_(" - Suppressing further warnings about id not found...")
         return None
 
     def __str__(self):
@@ -40404,7 +40402,7 @@ class NeuroMLDocument(Standalone):
                     else:
                         all_ids.append(m.id)
         if self.warn_count < 10:
-            neuroml.loaders.print_(
+            neuroml.print_(
                 "Id "
                 + id
                 + " not found in <neuroml> element. All ids: "
@@ -40412,9 +40410,7 @@ class NeuroMLDocument(Standalone):
             )
             self.warn_count += 1
         elif self.warn_count == 10:
-            neuroml.loaders.print_(
-                " - Suppressing further warnings about id not found..."
-            )
+            neuroml.print_(" - Suppressing further warnings about id not found...")
         return None
 
     def append(self, element):
@@ -63251,7 +63247,8 @@ class IF_cond_exp(basePyNNIaFCondCell):
     :type e_rev_E: none
     :param e_rev_I: This parameter is never used in the NeuroML2 description of this cell! Any synapse producing a current can be placed on this cell
     :type e_rev_I: none
-    :param tau_refrac:
+    :p
+    aram tau_refrac:
     :type tau_refrac: none
     :param v_thresh:
     :type v_thresh: none

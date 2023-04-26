@@ -904,10 +904,10 @@ nml_doc_summary = MethodSpec(
                     else:
                         all_ids.append(m.id)
         if self.warn_count<10:
-            neuroml.loaders.print_("Id "+id+" not found in <neuroml> element. All ids: "+str(sorted(all_ids)))
+            neuroml.print_("Id "+id+" not found in <neuroml> element. All ids: "+str(sorted(all_ids)))
             self.warn_count+=1
         elif self.warn_count==10:
-            neuroml.loaders.print_(" - Suppressing further warnings about id not found...")
+            neuroml.print_(" - Suppressing further warnings about id not found...")
         return None
 
     def append(self, element):
@@ -949,10 +949,10 @@ network_get_by_id = MethodSpec(
                     else:
                         all_ids.append(m.id)
         if self.warn_count<10:
-            neuroml.loaders.print_("Id "+id+" not found in <network> element. All ids: "+str(sorted(all_ids)))
+            neuroml.print_("Id "+id+" not found in <network> element. All ids: "+str(sorted(all_ids)))
             self.warn_count+=1
         elif self.warn_count==10:
-            neuroml.loaders.print_(" - Suppressing further warnings about id not found...")
+            neuroml.print_(" - Suppressing further warnings about id not found...")
         return None
 
 
