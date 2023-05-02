@@ -158,8 +158,6 @@ volume = MethodSpec(
         :returns: volume of segment
         :rtype: float
         """
-
-        from math import pi
         if self.proximal==None:
             raise Exception('Cannot get volume of segment '+str(self.id)+' using the volume property, since no proximal point is set on it (the proximal point comes from the parent segment). Use the method get_segment_volume(segment_id) on the cell instead.')
 
@@ -196,9 +194,6 @@ surface_area = MethodSpec(
         :returns: surface area of segment
         :rtype: float
         """
-        from math import pi
-        from math import sqrt
-
         if self.proximal==None:
             raise Exception('Cannot get surface area of segment '+str(self.id)+' using the surface_area property, since no proximal point is set on it (the proximal point comes from the parent segment). Use the method get_segment_surface_area(segment_id) on the cell instead.')
 
@@ -761,7 +756,6 @@ nml_doc_summary = MethodSpec(
         NeuroMLDocument: networks, cells, projections, synapses, and so on.
         """
 
-        import inspect
 
         info = "*******************************************************\\n"
         info+="* NeuroMLDocument: "+self.id+"\\n*\\n"
@@ -893,7 +887,6 @@ nml_doc_summary = MethodSpec(
         :returns: Component with given ID or None if no Component with provided ID was found
         """
         if len(id)==0:
-            import inspect
             callframe = inspect.getouterframes(inspect.currentframe(), 2)
             print('Method: '+ callframe[1][3] + ' is asking for an element with no id...')
 
@@ -910,12 +903,11 @@ nml_doc_summary = MethodSpec(
                         return m
                     else:
                         all_ids.append(m.id)
-        from neuroml.loaders import print_
         if self.warn_count<10:
-            print_("Id "+id+" not found in <neuroml> element. All ids: "+str(sorted(all_ids)))
+            neuroml.print_("Id "+id+" not found in <neuroml> element. All ids: "+str(sorted(all_ids)))
             self.warn_count+=1
         elif self.warn_count==10:
-            print_(" - Suppressing further warnings about id not found...")
+            neuroml.print_(" - Suppressing further warnings about id not found...")
         return None
 
     def append(self, element):
@@ -956,12 +948,11 @@ network_get_by_id = MethodSpec(
                         return m
                     else:
                         all_ids.append(m.id)
-        from neuroml.loaders import print_
         if self.warn_count<10:
-            print_("Id "+id+" not found in <network> element. All ids: "+str(sorted(all_ids)))
+            neuroml.print_("Id "+id+" not found in <network> element. All ids: "+str(sorted(all_ids)))
             self.warn_count+=1
         elif self.warn_count==10:
-            print_(" - Suppressing further warnings about id not found...")
+            neuroml.print_(" - Suppressing further warnings about id not found...")
         return None
 
 
@@ -979,8 +970,6 @@ METHOD_SPECS += (network_get_by_id,)
 cell_methods = MethodSpec(
     name="cell_methods",
     source='''\
-
-    from ..neuro_lex_ids import neuro_lex_ids
 
     # Get segment object by its id
     def get_segment(self, segment_id):
@@ -1237,7 +1226,6 @@ cell_methods = MethodSpec(
         ord_segs = {}
 
         # sort unord_segs by id to get an ordered list in ord_segs
-        from operator import attrgetter
         for key, segs in unord_segs.items():
             if segs is not None:
                 if len(segs)==1 or len(segs)==0:
@@ -1258,8 +1246,6 @@ cell_methods = MethodSpec(
 
 
         if include_cumulative_lengths or include_path_lengths:
-            import math
-
             cumulative_lengths = {}
             path_lengths_to_proximal = {}
             path_lengths_to_distal = {}
@@ -1282,14 +1268,7 @@ cell_methods = MethodSpec(
                         while par_seg_element!=None:
 
                             par_seg = segments[par_seg_element.segments]
-                            d = par_seg.distal
-                            p = par_seg.proximal
-
-                            if not p:
-                                par_seg_parent_seg = segments[par_seg.parent.segments]
-                                p = par_seg_parent_seg.distal
-
-                            par_length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                            par_length = self.get_segment_length(par_seg.id)
 
                             fract = float(last_seg.parent.fraction_along)
                             path_lengths_to_proximal[key][seg.id] += par_length*fract
@@ -1731,7 +1710,7 @@ cell_methods = MethodSpec(
 
         """
         seg_group = self.add_segment_group(
-            group_id=group_id, neuro_lex_id=self.neuro_lex_ids["section"],
+            group_id=group_id, neuro_lex_id=neuroml.neuro_lex_ids.neuro_lex_ids["section"],
             notes=notes
         )
         return seg_group
@@ -2054,13 +2033,13 @@ cell_methods = MethodSpec(
                 notes = None
 
                 if grp == "soma_group":
-                    neuro_lex_id=self.neuro_lex_ids["soma"]
+                    neuro_lex_id=neuroml.neuro_lex_ids.neuro_lex_ids["soma"]
                     notes="Default soma segment group for the cell"
                 elif grp == "axon_group":
-                    neuro_lex_id=self.neuro_lex_ids["axon"]
+                    neuro_lex_id=neuroml.neuro_lex_ids.neuro_lex_ids["axon"]
                     notes="Default axon segment group for the cell"
                 elif grp == "dendrite_group":
-                    neuro_lex_id=self.neuro_lex_ids["dend"]
+                    neuro_lex_id=neuroml.neuro_lex_ids.neuro_lex_ids["dend"]
                     notes="Default dendrite segment group for the cell"
                 elif grp == "all":
                     neuro_lex_id=None
@@ -2207,8 +2186,11 @@ cell_methods = MethodSpec(
         :rtype: neuroml.Cell
 
         """
+        # don't recompute if already exists
         # get morphology tree
-        morph_tree = self.get_segment_adjacency_list()
+        morph_tree = getattr(self, "adjacency_list", None)
+        if morph_tree is None:
+            morph_tree = self.get_segment_adjacency_list()
 
         # initialise root segment and first segment group
         seg = self.get_segment(root_segment_id)
@@ -2280,8 +2262,16 @@ cell_methods = MethodSpec(
         Segment without children (leaf segments) are not included as parents in the
         adjacency list.
 
-        :returns: dict with parent segments as keys and their children as values
-        :rtype: dict
+        This method also stores the computed adjacency list in
+        `self.adjacency_list` for future use by other methods.
+
+        `self.adjacency_list` is populated each time this method is run, to
+        ensure that users can regenerate it after making modifications to the
+        cell morphology. If the morphology has not changed, one only needs to
+        populate it once and then re-use it as required.
+
+        :returns: dict with parent segment ids as keys and ids of their children as values
+        :rtype: dict[int, list[int]]
 
         """
         # create data structure holding list of children for each segment
@@ -2295,7 +2285,256 @@ cell_methods = MethodSpec(
             except AttributeError:
                 print(f"Warning: Segment: {segment} has no parent")
 
+        self.adjacency_list = child_lists
         return child_lists
+
+    def get_graph(self):
+        """Get a networkx DiGraph of the morphology of the cell with distances
+        between the proximal point of a parent and the point where a child
+        connects to it as the weights of the edges of the graph.
+
+        Please see https://networkx.org/documentation/stable/reference
+        for information on networkx routines that can be used on this graph.
+
+        This method also stores the graph in the `self.cell_graph` attribute
+        for future use.
+
+        :returns: networkx.Graph
+
+        """
+        cell_graph = nx.DiGraph()
+
+        # don't recompute if already exists
+        adlist = getattr(self, "adjacency_list", None)
+        if adlist is None:
+            adlist = self.get_segment_adjacency_list()
+
+        for parid, childrenids in adlist.items():
+
+            par_length = self.get_segment_length(parid)
+
+            for cid in childrenids:
+                child = self.get_segment(cid)
+
+                fract = float(child.parent.fraction_along)
+                len_to_proximal = par_length*fract
+
+                cell_graph.add_edge(parid, cid, weight=len_to_proximal)
+
+        self.cell_graph = cell_graph
+        return cell_graph
+
+    def get_distance(self, dest, source = 0):
+        """Get path length between between two segments on a cell.
+
+        Uses `networkx.dijkstra_path_length` to compute the shortest
+        path between source and dest
+
+        :param from: id of segment to get distance from
+        :type from: int
+        :param to: id of segment to get distance to
+        :type to: int
+        :returns: float
+        """
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        return nx.dijkstra_path_length(graph, source, dest)
+
+    def get_all_distances_from_segment(self, seg_id = 0):
+        """Get distances of all segments from the segment with id seg_id.
+
+        Useful to get distances of segments from the soma.
+
+        Uses networkx.single_source_dijkstra on the cell graph, without a
+        target.
+
+        :param seg_id: id of segment to get distances from
+        :type seg_id: int
+        :returns: pair of dictionaries for distance, path
+            The return value is a tuple of two dictionaries keyed by target
+            nodes. The first dictionary stores distance to each target node.
+            The second stores the path to each target node.
+
+        """
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        return(nx.single_source_dijkstra(graph, source=seg_id))
+
+    def get_segments_at_distance(self, distance, src_seg = 0):
+        """Get all segments at distance from the provided `src_seg`.
+
+        For each segment, it returns the fraction along the segment that the
+        provided distance is at. For example, if segment N is 500 units long,
+        and the `distance` cut-off is at 200, the fraction along is: 200/500.
+
+        :param src_seg: id of segment to get distances from
+        :type src_seg: int
+        :param distance: distance to get segments at
+        :type distance: float
+        :returns: dict with segment ids as keys, and fraction along at which
+            the cut off is as values
+
+        """
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        # returns all segments that are less than `distance` away.
+        (target_dict, path_dict) = (nx.single_source_dijkstra(graph, source=src_seg, cutoff=distance))
+
+        segs_frac_alongs = {}
+
+        for tgt, dist in target_dict.items():
+            try:
+                frac_along = ((distance - dist) / self.get_segment_length(tgt))
+            except ZeroDivisionError:
+                # ignore zero length segments
+                print(f"Warning: encountered zero length segment: {tgt}")
+                continue
+
+            if frac_along > 1.0:
+                # not in this segment
+                continue
+            else:
+                segs_frac_alongs[tgt] = frac_along
+
+        return segs_frac_alongs
+
+
+    def get_branching_points(self):
+        """Get segments where the cell morphology branches.
+
+        That is, the out-degree of the segment is > 1
+
+        :returns: list of segment ids
+
+        """
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+
+        segs = [n for (n, d) in graph.out_degree if d > 1]
+        return segs
+
+
+    def get_extremeties(self):
+        """Get segments that are at the ends/tips of the neuronal morphology,
+        with their distances from the soma.
+
+        :returns: dict of segment ids and their distances from cell root as values
+
+        """
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        segs = [n for (n, d) in graph.out_degree if d == 0]
+
+        res = {}
+        for s in segs:
+            res[s] = self.get_distance(s)
+        return res
+
+
+    def get_segment_location_info(self, seg_id):
+        """Get location information about a particular segment.
+
+        :param seg_id: id of segment to get information for
+        :type seg_id: int
+        :returns: a dictionary with various metrics about the segment
+
+            - length of segment
+            - distance from cell root
+            - distance from nearest branching point
+            - name of unbranched segment group segment belongs to (if any)
+            - id of root segment of the unbranched segment group
+            - distance from the segment group root segment
+
+        """
+        soma_id = self.get_morphology_root()
+        distance_from_soma = self.get_distance(seg_id, source=soma_id)
+        in_sg = None
+        sg_segs = None
+        sg_root = None
+        distance_from_sg_root = None
+        distance_from_bpt = None
+
+        # get the unbranched segment group that this segment is in
+        for sg in self.morphology.segment_groups:
+            if sg.neuro_lex_id == neuroml.neuro_lex_ids.neuro_lex_ids["section"]:
+                sg_segs = self.get_all_segments_in_group(sg)
+                if seg_id in sg_segs:
+                    in_sg = sg
+
+                    # break out of loop
+                    break
+
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+
+        # find first ancestral branching point
+        # (a segment with more than one child)
+        current = seg_id
+        sg_root = current
+        parent = list(graph.predecessors(current))[0]
+        children = list(graph.successors(parent))
+
+        while len(children) == 1:
+            # the root of the segment group may not be at a
+            # branching point: an unbranched cell branch can consist of
+            # multiple unbranched segment groups
+            if in_sg is not None:
+                if current in sg_segs:
+                    sg_root = current
+
+            current = parent
+            parent = list(graph.predecessors(current))[0]
+            children = list(graph.successors(parent))
+
+        distance_from_bpt = self.get_distance(seg_id, source=current)
+
+        res = {}
+        res['id'] = seg_id
+        res['length'] = self.get_segment_length(seg_id)
+        res['distance_from_cell_root'] = distance_from_soma
+        res['distance_from_nearest_branching_point'] = distance_from_bpt
+
+        # at unbranched segment root
+        if in_sg is not None:
+            res['in_unbranched_segment_group'] = in_sg.id
+            res['unbranched_segment_group_root'] = sg_root
+            distance_from_sg_root = self.get_distance(seg_id, source=sg_root)
+            res['distance_from_segment_group_root'] = distance_from_sg_root
+
+        return res
+
+
+    def get_morphology_root(self):
+        """Return the root of the complete cell morphology.
+
+        This is usually the first segment of the soma, and there should only be
+        one such segment.
+
+        :returns: id of the root segment
+
+        """
+        # check if convention was followed and segment id 0 is root (has no
+        # parents)
+        try:
+            root_seg = self.get_segment(0)
+            if root_seg.parent is None:
+                return 0
+        except ValueError:
+            pass
+
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        segs = [n for (n, d) in graph.in_degree if d == 0]
+        # there should only be one segment with 0 indegree
+        assert len(segs) == 1
+        return segs[0]
 
     ''',
     class_names=("Cell"),
@@ -2310,7 +2549,6 @@ inserts[
     "Network"
 ] = """
 
-        import numpy
 
         netGroup = h5file.create_group(h5Group, 'network')
         netGroup._f_setattr("id", self.id)
@@ -2344,8 +2582,6 @@ inserts[
 inserts[
     "Population"
 ] = """
-
-        import numpy
 
         popGroup = h5file.create_group(h5Group, 'population_'+self.id)
         popGroup._f_setattr("id", self.id)
@@ -2391,8 +2627,6 @@ inserts[
     "Projection"
 ] = """
 
-        import numpy
-
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
         projGroup._f_setattr("type", "projection")
@@ -2408,9 +2642,7 @@ inserts[
 
         extra_cols = {}
 
-        from neuroml.utils import has_segment_fraction_info
-
-        include_segment_fraction = has_segment_fraction_info(self.connections) or has_segment_fraction_info(self.connection_wds)
+        include_segment_fraction = neuroml.utils.has_segment_fraction_info(self.connections) or neuroml.utils.has_segment_fraction_info(self.connection_wds)
 
         if include_segment_fraction:
             extra_cols["column_"+str(cols)] = "pre_segment_id"
@@ -2483,8 +2715,6 @@ inserts[
 inserts[
     "ElectricalProjection"
 ] = """
-
-        import numpy
 
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
@@ -2560,8 +2790,6 @@ inserts[
 inserts[
     "ContinuousProjection"
 ] = """
-
-        import numpy
 
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
@@ -2643,8 +2871,6 @@ inserts[
 inserts[
     "InputList"
 ] = """
-
-        import numpy
 
         ilGroup = h5file.create_group(h5Group, 'inputList_'+self.id)
         ilGroup._f_setattr("id", self.id)

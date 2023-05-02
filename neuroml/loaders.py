@@ -14,14 +14,6 @@ from typing import Callable, Optional
 supressGeneratedsWarnings = True
 
 
-def print_(text, verbose=True):
-    if verbose:
-        prefix = "libNeuroML >>> "
-        # if not isinstance(text, str): text = text.decode('ascii')
-        if verbose:
-            print("%s%s" % (prefix, text.replace("\n", "\n" + prefix)))
-
-
 class NeuroMLLoader(object):
     @classmethod
     def load(cls, src):
@@ -194,7 +186,7 @@ def read_neuroml2_file(
     include_includes: bool = False,
     verbose: bool = False,
     already_included: list = None,
-    print_method: Callable = print_,
+    print_method: Callable = neuroml.print_,
     optimized: bool = False,
 ) -> neuroml.nml.nml.NeuroMLDocument:
     """
@@ -239,7 +231,7 @@ def read_neuroml2_string(
     include_includes: bool = False,
     verbose: bool = False,
     already_included: list = [],
-    print_method: Callable = print_,
+    print_method: Callable = neuroml.print_,
     optimized: bool = False,
     base_path: Optional[str] = None,
 ) -> neuroml.nml.nml.NeuroMLDocument:
@@ -282,7 +274,7 @@ def _read_neuroml2(
     include_includes: bool = False,
     verbose: bool = False,
     already_included: list = [],
-    print_method: Callable = print_,
+    print_method: Callable = neuroml.print_,
     optimized: bool = False,
     base_path: Optional[str] = None,
 ) -> neuroml.nml.nml.NeuroMLDocument:

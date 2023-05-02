@@ -452,6 +452,7 @@ class GeneratedsSuperSuper(object):
             "_FixedOffsetTZ",
             "GdsCollector_",
             "GeneratedsSuperSuper",
+            "attrgetter",
         ]
 
         # do not show parameters here, they are indicated by members below

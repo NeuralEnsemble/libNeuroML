@@ -4,4 +4,5 @@ cython
 flake8
 pytest
 numpy
+networkx
 black ; python_version >= '3.0'
