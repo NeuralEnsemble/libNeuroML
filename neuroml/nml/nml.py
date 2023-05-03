@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Apr 26 10:50:48 2023 by generateDS.py version 2.41.3.
+# Generated Wed May  3 13:39:08 2023 by generateDS.py version 2.41.3.
 # Python 3.10.11 (main, Apr  5 2023, 00:00:00) [GCC 13.0.1 20230404 (Red Hat 13.0.1-0)]
 #
 # Command line options:
@@ -1185,6 +1185,11 @@ class PlasticityTypes(str, Enum):
     TSODYKS_MARKRAM_DEP_FAC_MECHANISM = "tsodyksMarkramDepFacMechanism"
 
 
+class TrueOrFalse(str, Enum):
+    TRUE = "true"
+    FALSE = "false"
+
+
 class ZeroOrOne(str, Enum):
     """ZeroOrOne -- Value which is either 0 or 1"""
 
@@ -1266,6 +1271,19 @@ class ComponentType(GeneratedsSuper):
             None,
         ),
         MemberSpec_(
+            "DerivedParameter",
+            "DerivedParameter",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "DerivedParameter",
+                "type": "DerivedParameter",
+            },
+            None,
+        ),
+        MemberSpec_(
             "Constant",
             "Constant",
             1,
@@ -1341,6 +1359,7 @@ class ComponentType(GeneratedsSuper):
         description: "a string (optional)" = None,
         Property: "list of Property(s) (optional)" = None,
         Parameter: "list of Parameter(s) (optional)" = None,
+        DerivedParameter: "list of DerivedParameter(s) (optional)" = None,
         Constant: "list of Constant(s) (optional)" = None,
         Exposure: "list of Exposure(s) (optional)" = None,
         Requirement: "list of Requirement(s) (optional)" = None,
@@ -1370,6 +1389,11 @@ class ComponentType(GeneratedsSuper):
         else:
             self.Parameter = Parameter
         self.Parameter_nsprefix_ = None
+        if DerivedParameter is None:
+            self.DerivedParameter = []
+        else:
+            self.DerivedParameter = DerivedParameter
+        self.DerivedParameter_nsprefix_ = None
         if Constant is None:
             self.Constant = []
         else:
@@ -1412,6 +1436,7 @@ class ComponentType(GeneratedsSuper):
         if (
             self.Property
             or self.Parameter
+            or self.DerivedParameter
             or self.Constant
             or self.Exposure
             or self.Requirement
@@ -1557,6 +1582,20 @@ class ComponentType(GeneratedsSuper):
                 name_="Parameter",
                 pretty_print=pretty_print,
             )
+        for DerivedParameter_ in self.DerivedParameter:
+            namespaceprefix_ = (
+                self.DerivedParameter_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.DerivedParameter_nsprefix_)
+                else ""
+            )
+            DerivedParameter_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="DerivedParameter",
+                pretty_print=pretty_print,
+            )
         for Constant_ in self.Constant:
             namespaceprefix_ = (
                 self.Constant_nsprefix_ + ":"
@@ -1649,6 +1688,9 @@ class ComponentType(GeneratedsSuper):
             self.Parameter, "Parameter", min_occurs=0, max_occurs=9999999
         )
         self.gds_check_cardinality_(
+            self.DerivedParameter, "DerivedParameter", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
             self.Constant, "Constant", min_occurs=0, max_occurs=9999999
         )
         self.gds_check_cardinality_(
@@ -1670,6 +1712,8 @@ class ComponentType(GeneratedsSuper):
             for item in self.Property:
                 item.validate_(gds_collector, recursive=True)
             for item in self.Parameter:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.DerivedParameter:
                 item.validate_(gds_collector, recursive=True)
             for item in self.Constant:
                 item.validate_(gds_collector, recursive=True)
@@ -1722,6 +1766,11 @@ class ComponentType(GeneratedsSuper):
             obj_.build(child_, gds_collector_=gds_collector_)
             self.Parameter.append(obj_)
             obj_.original_tagname_ = "Parameter"
+        elif nodeName_ == "DerivedParameter":
+            obj_ = DerivedParameter.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.DerivedParameter.append(obj_)
+            obj_.original_tagname_ = "DerivedParameter"
         elif nodeName_ == "Constant":
             obj_ = Constant.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
@@ -1996,6 +2045,53 @@ class Dynamics(GeneratedsSuper):
             },
             None,
         ),
+        MemberSpec_(
+            "OnStart",
+            "OnStart",
+            0,
+            1,
+            {"maxOccurs": "1", "minOccurs": "0", "name": "OnStart", "type": "OnStart"},
+            None,
+        ),
+        MemberSpec_(
+            "OnEvent",
+            "OnEvent",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "OnEvent",
+                "type": "OnEvent",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "OnCondition",
+            "OnCondition",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "OnCondition",
+                "type": "OnCondition",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "Regime",
+            "Regime",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "Regime",
+                "type": "Regime",
+            },
+            None,
+        ),
     ]
     subclass = None
     superclass = None
@@ -2006,6 +2102,10 @@ class Dynamics(GeneratedsSuper):
         DerivedVariable: "list of DerivedVariable(s) (optional)" = None,
         ConditionalDerivedVariable: "list of ConditionalDerivedVariable(s) (optional)" = None,
         TimeDerivative: "list of TimeDerivative(s) (optional)" = None,
+        OnStart: "a OnStart (optional)" = None,
+        OnEvent: "list of OnEvent(s) (optional)" = None,
+        OnCondition: "list of OnCondition(s) (optional)" = None,
+        Regime: "list of Regime(s) (optional)" = None,
         gds_collector_=None,
         **kwargs_,
     ):
@@ -2034,6 +2134,23 @@ class Dynamics(GeneratedsSuper):
         else:
             self.TimeDerivative = TimeDerivative
         self.TimeDerivative_nsprefix_ = None
+        self.OnStart = OnStart
+        self.OnStart_nsprefix_ = None
+        if OnEvent is None:
+            self.OnEvent = []
+        else:
+            self.OnEvent = OnEvent
+        self.OnEvent_nsprefix_ = None
+        if OnCondition is None:
+            self.OnCondition = []
+        else:
+            self.OnCondition = OnCondition
+        self.OnCondition_nsprefix_ = None
+        if Regime is None:
+            self.Regime = []
+        else:
+            self.Regime = Regime
+        self.Regime_nsprefix_ = None
 
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -2053,6 +2170,10 @@ class Dynamics(GeneratedsSuper):
             or self.DerivedVariable
             or self.ConditionalDerivedVariable
             or self.TimeDerivative
+            or self.OnStart is not None
+            or self.OnEvent
+            or self.OnCondition
+            or self.Regime
         ):
             return True
         else:
@@ -2181,6 +2302,62 @@ class Dynamics(GeneratedsSuper):
                 name_="TimeDerivative",
                 pretty_print=pretty_print,
             )
+        if self.OnStart is not None:
+            namespaceprefix_ = (
+                self.OnStart_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.OnStart_nsprefix_)
+                else ""
+            )
+            self.OnStart.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="OnStart",
+                pretty_print=pretty_print,
+            )
+        for OnEvent_ in self.OnEvent:
+            namespaceprefix_ = (
+                self.OnEvent_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.OnEvent_nsprefix_)
+                else ""
+            )
+            OnEvent_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="OnEvent",
+                pretty_print=pretty_print,
+            )
+        for OnCondition_ in self.OnCondition:
+            namespaceprefix_ = (
+                self.OnCondition_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.OnCondition_nsprefix_)
+                else ""
+            )
+            OnCondition_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="OnCondition",
+                pretty_print=pretty_print,
+            )
+        for Regime_ in self.Regime:
+            namespaceprefix_ = (
+                self.Regime_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.Regime_nsprefix_)
+                else ""
+            )
+            Regime_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="Regime",
+                pretty_print=pretty_print,
+            )
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -2203,6 +2380,16 @@ class Dynamics(GeneratedsSuper):
         self.gds_check_cardinality_(
             self.TimeDerivative, "TimeDerivative", min_occurs=0, max_occurs=9999999
         )
+        self.gds_check_cardinality_(self.OnStart, "OnStart", min_occurs=0, max_occurs=1)
+        self.gds_check_cardinality_(
+            self.OnEvent, "OnEvent", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.OnCondition, "OnCondition", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.Regime, "Regime", min_occurs=0, max_occurs=9999999
+        )
         if recursive:
             for item in self.StateVariable:
                 item.validate_(gds_collector, recursive=True)
@@ -2211,6 +2398,14 @@ class Dynamics(GeneratedsSuper):
             for item in self.ConditionalDerivedVariable:
                 item.validate_(gds_collector, recursive=True)
             for item in self.TimeDerivative:
+                item.validate_(gds_collector, recursive=True)
+            if self.OnStart is not None:
+                self.OnStart.validate_(gds_collector, recursive=True)
+            for item in self.OnEvent:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.OnCondition:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.Regime:
                 item.validate_(gds_collector, recursive=True)
         return message_count == len(self.gds_collector_.get_messages())
 
@@ -2252,6 +2447,26 @@ class Dynamics(GeneratedsSuper):
             obj_.build(child_, gds_collector_=gds_collector_)
             self.TimeDerivative.append(obj_)
             obj_.original_tagname_ = "TimeDerivative"
+        elif nodeName_ == "OnStart":
+            obj_ = OnStart.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.OnStart = obj_
+            obj_.original_tagname_ = "OnStart"
+        elif nodeName_ == "OnEvent":
+            obj_ = OnEvent.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.OnEvent.append(obj_)
+            obj_.original_tagname_ = "OnEvent"
+        elif nodeName_ == "OnCondition":
+            obj_ = OnCondition.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.OnCondition.append(obj_)
+            obj_.original_tagname_ = "OnCondition"
+        elif nodeName_ == "Regime":
+            obj_ = Regime.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.Regime.append(obj_)
+            obj_.original_tagname_ = "Regime"
 
 
 # end class Dynamics
@@ -2620,6 +2835,1709 @@ class TimeDerivative(GeneratedsSuper):
 
 
 # end class TimeDerivative
+
+
+class OnStart(GeneratedsSuper):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "StateAssignment",
+            "StateAssignment",
+            1,
+            0,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "1",
+                "name": "StateAssignment",
+                "type": "StateAssignment",
+            },
+            None,
+        ),
+    ]
+    subclass = None
+    superclass = None
+
+    def __init__(
+        self,
+        StateAssignment: "list of StateAssignment(s) (required)" = None,
+        gds_collector_=None,
+        **kwargs_,
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        if StateAssignment is None:
+            self.StateAssignment = []
+        else:
+            self.StateAssignment = StateAssignment
+        self.StateAssignment_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, OnStart)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if OnStart.subclass:
+            return OnStart.subclass(*args_, **kwargs_)
+        else:
+            return OnStart(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if self.StateAssignment:
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="OnStart",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("OnStart")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "OnStart":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="OnStart"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="OnStart",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="OnStart"
+    ):
+        pass
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="OnStart",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        for StateAssignment_ in self.StateAssignment:
+            namespaceprefix_ = (
+                self.StateAssignment_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.StateAssignment_nsprefix_)
+                else ""
+            )
+            StateAssignment_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="StateAssignment",
+                pretty_print=pretty_print,
+            )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.StateAssignment, "StateAssignment", min_occurs=1, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.StateAssignment:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        pass
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        if nodeName_ == "StateAssignment":
+            obj_ = StateAssignment.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.StateAssignment.append(obj_)
+            obj_.original_tagname_ = "StateAssignment"
+
+
+# end class OnStart
+
+
+class StateAssignment(GeneratedsSuper):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "variable", "xs:string", 0, 0, {"use": "required", "name": "variable"}
+        ),
+        MemberSpec_("value", "xs:string", 0, 0, {"use": "required", "name": "value"}),
+    ]
+    subclass = None
+    superclass = None
+
+    def __init__(
+        self,
+        variable: "a string (required)" = None,
+        value: "a string (required)" = None,
+        gds_collector_=None,
+        **kwargs_,
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        self.variable = _cast(None, variable)
+        self.variable_nsprefix_ = None
+        self.value = _cast(None, value)
+        self.value_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, StateAssignment)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if StateAssignment.subclass:
+            return StateAssignment.subclass(*args_, **kwargs_)
+        else:
+            return StateAssignment(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if ():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="StateAssignment",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("StateAssignment")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "StateAssignment":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="StateAssignment"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="StateAssignment",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="StateAssignment",
+    ):
+        if self.variable is not None and "variable" not in already_processed:
+            already_processed.add("variable")
+            outfile.write(
+                " variable=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.variable), input_name="variable"
+                        )
+                    ),
+                )
+            )
+        if self.value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            outfile.write(
+                " value=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.value), input_name="value"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="StateAssignment",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(
+            self.gds_validate_string, self.variable, "variable"
+        )
+        self.gds_check_cardinality_(self.variable, "variable", required=True)
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.value, "value")
+        self.gds_check_cardinality_(self.value, "value", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("variable", node)
+        if value is not None and "variable" not in already_processed:
+            already_processed.add("variable")
+            self.variable = value
+        value = find_attr_value_("value", node)
+        if value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            self.value = value
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        pass
+
+
+# end class StateAssignment
+
+
+class OnEvent(GeneratedsSuper):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("port", "xs:string", 0, 0, {"use": "required", "name": "port"}),
+        MemberSpec_(
+            "StateAssignment",
+            "StateAssignment",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "StateAssignment",
+                "type": "StateAssignment",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "EventOut",
+            "EventOut",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "EventOut",
+                "type": "EventOut",
+            },
+            None,
+        ),
+    ]
+    subclass = None
+    superclass = None
+
+    def __init__(
+        self,
+        port: "a string (required)" = None,
+        StateAssignment: "list of StateAssignment(s) (optional)" = None,
+        EventOut: "list of EventOut(s) (optional)" = None,
+        gds_collector_=None,
+        **kwargs_,
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        self.port = _cast(None, port)
+        self.port_nsprefix_ = None
+        if StateAssignment is None:
+            self.StateAssignment = []
+        else:
+            self.StateAssignment = StateAssignment
+        self.StateAssignment_nsprefix_ = None
+        if EventOut is None:
+            self.EventOut = []
+        else:
+            self.EventOut = EventOut
+        self.EventOut_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, OnEvent)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if OnEvent.subclass:
+            return OnEvent.subclass(*args_, **kwargs_)
+        else:
+            return OnEvent(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if self.StateAssignment or self.EventOut:
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="OnEvent",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("OnEvent")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "OnEvent":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="OnEvent"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="OnEvent",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="OnEvent"
+    ):
+        if self.port is not None and "port" not in already_processed:
+            already_processed.add("port")
+            outfile.write(
+                " port=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.port), input_name="port"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="OnEvent",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        for StateAssignment_ in self.StateAssignment:
+            namespaceprefix_ = (
+                self.StateAssignment_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.StateAssignment_nsprefix_)
+                else ""
+            )
+            StateAssignment_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="StateAssignment",
+                pretty_print=pretty_print,
+            )
+        for EventOut_ in self.EventOut:
+            namespaceprefix_ = (
+                self.EventOut_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.EventOut_nsprefix_)
+                else ""
+            )
+            EventOut_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="EventOut",
+                pretty_print=pretty_print,
+            )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.port, "port")
+        self.gds_check_cardinality_(self.port, "port", required=True)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.StateAssignment, "StateAssignment", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.EventOut, "EventOut", min_occurs=0, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.StateAssignment:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.EventOut:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("port", node)
+        if value is not None and "port" not in already_processed:
+            already_processed.add("port")
+            self.port = value
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        if nodeName_ == "StateAssignment":
+            obj_ = StateAssignment.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.StateAssignment.append(obj_)
+            obj_.original_tagname_ = "StateAssignment"
+        elif nodeName_ == "EventOut":
+            obj_ = EventOut.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.EventOut.append(obj_)
+            obj_.original_tagname_ = "EventOut"
+
+
+# end class OnEvent
+
+
+class EventOut(GeneratedsSuper):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("port", "xs:string", 0, 0, {"use": "required", "name": "port"}),
+    ]
+    subclass = None
+    superclass = None
+
+    def __init__(
+        self, port: "a string (required)" = None, gds_collector_=None, **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        self.port = _cast(None, port)
+        self.port_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, EventOut)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if EventOut.subclass:
+            return EventOut.subclass(*args_, **kwargs_)
+        else:
+            return EventOut(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if ():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="EventOut",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("EventOut")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "EventOut":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="EventOut"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="EventOut",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="EventOut"
+    ):
+        if self.port is not None and "port" not in already_processed:
+            already_processed.add("port")
+            outfile.write(
+                " port=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.port), input_name="port"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="EventOut",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.port, "port")
+        self.gds_check_cardinality_(self.port, "port", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("port", node)
+        if value is not None and "port" not in already_processed:
+            already_processed.add("port")
+            self.port = value
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        pass
+
+
+# end class EventOut
+
+
+class OnCondition(GeneratedsSuper):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("test", "xs:string", 0, 0, {"use": "required", "name": "test"}),
+        MemberSpec_(
+            "StateAssignment",
+            "StateAssignment",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "StateAssignment",
+                "type": "StateAssignment",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "EventOut",
+            "EventOut",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "EventOut",
+                "type": "EventOut",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "Transition",
+            "Transition",
+            0,
+            1,
+            {
+                "maxOccurs": "1",
+                "minOccurs": "0",
+                "name": "Transition",
+                "type": "Transition",
+            },
+            None,
+        ),
+    ]
+    subclass = None
+    superclass = None
+
+    def __init__(
+        self,
+        test: "a string (required)" = None,
+        StateAssignment: "list of StateAssignment(s) (optional)" = None,
+        EventOut: "list of EventOut(s) (optional)" = None,
+        Transition: "a Transition (optional)" = None,
+        gds_collector_=None,
+        **kwargs_,
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        self.test = _cast(None, test)
+        self.test_nsprefix_ = None
+        if StateAssignment is None:
+            self.StateAssignment = []
+        else:
+            self.StateAssignment = StateAssignment
+        self.StateAssignment_nsprefix_ = None
+        if EventOut is None:
+            self.EventOut = []
+        else:
+            self.EventOut = EventOut
+        self.EventOut_nsprefix_ = None
+        self.Transition = Transition
+        self.Transition_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, OnCondition)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if OnCondition.subclass:
+            return OnCondition.subclass(*args_, **kwargs_)
+        else:
+            return OnCondition(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if self.StateAssignment or self.EventOut or self.Transition is not None:
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="OnCondition",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("OnCondition")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "OnCondition":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="OnCondition"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="OnCondition",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="OnCondition",
+    ):
+        if self.test is not None and "test" not in already_processed:
+            already_processed.add("test")
+            outfile.write(
+                " test=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.test), input_name="test"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="OnCondition",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        for StateAssignment_ in self.StateAssignment:
+            namespaceprefix_ = (
+                self.StateAssignment_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.StateAssignment_nsprefix_)
+                else ""
+            )
+            StateAssignment_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="StateAssignment",
+                pretty_print=pretty_print,
+            )
+        for EventOut_ in self.EventOut:
+            namespaceprefix_ = (
+                self.EventOut_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.EventOut_nsprefix_)
+                else ""
+            )
+            EventOut_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="EventOut",
+                pretty_print=pretty_print,
+            )
+        if self.Transition is not None:
+            namespaceprefix_ = (
+                self.Transition_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.Transition_nsprefix_)
+                else ""
+            )
+            self.Transition.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="Transition",
+                pretty_print=pretty_print,
+            )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.test, "test")
+        self.gds_check_cardinality_(self.test, "test", required=True)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.StateAssignment, "StateAssignment", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.EventOut, "EventOut", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.Transition, "Transition", min_occurs=0, max_occurs=1
+        )
+        if recursive:
+            for item in self.StateAssignment:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.EventOut:
+                item.validate_(gds_collector, recursive=True)
+            if self.Transition is not None:
+                self.Transition.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("test", node)
+        if value is not None and "test" not in already_processed:
+            already_processed.add("test")
+            self.test = value
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        if nodeName_ == "StateAssignment":
+            obj_ = StateAssignment.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.StateAssignment.append(obj_)
+            obj_.original_tagname_ = "StateAssignment"
+        elif nodeName_ == "EventOut":
+            obj_ = EventOut.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.EventOut.append(obj_)
+            obj_.original_tagname_ = "EventOut"
+        elif nodeName_ == "Transition":
+            obj_ = Transition.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.Transition = obj_
+            obj_.original_tagname_ = "Transition"
+
+
+# end class OnCondition
+
+
+class Transition(GeneratedsSuper):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("regime", "xs:string", 0, 0, {"use": "required", "name": "regime"}),
+    ]
+    subclass = None
+    superclass = None
+
+    def __init__(
+        self, regime: "a string (required)" = None, gds_collector_=None, **kwargs_
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        self.regime = _cast(None, regime)
+        self.regime_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Transition)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Transition.subclass:
+            return Transition.subclass(*args_, **kwargs_)
+        else:
+            return Transition(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if ():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Transition",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Transition")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Transition":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Transition"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Transition",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Transition"
+    ):
+        if self.regime is not None and "regime" not in already_processed:
+            already_processed.add("regime")
+            outfile.write(
+                " regime=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.regime), input_name="regime"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Transition",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.regime, "regime")
+        self.gds_check_cardinality_(self.regime, "regime", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("regime", node)
+        if value is not None and "regime" not in already_processed:
+            already_processed.add("regime")
+            self.regime = value
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        pass
+
+
+# end class Transition
+
+
+class Regime(GeneratedsSuper):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("name", "xs:string", 0, 0, {"use": "required", "name": "name"}),
+        MemberSpec_(
+            "initial", "TrueOrFalse", 0, 1, {"use": "optional", "name": "initial"}
+        ),
+        MemberSpec_(
+            "TimeDerivative",
+            "TimeDerivative",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "TimeDerivative",
+                "type": "TimeDerivative",
+            },
+            None,
+        ),
+        MemberSpec_(
+            "OnEntry",
+            "OnEntry",
+            0,
+            1,
+            {"maxOccurs": "1", "minOccurs": "0", "name": "OnEntry", "type": "OnEntry"},
+            None,
+        ),
+        MemberSpec_(
+            "OnCondition",
+            "OnCondition",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "OnCondition",
+                "type": "OnCondition",
+            },
+            None,
+        ),
+    ]
+    subclass = None
+    superclass = None
+
+    def __init__(
+        self,
+        name: "a string (required)" = None,
+        initial: "a TrueOrFalse (optional)" = None,
+        TimeDerivative: "list of TimeDerivative(s) (optional)" = None,
+        OnEntry: "a OnEntry (optional)" = None,
+        OnCondition: "list of OnCondition(s) (optional)" = None,
+        gds_collector_=None,
+        **kwargs_,
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        self.name = _cast(None, name)
+        self.name_nsprefix_ = None
+        self.initial = _cast(None, initial)
+        self.initial_nsprefix_ = None
+        if TimeDerivative is None:
+            self.TimeDerivative = []
+        else:
+            self.TimeDerivative = TimeDerivative
+        self.TimeDerivative_nsprefix_ = None
+        self.OnEntry = OnEntry
+        self.OnEntry_nsprefix_ = None
+        if OnCondition is None:
+            self.OnCondition = []
+        else:
+            self.OnCondition = OnCondition
+        self.OnCondition_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Regime)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Regime.subclass:
+            return Regime.subclass(*args_, **kwargs_)
+        else:
+            return Regime(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_TrueOrFalse(self, value):
+        # Validate type TrueOrFalse, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            value = value
+            enumerations = ["true", "false"]
+            if value not in enumerations:
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s does not match xsd enumeration restriction on TrueOrFalse'
+                    % {"value": encode_str_2_3(value), "lineno": lineno}
+                )
+                result = False
+
+    def _hasContent(self):
+        if self.TimeDerivative or self.OnEntry is not None or self.OnCondition:
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="Regime",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Regime")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Regime":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Regime"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Regime",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Regime"
+    ):
+        if self.name is not None and "name" not in already_processed:
+            already_processed.add("name")
+            outfile.write(
+                " name=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.name), input_name="name"
+                        )
+                    ),
+                )
+            )
+        if self.initial is not None and "initial" not in already_processed:
+            already_processed.add("initial")
+            outfile.write(
+                " initial=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.initial), input_name="initial"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="Regime",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        for TimeDerivative_ in self.TimeDerivative:
+            namespaceprefix_ = (
+                self.TimeDerivative_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.TimeDerivative_nsprefix_)
+                else ""
+            )
+            TimeDerivative_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="TimeDerivative",
+                pretty_print=pretty_print,
+            )
+        if self.OnEntry is not None:
+            namespaceprefix_ = (
+                self.OnEntry_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.OnEntry_nsprefix_)
+                else ""
+            )
+            self.OnEntry.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="OnEntry",
+                pretty_print=pretty_print,
+            )
+        for OnCondition_ in self.OnCondition:
+            namespaceprefix_ = (
+                self.OnCondition_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.OnCondition_nsprefix_)
+                else ""
+            )
+            OnCondition_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="OnCondition",
+                pretty_print=pretty_print,
+            )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.name, "name")
+        self.gds_check_cardinality_(self.name, "name", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_TrueOrFalse, self.initial, "initial"
+        )
+        self.gds_check_cardinality_(self.initial, "initial", required=False)
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.TimeDerivative, "TimeDerivative", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(self.OnEntry, "OnEntry", min_occurs=0, max_occurs=1)
+        self.gds_check_cardinality_(
+            self.OnCondition, "OnCondition", min_occurs=0, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.TimeDerivative:
+                item.validate_(gds_collector, recursive=True)
+            if self.OnEntry is not None:
+                self.OnEntry.validate_(gds_collector, recursive=True)
+            for item in self.OnCondition:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("name", node)
+        if value is not None and "name" not in already_processed:
+            already_processed.add("name")
+            self.name = value
+        value = find_attr_value_("initial", node)
+        if value is not None and "initial" not in already_processed:
+            already_processed.add("initial")
+            self.initial = value
+            self.validate_TrueOrFalse(self.initial)  # validate type TrueOrFalse
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        if nodeName_ == "TimeDerivative":
+            obj_ = TimeDerivative.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.TimeDerivative.append(obj_)
+            obj_.original_tagname_ = "TimeDerivative"
+        elif nodeName_ == "OnEntry":
+            obj_ = OnEntry.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.OnEntry = obj_
+            obj_.original_tagname_ = "OnEntry"
+        elif nodeName_ == "OnCondition":
+            obj_ = OnCondition.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.OnCondition.append(obj_)
+            obj_.original_tagname_ = "OnCondition"
+
+
+# end class Regime
+
+
+class OnEntry(GeneratedsSuper):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "StateAssignment",
+            "StateAssignment",
+            1,
+            0,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "1",
+                "name": "StateAssignment",
+                "type": "StateAssignment",
+            },
+            None,
+        ),
+    ]
+    subclass = None
+    superclass = None
+
+    def __init__(
+        self,
+        StateAssignment: "list of StateAssignment(s) (required)" = None,
+        gds_collector_=None,
+        **kwargs_,
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        if StateAssignment is None:
+            self.StateAssignment = []
+        else:
+            self.StateAssignment = StateAssignment
+        self.StateAssignment_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, OnEntry)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if OnEntry.subclass:
+            return OnEntry.subclass(*args_, **kwargs_)
+        else:
+            return OnEntry(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if self.StateAssignment:
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="OnEntry",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("OnEntry")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "OnEntry":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="OnEntry"
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="OnEntry",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="OnEntry"
+    ):
+        pass
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
+        name_="OnEntry",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        for StateAssignment_ in self.StateAssignment:
+            namespaceprefix_ = (
+                self.StateAssignment_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.StateAssignment_nsprefix_)
+                else ""
+            )
+            StateAssignment_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="StateAssignment",
+                pretty_print=pretty_print,
+            )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        # validate simple type children
+        # validate complex type children
+        self.gds_check_cardinality_(
+            self.StateAssignment, "StateAssignment", min_occurs=1, max_occurs=9999999
+        )
+        if recursive:
+            for item in self.StateAssignment:
+                item.validate_(gds_collector, recursive=True)
+        return message_count == len(self.gds_collector_.get_messages())
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        pass
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        if nodeName_ == "StateAssignment":
+            obj_ = StateAssignment.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.StateAssignment.append(obj_)
+            obj_.original_tagname_ = "StateAssignment"
+
+
+# end class OnEntry
 
 
 class IncludeType(GeneratedsSuper):
@@ -18040,8 +19958,7 @@ class InhomogeneousValue(BaseWithoutId):
 
 
 class ChannelDensityGHK2(Base):
-    """ChannelDensityGHK2 -- Time varying conductance density, **gDensity,**  which is distributed on an area of the cel
-    l, producing a current density **iDensity.**  Modified version of Jaffe et al. 1994 ( used also in Lawrence et al. 2006 ). See https://github.com/OpenSourceBrain/ghk-nernst.
+    """ChannelDensityGHK2 -- Time varying conductance density, **gDensity,**  which is distributed on an area of the cell, producing a current density **iDensity.**  Modified version of Jaffe et al. 1994 ( used also in Lawrence et al. 2006 ). See https://github.com/OpenSourceBrain/ghk-nernst.
     \n
     :param condDensity:
     :type condDensity: conductanceDensity
@@ -54034,6 +55951,195 @@ class LEMS_Property(NamedDimensionalType):
 # end class LEMS_Property
 
 
+class DerivedParameter(NamedDimensionalType):
+    """DerivedParameter -- LEMS DerivedParamter element"""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("value", "xs:string", 0, 0, {"use": "required", "name": "value"}),
+    ]
+    subclass = None
+    superclass = NamedDimensionalType
+
+    def __init__(
+        self,
+        name: "a string (required)" = None,
+        dimension: "a string (required)" = None,
+        description: "a string (optional)" = None,
+        value: "a string (required)" = None,
+        gds_collector_=None,
+        **kwargs_,
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("DerivedParameter"), self).__init__(
+            name, dimension, description, **kwargs_
+        )
+        self.value = _cast(None, value)
+        self.value_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, DerivedParameter)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if DerivedParameter.subclass:
+            return DerivedParameter.subclass(*args_, **kwargs_)
+        else:
+            return DerivedParameter(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(DerivedParameter, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="DerivedParameter",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("DerivedParameter")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "DerivedParameter":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="DerivedParameter",
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="DerivedParameter",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="DerivedParameter",
+    ):
+        super(DerivedParameter, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="DerivedParameter",
+        )
+        if self.value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            outfile.write(
+                " value=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.value), input_name="value"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="DerivedParameter",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(DerivedParameter, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.value, "value")
+        self.gds_check_cardinality_(self.value, "value", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("value", node)
+        if value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            self.value = value
+        super(DerivedParameter, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(DerivedParameter, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class DerivedParameter
+
+
 class Parameter(NamedDimensionalType):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
@@ -64930,6 +67036,7 @@ NamespaceToDefMappings_ = {
         ("DoubleGreaterThanZero", "NeuroML_v2.3.xsd", "ST"),
         ("ZeroOrOne", "NeuroML_v2.3.xsd", "ST"),
         ("Notes", "NeuroML_v2.3.xsd", "ST"),
+        ("TrueOrFalse", "NeuroML_v2.3.xsd", "ST"),
         ("ZeroToOne", "NeuroML_v2.3.xsd", "ST"),
         ("channelTypes", "NeuroML_v2.3.xsd", "ST"),
         ("gateTypes", "NeuroML_v2.3.xsd", "ST"),
@@ -64947,6 +67054,7 @@ NamespaceToDefMappings_ = {
         ("NamedDimensionalType", "NeuroML_v2.3.xsd", "CT"),
         ("NamedDimensionalVariable", "NeuroML_v2.3.xsd", "CT"),
         ("Parameter", "NeuroML_v2.3.xsd", "CT"),
+        ("DerivedParameter", "NeuroML_v2.3.xsd", "CT"),
         ("LEMS_Property", "NeuroML_v2.3.xsd", "CT"),
         ("Requirement", "NeuroML_v2.3.xsd", "CT"),
         ("InstanceRequirement", "NeuroML_v2.3.xsd", "CT"),
@@ -64956,6 +67064,14 @@ NamespaceToDefMappings_ = {
         ("ConditionalDerivedVariable", "NeuroML_v2.3.xsd", "CT"),
         ("Case", "NeuroML_v2.3.xsd", "CT"),
         ("TimeDerivative", "NeuroML_v2.3.xsd", "CT"),
+        ("OnStart", "NeuroML_v2.3.xsd", "CT"),
+        ("StateAssignment", "NeuroML_v2.3.xsd", "CT"),
+        ("OnEvent", "NeuroML_v2.3.xsd", "CT"),
+        ("EventOut", "NeuroML_v2.3.xsd", "CT"),
+        ("OnCondition", "NeuroML_v2.3.xsd", "CT"),
+        ("Transition", "NeuroML_v2.3.xsd", "CT"),
+        ("Regime", "NeuroML_v2.3.xsd", "CT"),
+        ("OnEntry", "NeuroML_v2.3.xsd", "CT"),
         ("NeuroMLDocument", "NeuroML_v2.3.xsd", "CT"),
         ("IncludeType", "NeuroML_v2.3.xsd", "CT"),
         ("IonChannelScalable", "NeuroML_v2.3.xsd", "CT"),
@@ -65185,6 +67301,7 @@ __all__ = [
     "ContinuousConnectionInstanceW",
     "ContinuousProjection",
     "DecayingPoolConcentrationModel",
+    "DerivedParameter",
     "DerivedVariable",
     "DistalDetails",
     "DoubleSynapse",
@@ -65195,6 +67312,7 @@ __all__ = [
     "ElectricalConnectionInstance",
     "ElectricalConnectionInstanceW",
     "ElectricalProjection",
+    "EventOut",
     "ExpCondSynapse",
     "ExpCurrSynapse",
     "ExpOneSynapse",
@@ -65264,6 +67382,10 @@ __all__ = [
     "NamedDimensionalVariable",
     "Network",
     "NeuroMLDocument",
+    "OnCondition",
+    "OnEntry",
+    "OnEvent",
+    "OnStart",
     "OpenState",
     "Parameter",
     "Path",
@@ -65283,6 +67405,7 @@ __all__ = [
     "RampGeneratorDL",
     "RandomLayout",
     "ReactionScheme",
+    "Regime",
     "Region",
     "Requirement",
     "Resistivity",
@@ -65307,6 +67430,7 @@ __all__ = [
     "SpikeSourcePoisson",
     "SpikeThresh",
     "Standalone",
+    "StateAssignment",
     "StateVariable",
     "SubTree",
     "SynapticConnection",
@@ -65314,6 +67438,7 @@ __all__ = [
     "TimeDerivative",
     "TimedSynapticInput",
     "TransientPoissonFiringSynapse",
+    "Transition",
     "UnstructuredLayout",
     "VariableParameter",
     "VoltageClamp",
