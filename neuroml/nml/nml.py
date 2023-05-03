@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed May  3 13:33:04 2023 by generateDS.py version 2.41.3.
+# Generated Wed May  3 13:39:08 2023 by generateDS.py version 2.41.3.
 # Python 3.10.11 (main, Apr  5 2023, 00:00:00) [GCC 13.0.1 20230404 (Red Hat 13.0.1-0)]
 #
 # Command line options:
@@ -1271,6 +1271,19 @@ class ComponentType(GeneratedsSuper):
             None,
         ),
         MemberSpec_(
+            "DerivedParameter",
+            "DerivedParameter",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "DerivedParameter",
+                "type": "DerivedParameter",
+            },
+            None,
+        ),
+        MemberSpec_(
             "Constant",
             "Constant",
             1,
@@ -1346,6 +1359,7 @@ class ComponentType(GeneratedsSuper):
         description: "a string (optional)" = None,
         Property: "list of Property(s) (optional)" = None,
         Parameter: "list of Parameter(s) (optional)" = None,
+        DerivedParameter: "list of DerivedParameter(s) (optional)" = None,
         Constant: "list of Constant(s) (optional)" = None,
         Exposure: "list of Exposure(s) (optional)" = None,
         Requirement: "list of Requirement(s) (optional)" = None,
@@ -1375,6 +1389,11 @@ class ComponentType(GeneratedsSuper):
         else:
             self.Parameter = Parameter
         self.Parameter_nsprefix_ = None
+        if DerivedParameter is None:
+            self.DerivedParameter = []
+        else:
+            self.DerivedParameter = DerivedParameter
+        self.DerivedParameter_nsprefix_ = None
         if Constant is None:
             self.Constant = []
         else:
@@ -1417,6 +1436,7 @@ class ComponentType(GeneratedsSuper):
         if (
             self.Property
             or self.Parameter
+            or self.DerivedParameter
             or self.Constant
             or self.Exposure
             or self.Requirement
@@ -1562,6 +1582,20 @@ class ComponentType(GeneratedsSuper):
                 name_="Parameter",
                 pretty_print=pretty_print,
             )
+        for DerivedParameter_ in self.DerivedParameter:
+            namespaceprefix_ = (
+                self.DerivedParameter_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.DerivedParameter_nsprefix_)
+                else ""
+            )
+            DerivedParameter_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="DerivedParameter",
+                pretty_print=pretty_print,
+            )
         for Constant_ in self.Constant:
             namespaceprefix_ = (
                 self.Constant_nsprefix_ + ":"
@@ -1654,6 +1688,9 @@ class ComponentType(GeneratedsSuper):
             self.Parameter, "Parameter", min_occurs=0, max_occurs=9999999
         )
         self.gds_check_cardinality_(
+            self.DerivedParameter, "DerivedParameter", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
             self.Constant, "Constant", min_occurs=0, max_occurs=9999999
         )
         self.gds_check_cardinality_(
@@ -1675,6 +1712,8 @@ class ComponentType(GeneratedsSuper):
             for item in self.Property:
                 item.validate_(gds_collector, recursive=True)
             for item in self.Parameter:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.DerivedParameter:
                 item.validate_(gds_collector, recursive=True)
             for item in self.Constant:
                 item.validate_(gds_collector, recursive=True)
@@ -1727,6 +1766,11 @@ class ComponentType(GeneratedsSuper):
             obj_.build(child_, gds_collector_=gds_collector_)
             self.Parameter.append(obj_)
             obj_.original_tagname_ = "Parameter"
+        elif nodeName_ == "DerivedParameter":
+            obj_ = DerivedParameter.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.DerivedParameter.append(obj_)
+            obj_.original_tagname_ = "DerivedParameter"
         elif nodeName_ == "Constant":
             obj_ = Constant.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
