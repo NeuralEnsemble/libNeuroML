@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed May  3 12:43:16 2023 by generateDS.py version 2.41.3.
+# Generated Wed May  3 13:33:04 2023 by generateDS.py version 2.41.3.
 # Python 3.10.11 (main, Apr  5 2023, 00:00:00) [GCC 13.0.1 20230404 (Red Hat 13.0.1-0)]
 #
 # Command line options:
@@ -55907,6 +55907,195 @@ class LEMS_Property(NamedDimensionalType):
 # end class LEMS_Property
 
 
+class DerivedParameter(NamedDimensionalType):
+    """DerivedParameter -- LEMS DerivedParamter element"""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("value", "xs:string", 0, 0, {"use": "required", "name": "value"}),
+    ]
+    subclass = None
+    superclass = NamedDimensionalType
+
+    def __init__(
+        self,
+        name: "a string (required)" = None,
+        dimension: "a string (required)" = None,
+        description: "a string (optional)" = None,
+        value: "a string (required)" = None,
+        gds_collector_=None,
+        **kwargs_,
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("DerivedParameter"), self).__init__(
+            name, dimension, description, **kwargs_
+        )
+        self.value = _cast(None, value)
+        self.value_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, DerivedParameter)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if DerivedParameter.subclass:
+            return DerivedParameter.subclass(*args_, **kwargs_)
+        else:
+            return DerivedParameter(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def _hasContent(self):
+        if super(DerivedParameter, self)._hasContent():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="DerivedParameter",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("DerivedParameter")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "DerivedParameter":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="DerivedParameter",
+        )
+        if self._hasContent():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="DerivedParameter",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="DerivedParameter",
+    ):
+        super(DerivedParameter, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="DerivedParameter",
+        )
+        if self.value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            outfile.write(
+                " value=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.value), input_name="value"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="DerivedParameter",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(DerivedParameter, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.value, "value")
+        self.gds_check_cardinality_(self.value, "value", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("value", node)
+        if value is not None and "value" not in already_processed:
+            already_processed.add("value")
+            self.value = value
+        super(DerivedParameter, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(DerivedParameter, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class DerivedParameter
+
+
 class Parameter(NamedDimensionalType):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = []
@@ -66821,6 +67010,7 @@ NamespaceToDefMappings_ = {
         ("NamedDimensionalType", "NeuroML_v2.3.xsd", "CT"),
         ("NamedDimensionalVariable", "NeuroML_v2.3.xsd", "CT"),
         ("Parameter", "NeuroML_v2.3.xsd", "CT"),
+        ("DerivedParameter", "NeuroML_v2.3.xsd", "CT"),
         ("LEMS_Property", "NeuroML_v2.3.xsd", "CT"),
         ("Requirement", "NeuroML_v2.3.xsd", "CT"),
         ("InstanceRequirement", "NeuroML_v2.3.xsd", "CT"),
@@ -67067,6 +67257,7 @@ __all__ = [
     "ContinuousConnectionInstanceW",
     "ContinuousProjection",
     "DecayingPoolConcentrationModel",
+    "DerivedParameter",
     "DerivedVariable",
     "DistalDetails",
     "DoubleSynapse",
