@@ -131,5 +131,3 @@ See https://docs.neuroml.org/ for an overview of the various NeuroML libraries.
 
 :copyright: Copyright 2023 by the libNeuroML team, see [AUTHORS](AUTHORS). Modified BSD License, see [LICENSE](LICENSE) for details.
 
-
-[![Build Status](https://api.travis-ci.org/NeuralEnsemble/libNeuroML.png)](https://travis-ci.org/NeuralEnsemble/libNeuroML)
