@@ -18,12 +18,11 @@ setup(
     description="A Python library for working with NeuroML descriptions of neuronal models",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    install_requires=["lxml", "six", "networkx"],
+    install_requires=["lxml", "six", "networkx", "numpy"],
     tests_require=["pytest"],
     extras_require={
         "full": [
             "cython",
-            "numpy",
             "numexpr",
             "tables>=3.3.0",
         ]
