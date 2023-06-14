@@ -1,6 +1,0 @@
-six
-lxml
-numpy
-numexpr ; python_version >= '3'
-tables>=3.3.0
-networkx
