@@ -33,7 +33,6 @@ A related package, **[pyNeuroML](https://github.com/NeuroML/pyNeuroML)** builds 
 
 pyNeuroML builds on: [libNeuroML](https://github.com/NeuralEnsemble/libNeuroML) & [PyLEMS](https://github.com/LEMS/pylems) and wraps functionality from [jNeuroML](https://github.com/NeuroML/jNeuroML).
 
-
 ## Development process for libNeuroML
 
 Most of the work happens in the [development branch](https://github.com/NeuralEnsemble/libNeuroML/tree/development).
@@ -41,6 +40,7 @@ That branch is kept up to date with the development branches for [NeuroML 2](htt
 See https://docs.neuroml.org/ for an overview of the various NeuroML libraries.
 
 ## Changelog
+
 ### version 0.4.1
 
 - add multiple cell builder utility functions
@@ -128,6 +128,4 @@ See https://docs.neuroml.org/ for an overview of the various NeuroML libraries.
 - Schema validation utility
 - Improved documentation and documentation new look
 
-
 :copyright: Copyright 2023 by the libNeuroML team, see [AUTHORS](AUTHORS). Modified BSD License, see [LICENSE](LICENSE) for details.
-
