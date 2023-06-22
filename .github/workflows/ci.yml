@@ -41,9 +41,10 @@ jobs:
         pytest -vs 
 
     - name: Run examples
-      if: ${{ matrix.python-version != '3.7' && matrix.runs-on == 'macos-latest' }} # issue with _bz2 module...
+      if: ${{ matrix.python-version != '3.7' || matrix.runs-on != 'macos-latest' }} # issue with _bz2 module...
       run: |
-        cd ./neuroml/examples && python run_all.py
+        cd neuroml/examples
+        python run_all.py
 
     - name: Final version info
       run: |
