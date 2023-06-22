@@ -7,7 +7,13 @@ Copyright 2023 NeuroML contributors
 """
 
 
-__version__: str = "0.5.2"
+try:
+    import importlib.metadata
+    __version__ = importlib.metadata.version("libNeuroML")
+except ImportError:
+    import importlib_metadata
+    __version__ = importlib_metadata.version("libNeuroML")
+
 __version_info__: tuple = tuple(int(i) for i in __version__.split("."))
 
 

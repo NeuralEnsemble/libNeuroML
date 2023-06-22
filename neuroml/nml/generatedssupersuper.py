@@ -303,8 +303,9 @@ class GeneratedsSuperSuper(object):
         except AttributeError:
             info_str = ""
 
-        info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information.\n\n"
-        info_str += "Valid members for {} are:\n".format(self.__class__.__name__)
+        class_name = self.__class__.__name__
+        info_str += f"NeuroMLv2 schema documentation: https://docs.neuroml.org/Userdocs/Schemas/Index.html?highlight={class_name[0].lower()}{class_name[1:]}#{class_name.lower()} for more information.\n\n"
+        info_str += "Valid members for {} are:\n".format(class_name)
         all_members = self._get_members()
         for member in all_members:
             info_str += "* {} (class: {}, {})\n".format(

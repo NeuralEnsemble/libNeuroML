@@ -13,15 +13,13 @@ On most systems with a Python installation, libNeuroML can be installed using th
 It is recommended to use a `virtual environment <https://docs.python.org/3/tutorial/venv.html>`_ when installing Python packages using `pip` to prevent these from conflicting with other system libraries.
 
 This will support the default XML serialization.
-To install all of requirements to include the other serialisations, use
+Note that you may be required to install libhdf5 using your package manager because PyTables' wheels for python 3.7+ depend on the system libhdf5 to build.
 
 ::
 
     # On Ubuntu based systems
     sudo apt-get install libhdf5-dev
-    pip install libNeuroML[full]
-
-The ``apt`` line is required at time of writing because PyTables' wheels for python 3.7 depend on the system libhdf5.
+    pip install libNeuroML
 
 
 On Fedora based systems
@@ -51,14 +49,23 @@ To build and install libNeuroML, you can use the standard install method for Pyt
 
 ::
 
-    python setup.py install
+    pip install .
 
 To use the **latest development version of libNeuroML**, switch to the development branch:
 
 ::
 
     git checkout development
-    sudo python setup.py install
+    pip install .
+
+
+To install developer dependencies and other extras, use the extras declared in the `setup.cfg` file. E.g.:
+
+::
+
+    pip install .[dev]
+    pip install .[test]
+    pip install .[doc]
 
 
 Run an example
