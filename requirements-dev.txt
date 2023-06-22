@@ -1,8 +1,0 @@
-wheel
-generateds >= 2.20a; python_version >= '3.0'
-cython
-flake8
-pytest
-numpy
-networkx
-black ; python_version >= '3.0'

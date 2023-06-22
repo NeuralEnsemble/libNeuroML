@@ -1,5 +1,0 @@
-sphinxcontrib-bibtex
-pydata-sphinx-theme
-lxml
-numpy
-networkx
