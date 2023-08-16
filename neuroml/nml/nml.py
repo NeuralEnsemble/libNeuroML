@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed May  3 13:39:08 2023 by generateDS.py version 2.41.3.
-# Python 3.10.11 (main, Apr  5 2023, 00:00:00) [GCC 13.0.1 20230404 (Red Hat 13.0.1-0)]
+# Generated Wed Aug 16 17:12:11 2023 by generateDS.py version 2.43.1.
+# Python 3.10.12 (main, Jun  8 2023, 00:00:00) [GCC 13.1.1 20230511 (Red Hat 13.1.1-2)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -47,6 +47,8 @@ import inspect
 import networkx as nx
 
 import numpy
+
+import natsort
 
 
 import neuroml
@@ -297,7 +299,10 @@ except ModulenotfoundExp_ as exp:
             return values
 
         def gds_format_float(self, input_data, input_name=""):
-            return ("%.15f" % float(input_data)).rstrip("0")
+            value = ("%.15f" % float(input_data)).rstrip("0")
+            if value.endswith("."):
+                value += "0"
+            return value
 
         def gds_parse_float(self, input_data, node=None, input_name=""):
             try:
@@ -1166,10 +1171,8 @@ def _cast(typ, value):
 
 
 #
-# Data representation classes.
+# Start enum classes
 #
-
-
 class BlockTypes(str, Enum):
     VOLTAGE_CONC_DEP_BLOCK_MECHANISM = "voltageConcDepBlockMechanism"
 
@@ -1232,6 +1235,9 @@ class populationTypes(str, Enum):
     POPULATION_LIST = "populationList"
 
 
+#
+# Start data representation classes
+#
 class ComponentType(GeneratedsSuper):
     """ComponentType -- Contains an extension to NeuroML by creating custom LEMS ComponentType."""
 
@@ -1432,7 +1438,7 @@ class ComponentType(GeneratedsSuper):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.Property
             or self.Parameter
@@ -1480,7 +1486,7 @@ class ComponentType(GeneratedsSuper):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="ComponentType"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -1841,7 +1847,7 @@ class InstanceRequirement(GeneratedsSuper):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if ():
             return True
         else:
@@ -1884,7 +1890,7 @@ class InstanceRequirement(GeneratedsSuper):
             namespaceprefix_,
             name_="InstanceRequirement",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -2164,7 +2170,7 @@ class Dynamics(GeneratedsSuper):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.StateVariable
             or self.DerivedVariable
@@ -2212,7 +2218,7 @@ class Dynamics(GeneratedsSuper):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Dynamics"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -2512,7 +2518,7 @@ class Case(GeneratedsSuper):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if ():
             return True
         else:
@@ -2551,7 +2557,7 @@ class Case(GeneratedsSuper):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Case"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -2692,7 +2698,7 @@ class TimeDerivative(GeneratedsSuper):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if ():
             return True
         else:
@@ -2731,7 +2737,7 @@ class TimeDerivative(GeneratedsSuper):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="TimeDerivative"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -2886,7 +2892,7 @@ class OnStart(GeneratedsSuper):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if self.StateAssignment:
             return True
         else:
@@ -2925,7 +2931,7 @@ class OnStart(GeneratedsSuper):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="OnStart"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -3056,7 +3062,7 @@ class StateAssignment(GeneratedsSuper):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if ():
             return True
         else:
@@ -3095,7 +3101,7 @@ class StateAssignment(GeneratedsSuper):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="StateAssignment"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -3273,7 +3279,7 @@ class OnEvent(GeneratedsSuper):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if self.StateAssignment or self.EventOut:
             return True
         else:
@@ -3312,7 +3318,7 @@ class OnEvent(GeneratedsSuper):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="OnEvent"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -3474,7 +3480,7 @@ class EventOut(GeneratedsSuper):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if ():
             return True
         else:
@@ -3513,7 +3519,7 @@ class EventOut(GeneratedsSuper):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="EventOut"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -3682,7 +3688,7 @@ class OnCondition(GeneratedsSuper):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if self.StateAssignment or self.EventOut or self.Transition is not None:
             return True
         else:
@@ -3721,7 +3727,7 @@ class OnCondition(GeneratedsSuper):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="OnCondition"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -3912,7 +3918,7 @@ class Transition(GeneratedsSuper):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if ():
             return True
         else:
@@ -3951,7 +3957,7 @@ class Transition(GeneratedsSuper):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Transition"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -4148,7 +4154,7 @@ class Regime(GeneratedsSuper):
                 )
                 result = False
 
-    def _hasContent(self):
+    def has__content(self):
         if self.TimeDerivative or self.OnEntry is not None or self.OnCondition:
             return True
         else:
@@ -4187,7 +4193,7 @@ class Regime(GeneratedsSuper):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Regime"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -4410,7 +4416,7 @@ class OnEntry(GeneratedsSuper):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if self.StateAssignment:
             return True
         else:
@@ -4449,7 +4455,7 @@ class OnEntry(GeneratedsSuper):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="OnEntry"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -4571,7 +4577,7 @@ class IncludeType(GeneratedsSuper):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if ():
             return True
         else:
@@ -4610,7 +4616,7 @@ class IncludeType(GeneratedsSuper):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="IncludeType"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -4854,7 +4860,7 @@ class Q10Settings(GeneratedsSuper):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(degC))$"]
     ]
 
-    def _hasContent(self):
+    def has__content(self):
         if ():
             return True
         else:
@@ -4893,7 +4899,7 @@ class Q10Settings(GeneratedsSuper):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Q10Settings"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -5120,7 +5126,7 @@ class VariableParameter(GeneratedsSuper):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if self.inhomogeneous_value is not None:
             return True
         else:
@@ -5163,7 +5169,7 @@ class VariableParameter(GeneratedsSuper):
             namespaceprefix_,
             name_="VariableParameter",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -5330,7 +5336,7 @@ class BaseWithoutId(GeneratedsSuper):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if ():
             return True
         else:
@@ -5369,7 +5375,7 @@ class BaseWithoutId(GeneratedsSuper):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="BaseWithoutId"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -5518,8 +5524,8 @@ class BaseNonNegativeIntegerId(BaseWithoutId):
                 return False
             pass
 
-    def _hasContent(self):
-        if super(BaseNonNegativeIntegerId, self)._hasContent():
+    def has__content(self):
+        if super(BaseNonNegativeIntegerId, self).has__content():
             return True
         else:
             return False
@@ -5561,7 +5567,7 @@ class BaseNonNegativeIntegerId(BaseWithoutId):
             namespaceprefix_,
             name_="BaseNonNegativeIntegerId",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -5752,8 +5758,8 @@ class Base(BaseWithoutId):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
-        if super(Base, self)._hasContent():
+    def has__content(self):
+        if super(Base, self).has__content():
             return True
         else:
             return False
@@ -5791,7 +5797,7 @@ class Base(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Base"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -6034,12 +6040,12 @@ class Standalone(Base):
 
     validate_MetaId_patterns_ = [["^([a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.notes is not None
             or self.properties
             or self.annotation is not None
-            or super(Standalone, self)._hasContent()
+            or super(Standalone, self).has__content()
         ):
             return True
         else:
@@ -6078,7 +6084,7 @@ class Standalone(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Standalone"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -6407,8 +6413,8 @@ class SpikeSourcePoisson(Standalone):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz))$"]
     ]
 
-    def _hasContent(self):
-        if super(SpikeSourcePoisson, self)._hasContent():
+    def has__content(self):
+        if super(SpikeSourcePoisson, self).has__content():
             return True
         else:
             return False
@@ -6450,7 +6456,7 @@ class SpikeSourcePoisson(Standalone):
             namespaceprefix_,
             name_="SpikeSourcePoisson",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -6752,8 +6758,8 @@ class Input(BaseNonNegativeIntegerId):
                 )
                 result = False
 
-    def _hasContent(self):
-        if super(Input, self)._hasContent():
+    def has__content(self):
+        if super(Input, self).has__content():
             return True
         else:
             return False
@@ -6791,7 +6797,7 @@ class Input(BaseNonNegativeIntegerId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Input"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -7115,8 +7121,8 @@ class InputList(Base):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
-        if self.input or self.input_ws or super(InputList, self)._hasContent():
+    def has__content(self):
+        if self.input or self.input_ws or super(InputList, self).has__content():
             return True
         else:
             return False
@@ -7154,7 +7160,7 @@ class InputList(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="InputList"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -7428,8 +7434,8 @@ class ExplicitInput(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(ExplicitInput, self)._hasContent():
+    def has__content(self):
+        if super(ExplicitInput, self).has__content():
             return True
         else:
             return False
@@ -7467,7 +7473,7 @@ class ExplicitInput(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="ExplicitInput"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -7752,8 +7758,8 @@ class BaseConnection(BaseNonNegativeIntegerId):
 
     validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
-    def _hasContent(self):
-        if super(BaseConnection, self)._hasContent():
+    def has__content(self):
+        if super(BaseConnection, self).has__content():
             return True
         else:
             return False
@@ -7791,7 +7797,7 @@ class BaseConnection(BaseNonNegativeIntegerId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="BaseConnection"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -7998,8 +8004,8 @@ class BaseProjection(Base):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
-        if super(BaseProjection, self)._hasContent():
+    def has__content(self):
+        if super(BaseProjection, self).has__content():
             return True
         else:
             return False
@@ -8037,7 +8043,7 @@ class BaseProjection(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="BaseProjection"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -8314,8 +8320,8 @@ class SynapticConnection(BaseWithoutId):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
-        if super(SynapticConnection, self)._hasContent():
+    def has__content(self):
+        if super(SynapticConnection, self).has__content():
             return True
         else:
             return False
@@ -8357,7 +8363,7 @@ class SynapticConnection(BaseWithoutId):
             namespaceprefix_,
             name_="SynapticConnection",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -8616,8 +8622,8 @@ class CellSet(Base):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if self.anytypeobjs_ or super(CellSet, self)._hasContent():
+    def has__content(self):
+        if self.anytypeobjs_ or super(CellSet, self).has__content():
             return True
         else:
             return False
@@ -8655,7 +8661,7 @@ class CellSet(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="CellSet"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -8814,8 +8820,8 @@ class Location(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(Location, self)._hasContent():
+    def has__content(self):
+        if super(Location, self).has__content():
             return True
         else:
             return False
@@ -8853,7 +8859,7 @@ class Location(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Location"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -9043,8 +9049,8 @@ class Instance(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if self.location is not None or super(Instance, self)._hasContent():
+    def has__content(self):
+        if self.location is not None or super(Instance, self).has__content():
             return True
         else:
             return False
@@ -9082,7 +9088,7 @@ class Instance(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Instance"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -9302,8 +9308,8 @@ class GridLayout(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(GridLayout, self)._hasContent():
+    def has__content(self):
+        if super(GridLayout, self).has__content():
             return True
         else:
             return False
@@ -9341,7 +9347,7 @@ class GridLayout(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="GridLayout"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -9532,8 +9538,8 @@ class RandomLayout(BaseWithoutId):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
-        if super(RandomLayout, self)._hasContent():
+    def has__content(self):
+        if super(RandomLayout, self).has__content():
             return True
         else:
             return False
@@ -9571,7 +9577,7 @@ class RandomLayout(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="RandomLayout"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -9729,8 +9735,8 @@ class UnstructuredLayout(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(UnstructuredLayout, self)._hasContent():
+    def has__content(self):
+        if super(UnstructuredLayout, self).has__content():
             return True
         else:
             return False
@@ -9772,7 +9778,7 @@ class UnstructuredLayout(BaseWithoutId):
             namespaceprefix_,
             name_="UnstructuredLayout",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -9965,12 +9971,12 @@ class Layout(BaseWithoutId):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.random is not None
             or self.grid is not None
             or self.unstructured is not None
-            or super(Layout, self)._hasContent()
+            or super(Layout, self).has__content()
         ):
             return True
         else:
@@ -10009,7 +10015,7 @@ class Layout(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Layout"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -10390,11 +10396,11 @@ class Population(Standalone):
 
     validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.layout is not None
             or self.instances
-            or super(Population, self)._hasContent()
+            or super(Population, self).has__content()
         ):
             return True
         else:
@@ -10433,7 +10439,7 @@ class Population(Standalone):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Population"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -10796,8 +10802,8 @@ class Region(Base):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
-        if self.anytypeobjs_ or super(Region, self)._hasContent():
+    def has__content(self):
+        if self.anytypeobjs_ or super(Region, self).has__content():
             return True
         else:
             return False
@@ -10835,7 +10841,7 @@ class Region(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Region"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -11008,8 +11014,8 @@ class SpaceStructure(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(SpaceStructure, self)._hasContent():
+    def has__content(self):
+        if super(SpaceStructure, self).has__content():
             return True
         else:
             return False
@@ -11047,7 +11053,7 @@ class SpaceStructure(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="SpaceStructure"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -11296,8 +11302,8 @@ class Space(Base):
                 )
                 result = False
 
-    def _hasContent(self):
-        if self.structure is not None or super(Space, self)._hasContent():
+    def has__content(self):
+        if self.structure is not None or super(Space, self).has__content():
             return True
         else:
             return False
@@ -11335,7 +11341,7 @@ class Space(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Space"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -11816,7 +11822,7 @@ class Network(Standalone):
 
     validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.spaces
             or self.regions
@@ -11829,7 +11835,7 @@ class Network(Standalone):
             or self.continuous_projections
             or self.explicit_inputs
             or self.input_lists
-            or super(Network, self)._hasContent()
+            or super(Network, self).has__content()
         ):
             return True
         else:
@@ -11868,7 +11874,7 @@ class Network(Standalone):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Network"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -12514,8 +12520,8 @@ class TransientPoissonFiringSynapse(Standalone):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
     ]
 
-    def _hasContent(self):
-        if super(TransientPoissonFiringSynapse, self)._hasContent():
+    def has__content(self):
+        if super(TransientPoissonFiringSynapse, self).has__content():
             return True
         else:
             return False
@@ -12560,7 +12566,7 @@ class TransientPoissonFiringSynapse(Standalone):
             namespaceprefix_,
             name_="TransientPoissonFiringSynapse",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -12862,8 +12868,8 @@ class PoissonFiringSynapse(Standalone):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz))$"]
     ]
 
-    def _hasContent(self):
-        if super(PoissonFiringSynapse, self)._hasContent():
+    def has__content(self):
+        if super(PoissonFiringSynapse, self).has__content():
             return True
         else:
             return False
@@ -12905,7 +12911,7 @@ class PoissonFiringSynapse(Standalone):
             namespaceprefix_,
             name_="PoissonFiringSynapse",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -13145,8 +13151,8 @@ class SpikeGeneratorPoisson(Standalone):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz))$"]
     ]
 
-    def _hasContent(self):
-        if super(SpikeGeneratorPoisson, self)._hasContent():
+    def has__content(self):
+        if super(SpikeGeneratorPoisson, self).has__content():
             return True
         else:
             return False
@@ -13188,7 +13194,7 @@ class SpikeGeneratorPoisson(Standalone):
             namespaceprefix_,
             name_="SpikeGeneratorPoisson",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -13408,8 +13414,8 @@ class SpikeGeneratorRandom(Standalone):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
     ]
 
-    def _hasContent(self):
-        if super(SpikeGeneratorRandom, self)._hasContent():
+    def has__content(self):
+        if super(SpikeGeneratorRandom, self).has__content():
             return True
         else:
             return False
@@ -13451,7 +13457,7 @@ class SpikeGeneratorRandom(Standalone):
             namespaceprefix_,
             name_="SpikeGeneratorRandom",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -13668,8 +13674,8 @@ class SpikeGenerator(Standalone):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
     ]
 
-    def _hasContent(self):
-        if super(SpikeGenerator, self)._hasContent():
+    def has__content(self):
+        if super(SpikeGenerator, self).has__content():
             return True
         else:
             return False
@@ -13707,7 +13713,7 @@ class SpikeGenerator(Standalone):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="SpikeGenerator"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -13917,8 +13923,8 @@ class TimedSynapticInput(Standalone):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
-        if self.spikes or super(TimedSynapticInput, self)._hasContent():
+    def has__content(self):
+        if self.spikes or super(TimedSynapticInput, self).has__content():
             return True
         else:
             return False
@@ -13960,7 +13966,7 @@ class TimedSynapticInput(Standalone):
             namespaceprefix_,
             name_="TimedSynapticInput",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -14170,8 +14176,8 @@ class SpikeArray(Standalone):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if self.spikes or super(SpikeArray, self)._hasContent():
+    def has__content(self):
+        if self.spikes or super(SpikeArray, self).has__content():
             return True
         else:
             return False
@@ -14209,7 +14215,7 @@ class SpikeArray(Standalone):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="SpikeArray"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -14389,8 +14395,8 @@ class Spike(BaseNonNegativeIntegerId):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
     ]
 
-    def _hasContent(self):
-        if super(Spike, self)._hasContent():
+    def has__content(self):
+        if super(Spike, self).has__content():
             return True
         else:
             return False
@@ -14428,7 +14434,7 @@ class Spike(BaseNonNegativeIntegerId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Spike"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -14770,8 +14776,8 @@ class VoltageClampTriple(Standalone):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(ohm|kohm|Mohm))$"]
     ]
 
-    def _hasContent(self):
-        if super(VoltageClampTriple, self)._hasContent():
+    def has__content(self):
+        if super(VoltageClampTriple, self).has__content():
             return True
         else:
             return False
@@ -14813,7 +14819,7 @@ class VoltageClampTriple(Standalone):
             namespaceprefix_,
             name_="VoltageClampTriple",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -15262,8 +15268,8 @@ class VoltageClamp(Standalone):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(ohm|kohm|Mohm))$"]
     ]
 
-    def _hasContent(self):
-        if super(VoltageClamp, self)._hasContent():
+    def has__content(self):
+        if super(VoltageClamp, self).has__content():
             return True
         else:
             return False
@@ -15301,7 +15307,7 @@ class VoltageClamp(Standalone):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="VoltageClamp"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -15586,12 +15592,12 @@ class CompoundInputDL(Standalone):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.pulse_generator_dls
             or self.sine_generator_dls
             or self.ramp_generator_dls
-            or super(CompoundInputDL, self)._hasContent()
+            or super(CompoundInputDL, self).has__content()
         ):
             return True
         else:
@@ -15630,7 +15636,7 @@ class CompoundInputDL(Standalone):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="CompoundInputDL"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -15892,12 +15898,12 @@ class CompoundInput(Standalone):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.pulse_generators
             or self.sine_generators
             or self.ramp_generators
-            or super(CompoundInput, self)._hasContent()
+            or super(CompoundInput, self).has__content()
         ):
             return True
         else:
@@ -15936,7 +15942,7 @@ class CompoundInput(Standalone):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="CompoundInput"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -16255,8 +16261,8 @@ class RampGeneratorDL(Standalone):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?)$"]
     ]
 
-    def _hasContent(self):
-        if super(RampGeneratorDL, self)._hasContent():
+    def has__content(self):
+        if super(RampGeneratorDL, self).has__content():
             return True
         else:
             return False
@@ -16294,7 +16300,7 @@ class RampGeneratorDL(Standalone):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="RampGeneratorDL"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -16674,8 +16680,8 @@ class RampGenerator(Standalone):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA))$"]
     ]
 
-    def _hasContent(self):
-        if super(RampGenerator, self)._hasContent():
+    def has__content(self):
+        if super(RampGenerator, self).has__content():
             return True
         else:
             return False
@@ -16713,7 +16719,7 @@ class RampGenerator(Standalone):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="RampGenerator"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -17087,8 +17093,8 @@ class SineGeneratorDL(Standalone):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?)$"]
     ]
 
-    def _hasContent(self):
-        if super(SineGeneratorDL, self)._hasContent():
+    def has__content(self):
+        if super(SineGeneratorDL, self).has__content():
             return True
         else:
             return False
@@ -17126,7 +17132,7 @@ class SineGeneratorDL(Standalone):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="SineGeneratorDL"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -17510,8 +17516,8 @@ class SineGenerator(Standalone):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA))$"]
     ]
 
-    def _hasContent(self):
-        if super(SineGenerator, self)._hasContent():
+    def has__content(self):
+        if super(SineGenerator, self).has__content():
             return True
         else:
             return False
@@ -17549,7 +17555,7 @@ class SineGenerator(Standalone):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="SineGenerator"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -17885,8 +17891,8 @@ class PulseGeneratorDL(Standalone):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?)$"]
     ]
 
-    def _hasContent(self):
-        if super(PulseGeneratorDL, self)._hasContent():
+    def has__content(self):
+        if super(PulseGeneratorDL, self).has__content():
             return True
         else:
             return False
@@ -17928,7 +17934,7 @@ class PulseGeneratorDL(Standalone):
             namespaceprefix_,
             name_="PulseGeneratorDL",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -18222,8 +18228,8 @@ class PulseGenerator(Standalone):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA))$"]
     ]
 
-    def _hasContent(self):
-        if super(PulseGenerator, self)._hasContent():
+    def has__content(self):
+        if super(PulseGenerator, self).has__content():
             return True
         else:
             return False
@@ -18261,7 +18267,7 @@ class PulseGenerator(Standalone):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="PulseGenerator"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -18465,8 +18471,8 @@ class ReactionScheme(Base):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if self.anytypeobjs_ or super(ReactionScheme, self)._hasContent():
+    def has__content(self):
+        if self.anytypeobjs_ or super(ReactionScheme, self).has__content():
             return True
         else:
             return False
@@ -18504,7 +18510,7 @@ class ReactionScheme(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="ReactionScheme"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -18687,8 +18693,8 @@ class ExtracellularPropertiesLocal(Base):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if self.species or super(ExtracellularPropertiesLocal, self)._hasContent():
+    def has__content(self):
+        if self.species or super(ExtracellularPropertiesLocal, self).has__content():
             return True
         else:
             return False
@@ -18733,7 +18739,7 @@ class ExtracellularPropertiesLocal(Base):
             namespaceprefix_,
             name_="ExtracellularPropertiesLocal",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -18902,8 +18908,8 @@ class ExtracellularProperties(Base):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if self.species or super(ExtracellularProperties, self)._hasContent():
+    def has__content(self):
+        if self.species or super(ExtracellularProperties, self).has__content():
             return True
         else:
             return False
@@ -18945,7 +18951,7 @@ class ExtracellularProperties(Base):
             namespaceprefix_,
             name_="ExtracellularProperties",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -19138,11 +19144,11 @@ class IntracellularProperties(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.species
             or self.resistivities
-            or super(IntracellularProperties, self)._hasContent()
+            or super(IntracellularProperties, self).has__content()
         ):
             return True
         else:
@@ -19185,7 +19191,7 @@ class IntracellularProperties(BaseWithoutId):
             namespaceprefix_,
             name_="IntracellularProperties",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -19488,8 +19494,8 @@ class Species(Base):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM))$"]
     ]
 
-    def _hasContent(self):
-        if super(Species, self)._hasContent():
+    def has__content(self):
+        if super(Species, self).has__content():
             return True
         else:
             return False
@@ -19527,7 +19533,7 @@ class Species(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Species"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -19782,8 +19788,8 @@ class InhomogeneousValue(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(InhomogeneousValue, self)._hasContent():
+    def has__content(self):
+        if super(InhomogeneousValue, self).has__content():
             return True
         else:
             return False
@@ -19825,7 +19831,7 @@ class InhomogeneousValue(BaseWithoutId):
             namespaceprefix_,
             name_="InhomogeneousValue",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -20096,8 +20102,8 @@ class ChannelDensityGHK2(Base):
         ]
     ]
 
-    def _hasContent(self):
-        if super(ChannelDensityGHK2, self)._hasContent():
+    def has__content(self):
+        if super(ChannelDensityGHK2, self).has__content():
             return True
         else:
             return False
@@ -20139,7 +20145,7 @@ class ChannelDensityGHK2(Base):
             namespaceprefix_,
             name_="ChannelDensityGHK2",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -20467,8 +20473,8 @@ class ChannelDensityGHK(Base):
         ]
     ]
 
-    def _hasContent(self):
-        if super(ChannelDensityGHK, self)._hasContent():
+    def has__content(self):
+        if super(ChannelDensityGHK, self).has__content():
             return True
         else:
             return False
@@ -20510,7 +20516,7 @@ class ChannelDensityGHK(Base):
             namespaceprefix_,
             name_="ChannelDensityGHK",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -20861,8 +20867,8 @@ class ChannelDensityNernst(Base):
         ]
     ]
 
-    def _hasContent(self):
-        if self.variable_parameters or super(ChannelDensityNernst, self)._hasContent():
+    def has__content(self):
+        if self.variable_parameters or super(ChannelDensityNernst, self).has__content():
             return True
         else:
             return False
@@ -20904,7 +20910,7 @@ class ChannelDensityNernst(Base):
             namespaceprefix_,
             name_="ChannelDensityNernst",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -21367,8 +21373,8 @@ class ChannelDensity(Base):
                 return False
             pass
 
-    def _hasContent(self):
-        if self.variable_parameters or super(ChannelDensity, self)._hasContent():
+    def has__content(self):
+        if self.variable_parameters or super(ChannelDensity, self).has__content():
             return True
         else:
             return False
@@ -21406,7 +21412,7 @@ class ChannelDensity(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="ChannelDensity"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -21758,10 +21764,10 @@ class ChannelDensityNonUniformGHK(Base):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.variable_parameters
-            or super(ChannelDensityNonUniformGHK, self)._hasContent()
+            or super(ChannelDensityNonUniformGHK, self).has__content()
         ):
             return True
         else:
@@ -21807,7 +21813,7 @@ class ChannelDensityNonUniformGHK(Base):
             namespaceprefix_,
             name_="ChannelDensityNonUniformGHK",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -22061,10 +22067,10 @@ class ChannelDensityNonUniformNernst(Base):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.variable_parameters
-            or super(ChannelDensityNonUniformNernst, self)._hasContent()
+            or super(ChannelDensityNonUniformNernst, self).has__content()
         ):
             return True
         else:
@@ -22112,7 +22118,7 @@ class ChannelDensityNonUniformNernst(Base):
             namespaceprefix_,
             name_="ChannelDensityNonUniformNernst",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -22407,10 +22413,10 @@ class ChannelDensityNonUniform(Base):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
     ]
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.variable_parameters
-            or super(ChannelDensityNonUniform, self)._hasContent()
+            or super(ChannelDensityNonUniform, self).has__content()
         ):
             return True
         else:
@@ -22453,7 +22459,7 @@ class ChannelDensityNonUniform(Base):
             namespaceprefix_,
             name_="ChannelDensityNonUniform",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -22816,8 +22822,8 @@ class ChannelPopulation(Base):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
     ]
 
-    def _hasContent(self):
-        if self.variable_parameters or super(ChannelPopulation, self)._hasContent():
+    def has__content(self):
+        if self.variable_parameters or super(ChannelPopulation, self).has__content():
             return True
         else:
             return False
@@ -22859,7 +22865,7 @@ class ChannelPopulation(Base):
             namespaceprefix_,
             name_="ChannelPopulation",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -23216,8 +23222,8 @@ class Resistivity(BaseWithoutId):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
-        if super(Resistivity, self)._hasContent():
+    def has__content(self):
+        if super(Resistivity, self).has__content():
             return True
         else:
             return False
@@ -23255,7 +23261,7 @@ class Resistivity(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Resistivity"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -23499,8 +23505,8 @@ class InitMembPotential(BaseWithoutId):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
-        if super(InitMembPotential, self)._hasContent():
+    def has__content(self):
+        if super(InitMembPotential, self).has__content():
             return True
         else:
             return False
@@ -23542,7 +23548,7 @@ class InitMembPotential(BaseWithoutId):
             namespaceprefix_,
             name_="InitMembPotential",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -23796,8 +23802,8 @@ class SpecificCapacitance(BaseWithoutId):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
-        if super(SpecificCapacitance, self)._hasContent():
+    def has__content(self):
+        if super(SpecificCapacitance, self).has__content():
             return True
         else:
             return False
@@ -23839,7 +23845,7 @@ class SpecificCapacitance(BaseWithoutId):
             namespaceprefix_,
             name_="SpecificCapacitance",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -24089,8 +24095,8 @@ class SpikeThresh(BaseWithoutId):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
-        if super(SpikeThresh, self)._hasContent():
+    def has__content(self):
+        if super(SpikeThresh, self).has__content():
             return True
         else:
             return False
@@ -24128,7 +24134,7 @@ class SpikeThresh(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="SpikeThresh"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -24525,7 +24531,7 @@ class MembraneProperties(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.channel_populations
             or self.channel_densities
@@ -24539,7 +24545,7 @@ class MembraneProperties(BaseWithoutId):
             or self.spike_threshes
             or self.specific_capacitances
             or self.init_memb_potentials
-            or super(MembraneProperties, self)._hasContent()
+            or super(MembraneProperties, self).has__content()
         ):
             return True
         else:
@@ -24582,7 +24588,7 @@ class MembraneProperties(BaseWithoutId):
             namespaceprefix_,
             name_="MembraneProperties",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -25098,12 +25104,12 @@ class BiophysicalProperties2CaPools(Standalone):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.membrane_properties2_ca_pools is not None
             or self.intracellular_properties2_ca_pools is not None
             or self.extracellular_properties is not None
-            or super(BiophysicalProperties2CaPools, self)._hasContent()
+            or super(BiophysicalProperties2CaPools, self).has__content()
         ):
             return True
         else:
@@ -25149,7 +25155,7 @@ class BiophysicalProperties2CaPools(Standalone):
             namespaceprefix_,
             name_="BiophysicalProperties2CaPools",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -25411,12 +25417,12 @@ class BiophysicalProperties(Standalone):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.membrane_properties is not None
             or self.intracellular_properties is not None
             or self.extracellular_properties is not None
-            or super(BiophysicalProperties, self)._hasContent()
+            or super(BiophysicalProperties, self).has__content()
         ):
             return True
         else:
@@ -25459,7 +25465,7 @@ class BiophysicalProperties(Standalone):
             namespaceprefix_,
             name_="BiophysicalProperties",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -25689,8 +25695,8 @@ class SegmentEndPoint(BaseWithoutId):
                 return False
             pass
 
-    def _hasContent(self):
-        if super(SegmentEndPoint, self)._hasContent():
+    def has__content(self):
+        if super(SegmentEndPoint, self).has__content():
             return True
         else:
             return False
@@ -25728,7 +25734,7 @@ class SegmentEndPoint(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="SegmentEndPoint"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -25884,11 +25890,11 @@ class SubTree(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.from_ is not None
             or self.to is not None
-            or super(SubTree, self)._hasContent()
+            or super(SubTree, self).has__content()
         ):
             return True
         else:
@@ -25927,7 +25933,7 @@ class SubTree(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="SubTree"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -26107,11 +26113,11 @@ class Path(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.from_ is not None
             or self.to is not None
-            or super(Path, self)._hasContent()
+            or super(Path, self).has__content()
         ):
             return True
         else:
@@ -26150,7 +26156,7 @@ class Path(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Path"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -26346,8 +26352,8 @@ class Include(BaseWithoutId):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
-        if super(Include, self)._hasContent():
+    def has__content(self):
+        if super(Include, self).has__content():
             return True
         else:
             return False
@@ -26385,7 +26391,7 @@ class Include(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Include"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -26550,8 +26556,8 @@ class Member(BaseWithoutId):
                 return False
             pass
 
-    def _hasContent(self):
-        if super(Member, self)._hasContent():
+    def has__content(self):
+        if super(Member, self).has__content():
             return True
         else:
             return False
@@ -26589,7 +26595,7 @@ class Member(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Member"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -26726,8 +26732,8 @@ class DistalDetails(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(DistalDetails, self)._hasContent():
+    def has__content(self):
+        if super(DistalDetails, self).has__content():
             return True
         else:
             return False
@@ -26765,7 +26771,7 @@ class DistalDetails(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="DistalDetails"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -26910,8 +26916,8 @@ class ProximalDetails(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(ProximalDetails, self)._hasContent():
+    def has__content(self):
+        if super(ProximalDetails, self).has__content():
             return True
         else:
             return False
@@ -26949,7 +26955,7 @@ class ProximalDetails(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="ProximalDetails"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -27148,11 +27154,11 @@ class InhomogeneousParameter(Base):
                 )
                 result = False
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.proximal is not None
             or self.distal is not None
-            or super(InhomogeneousParameter, self)._hasContent()
+            or super(InhomogeneousParameter, self).has__content()
         ):
             return True
         else:
@@ -27195,7 +27201,7 @@ class InhomogeneousParameter(Base):
             namespaceprefix_,
             name_="InhomogeneousParameter",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -27604,7 +27610,7 @@ class SegmentGroup(Base):
 
     validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.notes is not None
             or self.properties
@@ -27614,7 +27620,7 @@ class SegmentGroup(Base):
             or self.paths
             or self.sub_trees
             or self.inhomogeneous_parameters
-            or super(SegmentGroup, self)._hasContent()
+            or super(SegmentGroup, self).has__content()
         ):
             return True
         else:
@@ -27653,7 +27659,7 @@ class SegmentGroup(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="SegmentGroup"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -28064,8 +28070,8 @@ class Point3DWithDiam(BaseWithoutId):
                 )
                 result = False
 
-    def _hasContent(self):
-        if super(Point3DWithDiam, self)._hasContent():
+    def has__content(self):
+        if super(Point3DWithDiam, self).has__content():
             return True
         else:
             return False
@@ -28103,7 +28109,7 @@ class Point3DWithDiam(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Point3DWithDiam"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -28370,8 +28376,8 @@ class SegmentParent(BaseWithoutId):
                 )
                 result = False
 
-    def _hasContent(self):
-        if super(SegmentParent, self)._hasContent():
+    def has__content(self):
+        if super(SegmentParent, self).has__content():
             return True
         else:
             return False
@@ -28409,7 +28415,7 @@ class SegmentParent(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="SegmentParent"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -28639,12 +28645,12 @@ class Segment(BaseNonNegativeIntegerId):
 
     validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.parent is not None
             or self.proximal is not None
             or self.distal is not None
-            or super(Segment, self)._hasContent()
+            or super(Segment, self).has__content()
         ):
             return True
         else:
@@ -28683,7 +28689,7 @@ class Segment(BaseNonNegativeIntegerId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Segment"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -29059,11 +29065,11 @@ class Morphology(Standalone):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.segments
             or self.segment_groups
-            or super(Morphology, self)._hasContent()
+            or super(Morphology, self).has__content()
         ):
             return True
         else:
@@ -29102,7 +29108,7 @@ class Morphology(Standalone):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Morphology"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -29320,8 +29326,8 @@ class BaseCell(Standalone):
 
     validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
-    def _hasContent(self):
-        if super(BaseCell, self)._hasContent():
+    def has__content(self):
+        if super(BaseCell, self).has__content():
             return True
         else:
             return False
@@ -29359,7 +29365,7 @@ class BaseCell(Standalone):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="BaseCell"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -29628,8 +29634,8 @@ class PlasticityMechanism(BaseWithoutId):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
     ]
 
-    def _hasContent(self):
-        if super(PlasticityMechanism, self)._hasContent():
+    def has__content(self):
+        if super(PlasticityMechanism, self).has__content():
             return True
         else:
             return False
@@ -29671,7 +29677,7 @@ class PlasticityMechanism(BaseWithoutId):
             namespaceprefix_,
             name_="PlasticityMechanism",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -30037,8 +30043,8 @@ class BlockMechanism(BaseWithoutId):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
     ]
 
-    def _hasContent(self):
-        if super(BlockMechanism, self)._hasContent():
+    def has__content(self):
+        if super(BlockMechanism, self).has__content():
             return True
         else:
             return False
@@ -30076,7 +30082,7 @@ class BlockMechanism(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="BlockMechanism"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -30355,8 +30361,8 @@ class BaseSynapse(Standalone):
 
     validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
-    def _hasContent(self):
-        if super(BaseSynapse, self)._hasContent():
+    def has__content(self):
+        if super(BaseSynapse, self).has__content():
             return True
         else:
             return False
@@ -30394,7 +30400,7 @@ class BaseSynapse(Standalone):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="BaseSynapse"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -30722,8 +30728,8 @@ class FixedFactorConcentrationModel(Standalone):
         ]
     ]
 
-    def _hasContent(self):
-        if super(FixedFactorConcentrationModel, self)._hasContent():
+    def has__content(self):
+        if super(FixedFactorConcentrationModel, self).has__content():
             return True
         else:
             return False
@@ -30768,7 +30774,7 @@ class FixedFactorConcentrationModel(Standalone):
             namespaceprefix_,
             name_="FixedFactorConcentrationModel",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -31161,8 +31167,8 @@ class DecayingPoolConcentrationModel(Standalone):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(m|cm|um))$"]
     ]
 
-    def _hasContent(self):
-        if super(DecayingPoolConcentrationModel, self)._hasContent():
+    def has__content(self):
+        if super(DecayingPoolConcentrationModel, self).has__content():
             return True
         else:
             return False
@@ -31209,7 +31215,7 @@ class DecayingPoolConcentrationModel(Standalone):
             namespaceprefix_,
             name_="DecayingPoolConcentrationModel",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -31570,8 +31576,8 @@ class HHTime(BaseWithoutId):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
     ]
 
-    def _hasContent(self):
-        if super(HHTime, self)._hasContent():
+    def has__content(self):
+        if super(HHTime, self).has__content():
             return True
         else:
             return False
@@ -31609,7 +31615,7 @@ class HHTime(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="HHTime"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -31908,8 +31914,8 @@ class HHVariable(BaseWithoutId):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
     ]
 
-    def _hasContent(self):
-        if super(HHVariable, self)._hasContent():
+    def has__content(self):
+        if super(HHVariable, self).has__content():
             return True
         else:
             return False
@@ -31947,7 +31953,7 @@ class HHVariable(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="HHVariable"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -32252,8 +32258,8 @@ class HHRate(BaseWithoutId):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
     ]
 
-    def _hasContent(self):
-        if super(HHRate, self)._hasContent():
+    def has__content(self):
+        if super(HHRate, self).has__content():
             return True
         else:
             return False
@@ -32291,7 +32297,7 @@ class HHRate(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="HHRate"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -32598,13 +32604,13 @@ class GateFractionalSubgate(Base):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?)$"]
     ]
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.notes is not None
             or self.q10_settings is not None
             or self.steady_state is not None
             or self.time_course is not None
-            or super(GateFractionalSubgate, self)._hasContent()
+            or super(GateFractionalSubgate, self).has__content()
         ):
             return True
         else:
@@ -32647,7 +32653,7 @@ class GateFractionalSubgate(Base):
             namespaceprefix_,
             name_="GateFractionalSubgate",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -33001,12 +33007,12 @@ class GateFractional(Base):
                 return False
             pass
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.notes is not None
             or self.q10_settings is not None
             or self.sub_gates
-            or super(GateFractional, self)._hasContent()
+            or super(GateFractional, self).has__content()
         ):
             return True
         else:
@@ -33045,7 +33051,7 @@ class GateFractional(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="GateFractional"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -33340,11 +33346,11 @@ class GateHHInstantaneous(Base):
                 return False
             pass
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.notes is not None
             or self.steady_state is not None
-            or super(GateHHInstantaneous, self)._hasContent()
+            or super(GateHHInstantaneous, self).has__content()
         ):
             return True
         else:
@@ -33387,7 +33393,7 @@ class GateHHInstantaneous(Base):
             namespaceprefix_,
             name_="GateHHInstantaneous",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -33695,14 +33701,14 @@ class GateHHRatesInf(Base):
                 return False
             pass
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.notes is not None
             or self.q10_settings is not None
             or self.forward_rate is not None
             or self.reverse_rate is not None
             or self.steady_state is not None
-            or super(GateHHRatesInf, self)._hasContent()
+            or super(GateHHRatesInf, self).has__content()
         ):
             return True
         else:
@@ -33741,7 +33747,7 @@ class GateHHRatesInf(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="GateHHRatesInf"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -34115,14 +34121,14 @@ class GateHHRatesTau(Base):
                 return False
             pass
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.notes is not None
             or self.q10_settings is not None
             or self.forward_rate is not None
             or self.reverse_rate is not None
             or self.time_course is not None
-            or super(GateHHRatesTau, self)._hasContent()
+            or super(GateHHRatesTau, self).has__content()
         ):
             return True
         else:
@@ -34161,7 +34167,7 @@ class GateHHRatesTau(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="GateHHRatesTau"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -34546,7 +34552,7 @@ class GateHHRatesTauInf(Base):
                 return False
             pass
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.notes is not None
             or self.q10_settings is not None
@@ -34554,7 +34560,7 @@ class GateHHRatesTauInf(Base):
             or self.reverse_rate is not None
             or self.time_course is not None
             or self.steady_state is not None
-            or super(GateHHRatesTauInf, self)._hasContent()
+            or super(GateHHRatesTauInf, self).has__content()
         ):
             return True
         else:
@@ -34597,7 +34603,7 @@ class GateHHRatesTauInf(Base):
             namespaceprefix_,
             name_="GateHHRatesTauInf",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -34988,13 +34994,13 @@ class GateHHTauInf(Base):
                 return False
             pass
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.notes is not None
             or self.q10_settings is not None
             or self.time_course is not None
             or self.steady_state is not None
-            or super(GateHHTauInf, self)._hasContent()
+            or super(GateHHTauInf, self).has__content()
         ):
             return True
         else:
@@ -35033,7 +35039,7 @@ class GateHHTauInf(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="GateHHTauInf"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -35372,13 +35378,13 @@ class GateHHRates(Base):
                 return False
             pass
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.notes is not None
             or self.q10_settings is not None
             or self.forward_rate is not None
             or self.reverse_rate is not None
-            or super(GateHHRates, self)._hasContent()
+            or super(GateHHRates, self).has__content()
         ):
             return True
         else:
@@ -35417,7 +35423,7 @@ class GateHHRates(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="GateHHRates"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -35834,7 +35840,7 @@ class GateHHUndetermined(Base):
                 )
                 result = False
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.notes is not None
             or self.q10_settings is not None
@@ -35843,7 +35849,7 @@ class GateHHUndetermined(Base):
             or self.time_course is not None
             or self.steady_state is not None
             or self.sub_gates
-            or super(GateHHUndetermined, self)._hasContent()
+            or super(GateHHUndetermined, self).has__content()
         ):
             return True
         else:
@@ -35886,7 +35892,7 @@ class GateHHUndetermined(Base):
             namespaceprefix_,
             name_="GateHHUndetermined",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -36378,7 +36384,7 @@ class GateKS(Base):
                 return False
             pass
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.notes is not None
             or self.q10_settings is not None
@@ -36387,7 +36393,7 @@ class GateKS(Base):
             or self.forward_transition
             or self.reverse_transition
             or self.tau_inf_transition
-            or super(GateKS, self)._hasContent()
+            or super(GateKS, self).has__content()
         ):
             return True
         else:
@@ -36426,7 +36432,7 @@ class GateKS(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="GateKS"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -36789,11 +36795,11 @@ class TauInfTransition(Base):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.steady_state is not None
             or self.time_course is not None
-            or super(TauInfTransition, self)._hasContent()
+            or super(TauInfTransition, self).has__content()
         ):
             return True
         else:
@@ -36836,7 +36842,7 @@ class TauInfTransition(Base):
             namespaceprefix_,
             name_="TauInfTransition",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -37093,8 +37099,8 @@ class ReverseTransition(Base):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
-        if self.anytypeobjs_ or super(ReverseTransition, self)._hasContent():
+    def has__content(self):
+        if self.anytypeobjs_ or super(ReverseTransition, self).has__content():
             return True
         else:
             return False
@@ -37136,7 +37142,7 @@ class ReverseTransition(Base):
             namespaceprefix_,
             name_="ReverseTransition",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -37353,8 +37359,8 @@ class ForwardTransition(Base):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
-        if self.anytypeobjs_ or super(ForwardTransition, self)._hasContent():
+    def has__content(self):
+        if self.anytypeobjs_ or super(ForwardTransition, self).has__content():
             return True
         else:
             return False
@@ -37396,7 +37402,7 @@ class ForwardTransition(Base):
             namespaceprefix_,
             name_="ForwardTransition",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -37561,8 +37567,8 @@ class OpenState(Base):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(OpenState, self)._hasContent():
+    def has__content(self):
+        if super(OpenState, self).has__content():
             return True
         else:
             return False
@@ -37600,7 +37606,7 @@ class OpenState(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="OpenState"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -37710,8 +37716,8 @@ class ClosedState(Base):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(ClosedState, self)._hasContent():
+    def has__content(self):
+        if super(ClosedState, self).has__content():
             return True
         else:
             return False
@@ -37749,7 +37755,7 @@ class ClosedState(Base):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="ClosedState"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -37957,8 +37963,8 @@ class Q10ConductanceScaling(BaseWithoutId):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(degC))$"]
     ]
 
-    def _hasContent(self):
-        if super(Q10ConductanceScaling, self)._hasContent():
+    def has__content(self):
+        if super(Q10ConductanceScaling, self).has__content():
             return True
         else:
             return False
@@ -38000,7 +38006,7 @@ class Q10ConductanceScaling(BaseWithoutId):
             namespaceprefix_,
             name_="Q10ConductanceScaling",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -38323,8 +38329,8 @@ class IonChannelKS(Standalone):
 
     validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
-    def _hasContent(self):
-        if self.gate_kses or super(IonChannelKS, self)._hasContent():
+    def has__content(self):
+        if self.gate_kses or super(IonChannelKS, self).has__content():
             return True
         else:
             return False
@@ -38362,7 +38368,7 @@ class IonChannelKS(Standalone):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="IonChannelKS"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -38634,10 +38640,10 @@ class IonChannelScalable(Standalone):
 
     validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.q10_conductance_scalings
-            or super(IonChannelScalable, self)._hasContent()
+            or super(IonChannelScalable, self).has__content()
         ):
             return True
         else:
@@ -38680,7 +38686,7 @@ class IonChannelScalable(Standalone):
             namespaceprefix_,
             name_="IonChannelScalable",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -40143,7 +40149,7 @@ class NeuroMLDocument(Standalone):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.includes
             or self.extracellular_properties
@@ -40212,7 +40218,7 @@ class NeuroMLDocument(Standalone):
             or self.SpikeSourcePoisson
             or self.networks
             or self.ComponentType
-            or super(NeuroMLDocument, self)._hasContent()
+            or super(NeuroMLDocument, self).has__content()
         ):
             return True
         else:
@@ -40251,7 +40257,7 @@ class NeuroMLDocument(Standalone):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="NeuroMLDocument"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -42400,8 +42406,8 @@ class NamedDimensionalVariable(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(NamedDimensionalVariable, self)._hasContent():
+    def has__content(self):
+        if super(NamedDimensionalVariable, self).has__content():
             return True
         else:
             return False
@@ -42443,7 +42449,7 @@ class NamedDimensionalVariable(BaseWithoutId):
             namespaceprefix_,
             name_="NamedDimensionalVariable",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -42680,8 +42686,8 @@ class NamedDimensionalType(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(NamedDimensionalType, self)._hasContent():
+    def has__content(self):
+        if super(NamedDimensionalType, self).has__content():
             return True
         else:
             return False
@@ -42723,7 +42729,7 @@ class NamedDimensionalType(BaseWithoutId):
             namespaceprefix_,
             name_="NamedDimensionalType",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -42934,8 +42940,8 @@ class Exposure(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(Exposure, self)._hasContent():
+    def has__content(self):
+        if super(Exposure, self).has__content():
             return True
         else:
             return False
@@ -42973,7 +42979,7 @@ class Exposure(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Exposure"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -43195,8 +43201,8 @@ class Constant(BaseWithoutId):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*([_a-zA-Z0-9])*)$"]
     ]
 
-    def _hasContent(self):
-        if super(Constant, self)._hasContent():
+    def has__content(self):
+        if super(Constant, self).has__content():
             return True
         else:
             return False
@@ -43234,7 +43240,7 @@ class Constant(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Constant"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -43429,8 +43435,8 @@ class Annotation(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if self.anytypeobjs_ or super(Annotation, self)._hasContent():
+    def has__content(self):
+        if self.anytypeobjs_ or super(Annotation, self).has__content():
             return True
         else:
             return False
@@ -43468,7 +43474,7 @@ class Annotation(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Annotation"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -43596,8 +43602,8 @@ class Property(BaseWithoutId):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(Property, self)._hasContent():
+    def has__content(self):
+        if super(Property, self).has__content():
             return True
         else:
             return False
@@ -43635,7 +43641,7 @@ class Property(BaseWithoutId):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Property"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -43807,8 +43813,8 @@ class BasePynnSynapse(BaseSynapse):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(BasePynnSynapse, self)._hasContent():
+    def has__content(self):
+        if super(BasePynnSynapse, self).has__content():
             return True
         else:
             return False
@@ -43846,7 +43852,7 @@ class BasePynnSynapse(BaseSynapse):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="BasePynnSynapse"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -44046,8 +44052,8 @@ class basePyNNCell(BaseCell):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(basePyNNCell, self)._hasContent():
+    def has__content(self):
+        if super(basePyNNCell, self).has__content():
             return True
         else:
             return False
@@ -44085,7 +44091,7 @@ class basePyNNCell(BaseCell):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="basePyNNCell"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -44299,8 +44305,8 @@ class InputW(Input):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(InputW, self)._hasContent():
+    def has__content(self):
+        if super(InputW, self).has__content():
             return True
         else:
             return False
@@ -44338,7 +44344,7 @@ class InputW(Input):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="InputW"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -44545,12 +44551,12 @@ class ContinuousProjection(BaseProjection):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.continuous_connections
             or self.continuous_connection_instances
             or self.continuous_connection_instance_ws
-            or super(ContinuousProjection, self)._hasContent()
+            or super(ContinuousProjection, self).has__content()
         ):
             return True
         else:
@@ -44593,7 +44599,7 @@ class ContinuousProjection(BaseProjection):
             namespaceprefix_,
             name_="ContinuousProjection",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -44953,12 +44959,12 @@ class ElectricalProjection(BaseProjection):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.electrical_connections
             or self.electrical_connection_instances
             or self.electrical_connection_instance_ws
-            or super(ElectricalProjection, self)._hasContent()
+            or super(ElectricalProjection, self).has__content()
         ):
             return True
         else:
@@ -45001,7 +45007,7 @@ class ElectricalProjection(BaseProjection):
             namespaceprefix_,
             name_="ElectricalProjection",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -45403,8 +45409,8 @@ class BaseConnectionNewFormat(BaseConnection):
                 )
                 result = False
 
-    def _hasContent(self):
-        if super(BaseConnectionNewFormat, self)._hasContent():
+    def has__content(self):
+        if super(BaseConnectionNewFormat, self).has__content():
             return True
         else:
             return False
@@ -45446,7 +45452,7 @@ class BaseConnectionNewFormat(BaseConnection):
             namespaceprefix_,
             name_="BaseConnectionNewFormat",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -45827,8 +45833,8 @@ class BaseConnectionOldFormat(BaseConnection):
                 )
                 result = False
 
-    def _hasContent(self):
-        if super(BaseConnectionOldFormat, self)._hasContent():
+    def has__content(self):
+        if super(BaseConnectionOldFormat, self).has__content():
             return True
         else:
             return False
@@ -45870,7 +45876,7 @@ class BaseConnectionOldFormat(BaseConnection):
             namespaceprefix_,
             name_="BaseConnectionOldFormat",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -46218,11 +46224,11 @@ class Projection(BaseProjection):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.connections
             or self.connection_wds
-            or super(Projection, self)._hasContent()
+            or super(Projection, self).has__content()
         ):
             return True
         else:
@@ -46261,7 +46267,7 @@ class Projection(BaseProjection):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Projection"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -46596,8 +46602,8 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
     ]
 
-    def _hasContent(self):
-        if super(SpikeGeneratorRefPoisson, self)._hasContent():
+    def has__content(self):
+        if super(SpikeGeneratorRefPoisson, self).has__content():
             return True
         else:
             return False
@@ -46639,7 +46645,7 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
             namespaceprefix_,
             name_="SpikeGeneratorRefPoisson",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -46790,8 +46796,8 @@ class IntracellularProperties2CaPools(IntracellularProperties):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(IntracellularProperties2CaPools, self)._hasContent():
+    def has__content(self):
+        if super(IntracellularProperties2CaPools, self).has__content():
             return True
         else:
             return False
@@ -46838,7 +46844,7 @@ class IntracellularProperties2CaPools(IntracellularProperties):
             namespaceprefix_,
             name_="IntracellularProperties2CaPools",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -46985,8 +46991,8 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(ConcentrationModel_D, self)._hasContent():
+    def has__content(self):
+        if super(ConcentrationModel_D, self).has__content():
             return True
         else:
             return False
@@ -47028,7 +47034,7 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
             namespaceprefix_,
             name_="ConcentrationModel_D",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -47189,8 +47195,8 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(ChannelDensityNernstCa2, self)._hasContent():
+    def has__content(self):
+        if super(ChannelDensityNernstCa2, self).has__content():
             return True
         else:
             return False
@@ -47232,7 +47238,7 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
             namespaceprefix_,
             name_="ChannelDensityNernstCa2",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -47426,8 +47432,8 @@ class ChannelDensityVShift(ChannelDensity):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
     ]
 
-    def _hasContent(self):
-        if super(ChannelDensityVShift, self)._hasContent():
+    def has__content(self):
+        if super(ChannelDensityVShift, self).has__content():
             return True
         else:
             return False
@@ -47469,7 +47475,7 @@ class ChannelDensityVShift(ChannelDensity):
             namespaceprefix_,
             name_="ChannelDensityVShift",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -47660,10 +47666,10 @@ class MembraneProperties2CaPools(MembraneProperties):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.channel_density_nernst_ca2s
-            or super(MembraneProperties2CaPools, self)._hasContent()
+            or super(MembraneProperties2CaPools, self).has__content()
         ):
             return True
         else:
@@ -47706,7 +47712,7 @@ class MembraneProperties2CaPools(MembraneProperties):
             namespaceprefix_,
             name_="MembraneProperties2CaPools",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -47951,11 +47957,11 @@ class Cell(BaseCell):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.morphology is not None
             or self.biophysical_properties is not None
-            or super(Cell, self)._hasContent()
+            or super(Cell, self).has__content()
         ):
             return True
         else:
@@ -47994,7 +48000,7 @@ class Cell(BaseCell):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Cell"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -49025,7 +49031,8 @@ class Cell(BaseCell):
             if i not in new_includes:
                 new_includes.append(i)
         includes = set(new_includes)
-        seg_group.includes = list(includes)
+        # sorted
+        seg_group.includes = natsort.natsorted(includes, key=lambda x: x.segment_groups)
 
         # remove members that are included by included segment groups
         if len(includes) > 0 and len(members) > 0:
@@ -49037,7 +49044,8 @@ class Cell(BaseCell):
                 for i in members:
                     if i.segments not in all_segment_ids_in_group:
                         new_members.append(i)
-            seg_group.members = list(new_members)
+            # sorted
+            seg_group.members = natsort.natsorted(new_members, key=lambda x: x.segments)
 
     def set_spike_thresh(self, v, group_id="all"):
         """Set the spike threshold of the cell.
@@ -50233,8 +50241,8 @@ class PinskyRinzelCA3Cell(BaseCell):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(F_per_m2|uF_per_cm2))$"]
     ]
 
-    def _hasContent(self):
-        if super(PinskyRinzelCA3Cell, self)._hasContent():
+    def has__content(self):
+        if super(PinskyRinzelCA3Cell, self).has__content():
             return True
         else:
             return False
@@ -50276,7 +50284,7 @@ class PinskyRinzelCA3Cell(BaseCell):
             namespaceprefix_,
             name_="PinskyRinzelCA3Cell",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -50943,8 +50951,8 @@ class FitzHughNagumo1969Cell(BaseCell):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?)$"]
     ]
 
-    def _hasContent(self):
-        if super(FitzHughNagumo1969Cell, self)._hasContent():
+    def has__content(self):
+        if super(FitzHughNagumo1969Cell, self).has__content():
             return True
         else:
             return False
@@ -50986,7 +50994,7 @@ class FitzHughNagumo1969Cell(BaseCell):
             namespaceprefix_,
             name_="FitzHughNagumo1969Cell",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -51262,8 +51270,8 @@ class FitzHughNagumoCell(BaseCell):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?)$"]
     ]
 
-    def _hasContent(self):
-        if super(FitzHughNagumoCell, self)._hasContent():
+    def has__content(self):
+        if super(FitzHughNagumoCell, self).has__content():
             return True
         else:
             return False
@@ -51305,7 +51313,7 @@ class FitzHughNagumoCell(BaseCell):
             namespaceprefix_,
             name_="FitzHughNagumoCell",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -51503,8 +51511,8 @@ class BaseCellMembPotCap(BaseCell):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(F|uF|nF|pF))$"]
     ]
 
-    def _hasContent(self):
-        if super(BaseCellMembPotCap, self)._hasContent():
+    def has__content(self):
+        if super(BaseCellMembPotCap, self).has__content():
             return True
         else:
             return False
@@ -51546,7 +51554,7 @@ class BaseCellMembPotCap(BaseCell):
             namespaceprefix_,
             name_="BaseCellMembPotCap",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -51821,8 +51829,8 @@ class IzhikevichCell(BaseCell):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?)$"]
     ]
 
-    def _hasContent(self):
-        if super(IzhikevichCell, self)._hasContent():
+    def has__content(self):
+        if super(IzhikevichCell, self).has__content():
             return True
         else:
             return False
@@ -51860,7 +51868,7 @@ class IzhikevichCell(BaseCell):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="IzhikevichCell"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -52253,8 +52261,8 @@ class IafCell(BaseCell):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS))$"]
     ]
 
-    def _hasContent(self):
-        if super(IafCell, self)._hasContent():
+    def has__content(self):
+        if super(IafCell, self).has__content():
             return True
         else:
             return False
@@ -52292,7 +52300,7 @@ class IafCell(BaseCell):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="IafCell"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -52663,8 +52671,8 @@ class IafTauCell(BaseCell):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
     ]
 
-    def _hasContent(self):
-        if super(IafTauCell, self)._hasContent():
+    def has__content(self):
+        if super(IafTauCell, self).has__content():
             return True
         else:
             return False
@@ -52702,7 +52710,7 @@ class IafTauCell(BaseCell):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="IafTauCell"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -53065,8 +53073,8 @@ class GradedSynapse(BaseSynapse):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(per_s|per_ms|Hz))$"]
     ]
 
-    def _hasContent(self):
-        if super(GradedSynapse, self)._hasContent():
+    def has__content(self):
+        if super(GradedSynapse, self).has__content():
             return True
         else:
             return False
@@ -53104,7 +53112,7 @@ class GradedSynapse(BaseSynapse):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="GradedSynapse"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -53385,8 +53393,8 @@ class LinearGradedSynapse(BaseSynapse):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS))$"]
     ]
 
-    def _hasContent(self):
-        if super(LinearGradedSynapse, self)._hasContent():
+    def has__content(self):
+        if super(LinearGradedSynapse, self).has__content():
             return True
         else:
             return False
@@ -53428,7 +53436,7 @@ class LinearGradedSynapse(BaseSynapse):
             namespaceprefix_,
             name_="LinearGradedSynapse",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -53579,8 +53587,8 @@ class SilentSynapse(BaseSynapse):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(SilentSynapse, self)._hasContent():
+    def has__content(self):
+        if super(SilentSynapse, self).has__content():
             return True
         else:
             return False
@@ -53618,7 +53626,7 @@ class SilentSynapse(BaseSynapse):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="SilentSynapse"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -53788,8 +53796,8 @@ class GapJunction(BaseSynapse):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS))$"]
     ]
 
-    def _hasContent(self):
-        if super(GapJunction, self)._hasContent():
+    def has__content(self):
+        if super(GapJunction, self).has__content():
             return True
         else:
             return False
@@ -53827,7 +53835,7 @@ class GapJunction(BaseSynapse):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="GapJunction"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -53983,8 +53991,8 @@ class BaseCurrentBasedSynapse(BaseSynapse):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(BaseCurrentBasedSynapse, self)._hasContent():
+    def has__content(self):
+        if super(BaseCurrentBasedSynapse, self).has__content():
             return True
         else:
             return False
@@ -54026,7 +54034,7 @@ class BaseCurrentBasedSynapse(BaseSynapse):
             namespaceprefix_,
             name_="BaseCurrentBasedSynapse",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -54183,8 +54191,8 @@ class BaseVoltageDepSynapse(BaseSynapse):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(BaseVoltageDepSynapse, self)._hasContent():
+    def has__content(self):
+        if super(BaseVoltageDepSynapse, self).has__content():
             return True
         else:
             return False
@@ -54226,7 +54234,7 @@ class BaseVoltageDepSynapse(BaseSynapse):
             namespaceprefix_,
             name_="BaseVoltageDepSynapse",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -54646,7 +54654,7 @@ class IonChannel(IonChannelScalable):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(S|mS|uS|nS|pS))$"]
     ]
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.gates
             or self.gate_hh_rates
@@ -54656,7 +54664,7 @@ class IonChannel(IonChannelScalable):
             or self.gate_h_hrates_tau_infs
             or self.gate_hh_instantaneouses
             or self.gate_fractionals
-            or super(IonChannel, self)._hasContent()
+            or super(IonChannel, self).has__content()
         ):
             return True
         else:
@@ -54695,7 +54703,7 @@ class IonChannel(IonChannelScalable):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="IonChannel"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -55095,8 +55103,8 @@ class ConditionalDerivedVariable(NamedDimensionalVariable):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if self.Case or super(ConditionalDerivedVariable, self)._hasContent():
+    def has__content(self):
+        if self.Case or super(ConditionalDerivedVariable, self).has__content():
             return True
         else:
             return False
@@ -55138,7 +55146,7 @@ class ConditionalDerivedVariable(NamedDimensionalVariable):
             namespaceprefix_,
             name_="ConditionalDerivedVariable",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -55288,8 +55296,8 @@ class StateVariable(NamedDimensionalVariable):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(StateVariable, self)._hasContent():
+    def has__content(self):
+        if super(StateVariable, self).has__content():
             return True
         else:
             return False
@@ -55327,7 +55335,7 @@ class StateVariable(NamedDimensionalVariable):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="StateVariable"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -55456,8 +55464,8 @@ class DerivedVariable(NamedDimensionalVariable):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(DerivedVariable, self)._hasContent():
+    def has__content(self):
+        if super(DerivedVariable, self).has__content():
             return True
         else:
             return False
@@ -55495,7 +55503,7 @@ class DerivedVariable(NamedDimensionalVariable):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="DerivedVariable"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -55648,8 +55656,8 @@ class Requirement(NamedDimensionalType):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(Requirement, self)._hasContent():
+    def has__content(self):
+        if super(Requirement, self).has__content():
             return True
         else:
             return False
@@ -55687,7 +55695,7 @@ class Requirement(NamedDimensionalType):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Requirement"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -55815,8 +55823,8 @@ class LEMS_Property(NamedDimensionalType):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(LEMS_Property, self)._hasContent():
+    def has__content(self):
+        if super(LEMS_Property, self).has__content():
             return True
         else:
             return False
@@ -55854,7 +55862,7 @@ class LEMS_Property(NamedDimensionalType):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="LEMS_Property"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -55993,8 +56001,8 @@ class DerivedParameter(NamedDimensionalType):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(DerivedParameter, self)._hasContent():
+    def has__content(self):
+        if super(DerivedParameter, self).has__content():
             return True
         else:
             return False
@@ -56036,7 +56044,7 @@ class DerivedParameter(NamedDimensionalType):
             namespaceprefix_,
             name_="DerivedParameter",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -56175,8 +56183,8 @@ class Parameter(NamedDimensionalType):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(Parameter, self)._hasContent():
+    def has__content(self):
+        if super(Parameter, self).has__content():
             return True
         else:
             return False
@@ -56214,7 +56222,7 @@ class Parameter(NamedDimensionalType):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Parameter"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -56337,8 +56345,8 @@ class AlphaCurrSynapse(BasePynnSynapse):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(AlphaCurrSynapse, self)._hasContent():
+    def has__content(self):
+        if super(AlphaCurrSynapse, self).has__content():
             return True
         else:
             return False
@@ -56380,7 +56388,7 @@ class AlphaCurrSynapse(BasePynnSynapse):
             namespaceprefix_,
             name_="AlphaCurrSynapse",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -56512,8 +56520,8 @@ class ExpCurrSynapse(BasePynnSynapse):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(ExpCurrSynapse, self)._hasContent():
+    def has__content(self):
+        if super(ExpCurrSynapse, self).has__content():
             return True
         else:
             return False
@@ -56551,7 +56559,7 @@ class ExpCurrSynapse(BasePynnSynapse):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="ExpCurrSynapse"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -56686,8 +56694,8 @@ class AlphaCondSynapse(BasePynnSynapse):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(AlphaCondSynapse, self)._hasContent():
+    def has__content(self):
+        if super(AlphaCondSynapse, self).has__content():
             return True
         else:
             return False
@@ -56729,7 +56737,7 @@ class AlphaCondSynapse(BasePynnSynapse):
             namespaceprefix_,
             name_="AlphaCondSynapse",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -56880,8 +56888,8 @@ class ExpCondSynapse(BasePynnSynapse):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(ExpCondSynapse, self)._hasContent():
+    def has__content(self):
+        if super(ExpCondSynapse, self).has__content():
             return True
         else:
             return False
@@ -56919,7 +56927,7 @@ class ExpCondSynapse(BasePynnSynapse):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="ExpCondSynapse"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -57151,8 +57159,8 @@ class HH_cond_exp(basePyNNCell):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(HH_cond_exp, self)._hasContent():
+    def has__content(self):
+        if super(HH_cond_exp, self).has__content():
             return True
         else:
             return False
@@ -57190,7 +57198,7 @@ class HH_cond_exp(basePyNNCell):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="HH_cond_exp"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -57502,8 +57510,8 @@ class basePyNNIaFCell(basePyNNCell):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(basePyNNIaFCell, self)._hasContent():
+    def has__content(self):
+        if super(basePyNNIaFCell, self).has__content():
             return True
         else:
             return False
@@ -57541,7 +57549,7 @@ class basePyNNIaFCell(basePyNNCell):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="basePyNNIaFCell"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -57808,8 +57816,8 @@ class ContinuousConnection(BaseConnectionNewFormat):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
-        if super(ContinuousConnection, self)._hasContent():
+    def has__content(self):
+        if super(ContinuousConnection, self).has__content():
             return True
         else:
             return False
@@ -57851,7 +57859,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
             namespaceprefix_,
             name_="ContinuousConnection",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -58181,8 +58189,8 @@ class ElectricalConnection(BaseConnectionNewFormat):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
-        if super(ElectricalConnection, self)._hasContent():
+    def has__content(self):
+        if super(ElectricalConnection, self).has__content():
             return True
         else:
             return False
@@ -58224,7 +58232,7 @@ class ElectricalConnection(BaseConnectionNewFormat):
             namespaceprefix_,
             name_="ElectricalConnection",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -58533,8 +58541,8 @@ class ConnectionWD(BaseConnectionOldFormat):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
     ]
 
-    def _hasContent(self):
-        if super(ConnectionWD, self)._hasContent():
+    def has__content(self):
+        if super(ConnectionWD, self).has__content():
             return True
         else:
             return False
@@ -58572,7 +58580,7 @@ class ConnectionWD(BaseConnectionOldFormat):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="ConnectionWD"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -58852,8 +58860,8 @@ class Connection(BaseConnectionOldFormat):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(Connection, self)._hasContent():
+    def has__content(self):
+        if super(Connection, self).has__content():
             return True
         else:
             return False
@@ -58891,7 +58899,7 @@ class Connection(BaseConnectionOldFormat):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Connection"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -59125,10 +59133,10 @@ class Cell2CaPools(Cell):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.biophysical_properties2_ca_pools is not None
-            or super(Cell2CaPools, self)._hasContent()
+            or super(Cell2CaPools, self).has__content()
         ):
             return True
         else:
@@ -59167,7 +59175,7 @@ class Cell2CaPools(Cell):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="Cell2CaPools"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -59539,8 +59547,8 @@ class AdExIaFCell(BaseCellMembPotCap):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA))$"]
     ]
 
-    def _hasContent(self):
-        if super(AdExIaFCell, self)._hasContent():
+    def has__content(self):
+        if super(AdExIaFCell, self).has__content():
             return True
         else:
             return False
@@ -59578,7 +59586,7 @@ class AdExIaFCell(BaseCellMembPotCap):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="AdExIaFCell"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -60159,8 +60167,8 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA))$"]
     ]
 
-    def _hasContent(self):
-        if super(Izhikevich2007Cell, self)._hasContent():
+    def has__content(self):
+        if super(Izhikevich2007Cell, self).has__content():
             return True
         else:
             return False
@@ -60202,7 +60210,7 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
             namespaceprefix_,
             name_="Izhikevich2007Cell",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -60577,8 +60585,8 @@ class IafRefCell(IafCell):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
     ]
 
-    def _hasContent(self):
-        if super(IafRefCell, self)._hasContent():
+    def has__content(self):
+        if super(IafRefCell, self).has__content():
             return True
         else:
             return False
@@ -60616,7 +60624,7 @@ class IafRefCell(IafCell):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="IafRefCell"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -60822,8 +60830,8 @@ class IafTauRefCell(IafTauCell):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
     ]
 
-    def _hasContent(self):
-        if super(IafTauRefCell, self)._hasContent():
+    def has__content(self):
+        if super(IafTauRefCell, self).has__content():
             return True
         else:
             return False
@@ -60861,7 +60869,7 @@ class IafTauRefCell(IafTauCell):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="IafTauRefCell"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -61065,8 +61073,8 @@ class DoubleSynapse(BaseVoltageDepSynapse):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def _hasContent(self):
-        if super(DoubleSynapse, self)._hasContent():
+    def has__content(self):
+        if super(DoubleSynapse, self).has__content():
             return True
         else:
             return False
@@ -61104,7 +61112,7 @@ class DoubleSynapse(BaseVoltageDepSynapse):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="DoubleSynapse"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -61390,8 +61398,8 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(A|uA|nA|pA))$"]
     ]
 
-    def _hasContent(self):
-        if super(AlphaCurrentSynapse, self)._hasContent():
+    def has__content(self):
+        if super(AlphaCurrentSynapse, self).has__content():
             return True
         else:
             return False
@@ -61433,7 +61441,7 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
             namespaceprefix_,
             name_="AlphaCurrentSynapse",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -61712,8 +61720,8 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
     ]
 
-    def _hasContent(self):
-        if super(BaseConductanceBasedSynapseTwo, self)._hasContent():
+    def has__content(self):
+        if super(BaseConductanceBasedSynapseTwo, self).has__content():
             return True
         else:
             return False
@@ -61760,7 +61768,7 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
             namespaceprefix_,
             name_="BaseConductanceBasedSynapseTwo",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -62074,8 +62082,8 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
     ]
 
-    def _hasContent(self):
-        if super(BaseConductanceBasedSynapse, self)._hasContent():
+    def has__content(self):
+        if super(BaseConductanceBasedSynapse, self).has__content():
             return True
         else:
             return False
@@ -62120,7 +62128,7 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
             namespaceprefix_,
             name_="BaseConductanceBasedSynapse",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -62392,8 +62400,8 @@ class IonChannelVShift(IonChannel):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
     ]
 
-    def _hasContent(self):
-        if super(IonChannelVShift, self)._hasContent():
+    def has__content(self):
+        if super(IonChannelVShift, self).has__content():
             return True
         else:
             return False
@@ -62435,7 +62443,7 @@ class IonChannelVShift(IonChannel):
             namespaceprefix_,
             name_="IonChannelVShift",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -62619,8 +62627,8 @@ class IonChannelHH(IonChannel):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(IonChannelHH, self)._hasContent():
+    def has__content(self):
+        if super(IonChannelHH, self).has__content():
             return True
         else:
             return False
@@ -62658,7 +62666,7 @@ class IonChannelHH(IonChannel):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="IonChannelHH"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -62829,8 +62837,8 @@ class IF_curr_exp(basePyNNIaFCell):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(IF_curr_exp, self)._hasContent():
+    def has__content(self):
+        if super(IF_curr_exp, self).has__content():
             return True
         else:
             return False
@@ -62868,7 +62876,7 @@ class IF_curr_exp(basePyNNIaFCell):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="IF_curr_exp"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -63039,8 +63047,8 @@ class IF_curr_alpha(basePyNNIaFCell):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(IF_curr_alpha, self)._hasContent():
+    def has__content(self):
+        if super(IF_curr_alpha, self).has__content():
             return True
         else:
             return False
@@ -63078,7 +63086,7 @@ class IF_curr_alpha(basePyNNIaFCell):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="IF_curr_alpha"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -63271,8 +63279,8 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(basePyNNIaFCondCell, self)._hasContent():
+    def has__content(self):
+        if super(basePyNNIaFCondCell, self).has__content():
             return True
         else:
             return False
@@ -63314,7 +63322,7 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
             namespaceprefix_,
             name_="basePyNNIaFCondCell",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -63503,8 +63511,8 @@ class ContinuousConnectionInstance(ContinuousConnection):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(ContinuousConnectionInstance, self)._hasContent():
+    def has__content(self):
+        if super(ContinuousConnectionInstance, self).has__content():
             return True
         else:
             return False
@@ -63549,7 +63557,7 @@ class ContinuousConnectionInstance(ContinuousConnection):
             namespaceprefix_,
             name_="ContinuousConnectionInstance",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -63731,8 +63739,8 @@ class ElectricalConnectionInstance(ElectricalConnection):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(ElectricalConnectionInstance, self)._hasContent():
+    def has__content(self):
+        if super(ElectricalConnectionInstance, self).has__content():
             return True
         else:
             return False
@@ -63777,7 +63785,7 @@ class ElectricalConnectionInstance(ElectricalConnection):
             namespaceprefix_,
             name_="ElectricalConnectionInstance",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -64030,8 +64038,8 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
     ]
 
-    def _hasContent(self):
-        if super(ExpThreeSynapse, self)._hasContent():
+    def has__content(self):
+        if super(ExpThreeSynapse, self).has__content():
             return True
         else:
             return False
@@ -64069,7 +64077,7 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="ExpThreeSynapse"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -64337,8 +64345,8 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
     ]
 
-    def _hasContent(self):
-        if super(ExpTwoSynapse, self)._hasContent():
+    def has__content(self):
+        if super(ExpTwoSynapse, self).has__content():
             return True
         else:
             return False
@@ -64376,7 +64384,7 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="ExpTwoSynapse"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -64622,8 +64630,8 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
     ]
 
-    def _hasContent(self):
-        if super(ExpOneSynapse, self)._hasContent():
+    def has__content(self):
+        if super(ExpOneSynapse, self).has__content():
             return True
         else:
             return False
@@ -64661,7 +64669,7 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="ExpOneSynapse"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -64864,8 +64872,8 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
         ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
     ]
 
-    def _hasContent(self):
-        if super(AlphaSynapse, self)._hasContent():
+    def has__content(self):
+        if super(AlphaSynapse, self).has__content():
             return True
         else:
             return False
@@ -64903,7 +64911,7 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="AlphaSynapse"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -65139,8 +65147,8 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(EIF_cond_exp_isfa_ista, self)._hasContent():
+    def has__content(self):
+        if super(EIF_cond_exp_isfa_ista, self).has__content():
             return True
         else:
             return False
@@ -65182,7 +65190,7 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
             namespaceprefix_,
             name_="EIF_cond_exp_isfa_ista",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -65443,8 +65451,8 @@ class IF_cond_exp(basePyNNIaFCondCell):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(IF_cond_exp, self)._hasContent():
+    def has__content(self):
+        if super(IF_cond_exp, self).has__content():
             return True
         else:
             return False
@@ -65482,7 +65490,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="IF_cond_exp"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -65661,8 +65669,8 @@ class IF_cond_alpha(basePyNNIaFCondCell):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(IF_cond_alpha, self)._hasContent():
+    def has__content(self):
+        if super(IF_cond_alpha, self).has__content():
             return True
         else:
             return False
@@ -65700,7 +65708,7 @@ class IF_cond_alpha(basePyNNIaFCondCell):
         self._exportAttributes(
             outfile, level, already_processed, namespaceprefix_, name_="IF_cond_alpha"
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -65848,8 +65856,8 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(ContinuousConnectionInstanceW, self)._hasContent():
+    def has__content(self):
+        if super(ContinuousConnectionInstanceW, self).has__content():
             return True
         else:
             return False
@@ -65894,7 +65902,7 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
             namespaceprefix_,
             name_="ContinuousConnectionInstanceW",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -66083,8 +66091,8 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(ElectricalConnectionInstanceW, self)._hasContent():
+    def has__content(self):
+        if super(ElectricalConnectionInstanceW, self).has__content():
             return True
         else:
             return False
@@ -66129,7 +66137,7 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
             namespaceprefix_,
             name_="ElectricalConnectionInstanceW",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -66350,11 +66358,11 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
+    def has__content(self):
         if (
             self.plasticity_mechanism is not None
             or self.block_mechanism is not None
-            or super(BlockingPlasticSynapse, self)._hasContent()
+            or super(BlockingPlasticSynapse, self).has__content()
         ):
             return True
         else:
@@ -66397,7 +66405,7 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
             namespaceprefix_,
             name_="BlockingPlasticSynapse",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -66659,8 +66667,8 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
 
     factory = staticmethod(factory)
 
-    def _hasContent(self):
-        if super(EIF_cond_alpha_isfa_ista, self)._hasContent():
+    def has__content(self):
+        if super(EIF_cond_alpha_isfa_ista, self).has__content():
             return True
         else:
             return False
@@ -66702,7 +66710,7 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
             namespaceprefix_,
             name_="EIF_cond_alpha_isfa_ista",
         )
-        if self._hasContent():
+        if self.has__content():
             outfile.write(">%s" % (eol_,))
             self._exportChildren(
                 outfile,
@@ -66790,6 +66798,11 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
 
 
 # end class EIF_cond_alpha_isfa_ista
+
+
+#
+# End data representation classes.
+#
 
 
 GDSClassesMapping = {
