@@ -186,14 +186,12 @@ class TestCell(unittest.TestCase):
             self.assertEqual(expected[sg.id], len(path_lengths_to_distal[sg.id]))
 
     def test_adjacency_list(self):
-        """test get_segment_adjacency_list method
-        """
+        """test get_segment_adjacency_list method"""
         cells = ["Purk2M9s", "pyr_4_sym.cell"]
 
         cells = ["pyr_4_sym"]
 
         for cell_name in cells:
-
             local_path = "../examples/test_files/%s.cell.nml" % cell_name
             if os.path.isfile(local_path):
                 test_file_path = local_path
@@ -214,12 +212,10 @@ class TestCell(unittest.TestCase):
             self.assertIn(5, adlist[1])
 
     def test_cell_graph(self):
-        """test get_graph method
-        """
+        """test get_graph method"""
         cells = ["pyr_4_sym"]
 
         for cell_name in cells:
-
             local_path = "../examples/test_files/%s.cell.nml" % cell_name
             if os.path.isfile(local_path):
                 test_file_path = local_path
@@ -238,14 +234,12 @@ class TestCell(unittest.TestCase):
             print(graph)
 
     def test_get_distance(self):
-        """test distance method
-        """
+        """test distance method"""
         cells = ["Purk2M9s", "pyr_4_sym.cell"]
 
         cells = ["pyr_4_sym"]
 
         for cell_name in cells:
-
             local_path = "../examples/test_files/%s.cell.nml" % cell_name
             if os.path.isfile(local_path):
                 test_file_path = local_path
@@ -270,12 +264,10 @@ class TestCell(unittest.TestCase):
             print(all_distances)
 
     def test_get_all_segments_at_distance(self):
-        """test distance method
-        """
+        """test distance method"""
         cells = ["pyr_4_sym"]
 
         for cell_name in cells:
-
             local_path = "../examples/test_files/%s.cell.nml" % cell_name
             if os.path.isfile(local_path):
                 test_file_path = local_path
@@ -300,12 +292,10 @@ class TestCell(unittest.TestCase):
             self.assertIn(3, list(adict.keys()))
 
     def test_get_branching_points(self):
-        """test get_branching_points
-        """
+        """test get_branching_points"""
         cells = ["pyr_4_sym"]
 
         for cell_name in cells:
-
             local_path = "../examples/test_files/%s.cell.nml" % cell_name
             if os.path.isfile(local_path):
                 test_file_path = local_path
@@ -327,12 +317,10 @@ class TestCell(unittest.TestCase):
             print(res)
 
     def test_get_extremeties(self):
-        """test get_extremeties
-        """
+        """test get_extremeties"""
         cells = ["pyr_4_sym"]
 
         for cell_name in cells:
-
             local_path = "../examples/test_files/%s.cell.nml" % cell_name
             if os.path.isfile(local_path):
                 test_file_path = local_path
@@ -356,12 +344,10 @@ class TestCell(unittest.TestCase):
             print(res)
 
     def test_locate_segment(self):
-        """test locate_segment method
-        """
+        """test locate_segment method"""
         cells = ["pyr_4_sym"]
 
         for cell_name in cells:
-
             local_path = "../examples/test_files/%s.cell.nml" % cell_name
             if os.path.isfile(local_path):
                 test_file_path = local_path
@@ -377,15 +363,14 @@ class TestCell(unittest.TestCase):
             self.assertEqual(acell.id, cell_name.split(".")[0])
 
             res = acell.get_segment_location_info(4)
-            self.assertEqual("apical4", res['in_unbranched_segment_group'])
-            self.assertEqual(0, res['distance_from_segment_group_root'])
+            self.assertEqual("apical4", res["in_unbranched_segment_group"])
+            self.assertEqual(0, res["distance_from_segment_group_root"])
 
     def test_get_morphology_root(self):
-        """Test get_morphology_root method """
+        """Test get_morphology_root method"""
         cells = ["pyr_4_sym"]
 
         for cell_name in cells:
-
             local_path = "../examples/test_files/%s.cell.nml" % cell_name
             if os.path.isfile(local_path):
                 test_file_path = local_path
