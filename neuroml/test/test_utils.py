@@ -8,7 +8,7 @@ Copyright 2023 NeuroML contributors
 """
 
 import neuroml
-from neuroml.utils import component_factory
+from neuroml.utils import component_factory, create_annotation
 import unittest
 import tempfile
 
@@ -42,3 +42,8 @@ class UtilsTestCase(unittest.TestCase):
             "IafCell",
             id="test_cell",
         )
+
+    def test_create_annotation(self):
+        """Test the create_annotation function."""
+        annotation = create_annotation(id_="test")
+        print(annotation)

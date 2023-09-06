@@ -3,12 +3,13 @@
 Utilities for checking generated code
 
 """
-import sys
 import inspect
+import sys
 import warnings
-from typing import Union, Any
+from typing import Any, List, Optional, Union
 
 import neuroml.nml.nml as schema
+
 from . import loaders
 
 
@@ -226,6 +227,71 @@ def component_factory(
         component_type, validate, **kwargs
     )
     return new_obj
+
+
+def create_annotation(id_: str,
+                      reference_publication: Optional[str] = None,
+                      reference_publication_doi: Optional[str] = None,
+                      biological_entity: Optional[str] = None,
+                      biological_entity_identifiers: Optional[List[str]] = None,
+                      biological_entities_is_part_of: Optional[List[str]] = None,
+                      model_doi: Optional[str] = None,
+                      modeldb_id: Optional[str] = None,
+                      model_is_derived_from: Optional[str] = None,
+                      ):
+    """Utility for creating an RDF Annotation.
+
+    This will create a new annotation that can be added to a NeuroML object
+    that supports Annotations.
+
+    To find suitable identifiers for entities, please see the various
+    registries listed on https://registry.identifiers.org/registry
+
+    Some common registries are:
+
+    - Gene Ontology: https://geneontology.org/
+    - InterLex (formerly Neurolex): https://scicrunch.org/scicrunch/interlex/dashboard
+    - NeuroMorpho: https://neuromorpho.org/
+    - NeuronDB: https://senselab.med.yale.edu/NeuronDB/
+    - ModelDB: https://modeldb.science/
+    - BioModels: https://www.ebi.ac.uk/biomodels/
+
+    This does not implement the complete set of RDF qualifiers described in the
+    COMBINE specifications:
+
+    - http://biomodels.net/biology-qualifiers/ and
+    - http://biomodels.net/model-qualifiers/ for the current specification.
+
+    An example is here:
+    https://github.com/combine-org/Annotations/blob/master/nonstandardized/NeuroML/NML2_FullCell.xml
+
+    :param id_: id of component being described
+    :param reference_publication: citation/reference of the manuscript related
+        to the model element
+    :param reference_publication_doi: DOI of the manuscript
+    :param biological_entity: biological entity that the component models
+    :param biological_entity_identifiers: identifier(s) of biological entity that
+        component models
+    :param biological_entites_is_part_of: identifier(s) of biological entities
+        that the component is part of
+    :param model_doi: DOI of model
+    :param modeldb_id: ID of model on ModelDB
+    :param model_is_derived_from: DOI of a model that this one may be derived
+        from/a modification of
+    :returns: created annotation
+
+    """
+    annotation = '<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">'
+
+    '""
+    if reference_publication is not None or reference_publication_doi is not None:
+        if reference_publication is not None:
+            ref_pub = rdflib.Bag(graph, rdflib.BNode, (rdflib.URIRef("")))
+    """
+
+    return graph.serialize(format="xml")
+
+    # graph.add((rdflib.Literal("NaConductance"), ))
 
 
 def main():
