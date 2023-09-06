@@ -320,10 +320,12 @@ class GeneratedsSuperSuper(object):
                 )
                 info_ret[member.get_name()]["type"] = member.get_data_type()
                 # Some classes like Annotation can hold anything, and are
-                # marked by an __ANY__ member, but a corresponding variable
-                # storing contents does not exist. For them, silently return
-                # None
-                contents = getattr(self, member.get_name(), None)
+                # marked by an __ANY__ member, and contents are stored in the
+                # 'anytypeobjs_' member. Handle these differently.
+                if member.get_name() == "__ANY__":
+                    contents = getattr(self, "anytypeobjs_", None)
+                else:
+                    contents = getattr(self, member.get_name(), None)
                 # check if the member is set to None
                 # if it's a container (list), it will not be set to None, it
                 # will be empty, []
