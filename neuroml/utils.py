@@ -278,7 +278,7 @@ def get_relative_component_path(src: str, dest: str, root: Type =
     :param root: root component of the hierarchy
     :param graph: a networkx digraph of the NeuroML hierarchy if available
         if not, one is constructed
-    :returns: networkx digraph for future use
+    :returns: calculated path and networkx digraph for future use
     """
     if graph is None:
         graph = networkx.DiGraph()
@@ -299,9 +299,10 @@ def get_relative_component_path(src: str, dest: str, root: Type =
         print(f"Path2: {p2s}")
         # remove one "../" because we do not need to get to the common level
         # here, unlike actual file system path traversal
-        print("Relative path: " + os.path.relpath(p1s, p2s).replace("../", "", 1))
+        path = os.path.relpath(p1s, p2s).replace("../", "", 1)
+        print("Relative path: " + path)
 
-    return graph
+    return (path, graph)
 
 
 def main():
