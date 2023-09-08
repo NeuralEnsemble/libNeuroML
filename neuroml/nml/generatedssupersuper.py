@@ -553,3 +553,36 @@ class GeneratedsSuperSuper(object):
                 print(err)
                 self.info()
                 raise ValueError(err)
+
+    @classmethod
+    def get_class_hierarchy(cls):
+        """Get the class hierarchy for a component classs.
+
+        Reference: https://stackoverflow.com/a/75161393/375067
+        :returns: TODO
+
+        """
+        # classes that don't have any members, like ZeroOrNone, which is an Enum
+        schema = sys.modules[cls.__module__]
+        try:
+            allmembers = cls._get_members()
+        except AttributeError:
+            return {cls.__name__: []}
+
+        retlist = []
+        for member in allmembers:
+            if member is not None:
+                # is it a complex type, which will have a corresponding class?
+                member_class = getattr(schema, member.get_data_type(), None)
+                # if it isn't a class, so a simple type, just added it with an
+                # empty list
+                if member_class is None:
+                    retlist.append({member.get_name(): []})
+                else:
+                    # if it is a class, see if it has a hierarchy
+                    try:
+                        retlist.append(member_class.get_class_hierarchy())
+                    except AttributeError:
+                        retlist.append({member_class.__name__: []})
+
+        return {cls.__name__: retlist}
