@@ -559,7 +559,12 @@ class GeneratedsSuperSuper(object):
         """Get the class hierarchy for a component classs.
 
         Reference: https://stackoverflow.com/a/75161393/375067
-        :returns: TODO
+
+        See the methods in neuroml.utils to use this generated hierarchy.
+
+        :returns: nested single key dictionaries where the key of each
+            dictionary is the root node of that subtree, and keys are its
+            immediate descendents
 
         """
         # classes that don't have any members, like ZeroOrNone, which is an Enum
@@ -586,3 +591,23 @@ class GeneratedsSuperSuper(object):
                         retlist.append({member_class.__name__: []})
 
         return {cls.__name__: retlist}
+
+    @classmethod
+    def get_nml2_class_hierarchy(cls):
+        """Return the NeuroML class hierarchy.
+
+        The root here is NeuroMLDocument.
+        This is useful in calculating paths to different components to aid in
+        construction of relative paths.
+
+        This caches the value as a class variable so that it is not
+        re-calculated when used multiple times.
+        """
+        # if hierarchy exists, return
+        try:
+            return cls.__nml_hier
+        # first run
+        except AttributeError:
+            schema = sys.modules[cls.__module__]
+            cls.__nml_hier = schema.NeuroMLDocument.get_class_hierarchy()
+        return cls.__nml_hier
