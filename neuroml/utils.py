@@ -3,12 +3,16 @@
 Utilities for checking generated code
 
 """
-import sys
 import inspect
+import os
+import sys
 import warnings
-from typing import Union, Any
+from typing import Any, Dict, Union, Optional, Type
+
+import networkx
 
 import neuroml.nml.nml as schema
+
 from . import loaders
 
 
@@ -241,6 +245,63 @@ def print_hierarchy(tree, indent=4, current_ind=0):
             print(k)
         for sub_tree in v:
             print_hierarchy(sub_tree, indent=indent, current_ind=current_ind + indent)
+
+
+def get_hier_graph_networkx(graph: networkx.Digraph, hier: Dict[str, Any]):
+    """Get a networkx graph of the NeuroML hierarchy
+
+    :param graph: graph object to populate
+    :param hier: component type hierarchy obtained from `get_class_hierarchy`
+        and `get_nml2_class_hierarchy` methods
+    :returns: None
+
+    """
+    for k, vs in hier.items():
+        for v in vs:
+            if type(v) is dict:
+                graph.add_edge(k, list(v.keys())[0])
+                get_hier_graph_networkx(graph, v)
+            else:
+                graph.add_edge(k, v)
+
+
+def get_relative_component_path(src: str, dest: str, root: Type =
+                                schema.NeuroMLDocument, graph:
+                                Optional[networkx.Digraph] = None):
+    """Construct a path from src component to dest in a neuroml document.
+
+    Useful when referring to components in other components
+    Note that
+
+    :param src: source component
+    :param dest: destination component
+    :param root: root component of the hierarchy
+    :param graph: a networkx digraph of the NeuroML hierarchy if available
+        if not, one is constructed
+    :returns: networkx digraph for future use
+    """
+    if graph is None:
+        graph = networkx.DiGraph()
+        get_hier_graph_networkx(graph, root.get_nml2_class_hierarchy())
+
+    p1 = (list(networkx.all_shortest_paths(graph, root.__name__, "Instance")))
+    p2 = (list(networkx.all_shortest_paths(graph, root.__name__, "Input")))
+
+    if len(p1) > 1 or len(p2) > 1:
+        print("Multiple paths found, cannot calculate recommended path")
+        print("Paths are:")
+        for p in p1 + p2:
+            print("/".join(p1[0]))
+    else:
+        p1s = "/".join(p1[0])
+        p2s = "/".join(p2[0])
+        print(f"Path1: {p1s}")
+        print(f"Path2: {p2s}")
+        # remove one "../" because we do not need to get to the common level
+        # here, unlike actual file system path traversal
+        print("Relative path: " + os.path.relpath(p1s, p2s).replace("../", "", 1))
+
+    return graph
 
 
 def main():
