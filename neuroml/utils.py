@@ -247,7 +247,7 @@ def print_hierarchy(tree, indent=4, current_ind=0):
             print_hierarchy(sub_tree, indent=indent, current_ind=current_ind + indent)
 
 
-def get_hier_graph_networkx(graph: networkx.Digraph, hier: Dict[str, Any]):
+def get_hier_graph_networkx(graph: networkx.DiGraph, hier: Dict[str, Any]):
     """Get a networkx graph of the NeuroML hierarchy
 
     :param graph: graph object to populate
@@ -267,7 +267,7 @@ def get_hier_graph_networkx(graph: networkx.Digraph, hier: Dict[str, Any]):
 
 def get_relative_component_path(src: str, dest: str, root: Type =
                                 schema.NeuroMLDocument, graph:
-                                Optional[networkx.Digraph] = None):
+                                Optional[networkx.DiGraph] = None):
     """Construct a path from src component to dest in a neuroml document.
 
     Useful when referring to components in other components
