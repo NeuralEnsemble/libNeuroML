@@ -12,7 +12,7 @@ try:
 except ImportError:
     import unittest
 
-from neuroml.utils import component_factory
+from neuroml.utils import (component_factory, print_hierarchy)
 import neuroml
 
 
@@ -762,3 +762,18 @@ class TestNML(unittest.TestCase):
 
         cell.morphinfo(True)
         cell.biophysinfo()
+
+    def test_class_hierarchy(self):
+        """Test the class hierarchy getter and printer
+        """
+        hier = neuroml.Cell.get_class_hierarchy()
+        self.assertIsNotNone(hier)
+        print()
+        print_hierarchy(hier)
+
+        hier = neuroml.Morphology.get_class_hierarchy()
+        self.assertIsNotNone(hier)
+        print()
+        print(hier)
+        print()
+        print_hierarchy(hier)

@@ -553,3 +553,61 @@ class GeneratedsSuperSuper(object):
                 print(err)
                 self.info()
                 raise ValueError(err)
+
+    @classmethod
+    def get_class_hierarchy(cls):
+        """Get the class hierarchy for a component classs.
+
+        Reference: https://stackoverflow.com/a/75161393/375067
+
+        See the methods in neuroml.utils to use this generated hierarchy.
+
+        :returns: nested single key dictionaries where the key of each
+            dictionary is the root node of that subtree, and keys are its
+            immediate descendents
+
+        """
+        # classes that don't have any members, like ZeroOrNone, which is an Enum
+        schema = sys.modules[cls.__module__]
+        try:
+            allmembers = cls._get_members()
+        except AttributeError:
+            return {cls.__name__: []}
+
+        retlist = []
+        for member in allmembers:
+            if member is not None:
+                # is it a complex type, which will have a corresponding class?
+                member_class = getattr(schema, member.get_data_type(), None)
+                # if it isn't a class, so a simple type, just added it with an
+                # empty list
+                if member_class is None:
+                    retlist.append({member.get_name(): []})
+                else:
+                    # if it is a class, see if it has a hierarchy
+                    try:
+                        retlist.append(member_class.get_class_hierarchy())
+                    except AttributeError:
+                        retlist.append({member_class.__name__: []})
+
+        return {cls.__name__: retlist}
+
+    @classmethod
+    def get_nml2_class_hierarchy(cls):
+        """Return the NeuroML class hierarchy.
+
+        The root here is NeuroMLDocument.
+        This is useful in calculating paths to different components to aid in
+        construction of relative paths.
+
+        This caches the value as a class variable so that it is not
+        re-calculated when used multiple times.
+        """
+        # if hierarchy exists, return
+        try:
+            return cls.__nml_hier
+        # first run
+        except AttributeError:
+            schema = sys.modules[cls.__module__]
+            cls.__nml_hier = schema.NeuroMLDocument.get_class_hierarchy()
+        return cls.__nml_hier

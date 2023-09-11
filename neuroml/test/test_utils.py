@@ -7,10 +7,11 @@ File: neuroml/test/test_utils.py
 Copyright 2023 NeuroML contributors
 """
 
-import neuroml
-from neuroml.utils import component_factory
 import unittest
-import tempfile
+
+import neuroml
+from neuroml.utils import (component_factory, get_relative_component_path,
+                           print_hierarchy)
 
 
 class UtilsTestCase(unittest.TestCase):
@@ -42,3 +43,13 @@ class UtilsTestCase(unittest.TestCase):
             "IafCell",
             id="test_cell",
         )
+
+    def test_networkx_hier_graph(self):
+        """Test constructing a networkx graph of a hierarchy"""
+        hier = neuroml.NeuroMLDocument.get_class_hierarchy()
+        self.assertIsNotNone(hier)
+        print_hierarchy(hier)
+
+        path, graph = get_relative_component_path("Input", "Instance")
+        self.assertIsNotNone(graph)
+        self.assertEqual(path, "../Population/Instance")
