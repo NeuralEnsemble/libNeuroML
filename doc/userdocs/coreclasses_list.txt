@@ -605,6 +605,17 @@ DecayingPoolConcentrationModel
 
 
 
+DerivedParameter
+################
+
+.. autoclass:: neuroml.nml.nml.DerivedParameter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
 DerivedVariable
 ###############
 
@@ -708,6 +719,17 @@ ElectricalProjection
 ####################
 
 .. autoclass:: neuroml.nml.nml.ElectricalProjection
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+EventOut
+########
+
+.. autoclass:: neuroml.nml.nml.EventOut
    :members:
    :undoc-members:
    :show-inheritance:
@@ -1482,6 +1504,50 @@ NeuroMLDocument
 
 
 
+OnCondition
+###########
+
+.. autoclass:: neuroml.nml.nml.OnCondition
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+OnEntry
+#######
+
+.. autoclass:: neuroml.nml.nml.OnEntry
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+OnEvent
+#######
+
+.. autoclass:: neuroml.nml.nml.OnEvent
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+OnStart
+#######
+
+.. autoclass:: neuroml.nml.nml.OnStart
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
 OpenState
 #########
 
@@ -1684,6 +1750,17 @@ ReactionScheme
 ##############
 
 .. autoclass:: neuroml.nml.nml.ReactionScheme
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+Regime
+######
+
+.. autoclass:: neuroml.nml.nml.Regime
    :members:
    :undoc-members:
    :show-inheritance:
@@ -1955,6 +2032,17 @@ Standalone
 
 
 
+StateAssignment
+###############
+
+.. autoclass:: neuroml.nml.nml.StateAssignment
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
 StateVariable
 #############
 
@@ -2025,6 +2113,28 @@ TransientPoissonFiringSynapse
 #############################
 
 .. autoclass:: neuroml.nml.nml.TransientPoissonFiringSynapse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+Transition
+##########
+
+.. autoclass:: neuroml.nml.nml.Transition
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+TrueOrFalse
+###########
+
+.. autoclass:: neuroml.nml.nml.TrueOrFalse
    :members:
    :undoc-members:
    :show-inheritance:

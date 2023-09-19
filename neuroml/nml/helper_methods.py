@@ -1772,7 +1772,8 @@ cell_methods = MethodSpec(
             if i not in new_includes:
                 new_includes.append(i)
         includes = set(new_includes)
-        seg_group.includes = list(includes)
+        # sorted
+        seg_group.includes = natsort.natsorted(includes, key=lambda x:x.segment_groups)
 
         # remove members that are included by included segment groups
         if len(includes) > 0 and len(members) > 0:
@@ -1782,7 +1783,8 @@ cell_methods = MethodSpec(
                 for i in members:
                     if i.segments not in all_segment_ids_in_group:
                         new_members.append(i)
-            seg_group.members = list(new_members)
+            # sorted
+            seg_group.members = natsort.natsorted(new_members, key=lambda x: x.segments)
 
 
     def set_spike_thresh(self, v, group_id="all"):
