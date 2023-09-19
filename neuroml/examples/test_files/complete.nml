@@ -195,7 +195,7 @@
             <continuousConnectionInstance id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.925038673001334" postCell="../IafPop1[0]" postFractionAlong="0.890281011017758" preComponent="silent1" postComponent="gs1"/>
         </continuousProjection>
         <continuousProjection id="ProjCCIW" presynapticPopulation="Pop_x" postsynapticPopulation="IafPop1">
-            <continuousConnectionInstanceW id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.603907240251041" postCell="../IafPop1[0]" postFractionAlong="0.144025903342251" preComponent="silent1" postComponent="gs1" weight="5."/>
+            <continuousConnectionInstanceW id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.603907240251041" postCell="../IafPop1[0]" postFractionAlong="0.144025903342251" preComponent="silent1" postComponent="gs1" weight="5.0"/>
         </continuousProjection>
         <inputList id="il" population="Pop_x" component="pfs">
             <input id="0" target="../Pop_x/0/iaf0" destination="synapses"/>
@@ -208,14 +208,14 @@
             <input id="7" target="../Pop_x/7/iaf0" destination="synapses"/>
         </inputList>
         <inputList id="ilw" population="Pop_x" component="pfs">
-            <inputW id="0" target="../Pop_x/0/iaf0" destination="synapses" weight="10."/>
-            <inputW id="1" target="../Pop_x/1/iaf0" destination="synapses" weight="10."/>
-            <inputW id="2" target="../Pop_x/2/iaf0" destination="synapses" weight="10."/>
-            <inputW id="3" target="../Pop_x/3/iaf0" destination="synapses" weight="10."/>
-            <inputW id="4" target="../Pop_x/4/iaf0" destination="synapses" weight="10."/>
-            <inputW id="5" target="../Pop_x/5/iaf0" destination="synapses" weight="10."/>
-            <inputW id="6" target="../Pop_x/6/iaf0" destination="synapses" weight="10."/>
-            <inputW id="7" target="../Pop_x/7/iaf0" destination="synapses" weight="10."/>
+            <inputW id="0" target="../Pop_x/0/iaf0" destination="synapses" weight="10.0"/>
+            <inputW id="1" target="../Pop_x/1/iaf0" destination="synapses" weight="10.0"/>
+            <inputW id="2" target="../Pop_x/2/iaf0" destination="synapses" weight="10.0"/>
+            <inputW id="3" target="../Pop_x/3/iaf0" destination="synapses" weight="10.0"/>
+            <inputW id="4" target="../Pop_x/4/iaf0" destination="synapses" weight="10.0"/>
+            <inputW id="5" target="../Pop_x/5/iaf0" destination="synapses" weight="10.0"/>
+            <inputW id="6" target="../Pop_x/6/iaf0" destination="synapses" weight="10.0"/>
+            <inputW id="7" target="../Pop_x/7/iaf0" destination="synapses" weight="10.0"/>
         </inputList>
     </network>
 </neuroml>
