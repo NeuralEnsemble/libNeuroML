@@ -3,6 +3,7 @@ from neuroml.nml.nml import parse as nmlparse
 from neuroml.nml.nml import parseString as nmlparsestring
 
 import neuroml
+from neuroml import (NeuroMLDocument)
 import neuroml.utils as utils
 
 import os
@@ -18,7 +19,7 @@ class NeuroMLLoader(object):
     @classmethod
     def load(cls, src):
         doc = cls.__nml2_doc(src)
-        if isinstance(doc, neuroml.nml.nml.NeuroMLDocument):
+        if isinstance(doc, NeuroMLDocument):
             return doc
         else:
             raise TypeError(
@@ -188,7 +189,7 @@ def read_neuroml2_file(
     already_included: list = None,
     print_method: Callable = neuroml.print_,
     optimized: bool = False,
-) -> neuroml.nml.nml.NeuroMLDocument:
+) -> NeuroMLDocument:
     """
     Read a NeuroML2 file into a NeuroMLDocument object
 
@@ -234,7 +235,7 @@ def read_neuroml2_string(
     print_method: Callable = neuroml.print_,
     optimized: bool = False,
     base_path: Optional[str] = None,
-) -> neuroml.nml.nml.NeuroMLDocument:
+) -> NeuroMLDocument:
     """
     Read a NeuroML2 string into a NeuroMLDocument object
 
@@ -277,7 +278,7 @@ def _read_neuroml2(
     print_method: Callable = neuroml.print_,
     optimized: bool = False,
     base_path: Optional[str] = None,
-) -> neuroml.nml.nml.NeuroMLDocument:
+) -> NeuroMLDocument:
     """
     Read a NeuroML2 file or string into a NeuroMLDocument object.
 
