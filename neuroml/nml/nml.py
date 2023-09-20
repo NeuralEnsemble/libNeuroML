@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Aug 16 17:12:11 2023 by generateDS.py version 2.43.1.
-# Python 3.10.12 (main, Jun  8 2023, 00:00:00) [GCC 13.1.1 20230511 (Red Hat 13.1.1-2)]
+# Generated Wed Sep 20 19:12:47 2023 by generateDS.py version 2.43.1.
+# Python 3.10.6 (main, Nov 14 2022, 16:10:14) [GCC 11.3.0]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -16,7 +16,7 @@
 #   NeuroML_v2.3.xsd
 #
 # Command line:
-#   /home/asinha/.local/share/virtualenvs/neuroml-310/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" --custom-imports-template="gds_imports-template.py" NeuroML_v2.3.xsd
+#   /usr/local/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" --custom-imports-template="gds_imports-template.py" NeuroML_v2.3.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -6616,7 +6616,13 @@ class Input(BaseNonNegativeIntegerId):
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_("target", "xs:string", 0, 0, {"use": "required", "name": "target"}),
+        MemberSpec_(
+            "target",
+            "Nml2PopulationReferencePath",
+            0,
+            0,
+            {"use": "required", "name": "target"},
+        ),
         MemberSpec_(
             "destination", "NmlId", 0, 0, {"use": "required", "name": "destination"}
         ),
@@ -6641,7 +6647,7 @@ class Input(BaseNonNegativeIntegerId):
     def __init__(
         self,
         id: "a NonNegativeInteger (required)" = None,
-        target: "a string (required)" = None,
+        target: "a Nml2PopulationReferencePath (required)" = None,
         destination: "a NmlId (required)" = None,
         segment_id: "a NonNegativeInteger (optional)" = None,
         fraction_along: "a ZeroToOne (optional)" = None,
@@ -6676,6 +6682,40 @@ class Input(BaseNonNegativeIntegerId):
             return Input(*args_, **kwargs_)
 
     factory = staticmethod(factory)
+
+    def validate_Nml2PopulationReferencePath(self, value):
+        # Validate type Nml2PopulationReferencePath, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2PopulationReferencePath_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2PopulationReferencePath_patterns_,
+                    )
+                )
+
+    validate_Nml2PopulationReferencePath_patterns_ = [
+        [
+            "^((\\.\\./)?([a-zA-Z_][a-zA-Z0-9_]*)((\\[[0-9]+\\])|(/[0-9]+)+((/[a-zA-Z_][a-zA-Z0-9_]*)?)/?))$"
+        ]
+    ]
 
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
@@ -6894,7 +6934,9 @@ class Input(BaseNonNegativeIntegerId):
         self.gds_collector_ = gds_collector
         message_count = len(self.gds_collector_.get_messages())
         # validate simple type attributes
-        self.gds_validate_builtin_ST_(self.gds_validate_string, self.target, "target")
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2PopulationReferencePath, self.target, "target"
+        )
         self.gds_check_cardinality_(self.target, "target", required=True)
         self.gds_validate_defined_ST_(
             self.validate_NmlId, self.destination, "destination"
@@ -6933,6 +6975,9 @@ class Input(BaseNonNegativeIntegerId):
         if value is not None and "target" not in already_processed:
             already_processed.add("target")
             self.target = value
+            self.validate_Nml2PopulationReferencePath(
+                self.target
+            )  # validate type Nml2PopulationReferencePath
         value = find_attr_value_("destination", node)
         if value is not None and "destination" not in already_processed:
             already_processed.add("destination")
@@ -7392,10 +7437,16 @@ class ExplicitInput(BaseWithoutId):
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
-        MemberSpec_("target", "xs:string", 0, 0, {"use": "required", "name": "target"}),
-        MemberSpec_("input", "xs:string", 0, 0, {"use": "required", "name": "input"}),
         MemberSpec_(
-            "destination", "xs:string", 0, 1, {"use": "optional", "name": "destination"}
+            "target",
+            "Nml2PopulationReferencePath",
+            0,
+            0,
+            {"use": "required", "name": "target"},
+        ),
+        MemberSpec_("input", "NmlId", 0, 0, {"use": "required", "name": "input"}),
+        MemberSpec_(
+            "destination", "NmlId", 0, 1, {"use": "optional", "name": "destination"}
         ),
     ]
     subclass = None
@@ -7403,9 +7454,9 @@ class ExplicitInput(BaseWithoutId):
 
     def __init__(
         self,
-        target: "a string (required)" = None,
-        input: "a string (required)" = None,
-        destination: "a string (optional)" = None,
+        target: "a Nml2PopulationReferencePath (required)" = None,
+        input: "a NmlId (required)" = None,
+        destination: "a NmlId (optional)" = None,
         gds_collector_=None,
         **kwargs_,
     ):
@@ -7433,6 +7484,70 @@ class ExplicitInput(BaseWithoutId):
             return ExplicitInput(*args_, **kwargs_)
 
     factory = staticmethod(factory)
+
+    def validate_Nml2PopulationReferencePath(self, value):
+        # Validate type Nml2PopulationReferencePath, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2PopulationReferencePath_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2PopulationReferencePath_patterns_,
+                    )
+                )
+
+    validate_Nml2PopulationReferencePath_patterns_ = [
+        [
+            "^((\\.\\./)?([a-zA-Z_][a-zA-Z0-9_]*)((\\[[0-9]+\\])|(/[0-9]+)+((/[a-zA-Z_][a-zA-Z0-9_]*)?)/?))$"
+        ]
+    ]
+
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NmlId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NmlId_patterns_,
+                    )
+                )
+
+    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
     def has__content(self):
         if super(ExplicitInput, self).has__content():
@@ -7560,12 +7675,14 @@ class ExplicitInput(BaseWithoutId):
         self.gds_collector_ = gds_collector
         message_count = len(self.gds_collector_.get_messages())
         # validate simple type attributes
-        self.gds_validate_builtin_ST_(self.gds_validate_string, self.target, "target")
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2PopulationReferencePath, self.target, "target"
+        )
         self.gds_check_cardinality_(self.target, "target", required=True)
-        self.gds_validate_builtin_ST_(self.gds_validate_string, self.input, "input")
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.input, "input")
         self.gds_check_cardinality_(self.input, "input", required=True)
-        self.gds_validate_builtin_ST_(
-            self.gds_validate_string, self.destination, "destination"
+        self.gds_validate_defined_ST_(
+            self.validate_NmlId, self.destination, "destination"
         )
         self.gds_check_cardinality_(self.destination, "destination", required=False)
         # validate simple type children
@@ -7591,14 +7708,19 @@ class ExplicitInput(BaseWithoutId):
         if value is not None and "target" not in already_processed:
             already_processed.add("target")
             self.target = value
+            self.validate_Nml2PopulationReferencePath(
+                self.target
+            )  # validate type Nml2PopulationReferencePath
         value = find_attr_value_("input", node)
         if value is not None and "input" not in already_processed:
             already_processed.add("input")
             self.input = value
+            self.validate_NmlId(self.input)  # validate type NmlId
         value = find_attr_value_("destination", node)
         if value is not None and "destination" not in already_processed:
             already_processed.add("destination")
             self.destination = value
+            self.validate_NmlId(self.destination)  # validate type NmlId
         super(ExplicitInput, self)._buildAttributes(node, attrs, already_processed)
 
     def _buildChildren(
@@ -8207,11 +8329,17 @@ class SynapticConnection(BaseWithoutId):
             1,
             {"use": "optional", "name": "neuro_lex_id"},
         ),
-        MemberSpec_("from_", "xs:string", 0, 0, {"use": "required", "name": "from_"}),
-        MemberSpec_("to", "xs:string", 0, 0, {"use": "required", "name": "to"}),
         MemberSpec_(
-            "synapse", "xs:string", 0, 0, {"use": "required", "name": "synapse"}
+            "from_",
+            "Nml2PopulationReferencePath",
+            0,
+            0,
+            {"use": "required", "name": "from_"},
         ),
+        MemberSpec_(
+            "to", "Nml2PopulationReferencePath", 0, 0, {"use": "required", "name": "to"}
+        ),
+        MemberSpec_("synapse", "NmlId", 0, 0, {"use": "required", "name": "synapse"}),
         MemberSpec_(
             "destination", "NmlId", 0, 1, {"use": "optional", "name": "destination"}
         ),
@@ -8222,9 +8350,9 @@ class SynapticConnection(BaseWithoutId):
     def __init__(
         self,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
-        from_: "a string (required)" = None,
-        to: "a string (required)" = None,
-        synapse: "a string (required)" = None,
+        from_: "a Nml2PopulationReferencePath (required)" = None,
+        to: "a Nml2PopulationReferencePath (required)" = None,
+        synapse: "a NmlId (required)" = None,
         destination: "a NmlId (optional)" = None,
         gds_collector_=None,
         **kwargs_,
@@ -8289,6 +8417,40 @@ class SynapticConnection(BaseWithoutId):
                 )
 
     validate_NeuroLexId_patterns_ = [["^([a-zA-Z0-9_:]*)$"]]
+
+    def validate_Nml2PopulationReferencePath(self, value):
+        # Validate type Nml2PopulationReferencePath, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2PopulationReferencePath_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2PopulationReferencePath_patterns_,
+                    )
+                )
+
+    validate_Nml2PopulationReferencePath_patterns_ = [
+        [
+            "^((\\.\\./)?([a-zA-Z_][a-zA-Z0-9_]*)((\\[[0-9]+\\])|(/[0-9]+)+((/[a-zA-Z_][a-zA-Z0-9_]*)?)/?))$"
+        ]
+    ]
 
     def validate_NmlId(self, value):
         # Validate type NmlId, a restriction on xs:string.
@@ -8480,11 +8642,15 @@ class SynapticConnection(BaseWithoutId):
             self.validate_NeuroLexId, self.neuro_lex_id, "neuro_lex_id"
         )
         self.gds_check_cardinality_(self.neuro_lex_id, "neuro_lex_id", required=False)
-        self.gds_validate_builtin_ST_(self.gds_validate_string, self.from_, "from_")
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2PopulationReferencePath, self.from_, "from_"
+        )
         self.gds_check_cardinality_(self.from_, "from_", required=True)
-        self.gds_validate_builtin_ST_(self.gds_validate_string, self.to, "to")
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2PopulationReferencePath, self.to, "to"
+        )
         self.gds_check_cardinality_(self.to, "to", required=True)
-        self.gds_validate_builtin_ST_(self.gds_validate_string, self.synapse, "synapse")
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.synapse, "synapse")
         self.gds_check_cardinality_(self.synapse, "synapse", required=True)
         self.gds_validate_defined_ST_(
             self.validate_NmlId, self.destination, "destination"
@@ -8518,14 +8684,21 @@ class SynapticConnection(BaseWithoutId):
         if value is not None and "from" not in already_processed:
             already_processed.add("from")
             self.from_ = value
+            self.validate_Nml2PopulationReferencePath(
+                self.from_
+            )  # validate type Nml2PopulationReferencePath
         value = find_attr_value_("to", node)
         if value is not None and "to" not in already_processed:
             already_processed.add("to")
             self.to = value
+            self.validate_Nml2PopulationReferencePath(
+                self.to
+            )  # validate type Nml2PopulationReferencePath
         value = find_attr_value_("synapse", node)
         if value is not None and "synapse" not in already_processed:
             already_processed.add("synapse")
             self.synapse = value
+            self.validate_NmlId(self.synapse)  # validate type NmlId
         value = find_attr_value_("destination", node)
         if value is not None and "destination" not in already_processed:
             already_processed.add("destination")
@@ -26692,6 +26865,8 @@ class Member(BaseWithoutId):
 
 
 class DistalDetails(BaseWithoutId):
+    """DistalDetails -- What to do at the distal point when creating an inhomogeneous parameter"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -26876,6 +27051,8 @@ class DistalDetails(BaseWithoutId):
 
 
 class ProximalDetails(BaseWithoutId):
+    """ProximalDetails -- What to do at the proximal point when creating an inhomogeneous parameter"""
+
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
@@ -39297,6 +39474,19 @@ class NeuroMLDocument(Standalone):
             None,
         ),
         MemberSpec_(
+            "hindmarshRose1984Cell",
+            "HindmarshRose1984Cell",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "hindmarshRose1984Cell",
+                "type": "HindmarshRose1984Cell",
+            },
+            None,
+        ),
+        MemberSpec_(
             "pulse_generators",
             "PulseGenerator",
             1,
@@ -39758,6 +39948,7 @@ class NeuroMLDocument(Standalone):
         fitz_hugh_nagumo_cells: "list of FitzHughNagumoCell(s) (optional)" = None,
         fitz_hugh_nagumo1969_cells: "list of FitzHughNagumo1969Cell(s) (optional)" = None,
         pinsky_rinzel_ca3_cells: "list of PinskyRinzelCA3Cell(s) (optional)" = None,
+        hindmarshRose1984Cell: "list of HindmarshRose1984Cell(s) (optional)" = None,
         pulse_generators: "list of PulseGenerator(s) (optional)" = None,
         pulse_generator_dls: "list of PulseGeneratorDL(s) (optional)" = None,
         sine_generators: "list of SineGenerator(s) (optional)" = None,
@@ -39976,6 +40167,11 @@ class NeuroMLDocument(Standalone):
         else:
             self.pinsky_rinzel_ca3_cells = pinsky_rinzel_ca3_cells
         self.pinsky_rinzel_ca3_cells_nsprefix_ = None
+        if hindmarshRose1984Cell is None:
+            self.hindmarshRose1984Cell = []
+        else:
+            self.hindmarshRose1984Cell = hindmarshRose1984Cell
+        self.hindmarshRose1984Cell_nsprefix_ = None
         if pulse_generators is None:
             self.pulse_generators = []
         else:
@@ -40186,6 +40382,7 @@ class NeuroMLDocument(Standalone):
             or self.fitz_hugh_nagumo_cells
             or self.fitz_hugh_nagumo1969_cells
             or self.pinsky_rinzel_ca3_cells
+            or self.hindmarshRose1984Cell
             or self.pulse_generators
             or self.pulse_generator_dls
             or self.sine_generators
@@ -40799,6 +40996,20 @@ class NeuroMLDocument(Standalone):
                 name_="pinskyRinzelCA3Cell",
                 pretty_print=pretty_print,
             )
+        for hindmarshRose1984Cell_ in self.hindmarshRose1984Cell:
+            namespaceprefix_ = (
+                self.hindmarshRose1984Cell_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.hindmarshRose1984Cell_nsprefix_)
+                else ""
+            )
+            hindmarshRose1984Cell_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="hindmarshRose1984Cell",
+                pretty_print=pretty_print,
+            )
         for pulseGenerator_ in self.pulse_generators:
             namespaceprefix_ = (
                 self.pulse_generators_nsprefix_ + ":"
@@ -41405,6 +41616,12 @@ class NeuroMLDocument(Standalone):
             max_occurs=9999999,
         )
         self.gds_check_cardinality_(
+            self.hindmarshRose1984Cell,
+            "hindmarshRose1984Cell",
+            min_occurs=0,
+            max_occurs=9999999,
+        )
+        self.gds_check_cardinality_(
             self.pulse_generators, "pulse_generators", min_occurs=0, max_occurs=9999999
         )
         self.gds_check_cardinality_(
@@ -41624,6 +41841,8 @@ class NeuroMLDocument(Standalone):
             for item in self.fitz_hugh_nagumo1969_cells:
                 item.validate_(gds_collector, recursive=True)
             for item in self.pinsky_rinzel_ca3_cells:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.hindmarshRose1984Cell:
                 item.validate_(gds_collector, recursive=True)
             for item in self.pulse_generators:
                 item.validate_(gds_collector, recursive=True)
@@ -41892,6 +42111,11 @@ class NeuroMLDocument(Standalone):
             obj_.build(child_, gds_collector_=gds_collector_)
             self.pinsky_rinzel_ca3_cells.append(obj_)
             obj_.original_tagname_ = "pinskyRinzelCA3Cell"
+        elif nodeName_ == "hindmarshRose1984Cell":
+            obj_ = HindmarshRose1984Cell.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.hindmarshRose1984Cell.append(obj_)
+            obj_.original_tagname_ = "hindmarshRose1984Cell"
         elif nodeName_ == "pulseGenerator":
             obj_ = PulseGenerator.factory(parent_object_=self)
             obj_.build(child_, gds_collector_=gds_collector_)
@@ -44274,7 +44498,7 @@ class InputW(Input):
     def __init__(
         self,
         id: "a NonNegativeInteger (required)" = None,
-        target: "a string (required)" = None,
+        target: "a Nml2PopulationReferencePath (required)" = None,
         destination: "a NmlId (required)" = None,
         segment_id: "a NonNegativeInteger (optional)" = None,
         fraction_along: "a ZeroToOne (optional)" = None,
@@ -45691,7 +45915,11 @@ class BaseConnectionOldFormat(BaseConnection):
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
-            "pre_cell_id", "xs:string", 0, 0, {"use": "required", "name": "pre_cell_id"}
+            "pre_cell_id",
+            "Nml2PopulationReferencePath",
+            0,
+            0,
+            {"use": "required", "name": "pre_cell_id"},
         ),
         MemberSpec_(
             "pre_segment_id",
@@ -45709,7 +45937,7 @@ class BaseConnectionOldFormat(BaseConnection):
         ),
         MemberSpec_(
             "post_cell_id",
-            "xs:string",
+            "Nml2PopulationReferencePath",
             0,
             0,
             {"use": "required", "name": "post_cell_id"},
@@ -45736,10 +45964,10 @@ class BaseConnectionOldFormat(BaseConnection):
         self,
         id: "a NmlId (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
-        pre_cell_id: "a string (required)" = None,
+        pre_cell_id: "a Nml2PopulationReferencePath (required)" = None,
         pre_segment_id: "a NonNegativeInteger (optional)" = "0",
         pre_fraction_along: "a ZeroToOne (optional)" = "0.5",
-        post_cell_id: "a string (required)" = None,
+        post_cell_id: "a Nml2PopulationReferencePath (required)" = None,
         post_segment_id: "a NonNegativeInteger (optional)" = "0",
         post_fraction_along: "a ZeroToOne (optional)" = "0.5",
         extensiontype_=None,
@@ -45781,6 +46009,40 @@ class BaseConnectionOldFormat(BaseConnection):
             return BaseConnectionOldFormat(*args_, **kwargs_)
 
     factory = staticmethod(factory)
+
+    def validate_Nml2PopulationReferencePath(self, value):
+        # Validate type Nml2PopulationReferencePath, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2PopulationReferencePath_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2PopulationReferencePath_patterns_,
+                    )
+                )
+
+    validate_Nml2PopulationReferencePath_patterns_ = [
+        [
+            "^((\\.\\./)?([a-zA-Z_][a-zA-Z0-9_]*)((\\[[0-9]+\\])|(/[0-9]+)+((/[a-zA-Z_][a-zA-Z0-9_]*)?)/?))$"
+        ]
+    ]
 
     def validate_NonNegativeInteger(self, value):
         # Validate type NonNegativeInteger, a restriction on xs:nonNegativeInteger.
@@ -46005,8 +46267,8 @@ class BaseConnectionOldFormat(BaseConnection):
         self.gds_collector_ = gds_collector
         message_count = len(self.gds_collector_.get_messages())
         # validate simple type attributes
-        self.gds_validate_builtin_ST_(
-            self.gds_validate_string, self.pre_cell_id, "pre_cell_id"
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2PopulationReferencePath, self.pre_cell_id, "pre_cell_id"
         )
         self.gds_check_cardinality_(self.pre_cell_id, "pre_cell_id", required=True)
         self.gds_validate_defined_ST_(
@@ -46021,8 +46283,8 @@ class BaseConnectionOldFormat(BaseConnection):
         self.gds_check_cardinality_(
             self.pre_fraction_along, "pre_fraction_along", required=False
         )
-        self.gds_validate_builtin_ST_(
-            self.gds_validate_string, self.post_cell_id, "post_cell_id"
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2PopulationReferencePath, self.post_cell_id, "post_cell_id"
         )
         self.gds_check_cardinality_(self.post_cell_id, "post_cell_id", required=True)
         self.gds_validate_defined_ST_(
@@ -46060,6 +46322,9 @@ class BaseConnectionOldFormat(BaseConnection):
         if value is not None and "preCellId" not in already_processed:
             already_processed.add("preCellId")
             self.pre_cell_id = value
+            self.validate_Nml2PopulationReferencePath(
+                self.pre_cell_id
+            )  # validate type Nml2PopulationReferencePath
         value = find_attr_value_("preSegmentId", node)
         if value is not None and "preSegmentId" not in already_processed:
             already_processed.add("preSegmentId")
@@ -46079,6 +46344,9 @@ class BaseConnectionOldFormat(BaseConnection):
         if value is not None and "postCellId" not in already_processed:
             already_processed.add("postCellId")
             self.post_cell_id = value
+            self.validate_Nml2PopulationReferencePath(
+                self.post_cell_id
+            )  # validate type Nml2PopulationReferencePath
         value = find_attr_value_("postSegmentId", node)
         if value is not None and "postSegmentId" not in already_processed:
             already_processed.add("postSegmentId")
@@ -49814,7 +50082,7 @@ class Cell(BaseCell):
 
 
 class PinskyRinzelCA3Cell(BaseCell):
-    """PinskyRinzelCA3Cell -- Reduced CA3 cell model from Pinsky and Rinzel 1994. See https://github.com/OpenSourceBrain/PinskyRinzelModel
+    """PinskyRinzelCA3Cell -- Reduced CA3 cell model from Pinsky, P. F. , Rinzel, J. Intrinsic and network rhythmogenesis in a reduced traub model for CA3 neurons. J Comput Neurosci 1, 39-60 ( 1994 ). See https://github.com/OpenSourceBrain/PinskyRinzelModel
     \n
     :param iSoma:
     :type iSoma: currentDensity
@@ -58465,10 +58733,10 @@ class ConnectionWD(BaseConnectionOldFormat):
         self,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
-        pre_cell_id: "a string (required)" = None,
+        pre_cell_id: "a Nml2PopulationReferencePath (required)" = None,
         pre_segment_id: "a NonNegativeInteger (optional)" = "0",
         pre_fraction_along: "a ZeroToOne (optional)" = "0.5",
-        post_cell_id: "a string (required)" = None,
+        post_cell_id: "a Nml2PopulationReferencePath (required)" = None,
         post_segment_id: "a NonNegativeInteger (optional)" = "0",
         post_fraction_along: "a ZeroToOne (optional)" = "0.5",
         weight: "a float (required)" = None,
@@ -58822,10 +59090,10 @@ class Connection(BaseConnectionOldFormat):
         self,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
-        pre_cell_id: "a string (required)" = None,
+        pre_cell_id: "a Nml2PopulationReferencePath (required)" = None,
         pre_segment_id: "a NonNegativeInteger (optional)" = "0",
         pre_fraction_along: "a ZeroToOne (optional)" = "0.5",
-        post_cell_id: "a string (required)" = None,
+        post_cell_id: "a Nml2PopulationReferencePath (required)" = None,
         post_segment_id: "a NonNegativeInteger (optional)" = "0",
         post_fraction_along: "a ZeroToOne (optional)" = "0.5",
         gds_collector_=None,
@@ -59288,28 +59556,539 @@ class Cell2CaPools(Cell):
 # end class Cell2CaPools
 
 
+class HindmarshRose1984Cell(BaseCellMembPotCap):
+    """HindmarshRose1984Cell -- The Hindmarsh Rose model is a simplified point cell model which captures complex firing patterns of single neurons, such as periodic and chaotic bursting. It has a fast spiking subsystem, which is a generalization of the FitzHugh-Nagumo system, coupled to a slower subsystem which allows the model to fire bursts. The dynamical variables x, y, z correspond to the membrane potential, a recovery variable, and a slower adaptation current, respectively. See Hindmarsh J. L. , and Rose R. M. ( 1984 ) A model of neuronal bursting using three coupled first order differential equations. Proc. R. Soc. London, Ser. B 221:87
+    –
+    102.
+    \n
+    :param a: cubic term in x nullcline
+    :type a: none
+    :param b: quadratic term in x nullcline
+    :type b: none
+    :param c: constant term in y nullcline
+    :type c: none
+    :param d: quadratic term in y nullcline
+    :type d: none
+    :param r: timescale separation between slow and fast subsystem ( r greater than 0; r much less than 1 )
+    :type r: none
+    :param s: related to adaptation
+    :type s: none
+    :param x1: related to the system's resting potential
+    :type x1: none
+    :param v_scaling: scaling of x for physiological membrane potential
+    :type v_scaling: voltage
+    :param x0:
+    :type x0: none
+    :param y0:
+    :type y0: none
+    :param z0:
+    :type z0: none
+    :param C: Total capacitance of the cell membrane
+    :type C: capacitance
+
+    """
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("a", "Nml2Quantity_none", 0, 0, {"use": "required", "name": "a"}),
+        MemberSpec_("b", "Nml2Quantity_none", 0, 0, {"use": "required", "name": "b"}),
+        MemberSpec_("c", "Nml2Quantity_none", 0, 0, {"use": "required", "name": "c"}),
+        MemberSpec_("d", "Nml2Quantity_none", 0, 0, {"use": "required", "name": "d"}),
+        MemberSpec_("s", "Nml2Quantity_none", 0, 0, {"use": "required", "name": "s"}),
+        MemberSpec_("x1", "Nml2Quantity_none", 0, 0, {"use": "required", "name": "x1"}),
+        MemberSpec_("r", "Nml2Quantity_none", 0, 0, {"use": "required", "name": "r"}),
+        MemberSpec_("x0", "Nml2Quantity_none", 0, 0, {"use": "required", "name": "x0"}),
+        MemberSpec_("y0", "Nml2Quantity_none", 0, 0, {"use": "required", "name": "y0"}),
+        MemberSpec_("z0", "Nml2Quantity_none", 0, 0, {"use": "required", "name": "z0"}),
+        MemberSpec_(
+            "v_scaling",
+            "Nml2Quantity_voltage",
+            0,
+            0,
+            {"use": "required", "name": "v_scaling"},
+        ),
+    ]
+    subclass = None
+    superclass = BaseCellMembPotCap
+
+    def __init__(
+        self,
+        id: "a NmlId (required)" = None,
+        metaid: "a MetaId (optional)" = None,
+        notes: "a string (optional)" = None,
+        properties: "list of Property(s) (optional)" = None,
+        annotation: "a Annotation (optional)" = None,
+        neuro_lex_id: "a NeuroLexId (optional)" = None,
+        C: "a Nml2Quantity_capacitance (required)" = None,
+        a: "a Nml2Quantity_none (required)" = None,
+        b: "a Nml2Quantity_none (required)" = None,
+        c: "a Nml2Quantity_none (required)" = None,
+        d: "a Nml2Quantity_none (required)" = None,
+        s: "a Nml2Quantity_none (required)" = None,
+        x1: "a Nml2Quantity_none (required)" = None,
+        r: "a Nml2Quantity_none (required)" = None,
+        x0: "a Nml2Quantity_none (required)" = None,
+        y0: "a Nml2Quantity_none (required)" = None,
+        z0: "a Nml2Quantity_none (required)" = None,
+        v_scaling: "a Nml2Quantity_voltage (required)" = None,
+        gds_collector_=None,
+        **kwargs_,
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("HindmarshRose1984Cell"), self).__init__(
+            id, metaid, notes, properties, annotation, neuro_lex_id, C, **kwargs_
+        )
+        self.a = _cast(None, a)
+        self.a_nsprefix_ = None
+        self.b = _cast(None, b)
+        self.b_nsprefix_ = None
+        self.c = _cast(None, c)
+        self.c_nsprefix_ = None
+        self.d = _cast(None, d)
+        self.d_nsprefix_ = None
+        self.s = _cast(None, s)
+        self.s_nsprefix_ = None
+        self.x1 = _cast(None, x1)
+        self.x1_nsprefix_ = None
+        self.r = _cast(None, r)
+        self.r_nsprefix_ = None
+        self.x0 = _cast(None, x0)
+        self.x0_nsprefix_ = None
+        self.y0 = _cast(None, y0)
+        self.y0_nsprefix_ = None
+        self.z0 = _cast(None, z0)
+        self.z0_nsprefix_ = None
+        self.v_scaling = _cast(None, v_scaling)
+        self.v_scaling_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, HindmarshRose1984Cell
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if HindmarshRose1984Cell.subclass:
+            return HindmarshRose1984Cell.subclass(*args_, **kwargs_)
+        else:
+            return HindmarshRose1984Cell(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_Nml2Quantity_none(self, value):
+        # Validate type Nml2Quantity_none, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_none_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_none_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_none_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?)$"]
+    ]
+
+    def validate_Nml2Quantity_voltage(self, value):
+        # Validate type Nml2Quantity_voltage, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_voltage_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_voltage_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_voltage_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(V|mV))$"]
+    ]
+
+    def has__content(self):
+        if super(HindmarshRose1984Cell, self).has__content():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="HindmarshRose1984Cell",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("HindmarshRose1984Cell")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "HindmarshRose1984Cell":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="HindmarshRose1984Cell",
+        )
+        if self.has__content():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="HindmarshRose1984Cell",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="HindmarshRose1984Cell",
+    ):
+        super(HindmarshRose1984Cell, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="HindmarshRose1984Cell",
+        )
+        if self.a is not None and "a" not in already_processed:
+            already_processed.add("a")
+            outfile.write(
+                " a=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(quote_attrib(self.a), input_name="a")
+                    ),
+                )
+            )
+        if self.b is not None and "b" not in already_processed:
+            already_processed.add("b")
+            outfile.write(
+                " b=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(quote_attrib(self.b), input_name="b")
+                    ),
+                )
+            )
+        if self.c is not None and "c" not in already_processed:
+            already_processed.add("c")
+            outfile.write(
+                " c=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(quote_attrib(self.c), input_name="c")
+                    ),
+                )
+            )
+        if self.d is not None and "d" not in already_processed:
+            already_processed.add("d")
+            outfile.write(
+                " d=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(quote_attrib(self.d), input_name="d")
+                    ),
+                )
+            )
+        if self.s is not None and "s" not in already_processed:
+            already_processed.add("s")
+            outfile.write(
+                " s=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(quote_attrib(self.s), input_name="s")
+                    ),
+                )
+            )
+        if self.x1 is not None and "x1" not in already_processed:
+            already_processed.add("x1")
+            outfile.write(
+                " x1=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(quote_attrib(self.x1), input_name="x1")
+                    ),
+                )
+            )
+        if self.r is not None and "r" not in already_processed:
+            already_processed.add("r")
+            outfile.write(
+                " r=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(quote_attrib(self.r), input_name="r")
+                    ),
+                )
+            )
+        if self.x0 is not None and "x0" not in already_processed:
+            already_processed.add("x0")
+            outfile.write(
+                " x0=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(quote_attrib(self.x0), input_name="x0")
+                    ),
+                )
+            )
+        if self.y0 is not None and "y0" not in already_processed:
+            already_processed.add("y0")
+            outfile.write(
+                " y0=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(quote_attrib(self.y0), input_name="y0")
+                    ),
+                )
+            )
+        if self.z0 is not None and "z0" not in already_processed:
+            already_processed.add("z0")
+            outfile.write(
+                " z0=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(quote_attrib(self.z0), input_name="z0")
+                    ),
+                )
+            )
+        if self.v_scaling is not None and "v_scaling" not in already_processed:
+            already_processed.add("v_scaling")
+            outfile.write(
+                " v_scaling=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.v_scaling), input_name="v_scaling"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="HindmarshRose1984Cell",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(HindmarshRose1984Cell, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.a, "a")
+        self.gds_check_cardinality_(self.a, "a", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.b, "b")
+        self.gds_check_cardinality_(self.b, "b", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.c, "c")
+        self.gds_check_cardinality_(self.c, "c", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.d, "d")
+        self.gds_check_cardinality_(self.d, "d", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.s, "s")
+        self.gds_check_cardinality_(self.s, "s", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.x1, "x1")
+        self.gds_check_cardinality_(self.x1, "x1", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.r, "r")
+        self.gds_check_cardinality_(self.r, "r", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.x0, "x0")
+        self.gds_check_cardinality_(self.x0, "x0", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.y0, "y0")
+        self.gds_check_cardinality_(self.y0, "y0", required=True)
+        self.gds_validate_defined_ST_(self.validate_Nml2Quantity_none, self.z0, "z0")
+        self.gds_check_cardinality_(self.z0, "z0", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_voltage, self.v_scaling, "v_scaling"
+        )
+        self.gds_check_cardinality_(self.v_scaling, "v_scaling", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("a", node)
+        if value is not None and "a" not in already_processed:
+            already_processed.add("a")
+            self.a = value
+            self.validate_Nml2Quantity_none(self.a)  # validate type Nml2Quantity_none
+        value = find_attr_value_("b", node)
+        if value is not None and "b" not in already_processed:
+            already_processed.add("b")
+            self.b = value
+            self.validate_Nml2Quantity_none(self.b)  # validate type Nml2Quantity_none
+        value = find_attr_value_("c", node)
+        if value is not None and "c" not in already_processed:
+            already_processed.add("c")
+            self.c = value
+            self.validate_Nml2Quantity_none(self.c)  # validate type Nml2Quantity_none
+        value = find_attr_value_("d", node)
+        if value is not None and "d" not in already_processed:
+            already_processed.add("d")
+            self.d = value
+            self.validate_Nml2Quantity_none(self.d)  # validate type Nml2Quantity_none
+        value = find_attr_value_("s", node)
+        if value is not None and "s" not in already_processed:
+            already_processed.add("s")
+            self.s = value
+            self.validate_Nml2Quantity_none(self.s)  # validate type Nml2Quantity_none
+        value = find_attr_value_("x1", node)
+        if value is not None and "x1" not in already_processed:
+            already_processed.add("x1")
+            self.x1 = value
+            self.validate_Nml2Quantity_none(self.x1)  # validate type Nml2Quantity_none
+        value = find_attr_value_("r", node)
+        if value is not None and "r" not in already_processed:
+            already_processed.add("r")
+            self.r = value
+            self.validate_Nml2Quantity_none(self.r)  # validate type Nml2Quantity_none
+        value = find_attr_value_("x0", node)
+        if value is not None and "x0" not in already_processed:
+            already_processed.add("x0")
+            self.x0 = value
+            self.validate_Nml2Quantity_none(self.x0)  # validate type Nml2Quantity_none
+        value = find_attr_value_("y0", node)
+        if value is not None and "y0" not in already_processed:
+            already_processed.add("y0")
+            self.y0 = value
+            self.validate_Nml2Quantity_none(self.y0)  # validate type Nml2Quantity_none
+        value = find_attr_value_("z0", node)
+        if value is not None and "z0" not in already_processed:
+            already_processed.add("z0")
+            self.z0 = value
+            self.validate_Nml2Quantity_none(self.z0)  # validate type Nml2Quantity_none
+        value = find_attr_value_("v_scaling", node)
+        if value is not None and "v_scaling" not in already_processed:
+            already_processed.add("v_scaling")
+            self.v_scaling = value
+            self.validate_Nml2Quantity_voltage(
+                self.v_scaling
+            )  # validate type Nml2Quantity_voltage
+        super(HindmarshRose1984Cell, self)._buildAttributes(
+            node, attrs, already_processed
+        )
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(HindmarshRose1984Cell, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class HindmarshRose1984Cell
+
+
 class AdExIaFCell(BaseCellMembPotCap):
     """AdExIaFCell -- Model based on Brette R and Gerstner W ( 2005 ) Adaptive Exponential Integrate-and-Fire Model as an Effective Description of Neuronal Activity. J Neurophysiol 94:3637-3642
     \n
-    :param gL:
+    :param gL: Leak conductance
     :type gL: conductance
-    :param EL:
+    :param EL: Leak reversal potential
     :type EL: voltage
-    :param VT:
+    :param VT: Spike threshold
     :type VT: voltage
-    :param thresh:
+    :param thresh: Spike detection threshold
     :type thresh: voltage
-    :param reset:
+    :param reset: Reset potential
     :type reset: voltage
-    :param delT:
+    :param delT: Slope factor
     :type delT: voltage
-    :param tauw:
+    :param tauw: Adaptation time constant
     :type tauw: time
-    :param refract:
+    :param refract: Refractory period
     :type refract: time
-    :param a:
+    :param a: Sub-threshold adaptation variable
     :type a: conductance
-    :param b:
+    :param b: Spike-triggered adaptation variable
     :type b: current
     :param C: Total capacitance of the cell membrane
     :type C: capacitance
@@ -59885,23 +60664,23 @@ class AdExIaFCell(BaseCellMembPotCap):
 class Izhikevich2007Cell(BaseCellMembPotCap):
     """Izhikevich2007Cell -- Cell based on the modified Izhikevich model in Izhikevich 2007, Dynamical systems in neuroscience, MIT Press
     \n
-    :param v0:
+    :param v0: Initial membrane potential
     :type v0: voltage
     :param k:
     :type k: conductance_per_voltage
-    :param vr:
+    :param vr: Resting membrane potential
     :type vr: voltage
-    :param vt:
+    :param vt: Spike threshold
     :type vt: voltage
-    :param vpeak:
+    :param vpeak: Peak action potential value
     :type vpeak: voltage
-    :param a:
+    :param a: Time scale of recovery variable u
     :type a: per_time
-    :param b:
+    :param b: Sensitivity of recovery variable u to subthreshold fluctuations of membrane potential v
     :type b: conductance
-    :param c:
+    :param c: After-spike reset value of v
     :type c: voltage
-    :param d:
+    :param d: After-spike increase to u
     :type d: current
     :param C: Total capacitance of the cell membrane
     :type C: capacitance
@@ -67044,6 +67823,7 @@ NamespaceToDefMappings_ = {
         ("Nml2Quantity_conductancePerVoltage", "NeuroML_v2.3.xsd", "ST"),
         ("MetaId", "NeuroML_v2.3.xsd", "ST"),
         ("NeuroLexId", "NeuroML_v2.3.xsd", "ST"),
+        ("Nml2PopulationReferencePath", "NeuroML_v2.3.xsd", "ST"),
         ("NonNegativeInteger", "NeuroML_v2.3.xsd", "ST"),
         ("PositiveInteger", "NeuroML_v2.3.xsd", "ST"),
         ("DoubleGreaterThanZero", "NeuroML_v2.3.xsd", "ST"),
@@ -67144,6 +67924,7 @@ NamespaceToDefMappings_ = {
         ("FitzHughNagumoCell", "NeuroML_v2.3.xsd", "CT"),
         ("FitzHughNagumo1969Cell", "NeuroML_v2.3.xsd", "CT"),
         ("PinskyRinzelCA3Cell", "NeuroML_v2.3.xsd", "CT"),
+        ("HindmarshRose1984Cell", "NeuroML_v2.3.xsd", "CT"),
         ("Cell", "NeuroML_v2.3.xsd", "CT"),
         ("Cell2CaPools", "NeuroML_v2.3.xsd", "CT"),
         ("Morphology", "NeuroML_v2.3.xsd", "CT"),
@@ -67356,6 +68137,7 @@ __all__ = [
     "HHTime",
     "HHVariable",
     "HH_cond_exp",
+    "HindmarshRose1984Cell",
     "IF_cond_alpha",
     "IF_cond_exp",
     "IF_curr_alpha",
