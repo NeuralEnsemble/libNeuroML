@@ -9,7 +9,7 @@ echo "Note(1): Please remember to update the schema from the NeuroML2 repository
 echo "Note(2): Must be run in neuroml/nml/"
 NEUROML_VERSION=$(grep -E 'current_neuroml_version.*' ../__version__.py | cut -d '=' -f 2 | tr -d '"' | tr -d ' ')
 SCHEMA_FILE=NeuroML_${NEUROML_VERSION}.xsd
-PYTHON_VERSION=$(python --version 2>&1)
+PYTHON_VERSION=$(python3 --version 2>&1)
 
 regenerate () {
     if command -v generateDS > /dev/null 2>&1
@@ -33,7 +33,7 @@ regenerate () {
         echo "Modifying default arguments using annotate_nml and sed"
         pushd ../../
             # generates the sed-script.txt file
-            python -m neuroml.nml.annotate_nml
+            python3 -m neuroml.nml.annotate_nml
             echo "Generated sed script"
             sed_lines=$(wc -l sed-script.txt | cut -f1 -d " ")
             if [ $sed_lines -eq 0 ]
