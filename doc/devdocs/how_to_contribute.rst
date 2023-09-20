@@ -101,7 +101,7 @@ Release process
 libNeuroML is part of the official NeuroML release cycle.
 When a new libNeuroML release is ready the following needs to happen:
 
-- Update version number in setup.py
+- Update version number in setup.cfg
 - update version number in doc/conf.py
 - update release number in doc/conf.py (same as version number)
 - update changelog in README.md

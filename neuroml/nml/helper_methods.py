@@ -1,6 +1,7 @@
 import sys
 import re
 
+
 #
 # You must include the following class definition at the top of
 #   your method specification file.
@@ -157,8 +158,6 @@ volume = MethodSpec(
         :returns: volume of segment
         :rtype: float
         """
-
-        from math import pi
         if self.proximal==None:
             raise Exception('Cannot get volume of segment '+str(self.id)+' using the volume property, since no proximal point is set on it (the proximal point comes from the parent segment). Use the method get_segment_volume(segment_id) on the cell instead.')
 
@@ -195,9 +194,6 @@ surface_area = MethodSpec(
         :returns: surface area of segment
         :rtype: float
         """
-        from math import pi
-        from math import sqrt
-
         if self.proximal==None:
             raise Exception('Cannot get surface area of segment '+str(self.id)+' using the surface_area property, since no proximal point is set on it (the proximal point comes from the parent segment). Use the method get_segment_surface_area(segment_id) on the cell instead.')
 
@@ -222,177 +218,11 @@ surface_area = MethodSpec(
     class_names=("Segment"),
 )
 
-generic_add = MethodSpec(
-    name="add",
-    source='''\
-
-    def add(self, obj=None, hint=None, force=False):
-        """Generic function to allow easy addition of a new member to a NeuroML object.
-
-        Without arguments, when `obj=None`, it simply calls the `info()` method
-        to provide the list of valid member types for the NeuroML class.
-
-        Use `info(show_contents=True)` to see the valid members of this class,
-        and their current contents.
-
-        :param obj: object member to add
-        :type obj: any NeuroML Type defined by the API
-        :param hint: member name to add to when there are multiple members that `obj` can be added to
-        :type hint: string
-        :param force: boolean to force addition when an obj has already been added previously
-        :type force: bool
-
-        :raises Exception: if a member compatible to obj could not be found
-        :raises Exception: if multiple members can accept the object and no hint is provided.
-        """
-        if not obj:
-            self.info()
-            return
-
-        # getattr only returns the value of the provided member but one cannot
-        # then use this to modify the member. Using `vars` also allows us to
-        # modify the value
-        targets = []
-        all_members = self.get_members()
-        for member in all_members:
-            # get_data_type() returns the type as a string, e.g.: 'IncludeType'
-            if member.get_data_type() == type(obj).__name__:
-                targets.append(member)
-
-
-        if len(targets) == 0:
-            # no targets found
-            e = Exception(
-            """A member object of {} type could not be found in NeuroML class {}.\\n{}
-            """.format(type(obj).__name__, type(self).__name__, self.info()))
-            raise e
-        elif len(targets) == 1:
-            # good, just add it
-            self.__add(obj, targets[0], force)
-        else:
-            # more than one target
-            if not hint:
-                err_string = """Multiple members can accept {}. Please provide the name of the variable using the `hint` argument to specify which member to add to:\\n""".format(type(obj).__name__)
-                for t in targets:
-                    err_string += "- {}\\n".format(t.get_name())
-                raise Exception(err_string)
-
-            # use hint to figure out which target to use
-            for t in targets:
-                if hint == t.get_name():
-                    self.__add(obj, t, force)
-                    break
-
-
-    def __add(self, obj, member, force=False):
-        """Private method to add new member to a specified variable in a NeuroML object.
-
-        :param obj: object member to add
-        :type obj: any NeuroML Type defined by the API
-        :param member: member variable name to add to when there are multiple members that `obj` can be added to
-        :type member: MemberSpec_
-        :param force: boolean to force addition when an obj has already been added previously
-        :type force: bool
-
-        """
-        import warnings
-
-        # A single value, not a list:
-        if member.get_container() == 0:
-            if force:
-                vars(self)[member.get_name()] = obj
-            else:
-                if vars(self)[member.get_name()]:
-                    warnings.warn("""{} has already been assigned.  Use `force=True` to overwrite. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(member.get_name()))
-                else:
-                    vars(self)[member.get_name()] = obj
-        # List
-        else:
-            # Do not use 'obj in ..' for membership check because it also
-            # returns true if an element with the same value exists in the
-            # container
-            # https://docs.python.org/3/reference/expressions.html#membership-test-operations
-            if force:
-                vars(self)[member.get_name()].append(obj)
-            else:
-                if any(obj is e for e in vars(self)[member.get_name()]):
-                    warnings.warn("""{} already exists in {}. Use `force=True` to force readdition. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(obj, member.get_name()))
-                else:
-                    vars(self)[member.get_name()].append(obj)
-
-    def get_members(self):
-        """Get member data items, also from ancestors.
-
-        This function is required because generateDS does not include inherited
-        members in the member_data_items list for a derived class. So, for
-        example, while IonChannelHH has `gate_hh_rates` which it inherits from
-        IonChannel, IonChannelHH's `member_data_items_` is empty. It relies on
-        the IonChannel classes' `member_data_items_` list.
-
-        :returns: list of members, including ones inherited from ancestors.
-        """
-        import copy
-        # create a copy by value
-        # if copied by reference (=), the member_data_items_ object variable is
-        # modified to a large list, greatly increasing the memory usage.
-        all_members = copy.copy(self.member_data_items_)
-        for c in type(self).__mro__:
-            try:
-                all_members.extend(c.member_data_items_)
-            except AttributeError:
-                pass
-            except TypeError:
-                pass
-
-        # deduplicate
-        # TODO where are the duplicates coming from given that we're not
-        # calling this recursively?
-        all_members = list(set(all_members))
-        return all_members
-    ''',
-    class_names=("BaseWithoutId"),
-)
-
-generic_list = MethodSpec(
-    name="info",
-    source='''\
-
-    def info(self, show_contents=False):
-        """A helper function to get a list of members of this class.
-
-        This is useful to quickly check what members can go into a particular
-        NeuroML class (which will match the Schema definitions). It lists these
-        members and notes whether they are "single" type elements (Child
-        elements) or "List" elements (Children elements). It will also note
-        whether a member is optional or required.
-
-        See http://www.davekuhlman.org/generateDS.html#user-methods for more
-        information on the MemberSpec_ class that generateDS uses.
-
-        :param show_contents: also prints out the contents of the members
-        :type show_contents: bool
-
-        :returns: the string (for testing purposes)
-        """
-
-        info_str = "Valid members for {} are:\\n".format(self.__class__.__name__)
-        for member in self.member_data_items_:
-            info_str += ("* {} (class: {})\\n".format(member.name, member.data_type))
-            if show_contents:
-                contents = getattr(self, member.get_name())
-                info_str += ("\t* Contents: {}\\n\\n".format(contents))
-
-        info_str += "Please see the NeuroML standard schema documentation at https://docs.neuroml.org/Userdocs/NeuroMLv2.html for more information."
-        print(info_str)
-        return info_str
-    ''',
-    class_names=("BaseWithoutId"),
-)
 #
 # Provide a list of your method specifications.
 #   This list of specifications must be named METHOD_SPECS.
 #
-METHOD_SPECS = (length, volume, surface_area, num_segments, generic_add, generic_list)
+METHOD_SPECS = (length, volume, surface_area, num_segments)
 
 
 seg_grp = MethodSpec(
@@ -926,7 +756,6 @@ nml_doc_summary = MethodSpec(
         NeuroMLDocument: networks, cells, projections, synapses, and so on.
         """
 
-        import inspect
 
         info = "*******************************************************\\n"
         info+="* NeuroMLDocument: "+self.id+"\\n*\\n"
@@ -1058,26 +887,27 @@ nml_doc_summary = MethodSpec(
         :returns: Component with given ID or None if no Component with provided ID was found
         """
         if len(id)==0:
-            import inspect
             callframe = inspect.getouterframes(inspect.currentframe(), 2)
             print('Method: '+ callframe[1][3] + ' is asking for an element with no id...')
 
             return None
         all_ids = []
         for ms in self.member_data_items_:
-            mlist = self.__getattribute__(ms.name)
+            mlist = getattr(self, ms.get_name())
+            # TODO: debug why this is required
+            if mlist is None:
+                continue
             for m in mlist:
                 if hasattr(m,"id"):
                     if m.id == id:
                         return m
                     else:
                         all_ids.append(m.id)
-        from neuroml.loaders import print_
         if self.warn_count<10:
-            print_("Id "+id+" not found in <neuroml> element. All ids: "+str(sorted(all_ids)))
+            neuroml.print_("Id "+id+" not found in <neuroml> element. All ids: "+str(sorted(all_ids)))
             self.warn_count+=1
         elif self.warn_count==10:
-            print_(" - Suppressing further warnings about id not found...")
+            neuroml.print_(" - Suppressing further warnings about id not found...")
         return None
 
     def append(self, element):
@@ -1108,19 +938,21 @@ network_get_by_id = MethodSpec(
         """
         all_ids = []
         for ms in self.member_data_items_:
-            mlist = self.__getattribute__(ms.name)
+            mlist = getattr(self, ms.get_name())
+            # TODO: debug why this is required
+            if mlist is None:
+                continue
             for m in mlist:
                 if hasattr(m,"id"):
                     if m.id == id:
                         return m
                     else:
                         all_ids.append(m.id)
-        from neuroml.loaders import print_
         if self.warn_count<10:
-            print_("Id "+id+" not found in <network> element. All ids: "+str(sorted(all_ids)))
+            neuroml.print_("Id "+id+" not found in <network> element. All ids: "+str(sorted(all_ids)))
             self.warn_count+=1
         elif self.warn_count==10:
-            print_(" - Suppressing further warnings about id not found...")
+            neuroml.print_(" - Suppressing further warnings about id not found...")
         return None
 
 
@@ -1139,23 +971,22 @@ cell_methods = MethodSpec(
     name="cell_methods",
     source='''\
 
-
     # Get segment object by its id
     def get_segment(self, segment_id):
-        # type: (str) -> Segment
+        # type: (int) -> Segment
         """Get segment object by its id
 
         :param segment_id: ID of segment
         :return: segment
 
-        :raises Exception: if the segment is not found in the cell
+        :raises ValueError: if the segment is not found in the cell
         """
 
         for segment in self.morphology.segments:
             if segment.id == segment_id:
                 return segment
 
-        raise Exception("Segment with id "+str(segment_id)+" not found in cell "+str(self.id))
+        raise ValueError("Segment with id "+str(segment_id)+" not found in cell "+str(self.id))
 
     def get_segments_by_substring(self, substring):
         # type: (str) -> dict
@@ -1183,9 +1014,8 @@ cell_methods = MethodSpec(
         # type: (str) -> Point3DWithDiam
         """Get the proximal point of a segment.
 
-        Get the proximal point of a segment, even the proximal field is None
-        and so the proximal point is on the parent (at a point set by
-        fraction_along).
+        If the proximal for the segment is set to None, calculate the proximal
+        on the parent using fraction_along and return it.
 
         :param segment_id: ID of segment
         :return: proximal point
@@ -1204,7 +1034,8 @@ cell_methods = MethodSpec(
         else:
             pd = parent.distal
             pp = self.get_actual_proximal(segment.parent.segments)
-            p = Point3DWithDiam((1-fract)*pp.x+fract*pd.x, (1-fract)*pp.y+fract*pd.y, (1-fract)*pp.z+fract*pd.z)
+            # pp + f(pd - pp) = (1 - f)pp + f*pd
+            p = Point3DWithDiam(x=(1-fract)*pp.x+fract*pd.x, y=(1-fract)*pp.y+fract*pd.y, z=(1-fract)*pp.z+fract*pd.z)
             p.diameter = (1-fract)*pp.diameter+fract*pd.diameter
 
             return p
@@ -1278,16 +1109,14 @@ cell_methods = MethodSpec(
     def get_all_segments_in_group(self,
                                   segment_group,
                                   assume_all_means_all=True):
-        # type: (SegmentGroup, bool) -> List[Segment]
+        # type: (SegmentGroup, bool) -> List[int]
         """Get all the segments in a segment group of the cell.
 
         :param segment_group: segment group to get all segments of
-        :param assume_all_means_all: return all segments if the segment group
-            wasn't explicitly defined
-
-        :todo: check docstring
-
-        :return: list of segments
+        :param assume_all_means_all: return all segments if the "all" segment
+            group wasn't explicitly defined
+        :return: list of segment ids
+        :rtype: list[int]
 
         :raises Exception: if no segment group is found in the cell.
         """
@@ -1325,18 +1154,43 @@ cell_methods = MethodSpec(
                                        include_cumulative_lengths=False,
                                        include_path_lengths=False,
                                        path_length_metric="Path Length from root"): # Only option supported
-        # type: (List, bool, bool, bool, str) -> Dict
+        # type: (List, bool, bool, bool, str) -> Any
         """
-        Get ordered list of segments in specified groups
+        Get ordered list of segments in specified groups, with additional
+        information.
 
-        :param group_list: list of groups to get segments from
+        Note that this method orders segments by id, so the assumption is that
+        all segment with id `N + m` will be a descendent of segment with id `N`
+        in the segment group.
+
+        :param group_list: a group id or list of group ids to get segments from
+        :type group_list: str or list(str)
         :param check_parentage: verify parentage
-        :param include_commulative_lengths: also include cummulative lengths
-        :param include_path_lengths: also include path lengths
-        :param path_length_metric:
+        :type check_parentage: bool
+        :param include_cumulative_lengths: also include cummulative length of
+            each segment from root
+        :type include_cumulative_lengths: bool
+        :param include_path_lengths: also include path lengths from segment
+            group's root segment to proximal and distal points of each segment
+        :type include_path_lengths: bool
+        :param path_length_metric: metric to use for path length ("Path Length
+            from root" is currently the only supported option, and the default)
+        :type path_length_metric: str
 
-        :return: dictionary of segments with additional information depending
-            on what parameters were used:
+        :returns: depending on provided arguments:
+
+                - if no additional options are provided, returns a dictionary
+                  with segment group ids as keys, and lists of ordered segments
+                  in those segment groups as values (`ord_segs`)
+                - if only `include_path_lengths` is set, returns a tuple:
+                  `[ord_segs, path_lengths_to_proximal ,
+                  path_lengths_to_distal]`
+                - if only `include_cumulative_lengths` is set, returns a tuple:
+                  `[ord_segs, cumulative_lengths]`
+                - if both `include_path_lengths` and
+                  `include_cumulative_lengths` are set, returns a tuple:
+                  `[ord_segs, cumulative_lengths, path_lengths_to_proximal ,
+                  path_lengths_to_distal]`
 
         :raises: Exception if check_parentage is True and parentage cannot be verified
         """
@@ -1344,12 +1198,24 @@ cell_methods = MethodSpec(
         unord_segs = {}
         other_segs = {}
 
+        # convert to list if a single segment group ID has been provided
         if isinstance(group_list, str):
             group_list = [group_list]
 
+        # populate the dict to ensure that the order of segment groups is
+        # maintained in the returned result
+        for sgid in group_list:
+            unord_segs[sgid] = None
+
+        # get a dict of all segments in the cell, with their ids as keys
         segments = self.get_segment_ids_vs_segments()
 
+        # get list of segments in all segment groups
+        # and store this information in two dicts:
+        # - unord_segs: for segment groups in group_list
+        # - other_segs: for segment groups not in group_list
         for sg in self.morphology.segment_groups:
+            # get all segments in a segment group
             all_segs_here = self.get_all_segments_in_group(sg)
 
             if sg.id in group_list:
@@ -1359,13 +1225,13 @@ cell_methods = MethodSpec(
 
         ord_segs = {}
 
-        from operator import attrgetter
-        for key in unord_segs.keys():
-            segs = unord_segs[key]
-            if len(segs)==1 or len(segs)==0:
-                ord_segs[key]=segs
-            else:
-                ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False)
+        # sort unord_segs by id to get an ordered list in ord_segs
+        for key, segs in unord_segs.items():
+            if segs is not None:
+                if len(segs)==1 or len(segs)==0:
+                    ord_segs[key]=segs
+                else:
+                    ord_segs[key]=sorted(segs,key=attrgetter('id'),reverse=False)
 
         if check_parentage:
             # check parent ordering
@@ -1380,8 +1246,6 @@ cell_methods = MethodSpec(
 
 
         if include_cumulative_lengths or include_path_lengths:
-            import math
-
             cumulative_lengths = {}
             path_lengths_to_proximal = {}
             path_lengths_to_distal = {}
@@ -1404,14 +1268,7 @@ cell_methods = MethodSpec(
                         while par_seg_element!=None:
 
                             par_seg = segments[par_seg_element.segments]
-                            d = par_seg.distal
-                            p = par_seg.proximal
-
-                            if not p:
-                                par_seg_parent_seg = segments[par_seg.parent.segments]
-                                p = par_seg_parent_seg.distal
-
-                            par_length = math.sqrt( (d.x-p.x)**2 + (d.y-p.y)**2 + (d.z-p.z)**2 )
+                            par_length = self.get_segment_length(par_seg.id)
 
                             fract = float(last_seg.parent.fraction_along)
                             path_lengths_to_proximal[key][seg.id] += par_length*fract
@@ -1454,14 +1311,14 @@ cell_methods = MethodSpec(
         :param sg_id: id of segment group to find
         :type sg_id: str
         :returns: SegmentGroup object of specified ID
-        :raises Exception: if segment group is not found in cell
+        :raises ValueError: if segment group is not found in cell
         """
         if sg_id:
             for sg in self.morphology.segment_groups:
                 if sg.id == sg_id:
                     return sg
 
-        raise Exception("Segment group with id "+str(sg_id)+" not found in cell "+str(self.id))
+        raise ValueError("Segment group with id "+str(sg_id)+" not found in cell "+str(self.id))
 
     def get_segment_groups_by_substring(self, substring):
         # type: (str) -> dict
@@ -1470,25 +1327,1216 @@ cell_methods = MethodSpec(
         :param substring: substring to match
         :type substring: str
         :return: dictionary with segment group ID as key, and segment group as value
-        :raises Exception: if no segment groups are not found in cell
+        :raises ValueError: if no matching segment groups are found in cell
         """
         sgs = {}
         for sg in self.morphology.segment_groups:
             if substring in sg.id:
                 sgs[sg.id] = sg
         if len(sgs) == 0:
-            raise Exception("Segment group with id matching "+str(substring)+" not found in cell "+str(self.id))
+            raise ValueError("Segment group with id matching "+str(substring)+" not found in cell "+str(self.id))
         return sgs
 
 
-    def summary(self):
-        """Print cell summary."""
-        print("*******************************************************")
-        print("* Cell: "+str(self.id))
+    def summary(self, morph=True, biophys=True):
+        """Print cell summary.
+
+        Shows the number of segments and segment groups, and information on the
+        biophysical properties of the cell. See the `morphinfo` and
+        `biophysinfo` methods for more details.
+
+        :param morph: toggle showing/hiding morphology information
+        :type morph: bool
+        :param biophys: toggle showing/hiding biophysology information
+        :type biophys: bool
+        :returns: None
+        """
+
+        print(f"*********** Summary ({self.id}) ************")
         print("* Notes: "+str(self.notes))
+        print()
+
+        if morph:
+            print(f"*********** Morphology summary ({self.id}) ************")
+            self.morphinfo()
+            print("*******************************************************")
+            print("Tip: use morphinfo(True) to see more detailed information.")
+
+        if biophys:
+            print(f"*********** Biophys summary ({self.id}) ************")
+            self.biophysinfo()
+            print("*******************************************************")
+
+
+    def morphinfo(self, segment_detail=False):
+        """Show info on morphology of the cell.
+        By default, since cells can have large numbers of segments and segment
+        groups, it only provides metrics on the total numbers. To see details,
+        pass `segment_detail=True`.
+
+        See also: `get_segment_group_info`.
+
+        :param segment_detail: toggle whether to show detailed information on
+            segment groups and their segments
+        :type segment_detail: bool
+        :returns: None
+
+        """
         print("* Segments: "+str(len(self.morphology.segments)))
         print("* SegmentGroups: "+str(len(self.morphology.segment_groups)))
-        print("*******************************************************")
+
+        if segment_detail:
+            for sg in self.morphology.segment_groups:
+                self.get_segment_group_info(sg.id)
+
+
+    def biophysinfo(self):
+        """Get information on the biophysical properties of the cell.
+        :returns: None
+
+        """
+        bp = None
+        mp = None
+        ip = None
+        if self.__class__.__name__ == "Cell":
+            bp = self.biophysical_properties
+            mp = bp.membrane_properties
+            ip = bp.intracellular_properties
+        elif self.__class__.__name__ == "Cell2CaPools":
+            bp = self.biophysical_properties2_ca_pools
+            mp = bp.membrane_properties2_ca_pools
+            ip = bp.intracellular_properties2_ca_pools
+
+        membp = mp.info(show_contents=True, return_format="dict")
+        # check if there are any membrane properties
+        for prop, val in membp.items():
+            if len(val['members']) > 0:
+                print(f"* Membrane properties")
+                break
+
+        for prop, val in membp.items():
+            ctype = val['type']
+            # objects
+            ms = val['members']
+            if len(ms) > 0:
+                print(f"\t* {ctype}:")
+                for am in ms:
+                    inf = am.info(show_contents=True, return_format="dict")
+                    for p, v in inf.items():
+                        print(f"\t\t* {p}: {v['members']}")
+
+                    print()
+
+        intp = ip.info(show_contents=True, return_format="dict")
+        for prop, val in intp.items():
+            if len(val['members']) > 0:
+                print(f"* Intracellular properties")
+                break
+
+        for prop, val in intp.items():
+            ctype = val['type']
+            # objects
+            ms = val['members']
+            if len(ms) > 0:
+                print(f"\t* {ctype}:")
+                for am in ms:
+                    inf = am.info(show_contents=True, return_format="dict")
+                    for p, v in inf.items():
+                        print(f"\t\t* {p}: {v['members']}")
+
+                    print()
+
+    def get_segment_group_info(self, group_id):
+        """Get information about a segment group
+
+        :param group_id: id of segment group
+        :type group_id: int
+        :returns: None
+
+        """
+        print(f"* Segment group: {group_id}:")
+        segs = self.get_all_segments_in_group(segment_group=group_id)
+        for s in segs:
+            sinfo = self.get_segment(s)
+            print(f"\t * {s} (Parent: {sinfo.parent.segments if sinfo.parent else '-'}; {self.get_actual_proximal(s)} -> {sinfo.distal})")
+
+    def add_segment(
+        self,
+        prox,
+        dist,
+        seg_id=None,
+        name=None,
+        parent=None,
+        fraction_along=1.0,
+        group_id=None,
+        use_convention=True,
+        seg_type=None,
+        reorder_segment_groups=True,
+        optimise_segment_groups=True
+
+    ):
+        """Add a segment to the cell, to the provided segment group, creating
+        it if required.
+
+        :param prox: proximal segment information
+        :type prox: list with 4 float entries: [x, y, z, diameter]
+        :param dist: dist segment information
+        :type dist: list with 4 float entries: [x, y, z, diameter]
+        :param seg_id: explicit ID to set for segment
+            When not provided, the function will automatically add an ID based
+            on the number of segments already included in the cell. It is best
+            to either always set an explicit ID or let the function set it
+            automatically, but not to mix the two. A `ValueError` is raised if
+            a segment with the provided ID already exists
+        :type seg_id: str
+        :param name: name of segment
+            If a name is given, it is used.
+            If no name is given, but a segment group is provided, the segment
+            is named: "Seg<number>_<group name>" where <number> is the number
+            of the segment in the segment group. (to be read as "segment
+            <number> in <group>"; the group name should indicate the type here)
+            If no name is given, and no segment group is provided, the segment
+            is simply named: "Seg<segment id>".
+        :type name: str
+        :seg_type: type of segment ("axon", "dendrite", "soma")
+            If `use_convention` is `True`, and a `group_id` is provided, the
+            segment group will also be added to the default segment groups if
+            it has not been previously added. If `group_id` is `None`, the
+            segment will be added to the default groups instead.
+
+            If `use_convention` is `False`, this is unused.
+        :type seg_type: str
+        :param parent: parent segment object
+        :type parent: Segment
+        :param fraction_along: where the new segment is connected to the parent (0: distal point, 1: proximal point)
+        :type fraction_along: float
+        :param group_id: id of segment group to add the segment to
+            If a segment group with this id does not exist, a new segment group
+            will be created.
+
+            The suggested convention is: `axon_`, `soma_`, `dend_` for axonal,
+            somatic, and dendritic segment groups respectively.
+
+            Note that a newly created segment group will not be marked as an
+            unbranched segment group. If you wish to add a segment to an
+            unbranched segment group, please create one using
+            `add_unbranched_segment_group` and then add segments to it.
+        :type group_id: str
+        :param use_convention: whether the segment or its group should be added
+            to the global segment groups. The `seg_type` notes what global
+            group this segment or its segment group should also be added to.
+        :type use_convention: bool
+        :param reorder_segment_groups: whether the groups should be reordered
+            to put the default segment groups last after the segment has been
+            added.
+            This is required for a valid NeuroML file because segment groups
+            included in the default groups should be declared before they are
+            used in the default groups. When adding lots of segments, one may
+            want to only reorder at the end of the process instead of after
+            each segment is added.
+
+            This is only relevant if `use_convention=True`.
+        :type reorder_segment_groups: bool
+        :param optimise_segment_groups: toggle whether segment groups should be
+            optimised after operation
+        :type optimise_segment_groups: bool
+        :returns: the created segment
+        :rtype: Segment
+        :raises ValueError: if `seg_id` is provided and a segment with this ID
+            already exists
+
+        """
+        try:
+            if prox:
+                p = self.component_factory(
+                    "Point3DWithDiam", x=prox[0], y=prox[1], z=prox[2], diameter=prox[3]
+                )
+            else:
+                p = None
+        except IndexError as e:
+            print("{}: prox must be a list of 4 elements".format(e))
+        try:
+            d = self.component_factory(
+                "Point3DWithDiam", x=dist[0], y=dist[1], z=dist[2], diameter=dist[3]
+            )
+        except IndexError as e:
+            print("{}: dist must be a list of 4 elements".format(e))
+
+        segid = len(self.morphology.segments)
+        if segid > 0 and parent is None:
+            raise Exception(
+                "There are currently more than one segments in the cell, but one is being added without specifying a parent segment"
+            )
+
+        sp = (
+            self.component_factory(
+                "SegmentParent", segments=parent.id, fraction_along=fraction_along
+            )
+            if parent
+            else None
+        )
+
+        if seg_id:
+            try:
+                seg = None
+                seg = self.get_segment(seg_id)
+                if seg:
+                    raise ValueError(f"A segment with provided id {seg_id} already exists")
+            except ValueError:
+                # a segment with this ID does not already exist
+                pass
+        else:
+            seg_id = segid
+
+        segment = self.component_factory("Segment", id=seg_id, proximal=p, distal=d, parent=sp)
+
+        seg_group = None
+        if group_id:
+            seg_group_default = None
+
+            # cell.get_segment_group throws an exception of the segment group
+            # does not exist
+            try:
+                seg_group = self.get_segment_group(group_id)
+            except ValueError as e:
+                print("Warning: {}".format(e))
+                print(f"Warning: creating Segment Group with id {group_id}")
+                seg_group = self.add_segment_group(
+                    group_id=group_id
+                )
+            seg_group.members.append(Member(segments=segment.id))
+
+        if use_convention:
+            if not seg_type:
+                raise ValueError("Please provide a seg_type")
+            if seg_type == "axon":
+                [seg_group_all, seg_group_default] = self.setup_default_segment_groups(use_convention=True, default_groups=["all", "axon_group"])
+            elif seg_type == "soma":
+                [seg_group_all, seg_group_default] = self.setup_default_segment_groups(use_convention=True, default_groups=["all", "soma_group"])
+            elif seg_type == "dendrite":
+                [seg_group_all, seg_group_default] = self.setup_default_segment_groups(use_convention=True, default_groups=["all", "dendrite_group"])
+            else:
+                raise ValueError(f"Invalid segment type provided: {seg_type}")
+
+            # Now add the segment group that contains this segment if it exists
+            # to the global groups. If a segment group does not exist for this
+            # segment, add the segment itself to the global groups
+
+            # Do not use add here, we do not need it's extra features (and
+            # their performance costs)
+            # De-duplicate/optimise later if required
+            if seg_group and seg_group.id != seg_group_default.id:
+                seg_group_default.includes.append(Include(segment_groups=seg_group.id))
+                seg_group_all.includes.append(Include(segment_groups=seg_group.id))
+            else:
+                seg_group_default.members.append(Member(segments=segment.id))
+                seg_group_all.members.append(Member(segments=segment.id))
+
+            if reorder_segment_groups:
+                self.reorder_segment_groups()
+
+        if name:
+            segment.name = name
+        else:
+            # set a default name based on the group membership if group
+            # provided
+            if group_id:
+                # seg_group will exist by now: either it already existed or it
+                # was created above
+                segments_in_group = len(seg_group.members)
+                segment_name = f"Seg{segments_in_group - 1}_{group_id}"
+            else:
+                # if it doesn't belong to a group, use the type to indicate
+                # what kind of segment this is
+                segment_name = f"Seg{seg_id}"
+            segment.name = segment_name
+
+        self.morphology.segments.append(segment)
+
+        if optimise_segment_groups:
+            self.optimise_segment_groups()
+
+        return segment
+
+    def add_segment_group(self, group_id, neuro_lex_id=None, notes=None):
+        """Add a new general segment group.
+
+        The segments included in this group do not need to be contiguous. This
+        segment group will not be automatically marked as a section using the
+        required NeuroLex ID.
+
+        If a segment group with provided ID already exists, it will not be
+        overwritten.
+
+        :param group_id: ID of segment group
+        :type group_id: str
+        :param neuro_lex_id: NeuroLex ID to use for segment group
+        :type neuro_lex_id: str
+        :param notes: Notes text to add
+        :type notes: str
+        :returns: new segment group
+        :rtype: SegmentGroup
+
+        """
+        seg_group = None
+        try:
+            seg_group = self.get_segment_group(group_id)
+        except ValueError:
+            seg_group = self.morphology.add(
+                "SegmentGroup", id=group_id,
+                neuro_lex_id=neuro_lex_id,
+                notes=notes, validate=False
+            )
+        else:
+            print(f"Warning: Segment group {seg_group.id} already exists.")
+
+        return seg_group
+
+
+    def add_unbranched_segment_group(self, group_id, notes=None):
+        """Add a new unbranched segment group.
+
+        This is similar to the `add_segment_group` method, but this segment
+        group will be used to store contiguous segments, which form an
+        unbranched section of a cell. It adds the NeuroLex ID for a neuronal
+        branch to the segment group.
+
+        :param group_id: ID of segment group
+        :type group_id: str
+        :param notes: notes to add
+        :type notes: str
+        :returns: new segment group
+        :rtype: SegmentGroup
+
+        """
+        seg_group = self.add_segment_group(
+            group_id=group_id, neuro_lex_id=neuroml.neuro_lex_ids.neuro_lex_ids["section"],
+            notes=notes
+        )
+        return seg_group
+
+
+    def reorder_segment_groups(self):
+        """Move default segment groups to the end.
+
+        This is required so that the segment groups included in the default
+        groups are defined before they are used.
+
+        :returns: None
+
+        """
+        seg_groups = self.morphology.segment_groups
+        for group in ["soma_group", "axon_group", "dendrite_group", "all"]:
+            try:
+                sg = self.get_segment_group(group)
+                seg_groups.append(seg_groups.pop(seg_groups.index(sg)))
+            except ValueError:
+                pass
+
+
+    def optimise_segment_groups(self):
+        """Optimise all segment groups in the cell.
+
+        This will:
+
+        - deduplicate members and includes in segment groups
+        - remove members that have already been included using a segment group
+
+        """
+        for seg_group in self.morphology.segment_groups:
+            self.optimise_segment_group(seg_group.id)
+
+    def optimise_segment_group(self, seg_group_id):
+        """Optimise segment group with id `seg_group_id`.
+
+        :param seg_group_id: id of segment group to optimise
+        :type seg_group_id: str
+
+        """
+        seg_group = self.get_segment_group(seg_group_id)
+        # de-duplicate members and includes
+        # cannot use list(set(list)) because the hash values for NeuroML
+        # classes with identical values is also different
+
+        members = seg_group.members
+        new_members = []
+        for i in members:
+            if i not in new_members:
+                new_members.append(i)
+        members = new_members
+        seg_group.members = list(members)
+
+        includes = seg_group.includes
+        new_includes = []
+        for i in includes:
+            if i not in new_includes:
+                new_includes.append(i)
+        includes = set(new_includes)
+        # sorted
+        seg_group.includes = natsort.natsorted(includes, key=lambda x:x.segment_groups)
+
+        # remove members that are included by included segment groups
+        if len(includes) > 0 and len(members) > 0:
+            new_members = []
+            for inc in includes:
+                all_segment_ids_in_group = set(self.get_all_segments_in_group(inc.segment_groups))
+                for i in members:
+                    if i.segments not in all_segment_ids_in_group:
+                        new_members.append(i)
+            # sorted
+            seg_group.members = natsort.natsorted(new_members, key=lambda x: x.segments)
+
+
+    def set_spike_thresh(self, v, group_id="all"):
+        """Set the spike threshold of the cell.
+
+        :param v: value to set for spike threshold with units
+        :type v: str
+        :param group_id: id of segment group to modify
+        :type group_id: str
+        """
+        self.add_membrane_property(
+            "SpikeThresh", value=v, segment_groups=group_id
+        )
+
+
+    def set_init_memb_potential(self, v, group_id="all"):
+        """Set the initial membrane potential of the cell.
+
+        :param v: value to set for membrane potential with units
+        :type v: str
+        :param group_id: id of segment group to modify
+        :type group_id: str
+        """
+        self.add_membrane_property(
+            "InitMembPotential", value=v, segment_groups=group_id
+        )
+
+
+    def set_resistivity(self, resistivity, group_id="all") -> None:
+        """Set the resistivity of the cell
+
+        :type resistivity: str
+        :param group_id: segment group to modify
+        :type group_id: str
+        """
+        self.add_intracellular_property(
+            "Resistivity", value=resistivity, segment_groups=group_id
+        )
+
+
+    def set_specific_capacitance(
+        self, spec_cap, group_id="all"
+    ):
+        """Set the specific capacitance for the cell.
+
+        :param spec_cap: value of specific capacitance with units
+        :type spec_cap: str
+        :param group_id: segment group to modify
+        :type group_id: str
+        """
+        self.add_membrane_property(
+            "SpecificCapacitance", value=spec_cap, segment_groups=group_id
+        )
+
+
+    def add_intracellular_property(self, property_name, **kwargs):
+        """Generic function to add an intracellular property to the cell.
+
+        For a full list of membrane properties, see:
+        https://docs.neuroml.org/Userdocs/Schemas/Cells.html?#intracellularproperties
+
+        :param property_name: name of intracellular property to add
+        :type property_name: str
+        :param kwargs: named arguments for intracellular property to be added
+        :type kwargs: Any
+        :returns: added property
+
+        """
+        self.setup_nml_cell(use_convention=False)
+        prop = self.biophysical_properties.intracellular_properties.add(property_name, **kwargs)
+        return prop
+
+
+    def add_membrane_property(self, property_name, **kwargs):
+        """Generic function to add a membrane property to the cell.
+
+        For a full list of membrane properties, see:
+        https://docs.neuroml.org/Userdocs/Schemas/Cells.html?#membraneproperties
+
+        Please also see specific functions in this module, which are designed to be
+        easier to use than this generic function.
+
+        :param property_name: name of membrane to add
+        :type property_name: str
+        :param kwargs: named arguments for membrane property to be added
+        :type kwargs: Any
+        :returns: added property
+
+        """
+        self.setup_nml_cell(use_convention=False)
+        prop = self.biophysical_properties.membrane_properties.add(property_name, **kwargs)
+        return prop
+
+
+    def add_channel_density_v(
+        self,
+        channel_density_type,
+        nml_cell_doc,
+        ion_chan_def_file="",
+        **kwargs
+    ):
+        """Generic function to add channel density components to a Cell.
+
+        :param channel_density_type: type of channel density to add.
+            See https://docs.neuroml.org/Userdocs/Schemas/Cells.html for the
+            complete list.
+        :type channel_density_type: str
+        :param nml_cell_doc: cell NeuroML document to which channel density is to be added
+        :type nml_cell_doc: NeuroMLDocument
+        :param ion_chan_def_file: path to NeuroML2 file defining the ion channel, if empty, it assumes the channel is defined in the same file
+        :type ion_chan_def_file: str
+        :param kwargs: named arguments for required channel density type
+        :type kwargs: Any
+        :returns: added channel density
+        """
+
+        cd = self.add_membrane_property(channel_density_type, **kwargs)
+
+        if len(ion_chan_def_file) > 0:
+            if (
+                self.component_factory("IncludeType", href=ion_chan_def_file)
+                not in nml_cell_doc.includes
+            ):
+                nml_cell_doc.add("IncludeType", href=ion_chan_def_file)
+
+        return cd
+
+
+    def add_channel_density(
+        self,
+        nml_cell_doc,
+        cd_id,
+        ion_channel,
+        cond_density,
+        erev="0.0 mV",
+        group_id="all",
+        ion="non_specific",
+        ion_chan_def_file="",
+    ):
+        """Add channel density.
+
+        :param nml_cell_doc: cell NeuroML document to which channel density is to be added
+        :type nml_cell_doc: NeuroMLDocument
+        :param cd_id: id for channel density
+        :type cd_id: str
+        :param ion_channel: name of ion channel
+        :type ion_channel: str
+        :param cond_density: value of conductance density with units
+        :type cond_density: str
+        :param erev: value of reversal potential with units
+        :type erev: str
+        :param group_id: segment groups to add to
+        :type group_id: str
+        :param ion: name of ion
+        :type ion: str
+        :param ion_chan_def_file: path to NeuroML2 file defining the ion channel, if empty, it assumes the channel is defined in the same file
+        :type ion_chan_def_file: str
+        :returns: added channel density
+        :rtype: ChannelDensity
+        """
+        cd = self.add_membrane_property(
+            "ChannelDensity",
+            id=cd_id,
+            segment_groups=group_id,
+            ion=ion,
+            ion_channel=ion_channel,
+            erev=erev,
+            cond_density=cond_density,
+        )
+
+        if len(ion_chan_def_file) > 0:
+            if (
+                self.component_factory("IncludeType", href=ion_chan_def_file)
+                not in nml_cell_doc.includes
+            ):
+                nml_cell_doc.add("IncludeType", href=ion_chan_def_file)
+
+        return cd
+
+    def setup_nml_cell(self, use_convention=True, overwrite=False, default_groups=["all", "soma_group"]):
+        """Correctly initialise a NeuroML cell.
+
+        To be called after a new component has been created to initialise the
+        cell with these properties:
+
+        - Morphology: id="morphology"
+        - BiophysicalProperties: id="biophys":
+
+          - MembraneProperties
+          - IntracellularProperties
+
+        If `use_convention` is True, it also creates the provided
+        `default_groups` SegmentGroups for convenience. By default, it creates
+        the "all", and "soma_group" groups since each cell must at least have a
+        soma.
+
+        When dendritic and axonal segments are added, the `add_segment`
+        function will create `dendrite_group` and `axon_group` groups as
+        required.
+
+        Note that since this cell does not currently include a segment in its
+        morphology, it is *not* a valid NeuroML construct. Use the `add_segment`
+        and `add_unbranched_segments` functions to add segments and branches.
+        They will also populate the default segment groups.
+
+        :param id: id of the cell
+        :type id: str
+        :param use_convention: whether helper segment groups should be created using the default convention
+        :type use_convention: bool
+        :param overwrite: overwrite existing components
+        :type overwrite: bool
+        :param default_groups: list of default segment groups to create
+        :type default_groups: list of strings
+        :returns: None
+        :rtype: None
+
+        """
+        # do not validate yet, because segments are required
+        self.add("Morphology", id="morphology", validate=False, force=overwrite)
+
+        # add does not overwrite existing values
+        self.add("BiophysicalProperties", id="biophys", validate=False, force=overwrite)
+        self.biophysical_properties.add("IntracellularProperties", validate=False, force=overwrite)
+        self.biophysical_properties.add("MembraneProperties", validate=False, force=overwrite)
+
+        self.setup_default_segment_groups(use_convention, default_groups)
+
+
+    def setup_default_segment_groups(self, use_convention=True, default_groups=["all", "soma_group"]):
+        """Create default segment groups for the cell.
+
+        If `use_convention` is True, it also creates the provided
+        `default_groups` SegmentGroups for convenience. By default, it creates
+        the "all", and "soma_group" groups since each cell must at least have a
+        soma. Allowed values are: "all", "soma_group", "axon_group", "dendrite_group".
+
+        :param use_convention: whether helper segment groups should be created using the default convention
+        :type use_convention: bool
+        :param default_groups: list of default segment groups to create
+        :type default_groups: list of strings
+        :returns: list of created segment groups (or empty list if none created)
+        :rtype: list
+        """
+        new_groups = []
+        if use_convention:
+            for grp in default_groups:
+                neuro_lex_id = None
+                notes = None
+
+                if grp == "soma_group":
+                    neuro_lex_id=neuroml.neuro_lex_ids.neuro_lex_ids["soma"]
+                    notes="Default soma segment group for the cell"
+                elif grp == "axon_group":
+                    neuro_lex_id=neuroml.neuro_lex_ids.neuro_lex_ids["axon"]
+                    notes="Default axon segment group for the cell"
+                elif grp == "dendrite_group":
+                    neuro_lex_id=neuroml.neuro_lex_ids.neuro_lex_ids["dend"]
+                    notes="Default dendrite segment group for the cell"
+                elif grp == "all":
+                    neuro_lex_id=None
+                    notes="Default segment group for all segments in the cell"
+                else:
+                    print(f"Error: only 'all', 'soma_group', 'dendrite_group', and 'axon_group' are supported. Received {grp}")
+                    return []
+
+                seg_group = self.add_segment_group(group_id=grp, neuro_lex_id=neuro_lex_id, notes=notes)
+                new_groups.append(seg_group)
+
+            self.reorder_segment_groups()
+
+        return new_groups
+
+    def add_unbranched_segments(
+        self,
+        points,
+        parent=None,
+        fraction_along=1.0,
+        group_id=None,
+        use_convention=True,
+        seg_type=None,
+        reorder_segment_groups=True,
+        optimise_segment_groups=True
+    ):
+        """Add an unbranched list of segments to the cell.
+
+        The list of points will include the first proximal point where this
+        should be joined to the cell, followed by a list of distal points:
+
+        ::
+
+            |-----|-----|-----|------|.....---|
+            p1    d1    d2    d3     d4       d N-1
+
+        So, a list of N points will create a list of N-1 segments
+
+        The list of points will be of the form::
+
+            [[x1, y1, z1, d1], [x2, y2, z2, d2] ...]
+
+        Please ensure that the first point, p1, is correctly set to ensure that
+        this segment list is correctly connected to the rest of the cell.
+
+        :param points: 3D points to create the segments
+        :type points: list of [x, y, z, d] points
+        :param parent: parent segment where first segment of list is to be attached
+        :type parent: SegmentParent
+        :param fraction_along: where the new segment list is connected to the parent (0: distal point, 1: proximal point)
+            Note that the second and following segments will all be added at the
+            distal point of the previous segment
+        :type fraction_along: float
+        :param group_id: segment group to add the segment to
+            if a segment group does not already exist, it will be created
+        :type group_id: SegmentGroup
+        :param use_convention: whether helper segment groups should be created using the default convention
+            See the documentation of the `add_segment` method for more information
+            on the convention
+        :type use_convention: bool
+        :param seg_type: type of segments ("axon", "soma", "dendrite")
+        :type seg_type: str
+        :param reorder_segment_groups: whether the groups should be reordered
+            to put the default segment groups last after the segment has been
+            added.
+            This is required for a valid NeuroML file because segment groups
+            included in the default groups should be declared before they are
+            used in the default groups. When adding lots of segments, one may
+            want to only reorder at the end of the process instead of after
+            each segment is added.
+
+            This is only relevant if `use_convention=True`.
+        :type reorder_segment_groups: bool
+        :param optimise_segment_groups: toggle whether segment groups should be
+            optimised after operation
+        :type optimise_segment_groups: bool
+        :returns: the segment group containing this new list of segments
+        :rtype: SegmentGroup
+
+        """
+        prox = points[0]
+        dist = points[1]
+
+        seg_group = self.add_unbranched_segment_group(group_id=group_id)
+
+        # first segment
+        seg = self.add_segment(prox=prox, dist=dist, name=None, parent=parent,
+                               fraction_along=fraction_along, group_id=group_id,
+                               use_convention=use_convention,
+                               seg_type=seg_type,
+                               reorder_segment_groups=False)
+
+        # rest of the segments
+        prox = dist
+        for pt in points[2:]:
+            dist = pt
+            seg = self.add_segment(prox=prox, dist=dist, name=None, parent=seg,
+                                   fraction_along=1.0, group_id=group_id,
+                                   use_convention=use_convention,
+                                   seg_type=seg_type,
+                                   reorder_segment_groups=False)
+            prox = dist
+
+        if reorder_segment_groups:
+            self.reorder_segment_groups()
+
+        if optimise_segment_groups:
+            self.optimise_segment_groups()
+
+        return self.get_segment_group(group_id)
+
+    def create_unbranched_segment_group_branches(self, root_segment_id: int, use_convention: bool=True, reorder_segment_groups=True, optimise_segment_groups=True):
+        """Organise the segments of the cell into new segment groups that each
+        form a single contiguous unbranched cell branch.
+
+        Note that the first segment (root segment) of a branch must have a proximal
+        point that connects it to the rest of the neuronal morphology. If, when
+        constructing these branches, a root segment is found that does not include
+        a proximal point, one will be added using the `get_actual_proximal` method.
+
+        No other changes will be made to any segments, or to any pre-existing
+        segment groups.
+
+        :param root_segment_id: id of segment considered the root of the tree,
+            generally the first soma segment
+        :type root_segment_id: int
+        :param use_convention: toggle using NeuroML convention for segment groups
+        :type use_convention: bool
+        :param reorder_segment_groups: whether the groups should be reordered
+            to put the default segment groups last after the segment has been
+            added.
+            This is required for a valid NeuroML file because segment groups
+            included in the default groups should be declared before they are
+            used in the default groups. When adding lots of segments, one may
+            want to only reorder at the end of the process instead of after
+            each segment is added.
+
+            This is only relevant if `use_convention=True`.
+        :type reorder_segment_groups: bool
+        :param optimise_segment_groups: toggle whether segment groups should be
+            optimised after operation
+        :type optimise_segment_groups: bool
+        :returns: modified cell with new section groups
+        :rtype: neuroml.Cell
+
+        """
+        # don't recompute if already exists
+        # get morphology tree
+        morph_tree = getattr(self, "adjacency_list", None)
+        if morph_tree is None:
+            morph_tree = self.get_segment_adjacency_list()
+
+        # initialise root segment and first segment group
+        seg = self.get_segment(root_segment_id)
+        group_name = f"seg_group_{len(self.morphology.segment_groups) - 1}_seg_{seg.id}"
+        new_seg_group = self.add_unbranched_segment_group(group_name)
+
+        # run recursive function
+        self.__sectionise(root_segment_id, new_seg_group, morph_tree)
+
+        if reorder_segment_groups:
+            self.reorder_segment_groups()
+
+        if optimise_segment_groups:
+            self.optimise_segment_groups()
+
+
+
+    def __sectionise(self, root_segment_id, seg_group, morph_tree):
+        """Main recursive sectionising method.
+
+        :param root_segment_id: id of root of branch
+        :type root_segment_id: int
+        :returns: TODO
+
+        """
+        # print(f"Processing element: {root_segment_id}")
+
+        try:
+            children = morph_tree[root_segment_id]
+            # keep going while there's only one child
+            # no need to use recursion here---hits Python's recursion limits in
+            # long segment groups
+            # - if there are no children, it'll go to the except block
+            # - if there are more than one children, it'll go to the next
+            # conditional
+            while len(children) == 1:
+                seg_group.add("Member", segments=root_segment_id)
+                root_segment_id = children[0]
+                children = morph_tree[root_segment_id]
+            # if there are more than one children, we've reached the end of this
+            # segment group but not of the branch. New segment groups need to start
+            # from here.
+            if len(children) > 1:
+                # this becomes the last segment of the current segment group
+                seg_group.add("Member", segments=root_segment_id)
+
+                # each child will start a new segment group
+                for child in children:
+                    seg = self.get_segment(child)
+                    # Ensure that a proximal point is set.
+                    # This is required for the first segment of unbranched segment
+                    # groups
+                    seg.proximal = self.get_actual_proximal(seg.id)
+                    group_name = f"seg_group_{len(self.morphology.segment_groups) - 1}_seg_{seg.id}"
+                    new_seg_group = self.add_unbranched_segment_group(group_name)
+
+                    self.__sectionise(child, new_seg_group, morph_tree)
+        # if there are no children, it's a leaf node, so we just add to the current
+        # seg_group and do nothing else
+        except KeyError:
+            seg_group.add("Member", segments=root_segment_id)
+
+
+    def get_segment_adjacency_list(self):
+        """Get the adjacency list of all segments in the cell morphology.
+        Returns a dict where each key is a parent segment, and the value is the
+        list of its children segments.
+
+        Segment without children (leaf segments) are not included as parents in the
+        adjacency list.
+
+        This method also stores the computed adjacency list in
+        `self.adjacency_list` for future use by other methods.
+
+        `self.adjacency_list` is populated each time this method is run, to
+        ensure that users can regenerate it after making modifications to the
+        cell morphology. If the morphology has not changed, one only needs to
+        populate it once and then re-use it as required.
+
+        :returns: dict with parent segment ids as keys and ids of their children as values
+        :rtype: dict[int, list[int]]
+
+        """
+        # create data structure holding list of children for each segment
+        child_lists = {}
+        for segment in self.morphology.segments:
+            try:
+                parent = segment.parent.segments
+                if parent not in child_lists:
+                    child_lists[parent] = []
+                child_lists[parent].append(segment.id)
+            except AttributeError:
+                print(f"Warning: Segment: {segment} has no parent")
+
+        self.adjacency_list = child_lists
+        return child_lists
+
+    def get_graph(self):
+        """Get a networkx DiGraph of the morphology of the cell with distances
+        between the proximal point of a parent and the point where a child
+        connects to it as the weights of the edges of the graph.
+
+        Please see https://networkx.org/documentation/stable/reference
+        for information on networkx routines that can be used on this graph.
+
+        This method also stores the graph in the `self.cell_graph` attribute
+        for future use.
+
+        :returns: networkx.Graph
+
+        """
+        cell_graph = nx.DiGraph()
+
+        # don't recompute if already exists
+        adlist = getattr(self, "adjacency_list", None)
+        if adlist is None:
+            adlist = self.get_segment_adjacency_list()
+
+        for parid, childrenids in adlist.items():
+
+            par_length = self.get_segment_length(parid)
+
+            for cid in childrenids:
+                child = self.get_segment(cid)
+
+                fract = float(child.parent.fraction_along)
+                len_to_proximal = par_length*fract
+
+                cell_graph.add_edge(parid, cid, weight=len_to_proximal)
+
+        self.cell_graph = cell_graph
+        return cell_graph
+
+    def get_distance(self, dest, source = 0):
+        """Get path length between between two segments on a cell.
+
+        Uses `networkx.dijkstra_path_length` to compute the shortest
+        path between source and dest
+
+        :param from: id of segment to get distance from
+        :type from: int
+        :param to: id of segment to get distance to
+        :type to: int
+        :returns: float
+        """
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        return nx.dijkstra_path_length(graph, source, dest)
+
+    def get_all_distances_from_segment(self, seg_id = 0):
+        """Get distances of all segments from the segment with id seg_id.
+
+        Useful to get distances of segments from the soma.
+
+        Uses networkx.single_source_dijkstra on the cell graph, without a
+        target.
+
+        :param seg_id: id of segment to get distances from
+        :type seg_id: int
+        :returns: pair of dictionaries for distance, path
+            The return value is a tuple of two dictionaries keyed by target
+            nodes. The first dictionary stores distance to each target node.
+            The second stores the path to each target node.
+
+        """
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        return(nx.single_source_dijkstra(graph, source=seg_id))
+
+    def get_segments_at_distance(self, distance, src_seg = 0):
+        """Get all segments at distance from the provided `src_seg`.
+
+        For each segment, it returns the fraction along the segment that the
+        provided distance is at. For example, if segment N is 500 units long,
+        and the `distance` cut-off is at 200, the fraction along is: 200/500.
+
+        :param src_seg: id of segment to get distances from
+        :type src_seg: int
+        :param distance: distance to get segments at
+        :type distance: float
+        :returns: dict with segment ids as keys, and fraction along at which
+            the cut off is as values
+
+        """
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        # returns all segments that are less than `distance` away.
+        (target_dict, path_dict) = (nx.single_source_dijkstra(graph, source=src_seg, cutoff=distance))
+
+        segs_frac_alongs = {}
+
+        for tgt, dist in target_dict.items():
+            try:
+                frac_along = ((distance - dist) / self.get_segment_length(tgt))
+            except ZeroDivisionError:
+                # ignore zero length segments
+                print(f"Warning: encountered zero length segment: {tgt}")
+                continue
+
+            if frac_along > 1.0:
+                # not in this segment
+                continue
+            else:
+                segs_frac_alongs[tgt] = frac_along
+
+        return segs_frac_alongs
+
+
+    def get_branching_points(self):
+        """Get segments where the cell morphology branches.
+
+        That is, the out-degree of the segment is > 1
+
+        :returns: list of segment ids
+
+        """
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+
+        segs = [n for (n, d) in graph.out_degree if d > 1]
+        return segs
+
+
+    def get_extremeties(self):
+        """Get segments that are at the ends/tips of the neuronal morphology,
+        with their distances from the soma.
+
+        :returns: dict of segment ids and their distances from cell root as values
+
+        """
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        segs = [n for (n, d) in graph.out_degree if d == 0]
+
+        res = {}
+        for s in segs:
+            res[s] = self.get_distance(s)
+        return res
+
+
+    def get_segment_location_info(self, seg_id):
+        """Get location information about a particular segment.
+
+        :param seg_id: id of segment to get information for
+        :type seg_id: int
+        :returns: a dictionary with various metrics about the segment
+
+            - length of segment
+            - distance from cell root
+            - distance from nearest branching point
+            - name of unbranched segment group segment belongs to (if any)
+            - id of root segment of the unbranched segment group
+            - distance from the segment group root segment
+
+        """
+        soma_id = self.get_morphology_root()
+        distance_from_soma = self.get_distance(seg_id, source=soma_id)
+        in_sg = None
+        sg_segs = None
+        sg_root = None
+        distance_from_sg_root = None
+        distance_from_bpt = None
+
+        # get the unbranched segment group that this segment is in
+        for sg in self.morphology.segment_groups:
+            if sg.neuro_lex_id == neuroml.neuro_lex_ids.neuro_lex_ids["section"]:
+                sg_segs = self.get_all_segments_in_group(sg)
+                if seg_id in sg_segs:
+                    in_sg = sg
+
+                    # break out of loop
+                    break
+
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+
+        # find first ancestral branching point
+        # (a segment with more than one child)
+        current = seg_id
+        sg_root = current
+        parent = list(graph.predecessors(current))[0]
+        children = list(graph.successors(parent))
+
+        while len(children) == 1:
+            # the root of the segment group may not be at a
+            # branching point: an unbranched cell branch can consist of
+            # multiple unbranched segment groups
+            if in_sg is not None:
+                if current in sg_segs:
+                    sg_root = current
+
+            current = parent
+            parent = list(graph.predecessors(current))[0]
+            children = list(graph.successors(parent))
+
+        distance_from_bpt = self.get_distance(seg_id, source=current)
+
+        res = {}
+        res['id'] = seg_id
+        res['length'] = self.get_segment_length(seg_id)
+        res['distance_from_cell_root'] = distance_from_soma
+        res['distance_from_nearest_branching_point'] = distance_from_bpt
+
+        # at unbranched segment root
+        if in_sg is not None:
+            res['in_unbranched_segment_group'] = in_sg.id
+            res['unbranched_segment_group_root'] = sg_root
+            distance_from_sg_root = self.get_distance(seg_id, source=sg_root)
+            res['distance_from_segment_group_root'] = distance_from_sg_root
+
+        return res
+
+
+    def get_morphology_root(self):
+        """Return the root of the complete cell morphology.
+
+        This is usually the first segment of the soma, and there should only be
+        one such segment.
+
+        :returns: id of the root segment
+
+        """
+        # check if convention was followed and segment id 0 is root (has no
+        # parents)
+        try:
+            root_seg = self.get_segment(0)
+            if root_seg.parent is None:
+                return 0
+        except ValueError:
+            pass
+
+        graph = getattr(self, "cell_graph", None)
+        if graph is None:
+            graph = self.get_graph()
+        segs = [n for (n, d) in graph.in_degree if d == 0]
+        # there should only be one segment with 0 indegree
+        assert len(segs) == 1
+        return segs[0]
 
     ''',
     class_names=("Cell"),
@@ -1503,7 +2551,6 @@ inserts[
     "Network"
 ] = """
 
-        import numpy
 
         netGroup = h5file.create_group(h5Group, 'network')
         netGroup._f_setattr("id", self.id)
@@ -1537,8 +2584,6 @@ inserts[
 inserts[
     "Population"
 ] = """
-
-        import numpy
 
         popGroup = h5file.create_group(h5Group, 'population_'+self.id)
         popGroup._f_setattr("id", self.id)
@@ -1584,8 +2629,6 @@ inserts[
     "Projection"
 ] = """
 
-        import numpy
-
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
         projGroup._f_setattr("type", "projection")
@@ -1601,9 +2644,7 @@ inserts[
 
         extra_cols = {}
 
-        from neuroml.utils import has_segment_fraction_info
-
-        include_segment_fraction = has_segment_fraction_info(self.connections) or has_segment_fraction_info(self.connection_wds)
+        include_segment_fraction = neuroml.utils.has_segment_fraction_info(self.connections) or neuroml.utils.has_segment_fraction_info(self.connection_wds)
 
         if include_segment_fraction:
             extra_cols["column_"+str(cols)] = "pre_segment_id"
@@ -1676,8 +2717,6 @@ inserts[
 inserts[
     "ElectricalProjection"
 ] = """
-
-        import numpy
 
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
@@ -1753,8 +2792,6 @@ inserts[
 inserts[
     "ContinuousProjection"
 ] = """
-
-        import numpy
 
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
@@ -1836,8 +2873,6 @@ inserts[
 inserts[
     "InputList"
 ] = """
-
-        import numpy
 
         ilGroup = h5file.create_group(h5Group, 'inputList_'+self.id)
         ilGroup._f_setattr("id", self.id)

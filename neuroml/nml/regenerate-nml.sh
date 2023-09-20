@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Copyright 2021 NeuroML contributors
+# Copyright 2023 NeuroML contributors
 # File : regenerate-nml.sh
 # Regenerate nml.py from the current schema version
 
 
 echo "Note(1): Please remember to update the schema from the NeuroML2 repository"
 echo "Note(2): Must be run in neuroml/nml/"
-NEUROML_VERSION=$(grep -E 'current_neuroml_version.*' ../__init__.py | cut -d '=' -f 2 | tr -d '"' | tr -d ' ')
+NEUROML_VERSION=$(grep -E 'current_neuroml_version.*' ../__version__.py | cut -d '=' -f 2 | tr -d '"' | tr -d ' ')
 SCHEMA_FILE=NeuroML_${NEUROML_VERSION}.xsd
-PYTHON_VERSION=$(python --version 2>&1)
+PYTHON_VERSION=$(python3 --version 2>&1)
 
 regenerate () {
     if command -v generateDS > /dev/null 2>&1
@@ -22,15 +22,29 @@ regenerate () {
         rm -f nml.py
 
 
-        # The version of generateDS for Python 2.7 has a slightly different
-        # style for arguments. You do not give helper_methods.py, just
-        # helper_methods
-        if [[ "$PYTHON_VERSION" =~ "2.7" ]]
-        then
-            PYTHONPATH="$PYTHONPATH:." generateDS -o nml.py --use-getter-setter=none --user-methods=helper_methods $SCHEMA_FILE
-        else
-            PYTHONPATH="$PYTHONPATH:." generateDS -o nml.py --use-getter-setter=none --user-methods=helper_methods.py $SCHEMA_FILE
-        fi
+        PYTHONPATH="$PYTHONPATH:." generateDS -o nml.py --use-getter-setter=none --user-methods=helper_methods.py --export="write validate" --custom-imports-template=gds_imports-template.py $SCHEMA_FILE
+        # correct path to generatedssupersuper module file
+        sed -i 's/from generatedssupersuper/from .generatedssupersuper/' nml.py
+        sed -i 's/from generatedscollector/from .generatedscollector/' nml.py
+
+        # replace default arguments (None) with some hint of what's expected
+        # must be run from top level because of all the imports we
+        # have---otherwise it errors
+        echo "Modifying default arguments using annotate_nml and sed"
+        pushd ../../
+            # generates the sed-script.txt file
+            python3 -m neuroml.nml.annotate_nml
+            echo "Generated sed script"
+            sed_lines=$(wc -l sed-script.txt | cut -f1 -d " ")
+            if [ $sed_lines -eq 0 ]
+            then
+                echo "Something went wrong. No lines in sed script."
+            else
+                echo "${sed_lines} lines in sed script"
+            fi
+        popd
+        # apply the sed transformations
+        sleep 1 && sed -i -f ../../sed-script.txt nml.py
     else
         echo "GenerateDS not installed"
         echo "Run: pip install generateds"

@@ -16,7 +16,6 @@ except ImportError:
 
 
 class TestNeuroMLHDF5Parser(unittest.TestCase):
-
     base_dir = os.path.dirname(__file__)
     # base_dir = '.'
 
@@ -70,6 +69,5 @@ class TestNeuroMLHDF5Parser(unittest.TestCase):
 
 
 if __name__ == "__main__":
-
     tnxp = TestNeuroMLHDF5Parser()
     tnxp.test_write_load_hdf5()

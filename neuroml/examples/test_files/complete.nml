@@ -1,4 +1,4 @@
-<neuroml xmlns="http://www.neuroml.org/schema/neuroml2"  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2.2.xsd" id="Complete">
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2"  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2.3.xsd" id="Complete">
     <notes>Lots of notes....</notes>
     <expOneSynapse id="syn0" gbase="14nS" erev="0mV" tauDecay="3ms"/>
     <expTwoSynapse id="syn1" gbase="2nS" erev="0mV" tauDecay="3ms" tauRise="1ms"/>
@@ -195,7 +195,7 @@
             <continuousConnectionInstance id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.925038673001334" postCell="../IafPop1[0]" postFractionAlong="0.890281011017758" preComponent="silent1" postComponent="gs1"/>
         </continuousProjection>
         <continuousProjection id="ProjCCIW" presynapticPopulation="Pop_x" postsynapticPopulation="IafPop1">
-            <continuousConnectionInstanceW id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.603907240251041" postCell="../IafPop1[0]" postFractionAlong="0.144025903342251" preComponent="silent1" postComponent="gs1" weight="5."/>
+            <continuousConnectionInstanceW id="0" preCell="../Pop_x/0/iaf0" preFractionAlong="0.603907240251041" postCell="../IafPop1[0]" postFractionAlong="0.144025903342251" preComponent="silent1" postComponent="gs1" weight="5.0"/>
         </continuousProjection>
         <inputList id="il" population="Pop_x" component="pfs">
             <input id="0" target="../Pop_x/0/iaf0" destination="synapses"/>
@@ -208,14 +208,14 @@
             <input id="7" target="../Pop_x/7/iaf0" destination="synapses"/>
         </inputList>
         <inputList id="ilw" population="Pop_x" component="pfs">
-            <inputW id="0" target="../Pop_x/0/iaf0" destination="synapses" weight="10."/>
-            <inputW id="1" target="../Pop_x/1/iaf0" destination="synapses" weight="10."/>
-            <inputW id="2" target="../Pop_x/2/iaf0" destination="synapses" weight="10."/>
-            <inputW id="3" target="../Pop_x/3/iaf0" destination="synapses" weight="10."/>
-            <inputW id="4" target="../Pop_x/4/iaf0" destination="synapses" weight="10."/>
-            <inputW id="5" target="../Pop_x/5/iaf0" destination="synapses" weight="10."/>
-            <inputW id="6" target="../Pop_x/6/iaf0" destination="synapses" weight="10."/>
-            <inputW id="7" target="../Pop_x/7/iaf0" destination="synapses" weight="10."/>
+            <inputW id="0" target="../Pop_x/0/iaf0" destination="synapses" weight="10.0"/>
+            <inputW id="1" target="../Pop_x/1/iaf0" destination="synapses" weight="10.0"/>
+            <inputW id="2" target="../Pop_x/2/iaf0" destination="synapses" weight="10.0"/>
+            <inputW id="3" target="../Pop_x/3/iaf0" destination="synapses" weight="10.0"/>
+            <inputW id="4" target="../Pop_x/4/iaf0" destination="synapses" weight="10.0"/>
+            <inputW id="5" target="../Pop_x/5/iaf0" destination="synapses" weight="10.0"/>
+            <inputW id="6" target="../Pop_x/6/iaf0" destination="synapses" weight="10.0"/>
+            <inputW id="7" target="../Pop_x/7/iaf0" destination="synapses" weight="10.0"/>
         </inputList>
     </network>
 </neuroml>

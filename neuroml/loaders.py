@@ -3,29 +3,23 @@ from neuroml.nml.nml import parse as nmlparse
 from neuroml.nml.nml import parseString as nmlparsestring
 
 import neuroml
-from neuroml.utils import add_all_to_document
+from neuroml import (NeuroMLDocument)
+import neuroml.utils as utils
 
 import os
 import sys
 import warnings
 
+from typing import Callable, Optional
+
 supressGeneratedsWarnings = True
-
-
-def print_(text, verbose=True):
-    if verbose:
-        prefix = "libNeuroML >>> "
-        # if not isinstance(text, str): text = text.decode('ascii')
-        if verbose:
-
-            print("%s%s" % (prefix, text.replace("\n", "\n" + prefix)))
 
 
 class NeuroMLLoader(object):
     @classmethod
     def load(cls, src):
         doc = cls.__nml2_doc(src)
-        if isinstance(doc, neuroml.nml.nml.NeuroMLDocument):
+        if isinstance(doc, NeuroMLDocument):
             return doc
         else:
             raise TypeError(
@@ -36,13 +30,10 @@ class NeuroMLLoader(object):
 
     @classmethod
     def __nml2_doc(cls, file_name):
-        import sys
-
         try:
-
             if supressGeneratedsWarnings:
                 warnings.simplefilter("ignore")
-            nml2_doc = nmlparse(file_name)
+            nml2_doc = nmlparse(file_name, silence=True)
             if supressGeneratedsWarnings:
                 warnings.resetwarnings()
         except Exception as e:
@@ -59,8 +50,6 @@ class NeuroMLHdf5Loader(object):
 
     @classmethod
     def __nml2_doc(cls, file_name, optimized=False):
-        import sys
-
         import logging
 
         logging.basicConfig(
@@ -70,14 +59,12 @@ class NeuroMLHdf5Loader(object):
         from neuroml.hdf5.NeuroMLHdf5Parser import NeuroMLHdf5Parser
 
         if optimized:
-
             currParser = NeuroMLHdf5Parser(None, optimized=True)
 
             currParser.parse(file_name)
 
             return currParser.get_nml_doc()
         else:
-
             from neuroml.hdf5.NetworkBuilder import NetworkBuilder
 
             nmlHandler = NetworkBuilder()
@@ -88,18 +75,25 @@ class NeuroMLHdf5Loader(object):
 
             nml2_doc = nmlHandler.get_nml_doc()
             if currParser.nml_doc_extra_elements:
-                add_all_to_document(currParser.nml_doc_extra_elements, nml2_doc)
+                utils.add_all_to_document(currParser.nml_doc_extra_elements, nml2_doc)
 
             return nml2_doc
 
 
 class SWCLoader(object):
     """
-    WARNING: Class defunct
+    This class is deprecated and will be removed in a future release. Please
+    refer to https://docs.neuroml.org/Userdocs/ImportingMorphologyFiles.html
+    for information on importing/converting morphology files to NeuroML2.
     """
 
     @classmethod
     def load_swc_single(cls, src, name=None):
+        warnings.warn(
+            "This method/class is deprecated and will be removed in a future release. Please see https://docs.neuroml.org/Userdocs/ImportingMorphologyFiles.html",
+            FutureWarning,
+            stacklevel=2,
+        )
 
         import numpy as np
         from neuroml import arraymorph
@@ -156,7 +150,6 @@ class SWCLoader(object):
 class ArrayMorphLoader(object):
     @classmethod
     def __extract_morphology(cls, node):
-
         from neuroml import arraymorph
 
         loaded_morphology = arraymorph.ArrayMorphology()
@@ -175,7 +168,6 @@ class ArrayMorphLoader(object):
         import tables
 
         with tables.open_file(filepath, mode="r") as file:
-
             document = neuroml.NeuroMLDocument()
 
             for node in file.root:
@@ -191,13 +183,33 @@ class ArrayMorphLoader(object):
 
 
 def read_neuroml2_file(
-    nml2_file_name,
-    include_includes=False,
-    verbose=False,
-    already_included=[],
-    print_method=print_,
-    optimized=False,
-):
+    nml2_file_name: str,
+    include_includes: bool = False,
+    verbose: bool = False,
+    already_included: list = None,
+    print_method: Callable = neuroml.print_,
+    optimized: bool = False,
+) -> NeuroMLDocument:
+    """
+    Read a NeuroML2 file into a NeuroMLDocument object
+
+    :param nml2_file_name: name of NeuroML file to read
+    :type nml2_file_name: str
+    :param include_includes: toggle whether Included files should also be loaded
+    :type include_includes: bool
+    :param verbose: toggle verbose output
+    :type verbose: bool
+    :param already_included: list of already included files
+    :type already_included: list
+    :param print_method: print function to use
+    :type print_method: Callable
+    :param optimised: for optimised HDF5 NeuroML files
+    :type optimised: bool
+    :returns: NeuroMLDoc object containing the read file
+
+    """
+    if already_included is None:
+        already_included = []
 
     print_method("Loading NeuroML2 file: %s" % nml2_file_name, verbose)
 
@@ -216,14 +228,34 @@ def read_neuroml2_file(
 
 
 def read_neuroml2_string(
-    nml2_string,
-    include_includes=False,
-    verbose=False,
-    already_included=[],
-    print_method=print_,
-    optimized=False,
-    base_path=None,
-):
+    nml2_string: str,
+    include_includes: bool = False,
+    verbose: bool = False,
+    already_included: list = [],
+    print_method: Callable = neuroml.print_,
+    optimized: bool = False,
+    base_path: Optional[str] = None,
+) -> NeuroMLDocument:
+    """
+    Read a NeuroML2 string into a NeuroMLDocument object
+
+    :param nml2_string: NeuroML string to load
+    :type nml2_string: str
+    :param include_includes: toggle whether Included files should also be loaded
+    :type include_includes: bool
+    :param verbose: toggle verbose output
+    :type verbose: bool
+    :param already_included: list of already included files
+    :type already_included: list
+    :param print_method: print function to use
+    :type print_method: Callable
+    :param optimised: for optimised HDF5 NeuroML files
+    :type optimised: bool
+    :param base_path:
+    :type base_path: str
+    :returns: NeuroMLDoc object containing the model
+
+    """
 
     print_method("Loading NeuroML2 string, base_path: %s" % base_path, verbose)
 
@@ -239,20 +271,43 @@ def read_neuroml2_string(
 
 
 def _read_neuroml2(
-    nml2_file_name_or_string,
-    include_includes=False,
-    verbose=False,
-    already_included=[],
-    print_method=print_,
-    optimized=False,
-    base_path=None,
-):
+    nml2_file_name_or_string: str,
+    include_includes: bool = False,
+    verbose: bool = False,
+    already_included: list = [],
+    print_method: Callable = neuroml.print_,
+    optimized: bool = False,
+    base_path: Optional[str] = None,
+) -> NeuroMLDocument:
+    """
+    Read a NeuroML2 file or string into a NeuroMLDocument object.
+
+    Internal method, please use `read_neuroml2_file` or `read_neuroml2_string`
+    instead.
+
+    :param nml2_file_name_or_string: NeuroML file or string to load
+    :type nml2_file_name_or_string: str
+    :param include_includes: toggle whether Included files should also be loaded
+    :type include_includes: bool
+    :param verbose: toggle verbose output
+    :type verbose: bool
+    :param already_included: list of already included files
+    :type already_included: list
+    :param print_method: print function to use
+    :type print_method: Callable
+    :param optimised: for optimised HDF5 NeuroML files
+    :type optimised: bool
+    :param base_path:
+    :type base_path: str
+    :returns: NeuroMLDoc object containing the model
+
+    """
 
     # print("................ Loading: %s"%nml2_file_name_or_string[:7])
 
     base_path_to_use = (
         os.path.dirname(os.path.realpath(nml2_file_name_or_string))
-        if base_path == None
+        if base_path is None
         else base_path
     )
 
@@ -263,7 +318,7 @@ def _read_neuroml2(
         nml2_file_name_or_string, str
     ) or nml2_file_name_or_string.startswith("<"):
         nml2_doc = nmlparsestring(nml2_file_name_or_string)
-        base_path_to_use = "./" if base_path == None else base_path
+        base_path_to_use = "./" if base_path is None else base_path
     elif nml2_file_name_or_string.endswith(".h5") or nml2_file_name_or_string.endswith(
         ".hdf5"
     ):
@@ -276,7 +331,7 @@ def _read_neuroml2(
 
     if include_includes:
         print_method(
-            "Including included files (included already: %s)" % already_included,
+            "Including the included files (included already: %s)" % already_included,
             verbose,
         )
 
@@ -297,12 +352,12 @@ def _read_neuroml2(
                         already_included=already_included,
                     )
                     already_included.append(incl_loc)
-                    add_all_to_document(nml2_sub_doc, nml2_doc)
+                    utils.add_all_to_document(nml2_sub_doc, nml2_doc)
 
                 elif incl_loc.endswith(".nml.h5"):
                     nml2_sub_doc = NeuroMLHdf5Loader.load(incl_loc)
                     already_included.append(incl_loc)
-                    add_all_to_document(nml2_sub_doc, nml2_doc)
+                    utils.add_all_to_document(nml2_sub_doc, nml2_doc)
 
                 else:
                     raise Exception("Unrecognised extension on file: %s" % incl_loc)
@@ -312,17 +367,16 @@ def _read_neuroml2(
     else:
         if len(nml2_doc.includes) > 0:
             print_method(
-                "NOT including included files, even though %s are included!"
+                "NOT processing included files, even though %s are included!"
                 % len(nml2_doc.includes),
                 verbose,
             )
-
-        nml2_doc.includes = []
 
     return nml2_doc
 
 
 if __name__ == "__main__":
-
-    nml_doc = read_neuroml2_file(sys.argv[1])
+    f = sys.argv[1]
+    nml_doc = read_neuroml2_file(f)
+    print("Read in %s" % f)
     print(nml_doc.summary())

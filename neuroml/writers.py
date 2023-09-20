@@ -38,7 +38,6 @@ class NeuroMLWriter(object):
 class NeuroMLHdf5Writer(object):
     @classmethod
     def write(cls, nml_doc, h5_file_name, embed_xml=True, compress=True):
-
         import tables
 
         FILTERS = (
@@ -57,11 +56,9 @@ class NeuroMLHdf5Writer(object):
         rootGroup._f_setattr("GENERATED_BY", "libNeuroML v%s" % (neuroml.__version__))
 
         for network in nml_doc.networks:
-
             network.exportHdf5(h5file, rootGroup)
 
         if embed_xml:
-
             networks = []
             for n in nml_doc.networks:
                 networks.append(n)
@@ -167,7 +164,6 @@ class ArrayMorphWriter(object):
             cls.__write_single_cell(morphology, fileh, cell_id=cell.id)
 
         for default_id, morphology in enumerate(document.morphology):
-
             if morphology.id == None:
                 morphology.id = "Morphology" + str(default_id)
 
@@ -175,7 +171,6 @@ class ArrayMorphWriter(object):
 
     @classmethod
     def write(cls, data, filepath):
-
         import tables
 
         fileh = tables.open_file(filepath, mode="w")

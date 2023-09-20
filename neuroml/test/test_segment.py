@@ -101,7 +101,6 @@ class TestHelperProperties(unittest.TestCase):
         self.assertAlmostEqual(seg.surface_area, 4.19011944, places=7)
 
     def test_volume0(self):
-
         diam = 1.0
         len = 1.0
         d = Point3DWithDiam(x=0, y=0, z=0, diameter=diam)
@@ -111,7 +110,6 @@ class TestHelperProperties(unittest.TestCase):
         self.assertAlmostEqual(seg.volume, math.pi * (diam / 2) ** 2 * len, places=7)
 
     def test_volume1(self):
-
         diam = 1.0
         len = 1.0
         d = Point3DWithDiam(x=0, y=0, z=0, diameter=diam)
@@ -128,7 +126,6 @@ class TestHelperProperties(unittest.TestCase):
         self.assertAlmostEqual(seg.volume, 0.7932855820702964, places=7)
 
     def test_spherical(self):
-
         diam = 1.0
         d = Point3DWithDiam(x=0, y=0, z=0, diameter=diam)
         p = Point3DWithDiam(x=0, y=0, z=0, diameter=diam)
@@ -139,7 +136,6 @@ class TestHelperProperties(unittest.TestCase):
         self.assertEqual(seg.surface_area, math.pi)
 
     def test_cell_with_segs(self):
-
         cell = Cell(id="cell0")
 
         diam = 1.0
@@ -153,18 +149,20 @@ class TestHelperProperties(unittest.TestCase):
         cell.morphology = Morphology()
         cell.morphology.segments.append(seg0)
 
-        seg1 = Segment(id=1, distal=d1, parent=SegmentParent(0))
+        seg1 = Segment(id=1, distal=d1, parent=SegmentParent(segments=0))
         cell.morphology.segments.append(seg1)
 
         d2 = Point3DWithDiam(x=20, y=0, z=0, diameter=diam)
 
-        seg2 = Segment(id=2, proximal=d1, distal=d2, parent=SegmentParent(seg1.id))
+        seg2 = Segment(
+            id=2, proximal=d1, distal=d2, parent=SegmentParent(segments=seg1.id)
+        )
         cell.morphology.segments.append(seg2)
 
         d3 = Point3DWithDiam(x=15, y=10, z=0, diameter=diam)
 
         seg3 = Segment(
-            id=3, distal=d3, parent=SegmentParent(seg2.id, fraction_along=0.5)
+            id=3, distal=d3, parent=SegmentParent(segments=seg2.id, fraction_along=0.5)
         )
         cell.morphology.segments.append(seg3)
         for f in [0, 0.25, 0.5, 0.75, 1]:
@@ -227,7 +225,6 @@ class TestAttachedSegments(unittest.TestCase):
 
 
 if __name__ == "__main__":
-
     ta = TestHelperProperties()
 
     ta.test_length0()

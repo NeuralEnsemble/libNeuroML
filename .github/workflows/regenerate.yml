@@ -2,9 +2,9 @@ name: Regenerate nml.py
 
 on:
   push:
-    branches: [ master, development ]
+    branches: [ master, development, experimental ]
   pull_request:
-    branches: [ master, development ]
+    branches: [ master, development, experimental ]
 
 jobs:
   build:
@@ -12,22 +12,21 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9"]
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
 
     - name: Install dependencies
       run: |
-        sudo apt-get install libhdf5-serial-dev liblzo2-dev -y
+        sudo apt-get install libhdf5-serial-dev liblzo2-dev libgraphviz-dev -y
         python -m pip install --upgrade pip
-        if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install .[dev]
 
     - name: Rebuild nml.py
       run: |

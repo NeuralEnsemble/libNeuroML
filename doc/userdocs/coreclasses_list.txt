@@ -1,5 +1,27 @@
 .. Generated using nml-core-docs.py
 
+GeneratedsSuperSuper
+####################
+
+.. autoclass:: neuroml.nml.generatedssupersuper.GeneratedsSuperSuper
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+GdsCollector
+############
+
+.. autoclass:: neuroml.nml.generatedscollector.GdsCollector
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
 AdExIaFCell
 ###########
 
@@ -7,6 +29,7 @@ AdExIaFCell
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -17,6 +40,7 @@ AlphaCondSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -27,6 +51,7 @@ AlphaCurrSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -37,6 +62,7 @@ AlphaCurrentSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -47,6 +73,7 @@ AlphaSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -57,6 +84,7 @@ Annotation
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -67,6 +95,7 @@ Base
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -77,6 +106,7 @@ BaseCell
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -87,6 +117,7 @@ BaseCellMembPotCap
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -97,6 +128,7 @@ BaseConductanceBasedSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -107,6 +139,7 @@ BaseConductanceBasedSynapseTwo
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -117,6 +150,7 @@ BaseConnection
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -127,6 +161,7 @@ BaseConnectionNewFormat
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -137,6 +172,7 @@ BaseConnectionOldFormat
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -147,6 +183,7 @@ BaseCurrentBasedSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -157,6 +194,7 @@ BaseNonNegativeIntegerId
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -167,6 +205,7 @@ BaseProjection
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -177,6 +216,7 @@ BasePynnSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -187,6 +227,7 @@ BaseSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -197,6 +238,7 @@ BaseVoltageDepSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -207,6 +249,7 @@ BaseWithoutId
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -217,6 +260,7 @@ BiophysicalProperties
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -227,6 +271,7 @@ BiophysicalProperties2CaPools
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -237,6 +282,7 @@ BlockMechanism
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -247,6 +293,7 @@ BlockingPlasticSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -257,6 +304,7 @@ Case
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -267,6 +315,7 @@ Cell
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -277,6 +326,7 @@ Cell2CaPools
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -287,6 +337,7 @@ CellSet
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -297,6 +348,7 @@ ChannelDensity
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -307,6 +359,7 @@ ChannelDensityGHK
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -317,6 +370,7 @@ ChannelDensityGHK2
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -327,6 +381,7 @@ ChannelDensityNernst
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -337,6 +392,7 @@ ChannelDensityNernstCa2
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -347,6 +403,7 @@ ChannelDensityNonUniform
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -357,6 +414,7 @@ ChannelDensityNonUniformGHK
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -367,6 +425,7 @@ ChannelDensityNonUniformNernst
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -377,6 +436,7 @@ ChannelDensityVShift
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -387,6 +447,7 @@ ChannelPopulation
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -397,6 +458,7 @@ ClosedState
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -407,6 +469,7 @@ ComponentType
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -417,6 +480,7 @@ CompoundInput
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -427,6 +491,7 @@ CompoundInputDL
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -437,6 +502,7 @@ ConcentrationModel_D
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -447,6 +513,7 @@ ConditionalDerivedVariable
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -457,6 +524,7 @@ Connection
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -467,6 +535,7 @@ ConnectionWD
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -477,6 +546,7 @@ Constant
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -487,6 +557,7 @@ ContinuousConnection
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -497,6 +568,7 @@ ContinuousConnectionInstance
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -507,6 +579,7 @@ ContinuousConnectionInstanceW
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -517,6 +590,7 @@ ContinuousProjection
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -527,6 +601,18 @@ DecayingPoolConcentrationModel
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
+
+
+
+DerivedParameter
+################
+
+.. autoclass:: neuroml.nml.nml.DerivedParameter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
 
 
 
@@ -537,6 +623,7 @@ DerivedVariable
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -547,6 +634,7 @@ DistalDetails
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -557,6 +645,7 @@ DoubleSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -567,6 +656,7 @@ Dynamics
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -577,6 +667,7 @@ EIF_cond_alpha_isfa_ista
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -587,6 +678,7 @@ EIF_cond_exp_isfa_ista
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -597,6 +689,7 @@ ElectricalConnection
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -607,6 +700,7 @@ ElectricalConnectionInstance
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -617,6 +711,7 @@ ElectricalConnectionInstanceW
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -627,6 +722,18 @@ ElectricalProjection
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
+
+
+
+EventOut
+########
+
+.. autoclass:: neuroml.nml.nml.EventOut
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
 
 
 
@@ -637,6 +744,7 @@ ExpCondSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -647,6 +755,7 @@ ExpCurrSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -657,6 +766,7 @@ ExpOneSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -667,6 +777,7 @@ ExpThreeSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -677,6 +788,7 @@ ExpTwoSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -687,6 +799,7 @@ ExplicitInput
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -697,6 +810,7 @@ Exposure
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -707,6 +821,7 @@ ExtracellularProperties
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -717,6 +832,7 @@ ExtracellularPropertiesLocal
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -727,6 +843,7 @@ FitzHughNagumo1969Cell
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -737,6 +854,7 @@ FitzHughNagumoCell
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -747,6 +865,7 @@ FixedFactorConcentrationModel
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -757,6 +876,7 @@ ForwardTransition
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -767,6 +887,7 @@ GapJunction
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -777,6 +898,7 @@ GateFractional
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -787,6 +909,7 @@ GateFractionalSubgate
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -797,6 +920,7 @@ GateHHInstantaneous
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -807,6 +931,7 @@ GateHHRates
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -817,6 +942,7 @@ GateHHRatesInf
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -827,6 +953,7 @@ GateHHRatesTau
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -837,6 +964,7 @@ GateHHRatesTauInf
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -847,6 +975,7 @@ GateHHTauInf
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -857,6 +986,7 @@ GateHHUndetermined
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -866,6 +996,15 @@ GateKS
 .. autoclass:: neuroml.nml.nml.GateKS
    :members:
    :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+GeneratedsSuper
+###############
+
+.. autoclass:: neuroml.nml.nml.GeneratedsSuper
    :show-inheritance:
 
 
@@ -877,6 +1016,7 @@ GradedSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -887,6 +1027,7 @@ GridLayout
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -897,6 +1038,7 @@ HHRate
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -907,6 +1049,7 @@ HHTime
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -917,6 +1060,7 @@ HHVariable
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -927,6 +1071,7 @@ HH_cond_exp
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -937,6 +1082,7 @@ IF_cond_alpha
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -947,6 +1093,7 @@ IF_cond_exp
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -957,6 +1104,7 @@ IF_curr_alpha
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -967,6 +1115,7 @@ IF_curr_exp
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -977,6 +1126,7 @@ IafCell
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -987,6 +1137,7 @@ IafRefCell
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -997,6 +1148,7 @@ IafTauCell
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1007,6 +1159,7 @@ IafTauRefCell
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1017,6 +1170,7 @@ Include
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1027,6 +1181,7 @@ IncludeType
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1037,6 +1192,7 @@ InhomogeneousParameter
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1047,6 +1203,7 @@ InhomogeneousValue
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1057,6 +1214,7 @@ InitMembPotential
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1067,6 +1225,7 @@ Input
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1077,6 +1236,7 @@ InputList
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1087,6 +1247,7 @@ InputW
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1097,6 +1258,7 @@ Instance
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1107,6 +1269,7 @@ InstanceRequirement
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1117,6 +1280,7 @@ IntracellularProperties
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1127,6 +1291,7 @@ IntracellularProperties2CaPools
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1137,6 +1302,7 @@ IonChannel
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1147,6 +1313,7 @@ IonChannelHH
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1157,6 +1324,7 @@ IonChannelKS
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1167,6 +1335,7 @@ IonChannelScalable
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1177,6 +1346,7 @@ IonChannelVShift
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1187,6 +1357,7 @@ Izhikevich2007Cell
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1197,6 +1368,7 @@ IzhikevichCell
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1207,6 +1379,7 @@ LEMS_Property
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1217,6 +1390,7 @@ Layout
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1227,6 +1401,7 @@ LinearGradedSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1237,6 +1412,7 @@ Location
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1247,6 +1423,7 @@ Member
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1257,6 +1434,7 @@ MembraneProperties
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1267,18 +1445,7 @@ MembraneProperties2CaPools
    :members:
    :undoc-members:
    :show-inheritance:
-
-
-
-MixedContainer:
-
-################
-
-.. autoclass:: neuroml.nml.nml.MixedContainer:
-
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1289,6 +1456,7 @@ Morphology
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1299,6 +1467,7 @@ NamedDimensionalType
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1309,6 +1478,7 @@ NamedDimensionalVariable
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1319,6 +1489,7 @@ Network
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1329,6 +1500,51 @@ NeuroMLDocument
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
+
+
+
+OnCondition
+###########
+
+.. autoclass:: neuroml.nml.nml.OnCondition
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+OnEntry
+#######
+
+.. autoclass:: neuroml.nml.nml.OnEntry
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+OnEvent
+#######
+
+.. autoclass:: neuroml.nml.nml.OnEvent
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+OnStart
+#######
+
+.. autoclass:: neuroml.nml.nml.OnStart
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1339,6 +1555,7 @@ OpenState
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1349,6 +1566,7 @@ Parameter
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1359,6 +1577,7 @@ Path
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1369,6 +1588,7 @@ PinskyRinzelCA3Cell
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1379,6 +1599,7 @@ PlasticityMechanism
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1389,6 +1610,7 @@ Point3DWithDiam
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1399,6 +1621,7 @@ PoissonFiringSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1409,6 +1632,7 @@ Population
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1419,6 +1643,7 @@ Projection
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1429,6 +1654,7 @@ Property
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1439,6 +1665,7 @@ ProximalDetails
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1449,6 +1676,7 @@ PulseGenerator
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1459,6 +1687,7 @@ PulseGeneratorDL
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1469,6 +1698,7 @@ Q10ConductanceScaling
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1479,6 +1709,7 @@ Q10Settings
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1489,6 +1720,7 @@ RampGenerator
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1499,6 +1731,7 @@ RampGeneratorDL
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1509,6 +1742,7 @@ RandomLayout
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1519,6 +1753,18 @@ ReactionScheme
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
+
+
+
+Regime
+######
+
+.. autoclass:: neuroml.nml.nml.Regime
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1529,6 +1775,7 @@ Region
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1539,6 +1786,7 @@ Requirement
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1549,6 +1797,7 @@ Resistivity
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1559,6 +1808,7 @@ ReverseTransition
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1569,6 +1819,7 @@ Segment
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1579,6 +1830,7 @@ SegmentEndPoint
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1589,6 +1841,7 @@ SegmentGroup
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1599,6 +1852,7 @@ SegmentParent
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1609,6 +1863,7 @@ SilentSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1619,6 +1874,7 @@ SineGenerator
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1629,6 +1885,7 @@ SineGeneratorDL
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1639,6 +1896,7 @@ Space
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1649,6 +1907,7 @@ SpaceStructure
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1659,6 +1918,7 @@ Species
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1669,6 +1929,7 @@ SpecificCapacitance
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1679,6 +1940,7 @@ Spike
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1689,6 +1951,7 @@ SpikeArray
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1699,6 +1962,7 @@ SpikeGenerator
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1709,6 +1973,7 @@ SpikeGeneratorPoisson
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1719,6 +1984,7 @@ SpikeGeneratorRandom
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1729,6 +1995,7 @@ SpikeGeneratorRefPoisson
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1739,6 +2006,7 @@ SpikeSourcePoisson
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1749,6 +2017,7 @@ SpikeThresh
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1759,6 +2028,18 @@ Standalone
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
+
+
+
+StateAssignment
+###############
+
+.. autoclass:: neuroml.nml.nml.StateAssignment
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1769,6 +2050,7 @@ StateVariable
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1779,6 +2061,7 @@ SubTree
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1789,6 +2072,7 @@ SynapticConnection
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1799,6 +2083,7 @@ TauInfTransition
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1809,6 +2094,7 @@ TimeDerivative
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1819,6 +2105,7 @@ TimedSynapticInput
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1829,6 +2116,29 @@ TransientPoissonFiringSynapse
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
+
+
+
+Transition
+##########
+
+.. autoclass:: neuroml.nml.nml.Transition
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+TrueOrFalse
+###########
+
+.. autoclass:: neuroml.nml.nml.TrueOrFalse
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1839,6 +2149,7 @@ UnstructuredLayout
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1849,6 +2160,7 @@ VariableParameter
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1859,6 +2171,7 @@ VoltageClamp
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1869,6 +2182,7 @@ VoltageClampTriple
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1879,6 +2193,7 @@ basePyNNCell
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1889,6 +2204,7 @@ basePyNNIaFCell
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
 
@@ -1899,5 +2215,6 @@ basePyNNIaFCondCell
    :members:
    :undoc-members:
    :show-inheritance:
+   :inherited-members:
 
 
