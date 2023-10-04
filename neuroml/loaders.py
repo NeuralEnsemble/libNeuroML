@@ -203,8 +203,8 @@ def read_neuroml2_file(
     :type already_included: list
     :param print_method: print function to use
     :type print_method: Callable
-    :param optimised: for optimised HDF5 NeuroML files
-    :type optimised: bool
+    :param optimized: for optimized HDF5 NeuroML files
+    :type optimized: bool
     :returns: NeuroMLDoc object containing the read file
 
     """
@@ -249,8 +249,8 @@ def read_neuroml2_string(
     :type already_included: list
     :param print_method: print function to use
     :type print_method: Callable
-    :param optimised: for optimised HDF5 NeuroML files
-    :type optimised: bool
+    :param optimized: for optimized HDF5 NeuroML files
+    :type optimized: bool
     :param base_path:
     :type base_path: str
     :returns: NeuroMLDoc object containing the model
@@ -295,8 +295,8 @@ def _read_neuroml2(
     :type already_included: list
     :param print_method: print function to use
     :type print_method: Callable
-    :param optimised: for optimised HDF5 NeuroML files
-    :type optimised: bool
+    :param optimized: for optimized HDF5 NeuroML files
+    :type optimized: bool
     :param base_path:
     :type base_path: str
     :returns: NeuroMLDoc object containing the model
