@@ -1,7 +1,7 @@
 import typing
 
 import neuroml
-import neuroml.arraymorph.ArrayMorphology
+from neuroml.arraymorph import ArrayMorphology
 
 """Classes to write NeuroML to various formats."""
 
@@ -153,14 +153,14 @@ class ArrayMorphWriter(object):
     @classmethod
     def __write_single_cell(
         cls,
-        array_morph: neuroml.arraymorph.ArrayMorphology,
+        array_morph: ArrayMorphology,
         fileh,
         cell_id: typing.Optional[str] = None,
     ):
         """Write a array morphology to a file handler.
 
         :param array_morph: a array morph object containing a morphology
-        :type array_morph: neuroml.arraymorph.ArrayMorphology
+        :type array_morph: ArrayMorphology
         :param fileh: pytables file object of file to write to
         :type fileh: pytables file object
         :param cell_id: id of cell
@@ -225,13 +225,13 @@ class ArrayMorphWriter(object):
     @classmethod
     def write(
         cls,
-        data: typing.Union[neuroml.NeuroMLDocument, neuroml.arraymorph.ArrayMorphology],
+        data: typing.Union[neuroml.NeuroMLDocument, ArrayMorphology],
         filepath: str,
     ):
         """Write morphology to file in ArrayMorph format.
 
         :param data: data to write
-        :type data: neuroml.arraymorph.ArrayMorphology or neuroml.NeuroMLDocument
+        :type data: ArrayMorphology or neuroml.NeuroMLDocument
         :param filepath: path of file to write to
         :type filepath: str
 
@@ -243,7 +243,7 @@ class ArrayMorphWriter(object):
         # Now instead we should go through a document/cell/morphology
         # hierarchy - this kind of tree traversal should be done recursively
 
-        if isinstance(data, neuroml.arraymorph.ArrayMorphology):
+        if isinstance(data, ArrayMorphology):
             cls.__write_single_cell(data, fileh)
 
         if isinstance(data, neuroml.NeuroMLDocument):
