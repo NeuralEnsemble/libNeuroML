@@ -1,7 +1,7 @@
-import neuroml
-import neuroml.arraymorph.ArrayMorphology
 import typing
 
+import neuroml
+import neuroml.arraymorph.ArrayMorphology
 
 """Classes to write NeuroML to various formats."""
 
