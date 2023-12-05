@@ -1,23 +1,30 @@
-from neuroml.nml.nml import parse as nmlparse
-
-from neuroml.nml.nml import parseString as nmlparsestring
-
-import neuroml
-from neuroml import (NeuroMLDocument)
-import neuroml.utils as utils
-
 import os
 import sys
 import warnings
-
 from typing import Callable, Optional
+
+import neuroml
+import neuroml.utils as utils
+from neuroml import NeuroMLDocument
+from neuroml.nml.nml import parse as nmlparse
+from neuroml.nml.nml import parseString as nmlparsestring
 
 supressGeneratedsWarnings = True
 
 
 class NeuroMLLoader(object):
+    """Class for loading NeuroML."""
+
     @classmethod
-    def load(cls, src):
+    def load(cls, src: str) -> neuroml.NeuroMLDocument:
+        """Load a NeuroML file.
+
+        :param src: file
+        :type src: str
+        :returns: NeuroMLDocument object
+        :rtype: neuroml.NeuromlDocument
+        :raises TypeError: if the file is not a valid NeuroML document
+        """
         doc = cls.__nml2_doc(src)
         if isinstance(doc, NeuroMLDocument):
             return doc
@@ -29,7 +36,15 @@ class NeuroMLLoader(object):
             )
 
     @classmethod
-    def __nml2_doc(cls, file_name):
+    def __nml2_doc(cls, file_name: str) -> neuroml.NeuroMLDocument:
+        """Load and parse a NeuroML file.
+
+        :param file_name: the file
+        :type file_name: str
+        :returns: NeuroMLDocument object
+        :rtype: neuroml.NeuromlDocument
+        :raises Exception: if the document is not a valid NeuroML Document
+        """
         try:
             if supressGeneratedsWarnings:
                 warnings.simplefilter("ignore")
@@ -43,13 +58,43 @@ class NeuroMLLoader(object):
 
 
 class NeuroMLHdf5Loader(object):
+    """Class for loading a NeuroML HDF5 file."""
+
     @classmethod
-    def load(cls, src, optimized=False):
+    def load(cls, src: str, optimized: bool = False) -> neuroml.NeuroMLDocument:
+        """Load a NeuroML HDF5 file.
+
+        :param src: file
+        :type src: str
+        :param optimized: load optimized numpy representation
+            In the optimized representation, instead of the complete Python
+            object tree being constructed, the various tables in the HDF5 file
+            are loaded as numpy arrays. This is transparent to the user, who
+            can continue using the standard methods to access the data.
+        :type optimized: bool
+        :returns: NeuroMLDocument object
+        :rtype: neuroml.NeuromlDocument
+        """
         doc = cls.__nml2_doc(src, optimized)
         return doc
 
     @classmethod
-    def __nml2_doc(cls, file_name, optimized=False):
+    def __nml2_doc(
+        cls, file_name: str, optimized: bool = False
+    ) -> neuroml.NeuroMLDocument:
+        """Load and parse a NeuroML HDF5 file.
+
+        :param file_name: the file
+        :type file_name: str
+        :param optimized: load optimized numpy representation
+            In the optimized representation, instead of the complete Python
+            object tree being constructed, the various tables in the HDF5 file
+            are loaded as numpy arrays. This is transparent to the user, who
+            can continue using the standard methods to access the data.
+        :type optimized: bool
+        :returns: NeuroMLDocument object
+        :rtype: neuroml.NeuromlDocument
+        """
         import logging
 
         logging.basicConfig(
@@ -96,6 +141,7 @@ class SWCLoader(object):
         )
 
         import numpy as np
+
         from neuroml import arraymorph
 
         dtype = {

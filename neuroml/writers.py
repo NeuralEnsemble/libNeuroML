@@ -1,6 +1,7 @@
-import neuroml
-from six import string_types
+import typing
 
+import neuroml
+from neuroml.arraymorph import ArrayMorphology
 
 """Classes to write NeuroML to various formats."""
 
@@ -10,8 +11,9 @@ class NeuroMLWriter(object):
 
     In future can implement from other types via chain of responsibility pattern.
     """
+
     @classmethod
-    def write(cls, nmldoc, file, close=True):
+    def write(cls, nmldoc: neuroml.NeuroMLDocument, file: str, close: bool = True):
         """Write a NeuroMLDocument to file.
 
         :param nmldoc: NeuroML document object to write
@@ -23,8 +25,10 @@ class NeuroMLWriter(object):
         :raises AttributeError: if export fails
         """
 
-        if isinstance(file, string_types):
-            file = open(file, "w")
+        if isinstance(file, str):
+            fileh = open(file, "w")
+        else:
+            fileh = file
 
         # TODO: this should be extracted from the schema:
         namespacedef = 'xmlns="http://www.neuroml.org/schema/neuroml2" '
@@ -37,20 +41,27 @@ class NeuroMLWriter(object):
 
         try:
             nmldoc.export(
-                file, 0, name_="neuroml", namespacedef_=namespacedef
+                fileh, 0, name_="neuroml", namespacedef_=namespacedef
             )  # name_ param to ensure root element named correctly - generateDS limitation
         except AttributeError as ae:
-            file.close()
+            fileh.close()
             raise (ae)
 
         if close:
-            file.close()
+            fileh.close()
 
 
 class NeuroMLHdf5Writer(object):
     """Exports NeuroML documents to HDF5 format."""
+
     @classmethod
-    def write(cls, nml_doc, h5_file_name, embed_xml=True, compress=True):
+    def write(
+        cls,
+        nml_doc: neuroml.NeuroMLDocument,
+        h5_file_name: str,
+        embed_xml: bool = True,
+        compress: bool = True,
+    ):
         """Write a NeuroMLDocument to HDF5 file
 
         :param nmldoc: NeuroML document object to write
@@ -92,9 +103,11 @@ class NeuroMLHdf5Writer(object):
 
             try:
                 import StringIO
+
                 sf = StringIO.StringIO()
             except ImportError:
                 import io
+
                 sf = io.StringIO()
 
             NeuroMLWriter.write(nml_doc, sf, close=False)
@@ -140,13 +153,18 @@ class ArrayMorphWriter(object):
     """
 
     @classmethod
-    def __write_single_cell(cls, array_morph, fileh, cell_id=None):
+    def __write_single_cell(
+        cls,
+        array_morph: ArrayMorphology,
+        fileh,
+        cell_id: typing.Optional[str] = None,
+    ):
         """Write a array morphology to a file handler.
 
         :param array_morph: a array morph object containing a morphology
-        :type array_morph: neuroml.arraymorph.ArrayMorphology
-        :param fileh: file handler of file to write to
-        :type fileh: file object
+        :type array_morph: ArrayMorphology
+        :param fileh: pytables file object of file to write to
+        :type fileh: pytables file object
         :param cell_id: id of cell
         :type cell_id: str
         """
@@ -182,7 +200,7 @@ class ArrayMorphWriter(object):
         )
 
     @classmethod
-    def __write_neuroml_document(cls, document, fileh):
+    def __write_neuroml_document(cls, document: neuroml.NeuroMLDocument, fileh):
         """Write a NeuroMLDocument containing morphology to a file handler
 
         :param document: a NeuroML document object containing a morphology
@@ -207,11 +225,15 @@ class ArrayMorphWriter(object):
             cls.__write_single_cell(morphology, fileh, cell_id=cell.id)
 
     @classmethod
-    def write(cls, data, filepath):
+    def write(
+        cls,
+        data: typing.Union[neuroml.NeuroMLDocument, ArrayMorphology],
+        filepath: str,
+    ):
         """Write morphology to file in ArrayMorph format.
 
         :param data: data to write
-        :type data: neuroml.arraymorph.ArrayMorphology or neuroml.NeuroMLDocument
+        :type data: ArrayMorphology or neuroml.NeuroMLDocument
         :param filepath: path of file to write to
         :type filepath: str
 
@@ -223,7 +245,7 @@ class ArrayMorphWriter(object):
         # Now instead we should go through a document/cell/morphology
         # hierarchy - this kind of tree traversal should be done recursively
 
-        if isinstance(data, neuroml.arraymorph.ArrayMorphology):
+        if isinstance(data, ArrayMorphology):
             cls.__write_single_cell(data, fileh)
 
         if isinstance(data, neuroml.NeuroMLDocument):
