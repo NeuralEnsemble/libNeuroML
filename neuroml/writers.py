@@ -27,6 +27,8 @@ class NeuroMLWriter(object):
 
         if isinstance(file, str):
             fileh = open(file, "w")
+        else:
+            fileh = file
 
         # TODO: this should be extracted from the schema:
         namespacedef = 'xmlns="http://www.neuroml.org/schema/neuroml2" '
