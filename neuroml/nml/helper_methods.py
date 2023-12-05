@@ -2931,7 +2931,14 @@ for insert in inserts.keys():
         source='''\
 
     def exportHdf5(self, h5file, h5Group):
-        """Export to HDF5 file.  """
+        """Export to HDF5 file.
+
+        :param h5file: HDF5 file handler
+        :type h5file: file object
+        :param h5Group: the tables Group object to write
+        :type h5Group: tables.Group
+
+        """
         #print("Exporting %s: "+str(self.id)+" as HDF5")
         %s
     '''

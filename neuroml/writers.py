@@ -2,13 +2,25 @@ import neuroml
 from six import string_types
 
 
+"""Classes to write NeuroML to various formats."""
+
+
 class NeuroMLWriter(object):
+    """Writes from NeuroMLDocument to nml file.
+
+    In future can implement from other types via chain of responsibility pattern.
+    """
     @classmethod
     def write(cls, nmldoc, file, close=True):
-        """
-        Writes from NeuroMLDocument to nml file
-        in future can implement from other types
-        via chain of responsibility pattern.
+        """Write a NeuroMLDocument to file.
+
+        :param nmldoc: NeuroML document object to write
+        :type nmldoc: neuroml.NeuroMLDocument
+        :param file: file name to write to
+        :type file: str
+        :param close: toggle whether file should be closed
+        :type close: bool
+        :raises AttributeError: if export fails
         """
 
         if isinstance(file, string_types):
@@ -36,8 +48,21 @@ class NeuroMLWriter(object):
 
 
 class NeuroMLHdf5Writer(object):
+    """Exports NeuroML documents to HDF5 format."""
     @classmethod
     def write(cls, nml_doc, h5_file_name, embed_xml=True, compress=True):
+        """Write a NeuroMLDocument to HDF5 file
+
+        :param nmldoc: NeuroML document object to write
+        :type nmldoc: neuroml.NeuroMLDocument
+        :param h5_file_name: file name to write to
+        :type h5_file_name: str
+        :param embed_xml: toggle whether XML serialization should be embedded
+        :type embed_xml: bool
+        :param compress: toggle compression
+        :type compress: bool
+        """
+
         import tables
 
         FILTERS = (
@@ -67,17 +92,13 @@ class NeuroMLHdf5Writer(object):
 
             try:
                 import StringIO
-
                 sf = StringIO.StringIO()
-            except:
+            except ImportError:
                 import io
-
                 sf = io.StringIO()
 
             NeuroMLWriter.write(nml_doc, sf, close=False)
-
             nml2 = sf.getvalue()
-
             rootGroup._f_setattr("neuroml_top_level", nml2)
 
             # Put back into previous form...
@@ -89,20 +110,20 @@ class NeuroMLHdf5Writer(object):
     """
     @classmethod
     def write_xml_and_hdf5(cls,nml_doc0,xml_file_name,h5_file_name):
-        
+
         nml_doc_hdf5 = neuroml.NeuroMLDocument(nml_doc0.id)
-        
+
         for n in nml_doc0.networks:
             nml_doc_hdf5.networks.append(n)
-            
+
         nml_doc0.networks = []
-        
-        nml_doc0.includes.append(neuroml.IncludeType(h5_file_name)) 
-        
+
+        nml_doc0.includes.append(neuroml.IncludeType(h5_file_name))
+
         NeuroMLWriter.write(nml_doc0,xml_file_name)
-        
+
         NeuroMLHdf5Writer.write(nml_doc_hdf5,h5_file_name,embed_xml=False)
-        
+
         # Put back into previous form...
         for n in nml_doc_hdf5.networks:
             nml_doc0.networks.append(n)
@@ -113,11 +134,22 @@ class NeuroMLHdf5Writer(object):
 
 class ArrayMorphWriter(object):
     """
+    Write morphology to ArrayMorph format.
+
     For now just testing a simple method which can write a morphology, not a NeuroMLDocument.
     """
 
     @classmethod
     def __write_single_cell(cls, array_morph, fileh, cell_id=None):
+        """Write a array morphology to a file handler.
+
+        :param array_morph: a array morph object containing a morphology
+        :type array_morph: neuroml.arraymorph.ArrayMorphology
+        :param fileh: file handler of file to write to
+        :type fileh: file object
+        :param cell_id: id of cell
+        :type cell_id: str
+        """
         vertices = array_morph.vertices
         connectivity = array_morph.connectivity
         physical_mask = array_morph.physical_mask
@@ -128,12 +160,12 @@ class ArrayMorphWriter(object):
         # Create the groups:
         # can use morphology name in future?
 
-        if array_morph.id == None:
+        if array_morph.id is None:
             morphology_name = "Morphology"
         else:
             morphology_name = array_morph.id
 
-        if cell_id == None:
+        if cell_id is None:
             morphology_group = fileh.create_group(root, morphology_name)
             hierarchy_prefix = "/" + morphology_name
         else:
@@ -151,26 +183,39 @@ class ArrayMorphWriter(object):
 
     @classmethod
     def __write_neuroml_document(cls, document, fileh):
-        document_id = document.id
+        """Write a NeuroMLDocument containing morphology to a file handler
 
+        :param document: a NeuroML document object containing a morphology
+        :type document: neuroml.NeuroMLDocument
+        :param fileh: file handler of file to write to
+        :type fileh: file object
+        """
         for default_id, cell in enumerate(document.cells):
             morphology = cell.morphology
 
-            if morphology.id == None:
+            if morphology.id is None:
                 morphology.id = "Morphology" + str(default_id)
-            if cell.id == None:
+            if cell.id is None:
                 cell.id = "Cell" + str(default_id)
 
             cls.__write_single_cell(morphology, fileh, cell_id=cell.id)
 
         for default_id, morphology in enumerate(document.morphology):
-            if morphology.id == None:
+            if morphology.id is None:
                 morphology.id = "Morphology" + str(default_id)
 
             cls.__write_single_cell(morphology, fileh, cell_id=cell.id)
 
     @classmethod
     def write(cls, data, filepath):
+        """Write morphology to file in ArrayMorph format.
+
+        :param data: data to write
+        :type data: neuroml.arraymorph.ArrayMorphology or neuroml.NeuroMLDocument
+        :param filepath: path of file to write to
+        :type filepath: str
+
+        """
         import tables
 
         fileh = tables.open_file(filepath, mode="w")

@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Sep 20 19:12:47 2023 by generateDS.py version 2.43.1.
-# Python 3.10.6 (main, Nov 14 2022, 16:10:14) [GCC 11.3.0]
+# Generated Tue Dec  5 10:44:41 2023 by generateDS.py version 2.43.3.
+# Python 3.11.6 (main, Oct  3 2023, 00:00:00) [GCC 13.2.1 20230918 (Red Hat 13.2.1-3)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -16,7 +16,7 @@
 #   NeuroML_v2.3.xsd
 #
 # Command line:
-#   /usr/local/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" --custom-imports-template="gds_imports-template.py" NeuroML_v2.3.xsd
+#   /home/asinha/.local/share/virtualenvs/neuroml-311-dev/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" --custom-imports-template="gds_imports-template.py" NeuroML_v2.3.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -7370,7 +7370,14 @@ class InputList(Base):
         super(InputList, self)._buildChildren(child_, node, nodeName_, True)
 
     def exportHdf5(self, h5file, h5Group):
-        """Export to HDF5 file."""
+        """Export to HDF5 file.
+
+        :param h5file: HDF5 file handler
+        :type h5file: file object
+        :param h5Group: the tables Group object to write
+        :type h5Group: tables.Group
+
+        """
         # print("Exporting InputList: "+str(self.id)+" as HDF5")
 
         ilGroup = h5file.create_group(h5Group, "inputList_" + self.id)
@@ -10840,7 +10847,14 @@ class Population(Standalone):
         super(Population, self)._buildChildren(child_, node, nodeName_, True)
 
     def exportHdf5(self, h5file, h5Group):
-        """Export to HDF5 file."""
+        """Export to HDF5 file.
+
+        :param h5file: HDF5 file handler
+        :type h5file: file object
+        :param h5Group: the tables Group object to write
+        :type h5Group: tables.Group
+
+        """
         # print("Exporting Population: "+str(self.id)+" as HDF5")
 
         popGroup = h5file.create_group(h5Group, "population_" + self.id)
@@ -12504,7 +12518,14 @@ class Network(Standalone):
         )
 
     def exportHdf5(self, h5file, h5Group):
-        """Export to HDF5 file."""
+        """Export to HDF5 file.
+
+        :param h5file: HDF5 file handler
+        :type h5file: file object
+        :param h5Group: the tables Group object to write
+        :type h5Group: tables.Group
+
+        """
         # print("Exporting Network: "+str(self.id)+" as HDF5")
 
         netGroup = h5file.create_group(h5Group, "network")
@@ -44993,7 +45014,14 @@ class ContinuousProjection(BaseProjection):
         super(ContinuousProjection, self)._buildChildren(child_, node, nodeName_, True)
 
     def exportHdf5(self, h5file, h5Group):
-        """Export to HDF5 file."""
+        """Export to HDF5 file.
+
+        :param h5file: HDF5 file handler
+        :type h5file: file object
+        :param h5Group: the tables Group object to write
+        :type h5Group: tables.Group
+
+        """
         # print("Exporting ContinuousProjection: "+str(self.id)+" as HDF5")
 
         projGroup = h5file.create_group(h5Group, "projection_" + self.id)
@@ -45401,7 +45429,14 @@ class ElectricalProjection(BaseProjection):
         super(ElectricalProjection, self)._buildChildren(child_, node, nodeName_, True)
 
     def exportHdf5(self, h5file, h5Group):
-        """Export to HDF5 file."""
+        """Export to HDF5 file.
+
+        :param h5file: HDF5 file handler
+        :type h5file: file object
+        :param h5Group: the tables Group object to write
+        :type h5Group: tables.Group
+
+        """
         # print("Exporting ElectricalProjection: "+str(self.id)+" as HDF5")
 
         projGroup = h5file.create_group(h5Group, "projection_" + self.id)
@@ -46678,7 +46713,14 @@ class Projection(BaseProjection):
         super(Projection, self)._buildChildren(child_, node, nodeName_, True)
 
     def exportHdf5(self, h5file, h5Group):
-        """Export to HDF5 file."""
+        """Export to HDF5 file.
+
+        :param h5file: HDF5 file handler
+        :type h5file: file object
+        :param h5Group: the tables Group object to write
+        :type h5Group: tables.Group
+
+        """
         # print("Exporting Projection: "+str(self.id)+" as HDF5")
 
         projGroup = h5file.create_group(h5Group, "projection_" + self.id)
