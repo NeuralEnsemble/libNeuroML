@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
         runs-on: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
@@ -38,7 +38,7 @@ jobs:
       if: ${{ matrix.runs-on == 'ubuntu-latest' }}
       run: |
         # Just test on linux for now...
-        pytest -vs 
+        pytest -vs
 
     - name: Run examples
       if: ${{ matrix.python-version != '3.7' || matrix.runs-on != 'macos-latest' }} # issue with _bz2 module...
