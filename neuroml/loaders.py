@@ -382,7 +382,12 @@ def _read_neuroml2(
         )
 
         for include in nml2_doc.includes:
-            incl_loc = os.path.abspath(os.path.join(base_path_to_use, include.href))
+            # if given path exists, use it, otherwise assume its relative to
+            # current directory and try that
+            if os.path.exists(include.href):
+                incl_loc = os.path.abspath(include.href)
+            else:
+                incl_loc = os.path.abspath(os.path.join(base_path_to_use, include.href))
             if incl_loc not in already_included:
                 print_method(
                     "Loading included NeuroML2 file: %s (base: %s, resolved: %s)"
