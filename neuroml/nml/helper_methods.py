@@ -1867,8 +1867,8 @@ cell_methods = MethodSpec(
         Please also see specific functions in this module, which are designed to be
         easier to use than this generic function.
 
-        :param property_name: name of membrane to add
-        :type property_name: str
+        :param property_name: name or class of membrane property to add
+        :type property_name: str or class
         :param kwargs: named arguments for membrane property to be added
         :type kwargs: Any
         :returns: added property
@@ -1888,10 +1888,10 @@ cell_methods = MethodSpec(
     ):
         """Generic function to add channel density components to a Cell.
 
-        :param channel_density_type: type of channel density to add.
+        :param channel_density_type: name or class of channel density type to add.
             See https://docs.neuroml.org/Userdocs/Schemas/Cells.html for the
             complete list.
-        :type channel_density_type: str
+        :type channel_density_type: str or class
         :param nml_cell_doc: cell NeuroML document to which channel density is to be added
         :type nml_cell_doc: NeuroMLDocument
         :param ion_chan_def_file: path to NeuroML2 file defining the ion channel, if empty, it assumes the channel is defined in the same file
