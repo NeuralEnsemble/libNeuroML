@@ -1320,19 +1320,25 @@ cell_methods = MethodSpec(
 
         raise ValueError("Segment group with id "+str(sg_id)+" not found in cell "+str(self.id))
 
-    def get_segment_groups_by_substring(self, substring):
-        # type: (str) -> dict
+    def get_segment_groups_by_substring(self, substring, unbranched=False):
+        # type: (str, bool) -> dict[str, neuroml.SegmentGroup]
         """Get a dictionary of segment group IDs and the segment groups matching the specified substring
 
         :param substring: substring to match
         :type substring: str
+        :param unbranced: toggle selecting unbranched segment groups
+        :type unbranched: bool
         :return: dictionary with segment group ID as key, and segment group as value
         :raises ValueError: if no matching segment groups are found in cell
         """
         sgs = {}
         for sg in self.morphology.segment_groups:
             if substring in sg.id:
-                sgs[sg.id] = sg
+                if unbranched is True:
+                    if sg.neuro_lex_id == neuroml.neuro_lex_ids.neuro_lex_ids["section"]:
+                        sgs[sg.id] = sg
+                else:
+                    sgs[sg.id] = sg
         if len(sgs) == 0:
             raise ValueError("Segment group with id matching "+str(substring)+" not found in cell "+str(self.id))
         return sgs
