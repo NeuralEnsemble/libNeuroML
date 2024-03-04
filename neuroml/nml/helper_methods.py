@@ -1324,7 +1324,8 @@ cell_methods = MethodSpec(
         # type: (str, bool) -> dict[str, neuroml.SegmentGroup]
         """Get a dictionary of segment group IDs and the segment groups matching the specified substring
 
-        :param substring: substring to match
+        :param substring: substring to match, an empty string "" matches all
+            groups
         :type substring: str
         :param unbranced: toggle selecting unbranched segment groups
         :type unbranched: bool
@@ -1333,7 +1334,7 @@ cell_methods = MethodSpec(
         """
         sgs = {}
         for sg in self.morphology.segment_groups:
-            if substring in sg.id:
+            if substring == "" or substring in sg.id:
                 if unbranched is True:
                     if sg.neuro_lex_id == neuroml.neuro_lex_ids.neuro_lex_ids["section"]:
                         sgs[sg.id] = sg
