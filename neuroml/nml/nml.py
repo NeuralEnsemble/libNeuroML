@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Mar  4 16:33:06 2024 by generateDS.py version 2.43.3.
-# Python 3.11.8 (main, Feb 28 2024, 00:00:00) [GCC 13.2.1 20231205 (Red Hat 13.2.1-6)]
+# Generated Tue Mar  5 14:34:31 2024 by generateDS.py version 2.43.3.
+# Python 3.11.8 (main, Feb  7 2024, 00:00:00) [GCC 13.2.1 20231205 (Red Hat 13.2.1-6)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -48678,11 +48678,13 @@ class Cell(BaseCell):
         return segments
 
     def get_all_segments_in_group(
-        self, segment_group: SegmentGroup, assume_all_means_all: bool = True
+        self,
+        segment_group: typing.Union[str, SegmentGroup],
+        assume_all_means_all: bool = True,
     ) -> typing.List[int]:
         """Get all the segments in a segment group of the cell.
 
-        :param segment_group: segment group to get all segments of
+        :param segment_group: segment group id (str) or object (SegmentGroup) to get all segments of
         :param assume_all_means_all: return all segments if the "all" segment
             group wasn't explicitly defined
         :return: list of segment ids

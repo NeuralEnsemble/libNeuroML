@@ -1100,11 +1100,11 @@ cell_methods = MethodSpec(
         return segments
 
     def get_all_segments_in_group(self,
-                                  segment_group: SegmentGroup,
+                                  segment_group: typing.Union[str, SegmentGroup],
                                   assume_all_means_all: bool = True) -> typing.List[int]:
         """Get all the segments in a segment group of the cell.
 
-        :param segment_group: segment group to get all segments of
+        :param segment_group: segment group id (str) or object (SegmentGroup) to get all segments of
         :param assume_all_means_all: return all segments if the "all" segment
             group wasn't explicitly defined
         :return: list of segment ids
