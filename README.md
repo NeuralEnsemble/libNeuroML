@@ -43,6 +43,8 @@ See https://docs.neuroml.org/ for an overview of the various NeuroML libraries.
 
 ### version 0.5.8
 
+- drop py3.7, add py3,12
+- fix loader to check for given path and fall back to relative path
 - extend `get_segment_groups_from_substring` to also include an `unbranched` filter
 - more type hint/doc fixes
 
