@@ -41,6 +41,15 @@ See https://docs.neuroml.org/ for an overview of the various NeuroML libraries.
 
 ## Changelog
 
+### version 0.5.8
+
+- extend `get_segment_groups_from_substring` to also include an `unbranched` filter
+- more type hint/doc fixes
+
+### version 0.5.7
+
+- more documentation for writes/loaders
+
 ### version 0.5.6
 
 - documentation fixes to writer modules
