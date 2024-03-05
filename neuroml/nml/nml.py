@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Dec 20 14:57:27 2023 by generateDS.py version 2.43.3.
-# Python 3.11.7 (main, Dec  6 2023, 00:00:00) [GCC 13.2.1 20231205 (Red Hat 13.2.1-6)]
+# Generated Mon Mar  4 16:33:06 2024 by generateDS.py version 2.43.3.
+# Python 3.11.8 (main, Feb 28 2024, 00:00:00) [GCC 13.2.1 20231205 (Red Hat 13.2.1-6)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -49,6 +49,8 @@ import networkx as nx
 import numpy
 
 import natsort
+
+import typing
 
 
 import neuroml
@@ -153,6 +155,7 @@ try:
 except ModulenotfoundExp_:
 
     class GdsCollector_(object):
+
         def __init__(self, messages=None):
             if messages is None:
                 self.messages = []
@@ -7037,6 +7040,7 @@ class Input(BaseNonNegativeIntegerId):
         return float(self.fraction_along) if self.fraction_along else 0.5
 
     def __str__(self):
+
         return (
             "Input "
             + str(self.id)
@@ -7427,6 +7431,7 @@ class InputList(Base):
             array._f_setattr(k, extra_cols[k])
 
     def __str__(self):
+
         return (
             "Input list: "
             + self.id
@@ -7763,6 +7768,7 @@ class ExplicitInput(BaseWithoutId):
         return float(self.fraction_along) if self.fraction_along else 0.5
 
     def __str__(self):
+
         return (
             "Input "
             + str(self.id)
@@ -7794,6 +7800,7 @@ class ExplicitInput(BaseWithoutId):
             return self.target.split("/")[0]
 
     def __str__(self):
+
         dest = self.destination if self.destination else "unspecified"
         return (
             "Explicit Input of type "
@@ -8734,6 +8741,7 @@ class SynapticConnection(BaseWithoutId):
             return ref.split("/")[0]
 
     def __str__(self):
+
         dest = self.destination if self.destination else "unspecified"
         return (
             "Synaptic connection from "
@@ -9143,12 +9151,14 @@ class Location(BaseWithoutId):
         pass
 
     def _format(self, value):
+
         if int(value) == value:
             return str(int(value))
         else:
             return "%.4f" % value
 
     def __str__(self):
+
         return (
             "("
             + self._format(self.x)
@@ -9160,6 +9170,7 @@ class Location(BaseWithoutId):
         )
 
     def __repr__(self):
+
         return str(self)
 
 
@@ -9414,6 +9425,7 @@ class Instance(BaseWithoutId):
         super(Instance, self)._buildChildren(child_, node, nodeName_, True)
 
     def __str__(self):
+
         return (
             "Instance "
             + str(self.id)
@@ -9421,6 +9433,7 @@ class Instance(BaseWithoutId):
         )
 
     def __repr__(self):
+
         return str(self)
 
 
@@ -10864,6 +10877,7 @@ class Population(Standalone):
             popGroup._f_setattr("property:" + p.tag, p.value)
 
         if len(self.instances) > 0:
+
             colCount = 3
             a = numpy.zeros([len(self.instances), colCount], numpy.float32)
 
@@ -10896,6 +10910,7 @@ class Population(Standalone):
         )
 
     def __str__(self):
+
         return (
             "Population: "
             + str(self.id)
@@ -12477,7 +12492,7 @@ class Network(Standalone):
 
     warn_count = 0
 
-    def get_by_id(self, id):
+    def get_by_id(self, id: str) -> typing.Optional[typing.Any]:
         """Get a component by its ID
 
         :param id: ID of component to find
@@ -12509,6 +12524,7 @@ class Network(Standalone):
         return None
 
     def __str__(self):
+
         return (
             "Network "
             + str(self.id)
@@ -28160,6 +28176,7 @@ class SegmentGroup(Base):
         super(SegmentGroup, self)._buildChildren(child_, node, nodeName_, True)
 
     def __str__(self):
+
         return (
             "SegmentGroup: "
             + str(self.id)
@@ -28171,6 +28188,7 @@ class SegmentGroup(Base):
         )
 
     def __repr__(self):
+
         return str(self)
 
 
@@ -28434,6 +28452,7 @@ class Point3DWithDiam(BaseWithoutId):
         pass
 
     def __str__(self):
+
         return (
             "("
             + str(self.x)
@@ -28447,9 +28466,10 @@ class Point3DWithDiam(BaseWithoutId):
         )
 
     def __repr__(self):
+
         return str(self)
 
-    def distance_to(self, other_3d_point):
+    def distance_to(self, other_3d_point) -> float:
         """Find the distance between this point and another.
 
         :param other_3d_point: other 3D point to calculate distance to
@@ -29099,6 +29119,7 @@ class Segment(BaseNonNegativeIntegerId):
         return length
 
     def __str__(self):
+
         return (
             "<Segment|"
             + str(self.id)
@@ -29107,6 +29128,7 @@ class Segment(BaseNonNegativeIntegerId):
         )
 
     def __repr__(self):
+
         return str(self)
 
     @property
@@ -29131,6 +29153,7 @@ class Segment(BaseNonNegativeIntegerId):
             and self.proximal.y == self.distal.y
             and self.proximal.z == self.distal.z
         ):
+
             if prox_rad != dist_rad:
                 raise Exception(
                     "Cannot get volume of segment "
@@ -29142,9 +29165,7 @@ class Segment(BaseNonNegativeIntegerId):
 
         length = self.length
 
-        volume = (
-            (pi / 3) * length * (prox_rad**2 + dist_rad**2 + prox_rad * dist_rad)
-        )
+        volume = (pi / 3) * length * (prox_rad**2 + dist_rad**2 + prox_rad * dist_rad)
 
         return volume
 
@@ -29170,6 +29191,7 @@ class Segment(BaseNonNegativeIntegerId):
             and self.proximal.y == self.distal.y
             and self.proximal.z == self.distal.z
         ):
+
             if prox_rad != dist_rad:
                 raise Exception(
                     "Cannot get surface area of segment "
@@ -42543,7 +42565,7 @@ class NeuroMLDocument(Standalone):
 
     warn_count = 0
 
-    def get_by_id(self, id):
+    def get_by_id(self, id: str) -> typing.Optional[typing.Any]:
         """Get a component by specifying its ID.
 
         :param id: id of Component to get
@@ -44683,6 +44705,7 @@ class InputW(Input):
         return float(self.weight) if self.weight != None else 1.0
 
     def __str__(self):
+
         return (
             "Input (weight) "
             + str(self.id)
@@ -45033,17 +45056,21 @@ class ContinuousProjection(BaseProjection):
         pre_comp = (
             self.continuous_connections[0].pre_component
             if len(self.continuous_connections) > 0
-            else self.continuous_connection_instances[0].pre_component
-            if len(self.continuous_connection_instances) > 0
-            else self.continuous_connection_instance_ws[0].pre_component
+            else (
+                self.continuous_connection_instances[0].pre_component
+                if len(self.continuous_connection_instances) > 0
+                else self.continuous_connection_instance_ws[0].pre_component
+            )
         )
         projGroup._f_setattr("preComponent", pre_comp)
         post_comp = (
             self.continuous_connections[0].post_component
             if len(self.continuous_connections) > 0
-            else self.continuous_connection_instances[0].post_component
-            if len(self.continuous_connection_instances) > 0
-            else self.continuous_connection_instance_ws[0].post_component
+            else (
+                self.continuous_connection_instances[0].post_component
+                if len(self.continuous_connection_instances) > 0
+                else self.continuous_connection_instance_ws[0].post_component
+            )
         )
         projGroup._f_setattr("postComponent", post_comp)
 
@@ -45448,9 +45475,11 @@ class ElectricalProjection(BaseProjection):
         syn = (
             self.electrical_connections[0].synapse
             if len(self.electrical_connections) > 0
-            else self.electrical_connection_instances[0].synapse
-            if len(self.electrical_connection_instances) > 0
-            else self.electrical_connection_instance_ws[0].synapse
+            else (
+                self.electrical_connection_instances[0].synapse
+                if len(self.electrical_connection_instances) > 0
+                else self.electrical_connection_instance_ws[0].synapse
+            )
         )
         projGroup._f_setattr("synapse", syn)
 
@@ -48511,8 +48540,7 @@ class Cell(BaseCell):
         super(Cell, self)._buildChildren(child_, node, nodeName_, True)
 
     # Get segment object by its id
-    def get_segment(self, segment_id):
-        # type: (int) -> Segment
+    def get_segment(self, segment_id: int) -> Segment:
         """Get segment object by its id
 
         :param segment_id: ID of segment
@@ -48529,8 +48557,7 @@ class Cell(BaseCell):
             "Segment with id " + str(segment_id) + " not found in cell " + str(self.id)
         )
 
-    def get_segments_by_substring(self, substring):
-        # type: (str) -> dict
+    def get_segments_by_substring(self, substring: str) -> typing.Dict[str, Segment]:
         """Get a dictionary of segment IDs and the segment matching the specified substring
 
         :param substring: substring to match
@@ -48555,8 +48582,7 @@ class Cell(BaseCell):
 
     # Get the proximal point of a segment, even the proximal field is None and
     # so the proximal point is on the parent (at a point set by fraction_along)
-    def get_actual_proximal(self, segment_id):
-        # type: (str) -> Point3DWithDiam
+    def get_actual_proximal(self, segment_id: str):
         """Get the proximal point of a segment.
 
         If the proximal for the segment is set to None, calculate the proximal
@@ -48589,8 +48615,7 @@ class Cell(BaseCell):
 
             return p
 
-    def get_segment_length(self, segment_id):
-        # type: (str) -> float
+    def get_segment_length(self, segment_id: str) -> float:
         """Get the length of the segment.
 
         :param segment_id: ID of segment
@@ -48607,8 +48632,7 @@ class Cell(BaseCell):
 
             return length
 
-    def get_segment_surface_area(self, segment_id):
-        # type: (str) -> float
+    def get_segment_surface_area(self, segment_id: str) -> float:
         """Get the surface area of the segment.
 
         :param segment_id: ID of the segment
@@ -48625,8 +48649,7 @@ class Cell(BaseCell):
 
             return temp_seg.surface_area
 
-    def get_segment_volume(self, segment_id):
-        # type: (str) -> float
+    def get_segment_volume(self, segment_id: str) -> float:
         """Get volume of segment
 
         :param segment_id: ID of the segment
@@ -48642,8 +48665,7 @@ class Cell(BaseCell):
 
             return temp_seg.volume
 
-    def get_segment_ids_vs_segments(self):
-        # type: () -> Dict
+    def get_segment_ids_vs_segments(self) -> typing.Dict[str, Segment]:
         """Get a dictionary of segment IDs and the segments in the cell.
 
         :return: dictionary with segment ID as key, and segment as value
@@ -48655,8 +48677,9 @@ class Cell(BaseCell):
 
         return segments
 
-    def get_all_segments_in_group(self, segment_group, assume_all_means_all=True):
-        # type: (SegmentGroup, bool) -> List[int]
+    def get_all_segments_in_group(
+        self, segment_group: SegmentGroup, assume_all_means_all: bool = True
+    ) -> typing.List[int]:
         """Get all the segments in a segment group of the cell.
 
         :param segment_group: segment group to get all segments of
@@ -48673,6 +48696,7 @@ class Cell(BaseCell):
                 if sg.id == segment_group:
                     segment_group = sg
             if isinstance(segment_group, str):
+
                 if (
                     assume_all_means_all and segment_group == "all"
                 ):  # i.e. wasn't explicitly defined, but assume it means all segments
@@ -48698,13 +48722,12 @@ class Cell(BaseCell):
 
     def get_ordered_segments_in_groups(
         self,
-        group_list,
-        check_parentage=False,
-        include_cumulative_lengths=False,
-        include_path_lengths=False,
-        path_length_metric="Path Length from root",
-    ):  # Only option supported
-        # type: (List, bool, bool, bool, str) -> Any
+        group_list: typing.List[str],
+        check_parentage: bool = False,
+        include_cumulative_lengths: bool = False,
+        include_path_lengths: bool = False,
+        path_length_metric: str = "Path Length from root",  # Only option supported
+    ) -> typing.Any:
         """
         Get ordered list of segments in specified groups, with additional
         information.
@@ -48811,16 +48834,19 @@ class Cell(BaseCell):
 
                 tot_len = 0
                 for seg in ord_segs[key]:
+
                     length = self.get_segment_length(seg.id)
 
                     if (
                         not seg.parent
                         or not seg.parent.segments in path_lengths_to_distal[key]
                     ):
+
                         path_lengths_to_proximal[key][seg.id] = 0
                         last_seg = seg
                         par_seg_element = seg.parent
                         while par_seg_element != None:
+
                             par_seg = segments[par_seg_element.segments]
                             par_length = self.get_segment_length(par_seg.id)
 
@@ -48845,12 +48871,15 @@ class Cell(BaseCell):
                     cumulative_lengths[key].append(tot_len)
 
         if include_path_lengths and not include_cumulative_lengths:
+
             return ord_segs, path_lengths_to_proximal, path_lengths_to_distal
 
         if include_cumulative_lengths and not include_path_lengths:
+
             return ord_segs, cumulative_lengths
 
         if include_cumulative_lengths and include_path_lengths:
+
             return (
                 ord_segs,
                 cumulative_lengths,
@@ -48860,8 +48889,7 @@ class Cell(BaseCell):
 
         return ord_segs
 
-    def get_segment_group(self, sg_id):
-        # type: (str) -> SegmentGroup
+    def get_segment_group(self, sg_id: str) -> SegmentGroup:
         """Return the SegmentGroup object for the specified segment group id.
 
         :param sg_id: id of segment group to find
@@ -48878,19 +48906,30 @@ class Cell(BaseCell):
             "Segment group with id " + str(sg_id) + " not found in cell " + str(self.id)
         )
 
-    def get_segment_groups_by_substring(self, substring):
-        # type: (str) -> dict
+    def get_segment_groups_by_substring(
+        self, substring: str, unbranched: bool = False
+    ) -> typing.Dict[str, SegmentGroup]:
         """Get a dictionary of segment group IDs and the segment groups matching the specified substring
 
-        :param substring: substring to match
+        :param substring: substring to match, an empty string "" matches all
+            groups
         :type substring: str
+        :param unbranced: toggle selecting unbranched segment groups
+        :type unbranched: bool
         :return: dictionary with segment group ID as key, and segment group as value
         :raises ValueError: if no matching segment groups are found in cell
         """
         sgs = {}
         for sg in self.morphology.segment_groups:
-            if substring in sg.id:
-                sgs[sg.id] = sg
+            if substring == "" or substring in sg.id:
+                if unbranched is True:
+                    if (
+                        sg.neuro_lex_id
+                        == neuroml.neuro_lex_ids.neuro_lex_ids["section"]
+                    ):
+                        sgs[sg.id] = sg
+                else:
+                    sgs[sg.id] = sg
         if len(sgs) == 0:
             raise ValueError(
                 "Segment group with id matching "
@@ -49897,6 +49936,7 @@ class Cell(BaseCell):
             adlist = self.get_segment_adjacency_list()
 
         for parid, childrenids in adlist.items():
+
             par_length = self.get_segment_length(parid)
 
             for cid in childrenids:
@@ -58320,7 +58360,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
     def _get_cell_id(self, id_string):
         return int(float(id_string))
 
-    def get_pre_cell_id(self):
+    def get_pre_cell_id(self) -> str:
         """Get the ID of the pre-synaptic cell
 
         :returns: ID of pre-synaptic cell
@@ -58329,7 +58369,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
 
         return self._get_cell_id(self.pre_cell)
 
-    def get_post_cell_id(self):
+    def get_post_cell_id(self) -> str:
         """Get the ID of the post-synaptic cell
 
         :returns: ID of post-synaptic cell
@@ -58338,7 +58378,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
 
         return self._get_cell_id(self.post_cell)
 
-    def get_pre_segment_id(self):
+    def get_pre_segment_id(self) -> str:
         """Get the ID of the pre-synpatic segment
 
         :returns: ID of pre-synaptic segment.
@@ -58347,7 +58387,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
 
         return int(self.pre_segment)
 
-    def get_post_segment_id(self):
+    def get_post_segment_id(self) -> str:
         """Get the ID of the post-synpatic segment
 
         :returns: ID of post-synaptic segment.
@@ -58393,6 +58433,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
         )
 
     def __str__(self):
+
         return (
             "Continuous Connection "
             + str(self.id)
@@ -58661,10 +58702,10 @@ class ElectricalConnection(BaseConnectionNewFormat):
         super(ElectricalConnection, self)._buildChildren(child_, node, nodeName_, True)
         pass
 
-    def _get_cell_id(self, id_string):
+    def _get_cell_id(self, id_string: str) -> int:
         return int(float(id_string))
 
-    def get_pre_cell_id(self):
+    def get_pre_cell_id(self) -> float:
         """Get the ID of the pre-synaptic cell
 
         :returns: ID of pre-synaptic cell
@@ -58673,7 +58714,7 @@ class ElectricalConnection(BaseConnectionNewFormat):
 
         return self._get_cell_id(self.pre_cell)
 
-    def get_post_cell_id(self):
+    def get_post_cell_id(self) -> str:
         """Get the ID of the post-synaptic cell
 
         :returns: ID of post-synaptic cell
@@ -58682,7 +58723,7 @@ class ElectricalConnection(BaseConnectionNewFormat):
 
         return self._get_cell_id(self.post_cell)
 
-    def get_pre_segment_id(self):
+    def get_pre_segment_id(self) -> str:
         """Get the ID of the pre-synpatic segment
 
         :returns: ID of pre-synaptic segment.
@@ -58691,7 +58732,7 @@ class ElectricalConnection(BaseConnectionNewFormat):
 
         return int(self.pre_segment)
 
-    def get_post_segment_id(self):
+    def get_post_segment_id(self) -> str:
         """Get the ID of the post-synpatic segment
 
         :returns: ID of post-synaptic segment.
@@ -58737,6 +58778,7 @@ class ElectricalConnection(BaseConnectionNewFormat):
         )
 
     def __str__(self):
+
         return (
             "Electrical Connection "
             + str(self.id)
@@ -59003,13 +59045,13 @@ class ConnectionWD(BaseConnectionOldFormat):
         super(ConnectionWD, self)._buildChildren(child_, node, nodeName_, True)
         pass
 
-    def _get_cell_id(self, id_string):
+    def _get_cell_id(self, id_string: str) -> int:
         if "[" in id_string:
             return int(id_string.split("[")[1].split("]")[0])
         else:
             return int(id_string.split("/")[2])
 
-    def get_pre_cell_id(self):
+    def get_pre_cell_id(self) -> str:
         """Get the ID of the pre-synaptic cell
 
         :returns: ID of pre-synaptic cell
@@ -59018,7 +59060,7 @@ class ConnectionWD(BaseConnectionOldFormat):
 
         return self._get_cell_id(self.pre_cell_id)
 
-    def get_post_cell_id(self):
+    def get_post_cell_id(self) -> str:
         """Get the ID of the post-synaptic cell
 
         :returns: ID of post-synaptic cell
@@ -59027,7 +59069,7 @@ class ConnectionWD(BaseConnectionOldFormat):
 
         return self._get_cell_id(self.post_cell_id)
 
-    def get_pre_segment_id(self):
+    def get_pre_segment_id(self) -> str:
         """Get the ID of the pre-synpatic segment
 
         :returns: ID of pre-synaptic segment.
@@ -59036,7 +59078,7 @@ class ConnectionWD(BaseConnectionOldFormat):
 
         return int(self.pre_segment_id)
 
-    def get_post_segment_id(self):
+    def get_post_segment_id(self) -> str:
         """Get the ID of the post-synpatic segment
 
         :returns: ID of post-synaptic segment.
@@ -59082,6 +59124,7 @@ class ConnectionWD(BaseConnectionOldFormat):
         )
 
     def __str__(self):
+
         return (
             "Connection "
             + str(self.id)
@@ -59092,6 +59135,7 @@ class ConnectionWD(BaseConnectionOldFormat):
         )
 
     def __str__(self):
+
         return (
             "Connection "
             + str(self.id)
@@ -59106,7 +59150,7 @@ class ConnectionWD(BaseConnectionOldFormat):
             + " ms"
         )
 
-    def get_delay_in_ms(self):
+    def get_delay_in_ms(self) -> float:
         """Get connection delay in milli seconds
 
         :returns: connection delay in milli seconds
@@ -59282,13 +59326,13 @@ class Connection(BaseConnectionOldFormat):
         super(Connection, self)._buildChildren(child_, node, nodeName_, True)
         pass
 
-    def _get_cell_id(self, id_string):
+    def _get_cell_id(self, id_string: str) -> int:
         if "[" in id_string:
             return int(id_string.split("[")[1].split("]")[0])
         else:
             return int(id_string.split("/")[2])
 
-    def get_pre_cell_id(self):
+    def get_pre_cell_id(self) -> str:
         """Get the ID of the pre-synaptic cell
 
         :returns: ID of pre-synaptic cell
@@ -59297,7 +59341,7 @@ class Connection(BaseConnectionOldFormat):
 
         return self._get_cell_id(self.pre_cell_id)
 
-    def get_post_cell_id(self):
+    def get_post_cell_id(self) -> str:
         """Get the ID of the post-synaptic cell
 
         :returns: ID of post-synaptic cell
@@ -59306,7 +59350,7 @@ class Connection(BaseConnectionOldFormat):
 
         return self._get_cell_id(self.post_cell_id)
 
-    def get_pre_segment_id(self):
+    def get_pre_segment_id(self) -> str:
         """Get the ID of the pre-synpatic segment
 
         :returns: ID of pre-synaptic segment.
@@ -59315,7 +59359,7 @@ class Connection(BaseConnectionOldFormat):
 
         return int(self.pre_segment_id)
 
-    def get_post_segment_id(self):
+    def get_post_segment_id(self) -> str:
         """Get the ID of the post-synpatic segment
 
         :returns: ID of post-synaptic segment.
@@ -59361,6 +59405,7 @@ class Connection(BaseConnectionOldFormat):
         )
 
     def __str__(self):
+
         return (
             "Connection "
             + str(self.id)
@@ -64487,6 +64532,7 @@ class ContinuousConnectionInstance(ContinuousConnection):
             return int(id_string.split("/")[2])
 
     def __str__(self):
+
         return (
             "Continuous Connection (Instance based) "
             + str(self.id)
@@ -64715,6 +64761,7 @@ class ElectricalConnectionInstance(ElectricalConnection):
             return int(id_string.split("/")[2])
 
     def __str__(self):
+
         return (
             "Electrical Connection (Instance based) "
             + str(self.id)
@@ -66830,6 +66877,7 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
         return float(self.weight) if self.weight != None else 1.0
 
     def __str__(self):
+
         return (
             "Continuous Connection (Instance based & weight) "
             + str(self.id)
@@ -67056,7 +67104,7 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
         )
         pass
 
-    def get_weight(self):
+    def get_weight(self) -> float:
         """Get the weight of the connection
 
         If a weight is not set (or is set to None), returns the default value
@@ -67069,6 +67117,7 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
         return float(self.weight) if self.weight != None else 1.0
 
     def __str__(self):
+
         return (
             "Electrical Connection (Instance based & weight) "
             + str(self.id)
