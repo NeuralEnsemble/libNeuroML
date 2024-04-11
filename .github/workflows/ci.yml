@@ -33,6 +33,7 @@ jobs:
     - name: Install dependencies
       run: |
         #sudo apt-get install libhdf5-serial-dev liblzo2-dev libgraphviz-dev -y
+        pip3 install git+https://github.com/PyTables/PyTables
         python -m pip install --upgrade pip
 
     - name: Build package
