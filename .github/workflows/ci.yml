@@ -33,9 +33,12 @@ jobs:
     - name: Install dependencies
       run: |
         #sudo apt-get install libhdf5-serial-dev liblzo2-dev libgraphviz-dev -y
-        pip3 install git+https://github.com/PyTables/PyTables
         python -m pip install --upgrade pip
 
+    - name: Install HDF5 for pytables on macos-14
+      run: |
+        if [[  ${{ matrix.runs-on }} == "macos-14" ]]; then brew install hdf5 ; fi;
+        
     - name: Build package
       run: |
         pip install .[full]
