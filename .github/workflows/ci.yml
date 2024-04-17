@@ -36,8 +36,9 @@ jobs:
         python -m pip install --upgrade pip
 
     - name: Install HDF5 for pytables on macos-14
+      if: ${{ matrix.runs-on == 'macos-14' }}
       run: |
-        if [[  ${{ matrix.runs-on }} == "macos-14" ]]; then brew install hdf5 ; fi;
+        brew install hdf5
         
     - name: Build package
       run: |
