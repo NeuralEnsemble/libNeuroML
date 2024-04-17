@@ -41,6 +41,8 @@ See https://docs.neuroml.org/ for an overview of the various NeuroML libraries.
 
 ## Changelog
 
+See also https://github.com/NeuralEnsemble/libNeuroML/releases.
+
 ### version 0.5.8
 
 - drop py3.7, add py3,12
