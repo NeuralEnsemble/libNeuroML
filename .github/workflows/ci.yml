@@ -15,11 +15,11 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
-        runs-on: [ubuntu-latest, windows-latest, macos-latest, macos-14]
+        runs-on: [ubuntu-latest, windows-latest, macos-latest]
         exclude:
-          - runs-on: macos-14
+          - runs-on: macos-latest
             python-version: "3.8"
-          - runs-on: macos-14
+          - runs-on: macos-latest
             python-version: "3.9"
 
     steps:
@@ -35,8 +35,8 @@ jobs:
         #sudo apt-get install libhdf5-serial-dev liblzo2-dev libgraphviz-dev -y
         python -m pip install --upgrade pip
 
-    - name: Install HDF5 for pytables on macos-14
-      if: ${{ matrix.runs-on == 'macos-14' }}
+    - name: Install HDF5 for pytables on macos-latest
+      if: ${{ matrix.runs-on == 'macos-latest' }}
       run: |
         brew install hdf5
         
@@ -51,7 +51,6 @@ jobs:
         pytest -vs
 
     - name: Run examples
-      if: ${{ matrix.python-version != '3.7' || matrix.runs-on != 'macos-latest' }} # issue with _bz2 module...
       run: |
         cd neuroml/examples
         python run_all.py
