@@ -53,13 +53,13 @@ regenerate () {
 }
 
 reformat () {
-    if command -v black > /dev/null 2>&1
+    if command -v ruff > /dev/null 2>&1
     then
-        echo "Formatting new nml.py with black"
-        black nml.py
+        echo "Formatting new nml.py with ruff"
+        ruff format nml.py
     else
-        echo "black is not installed"
-        echo "Run: pip install black"
+        echo "ruff is not installed"
+        echo "Run: pip install ruff"
     fi
 }
 
