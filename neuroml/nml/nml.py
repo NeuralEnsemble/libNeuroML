@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed May  8 18:20:27 2024 by generateDS.py version 2.43.3.
+# Generated Thu May 30 18:34:59 2024 by generateDS.py version 2.43.3.
 # Python 3.11.9 (main, Apr 17 2024, 00:00:00) [GCC 14.0.1 20240411 (Red Hat 14.0.1-0)]
 #
 # Command line options:
@@ -28,33 +28,24 @@ try:
     ModulenotfoundExp_ = ModuleNotFoundError
 except NameError:
     ModulenotfoundExp_ = ImportError
-from six.moves import zip_longest
-import os
-import re as re_
 import base64
 import datetime as datetime_
 import decimal as decimal_
-from lxml import etree as etree_
-
+import inspect
 import math
-
+import os
+import re as re_
+import typing
 from math import pi, sqrt
-
 from operator import attrgetter
 
-import inspect
-
-import networkx as nx
-
-import numpy
-
 import natsort
-
-import typing
-
+import networkx as nx
+import numpy
+from lxml import etree as etree_
+from six.moves import zip_longest
 
 import neuroml
-
 import neuroml.neuro_lex_ids
 
 Validate_simpletypes_ = True
@@ -49444,7 +49435,7 @@ class Cell(BaseCell):
         """
         self.setup_nml_cell(use_convention=False)
         prop = self.biophysical_properties.membrane_properties.add(
-            property_name, **kwargs
+            property_name, validate=False, **kwargs
         )
         return prop
 
