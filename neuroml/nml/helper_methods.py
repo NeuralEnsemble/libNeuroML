@@ -1,5 +1,5 @@
-import sys
 import re
+import sys
 
 
 #
@@ -1872,7 +1872,7 @@ cell_methods = MethodSpec(
 
         """
         self.setup_nml_cell(use_convention=False)
-        prop = self.biophysical_properties.membrane_properties.add(property_name, **kwargs)
+        prop = self.biophysical_properties.membrane_properties.add(property_name, validate=False, **kwargs)
         return prop
 
 
@@ -2544,9 +2544,7 @@ METHOD_SPECS += (cell_methods,)
 
 inserts = {}
 
-inserts[
-    "Network"
-] = """
+inserts["Network"] = """
 
 
         netGroup = h5file.create_group(h5Group, 'network')
@@ -2578,9 +2576,7 @@ inserts[
 
 """
 
-inserts[
-    "Population"
-] = """
+inserts["Population"] = """
 
         popGroup = h5file.create_group(h5Group, 'population_'+self.id)
         popGroup._f_setattr("id", self.id)
@@ -2622,9 +2618,7 @@ inserts[
 
 """
 
-inserts[
-    "Projection"
-] = """
+inserts["Projection"] = """
 
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
@@ -2711,9 +2705,7 @@ inserts[
 
 """
 
-inserts[
-    "ElectricalProjection"
-] = """
+inserts["ElectricalProjection"] = """
 
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
@@ -2786,9 +2778,7 @@ inserts[
 """
 
 
-inserts[
-    "ContinuousProjection"
-] = """
+inserts["ContinuousProjection"] = """
 
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
@@ -2867,9 +2857,7 @@ inserts[
 """
 
 
-inserts[
-    "InputList"
-] = """
+inserts["InputList"] = """
 
         ilGroup = h5file.create_group(h5Group, 'inputList_'+self.id)
         ilGroup._f_setattr("id", self.id)
