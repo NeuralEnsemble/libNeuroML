@@ -17,6 +17,8 @@ off build time validation completely.
 Split out into a separate module so that all the parts of the code can
 access/modify it without the creation of circular dependencies.
 
+.. versionadded:: 0.6.0
+
 File: build_time_validation.py
 
 Copyright 2024 NeuroML contributors

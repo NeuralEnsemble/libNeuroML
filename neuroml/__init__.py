@@ -46,13 +46,18 @@ def disable_build_time_validation():
 
 
 def enable_build_time_validation():
-    """Enable build time validation"""
+    """Enable build time validation
+
+    .. versionadded:: 0.6.0
+    """
     build_time_validation.ENABLED = True
     logger.info("Build time validation has been enabled.")
 
 
 def get_build_time_validation() -> bool:
     """Get build time validation
+
+    .. versionadded:: 0.6.0
 
     :returns: state of build time validation
     :rtype: bool
