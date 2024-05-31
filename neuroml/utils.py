@@ -12,6 +12,7 @@ from typing import Any, Dict, Union, Optional, Type
 import networkx
 
 import neuroml.nml.nml as schema
+from neuroml import NeuroMLDocument
 
 from . import loaders
 
@@ -303,6 +304,21 @@ def get_relative_component_path(src: str, dest: str, root: Type =
         print("Relative path: " + path)
 
     return (path, graph)
+
+
+
+def fix_external_morphs_biophys_in_cell(nml2_doc: NeuroMLDocument) -> None:
+    """
+    Only used in the case where a cell element has a morphology (or biophysicalProperties) attribute, as opposed to a 
+    subelement morphology/biophysicalProperties. This will substitute the external element into the cell element for ease of access
+    """
+    for cell in nml2_doc.cells:
+        if cell.morphology_attr != None:
+            ext_morph = nml2_doc.get_by_id(cell.morphology_attr)
+            cell.morphology = ext_morph
+        if cell.biophysical_properties_attr != None:
+            ext_bp = nml2_doc.get_by_id(cell.biophysical_properties_attr)
+            cell.biophysical_properties = ext_bp
 
 
 def main():
