@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu May 30 18:34:59 2024 by generateDS.py version 2.43.3.
-# Python 3.11.9 (main, Apr 17 2024, 00:00:00) [GCC 14.0.1 20240411 (Red Hat 14.0.1-0)]
+# Generated Tue Jun 11 13:57:16 2024 by generateDS.py version 2.43.3.
+# Python 3.10.9 (main, Jan 11 2023, 15:21:40) [GCC 11.2.0]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -16,7 +16,7 @@
 #   NeuroML_v2.3.1.xsd
 #
 # Command line:
-#   /home/asinha/.local/share/virtualenvs/neuroml-311-dev/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" --custom-imports-template="gds_imports-template.py" NeuroML_v2.3.1.xsd
+#   /home/padraig/anaconda2/envs/py310//bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" --custom-imports-template="gds_imports-template.py" NeuroML_v2.3.1.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -28,24 +28,33 @@ try:
     ModulenotfoundExp_ = ModuleNotFoundError
 except NameError:
     ModulenotfoundExp_ = ImportError
+from six.moves import zip_longest
+import os
+import re as re_
 import base64
 import datetime as datetime_
 import decimal as decimal_
-import inspect
+from lxml import etree as etree_
+
 import math
-import os
-import re as re_
-import typing
+
 from math import pi, sqrt
+
 from operator import attrgetter
 
-import natsort
+import inspect
+
 import networkx as nx
+
 import numpy
-from lxml import etree as etree_
-from six.moves import zip_longest
+
+import natsort
+
+import typing
+
 
 import neuroml
+
 import neuroml.neuro_lex_ids
 
 Validate_simpletypes_ = True
