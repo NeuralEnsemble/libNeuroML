@@ -11,8 +11,8 @@
 #
 #
 
-import logging
 import inspect
+import logging
 
 
 class NeuroMLXMLParser:
@@ -94,8 +94,8 @@ class NeuroMLXMLParser:
         )
         if self.fix_external_morphs_biophys:
             from neuroml.utils import fix_external_morphs_biophys_in_cell
+
             fix_external_morphs_biophys_in_cell(self.nml_doc)
-                
 
         print("Loaded: %s as NeuroMLDocument" % filename)
 
@@ -480,9 +480,10 @@ class NeuroMLXMLParser:
 
 if __name__ == "__main__":
     file_name = "../examples/tmp/testnet.nml"
-    
-    import sys 
-    if len(sys.argv)==2:
+
+    import sys
+
+    if len(sys.argv) == 2:
         file_name = sys.argv[1]
 
     logging.basicConfig(
@@ -515,7 +516,7 @@ if __name__ == "__main__":
     print(nml_doc.cells)
 
     for cell in nml_doc.cells:
-        print('--- Cell: %s'%cell)
+        print("--- Cell: %s" % cell)
 
     nml_file = "../examples/tmp/testh5_2_.nml"
     import neuroml.writers as writers

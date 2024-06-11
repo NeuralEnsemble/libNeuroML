@@ -1,5 +1,5 @@
 """
-Example of connecting segments together to create a 
+Example of connecting segments together to create a
 multicompartmental model of a cell.
 
 In this case ArrayMorphology will be used rather than
@@ -8,8 +8,8 @@ ability to save in HDF5 format
 """
 
 import neuroml
-import neuroml.writers as writers
 import neuroml.arraymorph as am
+import neuroml.writers as writers
 
 p = neuroml.Point3DWithDiam(x=0, y=0, z=0, diameter=50)
 d = neuroml.Point3DWithDiam(x=50, y=0, z=0, diameter=50)

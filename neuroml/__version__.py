@@ -6,7 +6,6 @@ File: neuroml/__version__.py
 Copyright 2023 NeuroML contributors
 """
 
-
 try:
     import importlib.metadata
 

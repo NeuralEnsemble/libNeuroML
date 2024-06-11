@@ -3,19 +3,20 @@ Unit tests for cells
 
 """
 
-import neuroml
-from neuroml import loaders
-
-from neuroml import Segment
-from neuroml import SegmentParent
-from neuroml import SegmentGroup
-from neuroml import Member
-from neuroml import Include
-from neuroml import Cell
-from neuroml import Morphology
-from neuroml import Point3DWithDiam
-
 import os
+
+import neuroml
+from neuroml import (
+    Cell,
+    Include,
+    Member,
+    Morphology,
+    Point3DWithDiam,
+    Segment,
+    SegmentGroup,
+    SegmentParent,
+    loaders,
+)
 
 try:
     import unittest2 as unittest

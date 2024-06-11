@@ -1,44 +1,43 @@
 """
 
-Example to build an NML2 file with many (all?) NeuroML elements, particularly for 
+Example to build an NML2 file with many (all?) NeuroML elements, particularly for
 different network options
 
 """
 
-from neuroml import NeuroMLDocument
-from neuroml import IafCell
-from neuroml import IzhikevichCell
-from neuroml import Network
-from neuroml import ExpOneSynapse
-from neuroml import ExpTwoSynapse
-from neuroml import Population
-from neuroml import GapJunction
-
-from neuroml import Input
-from neuroml import InputW
-from neuroml import InputList
-from neuroml import ConnectionWD
-from neuroml import Connection
-from neuroml import Projection
-from neuroml import ContinuousConnection
-from neuroml import ContinuousConnectionInstance
-from neuroml import ContinuousConnectionInstanceW
-from neuroml import ContinuousProjection
-from neuroml import SilentSynapse
-
-from neuroml import GradedSynapse
-
-from neuroml import ElectricalProjection
-from neuroml import ElectricalConnection
-from neuroml import ElectricalConnectionInstance
-from neuroml import ElectricalConnectionInstanceW
-from neuroml import Property
-from neuroml import Instance
-from neuroml import Location
-from neuroml import PoissonFiringSynapse
+import random
 
 import neuroml.writers as writers
-import random
+from neuroml import (
+    Connection,
+    ConnectionWD,
+    ContinuousConnection,
+    ContinuousConnectionInstance,
+    ContinuousConnectionInstanceW,
+    ContinuousProjection,
+    ElectricalConnection,
+    ElectricalConnectionInstance,
+    ElectricalConnectionInstanceW,
+    ElectricalProjection,
+    ExpOneSynapse,
+    ExpTwoSynapse,
+    GapJunction,
+    GradedSynapse,
+    IafCell,
+    Input,
+    InputList,
+    InputW,
+    Instance,
+    IzhikevichCell,
+    Location,
+    Network,
+    NeuroMLDocument,
+    PoissonFiringSynapse,
+    Population,
+    Projection,
+    Property,
+    SilentSynapse,
+)
 
 random.seed(123)
 

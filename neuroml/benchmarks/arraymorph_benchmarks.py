@@ -1,15 +1,19 @@
 """
 Benchmarks for reading and writing arraymorphs.
 """
+
 from __future__ import print_function
+
+import os
+import tempfile
+import time
+
 import numpy as np
-from neuroml import arraymorph as am
+from matplotlib import pyplot as plt
+
 import neuroml
 import neuroml.writers
-import tempfile
-from matplotlib import pyplot as plt
-import time
-import os
+from neuroml import arraymorph as am
 
 
 def timeit(method):

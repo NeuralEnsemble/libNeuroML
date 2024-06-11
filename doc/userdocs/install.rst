@@ -97,7 +97,7 @@ If all tests passed correctly, your output should look something like this:
     .......
     ----------------------------------------------------------------------
     Ran 55 tests in 40.1s
-    
+
     OK
 
 You can also use PyTest to run tests.

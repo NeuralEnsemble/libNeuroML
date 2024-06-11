@@ -28,33 +28,24 @@ try:
     ModulenotfoundExp_ = ModuleNotFoundError
 except NameError:
     ModulenotfoundExp_ = ImportError
-from six.moves import zip_longest
-import os
-import re as re_
 import base64
 import datetime as datetime_
 import decimal as decimal_
-from lxml import etree as etree_
-
+import inspect
 import math
-
+import os
+import re as re_
+import typing
 from math import pi, sqrt
-
 from operator import attrgetter
 
-import inspect
-
-import networkx as nx
-
-import numpy
-
 import natsort
-
-import typing
-
+import networkx as nx
+import numpy
+from lxml import etree as etree_
+from six.moves import zip_longest
 
 import neuroml
-
 import neuroml.neuro_lex_ids
 
 Validate_simpletypes_ = True

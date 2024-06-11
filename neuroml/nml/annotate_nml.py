@@ -13,10 +13,9 @@ File: annotate_nml.py
 Copyright 2023 NeuroML contributors
 """
 
-
 import inspect
-from . import nml
 
+from . import nml
 
 ignorelist = [
     "GeneratedsSuper",

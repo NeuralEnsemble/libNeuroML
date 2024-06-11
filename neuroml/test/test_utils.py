@@ -10,12 +10,14 @@ Copyright 2023 NeuroML contributors
 import unittest
 
 import neuroml
-from neuroml.utils import (component_factory, get_relative_component_path,
-                           print_hierarchy)
+from neuroml.utils import (
+    component_factory,
+    get_relative_component_path,
+    print_hierarchy,
+)
 
 
 class UtilsTestCase(unittest.TestCase):
-
     """Test the Utils module"""
 
     def test_component_factory(self):
