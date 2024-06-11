@@ -10,14 +10,13 @@
 #
 #
 
-import sys
 import logging
+import sys
 
 sys.path.append("../NeuroMLUtils")
 
-from neuroml.hdf5.DefaultNetworkHandler import DefaultNetworkHandler
-
 import neuroml
+from neuroml.hdf5.DefaultNetworkHandler import DefaultNetworkHandler
 
 
 class NetworkBuilder(DefaultNetworkHandler):

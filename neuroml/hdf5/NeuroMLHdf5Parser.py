@@ -14,28 +14,28 @@
 #
 #
 
-import logging
-import sys
 import inspect
+import logging
+import os.path
+import sys
 
-import tables  # pytables for HDF5 support
 import numpy as np
+import tables  # pytables for HDF5 support
 
 import neuroml
-
 from neuroml.hdf5 import get_str_attribute_group
-from neuroml.hdf5.NetworkContainer import NetworkContainer
-from neuroml.hdf5.NetworkContainer import PopulationContainer
-from neuroml.hdf5.NetworkContainer import InstanceList
-from neuroml.hdf5.NetworkContainer import ProjectionContainer
-from neuroml.hdf5.NetworkContainer import ElectricalProjectionContainer
-from neuroml.hdf5.NetworkContainer import ConnectionList
-from neuroml.hdf5.NetworkContainer import InputListContainer
-from neuroml.hdf5.NetworkContainer import InputsList
-
+from neuroml.hdf5.NetworkContainer import (
+    ConnectionList,
+    ElectricalProjectionContainer,
+    InputListContainer,
+    InputsList,
+    InstanceList,
+    NetworkContainer,
+    PopulationContainer,
+    ProjectionContainer,
+)
 from neuroml.loaders import read_neuroml2_string
 from neuroml.utils import add_all_to_document
-import os.path
 
 
 class NeuroMLHdf5Parser:

@@ -3,15 +3,15 @@ Unit tests for loaders
 
 """
 
+import os
+
+import pytest
+
+import neuroml.writers as writers
+from neuroml import loaders
 from neuroml.hdf5.DefaultNetworkHandler import DefaultNetworkHandler
 from neuroml.hdf5.NetworkBuilder import NetworkBuilder
 from neuroml.hdf5.NeuroMLXMLParser import NeuroMLXMLParser
-from neuroml import loaders
-import neuroml.writers as writers
-
-
-import os
-import pytest
 
 
 @pytest.mark.parametrize(

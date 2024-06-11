@@ -7,7 +7,6 @@ File: helpers/nml-core-docs.py
 Copyright 2023 NeuroML authors
 """
 
-
 import textwrap
 
 print("Generating list of nml classes")

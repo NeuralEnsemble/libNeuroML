@@ -3,13 +3,10 @@ Unit tests for the Segment class
 
 
 """
+
 import math
 
-from neuroml import Segment
-from neuroml import SegmentParent
-from neuroml import Cell
-from neuroml import Morphology
-from neuroml import Point3DWithDiam
+from neuroml import Cell, Morphology, Point3DWithDiam, Segment, SegmentParent
 
 try:
     import unittest2 as unittest

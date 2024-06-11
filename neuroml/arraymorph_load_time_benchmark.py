@@ -1,4 +1,5 @@
 import numpy as np
+
 import neuroml
 import neuroml.arraymorph as am
 

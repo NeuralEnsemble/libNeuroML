@@ -11,8 +11,8 @@
 #
 #
 
-import logging
 import inspect
+import logging
 
 
 class NeuroMLXMLParser:
@@ -27,8 +27,9 @@ class NeuroMLXMLParser:
     currentProjectionPostPop = ""
     currentSynapse = ""
 
-    def __init__(self, netHandler):
+    def __init__(self, netHandler, fix_external_morphs_biophys=True):
         self.netHandler = netHandler
+        self.fix_external_morphs_biophys = fix_external_morphs_biophys
 
         # For continued use with old API
         if not hasattr(self.netHandler, "handle_network") or hasattr(
@@ -91,6 +92,10 @@ class NeuroMLXMLParser:
         self.nml_doc = loaders.read_neuroml2_file(
             filename, include_includes=True, already_included=[]
         )
+        if self.fix_external_morphs_biophys:
+            from neuroml.utils import fix_external_morphs_biophys_in_cell
+
+            fix_external_morphs_biophys_in_cell(self.nml_doc)
 
         print("Loaded: %s as NeuroMLDocument" % filename)
 
@@ -474,7 +479,12 @@ class NeuroMLXMLParser:
 
 
 if __name__ == "__main__":
-    file_name = "../examples/tmp/testh5.nml"
+    file_name = "../examples/tmp/testnet.nml"
+
+    import sys
+
+    if len(sys.argv) == 2:
+        file_name = sys.argv[1]
 
     logging.basicConfig(
         level=logging.INFO, format="%(name)-19s %(levelname)-5s - %(message)s"
@@ -503,6 +513,10 @@ if __name__ == "__main__":
     nml_doc = nmlHandler.get_nml_doc()
 
     print(nml_doc.summary())
+    print(nml_doc.cells)
+
+    for cell in nml_doc.cells:
+        print("--- Cell: %s" % cell)
 
     nml_file = "../examples/tmp/testh5_2_.nml"
     import neuroml.writers as writers

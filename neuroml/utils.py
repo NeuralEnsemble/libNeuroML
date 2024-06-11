@@ -3,15 +3,17 @@
 Utilities for checking generated code
 
 """
+
 import inspect
 import os
 import sys
 import warnings
-from typing import Any, Dict, Union, Optional, Type
+from typing import Any, Dict, Optional, Type, Union
 
 import networkx
 
 import neuroml.nml.nml as schema
+from neuroml import NeuroMLDocument
 
 from . import loaders
 
@@ -240,7 +242,7 @@ def print_hierarchy(tree, indent=4, current_ind=0):
     for k, v in tree.items():
         if current_ind:
             before_dashes = current_ind - indent
-            print(' ' * before_dashes + '└' + '-'*(indent-1) + k)
+            print(" " * before_dashes + "└" + "-" * (indent - 1) + k)
         else:
             print(k)
         for sub_tree in v:
@@ -265,9 +267,12 @@ def get_hier_graph_networkx(graph: networkx.DiGraph, hier: Dict[str, Any]):
                 graph.add_edge(k, v)
 
 
-def get_relative_component_path(src: str, dest: str, root: Type =
-                                schema.NeuroMLDocument, graph:
-                                Optional[networkx.DiGraph] = None):
+def get_relative_component_path(
+    src: str,
+    dest: str,
+    root: Type = schema.NeuroMLDocument,
+    graph: Optional[networkx.DiGraph] = None,
+):
     """Construct a path from src component to dest in a neuroml document.
 
     Useful when referring to components in other components
@@ -284,8 +289,8 @@ def get_relative_component_path(src: str, dest: str, root: Type =
         graph = networkx.DiGraph()
         get_hier_graph_networkx(graph, root.get_nml2_class_hierarchy())
 
-    p1 = (list(networkx.all_shortest_paths(graph, root.__name__, "Instance")))
-    p2 = (list(networkx.all_shortest_paths(graph, root.__name__, "Input")))
+    p1 = list(networkx.all_shortest_paths(graph, root.__name__, "Instance"))
+    p2 = list(networkx.all_shortest_paths(graph, root.__name__, "Input"))
 
     if len(p1) > 1 or len(p2) > 1:
         print("Multiple paths found, cannot calculate recommended path")
@@ -303,6 +308,20 @@ def get_relative_component_path(src: str, dest: str, root: Type =
         print("Relative path: " + path)
 
     return (path, graph)
+
+
+def fix_external_morphs_biophys_in_cell(nml2_doc: NeuroMLDocument) -> None:
+    """
+    Only used in the case where a cell element has a morphology (or biophysicalProperties) attribute, as opposed to a
+    subelement morphology/biophysicalProperties. This will substitute the external element into the cell element for ease of access
+    """
+    for cell in nml2_doc.cells:
+        if cell.morphology_attr != None:
+            ext_morph = nml2_doc.get_by_id(cell.morphology_attr)
+            cell.morphology = ext_morph
+        if cell.biophysical_properties_attr != None:
+            ext_bp = nml2_doc.get_by_id(cell.biophysical_properties_attr)
+            cell.biophysical_properties = ext_bp
 
 
 def main():

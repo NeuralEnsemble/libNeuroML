@@ -7,14 +7,18 @@ File: neuroml/nml/generatedssupersuper.py
 Copyright 2023 NeuroML contributors
 """
 
-
+import logging
 import sys
+
+import neuroml.build_time_validation
 
 from .generatedscollector import GdsCollector
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
 
 class GeneratedsSuperSuper(object):
-
     """Super class for GeneratedsSuper.
 
     Any bits that must go into every libNeuroML class should go here.
@@ -52,7 +56,7 @@ class GeneratedsSuperSuper(object):
             self.info()
             return
         # a component type has been passed, create and add a new one
-        if type(obj) == type or type(obj) == str:
+        if type(obj) is type or isinstance(obj, str):
             obj = self.component_factory(obj, validate=validate, **kwargs)
 
         # getattr only returns the value of the provided member but one cannot
@@ -69,9 +73,7 @@ class GeneratedsSuperSuper(object):
             # no targets found
             e = Exception(
                 """A member object of {} type could not be found in NeuroML class {}.\n{}
-            """.format(
-                    type(obj).__name__, type(self).__name__, self.info()
-                )
+            """.format(type(obj).__name__, type(self).__name__, self.info())
             )
             raise e
         elif len(targets) == 1:
@@ -93,8 +95,10 @@ class GeneratedsSuperSuper(object):
                     self.__add(obj, t, force)
                     break
 
-        if validate:
+        if neuroml.build_time_validation.ENABLED and validate:
             self.validate()
+        else:
+            logger.warn("Build time validation is disabled.")
         return obj
 
     @classmethod
@@ -150,8 +154,10 @@ class GeneratedsSuperSuper(object):
 
         comp._check_arg_list(**kwargs)
 
-        if validate:
+        if neuroml.build_time_validation.ENABLED and validate:
             comp.validate()
+        else:
+            logger.warn("Build time validation is disabled.")
         return comp
 
     def __add(self, obj, member, force=False):
@@ -475,7 +481,7 @@ class GeneratedsSuperSuper(object):
             if ac.startswith("_") or ac.endswith("_") or ac in excluded_classes:
                 continue
             cc = getattr(module_object, ac, None)
-            if type(cc) == type:
+            if type(cc) is type:
                 try:
                     cc_members = cc()._get_members()
                     for amember in cc_members:

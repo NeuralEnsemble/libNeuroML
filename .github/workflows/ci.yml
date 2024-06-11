@@ -39,7 +39,7 @@ jobs:
       if: ${{ matrix.runs-on == 'macos-latest' }}
       run: |
         brew install hdf5
-        
+
     - name: Build package
       run: |
         pip install .[full]

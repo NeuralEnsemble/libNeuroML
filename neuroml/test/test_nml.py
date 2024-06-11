@@ -12,12 +12,11 @@ try:
 except ImportError:
     import unittest
 
-from neuroml.utils import (component_factory, print_hierarchy)
 import neuroml
+from neuroml.utils import component_factory, print_hierarchy
 
 
 class TestNML(unittest.TestCase):
-
     """Tests related to nml.py"""
 
     def test_get_members(self):
@@ -177,6 +176,9 @@ class TestNML(unittest.TestCase):
     def test_info(self):
         """Test getting member info."""
         cell = neuroml.Cell(id="testcell")
+        cell.set_spike_thresh("40mV")
+        cell.set_init_memb_potential("-70mV")
+        cell.set_specific_capacitance("1 uF_per_cm2")
         info = cell.info()
         self.assertRegex(info, "morphology")
         self.assertRegex(info, "biophysical_properties")
@@ -212,6 +214,9 @@ class TestNML(unittest.TestCase):
     def test_parentinfo(self):
         """Test the parent info method"""
         cell = neuroml.Cell(id="testcell")
+        cell.set_spike_thresh("40mV")
+        cell.set_init_memb_potential("-70mV")
+        cell.set_specific_capacitance("1 uF_per_cm2")
         info = cell.parentinfo()
         self.assertRegex(info, "NeuroMLDocument")
 
@@ -237,6 +242,9 @@ class TestNML(unittest.TestCase):
     def test_add_segment(self):
         """Test adding a segment."""
         new_cell = component_factory("Cell", id="test_cell")
+        new_cell.set_spike_thresh("40mV")
+        new_cell.set_init_memb_potential("-70mV")
+        new_cell.set_specific_capacitance("1 uF_per_cm2")
         segment = new_cell.add_segment(
             (0, 0, 0, 20),
             (20, 0, 0, 20),
@@ -255,6 +263,9 @@ class TestNML(unittest.TestCase):
     def test_add_segment_no_group(self):
         """Test adding a segment but without a group."""
         new_cell = component_factory("Cell", id="test_cell")
+        new_cell.set_spike_thresh("40mV")
+        new_cell.set_init_memb_potential("-70mV")
+        new_cell.set_specific_capacitance("1 uF_per_cm2")
         segment = new_cell.add_segment(
             (0, 0, 0, 20), (20, 0, 0, 20), name="soma", group_id=None, seg_type="soma"
         )
@@ -269,6 +280,8 @@ class TestNML(unittest.TestCase):
     def test_setting_init_memb_potential(self):
         """Test adding initial membrane potential."""
         new_cell = component_factory("Cell", id="test_cell")
+        new_cell.set_spike_thresh("40mV")
+        new_cell.set_specific_capacitance("1 uF_per_cm2")
         new_cell.add_segment(
             (0, 0, 0, 20),
             (20, 0, 0, 20),
@@ -291,6 +304,8 @@ class TestNML(unittest.TestCase):
             seg_type="soma",
         )
         new_cell.set_spike_thresh("40mV")
+        new_cell.set_init_memb_potential("-70mV")
+        new_cell.set_specific_capacitance("1 uF_per_cm2")
 
         self.assertIsNone(new_cell.validate(True))
 
@@ -321,6 +336,9 @@ class TestNML(unittest.TestCase):
             seg_type="soma",
         )
         new_cell.set_resistivity("2000 ohm_cm")
+        new_cell.set_spike_thresh("40mV")
+        new_cell.set_init_memb_potential("-70mV")
+        new_cell.set_specific_capacitance("1 uF_per_cm2")
         self.assertIsNone(new_cell.validate(True))
 
     @unittest.expectedFailure
@@ -340,6 +358,9 @@ class TestNML(unittest.TestCase):
     def test_setting_specific_capacitance(self):
         """Test setting the specific_capacitance."""
         new_cell = component_factory("Cell", id="test_cell")
+        new_cell.set_spike_thresh("40mV")
+        new_cell.set_init_memb_potential("-70mV")
+        new_cell.set_specific_capacitance("1 uF_per_cm2")
         new_cell.add_segment(
             (0, 0, 0, 20),
             (20, 0, 0, 20),
@@ -354,6 +375,9 @@ class TestNML(unittest.TestCase):
     def test_setting_specific_capacitance_should_fail(self):
         """Test setting the specific_capacitance."""
         new_cell = component_factory("Cell", id="test_cell")
+        new_cell.set_spike_thresh("40mV")
+        new_cell.set_init_memb_potential("-70mV")
+        new_cell.set_specific_capacitance("1 uF_per_cm2")
         new_cell.add_segment(
             (0, 0, 0, 20),
             (20, 0, 0, 20),
@@ -367,6 +391,9 @@ class TestNML(unittest.TestCase):
     def test_setting_channel_density(self):
         """Test setting the channel_density."""
         new_cell = component_factory("Cell", id="test_cell")
+        new_cell.set_spike_thresh("40mV")
+        new_cell.set_init_memb_potential("-70mV")
+        new_cell.set_specific_capacitance("1 uF_per_cm2")
         new_cell.add_segment(
             (0, 0, 0, 20),
             (20, 0, 0, 20),
@@ -411,6 +438,9 @@ class TestNML(unittest.TestCase):
     def test_setting_channel_density_v(self):
         """Test setting the channel_density."""
         new_cell = component_factory("Cell", id="test_cell")
+        new_cell.set_spike_thresh("40mV")
+        new_cell.set_init_memb_potential("-70mV")
+        new_cell.set_specific_capacitance("1 uF_per_cm2")
         new_cell.add_segment(
             (0, 0, 0, 20),
             (20, 0, 0, 20),
@@ -458,6 +488,9 @@ class TestNML(unittest.TestCase):
     def test_setting_channel_density_should_fail(self):
         """Test setting the channel_density."""
         new_cell = component_factory("Cell", id="test_cell")
+        new_cell.set_spike_thresh("40mV")
+        new_cell.set_init_memb_potential("-70mV")
+        new_cell.set_specific_capacitance("1 uF_per_cm2")
         new_cell.add_segment(
             (0, 0, 0, 20),
             (20, 0, 0, 20),
@@ -490,6 +523,8 @@ class TestNML(unittest.TestCase):
     def test_setting_membrane_property(self):
         """Test adding a new membrane property"""
         new_cell = component_factory("Cell", id="test_cell")
+        new_cell.set_spike_thresh("40mV")
+        new_cell.set_specific_capacitance("1 uF_per_cm2")
         new_cell.add_segment(
             (0, 0, 0, 20),
             (20, 0, 0, 20),
@@ -511,6 +546,9 @@ class TestNML(unittest.TestCase):
     def test_setting_intracellular_property(self):
         """Test adding a new membrane property"""
         new_cell = component_factory("Cell", id="test_cell")
+        new_cell.set_spike_thresh("40mV")
+        new_cell.set_init_memb_potential("-70mV")
+        new_cell.set_specific_capacitance("1 uF_per_cm2")
         new_cell.add_segment(
             (0, 0, 0, 20),
             (20, 0, 0, 20),
@@ -536,6 +574,9 @@ class TestNML(unittest.TestCase):
         "Test a simple cell."
         # test with component_factory
         cell = component_factory("Cell", id="simple_cell")
+        cell.set_spike_thresh("40mV")
+        cell.set_init_memb_potential("-70mV")
+        cell.set_specific_capacitance("1 uF_per_cm2")
         cell.notes = "NeuroML cell created by CellBuilder"
 
         # Add soma segment
@@ -556,6 +597,9 @@ class TestNML(unittest.TestCase):
         """Test a complex cell."""
         # with component_factory
         cell = component_factory("Cell", id="complex_cell")  # type: neuroml.Cell
+        cell.set_spike_thresh("40mV")
+        cell.set_init_memb_potential("-70mV")
+        cell.set_specific_capacitance("1 uF_per_cm2")
         cell.notes = "NeuroML cell created by CellBuilder"
 
         # Add soma segment
@@ -584,6 +628,9 @@ class TestNML(unittest.TestCase):
     def test_component_factory_create_cell(self):
         """Test cell creation"""
         new_cell = component_factory("Cell", id="test_cell")
+        new_cell.set_spike_thresh("40mV")
+        new_cell.set_init_memb_potential("-70mV")
+        new_cell.set_specific_capacitance("1 uF_per_cm2")
         self.assertIsInstance(new_cell, neuroml.Cell)
 
         # cell does not have segments: is invalid NeuroML
@@ -594,6 +641,9 @@ class TestNML(unittest.TestCase):
         "Test add_unbranced_segments"
         # test with component_factory
         cell = component_factory("Cell", id="simple_cell")
+        cell.set_spike_thresh("40mV")
+        cell.set_init_memb_potential("-70mV")
+        cell.set_specific_capacitance("1 uF_per_cm2")
         cell.notes = "NeuroML cell created by CellBuilder"
 
         # Add soma segment
@@ -629,6 +679,9 @@ class TestNML(unittest.TestCase):
     def test_optimise_segment_group(self):
         """Test `optimise_segment_group`"""
         cell = component_factory("Cell", id="simple_cell")  # type: neuroml.Cell
+        cell.set_spike_thresh("40mV")
+        cell.set_init_memb_potential("-70mV")
+        cell.set_specific_capacitance("1 uF_per_cm2")
         cell.notes = "NeuroML cell created by CellBuilder"
 
         # Add soma segment
@@ -669,6 +722,9 @@ class TestNML(unittest.TestCase):
     def test_create_unbranched_segment_group_branches(self):
         "Test create_unbranched_segment_group_branches"
         cell = component_factory("Cell", id="simple_cell")  # type: neuroml.Cell
+        cell.set_spike_thresh("40mV")
+        cell.set_init_memb_potential("-70mV")
+        cell.set_specific_capacitance("1 uF_per_cm2")
         cell.notes = "NeuroML cell created by CellBuilder"
 
         # Add soma segment
@@ -738,6 +794,9 @@ class TestNML(unittest.TestCase):
         """Test the morphinfo method"""
         # with component_factory
         cell = component_factory("Cell", id="complex_cell")  # type: neuroml.Cell
+        cell.set_spike_thresh("40mV")
+        cell.set_init_memb_potential("-70mV")
+        cell.set_specific_capacitance("1 uF_per_cm2")
         cell.notes = "NeuroML cell created by CellBuilder"
 
         # Add soma segment
@@ -764,8 +823,7 @@ class TestNML(unittest.TestCase):
         cell.biophysinfo()
 
     def test_class_hierarchy(self):
-        """Test the class hierarchy getter and printer
-        """
+        """Test the class hierarchy getter and printer"""
         hier = neuroml.Cell.get_class_hierarchy()
         self.assertIsNotNone(hier)
         print()
@@ -777,3 +835,9 @@ class TestNML(unittest.TestCase):
         print(hier)
         print()
         print_hierarchy(hier)
+
+
+if __name__ == "__main__":
+    ta = TestNML()
+
+    ta.test_add_segment()

@@ -2,12 +2,13 @@
 # The class names are essentially correct, the instance names need converting
 # also attributes need fixing
 
-import lxml
-from lxml import objectify
-import re
 import csv
+import re
 import sys
+
+import lxml
 import process_includes
+from lxml import objectify
 
 # In Python 3, it's io
 try:
@@ -15,7 +16,6 @@ try:
 except ImportError:
     from io import StringIO
 from config import variables
-
 
 sys.setrecursionlimit(10000)
 

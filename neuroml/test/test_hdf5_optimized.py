@@ -3,11 +3,10 @@ Unit tests for loaders
 
 """
 
-from neuroml import loaders
-import neuroml.writers as writers
-
 import os
 
+import neuroml.writers as writers
+from neuroml import loaders
 from neuroml.test.test_xml_parser import compare
 
 try:

@@ -9,4 +9,3 @@ Contributing
    implementation_of_bindings
    meeting_june_2012
    nodes_segments_sections
-
