@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Jun 11 13:57:16 2024 by generateDS.py version 2.43.3.
+# Generated Tue Jun 11 14:00:16 2024 by generateDS.py version 2.43.3.
 # Python 3.10.9 (main, Jan 11 2023, 15:21:40) [GCC 11.2.0]
 #
 # Command line options:
@@ -24597,10 +24597,10 @@ class MembraneProperties(BaseWithoutId):
             "specific_capacitances",
             "SpecificCapacitance",
             1,
-            1,
+            0,
             {
                 "maxOccurs": "unbounded",
-                "minOccurs": "0",
+                "minOccurs": "1",
                 "name": "specificCapacitance",
                 "type": "SpecificCapacitance",
             },
@@ -24610,10 +24610,10 @@ class MembraneProperties(BaseWithoutId):
             "init_memb_potentials",
             "InitMembPotential",
             1,
-            1,
+            0,
             {
                 "maxOccurs": "unbounded",
-                "minOccurs": "0",
+                "minOccurs": "1",
                 "name": "initMembPotential",
                 "type": "InitMembPotential",
             },
@@ -24635,8 +24635,8 @@ class MembraneProperties(BaseWithoutId):
         channel_density_non_uniform_nernsts: "list of ChannelDensityNonUniformNernst(s) (optional)" = None,
         channel_density_non_uniform_ghks: "list of ChannelDensityNonUniformGHK(s) (optional)" = None,
         spike_threshes: "list of SpikeThresh(s) (required)" = None,
-        specific_capacitances: "list of SpecificCapacitance(s) (optional)" = None,
-        init_memb_potentials: "list of InitMembPotential(s) (optional)" = None,
+        specific_capacitances: "list of SpecificCapacitance(s) (required)" = None,
+        init_memb_potentials: "list of InitMembPotential(s) (required)" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_,
@@ -25088,13 +25088,13 @@ class MembraneProperties(BaseWithoutId):
         self.gds_check_cardinality_(
             self.specific_capacitances,
             "specific_capacitances",
-            min_occurs=0,
+            min_occurs=1,
             max_occurs=9999999,
         )
         self.gds_check_cardinality_(
             self.init_memb_potentials,
             "init_memb_potentials",
-            min_occurs=0,
+            min_occurs=1,
             max_occurs=9999999,
         )
         if recursive:
@@ -47930,8 +47930,8 @@ class MembraneProperties2CaPools(MembraneProperties):
         channel_density_non_uniform_nernsts: "list of ChannelDensityNonUniformNernst(s) (optional)" = None,
         channel_density_non_uniform_ghks: "list of ChannelDensityNonUniformGHK(s) (optional)" = None,
         spike_threshes: "list of SpikeThresh(s) (required)" = None,
-        specific_capacitances: "list of SpecificCapacitance(s) (optional)" = None,
-        init_memb_potentials: "list of InitMembPotential(s) (optional)" = None,
+        specific_capacitances: "list of SpecificCapacitance(s) (required)" = None,
+        init_memb_potentials: "list of InitMembPotential(s) (required)" = None,
         channel_density_nernst_ca2s: "list of ChannelDensityNernstCa2(s) (optional)" = None,
         gds_collector_=None,
         **kwargs_,
