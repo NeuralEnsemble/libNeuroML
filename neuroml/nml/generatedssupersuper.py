@@ -98,7 +98,7 @@ class GeneratedsSuperSuper(object):
         if neuroml.build_time_validation.ENABLED and validate:
             self.validate()
         else:
-            logger.warn("Build time validation is disabled.")
+            logger.warning("Build time validation is disabled.")
         return obj
 
     @classmethod
@@ -157,7 +157,7 @@ class GeneratedsSuperSuper(object):
         if neuroml.build_time_validation.ENABLED and validate:
             comp.validate()
         else:
-            logger.warn("Build time validation is disabled.")
+            logger.warning("Build time validation is disabled.")
         return comp
 
     def __add(self, obj, member, force=False):
