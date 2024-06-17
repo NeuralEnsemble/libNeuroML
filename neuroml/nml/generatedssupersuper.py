@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Super class for GeneratedsSuper
 

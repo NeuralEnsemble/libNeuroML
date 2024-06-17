@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Gets type information from nml.py and generates a file of sed commands to be
 used to modify nml.py to add some information about the types of all variables
