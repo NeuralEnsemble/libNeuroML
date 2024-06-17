@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Module handling the current state of the build time validation.
 
