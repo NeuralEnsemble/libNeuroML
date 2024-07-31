@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Jun 11 14:00:16 2024 by generateDS.py version 2.43.3.
-# Python 3.10.9 (main, Jan 11 2023, 15:21:40) [GCC 11.2.0]
+# Generated Wed Jul 31 18:27:05 2024 by generateDS.py version 2.43.3.
+# Python 3.11.9 (main, Apr 17 2024, 00:00:00) [GCC 14.0.1 20240411 (Red Hat 14.0.1-0)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -16,7 +16,7 @@
 #   NeuroML_v2.3.1.xsd
 #
 # Command line:
-#   /home/padraig/anaconda2/envs/py310//bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" --custom-imports-template="gds_imports-template.py" NeuroML_v2.3.1.xsd
+#   /home/asinha/.local/share/virtualenvs/neuroml-311-dev/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" --custom-imports-template="gds_imports-template.py" NeuroML_v2.3.1.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -5305,16 +5305,31 @@ class BaseWithoutId(GeneratedsSuper):
     """BaseWithoutId -- Base element without ID specified *yet*, e.g. for an element with a particular requirement on its id which does not comply with NmlId (e.g. Segment needs nonNegativeInteger)."""
 
     __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = []
+    member_data_items_ = [
+        MemberSpec_(
+            "__ANY__",
+            "__ANY__",
+            1,
+            1,
+            {"maxOccurs": "unbounded", "minOccurs": "0", "processContents": "lax"},
+            None,
+        ),
+    ]
     subclass = None
     superclass = None
 
-    def __init__(self, extensiontype_=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self, anytypeobjs_=None, extensiontype_=None, gds_collector_=None, **kwargs_
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
+        if anytypeobjs_ is None:
+            self.anytypeobjs_ = []
+        else:
+            self.anytypeobjs_ = anytypeobjs_
         self.extensiontype_ = extensiontype_
 
     def factory(*args_, **kwargs_):
@@ -5330,7 +5345,7 @@ class BaseWithoutId(GeneratedsSuper):
     factory = staticmethod(factory)
 
     def has__content(self):
-        if ():
+        if self.anytypeobjs_:
             return True
         else:
             return False
@@ -5340,7 +5355,7 @@ class BaseWithoutId(GeneratedsSuper):
         outfile,
         level,
         namespaceprefix_="",
-        namespacedef_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
         name_="BaseWithoutId",
         pretty_print=True,
     ):
@@ -5378,6 +5393,7 @@ class BaseWithoutId(GeneratedsSuper):
                 name_="BaseWithoutId",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -5409,12 +5425,20 @@ class BaseWithoutId(GeneratedsSuper):
         outfile,
         level,
         namespaceprefix_="",
-        namespacedef_="",
+        namespacedef_=' xmlns:None="http://www.neuroml.org/schema/neuroml2" ',
         name_="BaseWithoutId",
         fromsubclass_=False,
         pretty_print=True,
     ):
-        pass
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if not fromsubclass_:
+            for obj_ in self.anytypeobjs_:
+                showIndent(outfile, level, pretty_print)
+                outfile.write(str(obj_))
+                outfile.write("\n")
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -5447,7 +5471,8 @@ class BaseWithoutId(GeneratedsSuper):
     def _buildChildren(
         self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
     ):
-        pass
+        content_ = self.gds_build_any(child_, "BaseWithoutId")
+        self.anytypeobjs_.append(content_)
 
 
 # end class BaseWithoutId
@@ -5467,6 +5492,7 @@ class BaseNonNegativeIntegerId(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         extensiontype_=None,
         gds_collector_=None,
@@ -5478,7 +5504,7 @@ class BaseNonNegativeIntegerId(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseNonNegativeIntegerId"), self).__init__(
-            extensiontype_, **kwargs_
+            anytypeobjs_, extensiontype_, **kwargs_
         )
         self.id = _cast(int, id)
         self.id_nsprefix_ = None
@@ -5570,6 +5596,7 @@ class BaseNonNegativeIntegerId(BaseWithoutId):
                 name_="BaseNonNegativeIntegerId",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -5626,7 +5653,6 @@ class BaseNonNegativeIntegerId(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -5694,6 +5720,7 @@ class Base(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         extensiontype_=None,
         gds_collector_=None,
@@ -5704,7 +5731,9 @@ class Base(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Base"), self).__init__(extensiontype_, **kwargs_)
+        super(globals().get("Base"), self).__init__(
+            anytypeobjs_, extensiontype_, **kwargs_
+        )
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
         self.extensiontype_ = extensiontype_
@@ -5800,6 +5829,7 @@ class Base(BaseWithoutId):
                 name_="Base",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -5852,7 +5882,6 @@ class Base(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -5941,6 +5970,7 @@ class Standalone(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -5955,7 +5985,9 @@ class Standalone(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Standalone"), self).__init__(id, extensiontype_, **kwargs_)
+        super(globals().get("Standalone"), self).__init__(
+            anytypeobjs_, id, extensiontype_, **kwargs_
+        )
         self.metaid = _cast(None, metaid)
         self.metaid_nsprefix_ = None
         self.notes = notes
@@ -6302,6 +6334,7 @@ class SpikeSourcePoisson(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -6319,7 +6352,7 @@ class SpikeSourcePoisson(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeSourcePoisson"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.start = _cast(None, start)
         self.start_nsprefix_ = None
@@ -6639,6 +6672,7 @@ class Input(BaseNonNegativeIntegerId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         target: "a Nml2PopulationReferencePath (required)" = None,
         destination: "a NmlId (required)" = None,
@@ -6653,7 +6687,9 @@ class Input(BaseNonNegativeIntegerId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Input"), self).__init__(id, extensiontype_, **kwargs_)
+        super(globals().get("Input"), self).__init__(
+            anytypeobjs_, id, extensiontype_, **kwargs_
+        )
         self.target = _cast(None, target)
         self.target_nsprefix_ = None
         self.destination = _cast(None, destination)
@@ -6840,6 +6876,7 @@ class Input(BaseNonNegativeIntegerId):
                 name_="Input",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -6921,7 +6958,6 @@ class Input(BaseNonNegativeIntegerId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -7088,6 +7124,7 @@ class InputList(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         populations: "a NmlId (required)" = None,
         component: "a NmlId (required)" = None,
@@ -7101,7 +7138,7 @@ class InputList(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("InputList"), self).__init__(id, **kwargs_)
+        super(globals().get("InputList"), self).__init__(anytypeobjs_, id, **kwargs_)
         self.populations = _cast(None, populations)
         self.populations_nsprefix_ = None
         self.component = _cast(None, component)
@@ -7454,6 +7491,7 @@ class ExplicitInput(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         target: "a Nml2PopulationReferencePath (required)" = None,
         input: "a NmlId (required)" = None,
         destination: "a NmlId (optional)" = None,
@@ -7465,7 +7503,7 @@ class ExplicitInput(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ExplicitInput"), self).__init__(**kwargs_)
+        super(globals().get("ExplicitInput"), self).__init__(anytypeobjs_, **kwargs_)
         self.target = _cast(None, target)
         self.target_nsprefix_ = None
         self.input = _cast(None, input)
@@ -7598,6 +7636,7 @@ class ExplicitInput(BaseWithoutId):
                 name_="ExplicitInput",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -7669,7 +7708,6 @@ class ExplicitInput(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -7820,6 +7858,7 @@ class BaseConnection(BaseNonNegativeIntegerId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         extensiontype_=None,
@@ -7832,7 +7871,7 @@ class BaseConnection(BaseNonNegativeIntegerId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConnection"), self).__init__(
-            id, extensiontype_, **kwargs_
+            anytypeobjs_, id, extensiontype_, **kwargs_
         )
         self.neuro_lex_id = _cast(None, neuro_lex_id)
         self.neuro_lex_id_nsprefix_ = None
@@ -7929,6 +7968,7 @@ class BaseConnection(BaseNonNegativeIntegerId):
                 name_="BaseConnection",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -7988,7 +8028,6 @@ class BaseConnection(BaseNonNegativeIntegerId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -8063,6 +8102,7 @@ class BaseProjection(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         presynaptic_population: "a NmlId (required)" = None,
         postsynaptic_population: "a NmlId (required)" = None,
@@ -8076,7 +8116,7 @@ class BaseProjection(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseProjection"), self).__init__(
-            id, extensiontype_, **kwargs_
+            anytypeobjs_, id, extensiontype_, **kwargs_
         )
         self.presynaptic_population = _cast(None, presynaptic_population)
         self.presynaptic_population_nsprefix_ = None
@@ -8175,6 +8215,7 @@ class BaseProjection(Base):
                 name_="BaseProjection",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -8254,7 +8295,6 @@ class BaseProjection(Base):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -8349,6 +8389,7 @@ class SynapticConnection(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         from_: "a Nml2PopulationReferencePath (required)" = None,
         to: "a Nml2PopulationReferencePath (required)" = None,
@@ -8362,7 +8403,9 @@ class SynapticConnection(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SynapticConnection"), self).__init__(**kwargs_)
+        super(globals().get("SynapticConnection"), self).__init__(
+            anytypeobjs_, **kwargs_
+        )
         self.neuro_lex_id = _cast(None, neuro_lex_id)
         self.neuro_lex_id_nsprefix_ = None
         self.from_ = _cast(None, from_)
@@ -8535,6 +8578,7 @@ class SynapticConnection(BaseWithoutId):
                 name_="SynapticConnection",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -8632,7 +8676,6 @@ class SynapticConnection(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -8764,9 +8807,9 @@ class CellSet(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         select: "a string (required)" = None,
-        anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_,
     ):
@@ -8775,7 +8818,7 @@ class CellSet(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("CellSet"), self).__init__(id, **kwargs_)
+        super(globals().get("CellSet"), self).__init__(anytypeobjs_, id, **kwargs_)
         self.select = _cast(None, select)
         self.select_nsprefix_ = None
         if anytypeobjs_ is None:
@@ -8962,6 +9005,7 @@ class Location(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         x: "a float (required)" = None,
         y: "a float (required)" = None,
         z: "a float (required)" = None,
@@ -8973,7 +9017,7 @@ class Location(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Location"), self).__init__(**kwargs_)
+        super(globals().get("Location"), self).__init__(anytypeobjs_, **kwargs_)
         self.x = _cast(float, x)
         self.x_nsprefix_ = None
         self.y = _cast(float, y)
@@ -9042,6 +9086,7 @@ class Location(BaseWithoutId):
                 name_="Location",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -9081,7 +9126,6 @@ class Location(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -9185,6 +9229,7 @@ class Instance(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a nonNegativeInteger (optional)" = None,
         i: "a nonNegativeInteger (optional)" = None,
         j: "a nonNegativeInteger (optional)" = None,
@@ -9198,7 +9243,7 @@ class Instance(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Instance"), self).__init__(**kwargs_)
+        super(globals().get("Instance"), self).__init__(anytypeobjs_, **kwargs_)
         self.id = _cast(int, id)
         self.id_nsprefix_ = None
         self.i = _cast(int, i)
@@ -9450,6 +9495,7 @@ class GridLayout(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         x_size: "a nonNegativeInteger (optional)" = None,
         y_size: "a nonNegativeInteger (optional)" = None,
         z_size: "a nonNegativeInteger (optional)" = None,
@@ -9461,7 +9507,7 @@ class GridLayout(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GridLayout"), self).__init__(**kwargs_)
+        super(globals().get("GridLayout"), self).__init__(anytypeobjs_, **kwargs_)
         self.x_size = _cast(int, x_size)
         self.x_size_nsprefix_ = None
         self.y_size = _cast(int, y_size)
@@ -9530,6 +9576,7 @@ class GridLayout(BaseWithoutId):
                 name_="GridLayout",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -9575,7 +9622,6 @@ class GridLayout(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -9653,6 +9699,7 @@ class RandomLayout(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         number: "a nonNegativeInteger (optional)" = None,
         regions: "a NmlId (optional)" = None,
         gds_collector_=None,
@@ -9663,7 +9710,7 @@ class RandomLayout(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("RandomLayout"), self).__init__(**kwargs_)
+        super(globals().get("RandomLayout"), self).__init__(anytypeobjs_, **kwargs_)
         self.number = _cast(int, number)
         self.number_nsprefix_ = None
         self.regions = _cast(None, regions)
@@ -9760,6 +9807,7 @@ class RandomLayout(BaseWithoutId):
                 name_="RandomLayout",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -9813,7 +9861,6 @@ class RandomLayout(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -9881,6 +9928,7 @@ class UnstructuredLayout(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         number: "a nonNegativeInteger (optional)" = None,
         gds_collector_=None,
         **kwargs_,
@@ -9890,7 +9938,9 @@ class UnstructuredLayout(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("UnstructuredLayout"), self).__init__(**kwargs_)
+        super(globals().get("UnstructuredLayout"), self).__init__(
+            anytypeobjs_, **kwargs_
+        )
         self.number = _cast(int, number)
         self.number_nsprefix_ = None
 
@@ -9961,6 +10011,7 @@ class UnstructuredLayout(BaseWithoutId):
                 name_="UnstructuredLayout",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -10006,7 +10057,6 @@ class UnstructuredLayout(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -10080,6 +10130,7 @@ class Layout(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         spaces: "a NmlId (optional)" = None,
         random: "a RandomLayout (required)" = None,
         grid: "a GridLayout (required)" = None,
@@ -10092,7 +10143,7 @@ class Layout(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Layout"), self).__init__(**kwargs_)
+        super(globals().get("Layout"), self).__init__(anytypeobjs_, **kwargs_)
         self.spaces = _cast(None, spaces)
         self.spaces_nsprefix_ = None
         self.random = random
@@ -10410,6 +10461,7 @@ class Population(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -10431,7 +10483,7 @@ class Population(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Population"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.component = _cast(None, component)
         self.component_nsprefix_ = None
@@ -10921,9 +10973,9 @@ class Region(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         spaces: "a NmlId (optional)" = None,
-        anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_,
     ):
@@ -10932,7 +10984,7 @@ class Region(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Region"), self).__init__(id, **kwargs_)
+        super(globals().get("Region"), self).__init__(anytypeobjs_, id, **kwargs_)
         self.spaces = _cast(None, spaces)
         self.spaces_nsprefix_ = None
         if anytypeobjs_ is None:
@@ -11154,6 +11206,7 @@ class SpaceStructure(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         x_spacing: "a float (optional)" = None,
         y_spacing: "a float (optional)" = None,
         z_spacing: "a float (optional)" = None,
@@ -11168,7 +11221,7 @@ class SpaceStructure(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SpaceStructure"), self).__init__(**kwargs_)
+        super(globals().get("SpaceStructure"), self).__init__(anytypeobjs_, **kwargs_)
         self.x_spacing = _cast(float, x_spacing)
         self.x_spacing_nsprefix_ = None
         self.y_spacing = _cast(float, y_spacing)
@@ -11243,6 +11296,7 @@ class SpaceStructure(BaseWithoutId):
                 name_="SpaceStructure",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -11314,7 +11368,6 @@ class SpaceStructure(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -11419,6 +11472,7 @@ class Space(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         based_on: "a allowedSpaces (optional)" = None,
         structure: "a SpaceStructure (optional)" = None,
@@ -11430,7 +11484,7 @@ class Space(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Space"), self).__init__(id, **kwargs_)
+        super(globals().get("Space"), self).__init__(anytypeobjs_, id, **kwargs_)
         self.based_on = _cast(None, based_on)
         self.based_on_nsprefix_ = None
         self.structure = structure
@@ -11809,6 +11863,7 @@ class Network(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -11837,7 +11892,7 @@ class Network(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Network"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
@@ -12597,6 +12652,7 @@ class TransientPoissonFiringSynapse(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -12616,7 +12672,7 @@ class TransientPoissonFiringSynapse(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("TransientPoissonFiringSynapse"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.average_rate = _cast(None, average_rate)
         self.average_rate_nsprefix_ = None
@@ -12983,6 +13039,7 @@ class PoissonFiringSynapse(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -13000,7 +13057,7 @@ class PoissonFiringSynapse(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("PoissonFiringSynapse"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.average_rate = _cast(None, average_rate)
         self.average_rate_nsprefix_ = None
@@ -13270,6 +13327,7 @@ class SpikeGeneratorPoisson(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -13286,7 +13344,14 @@ class SpikeGeneratorPoisson(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeGeneratorPoisson"), self).__init__(
-            id, metaid, notes, properties, annotation, extensiontype_, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            extensiontype_,
+            **kwargs_,
         )
         self.average_rate = _cast(None, average_rate)
         self.average_rate_nsprefix_ = None
@@ -13532,6 +13597,7 @@ class SpikeGeneratorRandom(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -13548,7 +13614,7 @@ class SpikeGeneratorRandom(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeGeneratorRandom"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.max_isi = _cast(None, max_isi)
         self.max_isi_nsprefix_ = None
@@ -13797,6 +13863,7 @@ class SpikeGenerator(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -13812,7 +13879,7 @@ class SpikeGenerator(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeGenerator"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.period = _cast(None, period)
         self.period_nsprefix_ = None
@@ -14037,6 +14104,7 @@ class TimedSynapticInput(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -14054,7 +14122,7 @@ class TimedSynapticInput(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("TimedSynapticInput"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.synapse = _cast(None, synapse)
         self.synapse_nsprefix_ = None
@@ -14328,6 +14396,7 @@ class SpikeArray(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -14343,7 +14412,7 @@ class SpikeArray(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeArray"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         if spikes is None:
             self.spikes = []
@@ -14524,6 +14593,7 @@ class Spike(BaseNonNegativeIntegerId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         time: "a Nml2Quantity_time (required)" = None,
         gds_collector_=None,
@@ -14534,7 +14604,7 @@ class Spike(BaseNonNegativeIntegerId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Spike"), self).__init__(id, **kwargs_)
+        super(globals().get("Spike"), self).__init__(anytypeobjs_, id, **kwargs_)
         self.time = _cast(None, time)
         self.time_nsprefix_ = None
 
@@ -14631,6 +14701,7 @@ class Spike(BaseNonNegativeIntegerId):
                 name_="Spike",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -14673,7 +14744,6 @@ class Spike(BaseNonNegativeIntegerId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -14788,6 +14858,7 @@ class VoltageClampTriple(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -14809,7 +14880,7 @@ class VoltageClampTriple(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("VoltageClampTriple"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.active = _cast(float, active)
         self.active_nsprefix_ = None
@@ -15318,6 +15389,7 @@ class VoltageClamp(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -15336,7 +15408,7 @@ class VoltageClamp(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("VoltageClamp"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -15732,6 +15804,7 @@ class CompoundInputDL(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -15749,7 +15822,7 @@ class CompoundInputDL(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("CompoundInputDL"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         if pulse_generator_dls is None:
             self.pulse_generator_dls = []
@@ -16038,6 +16111,7 @@ class CompoundInput(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -16055,7 +16129,7 @@ class CompoundInput(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("CompoundInput"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         if pulse_generators is None:
             self.pulse_generators = []
@@ -16340,6 +16414,7 @@ class RampGeneratorDL(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -16359,7 +16434,7 @@ class RampGeneratorDL(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("RampGeneratorDL"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -16759,6 +16834,7 @@ class RampGenerator(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -16778,7 +16854,7 @@ class RampGenerator(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("RampGenerator"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -17172,6 +17248,7 @@ class SineGeneratorDL(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -17191,7 +17268,7 @@ class SineGeneratorDL(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SineGeneratorDL"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -17563,6 +17640,7 @@ class SineGenerator(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -17582,7 +17660,7 @@ class SineGenerator(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SineGenerator"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -17976,6 +18054,7 @@ class PulseGeneratorDL(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -17993,7 +18072,7 @@ class PulseGeneratorDL(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("PulseGeneratorDL"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -18313,6 +18392,7 @@ class PulseGenerator(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -18330,7 +18410,7 @@ class PulseGenerator(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("PulseGenerator"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -18624,10 +18704,10 @@ class ReactionScheme(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         source: "a string (required)" = None,
         type: "a string (required)" = None,
-        anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_,
     ):
@@ -18636,7 +18716,9 @@ class ReactionScheme(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ReactionScheme"), self).__init__(id, **kwargs_)
+        super(globals().get("ReactionScheme"), self).__init__(
+            anytypeobjs_, id, **kwargs_
+        )
         self.source = _cast(None, source)
         self.source_nsprefix_ = None
         self.type = _cast(None, type)
@@ -18847,6 +18929,7 @@ class ExtracellularPropertiesLocal(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         species: "list of Species(s) (optional)" = None,
         gds_collector_=None,
@@ -18858,7 +18941,7 @@ class ExtracellularPropertiesLocal(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExtracellularPropertiesLocal"), self).__init__(
-            id, **kwargs_
+            anytypeobjs_, id, **kwargs_
         )
         if species is None:
             self.species = []
@@ -19064,6 +19147,7 @@ class ExtracellularProperties(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         species: "list of Species(s) (optional)" = None,
         gds_collector_=None,
@@ -19074,7 +19158,9 @@ class ExtracellularProperties(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ExtracellularProperties"), self).__init__(id, **kwargs_)
+        super(globals().get("ExtracellularProperties"), self).__init__(
+            anytypeobjs_, id, **kwargs_
+        )
         if species is None:
             self.species = []
         else:
@@ -19291,6 +19377,7 @@ class IntracellularProperties(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         species: "list of Species(s) (optional)" = None,
         resistivities: "list of Resistivity(s) (optional)" = None,
         extensiontype_=None,
@@ -19303,7 +19390,7 @@ class IntracellularProperties(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IntracellularProperties"), self).__init__(
-            extensiontype_, **kwargs_
+            anytypeobjs_, extensiontype_, **kwargs_
         )
         if species is None:
             self.species = []
@@ -19581,6 +19668,7 @@ class Species(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         concentration_model: "a NmlId (required)" = None,
         ion: "a NmlId (optional)" = None,
@@ -19595,7 +19683,7 @@ class Species(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Species"), self).__init__(id, **kwargs_)
+        super(globals().get("Species"), self).__init__(anytypeobjs_, id, **kwargs_)
         self.concentration_model = _cast(None, concentration_model)
         self.concentration_model_nsprefix_ = None
         self.ion = _cast(None, ion)
@@ -19730,6 +19818,7 @@ class Species(Base):
                 name_="Species",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -19830,7 +19919,6 @@ class Species(Base):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -19945,6 +20033,7 @@ class InhomogeneousValue(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         inhomogeneous_parameters: "a string (required)" = None,
         value: "a string (required)" = None,
         gds_collector_=None,
@@ -19955,7 +20044,9 @@ class InhomogeneousValue(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("InhomogeneousValue"), self).__init__(**kwargs_)
+        super(globals().get("InhomogeneousValue"), self).__init__(
+            anytypeobjs_, **kwargs_
+        )
         self.inhomogeneous_parameters = _cast(None, inhomogeneous_parameters)
         self.inhomogeneous_parameters_nsprefix_ = None
         self.value = _cast(None, value)
@@ -20028,6 +20119,7 @@ class InhomogeneousValue(BaseWithoutId):
                 name_="InhomogeneousValue",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -20095,7 +20187,6 @@ class InhomogeneousValue(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -20185,6 +20276,7 @@ class ChannelDensityGHK2(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         cond_density: "a Nml2Quantity_conductanceDensity (optional)" = None,
@@ -20199,7 +20291,9 @@ class ChannelDensityGHK2(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ChannelDensityGHK2"), self).__init__(id, **kwargs_)
+        super(globals().get("ChannelDensityGHK2"), self).__init__(
+            anytypeobjs_, id, **kwargs_
+        )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.cond_density = _cast(None, cond_density)
@@ -20342,6 +20436,7 @@ class ChannelDensityGHK2(Base):
                 name_="ChannelDensityGHK2",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -20439,7 +20534,6 @@ class ChannelDensityGHK2(Base):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -20558,6 +20652,7 @@ class ChannelDensityGHK(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         permeability: "a Nml2Quantity_permeability (required)" = None,
@@ -20572,7 +20667,9 @@ class ChannelDensityGHK(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ChannelDensityGHK"), self).__init__(id, **kwargs_)
+        super(globals().get("ChannelDensityGHK"), self).__init__(
+            anytypeobjs_, id, **kwargs_
+        )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.permeability = _cast(None, permeability)
@@ -20713,6 +20810,7 @@ class ChannelDensityGHK(Base):
                 name_="ChannelDensityGHK",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -20810,7 +20908,6 @@ class ChannelDensityGHK(Base):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -20940,6 +21037,7 @@ class ChannelDensityNernst(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         cond_density: "a Nml2Quantity_conductanceDensity (optional)" = None,
@@ -20957,7 +21055,7 @@ class ChannelDensityNernst(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityNernst"), self).__init__(
-            id, extensiontype_, **kwargs_
+            anytypeobjs_, id, extensiontype_, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -21394,6 +21492,7 @@ class ChannelDensity(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         cond_density: "a Nml2Quantity_conductanceDensity (optional)" = None,
@@ -21412,7 +21511,7 @@ class ChannelDensity(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensity"), self).__init__(
-            id, extensiontype_, **kwargs_
+            anytypeobjs_, id, extensiontype_, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -21882,6 +21981,7 @@ class ChannelDensityNonUniformGHK(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         ion: "a NmlId (required)" = None,
@@ -21895,7 +21995,7 @@ class ChannelDensityNonUniformGHK(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityNonUniformGHK"), self).__init__(
-            id, **kwargs_
+            anytypeobjs_, id, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -22185,6 +22285,7 @@ class ChannelDensityNonUniformNernst(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         ion: "a NmlId (required)" = None,
@@ -22198,7 +22299,7 @@ class ChannelDensityNonUniformNernst(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityNonUniformNernst"), self).__init__(
-            id, **kwargs_
+            anytypeobjs_, id, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -22498,6 +22599,7 @@ class ChannelDensityNonUniform(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         erev: "a Nml2Quantity_voltage (required)" = None,
@@ -22511,7 +22613,9 @@ class ChannelDensityNonUniform(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ChannelDensityNonUniform"), self).__init__(id, **kwargs_)
+        super(globals().get("ChannelDensityNonUniform"), self).__init__(
+            anytypeobjs_, id, **kwargs_
+        )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.erev = _cast(None, erev)
@@ -22881,6 +22985,7 @@ class ChannelPopulation(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         number: "a NonNegativeInteger (required)" = None,
@@ -22897,7 +23002,9 @@ class ChannelPopulation(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ChannelPopulation"), self).__init__(id, **kwargs_)
+        super(globals().get("ChannelPopulation"), self).__init__(
+            anytypeobjs_, id, **kwargs_
+        )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
         self.number = _cast(int, number)
@@ -23319,6 +23426,7 @@ class Resistivity(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         value: "a Nml2Quantity_resistivity (required)" = None,
         segment_groups: "a NmlId (optional)" = "all",
         gds_collector_=None,
@@ -23329,7 +23437,7 @@ class Resistivity(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Resistivity"), self).__init__(**kwargs_)
+        super(globals().get("Resistivity"), self).__init__(anytypeobjs_, **kwargs_)
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.segment_groups = _cast(None, segment_groups)
@@ -23458,6 +23566,7 @@ class Resistivity(BaseWithoutId):
                 name_="Resistivity",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -23517,7 +23626,6 @@ class Resistivity(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -23602,6 +23710,7 @@ class InitMembPotential(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         value: "a Nml2Quantity_voltage (required)" = None,
         segment_groups: "a NmlId (optional)" = "all",
         gds_collector_=None,
@@ -23612,7 +23721,9 @@ class InitMembPotential(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("InitMembPotential"), self).__init__(**kwargs_)
+        super(globals().get("InitMembPotential"), self).__init__(
+            anytypeobjs_, **kwargs_
+        )
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.segment_groups = _cast(None, segment_groups)
@@ -23745,6 +23856,7 @@ class InitMembPotential(BaseWithoutId):
                 name_="InitMembPotential",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -23808,7 +23920,6 @@ class InitMembPotential(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -23897,6 +24008,7 @@ class SpecificCapacitance(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         value: "a Nml2Quantity_specificCapacitance (required)" = None,
         segment_groups: "a NmlId (optional)" = "all",
         gds_collector_=None,
@@ -23907,7 +24019,9 @@ class SpecificCapacitance(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SpecificCapacitance"), self).__init__(**kwargs_)
+        super(globals().get("SpecificCapacitance"), self).__init__(
+            anytypeobjs_, **kwargs_
+        )
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.segment_groups = _cast(None, segment_groups)
@@ -24042,6 +24156,7 @@ class SpecificCapacitance(BaseWithoutId):
                 name_="SpecificCapacitance",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -24105,7 +24220,6 @@ class SpecificCapacitance(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -24192,6 +24306,7 @@ class SpikeThresh(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         value: "a Nml2Quantity_voltage (required)" = None,
         segment_groups: "a NmlId (optional)" = "all",
         gds_collector_=None,
@@ -24202,7 +24317,7 @@ class SpikeThresh(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SpikeThresh"), self).__init__(**kwargs_)
+        super(globals().get("SpikeThresh"), self).__init__(anytypeobjs_, **kwargs_)
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.segment_groups = _cast(None, segment_groups)
@@ -24331,6 +24446,7 @@ class SpikeThresh(BaseWithoutId):
                 name_="SpikeThresh",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -24390,7 +24506,6 @@ class SpikeThresh(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -24616,6 +24731,7 @@ class MembraneProperties(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         channel_populations: "list of ChannelPopulation(s) (optional)" = None,
         channel_densities: "list of ChannelDensity(s) (optional)" = None,
         channel_density_v_shifts: "list of ChannelDensityVShift(s) (optional)" = None,
@@ -24638,7 +24754,7 @@ class MembraneProperties(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("MembraneProperties"), self).__init__(
-            extensiontype_, **kwargs_
+            anytypeobjs_, extensiontype_, **kwargs_
         )
         if channel_populations is None:
             self.channel_populations = []
@@ -25251,6 +25367,7 @@ class BiophysicalProperties2CaPools(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -25268,7 +25385,7 @@ class BiophysicalProperties2CaPools(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BiophysicalProperties2CaPools"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.membrane_properties2_ca_pools = membrane_properties2_ca_pools
         self.membrane_properties2_ca_pools_nsprefix_ = None
@@ -25564,6 +25681,7 @@ class BiophysicalProperties(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -25581,7 +25699,7 @@ class BiophysicalProperties(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BiophysicalProperties"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.membrane_properties = membrane_properties
         self.membrane_properties_nsprefix_ = None
@@ -25838,6 +25956,7 @@ class SegmentEndPoint(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         segments: "a NonNegativeInteger (required)" = None,
         gds_collector_=None,
         **kwargs_,
@@ -25847,7 +25966,7 @@ class SegmentEndPoint(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SegmentEndPoint"), self).__init__(**kwargs_)
+        super(globals().get("SegmentEndPoint"), self).__init__(anytypeobjs_, **kwargs_)
         self.segments = _cast(int, segments)
         self.segments_nsprefix_ = None
 
@@ -25931,6 +26050,7 @@ class SegmentEndPoint(BaseWithoutId):
                 name_="SegmentEndPoint",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -25972,7 +26092,6 @@ class SegmentEndPoint(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -26049,6 +26168,7 @@ class SubTree(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         from_: "a SegmentEndPoint (optional)" = None,
         to: "a SegmentEndPoint (optional)" = None,
         gds_collector_=None,
@@ -26059,7 +26179,7 @@ class SubTree(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SubTree"), self).__init__(**kwargs_)
+        super(globals().get("SubTree"), self).__init__(anytypeobjs_, **kwargs_)
         self.from_ = from_
         self.from__nsprefix_ = None
         self.to = to
@@ -26272,6 +26392,7 @@ class Path(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         from_: "a SegmentEndPoint (optional)" = None,
         to: "a SegmentEndPoint (optional)" = None,
         gds_collector_=None,
@@ -26282,7 +26403,7 @@ class Path(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Path"), self).__init__(**kwargs_)
+        super(globals().get("Path"), self).__init__(anytypeobjs_, **kwargs_)
         self.from_ = from_
         self.from__nsprefix_ = None
         self.to = to
@@ -26484,6 +26605,7 @@ class Include(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         segment_groups: "a NmlId (required)" = None,
         gds_collector_=None,
         **kwargs_,
@@ -26493,7 +26615,7 @@ class Include(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Include"), self).__init__(**kwargs_)
+        super(globals().get("Include"), self).__init__(anytypeobjs_, **kwargs_)
         self.segment_groups = _cast(None, segment_groups)
         self.segment_groups_nsprefix_ = None
 
@@ -26588,6 +26710,7 @@ class Include(BaseWithoutId):
                 name_="Include",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -26633,7 +26756,6 @@ class Include(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -26699,6 +26821,7 @@ class Member(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         segments: "a NonNegativeInteger (required)" = None,
         gds_collector_=None,
         **kwargs_,
@@ -26708,7 +26831,7 @@ class Member(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Member"), self).__init__(**kwargs_)
+        super(globals().get("Member"), self).__init__(anytypeobjs_, **kwargs_)
         self.segments = _cast(int, segments)
         self.segments_nsprefix_ = None
 
@@ -26792,6 +26915,7 @@ class Member(BaseWithoutId):
                 name_="Member",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -26828,7 +26952,6 @@ class Member(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -26896,6 +27019,7 @@ class DistalDetails(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         normalization_end: "a double (required)" = None,
         gds_collector_=None,
         **kwargs_,
@@ -26905,7 +27029,7 @@ class DistalDetails(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("DistalDetails"), self).__init__(**kwargs_)
+        super(globals().get("DistalDetails"), self).__init__(anytypeobjs_, **kwargs_)
         self.normalization_end = _cast(float, normalization_end)
         self.normalization_end_nsprefix_ = None
 
@@ -26970,6 +27094,7 @@ class DistalDetails(BaseWithoutId):
                 name_="DistalDetails",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -27016,7 +27141,6 @@ class DistalDetails(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -27082,6 +27206,7 @@ class ProximalDetails(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         translation_start: "a double (required)" = None,
         gds_collector_=None,
         **kwargs_,
@@ -27091,7 +27216,7 @@ class ProximalDetails(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ProximalDetails"), self).__init__(**kwargs_)
+        super(globals().get("ProximalDetails"), self).__init__(anytypeobjs_, **kwargs_)
         self.translation_start = _cast(float, translation_start)
         self.translation_start_nsprefix_ = None
 
@@ -27156,6 +27281,7 @@ class ProximalDetails(BaseWithoutId):
                 name_="ProximalDetails",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -27202,7 +27328,6 @@ class ProximalDetails(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -27281,6 +27406,7 @@ class InhomogeneousParameter(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         variable: "a string (required)" = None,
         metric: "a Metric (required)" = None,
@@ -27294,7 +27420,9 @@ class InhomogeneousParameter(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("InhomogeneousParameter"), self).__init__(id, **kwargs_)
+        super(globals().get("InhomogeneousParameter"), self).__init__(
+            anytypeobjs_, id, **kwargs_
+        )
         self.variable = _cast(None, variable)
         self.variable_nsprefix_ = None
         self.metric = _cast(None, metric)
@@ -27681,6 +27809,7 @@ class SegmentGroup(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -27699,7 +27828,7 @@ class SegmentGroup(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SegmentGroup"), self).__init__(id, **kwargs_)
+        super(globals().get("SegmentGroup"), self).__init__(anytypeobjs_, id, **kwargs_)
         self.neuro_lex_id = _cast(None, neuro_lex_id)
         self.neuro_lex_id_nsprefix_ = None
         self.notes = notes
@@ -28202,6 +28331,7 @@ class Point3DWithDiam(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         x: "a double (required)" = None,
         y: "a double (required)" = None,
         z: "a double (required)" = None,
@@ -28214,7 +28344,7 @@ class Point3DWithDiam(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Point3DWithDiam"), self).__init__(**kwargs_)
+        super(globals().get("Point3DWithDiam"), self).__init__(anytypeobjs_, **kwargs_)
         self.x = _cast(float, x)
         self.x_nsprefix_ = None
         self.y = _cast(float, y)
@@ -28310,6 +28440,7 @@ class Point3DWithDiam(BaseWithoutId):
                 name_="Point3DWithDiam",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -28360,7 +28491,6 @@ class Point3DWithDiam(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -28488,6 +28618,7 @@ class SegmentParent(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         segments: "a NonNegativeInteger (required)" = None,
         fraction_along: "a ZeroToOne (optional)" = "1",
         gds_collector_=None,
@@ -28498,7 +28629,7 @@ class SegmentParent(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SegmentParent"), self).__init__(**kwargs_)
+        super(globals().get("SegmentParent"), self).__init__(anytypeobjs_, **kwargs_)
         self.segments = _cast(int, segments)
         self.segments_nsprefix_ = None
         self.fraction_along = _cast(float, fraction_along)
@@ -28616,6 +28747,7 @@ class SegmentParent(BaseWithoutId):
                 name_="SegmentParent",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -28663,7 +28795,6 @@ class SegmentParent(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -28768,6 +28899,7 @@ class Segment(BaseNonNegativeIntegerId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         name: "a string (optional)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
@@ -28782,7 +28914,7 @@ class Segment(BaseNonNegativeIntegerId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Segment"), self).__init__(id, **kwargs_)
+        super(globals().get("Segment"), self).__init__(anytypeobjs_, id, **kwargs_)
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
         self.neuro_lex_id = _cast(None, neuro_lex_id)
@@ -29213,6 +29345,7 @@ class Morphology(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -29229,7 +29362,7 @@ class Morphology(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Morphology"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         if segments is None:
             self.segments = []
@@ -29451,6 +29584,7 @@ class BaseCell(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -29467,7 +29601,14 @@ class BaseCell(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseCell"), self).__init__(
-            id, metaid, notes, properties, annotation, extensiontype_, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            extensiontype_,
+            **kwargs_,
         )
         self.neuro_lex_id = _cast(None, neuro_lex_id)
         self.neuro_lex_id_nsprefix_ = None
@@ -29693,6 +29834,7 @@ class PlasticityMechanism(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         type: "a PlasticityTypes (required)" = None,
         init_release_prob: "a ZeroToOne (required)" = None,
         tau_rec: "a Nml2Quantity_time (required)" = None,
@@ -29705,7 +29847,9 @@ class PlasticityMechanism(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("PlasticityMechanism"), self).__init__(**kwargs_)
+        super(globals().get("PlasticityMechanism"), self).__init__(
+            anytypeobjs_, **kwargs_
+        )
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.init_release_prob = _cast(float, init_release_prob)
@@ -29876,6 +30020,7 @@ class PlasticityMechanism(BaseWithoutId):
                 name_="PlasticityMechanism",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -29962,7 +30107,6 @@ class PlasticityMechanism(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -30074,6 +30218,7 @@ class BlockMechanism(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         type: "a BlockTypes (required)" = None,
         species: "a NmlId (required)" = None,
         block_concentration: "a Nml2Quantity_concentration (required)" = None,
@@ -30087,7 +30232,7 @@ class BlockMechanism(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("BlockMechanism"), self).__init__(**kwargs_)
+        super(globals().get("BlockMechanism"), self).__init__(anytypeobjs_, **kwargs_)
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.species = _cast(None, species)
@@ -30281,6 +30426,7 @@ class BlockMechanism(BaseWithoutId):
                 name_="BlockMechanism",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -30380,7 +30526,6 @@ class BlockMechanism(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -30486,6 +30631,7 @@ class BaseSynapse(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -30502,7 +30648,14 @@ class BaseSynapse(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseSynapse"), self).__init__(
-            id, metaid, notes, properties, annotation, extensiontype_, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            extensiontype_,
+            **kwargs_,
         )
         self.neuro_lex_id = _cast(None, neuro_lex_id)
         self.neuro_lex_id_nsprefix_ = None
@@ -30746,6 +30899,7 @@ class FixedFactorConcentrationModel(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -30764,7 +30918,7 @@ class FixedFactorConcentrationModel(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("FixedFactorConcentrationModel"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
@@ -31185,6 +31339,7 @@ class DecayingPoolConcentrationModel(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -31204,7 +31359,14 @@ class DecayingPoolConcentrationModel(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("DecayingPoolConcentrationModel"), self).__init__(
-            id, metaid, notes, properties, annotation, extensiontype_, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            extensiontype_,
+            **kwargs_,
         )
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
@@ -31634,6 +31796,7 @@ class HHTime(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         type: "a NmlId (required)" = None,
         rate: "a Nml2Quantity_time (optional)" = None,
         midpoint: "a Nml2Quantity_voltage (optional)" = None,
@@ -31647,7 +31810,7 @@ class HHTime(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("HHTime"), self).__init__(**kwargs_)
+        super(globals().get("HHTime"), self).__init__(anytypeobjs_, **kwargs_)
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.rate = _cast(None, rate)
@@ -31814,6 +31977,7 @@ class HHTime(BaseWithoutId):
                 name_="HHTime",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -31902,7 +32066,6 @@ class HHTime(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -32007,6 +32170,7 @@ class HHVariable(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         type: "a NmlId (required)" = None,
         rate: "a float (optional)" = None,
         midpoint: "a Nml2Quantity_voltage (optional)" = None,
@@ -32019,7 +32183,7 @@ class HHVariable(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("HHVariable"), self).__init__(**kwargs_)
+        super(globals().get("HHVariable"), self).__init__(anytypeobjs_, **kwargs_)
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.rate = _cast(float, rate)
@@ -32152,6 +32316,7 @@ class HHVariable(BaseWithoutId):
                 name_="HHVariable",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -32223,7 +32388,6 @@ class HHVariable(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -32319,6 +32483,7 @@ class HHRate(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         type: "a NmlId (required)" = None,
         rate: "a Nml2Quantity_pertime (optional)" = None,
         midpoint: "a Nml2Quantity_voltage (optional)" = None,
@@ -32331,7 +32496,7 @@ class HHRate(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("HHRate"), self).__init__(**kwargs_)
+        super(globals().get("HHRate"), self).__init__(anytypeobjs_, **kwargs_)
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.rate = _cast(None, rate)
@@ -32496,6 +32661,7 @@ class HHRate(BaseWithoutId):
                 name_="HHRate",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -32574,7 +32740,6 @@ class HHRate(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -32699,6 +32864,7 @@ class GateFractionalSubgate(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         fractional_conductance: "a Nml2Quantity_none (required)" = None,
         notes: "a string (optional)" = None,
@@ -32713,7 +32879,9 @@ class GateFractionalSubgate(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateFractionalSubgate"), self).__init__(id, **kwargs_)
+        super(globals().get("GateFractionalSubgate"), self).__init__(
+            anytypeobjs_, id, **kwargs_
+        )
         self.fractional_conductance = _cast(None, fractional_conductance)
         self.fractional_conductance_nsprefix_ = None
         self.notes = notes
@@ -33117,6 +33285,7 @@ class GateFractional(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         notes: "a string (optional)" = None,
@@ -33130,7 +33299,9 @@ class GateFractional(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateFractional"), self).__init__(id, **kwargs_)
+        super(globals().get("GateFractional"), self).__init__(
+            anytypeobjs_, id, **kwargs_
+        )
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -33460,6 +33631,7 @@ class GateHHInstantaneous(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         notes: "a string (optional)" = None,
@@ -33472,7 +33644,9 @@ class GateHHInstantaneous(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHInstantaneous"), self).__init__(id, **kwargs_)
+        super(globals().get("GateHHInstantaneous"), self).__init__(
+            anytypeobjs_, id, **kwargs_
+        )
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -33808,6 +33982,7 @@ class GateHHRatesInf(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         notes: "a string (optional)" = None,
@@ -33823,7 +33998,9 @@ class GateHHRatesInf(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHRatesInf"), self).__init__(id, **kwargs_)
+        super(globals().get("GateHHRatesInf"), self).__init__(
+            anytypeobjs_, id, **kwargs_
+        )
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -34228,6 +34405,7 @@ class GateHHRatesTau(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         notes: "a string (optional)" = None,
@@ -34243,7 +34421,9 @@ class GateHHRatesTau(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHRatesTau"), self).__init__(id, **kwargs_)
+        super(globals().get("GateHHRatesTau"), self).__init__(
+            anytypeobjs_, id, **kwargs_
+        )
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -34656,6 +34836,7 @@ class GateHHRatesTauInf(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         notes: "a string (optional)" = None,
@@ -34672,7 +34853,9 @@ class GateHHRatesTauInf(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHRatesTauInf"), self).__init__(id, **kwargs_)
+        super(globals().get("GateHHRatesTauInf"), self).__init__(
+            anytypeobjs_, id, **kwargs_
+        )
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -35104,6 +35287,7 @@ class GateHHTauInf(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         notes: "a string (optional)" = None,
@@ -35118,7 +35302,7 @@ class GateHHTauInf(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHTauInf"), self).__init__(id, **kwargs_)
+        super(globals().get("GateHHTauInf"), self).__init__(anytypeobjs_, id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -35488,6 +35672,7 @@ class GateHHRates(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         notes: "a string (optional)" = None,
@@ -35502,7 +35687,7 @@ class GateHHRates(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHRates"), self).__init__(id, **kwargs_)
+        super(globals().get("GateHHRates"), self).__init__(anytypeobjs_, id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -35897,6 +36082,7 @@ class GateHHUndetermined(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         type: "a gateTypes (required)" = None,
@@ -35915,7 +36101,9 @@ class GateHHUndetermined(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHUndetermined"), self).__init__(id, **kwargs_)
+        super(globals().get("GateHHUndetermined"), self).__init__(
+            anytypeobjs_, id, **kwargs_
+        )
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.type = _cast(None, type)
@@ -36470,6 +36658,7 @@ class GateKS(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         notes: "a string (optional)" = None,
@@ -36487,7 +36676,7 @@ class GateKS(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateKS"), self).__init__(id, **kwargs_)
+        super(globals().get("GateKS"), self).__init__(anytypeobjs_, id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -36919,6 +37108,7 @@ class TauInfTransition(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         from_: "a NmlId (required)" = None,
         to: "a NmlId (required)" = None,
@@ -36932,7 +37122,9 @@ class TauInfTransition(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("TauInfTransition"), self).__init__(id, **kwargs_)
+        super(globals().get("TauInfTransition"), self).__init__(
+            anytypeobjs_, id, **kwargs_
+        )
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
         self.to = _cast(None, to)
@@ -37224,10 +37416,10 @@ class ReverseTransition(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         from_: "a NmlId (required)" = None,
         to: "a NmlId (required)" = None,
-        anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_,
     ):
@@ -37236,7 +37428,9 @@ class ReverseTransition(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ReverseTransition"), self).__init__(id, **kwargs_)
+        super(globals().get("ReverseTransition"), self).__init__(
+            anytypeobjs_, id, **kwargs_
+        )
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
         self.to = _cast(None, to)
@@ -37484,10 +37678,10 @@ class ForwardTransition(Base):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         from_: "a NmlId (required)" = None,
         to: "a NmlId (required)" = None,
-        anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_,
     ):
@@ -37496,7 +37690,9 @@ class ForwardTransition(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ForwardTransition"), self).__init__(id, **kwargs_)
+        super(globals().get("ForwardTransition"), self).__init__(
+            anytypeobjs_, id, **kwargs_
+        )
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
         self.to = _cast(None, to)
@@ -37736,13 +37932,19 @@ class OpenState(Base):
     subclass = None
     superclass = Base
 
-    def __init__(self, id: "a NmlId (required)" = None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self,
+        anytypeobjs_=None,
+        id: "a NmlId (required)" = None,
+        gds_collector_=None,
+        **kwargs_,
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("OpenState"), self).__init__(id, **kwargs_)
+        super(globals().get("OpenState"), self).__init__(anytypeobjs_, id, **kwargs_)
 
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -37805,6 +38007,7 @@ class OpenState(Base):
                 name_="OpenState",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -37835,7 +38038,6 @@ class OpenState(Base):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -37885,13 +38087,19 @@ class ClosedState(Base):
     subclass = None
     superclass = Base
 
-    def __init__(self, id: "a NmlId (required)" = None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self,
+        anytypeobjs_=None,
+        id: "a NmlId (required)" = None,
+        gds_collector_=None,
+        **kwargs_,
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ClosedState"), self).__init__(id, **kwargs_)
+        super(globals().get("ClosedState"), self).__init__(anytypeobjs_, id, **kwargs_)
 
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -37954,6 +38162,7 @@ class ClosedState(Base):
                 name_="ClosedState",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -37989,7 +38198,6 @@ class ClosedState(Base):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -38058,6 +38266,7 @@ class Q10ConductanceScaling(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         q10_factor: "a Nml2Quantity_none (required)" = None,
         experimental_temp: "a Nml2Quantity_temperature (required)" = None,
         gds_collector_=None,
@@ -38068,7 +38277,9 @@ class Q10ConductanceScaling(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Q10ConductanceScaling"), self).__init__(**kwargs_)
+        super(globals().get("Q10ConductanceScaling"), self).__init__(
+            anytypeobjs_, **kwargs_
+        )
         self.q10_factor = _cast(None, q10_factor)
         self.q10_factor_nsprefix_ = None
         self.experimental_temp = _cast(None, experimental_temp)
@@ -38205,6 +38416,7 @@ class Q10ConductanceScaling(BaseWithoutId):
                 name_="Q10ConductanceScaling",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -38272,7 +38484,6 @@ class Q10ConductanceScaling(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -38382,6 +38593,7 @@ class IonChannelKS(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -38400,7 +38612,7 @@ class IonChannelKS(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannelKS"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.species = _cast(None, species)
         self.species_nsprefix_ = None
@@ -38757,6 +38969,7 @@ class IonChannelScalable(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -38774,7 +38987,14 @@ class IonChannelScalable(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannelScalable"), self).__init__(
-            id, metaid, notes, properties, annotation, extensiontype_, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            extensiontype_,
+            **kwargs_,
         )
         self.neuro_lex_id = _cast(None, neuro_lex_id)
         self.neuro_lex_id_nsprefix_ = None
@@ -39920,6 +40140,7 @@ class NeuroMLDocument(Standalone):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -40002,7 +40223,7 @@ class NeuroMLDocument(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("NeuroMLDocument"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
+            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
         )
         if includes is None:
             self.includes = []
@@ -42602,6 +42823,7 @@ class NamedDimensionalVariable(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -42616,7 +42838,7 @@ class NamedDimensionalVariable(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("NamedDimensionalVariable"), self).__init__(
-            extensiontype_, **kwargs_
+            anytypeobjs_, extensiontype_, **kwargs_
         )
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
@@ -42695,6 +42917,7 @@ class NamedDimensionalVariable(BaseWithoutId):
                 name_="NamedDimensionalVariable",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -42794,7 +43017,6 @@ class NamedDimensionalVariable(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -42885,6 +43107,7 @@ class NamedDimensionalType(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -42898,7 +43121,7 @@ class NamedDimensionalType(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("NamedDimensionalType"), self).__init__(
-            extensiontype_, **kwargs_
+            anytypeobjs_, extensiontype_, **kwargs_
         )
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
@@ -42975,6 +43198,7 @@ class NamedDimensionalType(BaseWithoutId):
                 name_="NamedDimensionalType",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -43062,7 +43286,6 @@ class NamedDimensionalType(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -43145,6 +43368,7 @@ class Exposure(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -43156,7 +43380,7 @@ class Exposure(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Exposure"), self).__init__(**kwargs_)
+        super(globals().get("Exposure"), self).__init__(anytypeobjs_, **kwargs_)
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
         self.dimension = _cast(None, dimension)
@@ -43225,6 +43449,7 @@ class Exposure(BaseWithoutId):
                 name_="Exposure",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -43291,7 +43516,6 @@ class Exposure(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -43371,6 +43595,7 @@ class Constant(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         value: "a Nml2Quantity (required)" = None,
@@ -43383,7 +43608,7 @@ class Constant(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Constant"), self).__init__(**kwargs_)
+        super(globals().get("Constant"), self).__init__(anytypeobjs_, **kwargs_)
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
         self.dimension = _cast(None, dimension)
@@ -43486,6 +43711,7 @@ class Constant(BaseWithoutId):
                 name_="Constant",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -43564,7 +43790,6 @@ class Constant(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -43653,7 +43878,7 @@ class Annotation(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Annotation"), self).__init__(**kwargs_)
+        super(globals().get("Annotation"), self).__init__(anytypeobjs_, **kwargs_)
         if anytypeobjs_ is None:
             self.anytypeobjs_ = []
         else:
@@ -43810,6 +44035,7 @@ class Property(BaseWithoutId):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         tag: "a string (required)" = None,
         value: "a string (required)" = None,
         gds_collector_=None,
@@ -43820,7 +44046,7 @@ class Property(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Property"), self).__init__(**kwargs_)
+        super(globals().get("Property"), self).__init__(anytypeobjs_, **kwargs_)
         self.tag = _cast(None, tag)
         self.tag_nsprefix_ = None
         self.value = _cast(None, value)
@@ -43887,6 +44113,7 @@ class Property(BaseWithoutId):
                 name_="Property",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -43939,7 +44166,6 @@ class Property(BaseWithoutId):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -44007,6 +44233,7 @@ class BasePynnSynapse(BaseSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -44024,6 +44251,7 @@ class BasePynnSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BasePynnSynapse"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -44234,6 +44462,7 @@ class basePyNNCell(BaseCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -44255,6 +44484,7 @@ class basePyNNCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("basePyNNCell"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -44509,6 +44739,7 @@ class InputW(Input):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         target: "a Nml2PopulationReferencePath (required)" = None,
         destination: "a NmlId (required)" = None,
@@ -44524,7 +44755,7 @@ class InputW(Input):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("InputW"), self).__init__(
-            id, target, destination, segment_id, fraction_along, **kwargs_
+            anytypeobjs_, id, target, destination, segment_id, fraction_along, **kwargs_
         )
         self.weight = _cast(float, weight)
         self.weight_nsprefix_ = None
@@ -44590,6 +44821,7 @@ class InputW(Input):
                 name_="InputW",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -44625,7 +44857,6 @@ class InputW(Input):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -44740,6 +44971,7 @@ class ContinuousProjection(BaseProjection):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         presynaptic_population: "a NmlId (required)" = None,
         postsynaptic_population: "a NmlId (required)" = None,
@@ -44755,7 +44987,7 @@ class ContinuousProjection(BaseProjection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ContinuousProjection"), self).__init__(
-            id, presynaptic_population, postsynaptic_population, **kwargs_
+            anytypeobjs_, id, presynaptic_population, postsynaptic_population, **kwargs_
         )
         if continuous_connections is None:
             self.continuous_connections = []
@@ -45155,6 +45387,7 @@ class ElectricalProjection(BaseProjection):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         presynaptic_population: "a NmlId (required)" = None,
         postsynaptic_population: "a NmlId (required)" = None,
@@ -45170,7 +45403,7 @@ class ElectricalProjection(BaseProjection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ElectricalProjection"), self).__init__(
-            id, presynaptic_population, postsynaptic_population, **kwargs_
+            anytypeobjs_, id, presynaptic_population, postsynaptic_population, **kwargs_
         )
         if electrical_connections is None:
             self.electrical_connections = []
@@ -45560,6 +45793,7 @@ class BaseConnectionNewFormat(BaseConnection):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell: "a string (required)" = None,
@@ -45578,7 +45812,7 @@ class BaseConnectionNewFormat(BaseConnection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConnectionNewFormat"), self).__init__(
-            id, neuro_lex_id, extensiontype_, **kwargs_
+            anytypeobjs_, id, neuro_lex_id, extensiontype_, **kwargs_
         )
         self.pre_cell = _cast(None, pre_cell)
         self.pre_cell_nsprefix_ = None
@@ -45712,6 +45946,7 @@ class BaseConnectionNewFormat(BaseConnection):
                 name_="BaseConnectionNewFormat",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -45821,7 +46056,6 @@ class BaseConnectionNewFormat(BaseConnection):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -45988,6 +46222,7 @@ class BaseConnectionOldFormat(BaseConnection):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell_id: "a Nml2PopulationReferencePath (required)" = None,
@@ -46006,7 +46241,7 @@ class BaseConnectionOldFormat(BaseConnection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConnectionOldFormat"), self).__init__(
-            id, neuro_lex_id, extensiontype_, **kwargs_
+            anytypeobjs_, id, neuro_lex_id, extensiontype_, **kwargs_
         )
         self.pre_cell_id = _cast(None, pre_cell_id)
         self.pre_cell_id_nsprefix_ = None
@@ -46174,6 +46409,7 @@ class BaseConnectionOldFormat(BaseConnection):
                 name_="BaseConnectionOldFormat",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -46287,7 +46523,6 @@ class BaseConnectionOldFormat(BaseConnection):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -46446,6 +46681,7 @@ class Projection(BaseProjection):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         presynaptic_population: "a NmlId (required)" = None,
         postsynaptic_population: "a NmlId (required)" = None,
@@ -46461,7 +46697,7 @@ class Projection(BaseProjection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Projection"), self).__init__(
-            id, presynaptic_population, postsynaptic_population, **kwargs_
+            anytypeobjs_, id, presynaptic_population, postsynaptic_population, **kwargs_
         )
         self.synapse = _cast(None, synapse)
         self.synapse_nsprefix_ = None
@@ -46836,6 +47072,7 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -46852,7 +47089,14 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeGeneratorRefPoisson"), self).__init__(
-            id, metaid, notes, properties, annotation, average_rate, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            average_rate,
+            **kwargs_,
         )
         self.minimum_isi = _cast(None, minimum_isi)
         self.minimum_isi_nsprefix_ = None
@@ -47069,6 +47313,7 @@ class IntracellularProperties2CaPools(IntracellularProperties):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         species: "list of Species(s) (optional)" = None,
         resistivities: "list of Resistivity(s) (optional)" = None,
         gds_collector_=None,
@@ -47080,7 +47325,7 @@ class IntracellularProperties2CaPools(IntracellularProperties):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IntracellularProperties2CaPools"), self).__init__(
-            species, resistivities, **kwargs_
+            anytypeobjs_, species, resistivities, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -47245,6 +47490,7 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -47264,6 +47510,7 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ConcentrationModel_D"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -47456,6 +47703,7 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         cond_density: "a Nml2Quantity_conductanceDensity (optional)" = None,
@@ -47472,6 +47720,7 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityNernstCa2"), self).__init__(
+            anytypeobjs_,
             id,
             ion_channel,
             cond_density,
@@ -47656,6 +47905,7 @@ class ChannelDensityVShift(ChannelDensity):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         cond_density: "a Nml2Quantity_conductanceDensity (optional)" = None,
@@ -47674,6 +47924,7 @@ class ChannelDensityVShift(ChannelDensity):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityVShift"), self).__init__(
+            anytypeobjs_,
             id,
             ion_channel,
             cond_density,
@@ -47911,6 +48162,7 @@ class MembraneProperties2CaPools(MembraneProperties):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         channel_populations: "list of ChannelPopulation(s) (optional)" = None,
         channel_densities: "list of ChannelDensity(s) (optional)" = None,
         channel_density_v_shifts: "list of ChannelDensityVShift(s) (optional)" = None,
@@ -47933,6 +48185,7 @@ class MembraneProperties2CaPools(MembraneProperties):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("MembraneProperties2CaPools"), self).__init__(
+            anytypeobjs_,
             channel_populations,
             channel_densities,
             channel_density_v_shifts,
@@ -48177,6 +48430,7 @@ class Cell(BaseCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -48197,6 +48451,7 @@ class Cell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Cell"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -50288,6 +50543,7 @@ class PinskyRinzelCA3Cell(BaseCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -50324,7 +50580,14 @@ class PinskyRinzelCA3Cell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("PinskyRinzelCA3Cell"), self).__init__(
-            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            neuro_lex_id,
+            **kwargs_,
         )
         self.i_soma = _cast(None, i_soma)
         self.i_soma_nsprefix_ = None
@@ -51175,6 +51438,7 @@ class FitzHughNagumo1969Cell(BaseCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -51196,7 +51460,14 @@ class FitzHughNagumo1969Cell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("FitzHughNagumo1969Cell"), self).__init__(
-            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            neuro_lex_id,
+            **kwargs_,
         )
         self.a = _cast(None, a)
         self.a_nsprefix_ = None
@@ -51509,6 +51780,7 @@ class FitzHughNagumoCell(BaseCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -51525,7 +51797,14 @@ class FitzHughNagumoCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("FitzHughNagumoCell"), self).__init__(
-            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            neuro_lex_id,
+            **kwargs_,
         )
         self.I = _cast(None, I)
         self.I_nsprefix_ = None
@@ -51741,6 +52020,7 @@ class BaseCellMembPotCap(BaseCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -51758,6 +52038,7 @@ class BaseCellMembPotCap(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseCellMembPotCap"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -52023,6 +52304,7 @@ class IzhikevichCell(BaseCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -52044,7 +52326,14 @@ class IzhikevichCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IzhikevichCell"), self).__init__(
-            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            neuro_lex_id,
+            **kwargs_,
         )
         self.v0 = _cast(None, v0)
         self.v0_nsprefix_ = None
@@ -52417,6 +52706,7 @@ class IafCell(BaseCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -52438,6 +52728,7 @@ class IafCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IafCell"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -52862,6 +53153,7 @@ class IafTauCell(BaseCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -52882,6 +53174,7 @@ class IafTauCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IafTauCell"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -53238,6 +53531,7 @@ class GradedSynapse(BaseSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -53258,7 +53552,14 @@ class GradedSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("GradedSynapse"), self).__init__(
-            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            neuro_lex_id,
+            **kwargs_,
         )
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
@@ -53632,6 +53933,7 @@ class LinearGradedSynapse(BaseSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -53648,7 +53950,14 @@ class LinearGradedSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("LinearGradedSynapse"), self).__init__(
-            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            neuro_lex_id,
+            **kwargs_,
         )
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
@@ -53863,6 +54172,7 @@ class SilentSynapse(BaseSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -53878,7 +54188,14 @@ class SilentSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SilentSynapse"), self).__init__(
-            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            neuro_lex_id,
+            **kwargs_,
         )
 
     def factory(*args_, **kwargs_):
@@ -54037,6 +54354,7 @@ class GapJunction(BaseSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -54053,7 +54371,14 @@ class GapJunction(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("GapJunction"), self).__init__(
-            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            neuro_lex_id,
+            **kwargs_,
         )
         self.conductance = _cast(None, conductance)
         self.conductance_nsprefix_ = None
@@ -54256,6 +54581,7 @@ class BaseCurrentBasedSynapse(BaseSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -54272,6 +54598,7 @@ class BaseCurrentBasedSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseCurrentBasedSynapse"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -54456,6 +54783,7 @@ class BaseVoltageDepSynapse(BaseSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -54472,6 +54800,7 @@ class BaseVoltageDepSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseVoltageDepSynapse"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -54773,6 +55102,7 @@ class IonChannel(IonChannelScalable):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -54801,6 +55131,7 @@ class IonChannel(IonChannelScalable):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannel"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -55373,6 +55704,7 @@ class ConditionalDerivedVariable(NamedDimensionalVariable):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -55387,7 +55719,7 @@ class ConditionalDerivedVariable(NamedDimensionalVariable):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ConditionalDerivedVariable"), self).__init__(
-            name, dimension, description, exposure, **kwargs_
+            anytypeobjs_, name, dimension, description, exposure, **kwargs_
         )
         if Case is None:
             self.Case = []
@@ -55574,6 +55906,7 @@ class StateVariable(NamedDimensionalVariable):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -55587,7 +55920,7 @@ class StateVariable(NamedDimensionalVariable):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("StateVariable"), self).__init__(
-            name, dimension, description, exposure, **kwargs_
+            anytypeobjs_, name, dimension, description, exposure, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -55651,6 +55984,7 @@ class StateVariable(NamedDimensionalVariable):
                 name_="StateVariable",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -55686,7 +56020,6 @@ class StateVariable(NamedDimensionalVariable):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -55736,6 +56069,7 @@ class DerivedVariable(NamedDimensionalVariable):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -55751,7 +56085,7 @@ class DerivedVariable(NamedDimensionalVariable):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("DerivedVariable"), self).__init__(
-            name, dimension, description, exposure, **kwargs_
+            anytypeobjs_, name, dimension, description, exposure, **kwargs_
         )
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
@@ -55819,6 +56153,7 @@ class DerivedVariable(NamedDimensionalVariable):
                 name_="DerivedVariable",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -55878,7 +56213,6 @@ class DerivedVariable(NamedDimensionalVariable):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -55935,6 +56269,7 @@ class Requirement(NamedDimensionalType):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -55947,7 +56282,7 @@ class Requirement(NamedDimensionalType):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Requirement"), self).__init__(
-            name, dimension, description, **kwargs_
+            anytypeobjs_, name, dimension, description, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -56011,6 +56346,7 @@ class Requirement(NamedDimensionalType):
                 name_="Requirement",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -56046,7 +56382,6 @@ class Requirement(NamedDimensionalType):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -56099,6 +56434,7 @@ class LEMS_Property(NamedDimensionalType):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -56112,7 +56448,7 @@ class LEMS_Property(NamedDimensionalType):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("LEMS_Property"), self).__init__(
-            name, dimension, description, **kwargs_
+            anytypeobjs_, name, dimension, description, **kwargs_
         )
         self.default_value = _cast(float, default_value)
         self.default_value_nsprefix_ = None
@@ -56178,6 +56514,7 @@ class LEMS_Property(NamedDimensionalType):
                 name_="LEMS_Property",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -56219,7 +56556,6 @@ class LEMS_Property(NamedDimensionalType):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -56277,6 +56613,7 @@ class DerivedParameter(NamedDimensionalType):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -56290,7 +56627,7 @@ class DerivedParameter(NamedDimensionalType):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("DerivedParameter"), self).__init__(
-            name, dimension, description, **kwargs_
+            anytypeobjs_, name, dimension, description, **kwargs_
         )
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
@@ -56360,6 +56697,7 @@ class DerivedParameter(NamedDimensionalType):
                 name_="DerivedParameter",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -56411,7 +56749,6 @@ class DerivedParameter(NamedDimensionalType):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -56462,6 +56799,7 @@ class Parameter(NamedDimensionalType):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -56474,7 +56812,7 @@ class Parameter(NamedDimensionalType):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Parameter"), self).__init__(
-            name, dimension, description, **kwargs_
+            anytypeobjs_, name, dimension, description, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -56538,6 +56876,7 @@ class Parameter(NamedDimensionalType):
                 name_="Parameter",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -56568,7 +56907,6 @@ class Parameter(NamedDimensionalType):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -56620,6 +56958,7 @@ class AlphaCurrSynapse(BasePynnSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -56636,7 +56975,15 @@ class AlphaCurrSynapse(BasePynnSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AlphaCurrSynapse"), self).__init__(
-            id, metaid, notes, properties, annotation, neuro_lex_id, tau_syn, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            neuro_lex_id,
+            tau_syn,
+            **kwargs_,
         )
 
     def factory(*args_, **kwargs_):
@@ -56795,6 +57142,7 @@ class ExpCurrSynapse(BasePynnSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -56811,7 +57159,15 @@ class ExpCurrSynapse(BasePynnSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpCurrSynapse"), self).__init__(
-            id, metaid, notes, properties, annotation, neuro_lex_id, tau_syn, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            neuro_lex_id,
+            tau_syn,
+            **kwargs_,
         )
 
     def factory(*args_, **kwargs_):
@@ -56966,6 +57322,7 @@ class AlphaCondSynapse(BasePynnSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -56983,7 +57340,15 @@ class AlphaCondSynapse(BasePynnSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AlphaCondSynapse"), self).__init__(
-            id, metaid, notes, properties, annotation, neuro_lex_id, tau_syn, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            neuro_lex_id,
+            tau_syn,
+            **kwargs_,
         )
         self.e_rev = _cast(float, e_rev)
         self.e_rev_nsprefix_ = None
@@ -57160,6 +57525,7 @@ class ExpCondSynapse(BasePynnSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -57177,7 +57543,15 @@ class ExpCondSynapse(BasePynnSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpCondSynapse"), self).__init__(
-            id, metaid, notes, properties, annotation, neuro_lex_id, tau_syn, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            neuro_lex_id,
+            tau_syn,
+            **kwargs_,
         )
         self.e_rev = _cast(float, e_rev)
         self.e_rev_nsprefix_ = None
@@ -57392,6 +57766,7 @@ class HH_cond_exp(basePyNNCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -57421,6 +57796,7 @@ class HH_cond_exp(basePyNNCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("HH_cond_exp"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -57752,6 +58128,7 @@ class basePyNNIaFCell(basePyNNCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -57778,6 +58155,7 @@ class basePyNNIaFCell(basePyNNCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("basePyNNIaFCell"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -58041,6 +58419,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell: "a string (required)" = None,
@@ -58061,6 +58440,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ContinuousConnection"), self).__init__(
+            anytypeobjs_,
             id,
             neuro_lex_id,
             pre_cell,
@@ -58175,6 +58555,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
                 name_="ContinuousConnection",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -58254,7 +58635,6 @@ class ContinuousConnection(BaseConnectionNewFormat):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -58417,6 +58797,7 @@ class ElectricalConnection(BaseConnectionNewFormat):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell: "a string (required)" = None,
@@ -58436,6 +58817,7 @@ class ElectricalConnection(BaseConnectionNewFormat):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ElectricalConnection"), self).__init__(
+            anytypeobjs_,
             id,
             neuro_lex_id,
             pre_cell,
@@ -58548,6 +58930,7 @@ class ElectricalConnection(BaseConnectionNewFormat):
                 name_="ElectricalConnection",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -58611,7 +58994,6 @@ class ElectricalConnection(BaseConnectionNewFormat):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -58769,6 +59151,7 @@ class ConnectionWD(BaseConnectionOldFormat):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell_id: "a Nml2PopulationReferencePath (required)" = None,
@@ -58788,6 +59171,7 @@ class ConnectionWD(BaseConnectionOldFormat):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ConnectionWD"), self).__init__(
+            anytypeobjs_,
             id,
             neuro_lex_id,
             pre_cell_id,
@@ -58896,6 +59280,7 @@ class ConnectionWD(BaseConnectionOldFormat):
                 name_="ConnectionWD",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -58948,7 +59333,6 @@ class ConnectionWD(BaseConnectionOldFormat):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -59126,6 +59510,7 @@ class Connection(BaseConnectionOldFormat):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell_id: "a Nml2PopulationReferencePath (required)" = None,
@@ -59143,6 +59528,7 @@ class Connection(BaseConnectionOldFormat):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Connection"), self).__init__(
+            anytypeobjs_,
             id,
             neuro_lex_id,
             pre_cell_id,
@@ -59215,6 +59601,7 @@ class Connection(BaseConnectionOldFormat):
                 name_="Connection",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -59245,7 +59632,6 @@ class Connection(BaseConnectionOldFormat):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -59392,6 +59778,7 @@ class Cell2CaPools(Cell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -59412,6 +59799,7 @@ class Cell2CaPools(Cell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Cell2CaPools"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -59651,6 +60039,7 @@ class HindmarshRose1984Cell(BaseCellMembPotCap):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -59678,7 +60067,15 @@ class HindmarshRose1984Cell(BaseCellMembPotCap):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("HindmarshRose1984Cell"), self).__init__(
-            id, metaid, notes, properties, annotation, neuro_lex_id, C, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            neuro_lex_id,
+            C,
+            **kwargs_,
         )
         self.a = _cast(None, a)
         self.a_nsprefix_ = None
@@ -60175,6 +60572,7 @@ class AdExIaFCell(BaseCellMembPotCap):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -60201,7 +60599,15 @@ class AdExIaFCell(BaseCellMembPotCap):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AdExIaFCell"), self).__init__(
-            id, metaid, notes, properties, annotation, neuro_lex_id, C, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            neuro_lex_id,
+            C,
+            **kwargs_,
         )
         self.g_l = _cast(None, g_l)
         self.g_l_nsprefix_ = None
@@ -60764,6 +61170,7 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -60789,7 +61196,15 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Izhikevich2007Cell"), self).__init__(
-            id, metaid, notes, properties, annotation, neuro_lex_id, C, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            neuro_lex_id,
+            C,
+            **kwargs_,
         )
         self.v0 = _cast(None, v0)
         self.v0_nsprefix_ = None
@@ -61321,6 +61736,7 @@ class IafRefCell(IafCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -61342,6 +61758,7 @@ class IafRefCell(IafCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IafRefCell"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -61568,6 +61985,7 @@ class IafTauRefCell(IafTauCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -61588,6 +62006,7 @@ class IafTauRefCell(IafTauCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IafTauRefCell"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -61818,6 +62237,7 @@ class DoubleSynapse(BaseVoltageDepSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -61837,7 +62257,14 @@ class DoubleSynapse(BaseVoltageDepSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("DoubleSynapse"), self).__init__(
-            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            neuro_lex_id,
+            **kwargs_,
         )
         self.synapse1 = _cast(None, synapse1)
         self.synapse1_nsprefix_ = None
@@ -62113,6 +62540,7 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -62130,7 +62558,14 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AlphaCurrentSynapse"), self).__init__(
-            id, metaid, notes, properties, annotation, neuro_lex_id, **kwargs_
+            anytypeobjs_,
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            neuro_lex_id,
+            **kwargs_,
         )
         self.tau = _cast(None, tau)
         self.tau_nsprefix_ = None
@@ -62423,6 +62858,7 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -62442,6 +62878,7 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConductanceBasedSynapseTwo"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -62788,6 +63225,7 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -62806,6 +63244,7 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConductanceBasedSynapse"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -63122,6 +63561,7 @@ class IonChannelVShift(IonChannel):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -63150,6 +63590,7 @@ class IonChannelVShift(IonChannel):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannelVShift"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -63384,6 +63825,7 @@ class IonChannelHH(IonChannel):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -63411,6 +63853,7 @@ class IonChannelHH(IonChannel):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannelHH"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -63598,6 +64041,7 @@ class IF_curr_exp(basePyNNIaFCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -63623,6 +64067,7 @@ class IF_curr_exp(basePyNNIaFCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IF_curr_exp"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -63808,6 +64253,7 @@ class IF_curr_alpha(basePyNNIaFCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -63833,6 +64279,7 @@ class IF_curr_alpha(basePyNNIaFCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IF_curr_alpha"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -64029,6 +64476,7 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -64057,6 +64505,7 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("basePyNNIaFCondCell"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -64279,6 +64728,7 @@ class ContinuousConnectionInstance(ContinuousConnection):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell: "a string (required)" = None,
@@ -64299,6 +64749,7 @@ class ContinuousConnectionInstance(ContinuousConnection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ContinuousConnectionInstance"), self).__init__(
+            anytypeobjs_,
             id,
             neuro_lex_id,
             pre_cell,
@@ -64384,6 +64835,7 @@ class ContinuousConnectionInstance(ContinuousConnection):
                 name_="ContinuousConnectionInstance",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -64435,7 +64887,6 @@ class ContinuousConnectionInstance(ContinuousConnection):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -64509,6 +64960,7 @@ class ElectricalConnectionInstance(ElectricalConnection):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell: "a string (required)" = None,
@@ -64528,6 +64980,7 @@ class ElectricalConnectionInstance(ElectricalConnection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ElectricalConnectionInstance"), self).__init__(
+            anytypeobjs_,
             id,
             neuro_lex_id,
             pre_cell,
@@ -64612,6 +65065,7 @@ class ElectricalConnectionInstance(ElectricalConnection):
                 name_="ElectricalConnectionInstance",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -64663,7 +65117,6 @@ class ElectricalConnectionInstance(ElectricalConnection):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -64772,6 +65225,7 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -64793,6 +65247,7 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpThreeSynapse"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -65081,6 +65536,7 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -65101,6 +65557,7 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpTwoSynapse"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -65372,6 +65829,7 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -65390,6 +65848,7 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpOneSynapse"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -65614,6 +66073,7 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -65632,6 +66092,7 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AlphaSynapse"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -65884,6 +66345,7 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -65917,6 +66379,7 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("EIF_cond_exp_isfa_ista"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -66208,6 +66671,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -66235,6 +66699,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IF_cond_exp"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -66426,6 +66891,7 @@ class IF_cond_alpha(basePyNNIaFCondCell):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -66453,6 +66919,7 @@ class IF_cond_alpha(basePyNNIaFCondCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IF_cond_alpha"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -66624,6 +67091,7 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell: "a string (required)" = None,
@@ -66644,6 +67112,7 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ContinuousConnectionInstanceW"), self).__init__(
+            anytypeobjs_,
             id,
             neuro_lex_id,
             pre_cell,
@@ -66729,6 +67198,7 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
                 name_="ContinuousConnectionInstanceW",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -66773,7 +67243,6 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -66861,6 +67330,7 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell: "a string (required)" = None,
@@ -66880,6 +67350,7 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ElectricalConnectionInstanceW"), self).__init__(
+            anytypeobjs_,
             id,
             neuro_lex_id,
             pre_cell,
@@ -66964,6 +67435,7 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
                 name_="ElectricalConnectionInstanceW",
                 pretty_print=pretty_print,
             )
+            showIndent(outfile, level, pretty_print)
             outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
         else:
             outfile.write("/>%s" % (eol_,))
@@ -67008,7 +67480,6 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
             True,
             pretty_print=pretty_print,
         )
-        pass
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -67123,6 +67594,7 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -67144,6 +67616,7 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BlockingPlasticSynapse"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
@@ -67412,6 +67885,7 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
 
     def __init__(
         self,
+        anytypeobjs_=None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -67444,6 +67918,7 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("EIF_cond_alpha_isfa_ista"), self).__init__(
+            anytypeobjs_,
             id,
             metaid,
             notes,
