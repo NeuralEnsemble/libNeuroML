@@ -9,9 +9,6 @@ Copyright 2023 NeuroML contributors
 import logging
 import sys
 
-import lems.api
-from lems.api import Component
-
 import neuroml.build_time_validation
 
 from .generatedscollector import GdsCollector
@@ -60,10 +57,6 @@ class GeneratedsSuperSuper(object):
         # a component type has been passed, create and add a new one
         if type(obj) is type or isinstance(obj, str):
             obj = self.component_factory(obj, validate=validate, **kwargs)
-
-        if type(obj).__name__ == "Component":
-            self.anytypeobjs_.append(obj)
-            return obj
 
         # getattr only returns the value of the provided member but one cannot
         # then use this to modify the member. Using `vars` also allows us to
@@ -146,29 +139,27 @@ class GeneratedsSuperSuper(object):
 
         """
         module_object = sys.modules[cls.__module__]
-        lems_module_object = sys.modules["lems.api"]
-
-        new_component = False
 
         if isinstance(component_type, str):
-            if component_type in ["__ANY__", "Component"]:
-                comp_type_class = getattr(lems_module_object, "Component")
-                new_component = True
-            else:
-                comp_type_class = getattr(module_object, component_type)
+            comp_type_class = getattr(module_object, component_type)
         else:
-            if component_type.__name__ == "Component":
-                comp_type_class = getattr(lems_module_object, "Component")
-                new_component = True
-            else:
-                comp_type_class = getattr(module_object, component_type.__name__)
+            comp_type_class = getattr(module_object, component_type.__name__)
+
+        # if new component, manually add the supplied arguments after
+        # extracting id and name
+        if comp_type_class.__name__ == "Component":
+            new_comp_args = kwargs.copy()
+            try:
+                id_ = new_comp_args.pop("id")
+                type_ = new_comp_args.pop("type")
+            except KeyError:
+                print("Error: Component requires 'id' and 'type'")
+
+            comp = comp_type_class(id=id_, type=type_)
+            comp.anyAttributes_ = new_comp_args
+            return comp
 
         comp = comp_type_class(**kwargs)
-
-        # if new component, don't do anything else because it's not from the
-        # schema
-        if new_component:
-            return comp
 
         # additional setups where required
         if comp_type_class.__name__ == "Cell":
