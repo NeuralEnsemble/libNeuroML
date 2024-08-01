@@ -153,10 +153,13 @@ class GeneratedsSuperSuper(object):
                 id_ = new_comp_args.pop("id")
                 type_ = new_comp_args.pop("type")
             except KeyError:
-                print("Error: Component requires 'id' and 'type'")
+                print("Error: Component requires at least 'id' and 'type' arguments")
 
             comp = comp_type_class(id=id_, type=type_)
             comp.anyAttributes_ = new_comp_args
+            logging.warning(
+                "New Component reference created. This will NOT be validated against the schema."
+            )
             return comp
 
         comp = comp_type_class(**kwargs)
