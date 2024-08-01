@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Jul 31 18:27:05 2024 by generateDS.py version 2.43.3.
+# Generated Thu Aug  1 09:28:08 2024 by generateDS.py version 2.43.3.
 # Python 3.11.9 (main, Apr 17 2024, 00:00:00) [GCC 14.0.1 20240411 (Red Hat 14.0.1-0)]
 #
 # Command line options:
@@ -5301,17 +5301,296 @@ class VariableParameter(GeneratedsSuper):
 # end class VariableParameter
 
 
+class Component(GeneratedsSuper):
+    """Component -- A new Component based on a new defined ComponentType."""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("id", "NmlId", 0, 0, {"use": "required", "name": "id"}),
+        MemberSpec_("type", "NmlId", 0, 0, {"use": "required", "name": "type"}),
+    ]
+    subclass = None
+    superclass = None
+
+    def __init__(
+        self,
+        id: "a NmlId (required)" = None,
+        type: "a NmlId (required)" = None,
+        gds_collector_=None,
+        **kwargs_,
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        self.id = _cast(None, id)
+        self.id_nsprefix_ = None
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
+        self.anyAttributes_ = {}
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Component)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Component.subclass:
+            return Component.subclass(*args_, **kwargs_)
+        else:
+            return Component(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NmlId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NmlId_patterns_,
+                    )
+                )
+
+    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
+
+    def has__content(self):
+        if ():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Component",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Component")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Component":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Component"
+        )
+        if self.has__content():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Component",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Component"
+    ):
+        unique_counter = 0
+        for name, value in self.anyAttributes_.items():
+            xsinamespaceprefix = "xsi"
+            xsinamespace1 = "http://www.w3.org/2001/XMLSchema-instance"
+            xsinamespace2 = "{%s}" % (xsinamespace1,)
+            if name.startswith(xsinamespace2):
+                name1 = name[len(xsinamespace2) :]
+                name2 = "%s:%s" % (
+                    xsinamespaceprefix,
+                    name1,
+                )
+                if name2 not in already_processed:
+                    already_processed.add(name2)
+                    outfile.write(
+                        " %s=%s"
+                        % (
+                            name2,
+                            quote_attrib(value),
+                        )
+                    )
+            else:
+                mo = re_.match(Namespace_extract_pat_, name)
+                if mo is not None:
+                    namespace, name = mo.group(1, 2)
+                    if name not in already_processed:
+                        already_processed.add(name)
+                        if namespace == "http://www.w3.org/XML/1998/namespace":
+                            outfile.write(
+                                " %s=%s"
+                                % (
+                                    name,
+                                    quote_attrib(value),
+                                )
+                            )
+                        else:
+                            unique_counter += 1
+                            outfile.write(
+                                ' xmlns:%d="%s"'
+                                % (
+                                    unique_counter,
+                                    namespace,
+                                )
+                            )
+                            outfile.write(
+                                " %d:%s=%s"
+                                % (
+                                    unique_counter,
+                                    name,
+                                    quote_attrib(value),
+                                )
+                            )
+                else:
+                    if name not in already_processed:
+                        already_processed.add(name)
+                        outfile.write(
+                            " %s=%s"
+                            % (
+                                name,
+                                quote_attrib(value),
+                            )
+                        )
+        if self.id is not None and "id" not in already_processed:
+            already_processed.add("id")
+            outfile.write(
+                " id=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(quote_attrib(self.id), input_name="id")
+                    ),
+                )
+            )
+        if self.type is not None and "type" not in already_processed:
+            already_processed.add("type")
+            outfile.write(
+                " type=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.type), input_name="type"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Component",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.id, "id")
+        self.gds_check_cardinality_(self.id, "id", required=True)
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.type, "type")
+        self.gds_check_cardinality_(self.type, "type", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("id", node)
+        if value is not None and "id" not in already_processed:
+            already_processed.add("id")
+            self.id = value
+            self.validate_NmlId(self.id)  # validate type NmlId
+        value = find_attr_value_("type", node)
+        if value is not None and "type" not in already_processed:
+            already_processed.add("type")
+            self.type = value
+            self.validate_NmlId(self.type)  # validate type NmlId
+        self.anyAttributes_ = {}
+        for name, value in attrs.items():
+            if name not in already_processed:
+                self.anyAttributes_[name] = value
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        pass
+
+
+# end class Component
+
+
 class BaseWithoutId(GeneratedsSuper):
     """BaseWithoutId -- Base element without ID specified *yet*, e.g. for an element with a particular requirement on its id which does not comply with NmlId (e.g. Segment needs nonNegativeInteger)."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_(
-            "__ANY__",
-            "__ANY__",
+            "Component",
+            "Component",
             1,
             1,
-            {"maxOccurs": "unbounded", "minOccurs": "0", "processContents": "lax"},
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "Component",
+                "type": "Component",
+            },
             None,
         ),
     ]
@@ -5319,17 +5598,22 @@ class BaseWithoutId(GeneratedsSuper):
     superclass = None
 
     def __init__(
-        self, anytypeobjs_=None, extensiontype_=None, gds_collector_=None, **kwargs_
+        self,
+        Component: "list of Component(s) (optional)" = None,
+        extensiontype_=None,
+        gds_collector_=None,
+        **kwargs_,
     ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        if anytypeobjs_ is None:
-            self.anytypeobjs_ = []
+        if Component is None:
+            self.Component = []
         else:
-            self.anytypeobjs_ = anytypeobjs_
+            self.Component = Component
+        self.Component_nsprefix_ = None
         self.extensiontype_ = extensiontype_
 
     def factory(*args_, **kwargs_):
@@ -5345,7 +5629,7 @@ class BaseWithoutId(GeneratedsSuper):
     factory = staticmethod(factory)
 
     def has__content(self):
-        if self.anytypeobjs_:
+        if self.Component:
             return True
         else:
             return False
@@ -5434,11 +5718,20 @@ class BaseWithoutId(GeneratedsSuper):
             eol_ = "\n"
         else:
             eol_ = ""
-        if not fromsubclass_:
-            for obj_ in self.anytypeobjs_:
-                showIndent(outfile, level, pretty_print)
-                outfile.write(str(obj_))
-                outfile.write("\n")
+        for Component_ in self.Component:
+            namespaceprefix_ = (
+                self.Component_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.Component_nsprefix_)
+                else ""
+            )
+            Component_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="Component",
+                pretty_print=pretty_print,
+            )
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -5446,8 +5739,12 @@ class BaseWithoutId(GeneratedsSuper):
         # validate simple type attributes
         # validate simple type children
         # validate complex type children
+        self.gds_check_cardinality_(
+            self.Component, "Component", min_occurs=0, max_occurs=9999999
+        )
         if recursive:
-            pass
+            for item in self.Component:
+                item.validate_(gds_collector, recursive=True)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -5471,8 +5768,11 @@ class BaseWithoutId(GeneratedsSuper):
     def _buildChildren(
         self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
     ):
-        content_ = self.gds_build_any(child_, "BaseWithoutId")
-        self.anytypeobjs_.append(content_)
+        if nodeName_ == "Component":
+            obj_ = Component.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.Component.append(obj_)
+            obj_.original_tagname_ = "Component"
 
 
 # end class BaseWithoutId
@@ -5492,7 +5792,7 @@ class BaseNonNegativeIntegerId(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         extensiontype_=None,
         gds_collector_=None,
@@ -5504,7 +5804,7 @@ class BaseNonNegativeIntegerId(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseNonNegativeIntegerId"), self).__init__(
-            anytypeobjs_, extensiontype_, **kwargs_
+            Component, extensiontype_, **kwargs_
         )
         self.id = _cast(int, id)
         self.id_nsprefix_ = None
@@ -5720,7 +6020,7 @@ class Base(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         extensiontype_=None,
         gds_collector_=None,
@@ -5732,7 +6032,7 @@ class Base(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Base"), self).__init__(
-            anytypeobjs_, extensiontype_, **kwargs_
+            Component, extensiontype_, **kwargs_
         )
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
@@ -5970,7 +6270,7 @@ class Standalone(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -5986,7 +6286,7 @@ class Standalone(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Standalone"), self).__init__(
-            anytypeobjs_, id, extensiontype_, **kwargs_
+            Component, id, extensiontype_, **kwargs_
         )
         self.metaid = _cast(None, metaid)
         self.metaid_nsprefix_ = None
@@ -6334,7 +6634,7 @@ class SpikeSourcePoisson(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -6352,7 +6652,7 @@ class SpikeSourcePoisson(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeSourcePoisson"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.start = _cast(None, start)
         self.start_nsprefix_ = None
@@ -6672,7 +6972,7 @@ class Input(BaseNonNegativeIntegerId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         target: "a Nml2PopulationReferencePath (required)" = None,
         destination: "a NmlId (required)" = None,
@@ -6688,7 +6988,7 @@ class Input(BaseNonNegativeIntegerId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Input"), self).__init__(
-            anytypeobjs_, id, extensiontype_, **kwargs_
+            Component, id, extensiontype_, **kwargs_
         )
         self.target = _cast(None, target)
         self.target_nsprefix_ = None
@@ -7124,7 +7424,7 @@ class InputList(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         populations: "a NmlId (required)" = None,
         component: "a NmlId (required)" = None,
@@ -7138,7 +7438,7 @@ class InputList(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("InputList"), self).__init__(anytypeobjs_, id, **kwargs_)
+        super(globals().get("InputList"), self).__init__(Component, id, **kwargs_)
         self.populations = _cast(None, populations)
         self.populations_nsprefix_ = None
         self.component = _cast(None, component)
@@ -7491,7 +7791,7 @@ class ExplicitInput(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         target: "a Nml2PopulationReferencePath (required)" = None,
         input: "a NmlId (required)" = None,
         destination: "a NmlId (optional)" = None,
@@ -7503,7 +7803,7 @@ class ExplicitInput(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ExplicitInput"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("ExplicitInput"), self).__init__(Component, **kwargs_)
         self.target = _cast(None, target)
         self.target_nsprefix_ = None
         self.input = _cast(None, input)
@@ -7858,7 +8158,7 @@ class BaseConnection(BaseNonNegativeIntegerId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         extensiontype_=None,
@@ -7871,7 +8171,7 @@ class BaseConnection(BaseNonNegativeIntegerId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConnection"), self).__init__(
-            anytypeobjs_, id, extensiontype_, **kwargs_
+            Component, id, extensiontype_, **kwargs_
         )
         self.neuro_lex_id = _cast(None, neuro_lex_id)
         self.neuro_lex_id_nsprefix_ = None
@@ -8102,7 +8402,7 @@ class BaseProjection(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         presynaptic_population: "a NmlId (required)" = None,
         postsynaptic_population: "a NmlId (required)" = None,
@@ -8116,7 +8416,7 @@ class BaseProjection(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseProjection"), self).__init__(
-            anytypeobjs_, id, extensiontype_, **kwargs_
+            Component, id, extensiontype_, **kwargs_
         )
         self.presynaptic_population = _cast(None, presynaptic_population)
         self.presynaptic_population_nsprefix_ = None
@@ -8389,7 +8689,7 @@ class SynapticConnection(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         from_: "a Nml2PopulationReferencePath (required)" = None,
         to: "a Nml2PopulationReferencePath (required)" = None,
@@ -8403,9 +8703,7 @@ class SynapticConnection(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SynapticConnection"), self).__init__(
-            anytypeobjs_, **kwargs_
-        )
+        super(globals().get("SynapticConnection"), self).__init__(Component, **kwargs_)
         self.neuro_lex_id = _cast(None, neuro_lex_id)
         self.neuro_lex_id_nsprefix_ = None
         self.from_ = _cast(None, from_)
@@ -8807,9 +9105,10 @@ class CellSet(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         select: "a string (required)" = None,
+        anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_,
     ):
@@ -8818,7 +9117,7 @@ class CellSet(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("CellSet"), self).__init__(anytypeobjs_, id, **kwargs_)
+        super(globals().get("CellSet"), self).__init__(Component, id, **kwargs_)
         self.select = _cast(None, select)
         self.select_nsprefix_ = None
         if anytypeobjs_ is None:
@@ -9005,7 +9304,7 @@ class Location(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         x: "a float (required)" = None,
         y: "a float (required)" = None,
         z: "a float (required)" = None,
@@ -9017,7 +9316,7 @@ class Location(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Location"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("Location"), self).__init__(Component, **kwargs_)
         self.x = _cast(float, x)
         self.x_nsprefix_ = None
         self.y = _cast(float, y)
@@ -9229,7 +9528,7 @@ class Instance(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a nonNegativeInteger (optional)" = None,
         i: "a nonNegativeInteger (optional)" = None,
         j: "a nonNegativeInteger (optional)" = None,
@@ -9243,7 +9542,7 @@ class Instance(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Instance"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("Instance"), self).__init__(Component, **kwargs_)
         self.id = _cast(int, id)
         self.id_nsprefix_ = None
         self.i = _cast(int, i)
@@ -9495,7 +9794,7 @@ class GridLayout(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         x_size: "a nonNegativeInteger (optional)" = None,
         y_size: "a nonNegativeInteger (optional)" = None,
         z_size: "a nonNegativeInteger (optional)" = None,
@@ -9507,7 +9806,7 @@ class GridLayout(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GridLayout"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("GridLayout"), self).__init__(Component, **kwargs_)
         self.x_size = _cast(int, x_size)
         self.x_size_nsprefix_ = None
         self.y_size = _cast(int, y_size)
@@ -9699,7 +9998,7 @@ class RandomLayout(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         number: "a nonNegativeInteger (optional)" = None,
         regions: "a NmlId (optional)" = None,
         gds_collector_=None,
@@ -9710,7 +10009,7 @@ class RandomLayout(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("RandomLayout"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("RandomLayout"), self).__init__(Component, **kwargs_)
         self.number = _cast(int, number)
         self.number_nsprefix_ = None
         self.regions = _cast(None, regions)
@@ -9928,7 +10227,7 @@ class UnstructuredLayout(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         number: "a nonNegativeInteger (optional)" = None,
         gds_collector_=None,
         **kwargs_,
@@ -9938,9 +10237,7 @@ class UnstructuredLayout(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("UnstructuredLayout"), self).__init__(
-            anytypeobjs_, **kwargs_
-        )
+        super(globals().get("UnstructuredLayout"), self).__init__(Component, **kwargs_)
         self.number = _cast(int, number)
         self.number_nsprefix_ = None
 
@@ -10130,7 +10427,7 @@ class Layout(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         spaces: "a NmlId (optional)" = None,
         random: "a RandomLayout (required)" = None,
         grid: "a GridLayout (required)" = None,
@@ -10143,7 +10440,7 @@ class Layout(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Layout"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("Layout"), self).__init__(Component, **kwargs_)
         self.spaces = _cast(None, spaces)
         self.spaces_nsprefix_ = None
         self.random = random
@@ -10461,7 +10758,7 @@ class Population(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -10483,7 +10780,7 @@ class Population(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Population"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.component = _cast(None, component)
         self.component_nsprefix_ = None
@@ -10973,9 +11270,10 @@ class Region(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         spaces: "a NmlId (optional)" = None,
+        anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_,
     ):
@@ -10984,7 +11282,7 @@ class Region(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Region"), self).__init__(anytypeobjs_, id, **kwargs_)
+        super(globals().get("Region"), self).__init__(Component, id, **kwargs_)
         self.spaces = _cast(None, spaces)
         self.spaces_nsprefix_ = None
         if anytypeobjs_ is None:
@@ -11206,7 +11504,7 @@ class SpaceStructure(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         x_spacing: "a float (optional)" = None,
         y_spacing: "a float (optional)" = None,
         z_spacing: "a float (optional)" = None,
@@ -11221,7 +11519,7 @@ class SpaceStructure(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SpaceStructure"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("SpaceStructure"), self).__init__(Component, **kwargs_)
         self.x_spacing = _cast(float, x_spacing)
         self.x_spacing_nsprefix_ = None
         self.y_spacing = _cast(float, y_spacing)
@@ -11472,7 +11770,7 @@ class Space(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         based_on: "a allowedSpaces (optional)" = None,
         structure: "a SpaceStructure (optional)" = None,
@@ -11484,7 +11782,7 @@ class Space(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Space"), self).__init__(anytypeobjs_, id, **kwargs_)
+        super(globals().get("Space"), self).__init__(Component, id, **kwargs_)
         self.based_on = _cast(None, based_on)
         self.based_on_nsprefix_ = None
         self.structure = structure
@@ -11863,7 +12161,7 @@ class Network(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -11892,7 +12190,7 @@ class Network(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Network"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
@@ -12652,7 +12950,7 @@ class TransientPoissonFiringSynapse(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -12672,7 +12970,7 @@ class TransientPoissonFiringSynapse(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("TransientPoissonFiringSynapse"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.average_rate = _cast(None, average_rate)
         self.average_rate_nsprefix_ = None
@@ -13039,7 +13337,7 @@ class PoissonFiringSynapse(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -13057,7 +13355,7 @@ class PoissonFiringSynapse(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("PoissonFiringSynapse"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.average_rate = _cast(None, average_rate)
         self.average_rate_nsprefix_ = None
@@ -13327,7 +13625,7 @@ class SpikeGeneratorPoisson(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -13344,7 +13642,7 @@ class SpikeGeneratorPoisson(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeGeneratorPoisson"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -13597,7 +13895,7 @@ class SpikeGeneratorRandom(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -13614,7 +13912,7 @@ class SpikeGeneratorRandom(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeGeneratorRandom"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.max_isi = _cast(None, max_isi)
         self.max_isi_nsprefix_ = None
@@ -13863,7 +14161,7 @@ class SpikeGenerator(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -13879,7 +14177,7 @@ class SpikeGenerator(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeGenerator"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.period = _cast(None, period)
         self.period_nsprefix_ = None
@@ -14104,7 +14402,7 @@ class TimedSynapticInput(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -14122,7 +14420,7 @@ class TimedSynapticInput(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("TimedSynapticInput"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.synapse = _cast(None, synapse)
         self.synapse_nsprefix_ = None
@@ -14396,7 +14694,7 @@ class SpikeArray(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -14412,7 +14710,7 @@ class SpikeArray(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeArray"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         if spikes is None:
             self.spikes = []
@@ -14593,7 +14891,7 @@ class Spike(BaseNonNegativeIntegerId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         time: "a Nml2Quantity_time (required)" = None,
         gds_collector_=None,
@@ -14604,7 +14902,7 @@ class Spike(BaseNonNegativeIntegerId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Spike"), self).__init__(anytypeobjs_, id, **kwargs_)
+        super(globals().get("Spike"), self).__init__(Component, id, **kwargs_)
         self.time = _cast(None, time)
         self.time_nsprefix_ = None
 
@@ -14858,7 +15156,7 @@ class VoltageClampTriple(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -14880,7 +15178,7 @@ class VoltageClampTriple(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("VoltageClampTriple"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.active = _cast(float, active)
         self.active_nsprefix_ = None
@@ -15389,7 +15687,7 @@ class VoltageClamp(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -15408,7 +15706,7 @@ class VoltageClamp(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("VoltageClamp"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -15804,7 +16102,7 @@ class CompoundInputDL(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -15822,7 +16120,7 @@ class CompoundInputDL(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("CompoundInputDL"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         if pulse_generator_dls is None:
             self.pulse_generator_dls = []
@@ -16111,7 +16409,7 @@ class CompoundInput(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -16129,7 +16427,7 @@ class CompoundInput(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("CompoundInput"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         if pulse_generators is None:
             self.pulse_generators = []
@@ -16414,7 +16712,7 @@ class RampGeneratorDL(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -16434,7 +16732,7 @@ class RampGeneratorDL(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("RampGeneratorDL"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -16834,7 +17132,7 @@ class RampGenerator(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -16854,7 +17152,7 @@ class RampGenerator(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("RampGenerator"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -17248,7 +17546,7 @@ class SineGeneratorDL(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -17268,7 +17566,7 @@ class SineGeneratorDL(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SineGeneratorDL"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -17640,7 +17938,7 @@ class SineGenerator(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -17660,7 +17958,7 @@ class SineGenerator(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SineGenerator"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -18054,7 +18352,7 @@ class PulseGeneratorDL(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -18072,7 +18370,7 @@ class PulseGeneratorDL(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("PulseGeneratorDL"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -18392,7 +18690,7 @@ class PulseGenerator(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -18410,7 +18708,7 @@ class PulseGenerator(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("PulseGenerator"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.delay = _cast(None, delay)
         self.delay_nsprefix_ = None
@@ -18704,10 +19002,11 @@ class ReactionScheme(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         source: "a string (required)" = None,
         type: "a string (required)" = None,
+        anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_,
     ):
@@ -18716,9 +19015,7 @@ class ReactionScheme(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ReactionScheme"), self).__init__(
-            anytypeobjs_, id, **kwargs_
-        )
+        super(globals().get("ReactionScheme"), self).__init__(Component, id, **kwargs_)
         self.source = _cast(None, source)
         self.source_nsprefix_ = None
         self.type = _cast(None, type)
@@ -18929,7 +19226,7 @@ class ExtracellularPropertiesLocal(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         species: "list of Species(s) (optional)" = None,
         gds_collector_=None,
@@ -18941,7 +19238,7 @@ class ExtracellularPropertiesLocal(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExtracellularPropertiesLocal"), self).__init__(
-            anytypeobjs_, id, **kwargs_
+            Component, id, **kwargs_
         )
         if species is None:
             self.species = []
@@ -19147,7 +19444,7 @@ class ExtracellularProperties(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         species: "list of Species(s) (optional)" = None,
         gds_collector_=None,
@@ -19159,7 +19456,7 @@ class ExtracellularProperties(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExtracellularProperties"), self).__init__(
-            anytypeobjs_, id, **kwargs_
+            Component, id, **kwargs_
         )
         if species is None:
             self.species = []
@@ -19377,7 +19674,7 @@ class IntracellularProperties(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         species: "list of Species(s) (optional)" = None,
         resistivities: "list of Resistivity(s) (optional)" = None,
         extensiontype_=None,
@@ -19390,7 +19687,7 @@ class IntracellularProperties(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IntracellularProperties"), self).__init__(
-            anytypeobjs_, extensiontype_, **kwargs_
+            Component, extensiontype_, **kwargs_
         )
         if species is None:
             self.species = []
@@ -19668,7 +19965,7 @@ class Species(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         concentration_model: "a NmlId (required)" = None,
         ion: "a NmlId (optional)" = None,
@@ -19683,7 +19980,7 @@ class Species(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Species"), self).__init__(anytypeobjs_, id, **kwargs_)
+        super(globals().get("Species"), self).__init__(Component, id, **kwargs_)
         self.concentration_model = _cast(None, concentration_model)
         self.concentration_model_nsprefix_ = None
         self.ion = _cast(None, ion)
@@ -20033,7 +20330,7 @@ class InhomogeneousValue(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         inhomogeneous_parameters: "a string (required)" = None,
         value: "a string (required)" = None,
         gds_collector_=None,
@@ -20044,9 +20341,7 @@ class InhomogeneousValue(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("InhomogeneousValue"), self).__init__(
-            anytypeobjs_, **kwargs_
-        )
+        super(globals().get("InhomogeneousValue"), self).__init__(Component, **kwargs_)
         self.inhomogeneous_parameters = _cast(None, inhomogeneous_parameters)
         self.inhomogeneous_parameters_nsprefix_ = None
         self.value = _cast(None, value)
@@ -20276,7 +20571,7 @@ class ChannelDensityGHK2(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         cond_density: "a Nml2Quantity_conductanceDensity (optional)" = None,
@@ -20292,7 +20587,7 @@ class ChannelDensityGHK2(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityGHK2"), self).__init__(
-            anytypeobjs_, id, **kwargs_
+            Component, id, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -20652,7 +20947,7 @@ class ChannelDensityGHK(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         permeability: "a Nml2Quantity_permeability (required)" = None,
@@ -20668,7 +20963,7 @@ class ChannelDensityGHK(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityGHK"), self).__init__(
-            anytypeobjs_, id, **kwargs_
+            Component, id, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -21037,7 +21332,7 @@ class ChannelDensityNernst(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         cond_density: "a Nml2Quantity_conductanceDensity (optional)" = None,
@@ -21055,7 +21350,7 @@ class ChannelDensityNernst(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityNernst"), self).__init__(
-            anytypeobjs_, id, extensiontype_, **kwargs_
+            Component, id, extensiontype_, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -21492,7 +21787,7 @@ class ChannelDensity(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         cond_density: "a Nml2Quantity_conductanceDensity (optional)" = None,
@@ -21511,7 +21806,7 @@ class ChannelDensity(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensity"), self).__init__(
-            anytypeobjs_, id, extensiontype_, **kwargs_
+            Component, id, extensiontype_, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -21981,7 +22276,7 @@ class ChannelDensityNonUniformGHK(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         ion: "a NmlId (required)" = None,
@@ -21995,7 +22290,7 @@ class ChannelDensityNonUniformGHK(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityNonUniformGHK"), self).__init__(
-            anytypeobjs_, id, **kwargs_
+            Component, id, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -22285,7 +22580,7 @@ class ChannelDensityNonUniformNernst(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         ion: "a NmlId (required)" = None,
@@ -22299,7 +22594,7 @@ class ChannelDensityNonUniformNernst(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityNonUniformNernst"), self).__init__(
-            anytypeobjs_, id, **kwargs_
+            Component, id, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -22599,7 +22894,7 @@ class ChannelDensityNonUniform(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         erev: "a Nml2Quantity_voltage (required)" = None,
@@ -22614,7 +22909,7 @@ class ChannelDensityNonUniform(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityNonUniform"), self).__init__(
-            anytypeobjs_, id, **kwargs_
+            Component, id, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -22985,7 +23280,7 @@ class ChannelPopulation(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         number: "a NonNegativeInteger (required)" = None,
@@ -23003,7 +23298,7 @@ class ChannelPopulation(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelPopulation"), self).__init__(
-            anytypeobjs_, id, **kwargs_
+            Component, id, **kwargs_
         )
         self.ion_channel = _cast(None, ion_channel)
         self.ion_channel_nsprefix_ = None
@@ -23426,7 +23721,7 @@ class Resistivity(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         value: "a Nml2Quantity_resistivity (required)" = None,
         segment_groups: "a NmlId (optional)" = "all",
         gds_collector_=None,
@@ -23437,7 +23732,7 @@ class Resistivity(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Resistivity"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("Resistivity"), self).__init__(Component, **kwargs_)
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.segment_groups = _cast(None, segment_groups)
@@ -23710,7 +24005,7 @@ class InitMembPotential(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         value: "a Nml2Quantity_voltage (required)" = None,
         segment_groups: "a NmlId (optional)" = "all",
         gds_collector_=None,
@@ -23721,9 +24016,7 @@ class InitMembPotential(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("InitMembPotential"), self).__init__(
-            anytypeobjs_, **kwargs_
-        )
+        super(globals().get("InitMembPotential"), self).__init__(Component, **kwargs_)
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.segment_groups = _cast(None, segment_groups)
@@ -24008,7 +24301,7 @@ class SpecificCapacitance(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         value: "a Nml2Quantity_specificCapacitance (required)" = None,
         segment_groups: "a NmlId (optional)" = "all",
         gds_collector_=None,
@@ -24019,9 +24312,7 @@ class SpecificCapacitance(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SpecificCapacitance"), self).__init__(
-            anytypeobjs_, **kwargs_
-        )
+        super(globals().get("SpecificCapacitance"), self).__init__(Component, **kwargs_)
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.segment_groups = _cast(None, segment_groups)
@@ -24306,7 +24597,7 @@ class SpikeThresh(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         value: "a Nml2Quantity_voltage (required)" = None,
         segment_groups: "a NmlId (optional)" = "all",
         gds_collector_=None,
@@ -24317,7 +24608,7 @@ class SpikeThresh(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SpikeThresh"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("SpikeThresh"), self).__init__(Component, **kwargs_)
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.segment_groups = _cast(None, segment_groups)
@@ -24731,7 +25022,7 @@ class MembraneProperties(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         channel_populations: "list of ChannelPopulation(s) (optional)" = None,
         channel_densities: "list of ChannelDensity(s) (optional)" = None,
         channel_density_v_shifts: "list of ChannelDensityVShift(s) (optional)" = None,
@@ -24754,7 +25045,7 @@ class MembraneProperties(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("MembraneProperties"), self).__init__(
-            anytypeobjs_, extensiontype_, **kwargs_
+            Component, extensiontype_, **kwargs_
         )
         if channel_populations is None:
             self.channel_populations = []
@@ -25367,7 +25658,7 @@ class BiophysicalProperties2CaPools(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -25385,7 +25676,7 @@ class BiophysicalProperties2CaPools(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BiophysicalProperties2CaPools"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.membrane_properties2_ca_pools = membrane_properties2_ca_pools
         self.membrane_properties2_ca_pools_nsprefix_ = None
@@ -25681,7 +25972,7 @@ class BiophysicalProperties(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -25699,7 +25990,7 @@ class BiophysicalProperties(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BiophysicalProperties"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.membrane_properties = membrane_properties
         self.membrane_properties_nsprefix_ = None
@@ -25956,7 +26247,7 @@ class SegmentEndPoint(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         segments: "a NonNegativeInteger (required)" = None,
         gds_collector_=None,
         **kwargs_,
@@ -25966,7 +26257,7 @@ class SegmentEndPoint(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SegmentEndPoint"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("SegmentEndPoint"), self).__init__(Component, **kwargs_)
         self.segments = _cast(int, segments)
         self.segments_nsprefix_ = None
 
@@ -26168,7 +26459,7 @@ class SubTree(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         from_: "a SegmentEndPoint (optional)" = None,
         to: "a SegmentEndPoint (optional)" = None,
         gds_collector_=None,
@@ -26179,7 +26470,7 @@ class SubTree(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SubTree"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("SubTree"), self).__init__(Component, **kwargs_)
         self.from_ = from_
         self.from__nsprefix_ = None
         self.to = to
@@ -26392,7 +26683,7 @@ class Path(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         from_: "a SegmentEndPoint (optional)" = None,
         to: "a SegmentEndPoint (optional)" = None,
         gds_collector_=None,
@@ -26403,7 +26694,7 @@ class Path(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Path"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("Path"), self).__init__(Component, **kwargs_)
         self.from_ = from_
         self.from__nsprefix_ = None
         self.to = to
@@ -26605,7 +26896,7 @@ class Include(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         segment_groups: "a NmlId (required)" = None,
         gds_collector_=None,
         **kwargs_,
@@ -26615,7 +26906,7 @@ class Include(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Include"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("Include"), self).__init__(Component, **kwargs_)
         self.segment_groups = _cast(None, segment_groups)
         self.segment_groups_nsprefix_ = None
 
@@ -26821,7 +27112,7 @@ class Member(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         segments: "a NonNegativeInteger (required)" = None,
         gds_collector_=None,
         **kwargs_,
@@ -26831,7 +27122,7 @@ class Member(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Member"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("Member"), self).__init__(Component, **kwargs_)
         self.segments = _cast(int, segments)
         self.segments_nsprefix_ = None
 
@@ -27019,7 +27310,7 @@ class DistalDetails(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         normalization_end: "a double (required)" = None,
         gds_collector_=None,
         **kwargs_,
@@ -27029,7 +27320,7 @@ class DistalDetails(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("DistalDetails"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("DistalDetails"), self).__init__(Component, **kwargs_)
         self.normalization_end = _cast(float, normalization_end)
         self.normalization_end_nsprefix_ = None
 
@@ -27206,7 +27497,7 @@ class ProximalDetails(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         translation_start: "a double (required)" = None,
         gds_collector_=None,
         **kwargs_,
@@ -27216,7 +27507,7 @@ class ProximalDetails(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ProximalDetails"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("ProximalDetails"), self).__init__(Component, **kwargs_)
         self.translation_start = _cast(float, translation_start)
         self.translation_start_nsprefix_ = None
 
@@ -27406,7 +27697,7 @@ class InhomogeneousParameter(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         variable: "a string (required)" = None,
         metric: "a Metric (required)" = None,
@@ -27421,7 +27712,7 @@ class InhomogeneousParameter(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("InhomogeneousParameter"), self).__init__(
-            anytypeobjs_, id, **kwargs_
+            Component, id, **kwargs_
         )
         self.variable = _cast(None, variable)
         self.variable_nsprefix_ = None
@@ -27809,7 +28100,7 @@ class SegmentGroup(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -27828,7 +28119,7 @@ class SegmentGroup(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SegmentGroup"), self).__init__(anytypeobjs_, id, **kwargs_)
+        super(globals().get("SegmentGroup"), self).__init__(Component, id, **kwargs_)
         self.neuro_lex_id = _cast(None, neuro_lex_id)
         self.neuro_lex_id_nsprefix_ = None
         self.notes = notes
@@ -28331,7 +28622,7 @@ class Point3DWithDiam(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         x: "a double (required)" = None,
         y: "a double (required)" = None,
         z: "a double (required)" = None,
@@ -28344,7 +28635,7 @@ class Point3DWithDiam(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Point3DWithDiam"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("Point3DWithDiam"), self).__init__(Component, **kwargs_)
         self.x = _cast(float, x)
         self.x_nsprefix_ = None
         self.y = _cast(float, y)
@@ -28618,7 +28909,7 @@ class SegmentParent(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         segments: "a NonNegativeInteger (required)" = None,
         fraction_along: "a ZeroToOne (optional)" = "1",
         gds_collector_=None,
@@ -28629,7 +28920,7 @@ class SegmentParent(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("SegmentParent"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("SegmentParent"), self).__init__(Component, **kwargs_)
         self.segments = _cast(int, segments)
         self.segments_nsprefix_ = None
         self.fraction_along = _cast(float, fraction_along)
@@ -28899,7 +29190,7 @@ class Segment(BaseNonNegativeIntegerId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         name: "a string (optional)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
@@ -28914,7 +29205,7 @@ class Segment(BaseNonNegativeIntegerId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Segment"), self).__init__(anytypeobjs_, id, **kwargs_)
+        super(globals().get("Segment"), self).__init__(Component, id, **kwargs_)
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
         self.neuro_lex_id = _cast(None, neuro_lex_id)
@@ -29345,7 +29636,7 @@ class Morphology(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -29362,7 +29653,7 @@ class Morphology(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Morphology"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         if segments is None:
             self.segments = []
@@ -29584,7 +29875,7 @@ class BaseCell(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -29601,7 +29892,7 @@ class BaseCell(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseCell"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -29834,7 +30125,7 @@ class PlasticityMechanism(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         type: "a PlasticityTypes (required)" = None,
         init_release_prob: "a ZeroToOne (required)" = None,
         tau_rec: "a Nml2Quantity_time (required)" = None,
@@ -29847,9 +30138,7 @@ class PlasticityMechanism(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("PlasticityMechanism"), self).__init__(
-            anytypeobjs_, **kwargs_
-        )
+        super(globals().get("PlasticityMechanism"), self).__init__(Component, **kwargs_)
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.init_release_prob = _cast(float, init_release_prob)
@@ -30218,7 +30507,7 @@ class BlockMechanism(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         type: "a BlockTypes (required)" = None,
         species: "a NmlId (required)" = None,
         block_concentration: "a Nml2Quantity_concentration (required)" = None,
@@ -30232,7 +30521,7 @@ class BlockMechanism(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("BlockMechanism"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("BlockMechanism"), self).__init__(Component, **kwargs_)
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.species = _cast(None, species)
@@ -30631,7 +30920,7 @@ class BaseSynapse(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -30648,7 +30937,7 @@ class BaseSynapse(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -30899,7 +31188,7 @@ class FixedFactorConcentrationModel(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -30918,7 +31207,7 @@ class FixedFactorConcentrationModel(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("FixedFactorConcentrationModel"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
@@ -31339,7 +31628,7 @@ class DecayingPoolConcentrationModel(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -31359,7 +31648,7 @@ class DecayingPoolConcentrationModel(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("DecayingPoolConcentrationModel"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -31796,7 +32085,7 @@ class HHTime(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         type: "a NmlId (required)" = None,
         rate: "a Nml2Quantity_time (optional)" = None,
         midpoint: "a Nml2Quantity_voltage (optional)" = None,
@@ -31810,7 +32099,7 @@ class HHTime(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("HHTime"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("HHTime"), self).__init__(Component, **kwargs_)
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.rate = _cast(None, rate)
@@ -32170,7 +32459,7 @@ class HHVariable(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         type: "a NmlId (required)" = None,
         rate: "a float (optional)" = None,
         midpoint: "a Nml2Quantity_voltage (optional)" = None,
@@ -32183,7 +32472,7 @@ class HHVariable(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("HHVariable"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("HHVariable"), self).__init__(Component, **kwargs_)
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.rate = _cast(float, rate)
@@ -32483,7 +32772,7 @@ class HHRate(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         type: "a NmlId (required)" = None,
         rate: "a Nml2Quantity_pertime (optional)" = None,
         midpoint: "a Nml2Quantity_voltage (optional)" = None,
@@ -32496,7 +32785,7 @@ class HHRate(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("HHRate"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("HHRate"), self).__init__(Component, **kwargs_)
         self.type = _cast(None, type)
         self.type_nsprefix_ = None
         self.rate = _cast(None, rate)
@@ -32864,7 +33153,7 @@ class GateFractionalSubgate(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         fractional_conductance: "a Nml2Quantity_none (required)" = None,
         notes: "a string (optional)" = None,
@@ -32880,7 +33169,7 @@ class GateFractionalSubgate(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("GateFractionalSubgate"), self).__init__(
-            anytypeobjs_, id, **kwargs_
+            Component, id, **kwargs_
         )
         self.fractional_conductance = _cast(None, fractional_conductance)
         self.fractional_conductance_nsprefix_ = None
@@ -33285,7 +33574,7 @@ class GateFractional(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         notes: "a string (optional)" = None,
@@ -33299,9 +33588,7 @@ class GateFractional(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateFractional"), self).__init__(
-            anytypeobjs_, id, **kwargs_
-        )
+        super(globals().get("GateFractional"), self).__init__(Component, id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -33631,7 +33918,7 @@ class GateHHInstantaneous(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         notes: "a string (optional)" = None,
@@ -33645,7 +33932,7 @@ class GateHHInstantaneous(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("GateHHInstantaneous"), self).__init__(
-            anytypeobjs_, id, **kwargs_
+            Component, id, **kwargs_
         )
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
@@ -33982,7 +34269,7 @@ class GateHHRatesInf(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         notes: "a string (optional)" = None,
@@ -33998,9 +34285,7 @@ class GateHHRatesInf(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHRatesInf"), self).__init__(
-            anytypeobjs_, id, **kwargs_
-        )
+        super(globals().get("GateHHRatesInf"), self).__init__(Component, id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -34405,7 +34690,7 @@ class GateHHRatesTau(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         notes: "a string (optional)" = None,
@@ -34421,9 +34706,7 @@ class GateHHRatesTau(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHRatesTau"), self).__init__(
-            anytypeobjs_, id, **kwargs_
-        )
+        super(globals().get("GateHHRatesTau"), self).__init__(Component, id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -34836,7 +35119,7 @@ class GateHHRatesTauInf(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         notes: "a string (optional)" = None,
@@ -34854,7 +35137,7 @@ class GateHHRatesTauInf(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("GateHHRatesTauInf"), self).__init__(
-            anytypeobjs_, id, **kwargs_
+            Component, id, **kwargs_
         )
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
@@ -35287,7 +35570,7 @@ class GateHHTauInf(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         notes: "a string (optional)" = None,
@@ -35302,7 +35585,7 @@ class GateHHTauInf(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHTauInf"), self).__init__(anytypeobjs_, id, **kwargs_)
+        super(globals().get("GateHHTauInf"), self).__init__(Component, id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -35672,7 +35955,7 @@ class GateHHRates(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         notes: "a string (optional)" = None,
@@ -35687,7 +35970,7 @@ class GateHHRates(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateHHRates"), self).__init__(anytypeobjs_, id, **kwargs_)
+        super(globals().get("GateHHRates"), self).__init__(Component, id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -36082,7 +36365,7 @@ class GateHHUndetermined(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         type: "a gateTypes (required)" = None,
@@ -36102,7 +36385,7 @@ class GateHHUndetermined(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("GateHHUndetermined"), self).__init__(
-            anytypeobjs_, id, **kwargs_
+            Component, id, **kwargs_
         )
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
@@ -36658,7 +36941,7 @@ class GateKS(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         instances: "a PositiveInteger (required)" = None,
         notes: "a string (optional)" = None,
@@ -36676,7 +36959,7 @@ class GateKS(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("GateKS"), self).__init__(anytypeobjs_, id, **kwargs_)
+        super(globals().get("GateKS"), self).__init__(Component, id, **kwargs_)
         self.instances = _cast(int, instances)
         self.instances_nsprefix_ = None
         self.notes = notes
@@ -37108,7 +37391,7 @@ class TauInfTransition(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         from_: "a NmlId (required)" = None,
         to: "a NmlId (required)" = None,
@@ -37123,7 +37406,7 @@ class TauInfTransition(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("TauInfTransition"), self).__init__(
-            anytypeobjs_, id, **kwargs_
+            Component, id, **kwargs_
         )
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
@@ -37416,10 +37699,11 @@ class ReverseTransition(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         from_: "a NmlId (required)" = None,
         to: "a NmlId (required)" = None,
+        anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_,
     ):
@@ -37429,7 +37713,7 @@ class ReverseTransition(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ReverseTransition"), self).__init__(
-            anytypeobjs_, id, **kwargs_
+            Component, id, **kwargs_
         )
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
@@ -37678,10 +37962,11 @@ class ForwardTransition(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         from_: "a NmlId (required)" = None,
         to: "a NmlId (required)" = None,
+        anytypeobjs_=None,
         gds_collector_=None,
         **kwargs_,
     ):
@@ -37691,7 +37976,7 @@ class ForwardTransition(Base):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ForwardTransition"), self).__init__(
-            anytypeobjs_, id, **kwargs_
+            Component, id, **kwargs_
         )
         self.from_ = _cast(None, from_)
         self.from__nsprefix_ = None
@@ -37934,7 +38219,7 @@ class OpenState(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         gds_collector_=None,
         **kwargs_,
@@ -37944,7 +38229,7 @@ class OpenState(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("OpenState"), self).__init__(anytypeobjs_, id, **kwargs_)
+        super(globals().get("OpenState"), self).__init__(Component, id, **kwargs_)
 
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -38089,7 +38374,7 @@ class ClosedState(Base):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         gds_collector_=None,
         **kwargs_,
@@ -38099,7 +38384,7 @@ class ClosedState(Base):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("ClosedState"), self).__init__(anytypeobjs_, id, **kwargs_)
+        super(globals().get("ClosedState"), self).__init__(Component, id, **kwargs_)
 
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -38266,7 +38551,7 @@ class Q10ConductanceScaling(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         q10_factor: "a Nml2Quantity_none (required)" = None,
         experimental_temp: "a Nml2Quantity_temperature (required)" = None,
         gds_collector_=None,
@@ -38278,7 +38563,7 @@ class Q10ConductanceScaling(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Q10ConductanceScaling"), self).__init__(
-            anytypeobjs_, **kwargs_
+            Component, **kwargs_
         )
         self.q10_factor = _cast(None, q10_factor)
         self.q10_factor_nsprefix_ = None
@@ -38593,7 +38878,7 @@ class IonChannelKS(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -38612,7 +38897,7 @@ class IonChannelKS(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannelKS"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         self.species = _cast(None, species)
         self.species_nsprefix_ = None
@@ -38969,7 +39254,7 @@ class IonChannelScalable(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -38987,7 +39272,7 @@ class IonChannelScalable(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannelScalable"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -40140,7 +40425,7 @@ class NeuroMLDocument(Standalone):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -40223,7 +40508,7 @@ class NeuroMLDocument(Standalone):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("NeuroMLDocument"), self).__init__(
-            anytypeobjs_, id, metaid, notes, properties, annotation, **kwargs_
+            Component, id, metaid, notes, properties, annotation, **kwargs_
         )
         if includes is None:
             self.includes = []
@@ -42823,7 +43108,7 @@ class NamedDimensionalVariable(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -42838,7 +43123,7 @@ class NamedDimensionalVariable(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("NamedDimensionalVariable"), self).__init__(
-            anytypeobjs_, extensiontype_, **kwargs_
+            Component, extensiontype_, **kwargs_
         )
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
@@ -43107,7 +43392,7 @@ class NamedDimensionalType(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -43121,7 +43406,7 @@ class NamedDimensionalType(BaseWithoutId):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("NamedDimensionalType"), self).__init__(
-            anytypeobjs_, extensiontype_, **kwargs_
+            Component, extensiontype_, **kwargs_
         )
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
@@ -43368,7 +43653,7 @@ class Exposure(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -43380,7 +43665,7 @@ class Exposure(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Exposure"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("Exposure"), self).__init__(Component, **kwargs_)
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
         self.dimension = _cast(None, dimension)
@@ -43595,7 +43880,7 @@ class Constant(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         value: "a Nml2Quantity (required)" = None,
@@ -43608,7 +43893,7 @@ class Constant(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Constant"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("Constant"), self).__init__(Component, **kwargs_)
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
         self.dimension = _cast(None, dimension)
@@ -43872,13 +44157,19 @@ class Annotation(BaseWithoutId):
     subclass = None
     superclass = BaseWithoutId
 
-    def __init__(self, anytypeobjs_=None, gds_collector_=None, **kwargs_):
+    def __init__(
+        self,
+        Component: "list of Component(s) (optional)" = None,
+        anytypeobjs_=None,
+        gds_collector_=None,
+        **kwargs_,
+    ):
         self.gds_collector_ = gds_collector_
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Annotation"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("Annotation"), self).__init__(Component, **kwargs_)
         if anytypeobjs_ is None:
             self.anytypeobjs_ = []
         else:
@@ -44035,7 +44326,7 @@ class Property(BaseWithoutId):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         tag: "a string (required)" = None,
         value: "a string (required)" = None,
         gds_collector_=None,
@@ -44046,7 +44337,7 @@ class Property(BaseWithoutId):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("Property"), self).__init__(anytypeobjs_, **kwargs_)
+        super(globals().get("Property"), self).__init__(Component, **kwargs_)
         self.tag = _cast(None, tag)
         self.tag_nsprefix_ = None
         self.value = _cast(None, value)
@@ -44233,7 +44524,7 @@ class BasePynnSynapse(BaseSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -44251,7 +44542,7 @@ class BasePynnSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BasePynnSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -44462,7 +44753,7 @@ class basePyNNCell(BaseCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -44484,7 +44775,7 @@ class basePyNNCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("basePyNNCell"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -44739,7 +45030,7 @@ class InputW(Input):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         target: "a Nml2PopulationReferencePath (required)" = None,
         destination: "a NmlId (required)" = None,
@@ -44755,7 +45046,7 @@ class InputW(Input):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("InputW"), self).__init__(
-            anytypeobjs_, id, target, destination, segment_id, fraction_along, **kwargs_
+            Component, id, target, destination, segment_id, fraction_along, **kwargs_
         )
         self.weight = _cast(float, weight)
         self.weight_nsprefix_ = None
@@ -44971,7 +45262,7 @@ class ContinuousProjection(BaseProjection):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         presynaptic_population: "a NmlId (required)" = None,
         postsynaptic_population: "a NmlId (required)" = None,
@@ -44987,7 +45278,7 @@ class ContinuousProjection(BaseProjection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ContinuousProjection"), self).__init__(
-            anytypeobjs_, id, presynaptic_population, postsynaptic_population, **kwargs_
+            Component, id, presynaptic_population, postsynaptic_population, **kwargs_
         )
         if continuous_connections is None:
             self.continuous_connections = []
@@ -45387,7 +45678,7 @@ class ElectricalProjection(BaseProjection):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         presynaptic_population: "a NmlId (required)" = None,
         postsynaptic_population: "a NmlId (required)" = None,
@@ -45403,7 +45694,7 @@ class ElectricalProjection(BaseProjection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ElectricalProjection"), self).__init__(
-            anytypeobjs_, id, presynaptic_population, postsynaptic_population, **kwargs_
+            Component, id, presynaptic_population, postsynaptic_population, **kwargs_
         )
         if electrical_connections is None:
             self.electrical_connections = []
@@ -45793,7 +46084,7 @@ class BaseConnectionNewFormat(BaseConnection):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell: "a string (required)" = None,
@@ -45812,7 +46103,7 @@ class BaseConnectionNewFormat(BaseConnection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConnectionNewFormat"), self).__init__(
-            anytypeobjs_, id, neuro_lex_id, extensiontype_, **kwargs_
+            Component, id, neuro_lex_id, extensiontype_, **kwargs_
         )
         self.pre_cell = _cast(None, pre_cell)
         self.pre_cell_nsprefix_ = None
@@ -46222,7 +46513,7 @@ class BaseConnectionOldFormat(BaseConnection):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell_id: "a Nml2PopulationReferencePath (required)" = None,
@@ -46241,7 +46532,7 @@ class BaseConnectionOldFormat(BaseConnection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConnectionOldFormat"), self).__init__(
-            anytypeobjs_, id, neuro_lex_id, extensiontype_, **kwargs_
+            Component, id, neuro_lex_id, extensiontype_, **kwargs_
         )
         self.pre_cell_id = _cast(None, pre_cell_id)
         self.pre_cell_id_nsprefix_ = None
@@ -46681,7 +46972,7 @@ class Projection(BaseProjection):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         presynaptic_population: "a NmlId (required)" = None,
         postsynaptic_population: "a NmlId (required)" = None,
@@ -46697,7 +46988,7 @@ class Projection(BaseProjection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Projection"), self).__init__(
-            anytypeobjs_, id, presynaptic_population, postsynaptic_population, **kwargs_
+            Component, id, presynaptic_population, postsynaptic_population, **kwargs_
         )
         self.synapse = _cast(None, synapse)
         self.synapse_nsprefix_ = None
@@ -47072,7 +47363,7 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -47089,7 +47380,7 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SpikeGeneratorRefPoisson"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -47313,7 +47604,7 @@ class IntracellularProperties2CaPools(IntracellularProperties):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         species: "list of Species(s) (optional)" = None,
         resistivities: "list of Resistivity(s) (optional)" = None,
         gds_collector_=None,
@@ -47325,7 +47616,7 @@ class IntracellularProperties2CaPools(IntracellularProperties):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IntracellularProperties2CaPools"), self).__init__(
-            anytypeobjs_, species, resistivities, **kwargs_
+            Component, species, resistivities, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -47490,7 +47781,7 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -47510,7 +47801,7 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ConcentrationModel_D"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -47703,7 +47994,7 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         cond_density: "a Nml2Quantity_conductanceDensity (optional)" = None,
@@ -47720,7 +48011,7 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityNernstCa2"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             ion_channel,
             cond_density,
@@ -47905,7 +48196,7 @@ class ChannelDensityVShift(ChannelDensity):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         ion_channel: "a NmlId (required)" = None,
         cond_density: "a Nml2Quantity_conductanceDensity (optional)" = None,
@@ -47924,7 +48215,7 @@ class ChannelDensityVShift(ChannelDensity):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ChannelDensityVShift"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             ion_channel,
             cond_density,
@@ -48162,7 +48453,7 @@ class MembraneProperties2CaPools(MembraneProperties):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         channel_populations: "list of ChannelPopulation(s) (optional)" = None,
         channel_densities: "list of ChannelDensity(s) (optional)" = None,
         channel_density_v_shifts: "list of ChannelDensityVShift(s) (optional)" = None,
@@ -48185,7 +48476,7 @@ class MembraneProperties2CaPools(MembraneProperties):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("MembraneProperties2CaPools"), self).__init__(
-            anytypeobjs_,
+            Component,
             channel_populations,
             channel_densities,
             channel_density_v_shifts,
@@ -48430,7 +48721,7 @@ class Cell(BaseCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -48451,7 +48742,7 @@ class Cell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Cell"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -50543,7 +50834,7 @@ class PinskyRinzelCA3Cell(BaseCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -50580,7 +50871,7 @@ class PinskyRinzelCA3Cell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("PinskyRinzelCA3Cell"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -51438,7 +51729,7 @@ class FitzHughNagumo1969Cell(BaseCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -51460,7 +51751,7 @@ class FitzHughNagumo1969Cell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("FitzHughNagumo1969Cell"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -51780,7 +52071,7 @@ class FitzHughNagumoCell(BaseCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -51797,7 +52088,7 @@ class FitzHughNagumoCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("FitzHughNagumoCell"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -52020,7 +52311,7 @@ class BaseCellMembPotCap(BaseCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -52038,7 +52329,7 @@ class BaseCellMembPotCap(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseCellMembPotCap"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -52304,7 +52595,7 @@ class IzhikevichCell(BaseCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -52326,7 +52617,7 @@ class IzhikevichCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IzhikevichCell"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -52706,7 +52997,7 @@ class IafCell(BaseCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -52728,7 +53019,7 @@ class IafCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IafCell"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -53153,7 +53444,7 @@ class IafTauCell(BaseCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -53174,7 +53465,7 @@ class IafTauCell(BaseCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IafTauCell"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -53531,7 +53822,7 @@ class GradedSynapse(BaseSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -53552,7 +53843,7 @@ class GradedSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("GradedSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -53933,7 +54224,7 @@ class LinearGradedSynapse(BaseSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -53950,7 +54241,7 @@ class LinearGradedSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("LinearGradedSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -54172,7 +54463,7 @@ class SilentSynapse(BaseSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -54188,7 +54479,7 @@ class SilentSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("SilentSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -54354,7 +54645,7 @@ class GapJunction(BaseSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -54371,7 +54662,7 @@ class GapJunction(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("GapJunction"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -54581,7 +54872,7 @@ class BaseCurrentBasedSynapse(BaseSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -54598,7 +54889,7 @@ class BaseCurrentBasedSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseCurrentBasedSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -54783,7 +55074,7 @@ class BaseVoltageDepSynapse(BaseSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -54800,7 +55091,7 @@ class BaseVoltageDepSynapse(BaseSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseVoltageDepSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -55102,7 +55393,7 @@ class IonChannel(IonChannelScalable):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -55131,7 +55422,7 @@ class IonChannel(IonChannelScalable):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannel"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -55704,7 +55995,7 @@ class ConditionalDerivedVariable(NamedDimensionalVariable):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -55719,7 +56010,7 @@ class ConditionalDerivedVariable(NamedDimensionalVariable):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ConditionalDerivedVariable"), self).__init__(
-            anytypeobjs_, name, dimension, description, exposure, **kwargs_
+            Component, name, dimension, description, exposure, **kwargs_
         )
         if Case is None:
             self.Case = []
@@ -55906,7 +56197,7 @@ class StateVariable(NamedDimensionalVariable):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -55920,7 +56211,7 @@ class StateVariable(NamedDimensionalVariable):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("StateVariable"), self).__init__(
-            anytypeobjs_, name, dimension, description, exposure, **kwargs_
+            Component, name, dimension, description, exposure, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -56069,7 +56360,7 @@ class DerivedVariable(NamedDimensionalVariable):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -56085,7 +56376,7 @@ class DerivedVariable(NamedDimensionalVariable):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("DerivedVariable"), self).__init__(
-            anytypeobjs_, name, dimension, description, exposure, **kwargs_
+            Component, name, dimension, description, exposure, **kwargs_
         )
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
@@ -56269,7 +56560,7 @@ class Requirement(NamedDimensionalType):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -56282,7 +56573,7 @@ class Requirement(NamedDimensionalType):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Requirement"), self).__init__(
-            anytypeobjs_, name, dimension, description, **kwargs_
+            Component, name, dimension, description, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -56434,7 +56725,7 @@ class LEMS_Property(NamedDimensionalType):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -56448,7 +56739,7 @@ class LEMS_Property(NamedDimensionalType):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("LEMS_Property"), self).__init__(
-            anytypeobjs_, name, dimension, description, **kwargs_
+            Component, name, dimension, description, **kwargs_
         )
         self.default_value = _cast(float, default_value)
         self.default_value_nsprefix_ = None
@@ -56613,7 +56904,7 @@ class DerivedParameter(NamedDimensionalType):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -56627,7 +56918,7 @@ class DerivedParameter(NamedDimensionalType):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("DerivedParameter"), self).__init__(
-            anytypeobjs_, name, dimension, description, **kwargs_
+            Component, name, dimension, description, **kwargs_
         )
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
@@ -56799,7 +57090,7 @@ class Parameter(NamedDimensionalType):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         name: "a string (required)" = None,
         dimension: "a string (required)" = None,
         description: "a string (optional)" = None,
@@ -56812,7 +57103,7 @@ class Parameter(NamedDimensionalType):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Parameter"), self).__init__(
-            anytypeobjs_, name, dimension, description, **kwargs_
+            Component, name, dimension, description, **kwargs_
         )
 
     def factory(*args_, **kwargs_):
@@ -56958,7 +57249,7 @@ class AlphaCurrSynapse(BasePynnSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -56975,7 +57266,7 @@ class AlphaCurrSynapse(BasePynnSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AlphaCurrSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -57142,7 +57433,7 @@ class ExpCurrSynapse(BasePynnSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -57159,7 +57450,7 @@ class ExpCurrSynapse(BasePynnSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpCurrSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -57322,7 +57613,7 @@ class AlphaCondSynapse(BasePynnSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -57340,7 +57631,7 @@ class AlphaCondSynapse(BasePynnSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AlphaCondSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -57525,7 +57816,7 @@ class ExpCondSynapse(BasePynnSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -57543,7 +57834,7 @@ class ExpCondSynapse(BasePynnSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpCondSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -57766,7 +58057,7 @@ class HH_cond_exp(basePyNNCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -57796,7 +58087,7 @@ class HH_cond_exp(basePyNNCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("HH_cond_exp"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -58128,7 +58419,7 @@ class basePyNNIaFCell(basePyNNCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -58155,7 +58446,7 @@ class basePyNNIaFCell(basePyNNCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("basePyNNIaFCell"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -58419,7 +58710,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell: "a string (required)" = None,
@@ -58440,7 +58731,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ContinuousConnection"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             neuro_lex_id,
             pre_cell,
@@ -58797,7 +59088,7 @@ class ElectricalConnection(BaseConnectionNewFormat):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell: "a string (required)" = None,
@@ -58817,7 +59108,7 @@ class ElectricalConnection(BaseConnectionNewFormat):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ElectricalConnection"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             neuro_lex_id,
             pre_cell,
@@ -59151,7 +59442,7 @@ class ConnectionWD(BaseConnectionOldFormat):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell_id: "a Nml2PopulationReferencePath (required)" = None,
@@ -59171,7 +59462,7 @@ class ConnectionWD(BaseConnectionOldFormat):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ConnectionWD"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             neuro_lex_id,
             pre_cell_id,
@@ -59510,7 +59801,7 @@ class Connection(BaseConnectionOldFormat):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell_id: "a Nml2PopulationReferencePath (required)" = None,
@@ -59528,7 +59819,7 @@ class Connection(BaseConnectionOldFormat):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Connection"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             neuro_lex_id,
             pre_cell_id,
@@ -59778,7 +60069,7 @@ class Cell2CaPools(Cell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -59799,7 +60090,7 @@ class Cell2CaPools(Cell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Cell2CaPools"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -60039,7 +60330,7 @@ class HindmarshRose1984Cell(BaseCellMembPotCap):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -60067,7 +60358,7 @@ class HindmarshRose1984Cell(BaseCellMembPotCap):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("HindmarshRose1984Cell"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -60572,7 +60863,7 @@ class AdExIaFCell(BaseCellMembPotCap):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -60599,7 +60890,7 @@ class AdExIaFCell(BaseCellMembPotCap):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AdExIaFCell"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -61170,7 +61461,7 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -61196,7 +61487,7 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("Izhikevich2007Cell"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -61736,7 +62027,7 @@ class IafRefCell(IafCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -61758,7 +62049,7 @@ class IafRefCell(IafCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IafRefCell"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -61985,7 +62276,7 @@ class IafTauRefCell(IafTauCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -62006,7 +62297,7 @@ class IafTauRefCell(IafTauCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IafTauRefCell"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -62237,7 +62528,7 @@ class DoubleSynapse(BaseVoltageDepSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -62257,7 +62548,7 @@ class DoubleSynapse(BaseVoltageDepSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("DoubleSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -62540,7 +62831,7 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -62558,7 +62849,7 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AlphaCurrentSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -62858,7 +63149,7 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -62878,7 +63169,7 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConductanceBasedSynapseTwo"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -63225,7 +63516,7 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -63244,7 +63535,7 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BaseConductanceBasedSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -63561,7 +63852,7 @@ class IonChannelVShift(IonChannel):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -63590,7 +63881,7 @@ class IonChannelVShift(IonChannel):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannelVShift"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -63825,7 +64116,7 @@ class IonChannelHH(IonChannel):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -63853,7 +64144,7 @@ class IonChannelHH(IonChannel):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IonChannelHH"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -64041,7 +64332,7 @@ class IF_curr_exp(basePyNNIaFCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -64067,7 +64358,7 @@ class IF_curr_exp(basePyNNIaFCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IF_curr_exp"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -64253,7 +64544,7 @@ class IF_curr_alpha(basePyNNIaFCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -64279,7 +64570,7 @@ class IF_curr_alpha(basePyNNIaFCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IF_curr_alpha"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -64476,7 +64767,7 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -64505,7 +64796,7 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("basePyNNIaFCondCell"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -64728,7 +65019,7 @@ class ContinuousConnectionInstance(ContinuousConnection):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell: "a string (required)" = None,
@@ -64749,7 +65040,7 @@ class ContinuousConnectionInstance(ContinuousConnection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ContinuousConnectionInstance"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             neuro_lex_id,
             pre_cell,
@@ -64960,7 +65251,7 @@ class ElectricalConnectionInstance(ElectricalConnection):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell: "a string (required)" = None,
@@ -64980,7 +65271,7 @@ class ElectricalConnectionInstance(ElectricalConnection):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ElectricalConnectionInstance"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             neuro_lex_id,
             pre_cell,
@@ -65225,7 +65516,7 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -65247,7 +65538,7 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpThreeSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -65536,7 +65827,7 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -65557,7 +65848,7 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpTwoSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -65829,7 +66120,7 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -65848,7 +66139,7 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ExpOneSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -66073,7 +66364,7 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -66092,7 +66383,7 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("AlphaSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -66345,7 +66636,7 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -66379,7 +66670,7 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("EIF_cond_exp_isfa_ista"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -66671,7 +66962,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -66699,7 +66990,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IF_cond_exp"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -66891,7 +67182,7 @@ class IF_cond_alpha(basePyNNIaFCondCell):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -66919,7 +67210,7 @@ class IF_cond_alpha(basePyNNIaFCondCell):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("IF_cond_alpha"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -67091,7 +67382,7 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell: "a string (required)" = None,
@@ -67112,7 +67403,7 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ContinuousConnectionInstanceW"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             neuro_lex_id,
             pre_cell,
@@ -67330,7 +67621,7 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NonNegativeInteger (required)" = None,
         neuro_lex_id: "a NeuroLexId (optional)" = None,
         pre_cell: "a string (required)" = None,
@@ -67350,7 +67641,7 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("ElectricalConnectionInstanceW"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             neuro_lex_id,
             pre_cell,
@@ -67594,7 +67885,7 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -67616,7 +67907,7 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("BlockingPlasticSynapse"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -67885,7 +68176,7 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
 
     def __init__(
         self,
-        anytypeobjs_=None,
+        Component: "list of Component(s) (optional)" = None,
         id: "a NmlId (required)" = None,
         metaid: "a MetaId (optional)" = None,
         notes: "a string (optional)" = None,
@@ -67918,7 +68209,7 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
         super(globals().get("EIF_cond_alpha_isfa_ista"), self).__init__(
-            anytypeobjs_,
+            Component,
             id,
             metaid,
             notes,
@@ -68547,6 +68838,7 @@ NamespaceToDefMappings_ = {
         ("ExpCurrSynapse", "NeuroML_v2.3.1.xsd", "CT"),
         ("AlphaCurrSynapse", "NeuroML_v2.3.1.xsd", "CT"),
         ("SpikeSourcePoisson", "NeuroML_v2.3.1.xsd", "CT"),
+        ("Component", "NeuroML_v2.3.1.xsd", "CT"),
         ("BaseWithoutId", "NeuroML_v2.3.1.xsd", "CT"),
         ("BaseNonNegativeIntegerId", "NeuroML_v2.3.1.xsd", "CT"),
         ("Base", "NeuroML_v2.3.1.xsd", "CT"),
@@ -68595,6 +68887,7 @@ __all__ = [
     "ChannelDensityVShift",
     "ChannelPopulation",
     "ClosedState",
+    "Component",
     "ComponentType",
     "CompoundInput",
     "CompoundInputDL",
