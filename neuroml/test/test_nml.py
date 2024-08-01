@@ -836,6 +836,32 @@ class TestNML(unittest.TestCase):
         print()
         print_hierarchy(hier)
 
+    def test_new_component(self):
+        """Test adding a Component"""
+        comp = component_factory(
+            "Component", id="test", type="test_type", some_arg="5 mV"
+        )
+        comp_str = str(comp)
+        print(comp_str)
+        self.assertIn('some_arg="5 mV"', comp_str)
+
+        newdoc = component_factory("NeuroMLDocument", id="newdoc")
+        newdoc.add("Component", id="another", type="another_type", another_arg="15 pS")
+        newdoc_str = str(newdoc)
+        self.assertIn('another_arg="15 pS"', newdoc_str)
+        print(newdoc_str)
+
+        cell = component_factory("Cell", id="simple_cell")  # type: neuroml.Cell
+        cell.set_spike_thresh("40mV")
+        cell.set_init_memb_potential("-70mV")
+        cell.set_specific_capacitance("1 uF_per_cm2")
+        cell.add_membrane_property(
+            "Component", id="test_comp", type="test_type", value="10 mV"
+        )
+        cell_str = str(cell)
+        self.assertIn('value="10 mV"', cell_str)
+        print(cell_str)
+
 
 if __name__ == "__main__":
     ta = TestNML()
