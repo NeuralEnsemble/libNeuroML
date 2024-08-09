@@ -4,6 +4,7 @@ Utilities for checking generated code
 
 """
 
+import copy
 import inspect
 import os
 import sys
@@ -310,18 +311,38 @@ def get_relative_component_path(
     return (path, graph)
 
 
-def fix_external_morphs_biophys_in_cell(nml2_doc: NeuroMLDocument) -> None:
+def fix_external_morphs_biophys_in_cell(
+    nml2_doc: NeuroMLDocument, overwrite: bool = True
+) -> NeuroMLDocument:
+    """Handle externally referenced morphologies and biophysics in cells.
+
+
+    This is only used in the case where a cell element has a morphology (or
+    biophysicalProperties) attribute, as opposed to a subelement
+    morphology/biophysicalProperties. This will substitute the external element
+    into the cell element for ease of access
+
+    :param nml2_doc: NeuroML document
+    :type nml2_doc: neuroml.NeuroMLDocument
+    :param overwrite: toggle whether the document is overwritten or a deep copy
+        created
+    :type overwrite: bool
+    :returns: neuroml document
     """
-    Only used in the case where a cell element has a morphology (or biophysicalProperties) attribute, as opposed to a
-    subelement morphology/biophysicalProperties. This will substitute the external element into the cell element for ease of access
-    """
-    for cell in nml2_doc.cells:
-        if cell.morphology_attr != None:
-            ext_morph = nml2_doc.get_by_id(cell.morphology_attr)
+    if overwrite is False:
+        newdoc = copy.deepcopy(nml2_doc)
+    else:
+        newdoc = nml2_doc
+
+    for cell in newdoc.cells:
+        if cell.morphology_attr is not None:
+            ext_morph = newdoc.get_by_id(cell.morphology_attr)
             cell.morphology = ext_morph
-        if cell.biophysical_properties_attr != None:
-            ext_bp = nml2_doc.get_by_id(cell.biophysical_properties_attr)
+        if cell.biophysical_properties_attr is not None:
+            ext_bp = newdoc.get_by_id(cell.biophysical_properties_attr)
             cell.biophysical_properties = ext_bp
+
+    return newdoc
 
 
 def main():
