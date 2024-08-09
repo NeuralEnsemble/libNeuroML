@@ -9,7 +9,7 @@ import inspect
 import os
 import sys
 import warnings
-from typing import Any, Dict, Optional, Type, Union
+from typing import Any, Dict, List, Optional, Set, Type, Union
 
 import networkx
 
@@ -328,19 +328,54 @@ def fix_external_morphs_biophys_in_cell(
         created
     :type overwrite: bool
     :returns: neuroml document
+    :raises ValueError: if referenced morphologies/biophysics cannot be found
     """
     if overwrite is False:
         newdoc = copy.deepcopy(nml2_doc)
     else:
         newdoc = nml2_doc
 
+    # get a list of ids by cells
+    referenced_ids = []
+    for cell in newdoc.cells:
+        if cell.morphology_attr is not None:
+            referenced_ids.append(cell.morphology_attr)
+        if cell.biophysical_properties_attr is not None:
+            referenced_ids.append(cell.biophysical_properties_attr)
+
+    # load referenced ids from included files
+    for inc in newdoc.includes:
+        incdoc = loaders.read_neuroml2_file(inc.href, verbose=False, optimized=True)
+        for morph in incdoc.morphology:
+            if morph.id in referenced_ids:
+                newdoc.add(morph)
+        for biophys in incdoc.biophysical_properties:
+            if biophys.id in referenced_ids:
+                newdoc.add(biophys)
+
+    # update cells
+    # keep track of used refs (do not pop them because multiple cells may refer
+    # to the same morph/biophys)
+    processed_refs = []
     for cell in newdoc.cells:
         if cell.morphology_attr is not None:
             ext_morph = newdoc.get_by_id(cell.morphology_attr)
-            cell.morphology = ext_morph
+            cell.morphology = copy.deepcopy(ext_morph)
+            processed_refs.append(cell.morphology_attr)
         if cell.biophysical_properties_attr is not None:
             ext_bp = newdoc.get_by_id(cell.biophysical_properties_attr)
             cell.biophysical_properties = ext_bp
+            processed_refs.append(cell.biophysical_properties_attr)
+
+    processed_refs_set = set(processed_refs)
+    referenced_ids_set = set(referenced_ids)
+
+    remaining_ref_ids = referenced_ids_set - processed_refs_set
+
+    if len(remaining_ref_ids) != 0:
+        raise ValueError(
+            f"These referenced morphologies/biophysics were not found: {referenced_ids}"
+        )
 
     return newdoc
 
