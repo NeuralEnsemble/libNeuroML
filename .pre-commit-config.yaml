@@ -5,7 +5,9 @@ repos:
     rev: v4.4.0
     hooks:
     -   id: trailing-whitespace
+        exclude: NeuroML.*xsd
     -   id: end-of-file-fixer
+        exclude: NeuroML.*xsd
     -   id: check-added-large-files
 - repo: https://github.com/astral-sh/ruff-pre-commit
   rev: v0.4.1
