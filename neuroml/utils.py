@@ -6,6 +6,7 @@ Utilities for checking generated code
 
 import copy
 import inspect
+import logging
 import os
 import sys
 import warnings
@@ -17,6 +18,9 @@ import neuroml.nml.nml as schema
 from neuroml import NeuroMLDocument
 
 from . import loaders
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 def validate_neuroml2(file_name: str) -> None:
@@ -316,11 +320,18 @@ def fix_external_morphs_biophys_in_cell(
 ) -> NeuroMLDocument:
     """Handle externally referenced morphologies and biophysics in cells.
 
-
     This is only used in the case where a cell element has a morphology (or
     biophysicalProperties) attribute, as opposed to a subelement
     morphology/biophysicalProperties. This will substitute the external element
     into the cell element for ease of access
+
+    The referenced morphologies can be included in the same document directly,
+    or in other documents included using the "IncludeType". This function will
+    load the included documents and attempt to read referenced bits from them.
+
+    Note that if a cell already includes Morphology and BiophysicalProperties,
+    we just use those. Any references to other Morphology/BiophysicalProperties
+    elements will be ignored.
 
     :param nml2_doc: NeuroML document
     :type nml2_doc: neuroml.NeuroMLDocument
@@ -328,54 +339,82 @@ def fix_external_morphs_biophys_in_cell(
         created
     :type overwrite: bool
     :returns: neuroml document
-    :raises ValueError: if referenced morphologies/biophysics cannot be found
+    :raises KeyError: if referenced morphologies/biophysics cannot be found
     """
     if overwrite is False:
         newdoc = copy.deepcopy(nml2_doc)
     else:
         newdoc = nml2_doc
 
-    # get a list of ids by cells
+    # get a list of morph/biophys ids being referred to by cells
     referenced_ids = []
     for cell in newdoc.cells:
         if cell.morphology_attr is not None:
-            referenced_ids.append(cell.morphology_attr)
+            if cell.morphology is None:
+                referenced_ids.append(cell.morphology_attr)
+            else:
+                logger.warning(
+                    f"Cell ({cell}) already contains a Morphology, ignoring reference."
+                )
+                logger.warning("Please check/correct your cell description")
         if cell.biophysical_properties_attr is not None:
-            referenced_ids.append(cell.biophysical_properties_attr)
+            if cell.biophysical_properties is None:
+                referenced_ids.append(cell.biophysical_properties_attr)
+            else:
+                logger.warning(
+                    f"Cell ({cell}) already contains a BiophysicalProperties element, ignoring reference."
+                )
+                logger.warning("Please check/correct your cell description")
 
-    # load referenced ids from included files
+    # load referenced ids from included files and store them in dicts
+    ext_morphs = {}
+    ext_biophys = {}
     for inc in newdoc.includes:
         incdoc = loaders.read_neuroml2_file(inc.href, verbose=False, optimized=True)
         for morph in incdoc.morphology:
             if morph.id in referenced_ids:
-                newdoc.add(morph)
+                ext_morphs[morph.id] = morph
         for biophys in incdoc.biophysical_properties:
             if biophys.id in referenced_ids:
-                newdoc.add(biophys)
+                ext_biophys[biophys.id] = biophys
 
-    # update cells
-    # keep track of used refs (do not pop them because multiple cells may refer
-    # to the same morph/biophys)
-    processed_refs = []
+    # also include morphs/biophys that are in the same document
+    for morph in newdoc.morphology:
+        if morph.id in referenced_ids:
+            ext_morphs[morph.id] = morph
+    for biophys in newdoc.biophysical_properties:
+        if biophys.id in referenced_ids:
+            ext_biophys[biophys.id] = biophys
+
+    # update cells by placing the morphology/biophys in them:
+    # if referenced ids are not found, throw errors
     for cell in newdoc.cells:
-        if cell.morphology_attr is not None:
-            ext_morph = newdoc.get_by_id(cell.morphology_attr)
-            cell.morphology = copy.deepcopy(ext_morph)
-            processed_refs.append(cell.morphology_attr)
-        if cell.biophysical_properties_attr is not None:
-            ext_bp = newdoc.get_by_id(cell.biophysical_properties_attr)
-            cell.biophysical_properties = ext_bp
-            processed_refs.append(cell.biophysical_properties_attr)
+        if cell.morphology_attr is not None and cell.morphology is None:
+            try:
+                # TODO: do we need a deepcopy here?
+                cell.morphology = copy.deepcopy(ext_morphs[cell.morphology_attr])
+                cell.morphology_attr = None
+            except KeyError as e:
+                logger.error(
+                    f"Morphology with id {cell.morphology_attr} was not found in included/external morphologies."
+                )
+                raise e
 
-    processed_refs_set = set(processed_refs)
-    referenced_ids_set = set(referenced_ids)
-
-    remaining_ref_ids = referenced_ids_set - processed_refs_set
-
-    if len(remaining_ref_ids) != 0:
-        raise ValueError(
-            f"These referenced morphologies/biophysics were not found: {referenced_ids}"
-        )
+        if (
+            cell.biophysical_properties_attr is not None
+            and cell.biophysical_properties is None
+        ):
+            try:
+                # TODO: do we need a deepcopy here?
+                cell.biophysical_properties = copy.deepcopy(
+                    ext_biophys[cell.biophysical_properties_attr]
+                )
+                cell.biophysical_properties_attr = None
+            except KeyError as e:
+                logger.error(
+                    f"Biophysics with id {cell.biophysical_properties_attr} was not found in included/external biophysics."
+                )
+                raise e
 
     return newdoc
 
