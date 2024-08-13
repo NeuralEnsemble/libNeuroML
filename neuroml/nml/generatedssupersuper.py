@@ -186,14 +186,15 @@ class GeneratedsSuperSuper(object):
         else:
             comp_type_class = getattr(module_object, component_type.__name__)
 
+        comp = comp_type_class(**kwargs)
+
         # handle component types that support __ANY__
         try:
             anytypevalue = kwargs["__ANY__"]
-            # first value, so put it in a list, otherwise each element of the
-            # string is taken to be a new object
-            comp = comp_type_class(anytypeobjs_=[anytypevalue], **kwargs)
+            # append value to anytypeobjs_ list
+            comp.anytypeobjs_.append(anytypevalue)
         except KeyError:
-            comp = comp_type_class(**kwargs)
+            pass
 
         # additional setups where required
         if comp_type_class.__name__ == "Cell":
