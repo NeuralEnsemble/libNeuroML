@@ -63,14 +63,12 @@ class GeneratedsSuperSuper(object):
         if isinstance(obj, str):
             # no hint, no pass
             if not hint:
-                self.logger.error("Received a text object to add.")
-                self.logger.error(
-                    'Please pass `hint="__ANY__"` to confirm that this is what you intend.'
+                e = Exception(
+                    "Received a text object to add. "
+                    + 'Please pass `hint="__ANY__"` to confirm that this is what you intend. '
+                    + "I will then try to add this to an __ANY__ member in the object."
                 )
-                self.logger.error(
-                    "I will then try to add this to an __ANY__ member in the object."
-                )
-                return None
+                raise e
             # hint confirmed, try to add it below
             else:
                 self.logger.warning("Received a text object to add.")
