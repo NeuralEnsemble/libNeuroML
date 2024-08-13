@@ -58,6 +58,26 @@ class GeneratedsSuperSuper(object):
         if type(obj) is type or isinstance(obj, str):
             obj = self.component_factory(obj, validate=validate, **kwargs)
 
+        # if obj is still a string, it is a general string, but to confirm that
+        # this is what the user intends, ask them to provide a hint.
+        if isinstance(obj, str):
+            # no hint, no pass
+            if not hint:
+                self.logger.error("Received a text object to add.")
+                self.logger.error(
+                    'Please pass `hint="__ANY__"` to confirm that this is what you intend.'
+                )
+                self.logger.error(
+                    "I will then try to add this to an __ANY__ member in the object."
+                )
+                return None
+            # hint confirmed, try to add it below
+            else:
+                self.logger.warning("Received a text object to add.")
+                self.logger.warning(
+                    "Trying to add this to an __ANY__ member in the object."
+                )
+
         # getattr only returns the value of the provided member but one cannot
         # then use this to modify the member. Using `vars` also allows us to
         # modify the value
@@ -65,13 +85,19 @@ class GeneratedsSuperSuper(object):
         all_members = self._get_members()
         for member in all_members:
             # get_data_type() returns the type as a string, e.g.: 'IncludeType'
+
+            # handle "__ANY__"
+            if isinstance(obj, str) and member.get_data_type() == "__ANY__":
+                targets.append(member)
+                break
+
             if member.get_data_type() == type(obj).__name__:
                 targets.append(member)
 
         if len(targets) == 0:
             # no targets found
             e = Exception(
-                """A member object of {} type could not be found in NeuroML class {}.\n{}
+                """A member object of '{}' type could not be found in NeuroML class {}.\n{}
             """.format(type(obj).__name__, type(self).__name__, self.info())
             )
             raise e
@@ -148,11 +174,26 @@ class GeneratedsSuperSuper(object):
         module_object = sys.modules[cls.__module__]
 
         if isinstance(component_type, str):
-            comp_type_class = getattr(module_object, component_type)
+            # class names do not have spaces, so if we find a space, we treat
+            # it as a general string and just return it.
+            if " " in component_type:
+                cls.logger.warning(
+                    "Component Type appears to be a generic string: nothing to do."
+                )
+                return component_type
+            else:
+                comp_type_class = getattr(module_object, component_type)
         else:
             comp_type_class = getattr(module_object, component_type.__name__)
 
-        comp = comp_type_class(**kwargs)
+        # handle component types that support __ANY__
+        try:
+            anytypevalue = kwargs["__ANY__"]
+            # first value, so put it in a list, otherwise each element of the
+            # string is taken to be a new object
+            comp = comp_type_class(anytypeobjs_=[anytypevalue], **kwargs)
+        except KeyError:
+            comp = comp_type_class(**kwargs)
 
         # additional setups where required
         if comp_type_class.__name__ == "Cell":
@@ -184,36 +225,40 @@ class GeneratedsSuperSuper(object):
         :type force: bool
 
         """
-        # A single value, not a list:
-        if member.get_container() == 0:
-            if force:
-                vars(self)[member.get_name()] = obj
-            else:
-                if vars(self)[member.get_name()]:
-                    self.logger.warning(
-                        """Member '{}' has already been assigned. Use `force=True` to overwrite. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
-                            member.get_name()
-                        )
-                    )
-                else:
-                    vars(self)[member.get_name()] = obj
-        # List
+        # handle __ANY__ which is to be stored in anytypeobjs_
+        if member.get_name() == "__ANY__":
+            vars(self)["anytypeobjs_"].append(obj)
         else:
-            if force:
-                vars(self)[member.get_name()].append(obj)
-            else:
-                # "obj in .." checks by identity and value.
-                # In XML, two children with same values are identical.
-                # There is no use case where the same child would be added
-                # twice to a component.
-                if obj in vars(self)[member.get_name()]:
-                    self.logger.warning(
-                        """{} already exists in {}. Use `force=True` to force readdition. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
-                            obj, member.get_name()
-                        )
-                    )
+            # A single value, not a list:
+            if member.get_container() == 0:
+                if force:
+                    vars(self)[member.get_name()] = obj
                 else:
+                    if vars(self)[member.get_name()]:
+                        self.logger.warning(
+                            """Member '{}' has already been assigned. Use `force=True` to overwrite. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
+                                member.get_name()
+                            )
+                        )
+                    else:
+                        vars(self)[member.get_name()] = obj
+            # List
+            else:
+                if force:
                     vars(self)[member.get_name()].append(obj)
+                else:
+                    # "obj in .." checks by identity and value.
+                    # In XML, two children with same values are identical.
+                    # There is no use case where the same child would be added
+                    # twice to a component.
+                    if obj in vars(self)[member.get_name()]:
+                        self.logger.warning(
+                            """{} already exists in {}. Use `force=True` to force readdition. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
+                                obj, member.get_name()
+                            )
+                        )
+                    else:
+                        vars(self)[member.get_name()].append(obj)
 
     @classmethod
     def _get_members(cls):
