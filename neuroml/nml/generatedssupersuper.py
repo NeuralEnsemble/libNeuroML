@@ -99,11 +99,11 @@ class GeneratedsSuperSuper(object):
         else:
             if not neuroml.build_time_validation.ENABLED:
                 self.logger.warning(
-                    f"Adding new {obj.__class__.__name__}: build time validation is globally disabled."
+                    f"Build time validation is globally disabled: adding new {obj.__class__.__name__}."
                 )
             else:
                 self.logger.warning(
-                    f"Adding new {obj.__class__.__name__}: build time validation is locally disabled."
+                    f"Build time validation is globally disabled: adding new {obj.__class__.__name__}."
                 )
         return obj
 
@@ -165,11 +165,11 @@ class GeneratedsSuperSuper(object):
         else:
             if not neuroml.build_time_validation.ENABLED:
                 cls.logger.warning(
-                    f"Creating new {comp_type_class.__name__}: build time validation is globally disabled."
+                    f"Build time validation is globally disabled: creating new {comp_type_class.__name__}."
                 )
             else:
                 cls.logger.warning(
-                    f"Creating new {comp_type_class.__name__}: build time validation is locally disabled."
+                    f"Build time validation is globally disabled: creating new {comp_type_class.__name__}."
                 )
         return comp
 
@@ -184,16 +184,14 @@ class GeneratedsSuperSuper(object):
         :type force: bool
 
         """
-        import warnings
-
         # A single value, not a list:
         if member.get_container() == 0:
             if force:
                 vars(self)[member.get_name()] = obj
             else:
                 if vars(self)[member.get_name()]:
-                    warnings.warn(
-                        """{} has already been assigned.  Use `force=True` to overwrite. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
+                    self.logger.warning(
+                        """Member '{}' has already been assigned. Use `force=True` to overwrite. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
                             member.get_name()
                         )
                     )
@@ -209,7 +207,7 @@ class GeneratedsSuperSuper(object):
                 # There is no use case where the same child would be added
                 # twice to a component.
                 if obj in vars(self)[member.get_name()]:
-                    warnings.warn(
+                    self.logger.warning(
                         """{} already exists in {}. Use `force=True` to force readdition. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
                             obj, member.get_name()
                         )
