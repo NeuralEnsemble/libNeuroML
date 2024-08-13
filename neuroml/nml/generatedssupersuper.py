@@ -13,15 +13,15 @@ import neuroml.build_time_validation
 
 from .generatedscollector import GdsCollector
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-
 
 class GeneratedsSuperSuper(object):
     """Super class for GeneratedsSuper.
 
     Any bits that must go into every libNeuroML class should go here.
     """
+
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.INFO)
 
     def add(self, obj=None, hint=None, force=False, validate=True, **kwargs):
         """Generic function to allow easy addition of a new member to a NeuroML object.
@@ -97,7 +97,14 @@ class GeneratedsSuperSuper(object):
         if neuroml.build_time_validation.ENABLED and validate:
             self.validate()
         else:
-            logger.warning("Build time validation is disabled.")
+            if not neuroml.build_time_validation.ENABLED:
+                self.logger.warning(
+                    f"Adding new {obj.__class__.__name__}: build time validation is globally disabled."
+                )
+            else:
+                self.logger.warning(
+                    f"Adding new {obj.__class__.__name__}: build time validation is locally disabled."
+                )
         return obj
 
     @classmethod
@@ -156,7 +163,14 @@ class GeneratedsSuperSuper(object):
         if neuroml.build_time_validation.ENABLED and validate:
             comp.validate()
         else:
-            logger.warning("Build time validation is disabled.")
+            if not neuroml.build_time_validation.ENABLED:
+                cls.logger.warning(
+                    f"Creating new {comp_type_class.__name__}: build time validation is globally disabled."
+                )
+            else:
+                cls.logger.warning(
+                    f"Creating new {comp_type_class.__name__}: build time validation is locally disabled."
+                )
         return comp
 
     def __add(self, obj, member, force=False):

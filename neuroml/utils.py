@@ -234,7 +234,7 @@ def component_factory(
     Please see `GeneratedsSuperSuper.component_factory` for more information.
     """
     new_obj = schema.NeuroMLDocument().component_factory(
-        component_type, validate, **kwargs
+        component_type=component_type, validate=validate, **kwargs
     )
     return new_obj
 

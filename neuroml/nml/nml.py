@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Jun 11 14:00:16 2024 by generateDS.py version 2.43.3.
-# Python 3.10.9 (main, Jan 11 2023, 15:21:40) [GCC 11.2.0]
+# Generated Tue Aug 13 13:52:09 2024 by generateDS.py version 2.44.1.
+# Python 3.11.9 (main, Apr 17 2024, 00:00:00) [GCC 14.0.1 20240411 (Red Hat 14.0.1-0)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -16,7 +16,7 @@
 #   NeuroML_v2.3.1.xsd
 #
 # Command line:
-#   /home/padraig/anaconda2/envs/py310//bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" --custom-imports-template="gds_imports-template.py" NeuroML_v2.3.1.xsd
+#   /home/asinha/.local/share/virtualenvs/neuroml-311-dev/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" --custom-imports-template="gds_imports-template.py" NeuroML_v2.3.1.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -198,7 +198,7 @@ except ModulenotfoundExp_ as exp:
 
     class GeneratedsSuper(GeneratedsSuperSuper):
         __hash__ = object.__hash__
-        tzoff_pattern = re_.compile(r"(\+|-)((0\d|1[0-3]):[0-5]\d|14:00)$")
+        tzoff_pattern = re_.compile("(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)$")
 
         class _FixedOffsetTZ(datetime_.tzinfo):
             def __init__(self, offset, name):
@@ -704,7 +704,7 @@ except ModulenotfoundExp_ as exp:
             path = "/".join(path_list)
             return path
 
-        Tag_strip_pattern_ = re_.compile(r"\{.*\}")
+        Tag_strip_pattern_ = re_.compile(r"{.*}")
 
         def get_path_list_(self, node, path_list):
             if node is None:
@@ -49111,13 +49111,13 @@ class Cell(BaseCell):
             else:
                 p = None
         except IndexError as e:
-            print("{}: prox must be a list of 4 elements".format(e))
+            raise ValueError("{}: prox must be a list of 4 elements".format(e))
         try:
             d = self.component_factory(
                 "Point3DWithDiam", x=dist[0], y=dist[1], z=dist[2], diameter=dist[3]
             )
         except IndexError as e:
-            print("{}: dist must be a list of 4 elements".format(e))
+            raise ValueError("{}: dist must be a list of 4 elements".format(e))
 
         segid = len(self.morphology.segments)
         if segid > 0 and parent is None:
@@ -49139,7 +49139,7 @@ class Cell(BaseCell):
                 seg = self.get_segment(seg_id)
                 if seg:
                     raise ValueError(
-                        f"A segment with provided id {seg_id} already exists"
+                        f"A segment with provided id '{seg_id}' already exists"
                     )
             except ValueError:
                 # a segment with this ID does not already exist
@@ -49160,8 +49160,8 @@ class Cell(BaseCell):
             try:
                 seg_group = self.get_segment_group(group_id)
             except ValueError as e:
-                print("Warning: {}".format(e))
-                print(f"Warning: creating Segment Group with id {group_id}")
+                self.logger.warning("{}".format(e))
+                self.logger.warning(f"Creating Segment Group with id '{group_id}'")
                 seg_group = self.add_segment_group(group_id=group_id)
             seg_group.members.append(Member(segments=segment.id))
 
@@ -49255,7 +49255,7 @@ class Cell(BaseCell):
                 validate=False,
             )
         else:
-            print(f"Warning: Segment group {seg_group.id} already exists.")
+            self.logger.warning(f"Segment group '{seg_group.id}' already exists.")
 
         return seg_group
 
@@ -49589,6 +49589,8 @@ class Cell(BaseCell):
         :type default_groups: list of strings
         :returns: list of created segment groups (or empty list if none created)
         :rtype: list
+
+        :raises ValueError: if a group other than the standard groups are provided
         """
         new_groups = []
         if use_convention:
@@ -49609,10 +49611,9 @@ class Cell(BaseCell):
                     neuro_lex_id = None
                     notes = "Default segment group for all segments in the cell"
                 else:
-                    print(
-                        f"Error: only 'all', 'soma_group', 'dendrite_group', and 'axon_group' are supported. Received {grp}"
+                    raise ValueError(
+                        f"Only 'all', 'soma_group', 'dendrite_group', and 'axon_group' are supported. Received {grp}"
                     )
-                    return []
 
                 seg_group = self.add_segment_group(
                     group_id=grp, neuro_lex_id=neuro_lex_id, notes=notes
@@ -49800,7 +49801,7 @@ class Cell(BaseCell):
         :returns: TODO
 
         """
-        # print(f"Processing element: {root_segment_id}")
+        self.logger.debug(f"Processing element: {root_segment_id}")
 
         try:
             children = morph_tree[root_segment_id]
@@ -49866,7 +49867,7 @@ class Cell(BaseCell):
                     child_lists[parent] = []
                 child_lists[parent].append(segment.id)
             except AttributeError:
-                print(f"Warning: Segment: {segment} has no parent")
+                self.logger.warning(f"Segment: {segment} has no parent")
 
         self.adjacency_list = child_lists
         return child_lists
@@ -49974,7 +49975,7 @@ class Cell(BaseCell):
                 frac_along = (distance - dist) / self.get_segment_length(tgt)
             except ZeroDivisionError:
                 # ignore zero length segments
-                print(f"Warning: encountered zero length segment: {tgt}")
+                self.logger.warning(f"Encountered zero length segment: {tgt}")
                 continue
 
             if frac_along > 1.0:
