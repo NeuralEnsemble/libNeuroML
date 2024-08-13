@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Gets type information from nml.py and generates a file of sed commands to be
 used to modify nml.py to add some information about the types of all variables
@@ -13,10 +12,9 @@ File: annotate_nml.py
 Copyright 2023 NeuroML contributors
 """
 
-
 import inspect
-from . import nml
 
+from . import nml
 
 ignorelist = [
     "GeneratedsSuper",

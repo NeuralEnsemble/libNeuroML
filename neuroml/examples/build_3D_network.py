@@ -4,23 +4,25 @@ Example to build a full spiking IaF network throught libNeuroML & save it as XML
 
 """
 
-from neuroml import NeuroMLDocument
-from neuroml import Network
-from neuroml import ExpOneSynapse
-from neuroml import Population
-from neuroml import Property
-from neuroml import Cell
-from neuroml import Location
-from neuroml import Instance
-from neuroml import Morphology
-from neuroml import Point3DWithDiam
-from neuroml import Segment
-from neuroml import SegmentParent
-from neuroml import Projection
-from neuroml import Connection
+from random import random
 
 import neuroml.writers as writers
-from random import random
+from neuroml import (
+    Cell,
+    Connection,
+    ExpOneSynapse,
+    Instance,
+    Location,
+    Morphology,
+    Network,
+    NeuroMLDocument,
+    Point3DWithDiam,
+    Population,
+    Projection,
+    Property,
+    Segment,
+    SegmentParent,
+)
 
 soma_diam = 10
 soma_len = 10

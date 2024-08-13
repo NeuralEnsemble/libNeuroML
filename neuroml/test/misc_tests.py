@@ -3,8 +3,8 @@ Miscelaneous unit tests
 
 """
 
-import sys
 import inspect
+import sys
 
 import neuroml
 

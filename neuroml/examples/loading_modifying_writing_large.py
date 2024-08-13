@@ -3,12 +3,11 @@ In this example an axon is built, a morphology is loaded, the axon is
 then connected to the loadeed morphology.
 """
 
+from guppy import hpy
+
 import neuroml
 import neuroml.loaders as loaders
 import neuroml.writers as writers
-
-
-from guppy import hpy
 
 h = hpy()
 

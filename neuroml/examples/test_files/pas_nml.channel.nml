@@ -5,7 +5,7 @@
     <ionChannel id="pas_nml" conductance="10pS" type="ionChannelPassive">
 
         <notes>Simple example of a leak/passive conductance. </notes>
-                            
+
     </ionChannel>
 
 </neuroml>

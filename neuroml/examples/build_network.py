@@ -5,17 +5,19 @@ through libNeuroML, save it as XML and validate it
 
 """
 
-from neuroml import NeuroMLDocument
-from neuroml import IafCell
-from neuroml import Network
-from neuroml import ExpOneSynapse
-from neuroml import Population
-from neuroml import PulseGenerator
-from neuroml import ExplicitInput
-from neuroml import SynapticConnection
-import neuroml.writers as writers
 from random import random
 
+import neuroml.writers as writers
+from neuroml import (
+    ExplicitInput,
+    ExpOneSynapse,
+    IafCell,
+    Network,
+    NeuroMLDocument,
+    Population,
+    PulseGenerator,
+    SynapticConnection,
+)
 
 nml_doc = NeuroMLDocument(id="IafNet")
 

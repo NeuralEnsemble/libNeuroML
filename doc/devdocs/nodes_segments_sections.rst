@@ -58,7 +58,7 @@ unbranched segmentGroups, which can be used as the basis for sections in any par
 in them, or be ignored by any other application.
 
 In libNeuroML, a section-like concept can be added at API level, to facilitate building cells, to facilitate import/export
-to/from simulators supporting this concept, and to serve as a basis for recompartmentalisation of cells. 
+to/from simulators supporting this concept, and to serve as a basis for recompartmentalisation of cells.
 
 
 
@@ -96,7 +96,7 @@ to the **parent** element, i.e.
     <parent segment="2" fractionAlong="0.5"/>
 
 This is not possible in a node based format, but represents a logically consistent description of what the modeller
-wants. 
+wants.
 
 
 What to do?

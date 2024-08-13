@@ -9,4 +9,3 @@ User guide
    api
    examples
    bibliography
-

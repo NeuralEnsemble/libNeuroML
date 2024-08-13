@@ -109,7 +109,7 @@ Mike V was asked to add a clone method to a morphology.
 It was decided that fraction_along should be a property of segment.
 
 The syntax for segment groups should be as follows:
-group=morph.segment_groups['axon_group'] 
+group=morph.segment_groups['axon_group']
 (in connect merge groups should be false by default - throw an exception, tell the user setting merge_groups = True or rename group will fix this)
 
 This was a subject of great debate and has not been completely settled.

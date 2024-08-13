@@ -1,9 +1,11 @@
 import warnings
-import neuroml.arraymorph as am
-import neuroml
+
 import numpy as np
-import neuroml.writers as writers
+
+import neuroml
+import neuroml.arraymorph as am
 import neuroml.loaders as loaders
+import neuroml.writers as writers
 
 try:
     import unittest2 as unittest

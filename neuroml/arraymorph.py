@@ -3,6 +3,7 @@ Prototype for object model backend for the libNeuroML project
 """
 
 import numpy as np
+
 import neuroml
 
 

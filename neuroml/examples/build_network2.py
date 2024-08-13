@@ -5,27 +5,28 @@ through libNeuroML, save it as XML and validate it
 
 """
 
-from neuroml import NeuroMLDocument
-from neuroml import IafCell
-from neuroml import Network
-from neuroml import ExpOneSynapse
-from neuroml import Population
-from neuroml import GapJunction
-
-from neuroml import Input
-from neuroml import InputList
-from neuroml import ConnectionWD
-from neuroml import Projection
-from neuroml import ElectricalProjection
-from neuroml import ElectricalConnection
-from neuroml import ElectricalConnectionInstance
-from neuroml import Property
-from neuroml import Instance
-from neuroml import Location
-from neuroml import PoissonFiringSynapse
+import random
 
 import neuroml.writers as writers
-import random
+from neuroml import (
+    ConnectionWD,
+    ElectricalConnection,
+    ElectricalConnectionInstance,
+    ElectricalProjection,
+    ExpOneSynapse,
+    GapJunction,
+    IafCell,
+    Input,
+    InputList,
+    Instance,
+    Location,
+    Network,
+    NeuroMLDocument,
+    PoissonFiringSynapse,
+    Population,
+    Projection,
+    Property,
+)
 
 random.seed(123)
 

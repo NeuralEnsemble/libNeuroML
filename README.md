@@ -41,6 +41,51 @@ See https://docs.neuroml.org/ for an overview of the various NeuroML libraries.
 
 ## Changelog
 
+See also https://github.com/NeuralEnsemble/libNeuroML/releases.
+
+### version 0.5.8
+
+- drop py3.7, add py3,12
+- fix loader to check for given path and fall back to relative path
+- extend `get_segment_groups_from_substring` to also include an `unbranched` filter
+- more type hint/doc fixes
+
+### version 0.5.7
+
+- more documentation for writes/loaders
+
+### version 0.5.6
+
+- documentation fixes to writer modules
+
+### version 0.5.5
+
+- update schema, changes for NML 2.3 release
+
+### version 0.5.4
+
+- use natsort to improve sorting of segments/groups when optimising
+
+### version 0.5.3
+
+- add links to schema documentation
+- move from legacy setup.py to pyproject.toml build system
+
+### version 0.5.2
+
+- explicitly depend on numpy
+
+### version 0.5.1
+
+- updates to GHA
+
+### version 0.5.0
+
+- enable CI on py3.11
+- fix to loaders
+- format code with black
+- add graph representation for morphology, and methods to calculate distances b/w segments
+
 ### version 0.4.1
 
 - add multiple cell builder utility functions

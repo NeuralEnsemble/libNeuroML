@@ -35,10 +35,10 @@ Network connection: SmallNet_pyr_bask contains 252 individual synaptic connectio
 
     <pulseGenerator id="BackgroundRandomIClamps" delay="0.0s" duration="100.0s" amplitude="6.0E-10A"/>
 
-    
+
     <network id="network_ACnet2" type="networkWithTemperature" temperature="6.3 degC">
 
-        
+
     <notes>A small scale network model with 60 cells based on Dave Beeman's Auditory Cortex model</notes>
 
         <population id="pyramidals_48" component="pyr_4_sym" type="populationList" size="48">

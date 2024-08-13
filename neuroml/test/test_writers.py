@@ -3,10 +3,12 @@ Unit tests for writers
 
 """
 
-import neuroml
-import numpy as np
-from neuroml import arraymorph as am
 import tempfile
+
+import numpy as np
+
+import neuroml
+from neuroml import arraymorph as am
 
 try:
     import unittest2 as unittest
