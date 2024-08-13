@@ -145,6 +145,23 @@ class GeneratedsSuperSuper(object):
         else:
             comp_type_class = getattr(module_object, component_type.__name__)
 
+        # if new component, manually add the supplied arguments after
+        # extracting id and name
+        if comp_type_class.__name__ == "Component":
+            new_comp_args = kwargs.copy()
+            try:
+                id_ = new_comp_args.pop("id")
+                type_ = new_comp_args.pop("type")
+            except KeyError:
+                print("Error: Component requires at least 'id' and 'type' arguments")
+
+            comp = comp_type_class(id=id_, type=type_)
+            comp.anyAttributes_ = new_comp_args
+            logging.warning(
+                "New Component reference created. This will NOT be validated against the schema."
+            )
+            return comp
+
         comp = comp_type_class(**kwargs)
 
         # additional setups where required
