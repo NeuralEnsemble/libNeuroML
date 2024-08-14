@@ -52,3 +52,4 @@ If the schema documentation does not resolve the issue, please `contact us <http
    Networks_list
    PyNN_list
    NeuroMLCoreCompTypes_list
+   Other_list

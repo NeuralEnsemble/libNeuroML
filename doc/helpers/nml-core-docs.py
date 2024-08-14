@@ -81,7 +81,9 @@ for f, excluded_classes in files.items():
     classes[f] = classlist
 
 
+total_classes = 0
 for module, clist in classes.items():
+    total_classes += len(clist)
     f = module.split(".")[0]
     for aclass in clist:
         # do not print all the internal methods in GeneratedsSuper
@@ -127,15 +129,28 @@ for module, clist in classes.items():
                 category = "Cells"
             elif "gate" in aclass.lower():
                 category = "Channels"
+            elif "hh" in aclass.lower():
+                category = "Channels"
+            elif "q10" in aclass.lower():
+                category = "Channels"
+            elif "channel" in aclass.lower():
+                category = "Channels"
+            elif "network" in aclass.lower():
+                category = "Networks"
+            elif "population" in aclass.lower():
+                category = "Networks"
             else:
+                print(f"{aclass} fits nowhere, putting in Other")
                 category = "Other"
-        else:
+        finally:
             comp_num_dict[category] += 1
             fwrite = output_files[category]
             print(towrite, file=fwrite)
 
 print("Done")
 print(comp_num_dict)
+
+print(f"Total classes read from libNeuroML: {total_classes}")
 
 for comp, num in comp_num_dict.items():
     output_files[comp].close()

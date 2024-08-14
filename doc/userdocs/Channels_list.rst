@@ -44,6 +44,17 @@ GateFractional
 
 
 
+GateFractionalSubgate
+^^^^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.GateFractionalSubgate
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
 GateHHInstantaneous
 ^^^^^^^^^^^^^^^^^^^
 
@@ -55,10 +66,109 @@ GateHHInstantaneous
 
 
 
+GateHHRates
+^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.GateHHRates
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+GateHHRatesInf
+^^^^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.GateHHRatesInf
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+GateHHRatesTau
+^^^^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.GateHHRatesTau
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+GateHHRatesTauInf
+^^^^^^^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.GateHHRatesTauInf
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+GateHHTauInf
+^^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.GateHHTauInf
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+GateHHUndetermined
+^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.GateHHUndetermined
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
 GateKS
 ^^^^^^
 
 .. autoclass:: neuroml.nml.nml.GateKS
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+HHRate
+^^^^^^
+
+.. autoclass:: neuroml.nml.nml.HHRate
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+HHTime
+^^^^^^
+
+.. autoclass:: neuroml.nml.nml.HHTime
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+HHVariable
+^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.HHVariable
    :members:
    :undoc-members:
    :show-inheritance:
@@ -99,6 +209,17 @@ IonChannelKS
 
 
 
+IonChannelScalable
+^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.IonChannelScalable
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
 IonChannelVShift
 ^^^^^^^^^^^^^^^^
 
@@ -132,6 +253,17 @@ Q10ConductanceScaling
 
 
 
+Q10Settings
+^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.Q10Settings
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
 ReverseTransition
 ^^^^^^^^^^^^^^^^^
 
@@ -147,6 +279,28 @@ TauInfTransition
 ^^^^^^^^^^^^^^^^
 
 .. autoclass:: neuroml.nml.nml.TauInfTransition
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+channelTypes
+^^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.channelTypes
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+gateTypes
+^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.gateTypes
    :members:
    :undoc-members:
    :show-inheritance:

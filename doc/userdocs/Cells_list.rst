@@ -88,6 +88,17 @@ Cell2CaPools
 
 
 
+CellSet
+^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.CellSet
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
 ChannelDensity
 ^^^^^^^^^^^^^^
 
@@ -213,6 +224,39 @@ DistalDetails
 ^^^^^^^^^^^^^
 
 .. autoclass:: neuroml.nml.nml.DistalDetails
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+ExtracellularProperties
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.ExtracellularProperties
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+ExtracellularPropertiesLocal
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.ExtracellularPropertiesLocal
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+FitzHughNagumo1969Cell
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.FitzHughNagumo1969Cell
    :members:
    :undoc-members:
    :show-inheritance:
@@ -543,6 +587,39 @@ VariableParameter
 ^^^^^^^^^^^^^^^^^
 
 .. autoclass:: neuroml.nml.nml.VariableParameter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+basePyNNCell
+^^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.basePyNNCell
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+basePyNNIaFCell
+^^^^^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.basePyNNIaFCell
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+basePyNNIaFCondCell
+^^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.basePyNNIaFCondCell
    :members:
    :undoc-members:
    :show-inheritance:

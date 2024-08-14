@@ -239,3 +239,25 @@ SynapticConnection
    :undoc-members:
    :show-inheritance:
    :inherited-members:
+
+
+
+networkTypes
+^^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.networkTypes
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+populationTypes
+^^^^^^^^^^^^^^^
+
+.. autoclass:: neuroml.nml.nml.populationTypes
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
