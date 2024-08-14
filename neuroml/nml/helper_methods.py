@@ -2181,8 +2181,6 @@ cell_methods = MethodSpec(
         :param optimise_segment_groups: toggle whether segment groups should be
             optimised after operation
         :type optimise_segment_groups: bool
-        :returns: modified cell with new section groups
-        :rtype: neuroml.Cell
 
         """
         # don't recompute if already exists
