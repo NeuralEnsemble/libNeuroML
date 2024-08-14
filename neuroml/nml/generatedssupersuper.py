@@ -127,7 +127,7 @@ class GeneratedsSuperSuper(object):
                 )
             else:
                 self.logger.warning(
-                    f"Build time validation is globally disabled: adding new {obj.__class__.__name__}."
+                    f"Build time validation is locally disabled: adding new {obj.__class__.__name__}."
                 )
         return obj
 
@@ -226,7 +226,7 @@ class GeneratedsSuperSuper(object):
                 )
             else:
                 cls.logger.warning(
-                    f"Build time validation is globally disabled: creating new {comp_type_class.__name__}."
+                    f"Build time validation is locally disabled: creating new {comp_type_class.__name__}."
                 )
         return comp
 
