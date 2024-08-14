@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Aug  1 09:28:08 2024 by generateDS.py version 2.43.3.
+# Generated Wed Aug 14 13:56:38 2024 by generateDS.py version 2.44.1.
 # Python 3.11.9 (main, Apr 17 2024, 00:00:00) [GCC 14.0.1 20240411 (Red Hat 14.0.1-0)]
 #
 # Command line options:
@@ -198,7 +198,7 @@ except ModulenotfoundExp_ as exp:
 
     class GeneratedsSuper(GeneratedsSuperSuper):
         __hash__ = object.__hash__
-        tzoff_pattern = re_.compile(r"(\+|-)((0\d|1[0-3]):[0-5]\d|14:00)$")
+        tzoff_pattern = re_.compile("(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)$")
 
         class _FixedOffsetTZ(datetime_.tzinfo):
             def __init__(self, offset, name):
@@ -704,7 +704,7 @@ except ModulenotfoundExp_ as exp:
             path = "/".join(path_list)
             return path
 
-        Tag_strip_pattern_ = re_.compile(r"\{.*\}")
+        Tag_strip_pattern_ = re_.compile(r"{.*}")
 
         def get_path_list_(self, node, path_list):
             if node is None:
@@ -50326,7 +50326,8 @@ class Cell(BaseCell):
 
         # initialise root segment and first segment group
         seg = self.get_segment(root_segment_id)
-        group_name = f"seg_group_{len(self.morphology.segment_groups) - 1}_seg_{seg.id}"
+        num_seg_groups = len(self.morphology.segment_groups)
+        group_name = f"seg_group_{num_seg_groups}_seg_{seg.id}"
         new_seg_group = self.add_unbranched_segment_group(group_name)
 
         # run recursive function
