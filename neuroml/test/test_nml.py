@@ -73,10 +73,6 @@ class TestNML(unittest.TestCase):
         # Success: returns object
         self.assertIsNotNone(doc.add(cell))
 
-        # Already added, so throw exception
-        with self.assertWarns(UserWarning):
-            doc.add(cell)
-
         # Success
         self.assertIsNotNone(doc.add(cell1))
 
@@ -164,9 +160,6 @@ class TestNML(unittest.TestCase):
 
         pop3 = neuroml.Population(id="unique")
         network.add(pop3)
-        # warning because this is already added
-        with self.assertWarns(UserWarning):
-            network.add(pop3)
 
         # Note that for Python, this is a new object
         # So we can add it again

@@ -1551,13 +1551,13 @@ cell_methods = MethodSpec(
             else:
                 p = None
         except IndexError as e:
-            print("{}: prox must be a list of 4 elements".format(e))
+            raise ValueError("{}: prox must be a list of 4 elements".format(e))
         try:
             d = self.component_factory(
                 "Point3DWithDiam", x=dist[0], y=dist[1], z=dist[2], diameter=dist[3]
             )
         except IndexError as e:
-            print("{}: dist must be a list of 4 elements".format(e))
+            raise ValueError("{}: dist must be a list of 4 elements".format(e))
 
         segid = len(self.morphology.segments)
         if segid > 0 and parent is None:
@@ -1578,7 +1578,7 @@ cell_methods = MethodSpec(
                 seg = None
                 seg = self.get_segment(seg_id)
                 if seg:
-                    raise ValueError(f"A segment with provided id {seg_id} already exists")
+                    raise ValueError(f"A segment with provided id '{seg_id}' already exists")
             except ValueError:
                 # a segment with this ID does not already exist
                 pass
@@ -1596,8 +1596,8 @@ cell_methods = MethodSpec(
             try:
                 seg_group = self.get_segment_group(group_id)
             except ValueError as e:
-                print("Warning: {}".format(e))
-                print(f"Warning: creating Segment Group with id {group_id}")
+                self.logger.warning("{}".format(e))
+                self.logger.warning(f"Creating Segment Group with id '{group_id}'")
                 seg_group = self.add_segment_group(
                     group_id=group_id
                 )
@@ -1685,7 +1685,7 @@ cell_methods = MethodSpec(
                 notes=notes, validate=False
             )
         else:
-            print(f"Warning: Segment group {seg_group.id} already exists.")
+            self.logger.warning(f"Segment group '{seg_group.id}' already exists.")
 
         return seg_group
 
@@ -2024,6 +2024,8 @@ cell_methods = MethodSpec(
         :type default_groups: list of strings
         :returns: list of created segment groups (or empty list if none created)
         :rtype: list
+
+        :raises ValueError: if a group other than the standard groups are provided
         """
         new_groups = []
         if use_convention:
@@ -2044,8 +2046,7 @@ cell_methods = MethodSpec(
                     neuro_lex_id=None
                     notes="Default segment group for all segments in the cell"
                 else:
-                    print(f"Error: only 'all', 'soma_group', 'dendrite_group', and 'axon_group' are supported. Received {grp}")
-                    return []
+                    raise ValueError(f"Only 'all', 'soma_group', 'dendrite_group', and 'axon_group' are supported. Received {grp}")
 
                 seg_group = self.add_segment_group(group_id=grp, neuro_lex_id=neuro_lex_id, notes=notes)
                 new_groups.append(seg_group)
@@ -2214,7 +2215,7 @@ cell_methods = MethodSpec(
         :returns: TODO
 
         """
-        # print(f"Processing element: {root_segment_id}")
+        self.logger.debug(f"Processing element: {root_segment_id}")
 
         try:
             children = morph_tree[root_segment_id]
@@ -2281,7 +2282,7 @@ cell_methods = MethodSpec(
                     child_lists[parent] = []
                 child_lists[parent].append(segment.id)
             except AttributeError:
-                print(f"Warning: Segment: {segment} has no parent")
+                self.logger.warning(f"Segment: {segment} has no parent")
 
         self.adjacency_list = child_lists
         return child_lists
@@ -2388,7 +2389,7 @@ cell_methods = MethodSpec(
                 frac_along = ((distance - dist) / self.get_segment_length(tgt))
             except ZeroDivisionError:
                 # ignore zero length segments
-                print(f"Warning: encountered zero length segment: {tgt}")
+                self.logger.warning(f"Encountered zero length segment: {tgt}")
                 continue
 
             if frac_along > 1.0:
