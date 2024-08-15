@@ -122,11 +122,11 @@ class GeneratedsSuperSuper(object):
             self.validate()
         else:
             if not neuroml.build_time_validation.ENABLED:
-                self.logger.warning(
+                self.logger.debug(
                     f"Build time validation is globally disabled: adding new {obj.__class__.__name__}."
                 )
             else:
-                self.logger.warning(
+                self.logger.debug(
                     f"Build time validation is locally disabled: adding new {obj.__class__.__name__}."
                 )
         return obj
@@ -204,11 +204,11 @@ class GeneratedsSuperSuper(object):
             comp.validate()
         else:
             if not neuroml.build_time_validation.ENABLED:
-                cls.logger.warning(
+                cls.logger.debug(
                     f"Build time validation is globally disabled: creating new {comp_type_class.__name__}."
                 )
             else:
-                cls.logger.warning(
+                cls.logger.debug(
                     f"Build time validation is locally disabled: creating new {comp_type_class.__name__}."
                 )
         return comp
