@@ -243,15 +243,20 @@ class GeneratedsSuperSuper(object):
         """
         # handle __ANY__ which is to be stored in anytypeobjs_
         if member.get_name() == "__ANY__":
+            self.logger.debug("__ANY__ member, appending to anytypeobjs_.")
             vars(self)["anytypeobjs_"].append(obj)
         else:
             # A single value, not a list:
+            self.logger.debug("Not a container member, assigning.")
             if member.get_container() == 0:
                 if force:
                     vars(self)[member.get_name()] = obj
+                    self.logger.warning(
+                        """Overwriting member '{}'.""".format(member.get_name())
+                    )
                 else:
                     if vars(self)[member.get_name()]:
-                        self.logger.warning(
+                        self.logger.debug(
                             """Member '{}' has already been assigned. Use `force=True` to overwrite. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
                                 member.get_name()
                             )
@@ -260,8 +265,12 @@ class GeneratedsSuperSuper(object):
                         vars(self)[member.get_name()] = obj
             # List
             else:
+                self.logger.debug("Container member, appending.")
                 if force:
                     vars(self)[member.get_name()].append(obj)
+                    self.logger.warning(
+                        """Force appending to member '{}'""".format(member.get_name())
+                    )
                 else:
                     # "obj in .." checks by identity and value.
                     # In XML, two children with same values are identical.
@@ -269,7 +278,7 @@ class GeneratedsSuperSuper(object):
                     # twice to a component.
                     if obj in vars(self)[member.get_name()]:
                         self.logger.warning(
-                            """{} already exists in {}. Use `force=True` to force readdition. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
+                            """{} already exists in {}. Use `force=True` to force readdition.""".format(
                                 obj, member.get_name()
                             )
                         )
