@@ -694,7 +694,7 @@ class GeneratedsSuperSuper(object):
         for member in all_members:
             if member.get_container() == 0:
                 if member.get_name() == id_:
-                    return member
+                    return getattr(self, member.get_name())
                 else:
                     all_ids.append(member.get_name())
             else:
