@@ -709,19 +709,20 @@ class GeneratedsSuperSuper(object):
         all_ids = []
         all_members = self._get_members()
         for member in all_members:
+            # not a list
             if member.get_container() == 0:
                 if member.get_name() == id_:
                     return getattr(self, member.get_name())
                 else:
                     all_ids.append(member.get_name())
             else:
-                contents = getattr(self, member.get_name(), None)
+                contents = getattr(self, member.get_name(), [])
                 for m in contents:
                     if hasattr(m, "id"):
                         if m.id == id_:
                             return m
-                    else:
-                        all_ids.append(m.id)
+                        else:
+                            all_ids.append(m.id)
 
         self.logger.warning(f"Id '{id_}' not found in {self.__name__}")
         self.logger.warning(f"All ids: {sorted(all_ids)}")
