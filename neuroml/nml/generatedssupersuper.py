@@ -681,3 +681,31 @@ class GeneratedsSuperSuper(object):
             schema = sys.modules[cls.__module__]
             cls.__nml_hier = schema.NeuroMLDocument.get_class_hierarchy()
         return cls.__nml_hier
+
+    def get_by_id(self, id_):
+        """Get a component or attribute by its ID
+
+        :param id_: ID of component or name of attribute to find
+        :type id_: str
+        :returns:  component with specified ID, or attribute, or None if neither found
+        """
+        all_ids = []
+        all_members = self._get_members()
+        for member in all_members:
+            if member.get_container() == 0:
+                if member.get_name() == id_:
+                    return member
+                else:
+                    all_ids.append(member.get_name())
+            else:
+                contents = getattr(self, member.get_name(), None)
+                for m in contents:
+                    if hasattr(m, "id"):
+                        if m.id == id_:
+                            return m
+                    else:
+                        all_ids.append(m.id)
+
+        self.logger.warning(f"Id '{id_}' not found in {self.__name__}")
+        self.logger.warning(f"All ids: {sorted(all_ids)}")
+        return None
