@@ -192,6 +192,18 @@ class TestNML(unittest.TestCase):
         test_pop = network.get_by_id("pop0")
         self.assertIs(test_pop, pop)
 
+    def test_get_by_id2(self):
+        """Test the get_by_id method, but for attribute"""
+        channel = neuroml.IonChannel(id="test", species="k", conductance="10pS")
+        species = channel.get_by_id("species")
+        self.assertEqual(species, "k")
+        conductance = channel.get_by_id("conductance")
+        self.assertEqual(conductance, "10pS")
+
+        # can now be edited
+        conductance = "20pS"
+        self.assertEqual(conductance, "20pS")
+
     def test_component_validate(self):
         """Test validate function"""
         network = neuroml.Network()
