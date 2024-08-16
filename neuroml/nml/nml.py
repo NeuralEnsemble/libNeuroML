@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Aug 14 17:50:43 2024 by generateDS.py version 2.44.1.
+# Generated Fri Aug 16 17:00:09 2024 by generateDS.py version 2.44.1.
 # Python 3.11.9 (main, Apr 17 2024, 00:00:00) [GCC 14.0.1 20240411 (Red Hat 14.0.1-0)]
 #
 # Command line options:
@@ -12820,39 +12820,6 @@ class Network(Standalone):
             self.input_lists.append(obj_)
             obj_.original_tagname_ = "inputList"
         super(Network, self)._buildChildren(child_, node, nodeName_, True)
-
-    warn_count = 0
-
-    def get_by_id(self, id: str) -> typing.Optional[typing.Any]:
-        """Get a component by its ID
-
-        :param id: ID of component to find
-        :type id: str
-        :returns:  component with specified ID or None if no component with specified ID found
-        """
-        all_ids = []
-        for ms in self.member_data_items_:
-            mlist = getattr(self, ms.get_name())
-            # TODO: debug why this is required
-            if mlist is None:
-                continue
-            for m in mlist:
-                if hasattr(m, "id"):
-                    if m.id == id:
-                        return m
-                    else:
-                        all_ids.append(m.id)
-        if self.warn_count < 10:
-            neuroml.print_(
-                "Id "
-                + id
-                + " not found in <network> element. All ids: "
-                + str(sorted(all_ids))
-            )
-            self.warn_count += 1
-        elif self.warn_count == 10:
-            neuroml.print_(" - Suppressing further warnings about id not found...")
-        return None
 
     def __str__(self):
         return (
@@ -43037,46 +43004,6 @@ class NeuroMLDocument(Standalone):
         info += "*******************************************************"
 
         return info
-
-    warn_count = 0
-
-    def get_by_id(self, id: str) -> typing.Optional[typing.Any]:
-        """Get a component by specifying its ID.
-
-        :param id: id of Component to get
-        :type id: str
-        :returns: Component with given ID or None if no Component with provided ID was found
-        """
-        if len(id) == 0:
-            callframe = inspect.getouterframes(inspect.currentframe(), 2)
-            print(
-                "Method: " + callframe[1][3] + " is asking for an element with no id..."
-            )
-
-            return None
-        all_ids = []
-        for ms in self.member_data_items_:
-            mlist = getattr(self, ms.get_name())
-            # TODO: debug why this is required
-            if mlist is None:
-                continue
-            for m in mlist:
-                if hasattr(m, "id"):
-                    if m.id == id:
-                        return m
-                    else:
-                        all_ids.append(m.id)
-        if self.warn_count < 10:
-            neuroml.print_(
-                "Id "
-                + id
-                + " not found in <neuroml> element. All ids: "
-                + str(sorted(all_ids))
-            )
-            self.warn_count += 1
-        elif self.warn_count == 10:
-            neuroml.print_(" - Suppressing further warnings about id not found...")
-        return None
 
     def append(self, element):
         """Append an element

@@ -877,39 +877,6 @@ nml_doc_summary = MethodSpec(
 
         return info
 
-    warn_count = 0
-
-    def get_by_id(self, id: str) -> typing.Optional[typing.Any]:
-        """Get a component by specifying its ID.
-
-        :param id: id of Component to get
-        :type id: str
-        :returns: Component with given ID or None if no Component with provided ID was found
-        """
-        if len(id)==0:
-            callframe = inspect.getouterframes(inspect.currentframe(), 2)
-            print('Method: '+ callframe[1][3] + ' is asking for an element with no id...')
-
-            return None
-        all_ids = []
-        for ms in self.member_data_items_:
-            mlist = getattr(self, ms.get_name())
-            # TODO: debug why this is required
-            if mlist is None:
-                continue
-            for m in mlist:
-                if hasattr(m,"id"):
-                    if m.id == id:
-                        return m
-                    else:
-                        all_ids.append(m.id)
-        if self.warn_count<10:
-            neuroml.print_("Id "+id+" not found in <neuroml> element. All ids: "+str(sorted(all_ids)))
-            self.warn_count+=1
-        elif self.warn_count==10:
-            neuroml.print_(" - Suppressing further warnings about id not found...")
-        return None
-
     def append(self, element):
         """Append an element
 
@@ -924,47 +891,19 @@ nml_doc_summary = MethodSpec(
 
 METHOD_SPECS += (nml_doc_summary,)
 
-network_get_by_id = MethodSpec(
-    name="get_by_id",
-    source='''\
-
-    warn_count = 0
-    def get_by_id(self, id: str) -> typing.Optional[typing.Any]:
-        """Get a component by its ID
-
-        :param id: ID of component to find
-        :type id: str
-        :returns:  component with specified ID or None if no component with specified ID found
-        """
-        all_ids = []
-        for ms in self.member_data_items_:
-            mlist = getattr(self, ms.get_name())
-            # TODO: debug why this is required
-            if mlist is None:
-                continue
-            for m in mlist:
-                if hasattr(m,"id"):
-                    if m.id == id:
-                        return m
-                    else:
-                        all_ids.append(m.id)
-        if self.warn_count<10:
-            neuroml.print_("Id "+id+" not found in <network> element. All ids: "+str(sorted(all_ids)))
-            self.warn_count+=1
-        elif self.warn_count==10:
-            neuroml.print_(" - Suppressing further warnings about id not found...")
-        return None
-
+network_str = MethodSpec(
+    name="str",
+    source="""\
 
     def __str__(self):
 
         return "Network "+str(self.id)+" with "+str(len(self.populations))+" population(s)"
 
-    ''',
+    """,
     class_names=("Network"),
 )
 
-METHOD_SPECS += (network_get_by_id,)
+METHOD_SPECS += (network_str,)
 
 
 cell_methods = MethodSpec(
