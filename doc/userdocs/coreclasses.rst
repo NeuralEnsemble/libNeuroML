@@ -42,4 +42,14 @@ This documentation is auto-generated from the `NeuroML schema <https://docs.neur
 In case of issues, please refer to the schema documentation for clarifications.
 If the schema documentation does not resolve the issue, please `contact us <https://docs.neuroml.org/NeuroMLOrg/CommunicationChannels.html>`__.
 
-.. include:: coreclasses_list.txt
+.. toctree::
+   :maxdepth: 1
+
+   Cells_list
+   Synapses_list
+   Channels_list
+   Inputs_list
+   Networks_list
+   PyNN_list
+   NeuroMLCoreCompTypes_list
+   Other_list
