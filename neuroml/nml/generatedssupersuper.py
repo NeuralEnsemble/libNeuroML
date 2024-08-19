@@ -699,23 +699,43 @@ class GeneratedsSuperSuper(object):
             cls.__nml_hier = schema.NeuroMLDocument.get_class_hierarchy()
         return cls.__nml_hier
 
-    def get_by_id(self, id_):
-        """Get a component or attribute by its ID
+    def get_member(self, id_):
+        """Get a component or attribute by its ID, or type, or attribute name
 
-        :param id_: ID of component or name of attribute to find
+        :param id_: id of component ("biophys"), or its type
+            ("BiophysicalProperties"), or its attribute name
+            ("biophysical_properties")
+
+
+            When the attribute name or type are given, this simply returns the
+            associated object, which could be a list.
+
         :type id_: str
-        :returns:  component with specified ID, or attribute, or None if neither found
+        :returns:  component if found, else None
         """
         all_ids = []
         all_members = self._get_members()
         for member in all_members:
+            # check name: biophysical_properties
+            if member.get_name() == id_:
+                return getattr(self, member.get_name())
+            # check type: BiophysicalProperties
+            elif member.get_data_type() == id_:
+                return getattr(self, member.get_name())
+
+            # check contents
+
             # not a list
             if member.get_container() == 0:
-                if member.get_name() == id_:
-                    return getattr(self, member.get_name())
+                # check contents for id: biophysical_properties.id
+                contents = getattr(self, member.get_name(), None)
+                if hasattr(contents, "id"):
+                    if contents.id == id_:
+                        return contents
                 else:
                     all_ids.append(member.get_name())
             else:
+                # container: iterate over each item
                 contents = getattr(self, member.get_name(), [])
                 for m in contents:
                     if hasattr(m, "id"):
@@ -724,6 +744,9 @@ class GeneratedsSuperSuper(object):
                         else:
                             all_ids.append(m.id)
 
-        self.logger.warning(f"Id '{id_}' not found in {self.__name__}")
+        try:
+            self.logger.warning(f"Id '{id_}' not found in {self.__name__}")
+        except AttributeError:
+            self.logger.warning(f"Id '{id_}' not found in {self.id}")
         self.logger.warning(f"All ids: {sorted(all_ids)}")
         return None
