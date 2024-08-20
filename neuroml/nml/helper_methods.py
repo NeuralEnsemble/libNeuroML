@@ -2121,8 +2121,6 @@ cell_methods = MethodSpec(
         :param optimise_segment_groups: toggle whether segment groups should be
             optimised after operation
         :type optimise_segment_groups: bool
-        :returns: modified cell with new section groups
-        :rtype: neuroml.Cell
 
         """
         # don't recompute if already exists
@@ -2133,7 +2131,8 @@ cell_methods = MethodSpec(
 
         # initialise root segment and first segment group
         seg = self.get_segment(root_segment_id)
-        group_name = f"seg_group_{len(self.morphology.segment_groups) - 1}_seg_{seg.id}"
+        num_seg_groups = len(self.morphology.segment_groups)
+        group_name = f"seg_group_{num_seg_groups}_seg_{seg.id}"
         new_seg_group = self.add_unbranched_segment_group(group_name)
 
         # run recursive function

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Aug 16 16:50:58 2024 by generateDS.py version 2.44.1.
+# Generated Tue Aug 20 10:23:13 2024 by generateDS.py version 2.44.1.
 # Python 3.11.9 (main, Apr 17 2024, 00:00:00) [GCC 14.0.1 20240411 (Red Hat 14.0.1-0)]
 #
 # Command line options:
@@ -49696,8 +49696,6 @@ class Cell(BaseCell):
         :param optimise_segment_groups: toggle whether segment groups should be
             optimised after operation
         :type optimise_segment_groups: bool
-        :returns: modified cell with new section groups
-        :rtype: neuroml.Cell
 
         """
         # don't recompute if already exists
@@ -49708,7 +49706,8 @@ class Cell(BaseCell):
 
         # initialise root segment and first segment group
         seg = self.get_segment(root_segment_id)
-        group_name = f"seg_group_{len(self.morphology.segment_groups) - 1}_seg_{seg.id}"
+        num_seg_groups = len(self.morphology.segment_groups)
+        group_name = f"seg_group_{num_seg_groups}_seg_{seg.id}"
         new_seg_group = self.add_unbranched_segment_group(group_name)
 
         # run recursive function
