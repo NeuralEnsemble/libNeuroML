@@ -3,8 +3,9 @@ Work in progress..
 
 """
 
-import neuroml
 import numpy as np
+
+import neuroml
 
 
 class NetworkContainer(neuroml.Network):

@@ -13,19 +13,19 @@ Please **do not** regenerate nml.py and push directly to the `master` branch bec
 The following packages are required.
 
 - generateds
-- black
+- ruff
 
-They can be installed using the `requirements-dev.txt` file in the root directory:
+They can be installed with using the dev option in the root directory:
 
 ```
-pip install -r requirements-dev.txt
+pip install .[dev]
 ```
 
 ### Regenerating nml.py
 
 - Run the `regenerate-nml.sh` script in the `neuroml/nml` folder.
 - This will use the API version defined in `neuroml/__init__.py` to find the right schema XSD file and run generateds to regenerate the `nml.py` file.
-- It will also run `black` on the newly generated file to reformat it.
+- It will also run `ruff` on the newly generated file to reformat it.
 
 The generateDS command that is invoked is of this form:
 

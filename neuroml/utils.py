@@ -3,17 +3,24 @@
 Utilities for checking generated code
 
 """
+
+import copy
 import inspect
+import logging
 import os
 import sys
 import warnings
-from typing import Any, Dict, Union, Optional, Type
+from typing import Any, Dict, List, Optional, Set, Type, Union
 
 import networkx
 
 import neuroml.nml.nml as schema
+from neuroml import NeuroMLDocument
 
 from . import loaders
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 def validate_neuroml2(file_name: str) -> None:
@@ -240,7 +247,7 @@ def print_hierarchy(tree, indent=4, current_ind=0):
     for k, v in tree.items():
         if current_ind:
             before_dashes = current_ind - indent
-            print(' ' * before_dashes + '└' + '-'*(indent-1) + k)
+            print(" " * before_dashes + "└" + "-" * (indent - 1) + k)
         else:
             print(k)
         for sub_tree in v:
@@ -265,9 +272,12 @@ def get_hier_graph_networkx(graph: networkx.DiGraph, hier: Dict[str, Any]):
                 graph.add_edge(k, v)
 
 
-def get_relative_component_path(src: str, dest: str, root: Type =
-                                schema.NeuroMLDocument, graph:
-                                Optional[networkx.DiGraph] = None):
+def get_relative_component_path(
+    src: str,
+    dest: str,
+    root: Type = schema.NeuroMLDocument,
+    graph: Optional[networkx.DiGraph] = None,
+):
     """Construct a path from src component to dest in a neuroml document.
 
     Useful when referring to components in other components
@@ -284,8 +294,8 @@ def get_relative_component_path(src: str, dest: str, root: Type =
         graph = networkx.DiGraph()
         get_hier_graph_networkx(graph, root.get_nml2_class_hierarchy())
 
-    p1 = (list(networkx.all_shortest_paths(graph, root.__name__, "Instance")))
-    p2 = (list(networkx.all_shortest_paths(graph, root.__name__, "Input")))
+    p1 = list(networkx.all_shortest_paths(graph, root.__name__, "Instance"))
+    p2 = list(networkx.all_shortest_paths(graph, root.__name__, "Input"))
 
     if len(p1) > 1 or len(p2) > 1:
         print("Multiple paths found, cannot calculate recommended path")
@@ -303,6 +313,110 @@ def get_relative_component_path(src: str, dest: str, root: Type =
         print("Relative path: " + path)
 
     return (path, graph)
+
+
+def fix_external_morphs_biophys_in_cell(
+    nml2_doc: NeuroMLDocument, overwrite: bool = True
+) -> NeuroMLDocument:
+    """Handle externally referenced morphologies and biophysics in cells.
+
+    This is only used in the case where a cell element has a morphology (or
+    biophysicalProperties) attribute, as opposed to a subelement
+    morphology/biophysicalProperties. This will substitute the external element
+    into the cell element for ease of access
+
+    The referenced morphologies can be included in the same document directly,
+    or in other documents included using the "IncludeType". This function will
+    load the included documents and attempt to read referenced bits from them.
+
+    Note that if a cell already includes Morphology and BiophysicalProperties,
+    we just use those. Any references to other Morphology/BiophysicalProperties
+    elements will be ignored.
+
+    :param nml2_doc: NeuroML document
+    :type nml2_doc: neuroml.NeuroMLDocument
+    :param overwrite: toggle whether the document is overwritten or a deep copy
+        created
+    :type overwrite: bool
+    :returns: neuroml document
+    :raises KeyError: if referenced morphologies/biophysics cannot be found
+    """
+    if overwrite is False:
+        newdoc = copy.deepcopy(nml2_doc)
+    else:
+        newdoc = nml2_doc
+
+    # get a list of morph/biophys ids being referred to by cells
+    referenced_ids = []
+    for cell in newdoc.cells:
+        if cell.morphology_attr is not None:
+            if cell.morphology is None:
+                referenced_ids.append(cell.morphology_attr)
+            else:
+                logger.warning(
+                    f"Cell ({cell}) already contains a Morphology, ignoring reference."
+                )
+                logger.warning("Please check/correct your cell description")
+        if cell.biophysical_properties_attr is not None:
+            if cell.biophysical_properties is None:
+                referenced_ids.append(cell.biophysical_properties_attr)
+            else:
+                logger.warning(
+                    f"Cell ({cell}) already contains a BiophysicalProperties element, ignoring reference."
+                )
+                logger.warning("Please check/correct your cell description")
+
+    # load referenced ids from included files and store them in dicts
+    ext_morphs = {}
+    ext_biophys = {}
+    for inc in newdoc.includes:
+        incdoc = loaders.read_neuroml2_file(inc.href, verbose=False, optimized=True)
+        for morph in incdoc.morphology:
+            if morph.id in referenced_ids:
+                ext_morphs[morph.id] = morph
+        for biophys in incdoc.biophysical_properties:
+            if biophys.id in referenced_ids:
+                ext_biophys[biophys.id] = biophys
+
+    # also include morphs/biophys that are in the same document
+    for morph in newdoc.morphology:
+        if morph.id in referenced_ids:
+            ext_morphs[morph.id] = morph
+    for biophys in newdoc.biophysical_properties:
+        if biophys.id in referenced_ids:
+            ext_biophys[biophys.id] = biophys
+
+    # update cells by placing the morphology/biophys in them:
+    # if referenced ids are not found, throw errors
+    for cell in newdoc.cells:
+        if cell.morphology_attr is not None and cell.morphology is None:
+            try:
+                # TODO: do we need a deepcopy here?
+                cell.morphology = copy.deepcopy(ext_morphs[cell.morphology_attr])
+                cell.morphology_attr = None
+            except KeyError as e:
+                logger.error(
+                    f"Morphology with id {cell.morphology_attr} was not found in included/external morphologies."
+                )
+                raise e
+
+        if (
+            cell.biophysical_properties_attr is not None
+            and cell.biophysical_properties is None
+        ):
+            try:
+                # TODO: do we need a deepcopy here?
+                cell.biophysical_properties = copy.deepcopy(
+                    ext_biophys[cell.biophysical_properties_attr]
+                )
+                cell.biophysical_properties_attr = None
+            except KeyError as e:
+                logger.error(
+                    f"Biophysics with id {cell.biophysical_properties_attr} was not found in included/external biophysics."
+                )
+                raise e
+
+    return newdoc
 
 
 def main():

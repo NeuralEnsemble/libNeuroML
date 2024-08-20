@@ -4,11 +4,11 @@ Example to create a file with multiple synapse types
 
 """
 
-from neuroml import NeuroMLDocument
-from neuroml import *
-import neuroml.writers as writers
 from random import random
 
+import neuroml.writers as writers
+from neuroml import *
+from neuroml import NeuroMLDocument
 
 nml_doc = NeuroMLDocument(id="SomeSynapses")
 

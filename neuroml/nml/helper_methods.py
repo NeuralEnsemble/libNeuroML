@@ -1,5 +1,5 @@
-import sys
 import re
+import sys
 
 
 #
@@ -256,7 +256,7 @@ seg_grp = MethodSpec(
 
         return str(self)
 
-    def distance_to(self, other_3d_point):
+    def distance_to(self, other_3d_point) -> float:
         """Find the distance between this point and another.
 
         :param other_3d_point: other 3D point to calculate distance to
@@ -286,13 +286,13 @@ connection_cell_ids = MethodSpec(
     name="connection_cell_ids",
     source='''\
 
-    def _get_cell_id(self, id_string):
+    def _get_cell_id(self, id_string: str) -> int:
         if '[' in id_string:
             return int(id_string.split('[')[1].split(']')[0])
         else:
             return int(id_string.split('/')[2])
 
-    def get_pre_cell_id(self):
+    def get_pre_cell_id(self) -> str:
         """Get the ID of the pre-synaptic cell
 
         :returns: ID of pre-synaptic cell
@@ -301,7 +301,7 @@ connection_cell_ids = MethodSpec(
 
         return self._get_cell_id(self.pre_cell_id)
 
-    def get_post_cell_id(self):
+    def get_post_cell_id(self) -> str:
         """Get the ID of the post-synaptic cell
 
         :returns: ID of post-synaptic cell
@@ -310,7 +310,7 @@ connection_cell_ids = MethodSpec(
 
         return self._get_cell_id(self.post_cell_id)
 
-    def get_pre_segment_id(self):
+    def get_pre_segment_id(self) -> str:
         """Get the ID of the pre-synpatic segment
 
         :returns: ID of pre-synaptic segment.
@@ -319,7 +319,7 @@ connection_cell_ids = MethodSpec(
 
         return int(self.pre_segment_id)
 
-    def get_post_segment_id(self):
+    def get_post_segment_id(self) -> str:
         """Get the ID of the post-synpatic segment
 
         :returns: ID of post-synaptic segment.
@@ -368,7 +368,7 @@ connection_wd_cell_ids = MethodSpec(
         return "Connection "+str(self.id)+": "+str(self.get_pre_info())+" -> "+str(self.get_post_info())+ \
             ", weight: "+'PERCENTAGEf' PERCENTAGE (float(self.weight))+", delay: "+'PERCENTAGE.5f' PERCENTAGE (self.get_delay_in_ms())+" ms"
 
-    def get_delay_in_ms(self):
+    def get_delay_in_ms(self) -> float:
         """Get connection delay in milli seconds
 
         :returns: connection delay in milli seconds
@@ -411,7 +411,7 @@ elec_connection_instance_w = MethodSpec(
     name="elec_connection_instance_w",
     source='''\
 
-    def get_weight(self):
+    def get_weight(self) -> float:
         """Get the weight of the connection
 
         If a weight is not set (or is set to None), returns the default value
@@ -438,10 +438,10 @@ elec_connection_cell_ids = MethodSpec(
     name="elec_connection_cell_ids",
     source='''\
 
-    def _get_cell_id(self, id_string):
+    def _get_cell_id(self, id_string: str) -> int:
             return int(float(id_string))
 
-    def get_pre_cell_id(self):
+    def get_pre_cell_id(self) -> float:
         """Get the ID of the pre-synaptic cell
 
         :returns: ID of pre-synaptic cell
@@ -450,7 +450,7 @@ elec_connection_cell_ids = MethodSpec(
 
         return self._get_cell_id(self.pre_cell)
 
-    def get_post_cell_id(self):
+    def get_post_cell_id(self) -> str:
         """Get the ID of the post-synaptic cell
 
         :returns: ID of post-synaptic cell
@@ -459,7 +459,7 @@ elec_connection_cell_ids = MethodSpec(
 
         return self._get_cell_id(self.post_cell)
 
-    def get_pre_segment_id(self):
+    def get_pre_segment_id(self) -> str:
         """Get the ID of the pre-synpatic segment
 
         :returns: ID of pre-synaptic segment.
@@ -468,7 +468,7 @@ elec_connection_cell_ids = MethodSpec(
 
         return int(self.pre_segment)
 
-    def get_post_segment_id(self):
+    def get_post_segment_id(self) -> str:
         """Get the ID of the post-synpatic segment
 
         :returns: ID of post-synaptic segment.
@@ -566,7 +566,7 @@ cont_connection_cell_ids = MethodSpec(
             return int(float(id_string))
 
 
-    def get_pre_cell_id(self):
+    def get_pre_cell_id(self) -> str:
         """Get the ID of the pre-synaptic cell
 
         :returns: ID of pre-synaptic cell
@@ -575,7 +575,7 @@ cont_connection_cell_ids = MethodSpec(
 
         return self._get_cell_id(self.pre_cell)
 
-    def get_post_cell_id(self):
+    def get_post_cell_id(self) -> str:
         """Get the ID of the post-synaptic cell
 
         :returns: ID of post-synaptic cell
@@ -584,7 +584,7 @@ cont_connection_cell_ids = MethodSpec(
 
         return self._get_cell_id(self.post_cell)
 
-    def get_pre_segment_id(self):
+    def get_pre_segment_id(self) -> str:
         """Get the ID of the pre-synpatic segment
 
         :returns: ID of pre-synaptic segment.
@@ -593,7 +593,7 @@ cont_connection_cell_ids = MethodSpec(
 
         return int(self.pre_segment)
 
-    def get_post_segment_id(self):
+    def get_post_segment_id(self) -> str:
         """Get the ID of the post-synpatic segment
 
         :returns: ID of post-synaptic segment.
@@ -879,7 +879,7 @@ nml_doc_summary = MethodSpec(
 
     warn_count = 0
 
-    def get_by_id(self,id):
+    def get_by_id(self, id: str) -> typing.Optional[typing.Any]:
         """Get a component by specifying its ID.
 
         :param id: id of Component to get
@@ -929,7 +929,7 @@ network_get_by_id = MethodSpec(
     source='''\
 
     warn_count = 0
-    def get_by_id(self,id):
+    def get_by_id(self, id: str) -> typing.Optional[typing.Any]:
         """Get a component by its ID
 
         :param id: ID of component to find
@@ -972,8 +972,7 @@ cell_methods = MethodSpec(
     source='''\
 
     # Get segment object by its id
-    def get_segment(self, segment_id):
-        # type: (int) -> Segment
+    def get_segment(self, segment_id: int) -> Segment:
         """Get segment object by its id
 
         :param segment_id: ID of segment
@@ -988,8 +987,7 @@ cell_methods = MethodSpec(
 
         raise ValueError("Segment with id "+str(segment_id)+" not found in cell "+str(self.id))
 
-    def get_segments_by_substring(self, substring):
-        # type: (str) -> dict
+    def get_segments_by_substring(self, substring: str) -> typing.Dict[str, Segment]:
         """Get a dictionary of segment IDs and the segment matching the specified substring
 
         :param substring: substring to match
@@ -1010,8 +1008,7 @@ cell_methods = MethodSpec(
 
     # Get the proximal point of a segment, even the proximal field is None and
     # so the proximal point is on the parent (at a point set by fraction_along)
-    def get_actual_proximal(self, segment_id):
-        # type: (str) -> Point3DWithDiam
+    def get_actual_proximal(self, segment_id: str):
         """Get the proximal point of a segment.
 
         If the proximal for the segment is set to None, calculate the proximal
@@ -1040,8 +1037,7 @@ cell_methods = MethodSpec(
 
             return p
 
-    def get_segment_length(self, segment_id):
-        # type: (str) -> float
+    def get_segment_length(self, segment_id: str) -> float:
         """Get the length of the segment.
 
         :param segment_id: ID of segment
@@ -1058,8 +1054,7 @@ cell_methods = MethodSpec(
 
             return length
 
-    def get_segment_surface_area(self, segment_id):
-        # type: (str) -> float
+    def get_segment_surface_area(self, segment_id: str) -> float:
         """Get the surface area of the segment.
 
         :param segment_id: ID of the segment
@@ -1076,8 +1071,7 @@ cell_methods = MethodSpec(
 
             return temp_seg.surface_area
 
-    def get_segment_volume(self, segment_id):
-        # type: (str) -> float
+    def get_segment_volume(self, segment_id: str) -> float:
         """Get volume of segment
 
         :param segment_id: ID of the segment
@@ -1093,8 +1087,7 @@ cell_methods = MethodSpec(
 
             return temp_seg.volume
 
-    def get_segment_ids_vs_segments(self):
-        # type: () -> Dict
+    def get_segment_ids_vs_segments(self) -> typing.Dict[str, Segment]:
         """Get a dictionary of segment IDs and the segments in the cell.
 
         :return: dictionary with segment ID as key, and segment as value
@@ -1107,12 +1100,11 @@ cell_methods = MethodSpec(
         return segments
 
     def get_all_segments_in_group(self,
-                                  segment_group,
-                                  assume_all_means_all=True):
-        # type: (SegmentGroup, bool) -> List[int]
+                                  segment_group: typing.Union[str, SegmentGroup],
+                                  assume_all_means_all: bool = True) -> typing.List[int]:
         """Get all the segments in a segment group of the cell.
 
-        :param segment_group: segment group to get all segments of
+        :param segment_group: segment group id (str) or object (SegmentGroup) to get all segments of
         :param assume_all_means_all: return all segments if the "all" segment
             group wasn't explicitly defined
         :return: list of segment ids
@@ -1149,12 +1141,12 @@ cell_methods = MethodSpec(
 
 
     def get_ordered_segments_in_groups(self,
-                                       group_list,
-                                       check_parentage=False,
-                                       include_cumulative_lengths=False,
-                                       include_path_lengths=False,
-                                       path_length_metric="Path Length from root"): # Only option supported
-        # type: (List, bool, bool, bool, str) -> Any
+                                       group_list: typing.List[str],
+                                       check_parentage: bool = False,
+                                       include_cumulative_lengths: bool = False,
+                                       include_path_lengths: bool = False,
+                                       path_length_metric: str = "Path Length from root" # Only option supported
+                                       ) -> typing.Any:
         """
         Get ordered list of segments in specified groups, with additional
         information.
@@ -1304,8 +1296,7 @@ cell_methods = MethodSpec(
 
         return ord_segs
 
-    def get_segment_group(self, sg_id):
-        # type: (str) -> SegmentGroup
+    def get_segment_group(self, sg_id: str) -> SegmentGroup:
         """Return the SegmentGroup object for the specified segment group id.
 
         :param sg_id: id of segment group to find
@@ -1320,19 +1311,25 @@ cell_methods = MethodSpec(
 
         raise ValueError("Segment group with id "+str(sg_id)+" not found in cell "+str(self.id))
 
-    def get_segment_groups_by_substring(self, substring):
-        # type: (str) -> dict
+    def get_segment_groups_by_substring(self, substring: str, unbranched: bool = False) -> typing.Dict[str, SegmentGroup]:
         """Get a dictionary of segment group IDs and the segment groups matching the specified substring
 
-        :param substring: substring to match
+        :param substring: substring to match, an empty string "" matches all
+            groups
         :type substring: str
+        :param unbranced: toggle selecting unbranched segment groups
+        :type unbranched: bool
         :return: dictionary with segment group ID as key, and segment group as value
         :raises ValueError: if no matching segment groups are found in cell
         """
         sgs = {}
         for sg in self.morphology.segment_groups:
-            if substring in sg.id:
-                sgs[sg.id] = sg
+            if substring == "" or substring in sg.id:
+                if unbranched is True:
+                    if sg.neuro_lex_id == neuroml.neuro_lex_ids.neuro_lex_ids["section"]:
+                        sgs[sg.id] = sg
+                else:
+                    sgs[sg.id] = sg
         if len(sgs) == 0:
             raise ValueError("Segment group with id matching "+str(substring)+" not found in cell "+str(self.id))
         return sgs
@@ -1867,15 +1864,15 @@ cell_methods = MethodSpec(
         Please also see specific functions in this module, which are designed to be
         easier to use than this generic function.
 
-        :param property_name: name of membrane to add
-        :type property_name: str
+        :param property_name: name or class of membrane property to add
+        :type property_name: str or class
         :param kwargs: named arguments for membrane property to be added
         :type kwargs: Any
         :returns: added property
 
         """
         self.setup_nml_cell(use_convention=False)
-        prop = self.biophysical_properties.membrane_properties.add(property_name, **kwargs)
+        prop = self.biophysical_properties.membrane_properties.add(property_name, validate=False, **kwargs)
         return prop
 
 
@@ -1888,10 +1885,10 @@ cell_methods = MethodSpec(
     ):
         """Generic function to add channel density components to a Cell.
 
-        :param channel_density_type: type of channel density to add.
+        :param channel_density_type: name or class of channel density type to add.
             See https://docs.neuroml.org/Userdocs/Schemas/Cells.html for the
             complete list.
-        :type channel_density_type: str
+        :type channel_density_type: str or class
         :param nml_cell_doc: cell NeuroML document to which channel density is to be added
         :type nml_cell_doc: NeuroMLDocument
         :param ion_chan_def_file: path to NeuroML2 file defining the ion channel, if empty, it assumes the channel is defined in the same file
@@ -2184,8 +2181,6 @@ cell_methods = MethodSpec(
         :param optimise_segment_groups: toggle whether segment groups should be
             optimised after operation
         :type optimise_segment_groups: bool
-        :returns: modified cell with new section groups
-        :rtype: neuroml.Cell
 
         """
         # don't recompute if already exists
@@ -2196,7 +2191,8 @@ cell_methods = MethodSpec(
 
         # initialise root segment and first segment group
         seg = self.get_segment(root_segment_id)
-        group_name = f"seg_group_{len(self.morphology.segment_groups) - 1}_seg_{seg.id}"
+        num_seg_groups = len(self.morphology.segment_groups)
+        group_name = f"seg_group_{num_seg_groups}_seg_{seg.id}"
         new_seg_group = self.add_unbranched_segment_group(group_name)
 
         # run recursive function
@@ -2547,9 +2543,7 @@ METHOD_SPECS += (cell_methods,)
 
 inserts = {}
 
-inserts[
-    "Network"
-] = """
+inserts["Network"] = """
 
 
         netGroup = h5file.create_group(h5Group, 'network')
@@ -2581,9 +2575,7 @@ inserts[
 
 """
 
-inserts[
-    "Population"
-] = """
+inserts["Population"] = """
 
         popGroup = h5file.create_group(h5Group, 'population_'+self.id)
         popGroup._f_setattr("id", self.id)
@@ -2625,9 +2617,7 @@ inserts[
 
 """
 
-inserts[
-    "Projection"
-] = """
+inserts["Projection"] = """
 
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
@@ -2714,9 +2704,7 @@ inserts[
 
 """
 
-inserts[
-    "ElectricalProjection"
-] = """
+inserts["ElectricalProjection"] = """
 
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
@@ -2789,9 +2777,7 @@ inserts[
 """
 
 
-inserts[
-    "ContinuousProjection"
-] = """
+inserts["ContinuousProjection"] = """
 
         projGroup = h5file.create_group(h5Group, 'projection_'+self.id)
         projGroup._f_setattr("id", self.id)
@@ -2870,9 +2856,7 @@ inserts[
 """
 
 
-inserts[
-    "InputList"
-] = """
+inserts["InputList"] = """
 
         ilGroup = h5file.create_group(h5Group, 'inputList_'+self.id)
         ilGroup._f_setattr("id", self.id)
@@ -2931,7 +2915,14 @@ for insert in inserts.keys():
         source='''\
 
     def exportHdf5(self, h5file, h5Group):
-        """Export to HDF5 file.  """
+        """Export to HDF5 file.
+
+        :param h5file: HDF5 file handler
+        :type h5file: file object
+        :param h5Group: the tables Group object to write
+        :type h5Group: tables.Group
+
+        """
         #print("Exporting %s: "+str(self.id)+" as HDF5")
         %s
     '''

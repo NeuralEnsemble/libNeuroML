@@ -4,11 +4,11 @@ Example to build a PyNN based network
 
 """
 
-from neuroml import NeuroMLDocument
-from neuroml import *
-import neuroml.writers as writers
 from random import random
 
+import neuroml.writers as writers
+from neuroml import *
+from neuroml import NeuroMLDocument
 
 ########################   Build the network   ####################################
 

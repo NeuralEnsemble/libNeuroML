@@ -21,7 +21,7 @@
           To cite BioModels Database, please use:      <a href="http://www.ncbi.nlm.nih.gov/pubmed/20587024" target="_blank">Li C, Donizelli M, Rodriguez N, Dharuri H, Endler L, Chelliah V, Li L, He E, Henry A, Stefan MI, Snoep JL, Hucka M, Le Novère N, Laibe C (2010) BioModels Database: An enhanced, curated and annotated resource for published quantitative kinetic models. BMC Syst Biol., 4:92.</a>
                 </p>
             </body>
-      
+
     </notes>
     <annotation>
       <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqmodel="http://biomodels.net/model-qualifiers/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
@@ -88,7 +88,7 @@
 	</rdf:Bag>
 	</bqbiol:isPartOf>
 	</rdf:Description>
-	
+
       </rdf:RDF>
     </annotation>
       <listOfUnitDefinitions>
@@ -114,7 +114,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
             </compartment>
@@ -132,7 +132,7 @@
 	</rdf:Bag>
 	</bqbiol:hasPart>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
             </species>
@@ -146,7 +146,7 @@
 	</rdf:Bag>
 	</bqbiol:isHomologTo>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
             </species>
@@ -160,7 +160,7 @@
 	</rdf:Bag>
 	</bqbiol:isHomologTo>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
             </species>
@@ -176,7 +176,7 @@
 	</rdf:Bag>
 	</bqbiol:hasPart>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
             </species>
@@ -190,7 +190,7 @@
 	</rdf:Bag>
 	</bqbiol:isHomologTo>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
             </species>
@@ -204,7 +204,7 @@
 	</rdf:Bag>
 	</bqbiol:isHomologTo>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
             </species>
@@ -219,7 +219,7 @@
 	</rdf:Bag>
 	</bqbiol:isHomologTo>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
             </species>
@@ -233,7 +233,7 @@
 	</rdf:Bag>
 	</bqbiol:isHomologTo>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
             </species>
@@ -247,7 +247,7 @@
 	</rdf:Bag>
 	</bqbiol:isHomologTo>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
             </species>
@@ -261,7 +261,7 @@
 	</rdf:Bag>
 	</bqbiol:isHomologTo>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
             </species>
@@ -275,7 +275,7 @@
 	</rdf:Bag>
 	</bqbiol:isHomologTo>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
             </species>
@@ -289,7 +289,7 @@
 	</rdf:Bag>
 	</bqbiol:isHomologTo>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
             </species>
@@ -303,7 +303,7 @@
 	</rdf:Bag>
 	</bqbiol:isHomologTo>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
             </species>
@@ -317,7 +317,7 @@
 	</rdf:Bag>
 	</bqbiol:isHomologTo>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
             </species>
@@ -331,7 +331,7 @@
 	</rdf:Bag>
 	</bqbiol:isHomologTo>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
             </species>
@@ -347,7 +347,7 @@
 	</rdf:Bag>
 	</bqbiol:isHomologTo>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
             </species>
@@ -438,7 +438,7 @@
     </listOfParameters>
     <listOfRules>
       <assignmentRule metaid="metaid_0000104" variable="kswe">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">        
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <plus/>
             <apply>
@@ -460,7 +460,7 @@
         </math>
             </assignmentRule>
       <assignmentRule metaid="metaid_0000105" variable="kmih">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">        
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <plus/>
             <apply>
@@ -477,7 +477,7 @@
         </math>
             </assignmentRule>
       <assignmentRule metaid="metaid_1000106" variable="Swe1T">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">        
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <plus/>
             <ci> Swe1 </ci>
@@ -488,7 +488,7 @@
         </math>
             </assignmentRule>
       <assignmentRule metaid="metaid_0000106" variable="IEin">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">        
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <minus/>
             <ci> IEtot </ci>
@@ -497,7 +497,7 @@
         </math>
             </assignmentRule>
       <assignmentRule metaid="metaid_0000107" variable="Cdh1in">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">        
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <minus/>
             <ci> Cdh1tot </ci>
@@ -506,7 +506,7 @@
         </math>
             </assignmentRule>
       <assignmentRule metaid="metaid_0000108" variable="Mih1">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">        
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <minus/>
             <ci> Mih1tot </ci>
@@ -515,7 +515,7 @@
         </math>
             </assignmentRule>
       <assignmentRule metaid="metaid_0000109" variable="Mcmin">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">        
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <minus/>
             <ci> Mcmtot </ci>
@@ -524,7 +524,7 @@
         </math>
             </assignmentRule>
       <assignmentRule metaid="metaid_0000110" variable="SBFin">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">        
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <minus/>
             <ci> SBFtot </ci>
@@ -544,7 +544,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -555,7 +555,7 @@
           <speciesReference metaid="_360490" species="Clb"/>
         </listOfProducts>
         <kineticLaw metaid="_360502">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> kdiss </ci>
@@ -574,7 +574,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -587,7 +587,7 @@
           <modifierSpeciesReference metaid="_360538" species="Cln"/>
         </listOfModifiers>
         <kineticLaw metaid="_360550">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> Trim </ci>
@@ -619,7 +619,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -633,7 +633,7 @@
           <modifierSpeciesReference metaid="_360598" species="Cdc20a"/>
         </listOfModifiers>
         <kineticLaw metaid="_360610">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> Trim </ci>
@@ -665,7 +665,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -675,7 +675,7 @@
           <speciesReference metaid="_360634" species="PTrim"/>
         </listOfProducts>
         <kineticLaw metaid="_360646">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> Trim </ci>
@@ -694,7 +694,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -705,7 +705,7 @@
           <speciesReference metaid="_360682" species="Trim"/>
         </listOfProducts>
         <kineticLaw metaid="_360694">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> kass </ci>
@@ -725,7 +725,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -735,7 +735,7 @@
           <speciesReference metaid="_360719" species="Trim"/>
         </listOfProducts>
         <kineticLaw metaid="_360731">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> PTrim </ci>
@@ -754,7 +754,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -765,7 +765,7 @@
           <modifierSpeciesReference metaid="_360767" species="Cdc20a"/>
         </listOfModifiers>
         <kineticLaw metaid="_360779">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> Clb </ci>
@@ -797,7 +797,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -807,7 +807,7 @@
           <speciesReference metaid="_360803" species="PClb"/>
         </listOfProducts>
         <kineticLaw metaid="_360815">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> kswe </ci>
@@ -826,7 +826,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfProducts>
@@ -837,7 +837,7 @@
           <modifierSpeciesReference metaid="_360851" species="Mcm"/>
         </listOfModifiers>
         <kineticLaw metaid="_360863">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <divide/>
               <apply>
@@ -870,7 +870,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -880,7 +880,7 @@
           <speciesReference metaid="_360887" species="Clb"/>
         </listOfProducts>
         <kineticLaw metaid="_360899">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> kmih </ci>
@@ -899,7 +899,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -909,7 +909,7 @@
           <modifierSpeciesReference metaid="_360925" species="Clb"/>
         </listOfModifiers>
         <kineticLaw metaid="_360937">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <divide/>
               <apply>
@@ -944,7 +944,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfProducts>
@@ -955,7 +955,7 @@
           <modifierSpeciesReference metaid="_360974" species="Cln"/>
         </listOfModifiers>
         <kineticLaw metaid="_360987">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <divide/>
               <apply>
@@ -994,14 +994,14 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
           <speciesReference metaid="_360999" species="IE"/>
         </listOfReactants>
         <kineticLaw metaid="_361011">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <divide/>
               <apply>
@@ -1028,7 +1028,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfProducts>
@@ -1038,7 +1038,7 @@
           <modifierSpeciesReference metaid="_361035" species="Clb"/>
         </listOfModifiers>
         <kineticLaw metaid="_361047">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <divide/>
               <apply>
@@ -1066,7 +1066,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -1076,7 +1076,7 @@
           <speciesReference metaid="_361071" species="Cdc20"/>
         </listOfProducts>
         <kineticLaw metaid="_361083">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <divide/>
               <apply>
@@ -1103,14 +1103,14 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
           <speciesReference metaid="_361095" species="Cdc20a"/>
         </listOfReactants>
         <kineticLaw metaid="_361107">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> kdcdc20 </ci>
@@ -1129,7 +1129,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -1142,7 +1142,7 @@
           <modifierSpeciesReference metaid="_361145" species="IE"/>
         </listOfModifiers>
         <kineticLaw metaid="_361157">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <divide/>
               <apply>
@@ -1170,7 +1170,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -1181,7 +1181,7 @@
           <modifierSpeciesReference metaid="_361193" species="Cln"/>
         </listOfModifiers>
         <kineticLaw metaid="_361205">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <divide/>
               <apply>
@@ -1220,7 +1220,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfProducts>
@@ -1230,7 +1230,7 @@
           <modifierSpeciesReference metaid="_361229" species="Cdc20a"/>
         </listOfModifiers>
         <kineticLaw metaid="_361241">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <divide/>
               <apply>
@@ -1265,7 +1265,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -1275,7 +1275,7 @@
           <speciesReference metaid="_361265" species="Swe1M"/>
         </listOfProducts>
         <kineticLaw metaid="_361277">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> khsl1 </ci>
@@ -1295,7 +1295,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -1305,7 +1305,7 @@
           <speciesReference metaid="_361301" species="PSwe1M"/>
         </listOfProducts>
         <kineticLaw metaid="_361313">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> khsl1 </ci>
@@ -1325,7 +1325,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -1338,7 +1338,7 @@
           <modifierSpeciesReference metaid="_361349" species="Clb"/>
         </listOfModifiers>
         <kineticLaw metaid="_361361">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <divide/>
               <apply>
@@ -1366,7 +1366,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -1379,7 +1379,7 @@
           <modifierSpeciesReference metaid="_361397" species="Clb"/>
         </listOfModifiers>
         <kineticLaw metaid="_361409">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <divide/>
               <apply>
@@ -1407,14 +1407,14 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
           <speciesReference metaid="_361421" species="Swe1"/>
         </listOfReactants>
         <kineticLaw metaid="_361433">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> kdswe_prime </ci>
@@ -1433,7 +1433,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -1443,7 +1443,7 @@
           <speciesReference metaid="_361457" species="Swe1"/>
         </listOfProducts>
         <kineticLaw metaid="_361470">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> khsl1r </ci>
@@ -1462,7 +1462,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -1472,7 +1472,7 @@
           <speciesReference metaid="_361494" species="PSwe1"/>
         </listOfProducts>
         <kineticLaw metaid="_361507">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> khsl1r </ci>
@@ -1491,7 +1491,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -1501,7 +1501,7 @@
           <speciesReference metaid="_361531" species="Swe1"/>
         </listOfProducts>
         <kineticLaw metaid="_361543">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <divide/>
               <apply>
@@ -1528,7 +1528,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -1538,7 +1538,7 @@
           <speciesReference metaid="_361567" species="Swe1M"/>
         </listOfProducts>
         <kineticLaw metaid="_361579">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <divide/>
               <apply>
@@ -1565,7 +1565,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfProducts>
@@ -1575,7 +1575,7 @@
           <modifierSpeciesReference metaid="_361603" species="SBF"/>
         </listOfModifiers>
         <kineticLaw metaid="_361615">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> ksswe </ci>
@@ -1594,14 +1594,14 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfProducts>
           <speciesReference metaid="_361627" species="Swe1"/>
         </listOfProducts>
         <kineticLaw metaid="_361639">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <ci> kssweC </ci>
           </math>
                 </kineticLaw>
@@ -1616,14 +1616,14 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
           <speciesReference metaid="_361651" species="PSwe1"/>
         </listOfReactants>
         <kineticLaw metaid="_361663">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> kdswe_prime </ci>
@@ -1642,7 +1642,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -1653,7 +1653,7 @@
           <speciesReference metaid="_361699" species="Sic"/>
         </listOfProducts>
         <kineticLaw metaid="_361711">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> kdiss </ci>
@@ -1672,7 +1672,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -1686,7 +1686,7 @@
           <modifierSpeciesReference metaid="_361760" species="Cdc20a"/>
         </listOfModifiers>
         <kineticLaw metaid="_361772">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> PTrim </ci>
@@ -1718,7 +1718,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -1732,7 +1732,7 @@
           <modifierSpeciesReference metaid="_361821" species="Clb"/>
         </listOfModifiers>
         <kineticLaw metaid="_361833">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> PTrim </ci>
@@ -1764,7 +1764,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -1775,7 +1775,7 @@
           <speciesReference metaid="_361870" species="PTrim"/>
         </listOfProducts>
         <kineticLaw metaid="_361882">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> kass </ci>
@@ -1795,14 +1795,14 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
           <speciesReference metaid="_361894" species="Mih1a"/>
         </listOfReactants>
         <kineticLaw metaid="_361906">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <divide/>
               <apply>
@@ -1829,7 +1829,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfProducts>
@@ -1839,7 +1839,7 @@
           <modifierSpeciesReference metaid="_361931" species="Clb"/>
         </listOfModifiers>
         <kineticLaw metaid="_361944">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <divide/>
               <apply>
@@ -1867,14 +1867,14 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
           <speciesReference metaid="_361956" species="Mcm"/>
         </listOfReactants>
         <kineticLaw metaid="_361968">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <divide/>
               <apply>
@@ -1901,7 +1901,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfProducts>
@@ -1911,7 +1911,7 @@
           <modifierSpeciesReference metaid="_361992" species="Clb"/>
         </listOfModifiers>
         <kineticLaw metaid="_362004">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <divide/>
               <apply>
@@ -1939,14 +1939,14 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
           <speciesReference metaid="_362016" species="BE"/>
         </listOfReactants>
         <kineticLaw metaid="_362028">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> kdbud </ci>
@@ -1963,7 +1963,7 @@
           <modifierSpeciesReference metaid="_362052" species="Cln"/>
         </listOfModifiers>
         <kineticLaw metaid="_362065">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> ksbud </ci>
@@ -1982,7 +1982,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -1993,7 +1993,7 @@
           <modifierSpeciesReference metaid="_362101" species="Clb"/>
         </listOfModifiers>
         <kineticLaw metaid="_362114">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> Sic </ci>
@@ -2025,14 +2025,14 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfProducts>
           <speciesReference metaid="_362126" species="Sic"/>
         </listOfProducts>
         <kineticLaw metaid="_362138">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <ci> kssic </ci>
           </math>
                 </kineticLaw>
@@ -2047,14 +2047,14 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
           <speciesReference metaid="_362150" species="Cln"/>
         </listOfReactants>
         <kineticLaw metaid="_362162">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> kdcln </ci>
@@ -2073,7 +2073,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfProducts>
@@ -2083,7 +2083,7 @@
           <modifierSpeciesReference metaid="_362186" species="SBF"/>
         </listOfModifiers>
         <kineticLaw metaid="_362198">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> kscln </ci>
@@ -2102,14 +2102,14 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
           <speciesReference metaid="_362210" species="Swe1M"/>
         </listOfReactants>
         <kineticLaw metaid="_362223">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> kdswe_prime </ci>
@@ -2128,14 +2128,14 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
           <speciesReference metaid="_362235" species="Cdc20"/>
         </listOfReactants>
         <kineticLaw metaid="_362247">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> kdcdc20 </ci>
@@ -2154,7 +2154,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfProducts>
@@ -2164,7 +2164,7 @@
           <modifierSpeciesReference metaid="_362271" species="Clb"/>
         </listOfModifiers>
         <kineticLaw metaid="_362283">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <plus/>
               <ci> kscdc20_prime </ci>
@@ -2207,14 +2207,14 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
           <speciesReference metaid="_362295" species="PSwe1M"/>
         </listOfReactants>
         <kineticLaw metaid="_362307">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> kdswe_doubleprime </ci>
@@ -2233,7 +2233,7 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfReactants>
@@ -2244,7 +2244,7 @@
           <modifierSpeciesReference metaid="_362343" species="Cdc20a"/>
         </listOfModifiers>
         <kineticLaw metaid="_362355">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> PClb </ci>
@@ -2276,14 +2276,14 @@
 	</rdf:Bag>
 	</bqbiol:isVersionOf>
 	</rdf:Description>
-	
+
           </rdf:RDF>
         </annotation>
               <listOfProducts>
           <speciesReference metaid="_362367" species="mass"/>
         </listOfProducts>
         <kineticLaw metaid="_362380">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> mu </ci>
@@ -2296,7 +2296,7 @@
     <listOfEvents>
       <event id="event_0000002" metaid="metaid_0000165">
         <trigger metaid="_362392">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <gt/>
               <ci> Clb </ci>
@@ -2306,7 +2306,7 @@
                 </trigger>
         <listOfEventAssignments>
           <eventAssignment metaid="_362404" variable="flag">
-            <math xmlns="http://www.w3.org/1998/Math/MathML">            
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
               <cn type="integer"> 1 </cn>
             </math>
                     </eventAssignment>
@@ -2314,7 +2314,7 @@
       </event>
       <event id="event_0000004" metaid="metaid_0000167">
         <trigger metaid="_362416">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <and/>
               <apply>
@@ -2332,12 +2332,12 @@
                 </trigger>
         <listOfEventAssignments>
           <eventAssignment metaid="_362429" variable="BE">
-            <math xmlns="http://www.w3.org/1998/Math/MathML">            
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
               <cn type="integer"> 0 </cn>
             </math>
                     </eventAssignment>
           <eventAssignment metaid="_362441" variable="mass">
-            <math xmlns="http://www.w3.org/1998/Math/MathML">            
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
               <apply>
                 <times/>
                 <cn> 0.5 </cn>
@@ -2349,7 +2349,7 @@
       </event>
       <event id="event_0000003" metaid="metaid_0000166">
         <trigger metaid="_362453">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <or/>
               <apply>
@@ -2367,7 +2367,7 @@
                 </trigger>
         <listOfEventAssignments>
           <eventAssignment metaid="_362465" variable="BUD">
-            <math xmlns="http://www.w3.org/1998/Math/MathML">            
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
               <cn type="integer"> 1 </cn>
             </math>
                     </eventAssignment>
@@ -2375,7 +2375,7 @@
       </event>
       <event id="event_0000005" metaid="metaid_0000169">
         <trigger metaid="_362477">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">          
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <and/>
               <apply>
@@ -2393,7 +2393,7 @@
                 </trigger>
         <listOfEventAssignments>
           <eventAssignment metaid="_362489" variable="BUD">
-            <math xmlns="http://www.w3.org/1998/Math/MathML">            
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
               <cn type="integer"> 0 </cn>
             </math>
                     </eventAssignment>

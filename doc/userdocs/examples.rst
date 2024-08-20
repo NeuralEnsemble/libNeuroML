@@ -2,7 +2,7 @@
 Examples
 ========
 
-The examples in this section are intended to give in depth overviews of how to accomplish 
+The examples in this section are intended to give in depth overviews of how to accomplish
 specific tasks with libNeuroML.
 
 These examples are located in the neuroml/examples directory and can
@@ -19,7 +19,7 @@ Loading and modifying a file
 ----------------------------
 
 .. literalinclude:: ../../neuroml/examples/loading_modifying_writing.py
- 
+
 
 Building a network
 ------------------
@@ -30,7 +30,7 @@ Building a 3D network
 ---------------------
 
 .. literalinclude:: ../../neuroml/examples/build_3D_network.py
- 
+
 Ion channels
 ------------
 

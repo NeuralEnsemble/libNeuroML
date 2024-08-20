@@ -3,9 +3,10 @@ Unit tests for loaders
 
 """
 
+import os
+
 import neuroml
 from neuroml import loaders
-import os
 
 try:
     import unittest2 as unittest

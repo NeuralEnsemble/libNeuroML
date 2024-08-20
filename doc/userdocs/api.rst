@@ -12,5 +12,3 @@ You can find information on these in the pages below.
    writers
    utils
    arraymorph
-
-

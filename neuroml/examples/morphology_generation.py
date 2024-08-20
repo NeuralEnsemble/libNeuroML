@@ -1,5 +1,5 @@
 """
-Example of connecting segments together to create a 
+Example of connecting segments together to create a
 multicompartmental model of a cell.
 """
 

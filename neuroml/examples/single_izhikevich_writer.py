@@ -1,7 +1,6 @@
-from neuroml import NeuroMLDocument
-from neuroml import IzhikevichCell
-from neuroml.writers import NeuroMLWriter
+from neuroml import IzhikevichCell, NeuroMLDocument
 from neuroml.utils import validate_neuroml2
+from neuroml.writers import NeuroMLWriter
 
 
 def write_izhikevich(filename="./tmp/SingleIzhikevich_test.nml"):
