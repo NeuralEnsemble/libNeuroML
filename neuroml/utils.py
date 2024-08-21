@@ -15,7 +15,7 @@ from typing import Any, Dict, List, Optional, Set, Type, Union
 import networkx
 
 import neuroml.nml.nml as schema
-from neuroml import NeuroMLDocument
+from neuroml import BiophysicalProperties, Morphology, NeuroMLDocument
 
 from . import loaders
 
@@ -316,7 +316,10 @@ def get_relative_component_path(
 
 
 def fix_external_morphs_biophys_in_cell(
-    nml2_doc: NeuroMLDocument, overwrite: bool = True
+    nml2_doc: NeuroMLDocument,
+    overwrite: bool = True,
+    load_morphology: bool = True,
+    load_biophysical_properties: bool = True,
 ) -> NeuroMLDocument:
     """Handle externally referenced morphologies and biophysics in cells.
 
@@ -338,18 +341,17 @@ def fix_external_morphs_biophys_in_cell(
     :param overwrite: toggle whether the document is overwritten or a deep copy
         created
     :type overwrite: bool
+    :param load_morphology: whether morphologies should be loaded
+    :type load_morphology: bool
+    :param load_biophysical_properties: whether biophysical_properties should be loaded
+    :type load_biophysical_properties: bool
     :returns: neuroml document
     :raises KeyError: if referenced morphologies/biophysics cannot be found
     """
-    if overwrite is False:
-        newdoc = copy.deepcopy(nml2_doc)
-    else:
-        newdoc = nml2_doc
-
     # get a list of morph/biophys ids being referred to by cells
     referenced_ids = []
-    for cell in newdoc.cells:
-        if cell.morphology_attr is not None:
+    for cell in nml2_doc.cells:
+        if load_morphology is True and cell.morphology_attr is not None:
             if cell.morphology is None:
                 referenced_ids.append(cell.morphology_attr)
             else:
@@ -357,7 +359,10 @@ def fix_external_morphs_biophys_in_cell(
                     f"Cell ({cell}) already contains a Morphology, ignoring reference."
                 )
                 logger.warning("Please check/correct your cell description")
-        if cell.biophysical_properties_attr is not None:
+        if (
+            load_biophysical_properties is True
+            and cell.biophysical_properties_attr is not None
+        ):
             if cell.biophysical_properties is None:
                 referenced_ids.append(cell.biophysical_properties_attr)
             else:
@@ -366,30 +371,77 @@ def fix_external_morphs_biophys_in_cell(
                 )
                 logger.warning("Please check/correct your cell description")
 
+    if len(referenced_ids) == 0:
+        logger.debug("No externally referenced morphologies or biophysics")
+        return nml2_doc
+
+    if overwrite is False:
+        newdoc = copy.deepcopy(nml2_doc)
+    else:
+        newdoc = nml2_doc
+
     # load referenced ids from included files and store them in dicts
-    ext_morphs = {}
-    ext_biophys = {}
-    for inc in newdoc.includes:
-        incdoc = loaders.read_neuroml2_file(inc.href, verbose=False, optimized=True)
-        for morph in incdoc.morphology:
+    found = False
+    ext_morphs: Dict[str, Morphology] = {}
+    ext_biophys: Dict[str, BiophysicalProperties] = {}
+
+    # first check the same document
+    if not found and load_morphology is True and newdoc.morphology:
+        for morph in newdoc.morphology:
             if morph.id in referenced_ids:
                 ext_morphs[morph.id] = morph
-        for biophys in incdoc.biophysical_properties:
+
+            if (len(ext_morphs) + len(ext_biophys)) == len(referenced_ids):
+                logger.debug("Found all references")
+                found = True
+                break
+
+    if (
+        not found
+        and load_biophysical_properties is True
+        and newdoc.biophysical_properties
+    ):
+        for biophys in newdoc.biophysical_properties:
             if biophys.id in referenced_ids:
                 ext_biophys[biophys.id] = biophys
 
-    # also include morphs/biophys that are in the same document
-    for morph in newdoc.morphology:
-        if morph.id in referenced_ids:
-            ext_morphs[morph.id] = morph
-    for biophys in newdoc.biophysical_properties:
-        if biophys.id in referenced_ids:
-            ext_biophys[biophys.id] = biophys
+            if (len(ext_morphs) + len(ext_biophys)) == len(referenced_ids):
+                logger.debug("Found all references")
+                found = True
+                break
+
+    # now check included files (they need to be loaded and parsed, so this can
+    # be computationally intensive)
+    # includes/morphology/biophysical_properties should generally be empty
+    # lists and not None, but there may be cases where these have been removed
+    # after the document was loaded
+    if not found and newdoc.includes:
+        for inc in newdoc.includes:
+            incdoc = loaders.read_neuroml2_file(inc.href, verbose=False, optimized=True)
+
+            if load_morphology is True and incdoc.morphology:
+                for morph in incdoc.morphology:
+                    if morph.id in referenced_ids:
+                        ext_morphs[morph.id] = morph
+
+            if load_biophysical_properties is True and incdoc.biophysical_properties:
+                for biophys in incdoc.biophysical_properties:
+                    if biophys.id in referenced_ids:
+                        ext_biophys[biophys.id] = biophys
+
+            if (len(ext_morphs) + len(ext_biophys)) == len(referenced_ids):
+                logger.debug("Found all references")
+                found = True
+                break
 
     # update cells by placing the morphology/biophys in them:
     # if referenced ids are not found, throw errors
     for cell in newdoc.cells:
-        if cell.morphology_attr is not None and cell.morphology is None:
+        if (
+            load_morphology is True
+            and cell.morphology_attr is not None
+            and cell.morphology is None
+        ):
             try:
                 # TODO: do we need a deepcopy here?
                 cell.morphology = copy.deepcopy(ext_morphs[cell.morphology_attr])
@@ -401,7 +453,8 @@ def fix_external_morphs_biophys_in_cell(
                 raise e
 
         if (
-            cell.biophysical_properties_attr is not None
+            load_biophysical_properties is True
+            and cell.biophysical_properties_attr is not None
             and cell.biophysical_properties is None
         ):
             try:

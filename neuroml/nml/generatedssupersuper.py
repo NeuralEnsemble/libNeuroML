@@ -699,7 +699,7 @@ class GeneratedsSuperSuper(object):
             cls.__nml_hier = schema.NeuroMLDocument.get_class_hierarchy()
         return cls.__nml_hier
 
-    def get_member(self, id_):
+    def get_by_id(self, id_):
         """Get a component or attribute by its ID, or type, or attribute name
 
         :param id_: id of component ("biophys"), or its type
