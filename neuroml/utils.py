@@ -376,6 +376,10 @@ def fix_external_morphs_biophys_in_cell(
                 )
                 logger.warning("Please check/correct your cell description")
 
+    if len(referenced_ids) == 0:
+        logger.debug("No externally referenced morphologies or biophysics")
+        return newdoc
+
     # load referenced ids from included files and store them in dicts
     ext_morphs = {}
     ext_biophys = {}
