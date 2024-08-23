@@ -13,15 +13,15 @@ import neuroml.build_time_validation
 
 from .generatedscollector import GdsCollector
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-
 
 class GeneratedsSuperSuper(object):
     """Super class for GeneratedsSuper.
 
     Any bits that must go into every libNeuroML class should go here.
     """
+
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.INFO)
 
     def add(self, obj=None, hint=None, force=False, validate=True, **kwargs):
         """Generic function to allow easy addition of a new member to a NeuroML object.
@@ -37,7 +37,14 @@ class GeneratedsSuperSuper(object):
         calling (parent) component type object.
 
         :param obj: member object or class type (neuroml.NeuroMLDocument) or
-            name of class type ("NeuroMLDocument"), or None
+            name of class type ("NeuroMLDocument"), a string, or None
+
+            If the string that is passed is not the name of a NeuroML
+            component type, it will be added as a string if the parent
+            component type allows "any" elements. This does not mean that one
+            can add anything, since it must still be valid XML/LEMS. The
+            only usecase for this currently is to add RDF strings to the
+            Annotation component type.
         :type obj: str or type or None
         :param hint: member name to add to when there are multiple members that `obj` can be added to
         :type hint: string
@@ -58,6 +65,24 @@ class GeneratedsSuperSuper(object):
         if type(obj) is type or isinstance(obj, str):
             obj = self.component_factory(obj, validate=validate, **kwargs)
 
+        # if obj is still a string, it is a general string, but to confirm that
+        # this is what the user intends, ask them to provide a hint.
+        if isinstance(obj, str):
+            # no hint, no pass
+            if not hint:
+                e = Exception(
+                    "Received a text object to add. "
+                    + 'Please pass `hint="__ANY__"` to confirm that this is what you intend. '
+                    + "I will then try to add this to an __ANY__ member in the object."
+                )
+                raise e
+            # hint confirmed, try to add it below
+            else:
+                self.logger.warning("Received a text object to add.")
+                self.logger.warning(
+                    "Trying to add this to an __ANY__ member in the object."
+                )
+
         # getattr only returns the value of the provided member but one cannot
         # then use this to modify the member. Using `vars` also allows us to
         # modify the value
@@ -65,13 +90,19 @@ class GeneratedsSuperSuper(object):
         all_members = self._get_members()
         for member in all_members:
             # get_data_type() returns the type as a string, e.g.: 'IncludeType'
+
+            # handle "__ANY__"
+            if isinstance(obj, str) and member.get_data_type() == "__ANY__":
+                targets.append(member)
+                break
+
             if member.get_data_type() == type(obj).__name__:
                 targets.append(member)
 
         if len(targets) == 0:
             # no targets found
             e = Exception(
-                """A member object of {} type could not be found in NeuroML class {}.\n{}
+                """A member object of '{}' type could not be found in NeuroML class {}.\n{}
             """.format(type(obj).__name__, type(self).__name__, self.info())
             )
             raise e
@@ -97,7 +128,14 @@ class GeneratedsSuperSuper(object):
         if neuroml.build_time_validation.ENABLED and validate:
             self.validate()
         else:
-            logger.warning("Build time validation is disabled.")
+            if not neuroml.build_time_validation.ENABLED:
+                self.logger.debug(
+                    f"Build time validation is globally disabled: adding new {obj.__class__.__name__}."
+                )
+            else:
+                self.logger.debug(
+                    f"Build time validation is locally disabled: adding new {obj.__class__.__name__}."
+                )
         return obj
 
     @classmethod
@@ -128,12 +166,16 @@ class GeneratedsSuperSuper(object):
             Note that when providing the class type, one will need to import it,
             e.g.: `import NeuroMLDocument`, to ensure that it is defined, whereas
             this will not be required when using the string.
+
+            If the value passed for component_type is a general string (with
+            spaces), it is simply returned
         :type component_type: str/type
         :param validate: toggle validation (default: True)
         :type validate: bool
         :param kwargs: named arguments to be passed to ComponentType constructor
         :type kwargs: named arguments
-        :returns: new Component (object) of provided ComponentType
+        :returns: new Component (object) of provided ComponentType, or
+            unprocessed string with spaces if given for component_type
         :rtype: object
         :raises ValueError: if validation/checks fail
 
@@ -141,11 +183,27 @@ class GeneratedsSuperSuper(object):
         module_object = sys.modules[cls.__module__]
 
         if isinstance(component_type, str):
-            comp_type_class = getattr(module_object, component_type)
+            # class names do not have spaces, so if we find a space, we treat
+            # it as a general string and just return it.
+            if " " in component_type:
+                cls.logger.warning(
+                    "Component Type appears to be a generic string: nothing to do."
+                )
+                return component_type
+            else:
+                comp_type_class = getattr(module_object, component_type)
         else:
             comp_type_class = getattr(module_object, component_type.__name__)
 
         comp = comp_type_class(**kwargs)
+
+        # handle component types that support __ANY__
+        try:
+            anytypevalue = kwargs["__ANY__"]
+            # append value to anytypeobjs_ list
+            comp.anytypeobjs_.append(anytypevalue)
+        except KeyError:
+            pass
 
         # additional setups where required
         if comp_type_class.__name__ == "Cell":
@@ -156,7 +214,14 @@ class GeneratedsSuperSuper(object):
         if neuroml.build_time_validation.ENABLED and validate:
             comp.validate()
         else:
-            logger.warning("Build time validation is disabled.")
+            if not neuroml.build_time_validation.ENABLED:
+                cls.logger.debug(
+                    f"Build time validation is globally disabled: creating new {comp_type_class.__name__}."
+                )
+            else:
+                cls.logger.debug(
+                    f"Build time validation is locally disabled: creating new {comp_type_class.__name__}."
+                )
         return comp
 
     def __add(self, obj, member, force=False):
@@ -170,38 +235,49 @@ class GeneratedsSuperSuper(object):
         :type force: bool
 
         """
-        import warnings
-
-        # A single value, not a list:
-        if member.get_container() == 0:
-            if force:
-                vars(self)[member.get_name()] = obj
-            else:
-                if vars(self)[member.get_name()]:
-                    warnings.warn(
-                        """{} has already been assigned.  Use `force=True` to overwrite. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
-                            member.get_name()
-                        )
-                    )
-                else:
-                    vars(self)[member.get_name()] = obj
-        # List
+        # handle __ANY__ which is to be stored in anytypeobjs_
+        if member.get_name() == "__ANY__":
+            self.logger.debug("__ANY__ member, appending to anytypeobjs_.")
+            vars(self)["anytypeobjs_"].append(obj)
         else:
-            if force:
-                vars(self)[member.get_name()].append(obj)
-            else:
-                # "obj in .." checks by identity and value.
-                # In XML, two children with same values are identical.
-                # There is no use case where the same child would be added
-                # twice to a component.
-                if obj in vars(self)[member.get_name()]:
-                    warnings.warn(
-                        """{} already exists in {}. Use `force=True` to force readdition. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
-                            obj, member.get_name()
-                        )
+            # A single value, not a list:
+            self.logger.debug("Not a container member, assigning.")
+            if member.get_container() == 0:
+                if force:
+                    vars(self)[member.get_name()] = obj
+                    self.logger.warning(
+                        """Overwriting member '{}'.""".format(member.get_name())
                     )
                 else:
+                    if vars(self)[member.get_name()]:
+                        self.logger.debug(
+                            """Member '{}' has already been assigned. Use `force=True` to overwrite. Hint: you can make changes to the already added object as required without needing to re-add it because only references to the objects are added, not their values.""".format(
+                                member.get_name()
+                            )
+                        )
+                    else:
+                        vars(self)[member.get_name()] = obj
+            # List
+            else:
+                self.logger.debug("Container member, appending.")
+                if force:
                     vars(self)[member.get_name()].append(obj)
+                    self.logger.warning(
+                        """Force appending to member '{}'""".format(member.get_name())
+                    )
+                else:
+                    # "obj in .." checks by identity and value.
+                    # In XML, two children with same values are identical.
+                    # There is no use case where the same child would be added
+                    # twice to a component.
+                    if obj in vars(self)[member.get_name()]:
+                        self.logger.warning(
+                            """{} already exists in {}. Use `force=True` to force readdition.""".format(
+                                obj, member.get_name()
+                            )
+                        )
+                    else:
+                        vars(self)[member.get_name()].append(obj)
 
     @classmethod
     def _get_members(cls):
@@ -616,3 +692,55 @@ class GeneratedsSuperSuper(object):
             schema = sys.modules[cls.__module__]
             cls.__nml_hier = schema.NeuroMLDocument.get_class_hierarchy()
         return cls.__nml_hier
+
+    def get_by_id(self, id_):
+        """Get a component or attribute by its ID, or type, or attribute name
+
+        :param id_: id of component ("biophys"), or its type
+            ("BiophysicalProperties"), or its attribute name
+            ("biophysical_properties")
+
+
+            When the attribute name or type are given, this simply returns the
+            associated object, which could be a list.
+
+        :type id_: str
+        :returns:  component if found, else None
+        """
+        all_ids = []
+        all_members = self._get_members()
+        for member in all_members:
+            # check name: biophysical_properties
+            if member.get_name() == id_:
+                return getattr(self, member.get_name())
+            # check type: BiophysicalProperties
+            elif member.get_data_type() == id_:
+                return getattr(self, member.get_name())
+
+            # check contents
+
+            # not a list
+            if member.get_container() == 0:
+                # check contents for id: biophysical_properties.id
+                contents = getattr(self, member.get_name(), None)
+                if hasattr(contents, "id"):
+                    if contents.id == id_:
+                        return contents
+                else:
+                    all_ids.append(member.get_name())
+            else:
+                # container: iterate over each item
+                contents = getattr(self, member.get_name(), [])
+                for m in contents:
+                    if hasattr(m, "id"):
+                        if m.id == id_:
+                            return m
+                        else:
+                            all_ids.append(m.id)
+
+        try:
+            self.logger.warning(f"Id '{id_}' not found in {self.__name__}")
+        except AttributeError:
+            self.logger.warning(f"Id '{id_}' not found in {self.id}")
+        self.logger.warning(f"All ids: {sorted(all_ids)}")
+        return None

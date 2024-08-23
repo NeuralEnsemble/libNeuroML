@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Aug 14 13:56:38 2024 by generateDS.py version 2.44.1.
+# Generated Tue Aug 20 10:23:13 2024 by generateDS.py version 2.44.1.
 # Python 3.11.9 (main, Apr 17 2024, 00:00:00) [GCC 14.0.1 20240411 (Red Hat 14.0.1-0)]
 #
 # Command line options:
@@ -12467,39 +12467,6 @@ class Network(Standalone):
             self.input_lists.append(obj_)
             obj_.original_tagname_ = "inputList"
         super(Network, self)._buildChildren(child_, node, nodeName_, True)
-
-    warn_count = 0
-
-    def get_by_id(self, id: str) -> typing.Optional[typing.Any]:
-        """Get a component by its ID
-
-        :param id: ID of component to find
-        :type id: str
-        :returns:  component with specified ID or None if no component with specified ID found
-        """
-        all_ids = []
-        for ms in self.member_data_items_:
-            mlist = getattr(self, ms.get_name())
-            # TODO: debug why this is required
-            if mlist is None:
-                continue
-            for m in mlist:
-                if hasattr(m, "id"):
-                    if m.id == id:
-                        return m
-                    else:
-                        all_ids.append(m.id)
-        if self.warn_count < 10:
-            neuroml.print_(
-                "Id "
-                + id
-                + " not found in <network> element. All ids: "
-                + str(sorted(all_ids))
-            )
-            self.warn_count += 1
-        elif self.warn_count == 10:
-            neuroml.print_(" - Suppressing further warnings about id not found...")
-        return None
 
     def __str__(self):
         return (
@@ -42532,46 +42499,6 @@ class NeuroMLDocument(Standalone):
 
         return info
 
-    warn_count = 0
-
-    def get_by_id(self, id: str) -> typing.Optional[typing.Any]:
-        """Get a component by specifying its ID.
-
-        :param id: id of Component to get
-        :type id: str
-        :returns: Component with given ID or None if no Component with provided ID was found
-        """
-        if len(id) == 0:
-            callframe = inspect.getouterframes(inspect.currentframe(), 2)
-            print(
-                "Method: " + callframe[1][3] + " is asking for an element with no id..."
-            )
-
-            return None
-        all_ids = []
-        for ms in self.member_data_items_:
-            mlist = getattr(self, ms.get_name())
-            # TODO: debug why this is required
-            if mlist is None:
-                continue
-            for m in mlist:
-                if hasattr(m, "id"):
-                    if m.id == id:
-                        return m
-                    else:
-                        all_ids.append(m.id)
-        if self.warn_count < 10:
-            neuroml.print_(
-                "Id "
-                + id
-                + " not found in <neuroml> element. All ids: "
-                + str(sorted(all_ids))
-            )
-            self.warn_count += 1
-        elif self.warn_count == 10:
-            neuroml.print_(" - Suppressing further warnings about id not found...")
-        return None
-
     def append(self, element):
         """Append an element
 
@@ -49111,13 +49038,13 @@ class Cell(BaseCell):
             else:
                 p = None
         except IndexError as e:
-            print("{}: prox must be a list of 4 elements".format(e))
+            raise ValueError("{}: prox must be a list of 4 elements".format(e))
         try:
             d = self.component_factory(
                 "Point3DWithDiam", x=dist[0], y=dist[1], z=dist[2], diameter=dist[3]
             )
         except IndexError as e:
-            print("{}: dist must be a list of 4 elements".format(e))
+            raise ValueError("{}: dist must be a list of 4 elements".format(e))
 
         segid = len(self.morphology.segments)
         if segid > 0 and parent is None:
@@ -49139,7 +49066,7 @@ class Cell(BaseCell):
                 seg = self.get_segment(seg_id)
                 if seg:
                     raise ValueError(
-                        f"A segment with provided id {seg_id} already exists"
+                        f"A segment with provided id '{seg_id}' already exists"
                     )
             except ValueError:
                 # a segment with this ID does not already exist
@@ -49160,8 +49087,8 @@ class Cell(BaseCell):
             try:
                 seg_group = self.get_segment_group(group_id)
             except ValueError as e:
-                print("Warning: {}".format(e))
-                print(f"Warning: creating Segment Group with id {group_id}")
+                self.logger.warning("{}".format(e))
+                self.logger.warning(f"Creating Segment Group with id '{group_id}'")
                 seg_group = self.add_segment_group(group_id=group_id)
             seg_group.members.append(Member(segments=segment.id))
 
@@ -49255,7 +49182,7 @@ class Cell(BaseCell):
                 validate=False,
             )
         else:
-            print(f"Warning: Segment group {seg_group.id} already exists.")
+            self.logger.warning(f"Segment group '{seg_group.id}' already exists.")
 
         return seg_group
 
@@ -49589,6 +49516,8 @@ class Cell(BaseCell):
         :type default_groups: list of strings
         :returns: list of created segment groups (or empty list if none created)
         :rtype: list
+
+        :raises ValueError: if a group other than the standard groups are provided
         """
         new_groups = []
         if use_convention:
@@ -49609,10 +49538,9 @@ class Cell(BaseCell):
                     neuro_lex_id = None
                     notes = "Default segment group for all segments in the cell"
                 else:
-                    print(
-                        f"Error: only 'all', 'soma_group', 'dendrite_group', and 'axon_group' are supported. Received {grp}"
+                    raise ValueError(
+                        f"Only 'all', 'soma_group', 'dendrite_group', and 'axon_group' are supported. Received {grp}"
                     )
-                    return []
 
                 seg_group = self.add_segment_group(
                     group_id=grp, neuro_lex_id=neuro_lex_id, notes=notes
@@ -49799,7 +49727,7 @@ class Cell(BaseCell):
         :returns: TODO
 
         """
-        # print(f"Processing element: {root_segment_id}")
+        self.logger.debug(f"Processing element: {root_segment_id}")
 
         try:
             children = morph_tree[root_segment_id]
@@ -49865,7 +49793,7 @@ class Cell(BaseCell):
                     child_lists[parent] = []
                 child_lists[parent].append(segment.id)
             except AttributeError:
-                print(f"Warning: Segment: {segment} has no parent")
+                self.logger.warning(f"Segment: {segment} has no parent")
 
         self.adjacency_list = child_lists
         return child_lists
@@ -49973,7 +49901,7 @@ class Cell(BaseCell):
                 frac_along = (distance - dist) / self.get_segment_length(tgt)
             except ZeroDivisionError:
                 # ignore zero length segments
-                print(f"Warning: encountered zero length segment: {tgt}")
+                self.logger.warning(f"Encountered zero length segment: {tgt}")
                 continue
 
             if frac_along > 1.0:

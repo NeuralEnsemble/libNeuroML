@@ -73,10 +73,6 @@ class TestNML(unittest.TestCase):
         # Success: returns object
         self.assertIsNotNone(doc.add(cell))
 
-        # Already added, so throw exception
-        with self.assertWarns(UserWarning):
-            doc.add(cell)
-
         # Success
         self.assertIsNotNone(doc.add(cell1))
 
@@ -164,9 +160,6 @@ class TestNML(unittest.TestCase):
 
         pop3 = neuroml.Population(id="unique")
         network.add(pop3)
-        # warning because this is already added
-        with self.assertWarns(UserWarning):
-            network.add(pop3)
 
         # Note that for Python, this is a new object
         # So we can add it again
@@ -198,6 +191,18 @@ class TestNML(unittest.TestCase):
         network.add(pop)
         test_pop = network.get_by_id("pop0")
         self.assertIs(test_pop, pop)
+
+    def test_get_by_id2(self):
+        """Test the get_by_id method, but for attribute"""
+        channel = neuroml.IonChannel(id="test", species="k", conductance="10pS")
+        species = channel.get_by_id("species")
+        self.assertEqual(species, "k")
+        conductance = channel.get_by_id("conductance")
+        self.assertEqual(conductance, "10pS")
+
+        # can now be edited
+        conductance = "20pS"
+        self.assertEqual(conductance, "20pS")
 
     def test_component_validate(self):
         """Test validate function"""
@@ -835,6 +840,35 @@ class TestNML(unittest.TestCase):
         print(hier)
         print()
         print_hierarchy(hier)
+
+    def test_adding_any_exception(self):
+        """Test adding things to __ANY__ attributes exception raise"""
+        newdoc = neuroml.NeuroMLDocument(id="lol")
+        annotation = newdoc.add(neuroml.Annotation)
+
+        # without hint="__ANY__", we raise an exception
+        with self.assertRaises(Exception) as cm:
+            annotation.add(" some_string")
+
+        self.assertEqual(
+            """Received a text object to add. Please pass `hint="__ANY__"` to confirm that this is what you intend. I will then try to add this to an __ANY__ member in the object.""",
+            str(cm.exception),
+        )
+
+    def test_adding_any(self):
+        """Test adding things to __ANY__ attributes"""
+        newdoc = neuroml.NeuroMLDocument(id="lol")
+        annotation = newdoc.add(neuroml.Annotation)
+        # valid NeuroML, but not valid LEMS
+        # space required to distinguish it from the name of a component type,
+        # which will not have spaces
+        annotation.add(" some_string", hint="__ANY__")
+
+        # remove all spaces to test the string
+        annotation_text = str(annotation)
+        annotation_text = "".join(annotation_text.split())
+        print(annotation_text)
+        self.assertEqual("<Annotation>some_string</Annotation>", annotation_text)
 
 
 if __name__ == "__main__":
