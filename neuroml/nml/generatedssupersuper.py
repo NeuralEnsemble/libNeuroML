@@ -37,7 +37,14 @@ class GeneratedsSuperSuper(object):
         calling (parent) component type object.
 
         :param obj: member object or class type (neuroml.NeuroMLDocument) or
-            name of class type ("NeuroMLDocument"), or None
+            name of class type ("NeuroMLDocument"), a string, or None
+
+            If the string that is passed is not the name of a NeuroML
+            component type, it will be added as a string if the parent
+            component type allows "any" elements. This does not mean that one
+            can add anything, since it must still be valid XML/LEMS. The
+            only usecase for this currently is to add RDF strings to the
+            Annotation component type.
         :type obj: str or type or None
         :param hint: member name to add to when there are multiple members that `obj` can be added to
         :type hint: string
@@ -159,12 +166,16 @@ class GeneratedsSuperSuper(object):
             Note that when providing the class type, one will need to import it,
             e.g.: `import NeuroMLDocument`, to ensure that it is defined, whereas
             this will not be required when using the string.
+
+            If the value passed for component_type is a general string (with
+            spaces), it is simply returned
         :type component_type: str/type
         :param validate: toggle validation (default: True)
         :type validate: bool
         :param kwargs: named arguments to be passed to ComponentType constructor
         :type kwargs: named arguments
-        :returns: new Component (object) of provided ComponentType
+        :returns: new Component (object) of provided ComponentType, or
+            unprocessed string with spaces if given for component_type
         :rtype: object
         :raises ValueError: if validation/checks fail
 
