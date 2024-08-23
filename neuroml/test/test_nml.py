@@ -841,6 +841,20 @@ class TestNML(unittest.TestCase):
         print()
         print_hierarchy(hier)
 
+    def test_adding_any_exception(self):
+        """Test adding things to __ANY__ attributes exception raise"""
+        newdoc = neuroml.NeuroMLDocument(id="lol")
+        annotation = newdoc.add(neuroml.Annotation)
+
+        # without hint="__ANY__", we raise an exception
+        with self.assertRaises(Exception) as cm:
+            annotation.add(" some_string")
+
+        self.assertEqual(
+            """Received a text object to add. Please pass `hint="__ANY__"` to confirm that this is what you intend. I will then try to add this to an __ANY__ member in the object.""",
+            str(cm.exception),
+        )
+
     def test_adding_any(self):
         """Test adding things to __ANY__ attributes"""
         newdoc = neuroml.NeuroMLDocument(id="lol")
