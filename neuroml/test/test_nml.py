@@ -867,6 +867,35 @@ class TestNML(unittest.TestCase):
         self.assertIn('value="10 mV"', cell_str)
         print(cell_str)
 
+    def test_adding_any_exception(self):
+        """Test adding things to __ANY__ attributes exception raise"""
+        newdoc = neuroml.NeuroMLDocument(id="lol")
+        annotation = newdoc.add(neuroml.Annotation)
+
+        # without hint="__ANY__", we raise an exception
+        with self.assertRaises(Exception) as cm:
+            annotation.add(" some_string")
+
+        self.assertEqual(
+            """Received a text object to add. Please pass `hint="__ANY__"` to confirm that this is what you intend. I will then try to add this to an __ANY__ member in the object.""",
+            str(cm.exception),
+        )
+
+    def test_adding_any(self):
+        """Test adding things to __ANY__ attributes"""
+        newdoc = neuroml.NeuroMLDocument(id="lol")
+        annotation = newdoc.add(neuroml.Annotation)
+        # valid NeuroML, but not valid LEMS
+        # space required to distinguish it from the name of a component type,
+        # which will not have spaces
+        annotation.add(" some_string", hint="__ANY__")
+
+        # remove all spaces to test the string
+        annotation_text = str(annotation)
+        annotation_text = "".join(annotation_text.split())
+        print(annotation_text)
+        self.assertEqual("<Annotation>some_string</Annotation>", annotation_text)
+
 
 if __name__ == "__main__":
     ta = TestNML()
