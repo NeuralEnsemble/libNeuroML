@@ -49182,7 +49182,7 @@ class Cell(BaseCell):
                 validate=False,
             )
         else:
-            self.logger.warning(f"Segment group '{seg_group.id}' already exists.")
+            self.logger.debug(f"Segment group '{seg_group.id}' already exists.")
 
         return seg_group
 
