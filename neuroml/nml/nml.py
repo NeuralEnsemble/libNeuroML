@@ -49633,8 +49633,8 @@ class Cell(BaseCell):
             try:
                 seg_group = self.get_segment_group(group_id)
             except ValueError as e:
-                self.logger.warning("{}".format(e))
-                self.logger.warning(f"Creating Segment Group with id '{group_id}'")
+                self.logger.debug("{}".format(e))
+                self.logger.debug(f"Creating Segment Group with id '{group_id}'")
                 seg_group = self.add_segment_group(group_id=group_id)
             seg_group.members.append(Member(segments=segment.id))
 
@@ -49728,7 +49728,7 @@ class Cell(BaseCell):
                 validate=False,
             )
         else:
-            self.logger.warning(f"Segment group '{seg_group.id}' already exists.")
+            self.logger.debug(f"Segment group '{seg_group.id}' already exists.")
 
         return seg_group
 
