@@ -1535,8 +1535,8 @@ cell_methods = MethodSpec(
             try:
                 seg_group = self.get_segment_group(group_id)
             except ValueError as e:
-                self.logger.warning("{}".format(e))
-                self.logger.warning(f"Creating Segment Group with id '{group_id}'")
+                self.logger.debug("{}".format(e))
+                self.logger.debug(f"Creating Segment Group with id '{group_id}'")
                 seg_group = self.add_segment_group(
                     group_id=group_id
                 )
