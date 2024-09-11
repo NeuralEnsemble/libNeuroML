@@ -1031,8 +1031,15 @@ cell_methods = MethodSpec(
 
             return temp_seg.volume
 
-    @lru_cache(maxsize=1000)
     def get_segment_ids_vs_segments(self) -> typing.Dict[str, Segment]:
+        """Get a dictionary of segment IDs and the segments in the cell.
+
+        :return: dictionary with segment ID as key, and segment as value
+        """
+        return self.segment_ids_vs_segments
+
+    @cached_property
+    def segment_ids_vs_segments(self) -> typing.Dict[str, Segment]:
         """Get a dictionary of segment IDs and the segments in the cell.
 
         :return: dictionary with segment ID as key, and segment as value

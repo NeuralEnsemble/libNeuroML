@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Sep 11 15:35:00 2024 by generateDS.py version 2.44.1.
+# Generated Wed Sep 11 15:53:47 2024 by generateDS.py version 2.44.1.
 # Python 3.11.9 (main, Aug 23 2024, 00:00:00) [GCC 14.2.1 20240801 (Red Hat 14.2.1-1)]
 #
 # Command line options:
@@ -36,7 +36,7 @@ import math
 import os
 import re as re_
 import typing
-from functools import lru_cache
+from functools import cached_property, lru_cache
 from math import pi, sqrt
 from operator import attrgetter
 
@@ -48560,8 +48560,15 @@ class Cell(BaseCell):
 
             return temp_seg.volume
 
-    @lru_cache(maxsize=1000)
     def get_segment_ids_vs_segments(self) -> typing.Dict[str, Segment]:
+        """Get a dictionary of segment IDs and the segments in the cell.
+
+        :return: dictionary with segment ID as key, and segment as value
+        """
+        return self.segment_ids_vs_segments
+
+    @cached_property
+    def segment_ids_vs_segments(self) -> typing.Dict[str, Segment]:
         """Get a dictionary of segment IDs and the segments in the cell.
 
         :return: dictionary with segment ID as key, and segment as value
