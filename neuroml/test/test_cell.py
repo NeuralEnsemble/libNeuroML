@@ -392,6 +392,11 @@ class TestCell(unittest.TestCase):
             root_seg = acell.get_segment(0)
             new_id = 99999
             root_seg.id = new_id
+
+            # clear the cache, otherwise it'll return the old value again in
+            # other function calls also
+            acell.get_segment.cache_clear()
+
             # also update all descendents to ensure cell remains valid
             for seg in acell.morphology.segments:
                 par = seg.parent
