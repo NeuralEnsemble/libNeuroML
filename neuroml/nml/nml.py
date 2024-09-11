@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Sep 11 15:53:47 2024 by generateDS.py version 2.44.1.
+# Generated Wed Sep 11 16:30:43 2024 by generateDS.py version 2.44.1.
 # Python 3.11.9 (main, Aug 23 2024, 00:00:00) [GCC 14.2.1 20240801 (Red Hat 14.2.1-1)]
 #
 # Command line options:
@@ -48625,7 +48625,6 @@ class Cell(BaseCell):
 
         return all_segs
 
-    @lru_cache(maxsize=1000)
     def get_ordered_segments_in_groups(
         self,
         group_list: typing.List[str],

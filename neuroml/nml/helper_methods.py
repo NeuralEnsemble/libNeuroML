@@ -1093,7 +1093,6 @@ cell_methods = MethodSpec(
         return all_segs
 
 
-    @lru_cache(maxsize=1000)
     def get_ordered_segments_in_groups(self,
                                        group_list: typing.List[str],
                                        check_parentage: bool = False,
