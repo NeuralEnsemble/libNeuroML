@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Sep 11 16:30:43 2024 by generateDS.py version 2.44.1.
+# Generated Wed Sep 11 16:48:39 2024 by generateDS.py version 2.44.1.
 # Python 3.11.9 (main, Aug 23 2024, 00:00:00) [GCC 14.2.1 20240801 (Red Hat 14.2.1-1)]
 #
 # Command line options:
@@ -48560,11 +48560,28 @@ class Cell(BaseCell):
 
             return temp_seg.volume
 
-    def get_segment_ids_vs_segments(self) -> typing.Dict[str, Segment]:
+    def get_segment_ids_vs_segments(
+        self, cached: bool = True
+    ) -> typing.Dict[str, Segment]:
         """Get a dictionary of segment IDs and the segments in the cell.
+
+        :param cached: whether the cached value should be used.
+
+            Unless the cell morphology has been modified since the last call to
+            this method or the last usage of `self.segment_ids_vs_segments`,
+            the cached value is up to date and should be used. If, the
+            morphology has changed, set `cached=False` to clear the cached
+            value and return an updated value.
+        :type cached: bool
 
         :return: dictionary with segment ID as key, and segment as value
         """
+        if cached is False:
+            try:
+                del self.__dict__["segment_ids_vs_segments"]
+            except KeyError:
+                pass
+
         return self.segment_ids_vs_segments
 
     @cached_property
