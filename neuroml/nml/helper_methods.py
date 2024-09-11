@@ -911,21 +911,19 @@ cell_methods = MethodSpec(
     source='''\
 
     # Get segment object by its id
-    @lru_cache(maxsize=1000)
     def get_segment(self, segment_id: int) -> Segment:
         """Get segment object by its id
 
         :param segment_id: ID of segment
+        :type segment_id: int
         :return: segment
 
         :raises ValueError: if the segment is not found in the cell
         """
-
-        for segment in self.morphology.segments:
-            if segment.id == segment_id:
-                return segment
-
-        raise ValueError("Segment with id "+str(segment_id)+" not found in cell "+str(self.id))
+        try:
+            return self.segment_ids_vs_segments[segment_id]
+        except KeyError:
+            raise ValueError("Segment with id "+str(segment_id)+" not found in cell "+str(self.id))
 
     def get_segments_by_substring(self, substring: str) -> typing.Dict[str, Segment]:
         """Get a dictionary of segment IDs and the segment matching the specified substring
