@@ -535,6 +535,7 @@ class GeneratedsSuperSuper(object):
             "GdsCollector_",
             "GeneratedsSuperSuper",
             "attrgetter",
+            "cached_property",
         ]
 
         # do not show parameters here, they are indicated by members below
