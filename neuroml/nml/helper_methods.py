@@ -911,6 +911,7 @@ cell_methods = MethodSpec(
     source='''\
 
     # Get segment object by its id
+    @lru_cache(maxsize=1000)
     def get_segment(self, segment_id: int) -> Segment:
         """Get segment object by its id
 
@@ -947,6 +948,7 @@ cell_methods = MethodSpec(
 
     # Get the proximal point of a segment, even the proximal field is None and
     # so the proximal point is on the parent (at a point set by fraction_along)
+    @lru_cache(maxsize=1000)
     def get_actual_proximal(self, segment_id: str):
         """Get the proximal point of a segment.
 
@@ -976,6 +978,7 @@ cell_methods = MethodSpec(
 
             return p
 
+    @lru_cache(maxsize=1000)
     def get_segment_length(self, segment_id: str) -> float:
         """Get the length of the segment.
 
@@ -993,6 +996,7 @@ cell_methods = MethodSpec(
 
             return length
 
+    @lru_cache(maxsize=1000)
     def get_segment_surface_area(self, segment_id: str) -> float:
         """Get the surface area of the segment.
 
@@ -1010,6 +1014,7 @@ cell_methods = MethodSpec(
 
             return temp_seg.surface_area
 
+    @lru_cache(maxsize=1000)
     def get_segment_volume(self, segment_id: str) -> float:
         """Get volume of segment
 
@@ -1026,6 +1031,7 @@ cell_methods = MethodSpec(
 
             return temp_seg.volume
 
+    @lru_cache
     def get_segment_ids_vs_segments(self) -> typing.Dict[str, Segment]:
         """Get a dictionary of segment IDs and the segments in the cell.
 
@@ -1038,6 +1044,7 @@ cell_methods = MethodSpec(
 
         return segments
 
+    @lru_cache(maxsize=1000)
     def get_all_segments_in_group(self,
                                   segment_group: typing.Union[str, SegmentGroup],
                                   assume_all_means_all: bool = True) -> typing.List[int]:
@@ -1079,6 +1086,7 @@ cell_methods = MethodSpec(
         return all_segs
 
 
+    @lru_cache(maxsize=1000)
     def get_ordered_segments_in_groups(self,
                                        group_list: typing.List[str],
                                        check_parentage: bool = False,
@@ -1235,6 +1243,7 @@ cell_methods = MethodSpec(
 
         return ord_segs
 
+    @lru_cache(maxsize=1000)
     def get_segment_group(self, sg_id: str) -> SegmentGroup:
         """Return the SegmentGroup object for the specified segment group id.
 
