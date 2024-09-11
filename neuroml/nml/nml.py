@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Aug 20 10:23:13 2024 by generateDS.py version 2.44.1.
-# Python 3.11.9 (main, Apr 17 2024, 00:00:00) [GCC 14.0.1 20240411 (Red Hat 14.0.1-0)]
+# Generated Wed Sep 11 16:30:43 2024 by generateDS.py version 2.44.1.
+# Python 3.11.9 (main, Aug 23 2024, 00:00:00) [GCC 14.2.1 20240801 (Red Hat 14.2.1-1)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -36,6 +36,7 @@ import math
 import os
 import re as re_
 import typing
+from functools import cached_property, lru_cache
 from math import pi, sqrt
 from operator import attrgetter
 
@@ -48429,6 +48430,7 @@ class Cell(BaseCell):
         super(Cell, self)._buildChildren(child_, node, nodeName_, True)
 
     # Get segment object by its id
+    @lru_cache(maxsize=1000)
     def get_segment(self, segment_id: int) -> Segment:
         """Get segment object by its id
 
@@ -48471,6 +48473,7 @@ class Cell(BaseCell):
 
     # Get the proximal point of a segment, even the proximal field is None and
     # so the proximal point is on the parent (at a point set by fraction_along)
+    @lru_cache(maxsize=1000)
     def get_actual_proximal(self, segment_id: str):
         """Get the proximal point of a segment.
 
@@ -48504,6 +48507,7 @@ class Cell(BaseCell):
 
             return p
 
+    @lru_cache(maxsize=1000)
     def get_segment_length(self, segment_id: str) -> float:
         """Get the length of the segment.
 
@@ -48521,6 +48525,7 @@ class Cell(BaseCell):
 
             return length
 
+    @lru_cache(maxsize=1000)
     def get_segment_surface_area(self, segment_id: str) -> float:
         """Get the surface area of the segment.
 
@@ -48538,6 +48543,7 @@ class Cell(BaseCell):
 
             return temp_seg.surface_area
 
+    @lru_cache(maxsize=1000)
     def get_segment_volume(self, segment_id: str) -> float:
         """Get volume of segment
 
@@ -48559,6 +48565,14 @@ class Cell(BaseCell):
 
         :return: dictionary with segment ID as key, and segment as value
         """
+        return self.segment_ids_vs_segments
+
+    @cached_property
+    def segment_ids_vs_segments(self) -> typing.Dict[str, Segment]:
+        """Get a dictionary of segment IDs and the segments in the cell.
+
+        :return: dictionary with segment ID as key, and segment as value
+        """
 
         segments = {}
         for segment in self.morphology.segments:
@@ -48566,6 +48580,7 @@ class Cell(BaseCell):
 
         return segments
 
+    @lru_cache(maxsize=1000)
     def get_all_segments_in_group(
         self,
         segment_group: typing.Union[str, SegmentGroup],
@@ -48773,6 +48788,7 @@ class Cell(BaseCell):
 
         return ord_segs
 
+    @lru_cache(maxsize=1000)
     def get_segment_group(self, sg_id: str) -> SegmentGroup:
         """Return the SegmentGroup object for the specified segment group id.
 
