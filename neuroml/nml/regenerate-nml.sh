@@ -56,6 +56,7 @@ reformat () {
     if command -v ruff > /dev/null 2>&1
     then
         echo "Formatting new nml.py with ruff"
+        ruff check --select I --fix nml.py
         ruff format nml.py
     else
         echo "ruff is not installed"
