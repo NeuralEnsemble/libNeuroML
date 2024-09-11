@@ -1,6 +1,7 @@
 import inspect
 import math
 import typing
+from functools import lru_cache
 from math import pi, sqrt
 from operator import attrgetter
 

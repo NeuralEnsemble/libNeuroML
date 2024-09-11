@@ -1031,7 +1031,7 @@ cell_methods = MethodSpec(
 
             return temp_seg.volume
 
-    @lru_cache
+    @lru_cache(maxsize=1000)
     def get_segment_ids_vs_segments(self) -> typing.Dict[str, Segment]:
         """Get a dictionary of segment IDs and the segments in the cell.
 

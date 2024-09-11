@@ -8,7 +8,6 @@ Copyright 2023 NeuroML contributors
 
 import logging
 import sys
-from functools import lru_cache  # noqa : so that it can be used in nml.py
 
 import neuroml.build_time_validation
 
