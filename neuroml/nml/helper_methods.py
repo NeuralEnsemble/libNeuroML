@@ -1617,6 +1617,12 @@ cell_methods = MethodSpec(
 
         self.morphology.segments.append(segment)
 
+        # remove cached property since it is now outdated
+        try:
+            del self.__dict__['segment_ids_vs_segments']
+        except KeyError:
+            pass
+
         if optimise_segment_groups:
             self.optimise_segment_groups()
 

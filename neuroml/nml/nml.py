@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Sep 11 17:09:38 2024 by generateDS.py version 2.44.1.
+# Generated Thu Sep 12 16:44:57 2024 by generateDS.py version 2.44.1.
 # Python 3.11.9 (main, Aug 23 2024, 00:00:00) [GCC 14.2.1 20240801 (Red Hat 14.2.1-1)]
 #
 # Command line options:
@@ -49178,6 +49178,12 @@ class Cell(BaseCell):
             segment.name = segment_name
 
         self.morphology.segments.append(segment)
+
+        # remove cached property since it is now outdated
+        try:
+            del self.__dict__["segment_ids_vs_segments"]
+        except KeyError:
+            pass
 
         if optimise_segment_groups:
             self.optimise_segment_groups()
