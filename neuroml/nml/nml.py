@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Thu Sep 12 16:44:57 2024 by generateDS.py version 2.44.1.
-# Python 3.11.9 (main, Aug 23 2024, 00:00:00) [GCC 14.2.1 20240801 (Red Hat 14.2.1-1)]
+# Generated Fri Sep 13 14:23:30 2024 by generateDS.py version 2.44.1.
+# Python 3.11.10 (main, Sep  9 2024, 00:00:00) [GCC 14.2.1 20240801 (Red Hat 14.2.1-1)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -49999,8 +49999,17 @@ class Cell(BaseCell):
             - distance from the segment group root segment
 
         """
-        soma_id = self.get_morphology_root()
-        distance_from_soma = self.get_distance(seg_id, source=soma_id)
+        res = {}
+        cell_root_id = self.get_morphology_root()
+        is_cell_root = False
+        if seg_id == cell_root_id:
+            is_cell_root = True
+
+        if not is_cell_root:
+            distance_from_soma = self.get_distance(seg_id, source=cell_root_id)
+        else:
+            distance_from_soma = 0.0
+
         in_sg = None
         sg_segs = None
         sg_root = None
@@ -50025,35 +50034,40 @@ class Cell(BaseCell):
         # (a segment with more than one child)
         current = seg_id
         sg_root = current
-        parent = list(graph.predecessors(current))[0]
-        children = list(graph.successors(parent))
-
-        while len(children) == 1:
-            # the root of the segment group may not be at a
-            # branching point: an unbranched cell branch can consist of
-            # multiple unbranched segment groups
-            if in_sg is not None:
-                if current in sg_segs:
-                    sg_root = current
-
-            current = parent
+        if not is_cell_root:
             parent = list(graph.predecessors(current))[0]
             children = list(graph.successors(parent))
 
-        distance_from_bpt = self.get_distance(seg_id, source=current)
+            while len(children) == 1:
+                # the root of the segment group may not be at a
+                # branching point: an unbranched cell branch can consist of
+                # multiple unbranched segment groups
+                if in_sg is not None:
+                    if current in sg_segs:
+                        sg_root = current
 
-        res = {}
-        res["id"] = seg_id
-        res["length"] = self.get_segment_length(seg_id)
-        res["distance_from_cell_root"] = distance_from_soma
-        res["distance_from_nearest_branching_point"] = distance_from_bpt
+                current = parent
+                parent = list(graph.predecessors(current))[0]
+                children = list(graph.successors(parent))
+
+            distance_from_bpt = self.get_distance(seg_id, source=current)
+        else:
+            distance_from_bpt = 0.0
 
         # at unbranched segment root
         if in_sg is not None:
             res["in_unbranched_segment_group"] = in_sg.id
             res["unbranched_segment_group_root"] = sg_root
-            distance_from_sg_root = self.get_distance(seg_id, source=sg_root)
-            res["distance_from_segment_group_root"] = distance_from_sg_root
+            if not is_cell_root:
+                distance_from_sg_root = self.get_distance(seg_id, source=sg_root)
+                res["distance_from_segment_group_root"] = distance_from_sg_root
+            else:
+                res["distance_from_segment_group_root"] = 0.0
+
+        res["id"] = seg_id
+        res["length"] = self.get_segment_length(seg_id)
+        res["distance_from_cell_root"] = distance_from_soma
+        res["distance_from_nearest_branching_point"] = distance_from_bpt
 
         return res
 
