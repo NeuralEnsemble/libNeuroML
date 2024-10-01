@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Sep 13 14:23:30 2024 by generateDS.py version 2.44.1.
+# Generated Tue Oct  1 17:21:18 2024 by generateDS.py version 2.44.1.
 # Python 3.11.10 (main, Sep  9 2024, 00:00:00) [GCC 14.2.1 20240801 (Red Hat 14.2.1-1)]
 #
 # Command line options:
@@ -13,10 +13,10 @@
 #   ('--custom-imports-template', 'gds_imports-template.py')
 #
 # Command line arguments:
-#   NeuroML_v2.3.1.xsd
+#   NeuroML_v2.3.2.xsd
 #
 # Command line:
-#   /home/asinha/.local/share/virtualenvs/neuroml-311-dev/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" --custom-imports-template="gds_imports-template.py" NeuroML_v2.3.1.xsd
+#   /home/asinha/.local/share/virtualenvs/neuroml-311-dev/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" --custom-imports-template="gds_imports-template.py" NeuroML_v2.3.2.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -30676,38 +30676,12 @@ class BaseSynapse(Standalone):
 # end class BaseSynapse
 
 
-class FixedFactorConcentrationModel(Standalone):
-    """FixedFactorConcentrationModel -- Model of buffering of concentration of an ion ( currently hard coded to be calcium, due to requirement for **iCa**  ) which has a baseline level **restingConc**  and tends to this value with time course **decayConstant.**  A fixed factor **rho**  is used to scale the incoming current *independently of the size of the compartment* to produce a concentration change.
-    \n
-    :param restingConc:
-    :type restingConc: concentration
-    :param decayConstant:
-    :type decayConstant: time
-    :param rho:
-    :type rho: rho_factor
-
-    """
+class ConcentrationModel(Standalone):
+    """ConcentrationModel -- Base for any model of an **ion**  concentration which changes with time. Internal ( **concentration**  ) and external ( **extConcentration**  ) values for the concentration of the ion are given."""
 
     __hash__ = GeneratedsSuper.__hash__
     member_data_items_ = [
         MemberSpec_("ion", "NmlId", 0, 0, {"use": "required", "name": "ion"}),
-        MemberSpec_(
-            "resting_conc",
-            "Nml2Quantity_concentration",
-            0,
-            0,
-            {"use": "required", "name": "resting_conc"},
-        ),
-        MemberSpec_(
-            "decay_constant",
-            "Nml2Quantity_time",
-            0,
-            0,
-            {"use": "required", "name": "decay_constant"},
-        ),
-        MemberSpec_(
-            "rho", "Nml2Quantity_rhoFactor", 0, 0, {"use": "required", "name": "rho"}
-        ),
     ]
     subclass = None
     superclass = Standalone
@@ -30720,448 +30694,6 @@ class FixedFactorConcentrationModel(Standalone):
         properties: "list of Property(s) (optional)" = None,
         annotation: "a Annotation (optional)" = None,
         ion: "a NmlId (required)" = None,
-        resting_conc: "a Nml2Quantity_concentration (required)" = None,
-        decay_constant: "a Nml2Quantity_time (required)" = None,
-        rho: "a Nml2Quantity_rhoFactor (required)" = None,
-        gds_collector_=None,
-        **kwargs_,
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        super(globals().get("FixedFactorConcentrationModel"), self).__init__(
-            id, metaid, notes, properties, annotation, **kwargs_
-        )
-        self.ion = _cast(None, ion)
-        self.ion_nsprefix_ = None
-        self.resting_conc = _cast(None, resting_conc)
-        self.resting_conc_nsprefix_ = None
-        self.decay_constant = _cast(None, decay_constant)
-        self.decay_constant_nsprefix_ = None
-        self.rho = _cast(None, rho)
-        self.rho_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, FixedFactorConcentrationModel
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if FixedFactorConcentrationModel.subclass:
-            return FixedFactorConcentrationModel.subclass(*args_, **kwargs_)
-        else:
-            return FixedFactorConcentrationModel(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def validate_NmlId(self, value):
-        # Validate type NmlId, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_NmlId_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_NmlId_patterns_,
-                    )
-                )
-
-    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
-
-    def validate_Nml2Quantity_concentration(self, value):
-        # Validate type Nml2Quantity_concentration, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_concentration_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_concentration_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_concentration_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM))$"]
-    ]
-
-    def validate_Nml2Quantity_time(self, value):
-        # Validate type Nml2Quantity_time, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_time_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_time_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_time_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
-    ]
-
-    def validate_Nml2Quantity_rhoFactor(self, value):
-        # Validate type Nml2Quantity_rhoFactor, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_rhoFactor_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_rhoFactor_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_rhoFactor_patterns_ = [
-        [
-            "^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m_per_A_per_s|mol_per_cm_per_uA_per_ms))$"
-        ]
-    ]
-
-    def has__content(self):
-        if super(FixedFactorConcentrationModel, self).has__content():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="FixedFactorConcentrationModel",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("FixedFactorConcentrationModel")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if (
-            self.original_tagname_ is not None
-            and name_ == "FixedFactorConcentrationModel"
-        ):
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="FixedFactorConcentrationModel",
-        )
-        if self.has__content():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="FixedFactorConcentrationModel",
-                pretty_print=pretty_print,
-            )
-            showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="FixedFactorConcentrationModel",
-    ):
-        super(FixedFactorConcentrationModel, self)._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="FixedFactorConcentrationModel",
-        )
-        if self.ion is not None and "ion" not in already_processed:
-            already_processed.add("ion")
-            outfile.write(
-                " ion=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(quote_attrib(self.ion), input_name="ion")
-                    ),
-                )
-            )
-        if self.resting_conc is not None and "resting_conc" not in already_processed:
-            already_processed.add("resting_conc")
-            outfile.write(
-                " restingConc=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.resting_conc), input_name="restingConc"
-                        )
-                    ),
-                )
-            )
-        if (
-            self.decay_constant is not None
-            and "decay_constant" not in already_processed
-        ):
-            already_processed.add("decay_constant")
-            outfile.write(
-                " decayConstant=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.decay_constant),
-                            input_name="decayConstant",
-                        )
-                    ),
-                )
-            )
-        if self.rho is not None and "rho" not in already_processed:
-            already_processed.add("rho")
-            outfile.write(
-                " rho=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(quote_attrib(self.rho), input_name="rho")
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="FixedFactorConcentrationModel",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        super(FixedFactorConcentrationModel, self)._exportChildren(
-            outfile,
-            level,
-            namespaceprefix_,
-            namespacedef_,
-            name_,
-            True,
-            pretty_print=pretty_print,
-        )
-
-    def validate_(self, gds_collector, recursive=False):
-        self.gds_collector_ = gds_collector
-        message_count = len(self.gds_collector_.get_messages())
-        # validate simple type attributes
-        self.gds_validate_defined_ST_(self.validate_NmlId, self.ion, "ion")
-        self.gds_check_cardinality_(self.ion, "ion", required=True)
-        self.gds_validate_defined_ST_(
-            self.validate_Nml2Quantity_concentration, self.resting_conc, "resting_conc"
-        )
-        self.gds_check_cardinality_(self.resting_conc, "resting_conc", required=True)
-        self.gds_validate_defined_ST_(
-            self.validate_Nml2Quantity_time, self.decay_constant, "decay_constant"
-        )
-        self.gds_check_cardinality_(
-            self.decay_constant, "decay_constant", required=True
-        )
-        self.gds_validate_defined_ST_(
-            self.validate_Nml2Quantity_rhoFactor, self.rho, "rho"
-        )
-        self.gds_check_cardinality_(self.rho, "rho", required=True)
-        # validate simple type children
-        # validate complex type children
-        if recursive:
-            pass
-        return message_count == len(self.gds_collector_.get_messages())
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("ion", node)
-        if value is not None and "ion" not in already_processed:
-            already_processed.add("ion")
-            self.ion = value
-            self.validate_NmlId(self.ion)  # validate type NmlId
-        value = find_attr_value_("restingConc", node)
-        if value is not None and "restingConc" not in already_processed:
-            already_processed.add("restingConc")
-            self.resting_conc = value
-            self.validate_Nml2Quantity_concentration(
-                self.resting_conc
-            )  # validate type Nml2Quantity_concentration
-        value = find_attr_value_("decayConstant", node)
-        if value is not None and "decayConstant" not in already_processed:
-            already_processed.add("decayConstant")
-            self.decay_constant = value
-            self.validate_Nml2Quantity_time(
-                self.decay_constant
-            )  # validate type Nml2Quantity_time
-        value = find_attr_value_("rho", node)
-        if value is not None and "rho" not in already_processed:
-            already_processed.add("rho")
-            self.rho = value
-            self.validate_Nml2Quantity_rhoFactor(
-                self.rho
-            )  # validate type Nml2Quantity_rhoFactor
-        super(FixedFactorConcentrationModel, self)._buildAttributes(
-            node, attrs, already_processed
-        )
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        super(FixedFactorConcentrationModel, self)._buildChildren(
-            child_, node, nodeName_, True
-        )
-        pass
-
-
-# end class FixedFactorConcentrationModel
-
-
-class DecayingPoolConcentrationModel(Standalone):
-    """DecayingPoolConcentrationModel -- Model of an intracellular buffering mechanism for **ion**  ( currently hard Coded to be calcium, due to requirement for **iCa**  ) which has a baseline level **restingConc**  and tends to this value with time course **decayConstant.**  The ion is assumed to occupy a shell inside the membrane of thickness **shellThickness.**
-    \n
-    :param restingConc:
-    :type restingConc: concentration
-    :param decayConstant:
-    :type decayConstant: time
-    :param shellThickness:
-    :type shellThickness: length
-
-    """
-
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("ion", "NmlId", 0, 0, {"use": "required", "name": "ion"}),
-        MemberSpec_(
-            "resting_conc",
-            "Nml2Quantity_concentration",
-            0,
-            0,
-            {"use": "required", "name": "resting_conc"},
-        ),
-        MemberSpec_(
-            "decay_constant",
-            "Nml2Quantity_time",
-            0,
-            0,
-            {"use": "required", "name": "decay_constant"},
-        ),
-        MemberSpec_(
-            "shell_thickness",
-            "Nml2Quantity_length",
-            0,
-            0,
-            {"use": "required", "name": "shell_thickness"},
-        ),
-    ]
-    subclass = None
-    superclass = Standalone
-
-    def __init__(
-        self,
-        id: "a NmlId (required)" = None,
-        metaid: "a MetaId (optional)" = None,
-        notes: "a string (optional)" = None,
-        properties: "list of Property(s) (optional)" = None,
-        annotation: "a Annotation (optional)" = None,
-        ion: "a NmlId (required)" = None,
-        resting_conc: "a Nml2Quantity_concentration (required)" = None,
-        decay_constant: "a Nml2Quantity_time (required)" = None,
-        shell_thickness: "a Nml2Quantity_length (required)" = None,
         extensiontype_=None,
         gds_collector_=None,
         **kwargs_,
@@ -31171,30 +30703,24 @@ class DecayingPoolConcentrationModel(Standalone):
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get("parent_object_")
         self.ns_prefix_ = None
-        super(globals().get("DecayingPoolConcentrationModel"), self).__init__(
+        super(globals().get("ConcentrationModel"), self).__init__(
             id, metaid, notes, properties, annotation, extensiontype_, **kwargs_
         )
         self.ion = _cast(None, ion)
         self.ion_nsprefix_ = None
-        self.resting_conc = _cast(None, resting_conc)
-        self.resting_conc_nsprefix_ = None
-        self.decay_constant = _cast(None, decay_constant)
-        self.decay_constant_nsprefix_ = None
-        self.shell_thickness = _cast(None, shell_thickness)
-        self.shell_thickness_nsprefix_ = None
         self.extensiontype_ = extensiontype_
 
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, DecayingPoolConcentrationModel
+                CurrentSubclassModule_, ConcentrationModel
             )
             if subclass is not None:
                 return subclass(*args_, **kwargs_)
-        if DecayingPoolConcentrationModel.subclass:
-            return DecayingPoolConcentrationModel.subclass(*args_, **kwargs_)
+        if ConcentrationModel.subclass:
+            return ConcentrationModel.subclass(*args_, **kwargs_)
         else:
-            return DecayingPoolConcentrationModel(*args_, **kwargs_)
+            return ConcentrationModel(*args_, **kwargs_)
 
     factory = staticmethod(factory)
 
@@ -31228,104 +30754,8 @@ class DecayingPoolConcentrationModel(Standalone):
 
     validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
 
-    def validate_Nml2Quantity_concentration(self, value):
-        # Validate type Nml2Quantity_concentration, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_concentration_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_concentration_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_concentration_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM))$"]
-    ]
-
-    def validate_Nml2Quantity_time(self, value):
-        # Validate type Nml2Quantity_time, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_time_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_time_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_time_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
-    ]
-
-    def validate_Nml2Quantity_length(self, value):
-        # Validate type Nml2Quantity_length, a restriction on xs:string.
-        if (
-            value is not None
-            and Validate_simpletypes_
-            and self.gds_collector_ is not None
-        ):
-            if not isinstance(value, str):
-                lineno = self.gds_get_node_lineno_()
-                self.gds_collector_.add_message(
-                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
-                    % {
-                        "value": value,
-                        "lineno": lineno,
-                    }
-                )
-                return False
-            if not self.gds_validate_simple_patterns(
-                self.validate_Nml2Quantity_length_patterns_, value
-            ):
-                self.gds_collector_.add_message(
-                    'Value "%s" does not match xsd pattern restrictions: %s'
-                    % (
-                        encode_str_2_3(value),
-                        self.validate_Nml2Quantity_length_patterns_,
-                    )
-                )
-
-    validate_Nml2Quantity_length_patterns_ = [
-        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(m|cm|um))$"]
-    ]
-
     def has__content(self):
-        if super(DecayingPoolConcentrationModel, self).has__content():
+        if super(ConcentrationModel, self).has__content():
             return True
         else:
             return False
@@ -31336,22 +30766,17 @@ class DecayingPoolConcentrationModel(Standalone):
         level,
         namespaceprefix_="",
         namespacedef_="",
-        name_="DecayingPoolConcentrationModel",
+        name_="ConcentrationModel",
         pretty_print=True,
     ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get(
-            "DecayingPoolConcentrationModel"
-        )
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("ConcentrationModel")
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
         if pretty_print:
             eol_ = "\n"
         else:
             eol_ = ""
-        if (
-            self.original_tagname_ is not None
-            and name_ == "DecayingPoolConcentrationModel"
-        ):
+        if self.original_tagname_ is not None and name_ == "ConcentrationModel":
             name_ = self.original_tagname_
         if UseCapturedNS_ and self.ns_prefix_:
             namespaceprefix_ = self.ns_prefix_ + ":"
@@ -31370,7 +30795,7 @@ class DecayingPoolConcentrationModel(Standalone):
             level,
             already_processed,
             namespaceprefix_,
-            name_="DecayingPoolConcentrationModel",
+            name_="ConcentrationModel",
         )
         if self.has__content():
             outfile.write(">%s" % (eol_,))
@@ -31379,7 +30804,7 @@ class DecayingPoolConcentrationModel(Standalone):
                 level + 1,
                 namespaceprefix_,
                 namespacedef_,
-                name_="DecayingPoolConcentrationModel",
+                name_="ConcentrationModel",
                 pretty_print=pretty_print,
             )
             showIndent(outfile, level, pretty_print)
@@ -31393,14 +30818,14 @@ class DecayingPoolConcentrationModel(Standalone):
         level,
         already_processed,
         namespaceprefix_="",
-        name_="DecayingPoolConcentrationModel",
+        name_="ConcentrationModel",
     ):
-        super(DecayingPoolConcentrationModel, self)._exportAttributes(
+        super(ConcentrationModel, self)._exportAttributes(
             outfile,
             level,
             already_processed,
             namespaceprefix_,
-            name_="DecayingPoolConcentrationModel",
+            name_="ConcentrationModel",
         )
         if self.ion is not None and "ion" not in already_processed:
             already_processed.add("ion")
@@ -31409,50 +30834,6 @@ class DecayingPoolConcentrationModel(Standalone):
                 % (
                     self.gds_encode(
                         self.gds_format_string(quote_attrib(self.ion), input_name="ion")
-                    ),
-                )
-            )
-        if self.resting_conc is not None and "resting_conc" not in already_processed:
-            already_processed.add("resting_conc")
-            outfile.write(
-                " restingConc=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.resting_conc), input_name="restingConc"
-                        )
-                    ),
-                )
-            )
-        if (
-            self.decay_constant is not None
-            and "decay_constant" not in already_processed
-        ):
-            already_processed.add("decay_constant")
-            outfile.write(
-                " decayConstant=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.decay_constant),
-                            input_name="decayConstant",
-                        )
-                    ),
-                )
-            )
-        if (
-            self.shell_thickness is not None
-            and "shell_thickness" not in already_processed
-        ):
-            already_processed.add("shell_thickness")
-            outfile.write(
-                " shellThickness=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.shell_thickness),
-                            input_name="shellThickness",
-                        )
                     ),
                 )
             )
@@ -31475,11 +30856,11 @@ class DecayingPoolConcentrationModel(Standalone):
         level,
         namespaceprefix_="",
         namespacedef_="",
-        name_="DecayingPoolConcentrationModel",
+        name_="ConcentrationModel",
         fromsubclass_=False,
         pretty_print=True,
     ):
-        super(DecayingPoolConcentrationModel, self)._exportChildren(
+        super(ConcentrationModel, self)._exportChildren(
             outfile,
             level,
             namespaceprefix_,
@@ -31495,22 +30876,6 @@ class DecayingPoolConcentrationModel(Standalone):
         # validate simple type attributes
         self.gds_validate_defined_ST_(self.validate_NmlId, self.ion, "ion")
         self.gds_check_cardinality_(self.ion, "ion", required=True)
-        self.gds_validate_defined_ST_(
-            self.validate_Nml2Quantity_concentration, self.resting_conc, "resting_conc"
-        )
-        self.gds_check_cardinality_(self.resting_conc, "resting_conc", required=True)
-        self.gds_validate_defined_ST_(
-            self.validate_Nml2Quantity_time, self.decay_constant, "decay_constant"
-        )
-        self.gds_check_cardinality_(
-            self.decay_constant, "decay_constant", required=True
-        )
-        self.gds_validate_defined_ST_(
-            self.validate_Nml2Quantity_length, self.shell_thickness, "shell_thickness"
-        )
-        self.gds_check_cardinality_(
-            self.shell_thickness, "shell_thickness", required=True
-        )
         # validate simple type children
         # validate complex type children
         if recursive:
@@ -31535,45 +30900,20 @@ class DecayingPoolConcentrationModel(Standalone):
             already_processed.add("ion")
             self.ion = value
             self.validate_NmlId(self.ion)  # validate type NmlId
-        value = find_attr_value_("restingConc", node)
-        if value is not None and "restingConc" not in already_processed:
-            already_processed.add("restingConc")
-            self.resting_conc = value
-            self.validate_Nml2Quantity_concentration(
-                self.resting_conc
-            )  # validate type Nml2Quantity_concentration
-        value = find_attr_value_("decayConstant", node)
-        if value is not None and "decayConstant" not in already_processed:
-            already_processed.add("decayConstant")
-            self.decay_constant = value
-            self.validate_Nml2Quantity_time(
-                self.decay_constant
-            )  # validate type Nml2Quantity_time
-        value = find_attr_value_("shellThickness", node)
-        if value is not None and "shellThickness" not in already_processed:
-            already_processed.add("shellThickness")
-            self.shell_thickness = value
-            self.validate_Nml2Quantity_length(
-                self.shell_thickness
-            )  # validate type Nml2Quantity_length
         value = find_attr_value_("xsi:type", node)
         if value is not None and "xsi:type" not in already_processed:
             already_processed.add("xsi:type")
             self.extensiontype_ = value
-        super(DecayingPoolConcentrationModel, self)._buildAttributes(
-            node, attrs, already_processed
-        )
+        super(ConcentrationModel, self)._buildAttributes(node, attrs, already_processed)
 
     def _buildChildren(
         self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
     ):
-        super(DecayingPoolConcentrationModel, self)._buildChildren(
-            child_, node, nodeName_, True
-        )
+        super(ConcentrationModel, self)._buildChildren(child_, node, nodeName_, True)
         pass
 
 
-# end class DecayingPoolConcentrationModel
+# end class ConcentrationModel
 
 
 class HHTime(BaseWithoutId):
@@ -39103,6 +38443,19 @@ class NeuroMLDocument(Standalone):
             None,
         ),
         MemberSpec_(
+            "concentration_model",
+            "ConcentrationModel",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "concentrationModel",
+                "type": "ConcentrationModel",
+            },
+            None,
+        ),
+        MemberSpec_(
             "decaying_pool_concentration_models",
             "DecayingPoolConcentrationModel",
             1,
@@ -39882,6 +39235,19 @@ class NeuroMLDocument(Standalone):
             },
             None,
         ),
+        MemberSpec_(
+            "Component",
+            "Component",
+            1,
+            1,
+            {
+                "maxOccurs": "unbounded",
+                "minOccurs": "0",
+                "name": "Component",
+                "type": "Component",
+            },
+            None,
+        ),
     ]
     subclass = None
     superclass = Standalone
@@ -39901,6 +39267,7 @@ class NeuroMLDocument(Standalone):
         ion_channel_hhs: "list of IonChannelHH(s) (optional)" = None,
         ion_channel_v_shifts: "list of IonChannelVShift(s) (optional)" = None,
         ion_channel_kses: "list of IonChannelKS(s) (optional)" = None,
+        concentration_model: "list of ConcentrationModel(s) (optional)" = None,
         decaying_pool_concentration_models: "list of DecayingPoolConcentrationModel(s) (optional)" = None,
         fixed_factor_concentration_models: "list of FixedFactorConcentrationModel(s) (optional)" = None,
         alpha_current_synapses: "list of AlphaCurrentSynapse(s) (optional)" = None,
@@ -39961,6 +39328,7 @@ class NeuroMLDocument(Standalone):
         SpikeSourcePoisson: "list of SpikeSourcePoisson(s) (optional)" = None,
         networks: "list of Network(s) (optional)" = None,
         ComponentType: "list of ComponentType(s) (optional)" = None,
+        Component: "list of Component(s) (optional)" = None,
         gds_collector_=None,
         **kwargs_,
     ):
@@ -40012,6 +39380,11 @@ class NeuroMLDocument(Standalone):
         else:
             self.ion_channel_kses = ion_channel_kses
         self.ion_channel_kses_nsprefix_ = None
+        if concentration_model is None:
+            self.concentration_model = []
+        else:
+            self.concentration_model = concentration_model
+        self.concentration_model_nsprefix_ = None
         if decaying_pool_concentration_models is None:
             self.decaying_pool_concentration_models = []
         else:
@@ -40312,6 +39685,11 @@ class NeuroMLDocument(Standalone):
         else:
             self.ComponentType = ComponentType
         self.ComponentType_nsprefix_ = None
+        if Component is None:
+            self.Component = []
+        else:
+            self.Component = Component
+        self.Component_nsprefix_ = None
 
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -40335,6 +39713,7 @@ class NeuroMLDocument(Standalone):
             or self.ion_channel_hhs
             or self.ion_channel_v_shifts
             or self.ion_channel_kses
+            or self.concentration_model
             or self.decaying_pool_concentration_models
             or self.fixed_factor_concentration_models
             or self.alpha_current_synapses
@@ -40395,6 +39774,7 @@ class NeuroMLDocument(Standalone):
             or self.SpikeSourcePoisson
             or self.networks
             or self.ComponentType
+            or self.Component
             or super(NeuroMLDocument, self).has__content()
         ):
             return True
@@ -40594,6 +39974,20 @@ class NeuroMLDocument(Standalone):
                 namespaceprefix_,
                 namespacedef_="",
                 name_="ionChannelKS",
+                pretty_print=pretty_print,
+            )
+        for concentrationModel_ in self.concentration_model:
+            namespaceprefix_ = (
+                self.concentration_model_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.concentration_model_nsprefix_)
+                else ""
+            )
+            concentrationModel_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="concentrationModel",
                 pretty_print=pretty_print,
             )
         for decayingPoolConcentrationModel_ in self.decaying_pool_concentration_models:
@@ -41438,6 +40832,20 @@ class NeuroMLDocument(Standalone):
                 name_="ComponentType",
                 pretty_print=pretty_print,
             )
+        for Component_ in self.Component:
+            namespaceprefix_ = (
+                self.Component_nsprefix_ + ":"
+                if (UseCapturedNS_ and self.Component_nsprefix_)
+                else ""
+            )
+            Component_.export(
+                outfile,
+                level,
+                namespaceprefix_,
+                namespacedef_="",
+                name_="Component",
+                pretty_print=pretty_print,
+            )
 
     def validate_(self, gds_collector, recursive=False):
         self.gds_collector_ = gds_collector
@@ -41477,6 +40885,12 @@ class NeuroMLDocument(Standalone):
         )
         self.gds_check_cardinality_(
             self.ion_channel_kses, "ion_channel_kses", min_occurs=0, max_occurs=9999999
+        )
+        self.gds_check_cardinality_(
+            self.concentration_model,
+            "concentration_model",
+            min_occurs=0,
+            max_occurs=9999999,
         )
         self.gds_check_cardinality_(
             self.decaying_pool_concentration_models,
@@ -41751,6 +41165,9 @@ class NeuroMLDocument(Standalone):
         self.gds_check_cardinality_(
             self.ComponentType, "ComponentType", min_occurs=0, max_occurs=9999999
         )
+        self.gds_check_cardinality_(
+            self.Component, "Component", min_occurs=0, max_occurs=9999999
+        )
         if recursive:
             for item in self.includes:
                 item.validate_(gds_collector, recursive=True)
@@ -41767,6 +41184,8 @@ class NeuroMLDocument(Standalone):
             for item in self.ion_channel_v_shifts:
                 item.validate_(gds_collector, recursive=True)
             for item in self.ion_channel_kses:
+                item.validate_(gds_collector, recursive=True)
+            for item in self.concentration_model:
                 item.validate_(gds_collector, recursive=True)
             for item in self.decaying_pool_concentration_models:
                 item.validate_(gds_collector, recursive=True)
@@ -41888,6 +41307,8 @@ class NeuroMLDocument(Standalone):
                 item.validate_(gds_collector, recursive=True)
             for item in self.ComponentType:
                 item.validate_(gds_collector, recursive=True)
+            for item in self.Component:
+                item.validate_(gds_collector, recursive=True)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -41950,6 +41371,12 @@ class NeuroMLDocument(Standalone):
             obj_.build(child_, gds_collector_=gds_collector_)
             self.ion_channel_kses.append(obj_)
             obj_.original_tagname_ = "ionChannelKS"
+        elif nodeName_ == "concentrationModel":
+            class_obj_ = self.get_class_obj_(child_, ConcentrationModel)
+            obj_ = class_obj_.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.concentration_model.append(obj_)
+            obj_.original_tagname_ = "concentrationModel"
         elif nodeName_ == "decayingPoolConcentrationModel":
             class_obj_ = self.get_class_obj_(child_, DecayingPoolConcentrationModel)
             obj_ = class_obj_.factory(parent_object_=self)
@@ -42258,6 +41685,11 @@ class NeuroMLDocument(Standalone):
             obj_.build(child_, gds_collector_=gds_collector_)
             self.ComponentType.append(obj_)
             obj_.original_tagname_ = "ComponentType"
+        elif nodeName_ == "Component":
+            obj_ = Component.factory(parent_object_=self)
+            obj_.build(child_, gds_collector_=gds_collector_)
+            self.Component.append(obj_)
+            obj_.original_tagname_ = "Component"
         super(NeuroMLDocument, self)._buildChildren(child_, node, nodeName_, True)
 
     def summary(self, show_includes=True, show_non_network=True):
@@ -43276,6 +42708,275 @@ class Exposure(BaseWithoutId):
 
 
 # end class Exposure
+
+
+class Component(Base):
+    """Component -- A new Component based on a new defined ComponentType."""
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("type", "NmlId", 0, 0, {"use": "required", "name": "type"}),
+    ]
+    subclass = None
+    superclass = Base
+
+    def __init__(
+        self,
+        id: "a NmlId (required)" = None,
+        type: "a NmlId (required)" = None,
+        gds_collector_=None,
+        **kwargs_,
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("Component"), self).__init__(id, **kwargs_)
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
+        self.anyAttributes_ = {}
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(CurrentSubclassModule_, Component)
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if Component.subclass:
+            return Component.subclass(*args_, **kwargs_)
+        else:
+            return Component(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_NmlId(self, value):
+        # Validate type NmlId, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_NmlId_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_NmlId_patterns_,
+                    )
+                )
+
+    validate_NmlId_patterns_ = [["^([a-zA-Z_][a-zA-Z0-9_]*)$"]]
+
+    def has__content(self):
+        if super(Component, self).has__content():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Component",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("Component")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "Component":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Component"
+        )
+        if self.has__content():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="Component",
+                pretty_print=pretty_print,
+            )
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self, outfile, level, already_processed, namespaceprefix_="", name_="Component"
+    ):
+        unique_counter = 0
+        for name, value in self.anyAttributes_.items():
+            xsinamespaceprefix = "xsi"
+            xsinamespace1 = "http://www.w3.org/2001/XMLSchema-instance"
+            xsinamespace2 = "{%s}" % (xsinamespace1,)
+            if name.startswith(xsinamespace2):
+                name1 = name[len(xsinamespace2) :]
+                name2 = "%s:%s" % (
+                    xsinamespaceprefix,
+                    name1,
+                )
+                if name2 not in already_processed:
+                    already_processed.add(name2)
+                    outfile.write(
+                        " %s=%s"
+                        % (
+                            name2,
+                            quote_attrib(value),
+                        )
+                    )
+            else:
+                mo = re_.match(Namespace_extract_pat_, name)
+                if mo is not None:
+                    namespace, name = mo.group(1, 2)
+                    if name not in already_processed:
+                        already_processed.add(name)
+                        if namespace == "http://www.w3.org/XML/1998/namespace":
+                            outfile.write(
+                                " %s=%s"
+                                % (
+                                    name,
+                                    quote_attrib(value),
+                                )
+                            )
+                        else:
+                            unique_counter += 1
+                            outfile.write(
+                                ' xmlns:%d="%s"'
+                                % (
+                                    unique_counter,
+                                    namespace,
+                                )
+                            )
+                            outfile.write(
+                                " %d:%s=%s"
+                                % (
+                                    unique_counter,
+                                    name,
+                                    quote_attrib(value),
+                                )
+                            )
+                else:
+                    if name not in already_processed:
+                        already_processed.add(name)
+                        outfile.write(
+                            " %s=%s"
+                            % (
+                                name,
+                                quote_attrib(value),
+                            )
+                        )
+        super(Component, self)._exportAttributes(
+            outfile, level, already_processed, namespaceprefix_, name_="Component"
+        )
+        if self.type is not None and "type" not in already_processed:
+            already_processed.add("type")
+            outfile.write(
+                " type=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.type), input_name="type"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="Component",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(Component, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+        pass
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(self.validate_NmlId, self.type, "type")
+        self.gds_check_cardinality_(self.type, "type", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("type", node)
+        if value is not None and "type" not in already_processed:
+            already_processed.add("type")
+            self.type = value
+            self.validate_NmlId(self.type)  # validate type NmlId
+        self.anyAttributes_ = {}
+        for name, value in attrs.items():
+            if name not in already_processed:
+                self.anyAttributes_[name] = value
+        super(Component, self)._buildAttributes(node, attrs, already_processed)
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(Component, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class Component
 
 
 class Constant(BaseWithoutId):
@@ -47161,212 +46862,6 @@ class IntracellularProperties2CaPools(IntracellularProperties):
 
 
 # end class IntracellularProperties2CaPools
-
-
-class ConcentrationModel_D(DecayingPoolConcentrationModel):
-    __hash__ = GeneratedsSuper.__hash__
-    member_data_items_ = [
-        MemberSpec_("type", "xs:string", 0, 0, {"use": "required", "name": "type"}),
-    ]
-    subclass = None
-    superclass = DecayingPoolConcentrationModel
-
-    def __init__(
-        self,
-        id: "a NmlId (required)" = None,
-        metaid: "a MetaId (optional)" = None,
-        notes: "a string (optional)" = None,
-        properties: "list of Property(s) (optional)" = None,
-        annotation: "a Annotation (optional)" = None,
-        ion: "a NmlId (required)" = None,
-        resting_conc: "a Nml2Quantity_concentration (required)" = None,
-        decay_constant: "a Nml2Quantity_time (required)" = None,
-        shell_thickness: "a Nml2Quantity_length (required)" = None,
-        type: "a string (required)" = "decayingPoolConcentrationModel",
-        gds_collector_=None,
-        **kwargs_,
-    ):
-        self.gds_collector_ = gds_collector_
-        self.gds_elementtree_node_ = None
-        self.original_tagname_ = None
-        self.parent_object_ = kwargs_.get("parent_object_")
-        self.ns_prefix_ = None
-        super(globals().get("ConcentrationModel_D"), self).__init__(
-            id,
-            metaid,
-            notes,
-            properties,
-            annotation,
-            ion,
-            resting_conc,
-            decay_constant,
-            shell_thickness,
-            **kwargs_,
-        )
-        self.type = _cast(None, type)
-        self.type_nsprefix_ = None
-
-    def factory(*args_, **kwargs_):
-        if CurrentSubclassModule_ is not None:
-            subclass = getSubclassFromModule_(
-                CurrentSubclassModule_, ConcentrationModel_D
-            )
-            if subclass is not None:
-                return subclass(*args_, **kwargs_)
-        if ConcentrationModel_D.subclass:
-            return ConcentrationModel_D.subclass(*args_, **kwargs_)
-        else:
-            return ConcentrationModel_D(*args_, **kwargs_)
-
-    factory = staticmethod(factory)
-
-    def has__content(self):
-        if super(ConcentrationModel_D, self).has__content():
-            return True
-        else:
-            return False
-
-    def export(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="ConcentrationModel_D",
-        pretty_print=True,
-    ):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get("ConcentrationModel_D")
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
-        if self.original_tagname_ is not None and name_ == "ConcentrationModel_D":
-            name_ = self.original_tagname_
-        if UseCapturedNS_ and self.ns_prefix_:
-            namespaceprefix_ = self.ns_prefix_ + ":"
-        showIndent(outfile, level, pretty_print)
-        outfile.write(
-            "<%s%s%s"
-            % (
-                namespaceprefix_,
-                name_,
-                namespacedef_ and " " + namespacedef_ or "",
-            )
-        )
-        already_processed = set()
-        self._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="ConcentrationModel_D",
-        )
-        if self.has__content():
-            outfile.write(">%s" % (eol_,))
-            self._exportChildren(
-                outfile,
-                level + 1,
-                namespaceprefix_,
-                namespacedef_,
-                name_="ConcentrationModel_D",
-                pretty_print=pretty_print,
-            )
-            showIndent(outfile, level, pretty_print)
-            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
-        else:
-            outfile.write("/>%s" % (eol_,))
-
-    def _exportAttributes(
-        self,
-        outfile,
-        level,
-        already_processed,
-        namespaceprefix_="",
-        name_="ConcentrationModel_D",
-    ):
-        super(ConcentrationModel_D, self)._exportAttributes(
-            outfile,
-            level,
-            already_processed,
-            namespaceprefix_,
-            name_="ConcentrationModel_D",
-        )
-        if self.type is not None and "type" not in already_processed:
-            already_processed.add("type")
-            outfile.write(
-                " type=%s"
-                % (
-                    self.gds_encode(
-                        self.gds_format_string(
-                            quote_attrib(self.type), input_name="type"
-                        )
-                    ),
-                )
-            )
-
-    def _exportChildren(
-        self,
-        outfile,
-        level,
-        namespaceprefix_="",
-        namespacedef_="",
-        name_="ConcentrationModel_D",
-        fromsubclass_=False,
-        pretty_print=True,
-    ):
-        super(ConcentrationModel_D, self)._exportChildren(
-            outfile,
-            level,
-            namespaceprefix_,
-            namespacedef_,
-            name_,
-            True,
-            pretty_print=pretty_print,
-        )
-
-    def validate_(self, gds_collector, recursive=False):
-        self.gds_collector_ = gds_collector
-        message_count = len(self.gds_collector_.get_messages())
-        # validate simple type attributes
-        self.gds_validate_builtin_ST_(self.gds_validate_string, self.type, "type")
-        self.gds_check_cardinality_(self.type, "type", required=True)
-        # validate simple type children
-        # validate complex type children
-        if recursive:
-            pass
-        return message_count == len(self.gds_collector_.get_messages())
-
-    def build(self, node, gds_collector_=None):
-        self.gds_collector_ = gds_collector_
-        if SaveElementTreeNode:
-            self.gds_elementtree_node_ = node
-        already_processed = set()
-        self.ns_prefix_ = node.prefix
-        self._buildAttributes(node, node.attrib, already_processed)
-        for child in node:
-            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
-            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
-        return self
-
-    def _buildAttributes(self, node, attrs, already_processed):
-        value = find_attr_value_("type", node)
-        if value is not None and "type" not in already_processed:
-            already_processed.add("type")
-            self.type = value
-        super(ConcentrationModel_D, self)._buildAttributes(
-            node, attrs, already_processed
-        )
-
-    def _buildChildren(
-        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
-    ):
-        super(ConcentrationModel_D, self)._buildChildren(child_, node, nodeName_, True)
-        pass
-
-
-# end class ConcentrationModel_D
 
 
 class ChannelDensityNernstCa2(ChannelDensityNernst):
@@ -54625,6 +54120,806 @@ class BaseVoltageDepSynapse(BaseSynapse):
 # end class BaseVoltageDepSynapse
 
 
+class FixedFactorConcentrationModel(ConcentrationModel):
+    """FixedFactorConcentrationModel -- Model of buffering of concentration of an ion ( currently hard coded to be calcium, due to requirement for **iCa**  ) which has a baseline level **restingConc**  and tends to this value with time course **decayConstant.**  A fixed factor **rho**  is used to scale the incoming current *independently of the size of the compartment* to produce a concentration change.
+    \n
+    :param restingConc:
+    :type restingConc: concentration
+    :param decayConstant:
+    :type decayConstant: time
+    :param rho:
+    :type rho: rho_factor
+
+    """
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "resting_conc",
+            "Nml2Quantity_concentration",
+            0,
+            0,
+            {"use": "required", "name": "resting_conc"},
+        ),
+        MemberSpec_(
+            "decay_constant",
+            "Nml2Quantity_time",
+            0,
+            0,
+            {"use": "required", "name": "decay_constant"},
+        ),
+        MemberSpec_(
+            "rho", "Nml2Quantity_rhoFactor", 0, 0, {"use": "required", "name": "rho"}
+        ),
+    ]
+    subclass = None
+    superclass = ConcentrationModel
+
+    def __init__(
+        self,
+        id: "a NmlId (required)" = None,
+        metaid: "a MetaId (optional)" = None,
+        notes: "a string (optional)" = None,
+        properties: "list of Property(s) (optional)" = None,
+        annotation: "a Annotation (optional)" = None,
+        ion: "a NmlId (required)" = None,
+        resting_conc: "a Nml2Quantity_concentration (required)" = None,
+        decay_constant: "a Nml2Quantity_time (required)" = None,
+        rho: "a Nml2Quantity_rhoFactor (required)" = None,
+        gds_collector_=None,
+        **kwargs_,
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("FixedFactorConcentrationModel"), self).__init__(
+            id, metaid, notes, properties, annotation, ion, **kwargs_
+        )
+        self.resting_conc = _cast(None, resting_conc)
+        self.resting_conc_nsprefix_ = None
+        self.decay_constant = _cast(None, decay_constant)
+        self.decay_constant_nsprefix_ = None
+        self.rho = _cast(None, rho)
+        self.rho_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, FixedFactorConcentrationModel
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if FixedFactorConcentrationModel.subclass:
+            return FixedFactorConcentrationModel.subclass(*args_, **kwargs_)
+        else:
+            return FixedFactorConcentrationModel(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_Nml2Quantity_concentration(self, value):
+        # Validate type Nml2Quantity_concentration, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_concentration_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_concentration_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_concentration_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM))$"]
+    ]
+
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_time_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_time_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_time_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
+    ]
+
+    def validate_Nml2Quantity_rhoFactor(self, value):
+        # Validate type Nml2Quantity_rhoFactor, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_rhoFactor_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_rhoFactor_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_rhoFactor_patterns_ = [
+        [
+            "^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m_per_A_per_s|mol_per_cm_per_uA_per_ms))$"
+        ]
+    ]
+
+    def has__content(self):
+        if super(FixedFactorConcentrationModel, self).has__content():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="FixedFactorConcentrationModel",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("FixedFactorConcentrationModel")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if (
+            self.original_tagname_ is not None
+            and name_ == "FixedFactorConcentrationModel"
+        ):
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="FixedFactorConcentrationModel",
+        )
+        if self.has__content():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="FixedFactorConcentrationModel",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="FixedFactorConcentrationModel",
+    ):
+        super(FixedFactorConcentrationModel, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="FixedFactorConcentrationModel",
+        )
+        if self.resting_conc is not None and "resting_conc" not in already_processed:
+            already_processed.add("resting_conc")
+            outfile.write(
+                " restingConc=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.resting_conc), input_name="restingConc"
+                        )
+                    ),
+                )
+            )
+        if (
+            self.decay_constant is not None
+            and "decay_constant" not in already_processed
+        ):
+            already_processed.add("decay_constant")
+            outfile.write(
+                " decayConstant=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.decay_constant),
+                            input_name="decayConstant",
+                        )
+                    ),
+                )
+            )
+        if self.rho is not None and "rho" not in already_processed:
+            already_processed.add("rho")
+            outfile.write(
+                " rho=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(quote_attrib(self.rho), input_name="rho")
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="FixedFactorConcentrationModel",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(FixedFactorConcentrationModel, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_concentration, self.resting_conc, "resting_conc"
+        )
+        self.gds_check_cardinality_(self.resting_conc, "resting_conc", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.decay_constant, "decay_constant"
+        )
+        self.gds_check_cardinality_(
+            self.decay_constant, "decay_constant", required=True
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_rhoFactor, self.rho, "rho"
+        )
+        self.gds_check_cardinality_(self.rho, "rho", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("restingConc", node)
+        if value is not None and "restingConc" not in already_processed:
+            already_processed.add("restingConc")
+            self.resting_conc = value
+            self.validate_Nml2Quantity_concentration(
+                self.resting_conc
+            )  # validate type Nml2Quantity_concentration
+        value = find_attr_value_("decayConstant", node)
+        if value is not None and "decayConstant" not in already_processed:
+            already_processed.add("decayConstant")
+            self.decay_constant = value
+            self.validate_Nml2Quantity_time(
+                self.decay_constant
+            )  # validate type Nml2Quantity_time
+        value = find_attr_value_("rho", node)
+        if value is not None and "rho" not in already_processed:
+            already_processed.add("rho")
+            self.rho = value
+            self.validate_Nml2Quantity_rhoFactor(
+                self.rho
+            )  # validate type Nml2Quantity_rhoFactor
+        super(FixedFactorConcentrationModel, self)._buildAttributes(
+            node, attrs, already_processed
+        )
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(FixedFactorConcentrationModel, self)._buildChildren(
+            child_, node, nodeName_, True
+        )
+        pass
+
+
+# end class FixedFactorConcentrationModel
+
+
+class DecayingPoolConcentrationModel(ConcentrationModel):
+    """DecayingPoolConcentrationModel -- Model of an intracellular buffering mechanism for **ion**  ( currently hard Coded to be calcium, due to requirement for **iCa**  ) which has a baseline level **restingConc**  and tends to this value with time course **decayConstant.**  The ion is assumed to occupy a shell inside the membrane of thickness **shellThickness.**
+    \n
+    :param restingConc:
+    :type restingConc: concentration
+    :param decayConstant:
+    :type decayConstant: time
+    :param shellThickness:
+    :type shellThickness: length
+
+    """
+
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_(
+            "resting_conc",
+            "Nml2Quantity_concentration",
+            0,
+            0,
+            {"use": "required", "name": "resting_conc"},
+        ),
+        MemberSpec_(
+            "decay_constant",
+            "Nml2Quantity_time",
+            0,
+            0,
+            {"use": "required", "name": "decay_constant"},
+        ),
+        MemberSpec_(
+            "shell_thickness",
+            "Nml2Quantity_length",
+            0,
+            0,
+            {"use": "required", "name": "shell_thickness"},
+        ),
+    ]
+    subclass = None
+    superclass = ConcentrationModel
+
+    def __init__(
+        self,
+        id: "a NmlId (required)" = None,
+        metaid: "a MetaId (optional)" = None,
+        notes: "a string (optional)" = None,
+        properties: "list of Property(s) (optional)" = None,
+        annotation: "a Annotation (optional)" = None,
+        ion: "a NmlId (required)" = None,
+        resting_conc: "a Nml2Quantity_concentration (required)" = None,
+        decay_constant: "a Nml2Quantity_time (required)" = None,
+        shell_thickness: "a Nml2Quantity_length (required)" = None,
+        extensiontype_=None,
+        gds_collector_=None,
+        **kwargs_,
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("DecayingPoolConcentrationModel"), self).__init__(
+            id, metaid, notes, properties, annotation, ion, extensiontype_, **kwargs_
+        )
+        self.resting_conc = _cast(None, resting_conc)
+        self.resting_conc_nsprefix_ = None
+        self.decay_constant = _cast(None, decay_constant)
+        self.decay_constant_nsprefix_ = None
+        self.shell_thickness = _cast(None, shell_thickness)
+        self.shell_thickness_nsprefix_ = None
+        self.extensiontype_ = extensiontype_
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, DecayingPoolConcentrationModel
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if DecayingPoolConcentrationModel.subclass:
+            return DecayingPoolConcentrationModel.subclass(*args_, **kwargs_)
+        else:
+            return DecayingPoolConcentrationModel(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def validate_Nml2Quantity_concentration(self, value):
+        # Validate type Nml2Quantity_concentration, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_concentration_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_concentration_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_concentration_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(mol_per_m3|mol_per_cm3|M|mM))$"]
+    ]
+
+    def validate_Nml2Quantity_time(self, value):
+        # Validate type Nml2Quantity_time, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_time_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_time_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_time_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(s|ms))$"]
+    ]
+
+    def validate_Nml2Quantity_length(self, value):
+        # Validate type Nml2Quantity_length, a restriction on xs:string.
+        if (
+            value is not None
+            and Validate_simpletypes_
+            and self.gds_collector_ is not None
+        ):
+            if not isinstance(value, str):
+                lineno = self.gds_get_node_lineno_()
+                self.gds_collector_.add_message(
+                    'Value "%(value)s"%(lineno)s is not of the correct base simple type (str)'
+                    % {
+                        "value": value,
+                        "lineno": lineno,
+                    }
+                )
+                return False
+            if not self.gds_validate_simple_patterns(
+                self.validate_Nml2Quantity_length_patterns_, value
+            ):
+                self.gds_collector_.add_message(
+                    'Value "%s" does not match xsd pattern restrictions: %s'
+                    % (
+                        encode_str_2_3(value),
+                        self.validate_Nml2Quantity_length_patterns_,
+                    )
+                )
+
+    validate_Nml2Quantity_length_patterns_ = [
+        ["^(-?([0-9]*(\\.[0-9]+)?)([eE]-?[0-9]+)?[\\s]*(m|cm|um))$"]
+    ]
+
+    def has__content(self):
+        if super(DecayingPoolConcentrationModel, self).has__content():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="DecayingPoolConcentrationModel",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get(
+            "DecayingPoolConcentrationModel"
+        )
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if (
+            self.original_tagname_ is not None
+            and name_ == "DecayingPoolConcentrationModel"
+        ):
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="DecayingPoolConcentrationModel",
+        )
+        if self.has__content():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="DecayingPoolConcentrationModel",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="DecayingPoolConcentrationModel",
+    ):
+        super(DecayingPoolConcentrationModel, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="DecayingPoolConcentrationModel",
+        )
+        if self.resting_conc is not None and "resting_conc" not in already_processed:
+            already_processed.add("resting_conc")
+            outfile.write(
+                " restingConc=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.resting_conc), input_name="restingConc"
+                        )
+                    ),
+                )
+            )
+        if (
+            self.decay_constant is not None
+            and "decay_constant" not in already_processed
+        ):
+            already_processed.add("decay_constant")
+            outfile.write(
+                " decayConstant=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.decay_constant),
+                            input_name="decayConstant",
+                        )
+                    ),
+                )
+            )
+        if (
+            self.shell_thickness is not None
+            and "shell_thickness" not in already_processed
+        ):
+            already_processed.add("shell_thickness")
+            outfile.write(
+                " shellThickness=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.shell_thickness),
+                            input_name="shellThickness",
+                        )
+                    ),
+                )
+            )
+        if self.extensiontype_ is not None and "xsi:type" not in already_processed:
+            already_processed.add("xsi:type")
+            outfile.write(' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"')
+            if ":" not in self.extensiontype_:
+                imported_ns_type_prefix_ = GenerateDSNamespaceTypePrefixes_.get(
+                    self.extensiontype_, ""
+                )
+                outfile.write(
+                    ' xsi:type="%s%s"' % (imported_ns_type_prefix_, self.extensiontype_)
+                )
+            else:
+                outfile.write(' xsi:type="%s"' % self.extensiontype_)
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="DecayingPoolConcentrationModel",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(DecayingPoolConcentrationModel, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_concentration, self.resting_conc, "resting_conc"
+        )
+        self.gds_check_cardinality_(self.resting_conc, "resting_conc", required=True)
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_time, self.decay_constant, "decay_constant"
+        )
+        self.gds_check_cardinality_(
+            self.decay_constant, "decay_constant", required=True
+        )
+        self.gds_validate_defined_ST_(
+            self.validate_Nml2Quantity_length, self.shell_thickness, "shell_thickness"
+        )
+        self.gds_check_cardinality_(
+            self.shell_thickness, "shell_thickness", required=True
+        )
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("restingConc", node)
+        if value is not None and "restingConc" not in already_processed:
+            already_processed.add("restingConc")
+            self.resting_conc = value
+            self.validate_Nml2Quantity_concentration(
+                self.resting_conc
+            )  # validate type Nml2Quantity_concentration
+        value = find_attr_value_("decayConstant", node)
+        if value is not None and "decayConstant" not in already_processed:
+            already_processed.add("decayConstant")
+            self.decay_constant = value
+            self.validate_Nml2Quantity_time(
+                self.decay_constant
+            )  # validate type Nml2Quantity_time
+        value = find_attr_value_("shellThickness", node)
+        if value is not None and "shellThickness" not in already_processed:
+            already_processed.add("shellThickness")
+            self.shell_thickness = value
+            self.validate_Nml2Quantity_length(
+                self.shell_thickness
+            )  # validate type Nml2Quantity_length
+        value = find_attr_value_("xsi:type", node)
+        if value is not None and "xsi:type" not in already_processed:
+            already_processed.add("xsi:type")
+            self.extensiontype_ = value
+        super(DecayingPoolConcentrationModel, self)._buildAttributes(
+            node, attrs, already_processed
+        )
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(DecayingPoolConcentrationModel, self)._buildChildren(
+            child_, node, nodeName_, True
+        )
+        pass
+
+
+# end class DecayingPoolConcentrationModel
+
+
 class IonChannel(IonChannelScalable):
     """IonChannel -- Note  **ionChannel**  and  **ionChannelHH**  are currently functionally identical. This is needed since many existing examples use ionChannel, some use ionChannelHH. NeuroML v2beta4 should remove one of these, probably ionChannelHH.
     \n
@@ -59348,6 +59643,212 @@ class Connection(BaseConnectionOldFormat):
         )
 
     # end class Connection
+
+
+class ConcentrationModel_D(DecayingPoolConcentrationModel):
+    __hash__ = GeneratedsSuper.__hash__
+    member_data_items_ = [
+        MemberSpec_("type", "xs:string", 0, 0, {"use": "required", "name": "type"}),
+    ]
+    subclass = None
+    superclass = DecayingPoolConcentrationModel
+
+    def __init__(
+        self,
+        id: "a NmlId (required)" = None,
+        metaid: "a MetaId (optional)" = None,
+        notes: "a string (optional)" = None,
+        properties: "list of Property(s) (optional)" = None,
+        annotation: "a Annotation (optional)" = None,
+        ion: "a NmlId (required)" = None,
+        resting_conc: "a Nml2Quantity_concentration (required)" = None,
+        decay_constant: "a Nml2Quantity_time (required)" = None,
+        shell_thickness: "a Nml2Quantity_length (required)" = None,
+        type: "a string (required)" = "decayingPoolConcentrationModel",
+        gds_collector_=None,
+        **kwargs_,
+    ):
+        self.gds_collector_ = gds_collector_
+        self.gds_elementtree_node_ = None
+        self.original_tagname_ = None
+        self.parent_object_ = kwargs_.get("parent_object_")
+        self.ns_prefix_ = None
+        super(globals().get("ConcentrationModel_D"), self).__init__(
+            id,
+            metaid,
+            notes,
+            properties,
+            annotation,
+            ion,
+            resting_conc,
+            decay_constant,
+            shell_thickness,
+            **kwargs_,
+        )
+        self.type = _cast(None, type)
+        self.type_nsprefix_ = None
+
+    def factory(*args_, **kwargs_):
+        if CurrentSubclassModule_ is not None:
+            subclass = getSubclassFromModule_(
+                CurrentSubclassModule_, ConcentrationModel_D
+            )
+            if subclass is not None:
+                return subclass(*args_, **kwargs_)
+        if ConcentrationModel_D.subclass:
+            return ConcentrationModel_D.subclass(*args_, **kwargs_)
+        else:
+            return ConcentrationModel_D(*args_, **kwargs_)
+
+    factory = staticmethod(factory)
+
+    def has__content(self):
+        if super(ConcentrationModel_D, self).has__content():
+            return True
+        else:
+            return False
+
+    def export(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="ConcentrationModel_D",
+        pretty_print=True,
+    ):
+        imported_ns_def_ = GenerateDSNamespaceDefs_.get("ConcentrationModel_D")
+        if imported_ns_def_ is not None:
+            namespacedef_ = imported_ns_def_
+        if pretty_print:
+            eol_ = "\n"
+        else:
+            eol_ = ""
+        if self.original_tagname_ is not None and name_ == "ConcentrationModel_D":
+            name_ = self.original_tagname_
+        if UseCapturedNS_ and self.ns_prefix_:
+            namespaceprefix_ = self.ns_prefix_ + ":"
+        showIndent(outfile, level, pretty_print)
+        outfile.write(
+            "<%s%s%s"
+            % (
+                namespaceprefix_,
+                name_,
+                namespacedef_ and " " + namespacedef_ or "",
+            )
+        )
+        already_processed = set()
+        self._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="ConcentrationModel_D",
+        )
+        if self.has__content():
+            outfile.write(">%s" % (eol_,))
+            self._exportChildren(
+                outfile,
+                level + 1,
+                namespaceprefix_,
+                namespacedef_,
+                name_="ConcentrationModel_D",
+                pretty_print=pretty_print,
+            )
+            showIndent(outfile, level, pretty_print)
+            outfile.write("</%s%s>%s" % (namespaceprefix_, name_, eol_))
+        else:
+            outfile.write("/>%s" % (eol_,))
+
+    def _exportAttributes(
+        self,
+        outfile,
+        level,
+        already_processed,
+        namespaceprefix_="",
+        name_="ConcentrationModel_D",
+    ):
+        super(ConcentrationModel_D, self)._exportAttributes(
+            outfile,
+            level,
+            already_processed,
+            namespaceprefix_,
+            name_="ConcentrationModel_D",
+        )
+        if self.type is not None and "type" not in already_processed:
+            already_processed.add("type")
+            outfile.write(
+                " type=%s"
+                % (
+                    self.gds_encode(
+                        self.gds_format_string(
+                            quote_attrib(self.type), input_name="type"
+                        )
+                    ),
+                )
+            )
+
+    def _exportChildren(
+        self,
+        outfile,
+        level,
+        namespaceprefix_="",
+        namespacedef_="",
+        name_="ConcentrationModel_D",
+        fromsubclass_=False,
+        pretty_print=True,
+    ):
+        super(ConcentrationModel_D, self)._exportChildren(
+            outfile,
+            level,
+            namespaceprefix_,
+            namespacedef_,
+            name_,
+            True,
+            pretty_print=pretty_print,
+        )
+
+    def validate_(self, gds_collector, recursive=False):
+        self.gds_collector_ = gds_collector
+        message_count = len(self.gds_collector_.get_messages())
+        # validate simple type attributes
+        self.gds_validate_builtin_ST_(self.gds_validate_string, self.type, "type")
+        self.gds_check_cardinality_(self.type, "type", required=True)
+        # validate simple type children
+        # validate complex type children
+        if recursive:
+            pass
+        return message_count == len(self.gds_collector_.get_messages())
+
+    def build(self, node, gds_collector_=None):
+        self.gds_collector_ = gds_collector_
+        if SaveElementTreeNode:
+            self.gds_elementtree_node_ = node
+        already_processed = set()
+        self.ns_prefix_ = node.prefix
+        self._buildAttributes(node, node.attrib, already_processed)
+        for child in node:
+            nodeName_ = Tag_pattern_.match(child.tag).groups()[-1]
+            self._buildChildren(child, node, nodeName_, gds_collector_=gds_collector_)
+        return self
+
+    def _buildAttributes(self, node, attrs, already_processed):
+        value = find_attr_value_("type", node)
+        if value is not None and "type" not in already_processed:
+            already_processed.add("type")
+            self.type = value
+        super(ConcentrationModel_D, self)._buildAttributes(
+            node, attrs, already_processed
+        )
+
+    def _buildChildren(
+        self, child_, node, nodeName_, fromsubclass_=False, gds_collector_=None
+    ):
+        super(ConcentrationModel_D, self)._buildChildren(child_, node, nodeName_, True)
+        pass
+
+
+# end class ConcentrationModel_D
 
 
 class Cell2CaPools(Cell):
@@ -67820,243 +68321,245 @@ RenameMappings_ = {}
 # simpleTypes are marked "ST" and complexTypes "CT".
 NamespaceToDefMappings_ = {
     "http://www.neuroml.org/schema/neuroml2": [
-        ("NmlId", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_none", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_voltage", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_length", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_resistance", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_resistivity", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_conductance", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_conductanceDensity", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_permeability", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_time", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_pertime", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_capacitance", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_specificCapacitance", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_concentration", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_current", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_currentDensity", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_temperature", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_rhoFactor", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2Quantity_conductancePerVoltage", "NeuroML_v2.3.1.xsd", "ST"),
-        ("MetaId", "NeuroML_v2.3.1.xsd", "ST"),
-        ("NeuroLexId", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Nml2PopulationReferencePath", "NeuroML_v2.3.1.xsd", "ST"),
-        ("NonNegativeInteger", "NeuroML_v2.3.1.xsd", "ST"),
-        ("PositiveInteger", "NeuroML_v2.3.1.xsd", "ST"),
-        ("DoubleGreaterThanZero", "NeuroML_v2.3.1.xsd", "ST"),
-        ("ZeroOrOne", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Notes", "NeuroML_v2.3.1.xsd", "ST"),
-        ("TrueOrFalse", "NeuroML_v2.3.1.xsd", "ST"),
-        ("ZeroToOne", "NeuroML_v2.3.1.xsd", "ST"),
-        ("channelTypes", "NeuroML_v2.3.1.xsd", "ST"),
-        ("gateTypes", "NeuroML_v2.3.1.xsd", "ST"),
-        ("BlockTypes", "NeuroML_v2.3.1.xsd", "ST"),
-        ("PlasticityTypes", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Metric", "NeuroML_v2.3.1.xsd", "ST"),
-        ("networkTypes", "NeuroML_v2.3.1.xsd", "ST"),
-        ("allowedSpaces", "NeuroML_v2.3.1.xsd", "ST"),
-        ("populationTypes", "NeuroML_v2.3.1.xsd", "ST"),
-        ("Property", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Annotation", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ComponentType", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Constant", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Exposure", "NeuroML_v2.3.1.xsd", "CT"),
-        ("NamedDimensionalType", "NeuroML_v2.3.1.xsd", "CT"),
-        ("NamedDimensionalVariable", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Parameter", "NeuroML_v2.3.1.xsd", "CT"),
-        ("DerivedParameter", "NeuroML_v2.3.1.xsd", "CT"),
-        ("LEMS_Property", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Requirement", "NeuroML_v2.3.1.xsd", "CT"),
-        ("InstanceRequirement", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Dynamics", "NeuroML_v2.3.1.xsd", "CT"),
-        ("DerivedVariable", "NeuroML_v2.3.1.xsd", "CT"),
-        ("StateVariable", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ConditionalDerivedVariable", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Case", "NeuroML_v2.3.1.xsd", "CT"),
-        ("TimeDerivative", "NeuroML_v2.3.1.xsd", "CT"),
-        ("OnStart", "NeuroML_v2.3.1.xsd", "CT"),
-        ("StateAssignment", "NeuroML_v2.3.1.xsd", "CT"),
-        ("OnEvent", "NeuroML_v2.3.1.xsd", "CT"),
-        ("EventOut", "NeuroML_v2.3.1.xsd", "CT"),
-        ("OnCondition", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Transition", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Regime", "NeuroML_v2.3.1.xsd", "CT"),
-        ("OnEntry", "NeuroML_v2.3.1.xsd", "CT"),
-        ("NeuroMLDocument", "NeuroML_v2.3.1.xsd", "CT"),
-        ("IncludeType", "NeuroML_v2.3.1.xsd", "CT"),
-        ("IonChannelScalable", "NeuroML_v2.3.1.xsd", "CT"),
-        ("IonChannelKS", "NeuroML_v2.3.1.xsd", "CT"),
-        ("IonChannel", "NeuroML_v2.3.1.xsd", "CT"),
-        ("IonChannelHH", "NeuroML_v2.3.1.xsd", "CT"),
-        ("IonChannelVShift", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Q10ConductanceScaling", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ClosedState", "NeuroML_v2.3.1.xsd", "CT"),
-        ("OpenState", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ForwardTransition", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ReverseTransition", "NeuroML_v2.3.1.xsd", "CT"),
-        ("TauInfTransition", "NeuroML_v2.3.1.xsd", "CT"),
-        ("GateKS", "NeuroML_v2.3.1.xsd", "CT"),
-        ("GateHHUndetermined", "NeuroML_v2.3.1.xsd", "CT"),
-        ("GateHHRates", "NeuroML_v2.3.1.xsd", "CT"),
-        ("GateHHTauInf", "NeuroML_v2.3.1.xsd", "CT"),
-        ("GateHHRatesTauInf", "NeuroML_v2.3.1.xsd", "CT"),
-        ("GateHHRatesTau", "NeuroML_v2.3.1.xsd", "CT"),
-        ("GateHHRatesInf", "NeuroML_v2.3.1.xsd", "CT"),
-        ("GateHHInstantaneous", "NeuroML_v2.3.1.xsd", "CT"),
-        ("GateFractional", "NeuroML_v2.3.1.xsd", "CT"),
-        ("GateFractionalSubgate", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Q10Settings", "NeuroML_v2.3.1.xsd", "CT"),
-        ("HHRate", "NeuroML_v2.3.1.xsd", "CT"),
-        ("HHVariable", "NeuroML_v2.3.1.xsd", "CT"),
-        ("HHTime", "NeuroML_v2.3.1.xsd", "CT"),
-        ("DecayingPoolConcentrationModel", "NeuroML_v2.3.1.xsd", "CT"),
-        ("FixedFactorConcentrationModel", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BaseSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BaseVoltageDepSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BaseCurrentBasedSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BaseConductanceBasedSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BaseConductanceBasedSynapseTwo", "NeuroML_v2.3.1.xsd", "CT"),
-        ("GapJunction", "NeuroML_v2.3.1.xsd", "CT"),
-        ("SilentSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("LinearGradedSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("GradedSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("AlphaCurrentSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("AlphaSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ExpOneSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ExpTwoSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ExpThreeSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("DoubleSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BlockingPlasticSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BlockMechanism", "NeuroML_v2.3.1.xsd", "CT"),
-        ("PlasticityMechanism", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BaseCell", "NeuroML_v2.3.1.xsd", "CT"),
-        ("IafTauCell", "NeuroML_v2.3.1.xsd", "CT"),
-        ("IafTauRefCell", "NeuroML_v2.3.1.xsd", "CT"),
-        ("IafCell", "NeuroML_v2.3.1.xsd", "CT"),
-        ("IafRefCell", "NeuroML_v2.3.1.xsd", "CT"),
-        ("IzhikevichCell", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BaseCellMembPotCap", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Izhikevich2007Cell", "NeuroML_v2.3.1.xsd", "CT"),
-        ("AdExIaFCell", "NeuroML_v2.3.1.xsd", "CT"),
-        ("FitzHughNagumoCell", "NeuroML_v2.3.1.xsd", "CT"),
-        ("FitzHughNagumo1969Cell", "NeuroML_v2.3.1.xsd", "CT"),
-        ("PinskyRinzelCA3Cell", "NeuroML_v2.3.1.xsd", "CT"),
-        ("HindmarshRose1984Cell", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Cell", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Cell2CaPools", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Morphology", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Segment", "NeuroML_v2.3.1.xsd", "CT"),
-        ("SegmentParent", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Point3DWithDiam", "NeuroML_v2.3.1.xsd", "CT"),
-        ("SegmentGroup", "NeuroML_v2.3.1.xsd", "CT"),
-        ("InhomogeneousParameter", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ProximalDetails", "NeuroML_v2.3.1.xsd", "CT"),
-        ("DistalDetails", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Member", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Include", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Path", "NeuroML_v2.3.1.xsd", "CT"),
-        ("SubTree", "NeuroML_v2.3.1.xsd", "CT"),
-        ("SegmentEndPoint", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BiophysicalProperties", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BiophysicalProperties2CaPools", "NeuroML_v2.3.1.xsd", "CT"),
-        ("MembraneProperties", "NeuroML_v2.3.1.xsd", "CT"),
-        ("MembraneProperties2CaPools", "NeuroML_v2.3.1.xsd", "CT"),
-        ("SpikeThresh", "NeuroML_v2.3.1.xsd", "CT"),
-        ("SpecificCapacitance", "NeuroML_v2.3.1.xsd", "CT"),
-        ("InitMembPotential", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Resistivity", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ChannelPopulation", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ChannelDensityNonUniform", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ChannelDensityNonUniformNernst", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ChannelDensityNonUniformGHK", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ChannelDensity", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ChannelDensityVShift", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ChannelDensityNernst", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ChannelDensityNernstCa2", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ChannelDensityGHK", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ChannelDensityGHK2", "NeuroML_v2.3.1.xsd", "CT"),
-        ("VariableParameter", "NeuroML_v2.3.1.xsd", "CT"),
-        ("InhomogeneousValue", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Species", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ConcentrationModel_D", "NeuroML_v2.3.1.xsd", "CT"),
-        ("IntracellularProperties", "NeuroML_v2.3.1.xsd", "CT"),
-        ("IntracellularProperties2CaPools", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ExtracellularProperties", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ExtracellularPropertiesLocal", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ReactionScheme", "NeuroML_v2.3.1.xsd", "CT"),
-        ("PulseGenerator", "NeuroML_v2.3.1.xsd", "CT"),
-        ("PulseGeneratorDL", "NeuroML_v2.3.1.xsd", "CT"),
-        ("SineGenerator", "NeuroML_v2.3.1.xsd", "CT"),
-        ("SineGeneratorDL", "NeuroML_v2.3.1.xsd", "CT"),
-        ("RampGenerator", "NeuroML_v2.3.1.xsd", "CT"),
-        ("RampGeneratorDL", "NeuroML_v2.3.1.xsd", "CT"),
-        ("CompoundInput", "NeuroML_v2.3.1.xsd", "CT"),
-        ("CompoundInputDL", "NeuroML_v2.3.1.xsd", "CT"),
-        ("VoltageClamp", "NeuroML_v2.3.1.xsd", "CT"),
-        ("VoltageClampTriple", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Spike", "NeuroML_v2.3.1.xsd", "CT"),
-        ("SpikeArray", "NeuroML_v2.3.1.xsd", "CT"),
-        ("TimedSynapticInput", "NeuroML_v2.3.1.xsd", "CT"),
-        ("SpikeGenerator", "NeuroML_v2.3.1.xsd", "CT"),
-        ("SpikeGeneratorRandom", "NeuroML_v2.3.1.xsd", "CT"),
-        ("SpikeGeneratorPoisson", "NeuroML_v2.3.1.xsd", "CT"),
-        ("SpikeGeneratorRefPoisson", "NeuroML_v2.3.1.xsd", "CT"),
-        ("PoissonFiringSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("TransientPoissonFiringSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Network", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Space", "NeuroML_v2.3.1.xsd", "CT"),
-        ("SpaceStructure", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Region", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Population", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Layout", "NeuroML_v2.3.1.xsd", "CT"),
-        ("UnstructuredLayout", "NeuroML_v2.3.1.xsd", "CT"),
-        ("RandomLayout", "NeuroML_v2.3.1.xsd", "CT"),
-        ("GridLayout", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Instance", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Location", "NeuroML_v2.3.1.xsd", "CT"),
-        ("CellSet", "NeuroML_v2.3.1.xsd", "CT"),
-        ("SynapticConnection", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BaseProjection", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Projection", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BaseConnection", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BaseConnectionOldFormat", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BaseConnectionNewFormat", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Connection", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ConnectionWD", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ElectricalProjection", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ElectricalConnection", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ElectricalConnectionInstance", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ElectricalConnectionInstanceW", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ContinuousProjection", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ContinuousConnection", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ContinuousConnectionInstance", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ContinuousConnectionInstanceW", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ExplicitInput", "NeuroML_v2.3.1.xsd", "CT"),
-        ("InputList", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Input", "NeuroML_v2.3.1.xsd", "CT"),
-        ("InputW", "NeuroML_v2.3.1.xsd", "CT"),
-        ("basePyNNCell", "NeuroML_v2.3.1.xsd", "CT"),
-        ("basePyNNIaFCell", "NeuroML_v2.3.1.xsd", "CT"),
-        ("basePyNNIaFCondCell", "NeuroML_v2.3.1.xsd", "CT"),
-        ("IF_curr_alpha", "NeuroML_v2.3.1.xsd", "CT"),
-        ("IF_curr_exp", "NeuroML_v2.3.1.xsd", "CT"),
-        ("IF_cond_alpha", "NeuroML_v2.3.1.xsd", "CT"),
-        ("IF_cond_exp", "NeuroML_v2.3.1.xsd", "CT"),
-        ("EIF_cond_exp_isfa_ista", "NeuroML_v2.3.1.xsd", "CT"),
-        ("EIF_cond_alpha_isfa_ista", "NeuroML_v2.3.1.xsd", "CT"),
-        ("HH_cond_exp", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BasePynnSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ExpCondSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("AlphaCondSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("ExpCurrSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("AlphaCurrSynapse", "NeuroML_v2.3.1.xsd", "CT"),
-        ("SpikeSourcePoisson", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BaseWithoutId", "NeuroML_v2.3.1.xsd", "CT"),
-        ("BaseNonNegativeIntegerId", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Base", "NeuroML_v2.3.1.xsd", "CT"),
-        ("Standalone", "NeuroML_v2.3.1.xsd", "CT"),
+        ("NmlId", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_none", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_voltage", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_length", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_resistance", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_resistivity", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_conductance", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_conductanceDensity", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_permeability", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_time", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_pertime", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_capacitance", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_specificCapacitance", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_concentration", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_current", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_currentDensity", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_temperature", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_rhoFactor", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2Quantity_conductancePerVoltage", "NeuroML_v2.3.2.xsd", "ST"),
+        ("MetaId", "NeuroML_v2.3.2.xsd", "ST"),
+        ("NeuroLexId", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Nml2PopulationReferencePath", "NeuroML_v2.3.2.xsd", "ST"),
+        ("NonNegativeInteger", "NeuroML_v2.3.2.xsd", "ST"),
+        ("PositiveInteger", "NeuroML_v2.3.2.xsd", "ST"),
+        ("DoubleGreaterThanZero", "NeuroML_v2.3.2.xsd", "ST"),
+        ("ZeroOrOne", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Notes", "NeuroML_v2.3.2.xsd", "ST"),
+        ("TrueOrFalse", "NeuroML_v2.3.2.xsd", "ST"),
+        ("ZeroToOne", "NeuroML_v2.3.2.xsd", "ST"),
+        ("channelTypes", "NeuroML_v2.3.2.xsd", "ST"),
+        ("gateTypes", "NeuroML_v2.3.2.xsd", "ST"),
+        ("BlockTypes", "NeuroML_v2.3.2.xsd", "ST"),
+        ("PlasticityTypes", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Metric", "NeuroML_v2.3.2.xsd", "ST"),
+        ("networkTypes", "NeuroML_v2.3.2.xsd", "ST"),
+        ("allowedSpaces", "NeuroML_v2.3.2.xsd", "ST"),
+        ("populationTypes", "NeuroML_v2.3.2.xsd", "ST"),
+        ("Property", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Annotation", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ComponentType", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Constant", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Component", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Exposure", "NeuroML_v2.3.2.xsd", "CT"),
+        ("NamedDimensionalType", "NeuroML_v2.3.2.xsd", "CT"),
+        ("NamedDimensionalVariable", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Parameter", "NeuroML_v2.3.2.xsd", "CT"),
+        ("DerivedParameter", "NeuroML_v2.3.2.xsd", "CT"),
+        ("LEMS_Property", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Requirement", "NeuroML_v2.3.2.xsd", "CT"),
+        ("InstanceRequirement", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Dynamics", "NeuroML_v2.3.2.xsd", "CT"),
+        ("DerivedVariable", "NeuroML_v2.3.2.xsd", "CT"),
+        ("StateVariable", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ConditionalDerivedVariable", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Case", "NeuroML_v2.3.2.xsd", "CT"),
+        ("TimeDerivative", "NeuroML_v2.3.2.xsd", "CT"),
+        ("OnStart", "NeuroML_v2.3.2.xsd", "CT"),
+        ("StateAssignment", "NeuroML_v2.3.2.xsd", "CT"),
+        ("OnEvent", "NeuroML_v2.3.2.xsd", "CT"),
+        ("EventOut", "NeuroML_v2.3.2.xsd", "CT"),
+        ("OnCondition", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Transition", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Regime", "NeuroML_v2.3.2.xsd", "CT"),
+        ("OnEntry", "NeuroML_v2.3.2.xsd", "CT"),
+        ("NeuroMLDocument", "NeuroML_v2.3.2.xsd", "CT"),
+        ("IncludeType", "NeuroML_v2.3.2.xsd", "CT"),
+        ("IonChannelScalable", "NeuroML_v2.3.2.xsd", "CT"),
+        ("IonChannelKS", "NeuroML_v2.3.2.xsd", "CT"),
+        ("IonChannel", "NeuroML_v2.3.2.xsd", "CT"),
+        ("IonChannelHH", "NeuroML_v2.3.2.xsd", "CT"),
+        ("IonChannelVShift", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Q10ConductanceScaling", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ClosedState", "NeuroML_v2.3.2.xsd", "CT"),
+        ("OpenState", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ForwardTransition", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ReverseTransition", "NeuroML_v2.3.2.xsd", "CT"),
+        ("TauInfTransition", "NeuroML_v2.3.2.xsd", "CT"),
+        ("GateKS", "NeuroML_v2.3.2.xsd", "CT"),
+        ("GateHHUndetermined", "NeuroML_v2.3.2.xsd", "CT"),
+        ("GateHHRates", "NeuroML_v2.3.2.xsd", "CT"),
+        ("GateHHTauInf", "NeuroML_v2.3.2.xsd", "CT"),
+        ("GateHHRatesTauInf", "NeuroML_v2.3.2.xsd", "CT"),
+        ("GateHHRatesTau", "NeuroML_v2.3.2.xsd", "CT"),
+        ("GateHHRatesInf", "NeuroML_v2.3.2.xsd", "CT"),
+        ("GateHHInstantaneous", "NeuroML_v2.3.2.xsd", "CT"),
+        ("GateFractional", "NeuroML_v2.3.2.xsd", "CT"),
+        ("GateFractionalSubgate", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Q10Settings", "NeuroML_v2.3.2.xsd", "CT"),
+        ("HHRate", "NeuroML_v2.3.2.xsd", "CT"),
+        ("HHVariable", "NeuroML_v2.3.2.xsd", "CT"),
+        ("HHTime", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ConcentrationModel", "NeuroML_v2.3.2.xsd", "CT"),
+        ("DecayingPoolConcentrationModel", "NeuroML_v2.3.2.xsd", "CT"),
+        ("FixedFactorConcentrationModel", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BaseSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BaseVoltageDepSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BaseCurrentBasedSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BaseConductanceBasedSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BaseConductanceBasedSynapseTwo", "NeuroML_v2.3.2.xsd", "CT"),
+        ("GapJunction", "NeuroML_v2.3.2.xsd", "CT"),
+        ("SilentSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("LinearGradedSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("GradedSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("AlphaCurrentSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("AlphaSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ExpOneSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ExpTwoSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ExpThreeSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("DoubleSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BlockingPlasticSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BlockMechanism", "NeuroML_v2.3.2.xsd", "CT"),
+        ("PlasticityMechanism", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BaseCell", "NeuroML_v2.3.2.xsd", "CT"),
+        ("IafTauCell", "NeuroML_v2.3.2.xsd", "CT"),
+        ("IafTauRefCell", "NeuroML_v2.3.2.xsd", "CT"),
+        ("IafCell", "NeuroML_v2.3.2.xsd", "CT"),
+        ("IafRefCell", "NeuroML_v2.3.2.xsd", "CT"),
+        ("IzhikevichCell", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BaseCellMembPotCap", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Izhikevich2007Cell", "NeuroML_v2.3.2.xsd", "CT"),
+        ("AdExIaFCell", "NeuroML_v2.3.2.xsd", "CT"),
+        ("FitzHughNagumoCell", "NeuroML_v2.3.2.xsd", "CT"),
+        ("FitzHughNagumo1969Cell", "NeuroML_v2.3.2.xsd", "CT"),
+        ("PinskyRinzelCA3Cell", "NeuroML_v2.3.2.xsd", "CT"),
+        ("HindmarshRose1984Cell", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Cell", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Cell2CaPools", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Morphology", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Segment", "NeuroML_v2.3.2.xsd", "CT"),
+        ("SegmentParent", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Point3DWithDiam", "NeuroML_v2.3.2.xsd", "CT"),
+        ("SegmentGroup", "NeuroML_v2.3.2.xsd", "CT"),
+        ("InhomogeneousParameter", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ProximalDetails", "NeuroML_v2.3.2.xsd", "CT"),
+        ("DistalDetails", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Member", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Include", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Path", "NeuroML_v2.3.2.xsd", "CT"),
+        ("SubTree", "NeuroML_v2.3.2.xsd", "CT"),
+        ("SegmentEndPoint", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BiophysicalProperties", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BiophysicalProperties2CaPools", "NeuroML_v2.3.2.xsd", "CT"),
+        ("MembraneProperties", "NeuroML_v2.3.2.xsd", "CT"),
+        ("MembraneProperties2CaPools", "NeuroML_v2.3.2.xsd", "CT"),
+        ("SpikeThresh", "NeuroML_v2.3.2.xsd", "CT"),
+        ("SpecificCapacitance", "NeuroML_v2.3.2.xsd", "CT"),
+        ("InitMembPotential", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Resistivity", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ChannelPopulation", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ChannelDensityNonUniform", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ChannelDensityNonUniformNernst", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ChannelDensityNonUniformGHK", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ChannelDensity", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ChannelDensityVShift", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ChannelDensityNernst", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ChannelDensityNernstCa2", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ChannelDensityGHK", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ChannelDensityGHK2", "NeuroML_v2.3.2.xsd", "CT"),
+        ("VariableParameter", "NeuroML_v2.3.2.xsd", "CT"),
+        ("InhomogeneousValue", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Species", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ConcentrationModel_D", "NeuroML_v2.3.2.xsd", "CT"),
+        ("IntracellularProperties", "NeuroML_v2.3.2.xsd", "CT"),
+        ("IntracellularProperties2CaPools", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ExtracellularProperties", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ExtracellularPropertiesLocal", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ReactionScheme", "NeuroML_v2.3.2.xsd", "CT"),
+        ("PulseGenerator", "NeuroML_v2.3.2.xsd", "CT"),
+        ("PulseGeneratorDL", "NeuroML_v2.3.2.xsd", "CT"),
+        ("SineGenerator", "NeuroML_v2.3.2.xsd", "CT"),
+        ("SineGeneratorDL", "NeuroML_v2.3.2.xsd", "CT"),
+        ("RampGenerator", "NeuroML_v2.3.2.xsd", "CT"),
+        ("RampGeneratorDL", "NeuroML_v2.3.2.xsd", "CT"),
+        ("CompoundInput", "NeuroML_v2.3.2.xsd", "CT"),
+        ("CompoundInputDL", "NeuroML_v2.3.2.xsd", "CT"),
+        ("VoltageClamp", "NeuroML_v2.3.2.xsd", "CT"),
+        ("VoltageClampTriple", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Spike", "NeuroML_v2.3.2.xsd", "CT"),
+        ("SpikeArray", "NeuroML_v2.3.2.xsd", "CT"),
+        ("TimedSynapticInput", "NeuroML_v2.3.2.xsd", "CT"),
+        ("SpikeGenerator", "NeuroML_v2.3.2.xsd", "CT"),
+        ("SpikeGeneratorRandom", "NeuroML_v2.3.2.xsd", "CT"),
+        ("SpikeGeneratorPoisson", "NeuroML_v2.3.2.xsd", "CT"),
+        ("SpikeGeneratorRefPoisson", "NeuroML_v2.3.2.xsd", "CT"),
+        ("PoissonFiringSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("TransientPoissonFiringSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Network", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Space", "NeuroML_v2.3.2.xsd", "CT"),
+        ("SpaceStructure", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Region", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Population", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Layout", "NeuroML_v2.3.2.xsd", "CT"),
+        ("UnstructuredLayout", "NeuroML_v2.3.2.xsd", "CT"),
+        ("RandomLayout", "NeuroML_v2.3.2.xsd", "CT"),
+        ("GridLayout", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Instance", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Location", "NeuroML_v2.3.2.xsd", "CT"),
+        ("CellSet", "NeuroML_v2.3.2.xsd", "CT"),
+        ("SynapticConnection", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BaseProjection", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Projection", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BaseConnection", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BaseConnectionOldFormat", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BaseConnectionNewFormat", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Connection", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ConnectionWD", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ElectricalProjection", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ElectricalConnection", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ElectricalConnectionInstance", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ElectricalConnectionInstanceW", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ContinuousProjection", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ContinuousConnection", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ContinuousConnectionInstance", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ContinuousConnectionInstanceW", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ExplicitInput", "NeuroML_v2.3.2.xsd", "CT"),
+        ("InputList", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Input", "NeuroML_v2.3.2.xsd", "CT"),
+        ("InputW", "NeuroML_v2.3.2.xsd", "CT"),
+        ("basePyNNCell", "NeuroML_v2.3.2.xsd", "CT"),
+        ("basePyNNIaFCell", "NeuroML_v2.3.2.xsd", "CT"),
+        ("basePyNNIaFCondCell", "NeuroML_v2.3.2.xsd", "CT"),
+        ("IF_curr_alpha", "NeuroML_v2.3.2.xsd", "CT"),
+        ("IF_curr_exp", "NeuroML_v2.3.2.xsd", "CT"),
+        ("IF_cond_alpha", "NeuroML_v2.3.2.xsd", "CT"),
+        ("IF_cond_exp", "NeuroML_v2.3.2.xsd", "CT"),
+        ("EIF_cond_exp_isfa_ista", "NeuroML_v2.3.2.xsd", "CT"),
+        ("EIF_cond_alpha_isfa_ista", "NeuroML_v2.3.2.xsd", "CT"),
+        ("HH_cond_exp", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BasePynnSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ExpCondSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("AlphaCondSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("ExpCurrSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("AlphaCurrSynapse", "NeuroML_v2.3.2.xsd", "CT"),
+        ("SpikeSourcePoisson", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BaseWithoutId", "NeuroML_v2.3.2.xsd", "CT"),
+        ("BaseNonNegativeIntegerId", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Base", "NeuroML_v2.3.2.xsd", "CT"),
+        ("Standalone", "NeuroML_v2.3.2.xsd", "CT"),
     ]
 }
 
@@ -68101,9 +68604,11 @@ __all__ = [
     "ChannelDensityVShift",
     "ChannelPopulation",
     "ClosedState",
+    "Component",
     "ComponentType",
     "CompoundInput",
     "CompoundInputDL",
+    "ConcentrationModel",
     "ConcentrationModel_D",
     "ConditionalDerivedVariable",
     "Connection",
