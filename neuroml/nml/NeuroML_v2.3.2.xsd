@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xs:schema xmlns="http://www.neuroml.org/schema/neuroml2" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jxb="http://java.sun.com/xml/ns/jaxb" targetNamespace="http://www.neuroml.org/schema/neuroml2" jxb:version="2.0" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified">
   <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
   <!--      Core elements                                    -->
@@ -262,6 +262,17 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:complexType name="Component">
+    <xs:annotation>
+      <xs:documentation>A new Component based on a new defined ComponentType.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Base">
+        <xs:attribute name="type" type="NmlId" use="required"/>
+        <xs:anyAttribute namespace="##any" minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:complexType name="Exposure">
     <xs:annotation>
       <xs:documentation>LEMS Exposure (ComponentType property) </xs:documentation>
@@ -476,6 +487,7 @@
           <xs:group ref="PyNNInputTypes"/>
           <xs:element name="network" type="Network" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element name="ComponentType" type="ComponentType" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="Component" type="Component" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -587,6 +599,7 @@
       <xs:documentation>Various types of concentration model which are defined in NeuroML 2. This list will be expanded...</xs:documentation>
     </xs:annotation>
     <xs:sequence>
+      <xs:element name="concentrationModel" type="ConcentrationModel" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="decayingPoolConcentrationModel" type="DecayingPoolConcentrationModel" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="fixedFactorConcentrationModel" type="FixedFactorConcentrationModel" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -1060,6 +1073,20 @@
   <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
   <!--      Concentration Model types                        -->
   <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  <xs:complexType name="ConcentrationModel">
+    <xs:annotation>
+      <xs:documentation>Base for any model of an **ion**  concentration which changes with time. Internal ( **concentration**  ) and external ( **extConcentration**  ) values for the concentration of the ion are given.
+</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Standalone">
+        <xs:attribute name="ion" type="NmlId" use="required">
+          <xs:annotation>
+            </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:complexType name="DecayingPoolConcentrationModel">
     <xs:annotation>
       <xs:documentation>Model of an intracellular buffering mechanism for **ion**  ( currently hard Coded to be calcium, due to requirement for **iCa**  ) which has a baseline level **restingConc**  and tends to this value with time course **decayConstant.**  The ion is assumed to occupy a shell inside the membrane of thickness **shellThickness.**
@@ -1074,11 +1101,7 @@
 </xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Standalone">
-        <xs:attribute name="ion" type="NmlId" use="required">
-          <xs:annotation>
-            </xs:annotation>
-        </xs:attribute>
+      <xs:extension base="ConcentrationModel">
         <xs:attribute name="restingConc" type="Nml2Quantity_concentration" use="required"/>
         <xs:attribute name="decayConstant" type="Nml2Quantity_time" use="required"/>
         <xs:attribute name="shellThickness" type="Nml2Quantity_length" use="required"/>
@@ -1099,11 +1122,7 @@
 </xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Standalone">
-        <xs:attribute name="ion" type="NmlId" use="required">
-          <xs:annotation>
-            </xs:annotation>
-        </xs:attribute>
+      <xs:extension base="ConcentrationModel">
         <xs:attribute name="restingConc" type="Nml2Quantity_concentration" use="required"/>
         <xs:attribute name="decayConstant" type="Nml2Quantity_time" use="required"/>
         <xs:attribute name="rho" type="Nml2Quantity_rhoFactor" use="required"/>
