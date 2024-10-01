@@ -18,4 +18,4 @@ except ImportError:
 __version_info__: tuple = tuple(int(i) for i in __version__.split("."))
 
 
-current_neuroml_version: str = "v2.3.1"
+current_neuroml_version: str = "v2.3.2"
