@@ -6,6 +6,7 @@ File: neuroml/nml/generatedssupersuper.py
 Copyright 2023 NeuroML contributors
 """
 
+import inspect
 import logging
 import sys
 
@@ -195,6 +196,38 @@ class GeneratedsSuperSuper(object):
         else:
             comp_type_class = getattr(module_object, component_type.__name__)
 
+        # handle Components that allow "anyAttributes_": these are included in
+        # the schema to allow use of user-defined Components
+        comp_type_class_atts = inspect.getmembers(comp_type_class, inspect.isroutine)
+        cls.logger.debug(f"Atts for {comp_type_class} are: {comp_type_class_atts}")
+        comp_type_class_members = comp_type_class._get_members()
+
+        # if we do have an anyattribute, we need to split the kwargs into
+        # members and other bits that will populate the anyattribute because
+        # the anyattribute needs to be explicitly populated by us
+        for att in comp_type_class_atts:
+            atname = att[0]
+            if atname == "_exportAttributes":
+                new_comp_args = kwargs.copy()
+                member_args = {}
+                for m in comp_type_class_members:
+                    try:
+                        member_args[m.get_name()] = new_comp_args.pop(m.get_name())
+                    except KeyError:
+                        cls.logger.error(
+                            f"Error: {comp_type_class} requires {m.get_name()}"
+                        )
+
+                # create new class with args that match members
+                comp = comp_type_class(**member_args)
+                # populate anyattributes with remaining kwargs
+                comp.anyAttributes_ = new_comp_args
+                logging.warning(
+                    "New Component created. Note: This will NOT be validated against the schema."
+                )
+                return comp
+
+        # if it does not have an anyattribute, treat as general
         comp = comp_type_class(**kwargs)
 
         # handle component types that support __ANY__
