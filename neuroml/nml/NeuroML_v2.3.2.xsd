@@ -262,17 +262,6 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="Component">
-    <xs:annotation>
-      <xs:documentation>A new Component based on a new defined ComponentType.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Base">
-        <xs:attribute name="type" type="NmlId" use="required"/>
-        <xs:anyAttribute namespace="##any" minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
   <xs:complexType name="Exposure">
     <xs:annotation>
       <xs:documentation>LEMS Exposure (ComponentType property) </xs:documentation>
@@ -487,7 +476,6 @@
           <xs:group ref="PyNNInputTypes"/>
           <xs:element name="network" type="Network" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element name="ComponentType" type="ComponentType" minOccurs="0" maxOccurs="unbounded"/>
-          <xs:element name="Component" type="Component" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -2128,6 +2116,7 @@
       <xs:extension base="BaseWithoutId">
         <xs:sequence>
           <xs:element name="channelPopulation" type="ChannelPopulation" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="baseChannelDensity" type="BaseChannelDensity" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element name="channelDensity" type="ChannelDensity" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element name="channelDensityVShift" type="ChannelDensityVShift" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element name="channelDensityNernst" type="ChannelDensityNernst" minOccurs="0" maxOccurs="unbounded"/>
@@ -2308,6 +2297,19 @@
           <xs:annotation>
             </xs:annotation>
         </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="BaseChannelDensity">
+    <xs:annotation>
+      <xs:documentation>Base type for a current of density **iDensity**  distributed on an area of a  **cell** , flowing through the specified **ionChannel.**  Instances of this ( normally  **channelDensity**  ) are specified in the  **membraneProperties**  of the  **cell** .
+</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Base">
+        <xs:attribute name="ionChannel" type="NmlId" use="required"/>
+        <xs:attribute name="type" type="NmlId" use="required"/>
+        <xs:anyAttribute namespace="##any" minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
