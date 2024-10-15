@@ -198,34 +198,48 @@ class GeneratedsSuperSuper(object):
 
         # handle Components that allow "anyAttributes_": these are included in
         # the schema to allow use of user-defined Components
-        comp_type_class_atts = inspect.getmembers(comp_type_class, inspect.isroutine)
-        cls.logger.debug(f"Atts for {comp_type_class} are: {comp_type_class_atts}")
+        comp_type_class_members = inspect.getmembers(comp_type_class, inspect.isroutine)
+        comp_type_class_init = None
+        for m in comp_type_class_members:
+            name, value = m
+            if name == "__init__":
+                comp_type_class_init = value
+                break
+
+        # all component type classes should have a constructor
+        assert comp_type_class_init is not None
+
+        cls.logger.debug(f"Got init method: {comp_type_class_init}")
+        init_source = inspect.getsource(comp_type_class_init)
+        cls.logger.debug(f"Got init source: {init_source}")
         comp_type_class_members = comp_type_class._get_members()
 
-        # if we do have an anyattribute, we need to split the kwargs into
+        # If we do have an anyattribute, we need to split the kwargs into
         # members and other bits that will populate the anyattribute because
-        # the anyattribute needs to be explicitly populated by us
-        for att in comp_type_class_atts:
-            atname = att[0]
-            if atname == "_exportAttributes":
-                new_comp_args = kwargs.copy()
-                member_args = {}
-                for m in comp_type_class_members:
-                    try:
-                        member_args[m.get_name()] = new_comp_args.pop(m.get_name())
-                    except KeyError:
-                        cls.logger.error(
-                            f"Error: {comp_type_class} requires {m.get_name()}"
-                        )
+        # the anyattribute needs to be explicitly populated by us.
 
-                # create new class with args that match members
-                comp = comp_type_class(**member_args)
-                # populate anyattributes with remaining kwargs
-                comp.anyAttributes_ = new_comp_args
-                logging.warning(
-                    "New Component created. Note: This will NOT be validated against the schema."
-                )
-                return comp
+        # Unfortunately, there isn't a better way of detecting if a class takes
+        # anyAttributes than to check its source. We could instantiate objects
+        # of each class, but that's going to be more expensive.
+        if "self.anyAttributes_ = {}" in init_source:
+            new_comp_args = kwargs.copy()
+            member_args = {}
+            for m in comp_type_class_members:
+                try:
+                    member_args[m.get_name()] = new_comp_args.pop(m.get_name())
+                except KeyError:
+                    cls.logger.error(
+                        f"Error: {comp_type_class} requires {m.get_name()}"
+                    )
+
+            # create new class with args that match members
+            comp = comp_type_class(**member_args)
+            # populate anyattributes with remaining kwargs
+            comp.anyAttributes_ = new_comp_args
+            cls.logger.warning(
+                "New Component created. Note: This will NOT be validated against the schema."
+            )
+            return comp
 
         # if it does not have an anyattribute, treat as general
         comp = comp_type_class(**kwargs)
