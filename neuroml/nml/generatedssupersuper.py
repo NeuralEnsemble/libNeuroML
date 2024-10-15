@@ -209,9 +209,7 @@ class GeneratedsSuperSuper(object):
         # all component type classes should have a constructor
         assert comp_type_class_init is not None
 
-        cls.logger.debug(f"Got init method: {comp_type_class_init}")
         init_source = inspect.getsource(comp_type_class_init)
-        cls.logger.debug(f"Got init source: {init_source}")
         comp_type_class_members = comp_type_class._get_members()
 
         # If we do have an anyattribute, we need to split the kwargs into
