@@ -6,13 +6,20 @@ from .__version__ import __version_info__ as __version__info__
 from .__version__ import current_neuroml_version as current_neuroml_version
 from .nml.nml import *  # allows importation of all neuroml classes
 
-logging.basicConfig(
-    format="libNeuroML >>> %(levelname)s - %(message)s",
-    level=logging.WARN,
-)
-
+# Define a logger for the package
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+logger.propagate = False
+
+ch = logging.StreamHandler()
+# do not set level for handler
+
+formatter = logging.Formatter(
+    "libNeuroML >>> %(asctime)s - %(levelname)s - %(message)s", datefmt="%H:%M:%S"
+)
+ch.setFormatter(formatter)
+
+logger.addHandler(ch)
 
 
 def print_(text, verbose=True):
