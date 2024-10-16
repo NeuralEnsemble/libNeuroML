@@ -2471,8 +2471,13 @@ cell_methods = MethodSpec(
                         sg_root = current
 
                 current = parent
-                parent = list(graph.predecessors(current))[0]
-                children = list(graph.successors(parent))
+                try:
+                    parent = list(graph.predecessors(current))[0]
+                    children = list(graph.successors(parent))
+                # if reached root, this will error because root has no
+                # predecessors, so we break
+                except IndexError:
+                    break
 
             distance_from_bpt = self.get_distance(seg_id, source=current)
         else:
