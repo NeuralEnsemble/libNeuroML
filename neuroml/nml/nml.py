@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Tue Oct 15 15:36:13 2024 by generateDS.py version 2.44.1.
+# Generated Wed Oct 16 16:30:12 2024 by generateDS.py version 2.44.1.
 # Python 3.11.10 (main, Sep  9 2024, 00:00:00) [GCC 14.2.1 20240801 (Red Hat 14.2.1-1)]
 #
 # Command line options:
@@ -49590,8 +49590,13 @@ class Cell(BaseCell):
                         sg_root = current
 
                 current = parent
-                parent = list(graph.predecessors(current))[0]
-                children = list(graph.successors(parent))
+                try:
+                    parent = list(graph.predecessors(current))[0]
+                    children = list(graph.successors(parent))
+                # if reached root, this will error because root has no
+                # predecessors, so we break
+                except IndexError:
+                    break
 
             distance_from_bpt = self.get_distance(seg_id, source=current)
         else:
