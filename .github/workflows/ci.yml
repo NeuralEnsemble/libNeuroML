@@ -30,9 +30,15 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    - name: Install HDF5 for pytables on ubuntu-latest
+      if: ${{ matrix.runs-on == 'ubuntu-latest' }}
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install libhdf5-serial-dev
+        #sudo apt-get install libhdf5-serial-dev liblzo2-dev libgraphviz-dev -y
+
     - name: Install dependencies
       run: |
-        #sudo apt-get install libhdf5-serial-dev liblzo2-dev libgraphviz-dev -y
         python -m pip install --upgrade pip
 
     - name: Install HDF5 for pytables on macos-latest
