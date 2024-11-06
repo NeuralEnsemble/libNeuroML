@@ -1845,7 +1845,12 @@ cell_methods = MethodSpec(
 
         """
         self.setup_nml_cell(use_convention=False)
-        prop = self.biophysical_properties.membrane_properties.add(property_name, validate=False, **kwargs)
+
+        if "validate" in kwargs.keys():
+            prop = self.biophysical_properties.membrane_properties.add(property_name, **kwargs)
+        else:
+            prop = self.biophysical_properties.membrane_properties.add(property_name, validate=False, **kwargs)
+
         return prop
 
 

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Oct 16 16:26:54 2024 by generateDS.py version 2.44.1.
+# Generated Wed Nov  6 11:43:32 2024 by generateDS.py version 2.44.1.
 # Python 3.11.10 (main, Sep  9 2024, 00:00:00) [GCC 14.2.1 20240801 (Red Hat 14.2.1-1)]
 #
 # Command line options:
@@ -49401,9 +49401,16 @@ class Cell(BaseCell):
 
         """
         self.setup_nml_cell(use_convention=False)
-        prop = self.biophysical_properties.membrane_properties.add(
-            property_name, validate=False, **kwargs
-        )
+
+        if "validate" in kwargs.keys():
+            prop = self.biophysical_properties.membrane_properties.add(
+                property_name, **kwargs
+            )
+        else:
+            prop = self.biophysical_properties.membrane_properties.add(
+                property_name, validate=False, **kwargs
+            )
+
         return prop
 
     def add_channel_density_v(
