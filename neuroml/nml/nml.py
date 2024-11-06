@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Nov  6 11:43:32 2024 by generateDS.py version 2.44.1.
+# Generated Wed Nov  6 17:39:46 2024 by generateDS.py version 2.44.1.
 # Python 3.11.10 (main, Sep  9 2024, 00:00:00) [GCC 14.2.1 20240801 (Red Hat 14.2.1-1)]
 #
 # Command line options:
@@ -48857,9 +48857,8 @@ class Cell(BaseCell):
             )
         return sgs
 
-    def summary(self, morph=True, biophys=True):
+    def summary(self, morph=True, biophys=True, string_buffer=None):
         """Print cell summary.
-
         Shows the number of segments and segment groups, and information on the
         biophysical properties of the cell. See the `morphinfo` and
         `biophysinfo` methods for more details.
@@ -48870,23 +48869,44 @@ class Cell(BaseCell):
         :type biophys: bool
         :returns: None
         """
+        if string_buffer is None:
+            string_buffer = sys.stdout
 
-        print(f"*********** Summary ({self.id}) ************")
-        print("* Notes: " + str(self.notes))
-        print()
+        print(f"*********** Summary ({self.id}) ************", file=string_buffer)
+        print("* Notes: " + str(self.notes), file=string_buffer)
+        print(file=string_buffer)
 
         if morph:
-            print(f"*********** Morphology summary ({self.id}) ************")
-            self.morphinfo()
-            print("*******************************************************")
-            print("Tip: use morphinfo(True) to see more detailed information.")
+            print(file=string_buffer)
+            print(
+                f"*********** Morphology summary ({self.id}) ************",
+                file=string_buffer,
+            )
+            self.morphinfo(string_buffer=string_buffer)
+            print(
+                "*******************************************************",
+                file=string_buffer,
+            )
+            print(
+                "Tip: use morphinfo(True) to see more detailed information.",
+                file=string_buffer,
+            )
+            print(file=string_buffer)
 
         if biophys:
-            print(f"*********** Biophys summary ({self.id}) ************")
-            self.biophysinfo()
-            print("*******************************************************")
+            print(file=string_buffer)
+            print(
+                f"*********** Biophys summary ({self.id}) ************",
+                file=string_buffer,
+            )
+            self.biophysinfo(string_buffer=string_buffer)
+            print(
+                "*******************************************************",
+                file=string_buffer,
+            )
+            print(file=string_buffer)
 
-    def morphinfo(self, segment_detail=False):
+    def morphinfo(self, segment_detail=False, string_buffer=None):
         """Show info on morphology of the cell.
         By default, since cells can have large numbers of segments and segment
         groups, it only provides metrics on the total numbers. To see details,
@@ -48900,18 +48920,27 @@ class Cell(BaseCell):
         :returns: None
 
         """
-        print("* Segments: " + str(len(self.morphology.segments)))
-        print("* SegmentGroups: " + str(len(self.morphology.segment_groups)))
+        if string_buffer is None:
+            string_buffer = sys.stdout
+
+        print("* Segments: " + str(len(self.morphology.segments)), file=string_buffer)
+        print(
+            "* SegmentGroups: " + str(len(self.morphology.segment_groups)),
+            file=string_buffer,
+        )
 
         if segment_detail:
             for sg in self.morphology.segment_groups:
                 self.get_segment_group_info(sg.id)
 
-    def biophysinfo(self):
+    def biophysinfo(self, string_buffer=None):
         """Get information on the biophysical properties of the cell.
         :returns: None
 
         """
+        if string_buffer is None:
+            string_buffer = sys.stdout
+
         bp = None
         mp = None
         ip = None
@@ -48928,7 +48957,7 @@ class Cell(BaseCell):
         # check if there are any membrane properties
         for prop, val in membp.items():
             if len(val["members"]) > 0:
-                print(f"* Membrane properties")
+                print(f"* Membrane properties", file=string_buffer)
                 break
 
         for prop, val in membp.items():
@@ -48936,18 +48965,18 @@ class Cell(BaseCell):
             # objects
             ms = val["members"]
             if len(ms) > 0:
-                print(f"	* {ctype}:")
+                print(f"	* {ctype}:", file=string_buffer)
                 for am in ms:
                     inf = am.info(show_contents=True, return_format="dict")
                     for p, v in inf.items():
-                        print(f"		* {p}: {v['members']}")
+                        print(f"		* {p}: {v['members']}", file=string_buffer)
 
-                    print()
+                    print(file=string_buffer)
 
         intp = ip.info(show_contents=True, return_format="dict")
         for prop, val in intp.items():
             if len(val["members"]) > 0:
-                print(f"* Intracellular properties")
+                print(f"* Intracellular properties", file=string_buffer)
                 break
 
         for prop, val in intp.items():
@@ -48955,28 +48984,31 @@ class Cell(BaseCell):
             # objects
             ms = val["members"]
             if len(ms) > 0:
-                print(f"	* {ctype}:")
+                print(f"	* {ctype}:", file=string_buffer)
                 for am in ms:
                     inf = am.info(show_contents=True, return_format="dict")
                     for p, v in inf.items():
-                        print(f"		* {p}: {v['members']}")
+                        print(f"		* {p}: {v['members']}", file=string_buffer)
 
-                    print()
+                    print(file=string_buffer)
 
-    def get_segment_group_info(self, group_id):
+    def get_segment_group_info(self, group_id, string_buffer=None):
         """Get information about a segment group
+        if string_buffer is None:
+            string_buffer = sys.stdout
 
         :param group_id: id of segment group
         :type group_id: int
         :returns: None
 
         """
-        print(f"* Segment group: {group_id}:")
+        print(f"* Segment group: {group_id}:", file=string_buffer)
         segs = self.get_all_segments_in_group(segment_group=group_id)
         for s in segs:
             sinfo = self.get_segment(s)
             print(
-                f"	 * {s} (Parent: {sinfo.parent.segments if sinfo.parent else '-'}; {self.get_actual_proximal(s)} -> {sinfo.distal})"
+                f"	 * {s} (Parent: {sinfo.parent.segments if sinfo.parent else '-'}; {self.get_actual_proximal(s)} -> {sinfo.distal})",
+                file=string_buffer,
             )
 
     def add_segment(
