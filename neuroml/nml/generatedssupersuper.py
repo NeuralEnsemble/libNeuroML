@@ -344,8 +344,7 @@ class GeneratedsSuperSuper(object):
         By default, this will only show the members, and not their contents.
         To see contents that have been set, use `show_contents=True`. This will
         not show empty/unset contents. To see all contents, set
-        `show_contents="all"`. To only show members that have values set, use
-        `show_contents="set"`.
+        `show_contents="all"`.
 
         Note that not all members will have ids (since not all NeuroML2
         ComponentTypes have ids). For members that do not have ids, the object
@@ -362,10 +361,10 @@ class GeneratedsSuperSuper(object):
             If "dict" or "list" is provided, the information is returned as a
             dict/list instead of being printed. Note that if `show_contents` is
             `False`, only a list of members is available and will be returned
-            even if "dict" is supplied. If `show_contents` is `True`, "all", or
-            "set" but "list" is provided, only the list of members will be
-            returned.  If something other than "string", "list", or "dict" is
-            provided, the string representation is returned and printed.
+            even if "dict" is supplied. If `show_contents` is `True`, or "all"
+            but "list" is provided, only the list of members will be returned.
+            If something other than "string", "list", or "dict" is provided,
+            the string representation is returned and printed.
         :type return_format: str
         :returns: info string, or list of members or dict with members as keys
             and member values as values
@@ -438,22 +437,17 @@ class GeneratedsSuperSuper(object):
                         contents_id
                     )
 
-                member_val = getattr(self, member.get_name(), None)
-
                 # if all, show everything
                 if show_contents == "all":
                     info_str += member_str + contents_str
-                    info_ret[member.get_name()]["members"] = member_val
-
+                    info_ret[member.get_name()]["members"] = contents
                 # if set, only show members where contents exist
-                elif show_contents == "set":
+                else:
                     if len(contents_str) > 0:
                         info_str += member_str + contents_str
-                    if member_val is not None:
-                        info_ret[member.get_name()]["members"] = member_val
-                else:
-                    info_str += member_str + contents_str
-                    info_ret[member.get_name()]["members"] = member_val
+                        info_ret[member.get_name()]["members"] = contents
+                    else:
+                        info_ret.pop(member.get_name())
 
             else:
                 info_ret.append(member.get_name())
