@@ -1360,7 +1360,7 @@ cell_methods = MethodSpec(
         if segment_detail:
             print(file=string_buffer)
             for sg in self.morphology.segment_groups:
-                self.get_segment_group_info(sg.id, file=string_buffer)
+                self.get_segment_group_info(sg.id, string_buffer=string_buffer)
         else:
             print(file=string_buffer)
             for sg in self.morphology.segment_groups:

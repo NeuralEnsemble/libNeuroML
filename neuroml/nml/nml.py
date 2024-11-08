@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Nov  8 15:15:22 2024 by generateDS.py version 2.44.1.
+# Generated Fri Nov  8 16:07:39 2024 by generateDS.py version 2.44.1.
 # Python 3.11.10 (main, Sep  9 2024, 00:00:00) [GCC 14.2.1 20240801 (Red Hat 14.2.1-1)]
 #
 # Command line options:
@@ -48928,7 +48928,7 @@ class Cell(BaseCell):
         if segment_detail:
             print(file=string_buffer)
             for sg in self.morphology.segment_groups:
-                self.get_segment_group_info(sg.id, file=string_buffer)
+                self.get_segment_group_info(sg.id, string_buffer=string_buffer)
         else:
             print(file=string_buffer)
             for sg in self.morphology.segment_groups:
