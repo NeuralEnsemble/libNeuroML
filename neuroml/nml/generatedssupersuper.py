@@ -457,6 +457,7 @@ class GeneratedsSuperSuper(object):
 
             else:
                 info_ret.append(member.get_name())
+                info_str += member_str
 
         if return_format == "list":
             if isinstance(info_ret, dict):
