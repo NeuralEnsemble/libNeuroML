@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Nov  6 17:39:46 2024 by generateDS.py version 2.44.1.
+# Generated Fri Nov  8 15:15:22 2024 by generateDS.py version 2.44.1.
 # Python 3.11.10 (main, Sep  9 2024, 00:00:00) [GCC 14.2.1 20240801 (Red Hat 14.2.1-1)]
 #
 # Command line options:
@@ -48887,10 +48887,6 @@ class Cell(BaseCell):
                 "*******************************************************",
                 file=string_buffer,
             )
-            print(
-                "Tip: use morphinfo(True) to see more detailed information.",
-                file=string_buffer,
-            )
             print(file=string_buffer)
 
         if biophys:
@@ -48930,8 +48926,16 @@ class Cell(BaseCell):
         )
 
         if segment_detail:
+            print(file=string_buffer)
             for sg in self.morphology.segment_groups:
-                self.get_segment_group_info(sg.id)
+                self.get_segment_group_info(sg.id, file=string_buffer)
+        else:
+            print(file=string_buffer)
+            for sg in self.morphology.segment_groups:
+                print(
+                    f"* SegmentGroup: {sg.id}; {len(sg.members)} members, {len(sg.includes)} included groups, {len(self.get_all_segments_in_group(sg))} segments",
+                    file=string_buffer,
+                )
 
     def biophysinfo(self, string_buffer=None):
         """Get information on the biophysical properties of the cell.

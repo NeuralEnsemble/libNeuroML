@@ -1358,9 +1358,13 @@ cell_methods = MethodSpec(
         print("* SegmentGroups: "+str(len(self.morphology.segment_groups)), file=string_buffer)
 
         if segment_detail:
+            print(file=string_buffer)
             for sg in self.morphology.segment_groups:
-                self.get_segment_group_info(sg.id)
-
+                self.get_segment_group_info(sg.id, file=string_buffer)
+        else:
+            print(file=string_buffer)
+            for sg in self.morphology.segment_groups:
+                print(f"* SegmentGroup: {sg.id}; {len(sg.members)} members, {len(sg.includes)} included groups, {len(self.get_all_segments_in_group(sg))} segments", file=string_buffer)
 
     def biophysinfo(self, string_buffer=None):
         """Get information on the biophysical properties of the cell.
