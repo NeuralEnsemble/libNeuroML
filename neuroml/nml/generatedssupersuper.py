@@ -344,7 +344,8 @@ class GeneratedsSuperSuper(object):
         By default, this will only show the members, and not their contents.
         To see contents that have been set, use `show_contents=True`. This will
         not show empty/unset contents. To see all contents, set
-        `show_contents=all`.
+        `show_contents="all"`. To only show members that have values set, use
+        `show_contents="set"`.
 
         Note that not all members will have ids (since not all NeuroML2
         ComponentTypes have ids). For members that do not have ids, the object
@@ -361,10 +362,10 @@ class GeneratedsSuperSuper(object):
             If "dict" or "list" is provided, the information is returned as a
             dict/list instead of being printed. Note that if `show_contents` is
             `False`, only a list of members is available and will be returned
-            even if "dict" is supplied. If `show_contents` is `True` or "all"
-            but "list" is provided, only the list of members will be returned.
-            If something other than "string", "list", or "dict" is provided,
-            the string representation is returned and printed.
+            even if "dict" is supplied. If `show_contents` is `True`, "all", or
+            "set" but "list" is provided, only the list of members will be
+            returned.  If something other than "string", "list", or "dict" is
+            provided, the string representation is returned and printed.
         :type return_format: str
         :returns: info string, or list of members or dict with members as keys
             and member values as values
@@ -389,7 +390,7 @@ class GeneratedsSuperSuper(object):
         info_str += "Valid members for {} are:\n".format(class_name)
         all_members = self._get_members()
         for member in all_members:
-            info_str += "* {} (class: {}, {})\n".format(
+            member_str = "* {} (class: {}, {})\n".format(
                 member.get_name(),
                 member.get_data_type(),
                 "Optional" if member.get_optional() else "Required",
@@ -410,11 +411,13 @@ class GeneratedsSuperSuper(object):
                 # will be empty, []
                 # if it's a scalar, it will be set to None or to a non
                 # container value
+                contents_str = ""
                 if contents is None or (
                     isinstance(contents, list) and len(contents) == 0
                 ):
                     if show_contents == "all":
-                        info_str += "\t* Contents: {}\n\n".format(contents)
+                        contents_str = "\t* Contents: {}\n\n".format(contents)
+                # has contents
                 else:
                     contents_id = None
                     # if list, iterate to get ids
@@ -431,12 +434,27 @@ class GeneratedsSuperSuper(object):
                             contents_id = f"'{contents.id}'"
                         else:
                             contents_id = contents
-                    info_str += "\t* Contents ('ids'/<objects>): {}\n\n".format(
+                    contents_str = "\t* Contents ('ids'/<objects>): {}\n\n".format(
                         contents_id
                     )
-                info_ret[member.get_name()]["members"] = getattr(
-                    self, member.get_name(), None
-                )
+
+                member_val = getattr(self, member.get_name(), None)
+
+                # if all, show everything
+                if show_contents == "all":
+                    info_str += member_str + contents_str
+                    info_ret[member.get_name()]["members"] = member_val
+
+                # if set, only show members where contents exist
+                elif show_contents == "set":
+                    if len(contents_str) > 0:
+                        info_str += member_str + contents_str
+                    if member_val is not None:
+                        info_ret[member.get_name()]["members"] = member_val
+                else:
+                    info_str += member_str + contents_str
+                    info_ret[member.get_name()]["members"] = member_val
+
             else:
                 info_ret.append(member.get_name())
 
@@ -447,9 +465,11 @@ class GeneratedsSuperSuper(object):
                 return info_ret
         elif return_format == "dict":
             return info_ret
-
-        print(info_str)
-        return info_str
+        elif return_format == "string":
+            return info_str
+        else:
+            print(info_str)
+            return info_str
 
     def validate(self, recursive=False):
         """Validate the component.
