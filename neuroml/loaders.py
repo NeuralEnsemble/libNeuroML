@@ -49,6 +49,7 @@ class NeuroMLLoader(object):
             if supressGeneratedsWarnings:
                 warnings.simplefilter("ignore")
             nml2_doc = nmlparse(file_name, silence=True)
+            utils.move_undetermined_gates_to_typed(nml2_doc)
             if supressGeneratedsWarnings:
                 warnings.resetwarnings()
         except Exception as e:
