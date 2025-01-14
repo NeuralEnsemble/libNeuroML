@@ -15,7 +15,20 @@ from typing import Any, Dict, List, Optional, Set, Type, Union
 import networkx
 
 import neuroml.nml.nml as schema
-from neuroml import BiophysicalProperties, Morphology, NeuroMLDocument
+from neuroml import (
+    BiophysicalProperties,
+    GateFractional,
+    GateHHInstantaneous,
+    GateHHRates,
+    GateHHRatesInf,
+    GateHHRatesTau,
+    GateHHRatesTauInf,
+    GateHHTauInf,
+    GateHHUndetermined,
+    GateKS,
+    Morphology,
+    NeuroMLDocument,
+)
 
 from . import loaders
 
@@ -472,10 +485,24 @@ def fix_external_morphs_biophys_in_cell(
     return newdoc
 
 
-def create_new_typed_gate(gate):
+def create_new_typed_gate(
+    gate: GateHHUndetermined,
+) -> Optional[
+    Union[
+        GateHHRates,
+        GateHHRatesTau,
+        GateHHRatesInf,
+        GateHHRatesTauInf,
+        GateHHTauInf,
+        GateHHInstantaneous,
+        GateFractional,
+        GateKS,
+    ]
+]:
     """Convert an undetermined gate to a "determined" gate
 
     :param gate: gate object of GateHHUndetermined type
+    :type gate: GateHHUndetermined
     :returns: new gate object, or None if the gate is not of a standard type
     """
     gates_name_map = {
@@ -501,17 +528,26 @@ def create_new_typed_gate(gate):
         new_gate.__dict__.update(gate.__dict__)
         return new_gate
 
+    return None
 
-def move_undetermined_gates_to_typed(nml2_doc):
+
+def move_undetermined_gates_to_typed(nml2_doc: NeuroMLDocument):
     """Replace gates of GateHHUndetermined type with their standard
     counterparts where possible.
 
     Note that this modifies the passed NeuroMLDocument object in-place.
 
+    If `nml2_doc` is not a NeuroMLDocument, this function does nothing and
+    simply returns None.
+
     :param nml2_doc: NeuroMLDocument object
+    :type nml2_doc: NeuroMLDocument
     :returns: None
 
     """
+    if not isinstance(nml2_doc, NeuroMLDocument):
+        return None
+
     all_channels = (
         list(nml2_doc.ion_channel_hhs.__iter__())
         + list(nml2_doc.ion_channel.__iter__())
