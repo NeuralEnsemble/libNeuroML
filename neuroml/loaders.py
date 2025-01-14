@@ -49,12 +49,12 @@ class NeuroMLLoader(object):
             if supressGeneratedsWarnings:
                 warnings.simplefilter("ignore")
             nml2_doc = nmlparse(file_name, silence=True)
-            utils.move_undetermined_gates_to_typed(nml2_doc)
             if supressGeneratedsWarnings:
                 warnings.resetwarnings()
         except Exception as e:
             raise Exception("Not a valid NeuroML 2 doc (%s): %s" % (file_name, e), e)
 
+        utils.move_undetermined_gates_to_typed(nml2_doc)
         return nml2_doc
 
 
