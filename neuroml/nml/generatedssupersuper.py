@@ -468,6 +468,25 @@ class GeneratedsSuperSuper(object):
             print(info_str)
             return info_str
 
+    def get_parameters(self):
+        """Get parameters for this component
+
+        This returns a subset of the results of the `info()` method, limiting
+        the results to the parameters only.
+
+        :returns: dictionary with parameter names as keys, and parameter values
+            as values
+        :rtype: dict[str, str]
+
+        """
+        info = self.info(show_contents="all", return_format="dict")
+        parameters = {}
+        for member, memberinfo in info.values():
+            if memberinfo["type"].startswith("Nml2Quantity_"):
+                parameters["member"] = memberinfo.members
+
+        return parameters
+
     def validate(self, recursive=False):
         """Validate the component.
 
