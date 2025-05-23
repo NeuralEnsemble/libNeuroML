@@ -872,18 +872,16 @@ class TestNML(unittest.TestCase):
 
     def test_parameter_listing(self):
         """Test listing component parameters"""
-        cell = component_factory(
-            "IafCell",
-            id="test_cell",
-            thresh="10mV",
-            leak_reversal="10mV",
-            reset="0mV",
-            C="10 F",
-            leak_conductance="10 nS",
-        )  # type: neuroml.Cell
-        # parameters = cell.info(return_format="dict", show_contents="all")
-        parameters = cell.get_parameters()
-        print(parameters)
+        params = {
+            "thresh": "10mV",
+            "leak_reversal": "10mV",
+            "reset": "0mV",
+            "C": "10 F",
+            "leak_conductance": "10 nS",
+        }
+        cell = component_factory("IafCell", id="test_cell", **params)  # type: neuroml.Cell
+        received_parameters = cell.get_parameters()
+        self.assertDictEqual(params, received_parameters)
 
 
 if __name__ == "__main__":
