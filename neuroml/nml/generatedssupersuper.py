@@ -482,7 +482,10 @@ class GeneratedsSuperSuper(object):
         info = self.info(show_contents="all", return_format="dict")
         parameters = {}
         for member, memberinfo in info.items():
-            if memberinfo["type"].startswith("Nml2Quantity_"):
+            if (
+                memberinfo["type"].startswith("Nml2Quantity_")
+                or memberinfo["type"] == "NmlId"
+            ):
                 parameters[member] = memberinfo["members"]
 
         return parameters
