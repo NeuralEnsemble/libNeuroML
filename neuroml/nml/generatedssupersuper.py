@@ -474,6 +474,8 @@ class GeneratedsSuperSuper(object):
         This returns a subset of the results of the `info()` method, limiting
         the results to the parameters only.
 
+        .. versionadded:: 0.6.6
+
         :returns: dictionary with parameter names as keys, and parameter values
             as values
         :rtype: dict[str, str]
