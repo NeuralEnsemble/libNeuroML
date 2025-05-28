@@ -870,6 +870,21 @@ class TestNML(unittest.TestCase):
         print(annotation_text)
         self.assertEqual("<Annotation>some_string</Annotation>", annotation_text)
 
+    def test_parameter_listing(self):
+        """Test listing component parameters"""
+        params = {
+            "id": "test_cell",
+            "thresh": "10mV",
+            "leak_reversal": "10mV",
+            "reset": "0mV",
+            "C": "10 F",
+            "leak_conductance": "10 nS",
+        }
+        cell = component_factory("IafCell", **params)  # type: neuroml.Cell
+        received_parameters = cell.get_parameters()
+        self.assertDictEqual(params, received_parameters)
+        print(received_parameters)
+
 
 if __name__ == "__main__":
     ta = TestNML()
