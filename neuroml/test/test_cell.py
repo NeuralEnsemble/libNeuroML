@@ -410,6 +410,31 @@ class TestCell(unittest.TestCase):
     def runTest(self):
         print("Running tests in TestCell")
 
+    def test_get_parameters(self):
+        """Test get_parameters"""
+        cells = ["pyr_4_sym"]
+
+        for cell_name in cells:
+            local_path = "../examples/test_files/%s.cell.nml" % cell_name
+            if os.path.isfile(local_path):
+                test_file_path = local_path
+            else:
+                root_dir = os.path.dirname(neuroml.__file__)
+                test_file_path = os.path.join(
+                    root_dir, "examples/test_files/%s.cell.nml" % cell_name
+                )
+            print("test file path is: " + test_file_path)
+
+            doc = loaders.NeuroMLLoader.load(test_file_path)
+            acell = doc.cells[0]  # type: neuroml.Cell
+
+            parameters = acell.get_parameters()
+
+            self.assertEquals(parameters["id"], acell.id)
+            self.assertEquals(
+                parameters["ChannelDensity:LeakConductance_pyr_all"]["erev"], "-66.0 mV"
+            )
+
 
 if __name__ == "__main__":
     ta = TestCell()
