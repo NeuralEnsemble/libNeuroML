@@ -2551,6 +2551,72 @@ cell_methods = MethodSpec(
         assert len(segs) == 1
         return segs[0]
 
+
+    def get_parameters(self):
+        """Get parameters for this cell component
+
+        .. versionadded:: 0.6.6
+
+        :returns: dictionary of dicts with parameter names as keys, and
+            parameter values as values
+
+        """
+        parameters = {}
+        bp = None
+        mp = None
+        ip = None
+
+        # can't use self.get_parameters() since it creates a recursion loop
+        # or can I: needs thought
+        info = self.info(show_contents="all", return_format="dict")
+        for member, memberinfo in info.items():
+            if (
+                memberinfo["type"].startswith("Nml2Quantity_")
+                or memberinfo["type"] == "NmlId"
+            ):
+                if memberinfo["members"]:
+                    parameters[member] = memberinfo["members"]
+
+        if self.__class__.__name__ == "Cell":
+            bp = self.biophysical_properties
+            mp = bp.membrane_properties
+            ip = bp.intracellular_properties
+        elif self.__class__.__name__ == "Cell2CaPools":
+            bp = self.biophysical_properties2_ca_pools
+            mp = bp.membrane_properties2_ca_pools
+            ip = bp.intracellular_properties2_ca_pools
+
+        meminfo = mp.info(show_contents="all", return_format="dict")
+        intinfo = ip.info(show_contents="all", return_format="dict")
+
+        for member, memberinfo in meminfo.items():
+            if (
+                memberinfo["type"].startswith("Nml2Quantity_")
+                or memberinfo["type"] == "NmlId"
+            ):
+                if memberinfo["members"]:
+                    parameters[member] = memberinfo["members"]
+            else:
+                for m in memberinfo["members"]:
+                    dictkey = memberinfo['type']
+                    dictkey += f":{m.id}" if getattr(m, "id", None) else ""
+                    parameters[dictkey] = m.get_parameters()
+
+        for member, memberinfo in intinfo.items():
+            if (
+                memberinfo["type"].startswith("Nml2Quantity_")
+                or memberinfo["type"] == "NmlId"
+            ):
+                if memberinfo["members"]:
+                    parameters[member] = memberinfo["members"]
+            else:
+                for m in memberinfo["members"]:
+                    dictkey = memberinfo['type']
+                    dictkey += f":{m.id}" if getattr(m, "id", None) else ""
+                    parameters[dictkey] = m.get_parameters()
+
+        return parameters
+
     ''',
     class_names=("Cell"),
 )
