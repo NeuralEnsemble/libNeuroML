@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Nov  8 16:07:39 2024 by generateDS.py version 2.44.1.
-# Python 3.11.10 (main, Sep  9 2024, 00:00:00) [GCC 14.2.1 20240801 (Red Hat 14.2.1-1)]
+# Generated Fri Jun  6 12:47:13 2025 by generateDS.py version 2.44.3.
+# Python 3.11.12 (main, May 13 2025, 00:00:00) [GCC 15.1.1 20250425 (Red Hat 15.1.1-1)]
 #
 # Command line options:
 #   ('-o', 'nml.py')
@@ -16,7 +16,7 @@
 #   NeuroML_v2.3.1.xsd
 #
 # Command line:
-#   /home/asinha/.local/share/virtualenvs/neuroml-311-dev/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" --custom-imports-template="gds_imports-template.py" NeuroML_v2.3.1.xsd
+#   /home/asinha/.local/share/virtualenvs/neuroml-dev-311/bin/generateDS -o "nml.py" --use-getter-setter="none" --user-methods="helper_methods.py" --export="write validate" --custom-imports-template="gds_imports-template.py" NeuroML_v2.3.1.xsd
 #
 # Current working directory (os.getcwd()):
 #   nml
@@ -5639,6 +5639,7 @@ class BaseNonNegativeIntegerId(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        BaseNonNegativeIntegerId.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -5865,6 +5866,7 @@ class Base(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        Base.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -6217,6 +6219,7 @@ class Standalone(Base):
                 item.validate_(gds_collector, recursive=True)
             if self.annotation is not None:
                 self.annotation.validate_(gds_collector, recursive=True)
+        Standalone.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -6557,6 +6560,7 @@ class SpikeSourcePoisson(Standalone):
         # validate complex type children
         if recursive:
             pass
+        SpikeSourcePoisson.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -6950,6 +6954,7 @@ class Input(BaseNonNegativeIntegerId):
         # validate complex type children
         if recursive:
             pass
+        Input.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -7320,6 +7325,7 @@ class InputList(Base):
                 item.validate_(gds_collector, recursive=True)
             for item in self.input_ws:
                 item.validate_(gds_collector, recursive=True)
+        InputList.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -7690,6 +7696,7 @@ class ExplicitInput(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        ExplicitInput.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -8003,6 +8010,7 @@ class BaseConnection(BaseNonNegativeIntegerId):
         # validate complex type children
         if recursive:
             pass
+        BaseConnection.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -8277,6 +8285,7 @@ class BaseProjection(Base):
         # validate complex type children
         if recursive:
             pass
+        BaseProjection.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -8661,6 +8670,7 @@ class SynapticConnection(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        SynapticConnection.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -8908,6 +8918,7 @@ class CellSet(Base):
         # validate complex type children
         if recursive:
             pass
+        CellSet.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -9098,6 +9109,7 @@ class Location(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        Location.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -9356,6 +9368,7 @@ class Instance(BaseWithoutId):
         if recursive:
             if self.location is not None:
                 self.location.validate_(gds_collector, recursive=True)
+        Instance.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -9592,6 +9605,7 @@ class GridLayout(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        GridLayout.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -9828,6 +9842,7 @@ class RandomLayout(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        RandomLayout.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -10019,6 +10034,7 @@ class UnstructuredLayout(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        UnstructuredLayout.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -10310,6 +10326,7 @@ class Layout(BaseWithoutId):
                 self.grid.validate_(gds_collector, recursive=True)
             if self.unstructured is not None:
                 self.unstructured.validate_(gds_collector, recursive=True)
+        Layout.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -10779,6 +10796,7 @@ class Population(Standalone):
                 self.layout.validate_(gds_collector, recursive=True)
             for item in self.instances:
                 item.validate_(gds_collector, recursive=True)
+        Population.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -11095,6 +11113,7 @@ class Region(Base):
         # validate complex type children
         if recursive:
             pass
+        Region.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -11343,6 +11362,7 @@ class SpaceStructure(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        SpaceStructure.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -11610,6 +11630,7 @@ class Space(Base):
         if recursive:
             if self.structure is not None:
                 self.structure.validate_(gds_collector, recursive=True)
+        Space.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -12375,6 +12396,7 @@ class Network(Standalone):
                 item.validate_(gds_collector, recursive=True)
             for item in self.input_lists:
                 item.validate_(gds_collector, recursive=True)
+        Network.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -12858,6 +12880,9 @@ class TransientPoissonFiringSynapse(Standalone):
         # validate complex type children
         if recursive:
             pass
+        TransientPoissonFiringSynapse.superclass.validate_(
+            self, gds_collector, recursive
+        )
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -13171,6 +13196,7 @@ class PoissonFiringSynapse(Standalone):
         # validate complex type children
         if recursive:
             pass
+        PoissonFiringSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -13436,6 +13462,7 @@ class SpikeGeneratorPoisson(Standalone):
         # validate complex type children
         if recursive:
             pass
+        SpikeGeneratorPoisson.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -13703,6 +13730,7 @@ class SpikeGeneratorRandom(Standalone):
         # validate complex type children
         if recursive:
             pass
+        SpikeGeneratorRandom.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -13939,6 +13967,7 @@ class SpikeGenerator(Standalone):
         # validate complex type children
         if recursive:
             pass
+        SpikeGenerator.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -14232,6 +14261,7 @@ class TimedSynapticInput(Standalone):
         if recursive:
             for item in self.spikes:
                 item.validate_(gds_collector, recursive=True)
+        TimedSynapticInput.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -14442,6 +14472,7 @@ class SpikeArray(Standalone):
         if recursive:
             for item in self.spikes:
                 item.validate_(gds_collector, recursive=True)
+        SpikeArray.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -14655,6 +14686,7 @@ class Spike(BaseNonNegativeIntegerId):
         # validate complex type children
         if recursive:
             pass
+        Spike.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -15165,6 +15197,7 @@ class VoltageClampTriple(Standalone):
         # validate complex type children
         if recursive:
             pass
+        VoltageClampTriple.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -15595,6 +15628,7 @@ class VoltageClamp(Standalone):
         # validate complex type children
         if recursive:
             pass
+        VoltageClamp.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -15915,6 +15949,7 @@ class CompoundInputDL(Standalone):
                 item.validate_(gds_collector, recursive=True)
             for item in self.ramp_generator_dls:
                 item.validate_(gds_collector, recursive=True)
+        CompoundInputDL.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -16212,6 +16247,7 @@ class CompoundInput(Standalone):
                 item.validate_(gds_collector, recursive=True)
             for item in self.ramp_generators:
                 item.validate_(gds_collector, recursive=True)
+        CompoundInput.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -16610,6 +16646,7 @@ class RampGeneratorDL(Standalone):
         # validate complex type children
         if recursive:
             pass
+        RampGeneratorDL.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -17031,6 +17068,7 @@ class RampGenerator(Standalone):
         # validate complex type children
         if recursive:
             pass
+        RampGenerator.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -17422,6 +17460,7 @@ class SineGeneratorDL(Standalone):
         # validate complex type children
         if recursive:
             pass
+        SineGeneratorDL.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -17845,6 +17884,7 @@ class SineGenerator(Standalone):
         # validate complex type children
         if recursive:
             pass
+        SineGenerator.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -18196,6 +18236,7 @@ class PulseGeneratorDL(Standalone):
         # validate complex type children
         if recursive:
             pass
+        PulseGeneratorDL.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -18525,6 +18566,7 @@ class PulseGenerator(Standalone):
         # validate complex type children
         if recursive:
             pass
+        PulseGenerator.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -18757,6 +18799,7 @@ class ReactionScheme(Base):
         # validate complex type children
         if recursive:
             pass
+        ReactionScheme.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -18975,6 +19018,9 @@ class ExtracellularPropertiesLocal(Base):
         if recursive:
             for item in self.species:
                 item.validate_(gds_collector, recursive=True)
+        ExtracellularPropertiesLocal.superclass.validate_(
+            self, gds_collector, recursive
+        )
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -19187,6 +19233,7 @@ class ExtracellularProperties(Base):
         if recursive:
             for item in self.species:
                 item.validate_(gds_collector, recursive=True)
+        ExtracellularProperties.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -19458,6 +19505,7 @@ class IntracellularProperties(BaseWithoutId):
                 item.validate_(gds_collector, recursive=True)
             for item in self.resistivities:
                 item.validate_(gds_collector, recursive=True)
+        IntracellularProperties.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -19838,6 +19886,7 @@ class Species(Base):
         # validate complex type children
         if recursive:
             pass
+        Species.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -20083,6 +20132,7 @@ class InhomogeneousValue(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        InhomogeneousValue.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -20437,6 +20487,7 @@ class ChannelDensityGHK2(Base):
         # validate complex type children
         if recursive:
             pass
+        ChannelDensityGHK2.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -20806,6 +20857,7 @@ class ChannelDensityGHK(Base):
         # validate complex type children
         if recursive:
             pass
+        ChannelDensityGHK.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -21239,6 +21291,7 @@ class ChannelDensityNernst(Base):
         if recursive:
             for item in self.variable_parameters:
                 item.validate_(gds_collector, recursive=True)
+        ChannelDensityNernst.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -21749,6 +21802,7 @@ class ChannelDensity(Base):
         if recursive:
             for item in self.variable_parameters:
                 item.validate_(gds_collector, recursive=True)
+        ChannelDensity.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -22080,6 +22134,7 @@ class ChannelDensityNonUniformGHK(Base):
         if recursive:
             for item in self.variable_parameters:
                 item.validate_(gds_collector, recursive=True)
+        ChannelDensityNonUniformGHK.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -22385,6 +22440,9 @@ class ChannelDensityNonUniformNernst(Base):
         if recursive:
             for item in self.variable_parameters:
                 item.validate_(gds_collector, recursive=True)
+        ChannelDensityNonUniformNernst.superclass.validate_(
+            self, gds_collector, recursive
+        )
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -22742,6 +22800,7 @@ class ChannelDensityNonUniform(Base):
         if recursive:
             for item in self.variable_parameters:
                 item.validate_(gds_collector, recursive=True)
+        ChannelDensityNonUniform.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -23186,6 +23245,7 @@ class ChannelPopulation(Base):
         if recursive:
             for item in self.variable_parameters:
                 item.validate_(gds_collector, recursive=True)
+        ChannelPopulation.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -23505,6 +23565,7 @@ class Resistivity(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        Resistivity.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -23796,6 +23857,7 @@ class InitMembPotential(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        InitMembPotential.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -24093,6 +24155,7 @@ class SpecificCapacitance(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        SpecificCapacitance.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -24378,6 +24441,7 @@ class SpikeThresh(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        SpikeThresh.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -25081,6 +25145,7 @@ class MembraneProperties(BaseWithoutId):
                 item.validate_(gds_collector, recursive=True)
             for item in self.init_memb_potentials:
                 item.validate_(gds_collector, recursive=True)
+        MembraneProperties.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -25444,6 +25509,9 @@ class BiophysicalProperties2CaPools(Standalone):
                 )
             if self.extracellular_properties is not None:
                 self.extracellular_properties.validate_(gds_collector, recursive=True)
+        BiophysicalProperties2CaPools.superclass.validate_(
+            self, gds_collector, recursive
+        )
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -25745,6 +25813,7 @@ class BiophysicalProperties(Standalone):
                 self.intracellular_properties.validate_(gds_collector, recursive=True)
             if self.extracellular_properties is not None:
                 self.extracellular_properties.validate_(gds_collector, recursive=True)
+        BiophysicalProperties.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -25954,6 +26023,7 @@ class SegmentEndPoint(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        SegmentEndPoint.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -26177,6 +26247,7 @@ class SubTree(BaseWithoutId):
                 self.from_.validate_(gds_collector, recursive=True)
             if self.to is not None:
                 self.to.validate_(gds_collector, recursive=True)
+        SubTree.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -26398,6 +26469,7 @@ class Path(BaseWithoutId):
                 self.from_.validate_(gds_collector, recursive=True)
             if self.to is not None:
                 self.to.validate_(gds_collector, recursive=True)
+        Path.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -26617,6 +26689,7 @@ class Include(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        Include.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -26810,6 +26883,7 @@ class Member(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        Member.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -27000,6 +27074,7 @@ class DistalDetails(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        DistalDetails.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -27186,6 +27261,7 @@ class ProximalDetails(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        ProximalDetails.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -27488,6 +27564,7 @@ class InhomogeneousParameter(Base):
                 self.proximal.validate_(gds_collector, recursive=True)
             if self.distal is not None:
                 self.distal.validate_(gds_collector, recursive=True)
+        InhomogeneousParameter.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -28050,6 +28127,7 @@ class SegmentGroup(Base):
                 item.validate_(gds_collector, recursive=True)
             for item in self.inhomogeneous_parameters:
                 item.validate_(gds_collector, recursive=True)
+        SegmentGroup.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -28348,6 +28426,7 @@ class Point3DWithDiam(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        Point3DWithDiam.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -28651,6 +28730,7 @@ class SegmentParent(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        SegmentParent.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -28984,6 +29064,7 @@ class Segment(BaseNonNegativeIntegerId):
                 self.proximal.validate_(gds_collector, recursive=True)
             if self.distal is not None:
                 self.distal.validate_(gds_collector, recursive=True)
+        Segment.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -29356,6 +29437,7 @@ class Morphology(Standalone):
                 item.validate_(gds_collector, recursive=True)
             for item in self.segment_groups:
                 item.validate_(gds_collector, recursive=True)
+        Morphology.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -29600,6 +29682,7 @@ class BaseCell(Standalone):
         # validate complex type children
         if recursive:
             pass
+        BaseCell.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -29956,6 +30039,7 @@ class PlasticityMechanism(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        PlasticityMechanism.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -30378,6 +30462,7 @@ class BlockMechanism(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        BlockMechanism.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -30640,6 +30725,7 @@ class BaseSynapse(Standalone):
         # validate complex type children
         if recursive:
             pass
+        BaseSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -31054,6 +31140,9 @@ class FixedFactorConcentrationModel(Standalone):
         # validate complex type children
         if recursive:
             pass
+        FixedFactorConcentrationModel.superclass.validate_(
+            self, gds_collector, recursive
+        )
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -31515,6 +31604,9 @@ class DecayingPoolConcentrationModel(Standalone):
         # validate complex type children
         if recursive:
             pass
+        DecayingPoolConcentrationModel.superclass.validate_(
+            self, gds_collector, recursive
+        )
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -31896,6 +31988,7 @@ class HHTime(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        HHTime.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -32213,6 +32306,7 @@ class HHVariable(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        HHVariable.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -32566,6 +32660,7 @@ class HHRate(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        HHRate.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -32975,6 +33070,7 @@ class GateFractionalSubgate(Base):
                 self.steady_state.validate_(gds_collector, recursive=True)
             if self.time_course is not None:
                 self.time_course.validate_(gds_collector, recursive=True)
+        GateFractionalSubgate.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -33336,6 +33432,7 @@ class GateFractional(Base):
                 self.q10_settings.validate_(gds_collector, recursive=True)
             for item in self.sub_gates:
                 item.validate_(gds_collector, recursive=True)
+        GateFractional.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -33663,6 +33760,7 @@ class GateHHInstantaneous(Base):
         if recursive:
             if self.steady_state is not None:
                 self.steady_state.validate_(gds_collector, recursive=True)
+        GateHHInstantaneous.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -34070,6 +34168,7 @@ class GateHHRatesInf(Base):
                 self.reverse_rate.validate_(gds_collector, recursive=True)
             if self.steady_state is not None:
                 self.steady_state.validate_(gds_collector, recursive=True)
+        GateHHRatesInf.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -34490,6 +34589,7 @@ class GateHHRatesTau(Base):
                 self.reverse_rate.validate_(gds_collector, recursive=True)
             if self.time_course is not None:
                 self.time_course.validate_(gds_collector, recursive=True)
+        GateHHRatesTau.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -34949,6 +35049,7 @@ class GateHHRatesTauInf(Base):
                 self.time_course.validate_(gds_collector, recursive=True)
             if self.steady_state is not None:
                 self.steady_state.validate_(gds_collector, recursive=True)
+        GateHHRatesTauInf.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -35343,6 +35444,7 @@ class GateHHTauInf(Base):
                 self.time_course.validate_(gds_collector, recursive=True)
             if self.steady_state is not None:
                 self.steady_state.validate_(gds_collector, recursive=True)
+        GateHHTauInf.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -35727,6 +35829,7 @@ class GateHHRates(Base):
                 self.forward_rate.validate_(gds_collector, recursive=True)
             if self.reverse_rate is not None:
                 self.reverse_rate.validate_(gds_collector, recursive=True)
+        GateHHRates.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -36271,6 +36374,7 @@ class GateHHUndetermined(Base):
                 self.steady_state.validate_(gds_collector, recursive=True)
             for item in self.sub_gates:
                 item.validate_(gds_collector, recursive=True)
+        GateHHUndetermined.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -36785,6 +36889,7 @@ class GateKS(Base):
                 item.validate_(gds_collector, recursive=True)
             for item in self.tau_inf_transition:
                 item.validate_(gds_collector, recursive=True)
+        GateKS.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -37125,6 +37230,7 @@ class TauInfTransition(Base):
                 self.steady_state.validate_(gds_collector, recursive=True)
             if self.time_course is not None:
                 self.time_course.validate_(gds_collector, recursive=True)
+        TauInfTransition.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -37393,6 +37499,7 @@ class ReverseTransition(Base):
         # validate complex type children
         if recursive:
             pass
+        ReverseTransition.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -37653,6 +37760,7 @@ class ForwardTransition(Base):
         # validate complex type children
         if recursive:
             pass
+        ForwardTransition.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -37813,6 +37921,7 @@ class OpenState(Base):
         # validate complex type children
         if recursive:
             pass
+        OpenState.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -37967,6 +38076,7 @@ class ClosedState(Base):
         # validate complex type children
         if recursive:
             pass
+        ClosedState.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -38262,6 +38372,7 @@ class Q10ConductanceScaling(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        Q10ConductanceScaling.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -38648,6 +38759,7 @@ class IonChannelKS(Standalone):
         if recursive:
             for item in self.gate_kses:
                 item.validate_(gds_collector, recursive=True)
+        IonChannelKS.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -38955,6 +39067,7 @@ class IonChannelScalable(Standalone):
         if recursive:
             for item in self.q10_conductance_scalings:
                 item.validate_(gds_collector, recursive=True)
+        IonChannelScalable.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -41888,6 +42001,7 @@ class NeuroMLDocument(Standalone):
                 item.validate_(gds_collector, recursive=True)
             for item in self.ComponentType:
                 item.validate_(gds_collector, recursive=True)
+        NeuroMLDocument.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -42746,6 +42860,7 @@ class NamedDimensionalVariable(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        NamedDimensionalVariable.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -43010,6 +43125,7 @@ class NamedDimensionalType(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        NamedDimensionalType.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -43239,6 +43355,7 @@ class Exposure(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        Exposure.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -43514,6 +43631,7 @@ class Constant(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        Constant.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -43697,6 +43815,7 @@ class Annotation(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        Annotation.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -43881,6 +44000,7 @@ class Property(BaseWithoutId):
         # validate complex type children
         if recursive:
             pass
+        Property.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -44091,6 +44211,7 @@ class BasePynnSynapse(BaseSynapse):
         # validate complex type children
         if recursive:
             pass
+        BasePynnSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -44364,6 +44485,7 @@ class basePyNNCell(BaseCell):
         # validate complex type children
         if recursive:
             pass
+        basePyNNCell.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -44565,6 +44687,7 @@ class InputW(Input):
         # validate complex type children
         if recursive:
             pass
+        InputW.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -44891,6 +45014,7 @@ class ContinuousProjection(BaseProjection):
                 item.validate_(gds_collector, recursive=True)
             for item in self.continuous_connection_instance_ws:
                 item.validate_(gds_collector, recursive=True)
+        ContinuousProjection.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -45306,6 +45430,7 @@ class ElectricalProjection(BaseProjection):
                 item.validate_(gds_collector, recursive=True)
             for item in self.electrical_connection_instance_ws:
                 item.validate_(gds_collector, recursive=True)
+        ElectricalProjection.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -45787,6 +45912,7 @@ class BaseConnectionNewFormat(BaseConnection):
         # validate complex type children
         if recursive:
             pass
+        BaseConnectionNewFormat.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -46257,6 +46383,7 @@ class BaseConnectionOldFormat(BaseConnection):
         # validate complex type children
         if recursive:
             pass
+        BaseConnectionOldFormat.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -46594,6 +46721,7 @@ class Projection(BaseProjection):
                 item.validate_(gds_collector, recursive=True)
             for item in self.connection_wds:
                 item.validate_(gds_collector, recursive=True)
+        Projection.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -46949,6 +47077,7 @@ class SpikeGeneratorRefPoisson(SpikeGeneratorPoisson):
         # validate complex type children
         if recursive:
             pass
+        SpikeGeneratorRefPoisson.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -47132,6 +47261,9 @@ class IntracellularProperties2CaPools(IntracellularProperties):
         # validate complex type children
         if recursive:
             pass
+        IntracellularProperties2CaPools.superclass.validate_(
+            self, gds_collector, recursive
+        )
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -47336,6 +47468,7 @@ class ConcentrationModel_D(DecayingPoolConcentrationModel):
         # validate complex type children
         if recursive:
             pass
+        ConcentrationModel_D.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -47526,6 +47659,7 @@ class ChannelDensityNernstCa2(ChannelDensityNernst):
         # validate complex type children
         if recursive:
             pass
+        ChannelDensityNernstCa2.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -47779,6 +47913,7 @@ class ChannelDensityVShift(ChannelDensity):
         # validate complex type children
         if recursive:
             pass
+        ChannelDensityVShift.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -48025,6 +48160,7 @@ class MembraneProperties2CaPools(MembraneProperties):
         if recursive:
             for item in self.channel_density_nernst_ca2s:
                 item.validate_(gds_collector, recursive=True)
+        MembraneProperties2CaPools.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -48383,6 +48519,7 @@ class Cell(BaseCell):
                 self.morphology.validate_(gds_collector, recursive=True)
             if self.biophysical_properties is not None:
                 self.biophysical_properties.validate_(gds_collector, recursive=True)
+        Cell.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -50145,6 +50282,71 @@ class Cell(BaseCell):
         assert len(segs) == 1
         return segs[0]
 
+    def get_parameters(self):
+        """Get parameters for this cell component
+
+        .. versionadded:: 0.6.6
+
+        :returns: dictionary of dicts with parameter names as keys, and
+            parameter values as values
+
+        """
+        parameters = {}
+        bp = None
+        mp = None
+        ip = None
+
+        # can't use self.get_parameters() since it creates a recursion loop
+        # or can I: needs thought
+        info = self.info(show_contents="all", return_format="dict")
+        for member, memberinfo in info.items():
+            if (
+                memberinfo["type"].startswith("Nml2Quantity_")
+                or memberinfo["type"] == "NmlId"
+            ):
+                if memberinfo["members"]:
+                    parameters[member] = memberinfo["members"]
+
+        if self.__class__.__name__ == "Cell":
+            bp = self.biophysical_properties
+            mp = bp.membrane_properties
+            ip = bp.intracellular_properties
+        elif self.__class__.__name__ == "Cell2CaPools":
+            bp = self.biophysical_properties2_ca_pools
+            mp = bp.membrane_properties2_ca_pools
+            ip = bp.intracellular_properties2_ca_pools
+
+        meminfo = mp.info(show_contents="all", return_format="dict")
+        intinfo = ip.info(show_contents="all", return_format="dict")
+
+        for member, memberinfo in meminfo.items():
+            if (
+                memberinfo["type"].startswith("Nml2Quantity_")
+                or memberinfo["type"] == "NmlId"
+            ):
+                if memberinfo["members"]:
+                    parameters[member] = memberinfo["members"]
+            else:
+                for m in memberinfo["members"]:
+                    dictkey = memberinfo["type"]
+                    dictkey += f":{m.id}" if getattr(m, "id", None) else ""
+                    parameters[dictkey] = m.get_parameters()
+
+        for member, memberinfo in intinfo.items():
+            if (
+                memberinfo["type"].startswith("Nml2Quantity_")
+                or memberinfo["type"] == "NmlId"
+            ):
+                if memberinfo["members"]:
+                    parameters[member] = memberinfo["members"]
+            else:
+                for m in memberinfo["members"]:
+                    dictkey = memberinfo["type"]
+                    dictkey += f":{m.id}" if getattr(m, "id", None) else ""
+                    parameters[dictkey] = m.get_parameters()
+
+        return parameters
+
     # end class Cell
 
 
@@ -50998,6 +51200,7 @@ class PinskyRinzelCA3Cell(BaseCell):
         # validate complex type children
         if recursive:
             pass
+        PinskyRinzelCA3Cell.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -51460,6 +51663,7 @@ class FitzHughNagumo1969Cell(BaseCell):
         # validate complex type children
         if recursive:
             pass
+        FitzHughNagumo1969Cell.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -51719,6 +51923,7 @@ class FitzHughNagumoCell(BaseCell):
         # validate complex type children
         if recursive:
             pass
+        FitzHughNagumoCell.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -51974,6 +52179,7 @@ class BaseCellMembPotCap(BaseCell):
         # validate complex type children
         if recursive:
             pass
+        BaseCellMembPotCap.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -52334,6 +52540,7 @@ class IzhikevichCell(BaseCell):
         # validate complex type children
         if recursive:
             pass
+        IzhikevichCell.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -52783,6 +52990,7 @@ class IafCell(BaseCell):
         # validate complex type children
         if recursive:
             pass
+        IafCell.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -53167,6 +53375,7 @@ class IafTauCell(BaseCell):
         # validate complex type children
         if recursive:
             pass
+        IafTauCell.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -53576,6 +53785,7 @@ class GradedSynapse(BaseSynapse):
         # validate complex type children
         if recursive:
             pass
+        GradedSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -53846,6 +54056,7 @@ class LinearGradedSynapse(BaseSynapse):
         # validate complex type children
         if recursive:
             pass
+        LinearGradedSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -54016,6 +54227,7 @@ class SilentSynapse(BaseSynapse):
         # validate complex type children
         if recursive:
             pass
+        SilentSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -54241,6 +54453,7 @@ class GapJunction(BaseSynapse):
         # validate complex type children
         if recursive:
             pass
+        GapJunction.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -54440,6 +54653,7 @@ class BaseCurrentBasedSynapse(BaseSynapse):
         # validate complex type children
         if recursive:
             pass
+        BaseCurrentBasedSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -54640,6 +54854,7 @@ class BaseVoltageDepSynapse(BaseSynapse):
         # validate complex type children
         if recursive:
             pass
+        BaseVoltageDepSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -55291,6 +55506,7 @@ class IonChannel(IonChannelScalable):
                 item.validate_(gds_collector, recursive=True)
             for item in self.gate_fractionals:
                 item.validate_(gds_collector, recursive=True)
+        IonChannel.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -55560,6 +55776,7 @@ class ConditionalDerivedVariable(NamedDimensionalVariable):
         if recursive:
             for item in self.Case:
                 item.validate_(gds_collector, recursive=True)
+        ConditionalDerivedVariable.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -55725,6 +55942,7 @@ class StateVariable(NamedDimensionalVariable):
         # validate complex type children
         if recursive:
             pass
+        StateVariable.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -55921,6 +56139,7 @@ class DerivedVariable(NamedDimensionalVariable):
         # validate complex type children
         if recursive:
             pass
+        DerivedVariable.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -56085,6 +56304,7 @@ class Requirement(NamedDimensionalType):
         # validate complex type children
         if recursive:
             pass
+        Requirement.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -56262,6 +56482,7 @@ class LEMS_Property(NamedDimensionalType):
         # validate complex type children
         if recursive:
             pass
+        LEMS_Property.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -56452,6 +56673,7 @@ class DerivedParameter(NamedDimensionalType):
         # validate complex type children
         if recursive:
             pass
+        DerivedParameter.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -56607,6 +56829,7 @@ class Parameter(NamedDimensionalType):
         # validate complex type children
         if recursive:
             pass
+        Parameter.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -56782,6 +57005,7 @@ class AlphaCurrSynapse(BasePynnSynapse):
         # validate complex type children
         if recursive:
             pass
+        AlphaCurrSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -56949,6 +57173,7 @@ class ExpCurrSynapse(BasePynnSynapse):
         # validate complex type children
         if recursive:
             pass
+        ExpCurrSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -57138,6 +57363,7 @@ class AlphaCondSynapse(BasePynnSynapse):
         # validate complex type children
         if recursive:
             pass
+        AlphaCondSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -57324,6 +57550,7 @@ class ExpCondSynapse(BasePynnSynapse):
         # validate complex type children
         if recursive:
             pass
+        ExpCondSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -57664,6 +57891,7 @@ class HH_cond_exp(basePyNNCell):
         # validate complex type children
         if recursive:
             pass
+        HH_cond_exp.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -57993,6 +58221,7 @@ class basePyNNIaFCell(basePyNNCell):
         # validate complex type children
         if recursive:
             pass
+        basePyNNIaFCell.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -58303,6 +58532,7 @@ class ContinuousConnection(BaseConnectionNewFormat):
         # validate complex type children
         if recursive:
             pass
+        ContinuousConnection.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -58652,6 +58882,7 @@ class ElectricalConnection(BaseConnectionNewFormat):
         # validate complex type children
         if recursive:
             pass
+        ElectricalConnection.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -58993,6 +59224,7 @@ class ConnectionWD(BaseConnectionOldFormat):
         # validate complex type children
         if recursive:
             pass
+        ConnectionWD.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -59284,6 +59516,7 @@ class Connection(BaseConnectionOldFormat):
         # validate complex type children
         if recursive:
             pass
+        Connection.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -59592,6 +59825,7 @@ class Cell2CaPools(Cell):
                 self.biophysical_properties2_ca_pools.validate_(
                     gds_collector, recursive=True
                 )
+        Cell2CaPools.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -60048,6 +60282,7 @@ class HindmarshRose1984Cell(BaseCellMembPotCap):
         # validate complex type children
         if recursive:
             pass
+        HindmarshRose1984Cell.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -60631,6 +60866,7 @@ class AdExIaFCell(BaseCellMembPotCap):
         # validate complex type children
         if recursive:
             pass
+        AdExIaFCell.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -61231,6 +61467,7 @@ class Izhikevich2007Cell(BaseCellMembPotCap):
         # validate complex type children
         if recursive:
             pass
+        Izhikevich2007Cell.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -61536,6 +61773,7 @@ class IafRefCell(IafCell):
         # validate complex type children
         if recursive:
             pass
+        IafRefCell.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -61786,6 +62024,7 @@ class IafTauRefCell(IafTauCell):
         # validate complex type children
         if recursive:
             pass
+        IafTauRefCell.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -62073,6 +62312,7 @@ class DoubleSynapse(BaseVoltageDepSynapse):
         # validate complex type children
         if recursive:
             pass
+        DoubleSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -62374,6 +62614,7 @@ class AlphaCurrentSynapse(BaseCurrentBasedSynapse):
         # validate complex type children
         if recursive:
             pass
+        AlphaCurrentSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -62733,6 +62974,9 @@ class BaseConductanceBasedSynapseTwo(BaseVoltageDepSynapse):
         # validate complex type children
         if recursive:
             pass
+        BaseConductanceBasedSynapseTwo.superclass.validate_(
+            self, gds_collector, recursive
+        )
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -63077,6 +63321,7 @@ class BaseConductanceBasedSynapse(BaseVoltageDepSynapse):
         # validate complex type children
         if recursive:
             pass
+        BaseConductanceBasedSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -63364,6 +63609,7 @@ class IonChannelVShift(IonChannel):
         # validate complex type children
         if recursive:
             pass
+        IonChannelVShift.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -63567,6 +63813,7 @@ class IonChannelHH(IonChannel):
         # validate complex type children
         if recursive:
             pass
+        IonChannelHH.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -63777,6 +64024,7 @@ class IF_curr_exp(basePyNNIaFCell):
         # validate complex type children
         if recursive:
             pass
+        IF_curr_exp.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -63987,6 +64235,7 @@ class IF_curr_alpha(basePyNNIaFCell):
         # validate complex type children
         if recursive:
             pass
+        IF_curr_alpha.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -64255,6 +64504,7 @@ class basePyNNIaFCondCell(basePyNNIaFCell):
         # validate complex type children
         if recursive:
             pass
+        basePyNNIaFCondCell.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -64474,6 +64724,9 @@ class ContinuousConnectionInstance(ContinuousConnection):
         # validate complex type children
         if recursive:
             pass
+        ContinuousConnectionInstance.superclass.validate_(
+            self, gds_collector, recursive
+        )
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -64702,6 +64955,9 @@ class ElectricalConnectionInstance(ElectricalConnection):
         # validate complex type children
         if recursive:
             pass
+        ElectricalConnectionInstance.superclass.validate_(
+            self, gds_collector, recursive
+        )
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -65026,6 +65282,7 @@ class ExpThreeSynapse(BaseConductanceBasedSynapseTwo):
         # validate complex type children
         if recursive:
             pass
+        ExpThreeSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -65329,6 +65586,7 @@ class ExpTwoSynapse(BaseConductanceBasedSynapse):
         # validate complex type children
         if recursive:
             pass
+        ExpTwoSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -65586,6 +65844,7 @@ class ExpOneSynapse(BaseConductanceBasedSynapse):
         # validate complex type children
         if recursive:
             pass
+        ExpOneSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -65824,6 +66083,7 @@ class AlphaSynapse(BaseConductanceBasedSynapse):
         # validate complex type children
         if recursive:
             pass
+        AlphaSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -66140,6 +66400,7 @@ class EIF_cond_exp_isfa_ista(basePyNNIaFCondCell):
         # validate complex type children
         if recursive:
             pass
+        EIF_cond_exp_isfa_ista.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -66391,6 +66652,7 @@ class IF_cond_exp(basePyNNIaFCondCell):
         # validate complex type children
         if recursive:
             pass
+        IF_cond_exp.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -66609,6 +66871,7 @@ class IF_cond_alpha(basePyNNIaFCondCell):
         # validate complex type children
         if recursive:
             pass
+        IF_cond_alpha.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -66814,6 +67077,9 @@ class ContinuousConnectionInstanceW(ContinuousConnectionInstance):
         # validate complex type children
         if recursive:
             pass
+        ContinuousConnectionInstanceW.superclass.validate_(
+            self, gds_collector, recursive
+        )
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -67049,6 +67315,9 @@ class ElectricalConnectionInstanceW(ElectricalConnectionInstance):
         # validate complex type children
         if recursive:
             pass
+        ElectricalConnectionInstanceW.superclass.validate_(
+            self, gds_collector, recursive
+        )
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -67354,6 +67623,7 @@ class BlockingPlasticSynapse(ExpTwoSynapse):
                 self.plasticity_mechanism.validate_(gds_collector, recursive=True)
             if self.block_mechanism is not None:
                 self.block_mechanism.validate_(gds_collector, recursive=True)
+        BlockingPlasticSynapse.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):
@@ -67615,6 +67885,7 @@ class EIF_cond_alpha_isfa_ista(EIF_cond_exp_isfa_ista):
         # validate complex type children
         if recursive:
             pass
+        EIF_cond_alpha_isfa_ista.superclass.validate_(self, gds_collector, recursive)
         return message_count == len(self.gds_collector_.get_messages())
 
     def build(self, node, gds_collector_=None):

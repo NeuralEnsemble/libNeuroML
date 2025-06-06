@@ -488,7 +488,8 @@ class GeneratedsSuperSuper(object):
                 memberinfo["type"].startswith("Nml2Quantity_")
                 or memberinfo["type"] == "NmlId"
             ):
-                parameters[member] = memberinfo["members"]
+                if memberinfo["members"]:
+                    parameters[member] = memberinfo["members"]
 
         return parameters
 
