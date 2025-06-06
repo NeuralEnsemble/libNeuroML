@@ -430,8 +430,8 @@ class TestCell(unittest.TestCase):
 
             parameters = acell.get_parameters()
 
-            self.assertEquals(parameters["id"], acell.id)
-            self.assertEquals(
+            self.assertEqual(parameters["id"], acell.id)
+            self.assertEqual(
                 parameters["ChannelDensity:LeakConductance_pyr_all"]["erev"], "-66.0 mV"
             )
 
