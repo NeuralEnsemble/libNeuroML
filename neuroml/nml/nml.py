@@ -37,6 +37,7 @@ import os
 import re as re_
 import typing
 from functools import cached_property, lru_cache
+from itertools import zip_longest
 from math import pi, sqrt
 from operator import attrgetter
 
@@ -44,7 +45,6 @@ import natsort
 import networkx as nx
 import numpy
 from lxml import etree as etree_
-from six.moves import zip_longest
 
 import neuroml
 import neuroml.neuro_lex_ids

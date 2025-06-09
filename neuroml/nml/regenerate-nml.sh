@@ -23,6 +23,8 @@ regenerate () {
 
 
         PYTHONPATH="$PYTHONPATH:." generateDS -o nml.py --use-getter-setter=none --user-methods=helper_methods.py --export="write validate" --custom-imports-template=gds_imports-template.py $SCHEMA_FILE
+        # replace six
+        sed -i 's/from six.moves/from itertools/' nml.py
         # correct path to generatedssupersuper module file
         sed -i 's/from generatedssupersuper/from .generatedssupersuper/' nml.py
         sed -i 's/from generatedscollector/from .generatedscollector/' nml.py
