@@ -37,6 +37,8 @@ from neuroml.hdf5.NetworkContainer import (
 from neuroml.loaders import read_neuroml2_string
 from neuroml.utils import add_all_to_document
 
+logging.getLogger("numexpr.utils").setLevel(logging.WARNING)
+
 
 class NeuroMLHdf5Parser:
     log = logging.getLogger("NeuroMLHdf5Parser")

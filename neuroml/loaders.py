@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 import warnings
@@ -10,6 +11,7 @@ from neuroml.nml.nml import parse as nmlparse
 from neuroml.nml.nml import parseString as nmlparsestring
 
 supressGeneratedsWarnings = True
+logging.getLogger("numexpr.utils").setLevel(logging.WARNING)
 
 
 class NeuroMLLoader(object):

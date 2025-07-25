@@ -10,7 +10,7 @@ import logging
 import os
 import sys
 import warnings
-from typing import Any, Dict, List, Optional, Set, Type, Union
+from typing import Any, Dict, Optional, Type, Union
 
 import networkx
 

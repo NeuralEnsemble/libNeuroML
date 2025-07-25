@@ -9,7 +9,6 @@ from .nml.nml import *  # allows importation of all neuroml classes
 # Define a logger for the package
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-logger.propagate = False
 
 ch = logging.StreamHandler()
 # do not set level for handler

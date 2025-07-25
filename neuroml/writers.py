@@ -1,7 +1,10 @@
+import logging
 import typing
 
 import neuroml
 from neuroml.arraymorph import ArrayMorphology
+
+logging.getLogger("numexpr.utils").setLevel(logging.WARNING)
 
 """Classes to write NeuroML to various formats."""
 
