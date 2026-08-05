@@ -15,7 +15,20 @@ from typing import Any, Dict, Optional, Type, Union
 import networkx
 
 import neuroml.nml.nml as schema
-from neuroml import BiophysicalProperties, Morphology, NeuroMLDocument
+from neuroml import (
+    BiophysicalProperties,
+    GateFractional,
+    GateHHInstantaneous,
+    GateHHRates,
+    GateHHRatesInf,
+    GateHHRatesTau,
+    GateHHRatesTauInf,
+    GateHHTauInf,
+    GateHHUndetermined,
+    GateKS,
+    Morphology,
+    NeuroMLDocument,
+)
 
 from . import loaders
 
@@ -470,6 +483,86 @@ def fix_external_morphs_biophys_in_cell(
                 raise e
 
     return newdoc
+
+
+def create_new_typed_gate(
+    gate: GateHHUndetermined,
+) -> Optional[
+    Union[
+        GateHHRates,
+        GateHHRatesTau,
+        GateHHRatesInf,
+        GateHHRatesTauInf,
+        GateHHTauInf,
+        GateHHInstantaneous,
+        GateFractional,
+        GateKS,
+    ]
+]:
+    """Convert an undetermined gate to a "determined" gate
+
+    :param gate: gate object of GateHHUndetermined type
+    :type gate: GateHHUndetermined
+    :returns: new gate object, or None if the gate is not of a standard type
+    """
+    gates_name_map = {
+        "gateHHrates": "GateHHRates",
+        "gateHHratesTau": "GateHHRatesTau",
+        "gateHHratesInf": "GateHHRatesInf",
+        "gateHHratesTauInf": "GateHHRatesTauInf",
+        "gateHHtauInf": "GateHHTauInf",
+        "gateHHInstantaneous": "GateHHInstantaneous",
+        "gateFractional": "GateFractional",
+        "gateKS": "GateKS",
+    }
+    gate_type = getattr(gate, "type", None)
+    if gate_type:
+        try:
+            gate_class_type = gates_name_map[gate_type]
+        # if it isn't in our dict, it's non standard
+        except KeyError:
+            return None
+
+        new_gate = component_factory(component_type=gate_class_type, validate=False)
+        print(gate.__dict__)
+        new_gate.__dict__.update(gate.__dict__)
+        return new_gate
+
+    return None
+
+
+def move_undetermined_gates_to_typed(nml2_doc: NeuroMLDocument):
+    """Replace gates of GateHHUndetermined type with their standard
+    counterparts where possible.
+
+    Note that this modifies the passed NeuroMLDocument object in-place.
+
+    If `nml2_doc` is not a NeuroMLDocument, this function does nothing and
+    simply returns None.
+
+    :param nml2_doc: NeuroMLDocument object
+    :type nml2_doc: NeuroMLDocument
+    :returns: None
+
+    """
+    if not isinstance(nml2_doc, NeuroMLDocument):
+        return None
+
+    all_channels = (
+        list(nml2_doc.ion_channel_hhs.__iter__())
+        + list(nml2_doc.ion_channel.__iter__())
+        + list(nml2_doc.ion_channel_v_shifts.__iter__())
+    )
+    for achannel in all_channels:
+        determined_gates = []
+        undetermined_gates = getattr(achannel, "gates", [])
+        for gate in undetermined_gates:
+            new_typed_gate = create_new_typed_gate(gate)
+            if new_typed_gate:
+                achannel.add(new_typed_gate)
+                determined_gates.append(gate)
+        for d_gate in determined_gates:
+            undetermined_gates.remove(d_gate)
 
 
 def main():

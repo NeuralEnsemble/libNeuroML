@@ -56,6 +56,7 @@ class NeuroMLLoader(object):
         except Exception as e:
             raise Exception("Not a valid NeuroML 2 doc (%s): %s" % (file_name, e), e)
 
+        utils.move_undetermined_gates_to_typed(nml2_doc)
         return nml2_doc
 
 
