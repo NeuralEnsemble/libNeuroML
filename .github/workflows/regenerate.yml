@@ -2,9 +2,9 @@ name: Regenerate nml.py
 
 on:
   push:
-    branches: [ master, development, experimental ]
+    branches: [ master, development, experimental, test* ]
   pull_request:
-    branches: [ master, development, experimental ]
+    branches: [ master, development, experimental, test* ]
 
 jobs:
   build:
