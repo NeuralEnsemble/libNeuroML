@@ -2,9 +2,9 @@ name: Build
 
 on:
   push:
-    branches: [ master, development, experimental ]
+    branches: [ master, development, experimental, test* ]
   pull_request:
-    branches: [ master, development, experimental ]
+    branches: [ master, development, experimental, test* ]
 
 jobs:
   build:
@@ -14,11 +14,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
         runs-on: [ubuntu-latest, windows-latest, macos-latest]
         exclude:
-          - runs-on: macos-latest
-            python-version: "3.9"
           - runs-on: windows-latest
             python-version: "3.13"  # not sure how to install libhdf5
 
